@@ -1,0 +1,1271 @@
+% ============================================================
+% Chapters 13-15: Bilingual TeX Part File
+% Source: Bergin, Mathematics for Economists with Applications
+% ============================================================
+
+\setcounter{chapter}{12}
+
+\chapter{Inequality-Constrained Optimization / 不等式约束最优化}
+
+\section{Introduction / 引言}
+
+\begin{original}
+This chapter considers the problem of maximizing or minimizing a function $f: \mathbb{R}^n \to \mathbb{R}$ subject to inequality constraints such as $g(x) \le c$ or $g(x) \ge c$. This type of problem arises frequently in economics. For example, maximizing output $y = f(x_1, x_2)$ subject to expenditure constraint, $g(x_1, x_2) = w_1x_1 + w_2x_2 \le c$, is a typical problem.
+\end{original}
+\begin{translation}
+本章研究在不等式约束（如 $g(x) \le c$ 或 $g(x) \ge c$）下最大化或最小化函数 $f: \mathbb{R}^n \to \mathbb{R}$ 的问题。这类问题在经济学中经常出现。例如，在支出约束 $g(x_1, x_2) = w_1x_1 + w_2x_2 \le c$ 下最大化产出 $y = f(x_1, x_2)$，就是一个典型问题。
+\end{translation}
+
+\begin{original}
+In Section 13.2, the constrained optimization is formally defined and the main result (Theorem 13.1) is given. All the results in this chapter are derived from this theorem and the constraint qualification. Section 13.2.1 discusses the constraint qualification, a (mild) condition that the derivatives of the constraints must satisfy to guarantee that the "standard" first-order conditions are necessary for a local optimum. In Section 13.2.2, the complementary slackness condition is discussed: on non-binding constraints we can take the Lagrange multipliers to be 0. Section 13.2.3 discusses the logical equivalence of the maximization and minimization programs. In Section 13.2.4, conditions are given under which a local optimum is also a global optimum. In Section 13.2.5, problems with non-negativity constraints are considered. The necessary conditions for a local optimum may be expressed in terms of the Kuhn--Tucker conditions, and this is done in Theorems 13.5 and 13.6, which are derived directly from the main result, Theorem 13.1. The remaining sections deal with a few miscellaneous topics.
+\end{original}
+\begin{translation}
+第13.2节正式定义了约束最优化问题，并给出了主要结果（定理13.1）。本章中的所有结果都从该定理和约束资格条件推导而来。第13.2.1节讨论了约束资格条件——这是约束的导数必须满足的一个（温和的）条件，用以保证标准一阶条件是局部最优解的必要条件。第13.2.2节讨论了互补松弛条件：对于非紧约束，我们可以令拉格朗日乘子为零。第13.2.3节讨论了最大化与最小化问题的逻辑等价性。第13.2.4节给出了局部最优解也是全局最优解的条件。第13.2.5节考虑了带有非负性约束的问题。局部最优解的必要条件可以用Kuhn--Tucker条件来表达，这在定理13.5和13.6中完成，这两个定理直接由定理13.1推导而来。其余各节讨论了一些其他主题。
+\end{translation}
+
+\subsection{A motivating example / 一个引入性例子}
+
+\begin{original}
+To develop some of the issues, consider the following optimization example.
+
+EXAMPLE 13.1:
+\[
+\max_{x_1,x_2} \quad x_1 x_2
+\]
+subject to:
+\[
+x_1^2 + x_2^2 \le 1, \qquad x_2 \ge \alpha x_1.
+\]
+
+Thus, the objective is $f(x_1, x_2) = x_1x_2$, and these constraints may be written $g_1(x_1, x_2) = x_1^2 + x_2^2 - 1 \le 0$ and $g_2(x_1, x_2) = -\alpha x_1 + x_2 \le 0$ (or more precisely $g_2(x_1, x_2) = -\alpha x_1 + x_2$). The figure depicts the problem for two different values of the parameter $\alpha$.
+\end{original}
+\begin{translation}
+为阐明其中涉及的问题，考虑以下最优化例子。
+
+\textbf{例13.1：}
+\[
+\max_{x_1,x_2} \quad x_1 x_2
+\]
+约束条件为：
+\[
+x_1^2 + x_2^2 \le 1, \qquad x_2 \ge \alpha x_1.
+\]
+
+因此，目标函数为 $f(x_1, x_2) = x_1x_2$，约束可写为 $g_1(x_1, x_2) = x_1^2 + x_2^2 - 1 \le 0$ 和 $g_2(x_1, x_2) = -\alpha x_1 + x_2 \le 0$（或更精确地，$g_2(x_1, x_2) = -\alpha x_1 + x_2$）。图形描绘了参数 $\alpha$ 取两个不同值时的问题。
+\end{translation}
+
+\begin{original}
+At parameter value $\tilde{\alpha}$, the constraints are $g_1(x_1, x_2) \le 0$ and $\tilde{g}_2(x_1, x_2) \le 0$ and the solution, $x^a$, satisfies $g_1(x^a) = 0$, $\tilde{g}_2(x^a) < 0$. Constraint $g_1$ is active or binding at $x^a$ but constraint $\tilde{g}_2$ is not active at $x^a$. At parameter value $\hat{\alpha}$, the constraints are $g_1(x_1, x_2) \le 0$ and $\hat{g}_2(x_1, x_2) \le 0$, and, at the solution, $x^b$ satisfies $g_1(x^b) = 0$, $\hat{g}_2(x^b) = 0$. Both constraints $g_1$ and $\hat{g}_2$ are active at $x^b$. Depending on circumstance, a constraint may or may not be binding, so that the equations defining the solution must reflect this possibility.
+
+In the case where $\alpha = \tilde{\alpha}$, the slope of the objective is equal to the slope of the active constraint. In the case where $\alpha = \hat{\alpha}$, the slope of the objective lies between the slopes of the constraints. The point $x^b$ is located at the solution to the two constraints: $x^b = (0.9285,0.3714)$. The slope of constraint 1 is 0.4 and the slope of constraint 2 is $-\frac{0.9285}{0.3714} = -2.5$. The slope of the objective is $-0.2908$. Thus, since the slope of the objective lies between the slopes of the two constraints, the slope of the objective may be written as a weighted average of the slopes of the constraints.
+\end{original}
+\begin{translation}
+在参数值 $\tilde{\alpha}$ 下，约束为 $g_1(x_1, x_2) \le 0$ 和 $\tilde{g}_2(x_1, x_2) \le 0$，解 $x^a$ 满足 $g_1(x^a) = 0$，$\tilde{g}_2(x^a) < 0$。约束 $g_1$ 在 $x^a$ 处是积极的（紧的），但约束 $\tilde{g}_2$ 在 $x^a$ 处不是积极的。在参数值 $\hat{\alpha}$ 下，约束为 $g_1(x_1, x_2) \le 0$ 和 $\hat{g}_2(x_1, x_2) \le 0$，解 $x^b$ 满足 $g_1(x^b) = 0$，$\hat{g}_2(x^b) = 0$。两个约束 $g_1$ 和 $\hat{g}_2$ 在 $x^b$ 处都是积极的。根据具体情况，约束可能是紧的也可能不是，因此定义解的方程必须反映这种可能性。
+
+在 $\alpha = \tilde{\alpha}$ 的情形中，目标函数的斜率等于积极约束的斜率。在 $\alpha = \hat{\alpha}$ 的情形中，目标函数的斜率介于两个约束的斜率之间。点 $x^b$ 位于两个约束的解处：$x^b = (0.9285,0.3714)$。约束1的斜率为0.4，约束2的斜率为 $-\frac{0.9285}{0.3714} = -2.5$。目标函数的斜率为 $-0.2908$。因此，由于目标函数的斜率介于两个约束的斜率之间，目标函数的斜率可以写成两个约束斜率的加权平均值。
+\end{translation}
+
+\begin{original}
+REMARK 13.1: Rather than express conditions in terms of slopes, it is standard practice to use the normal to a curve to represent the slope. Thus, with $f(x_1, x_2) = x_1x_2$ evaluated at $x^b$,
+
+\[
+\nabla f \overset{\text{def}}{=} (f_{x_1}, f_{x_2}) = (x_2, x_1) = (0.3714, 0.9285)
+\]
+
+is the normal to the curve $f(x_1, x_2)$ at $(x_1, x_2)$. As a vector, this has slope $\frac{x_1}{x_2}$, which is the negative of the reciprocal of the slope of the objective. Similarly, the normal of the linear constraint $g_2$ is $\nabla g_2 = (\frac{\partial g_2}{\partial x_1}, \frac{\partial g_2}{\partial x_2}) = (-0.4,1)$ and the normal of the quadratic constraint $g_1$ is $\nabla g_1 = (\frac{\partial g_1}{\partial x_1}, \frac{\partial g_1}{\partial x_2}) = (2x_1,2x_2) = (1.857,0.7428)$.
+\end{original}
+\begin{translation}
+\textbf{注13.1：} 与其用斜率来表示条件，标准做法是使用曲线的法向量。因此，对于 $f(x_1, x_2) = x_1x_2$ 在 $x^b$ 处的取值：
+
+\[
+\nabla f \overset{\text{def}}{=} (f_{x_1}, f_{x_2}) = (x_2, x_1) = (0.3714, 0.9285)
+\]
+
+是曲线 $f(x_1, x_2)$ 在 $(x_1, x_2)$ 处的法向量。其斜率为 $\frac{x_1}{x_2}$，这是目标函数斜率的负倒数。类似地，线性约束 $g_2$ 的法向量为 $\nabla g_2 = (\frac{\partial g_2}{\partial x_1}, \frac{\partial g_2}{\partial x_2}) = (-0.4,1)$，二次约束 $g_1$ 的法向量为 $\nabla g_1 = (\frac{\partial g_1}{\partial x_1}, \frac{\partial g_1}{\partial x_2}) = (2x_1,2x_2) = (1.857,0.7428)$。
+\end{translation}
+
+\begin{original}
+The normal of the objective may be expressed as a positive linear combination of the constraint normals:
+
+\[
+\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2
+\]
+\[
+\begin{pmatrix} 0.3714 \\ 0.9285 \end{pmatrix} = 0.3448 \begin{pmatrix} 1.8570 \\ 0.7428 \end{pmatrix} + 0.6724 \begin{pmatrix} -0.4 \\ 1 \end{pmatrix}. \tag{13.1}
+\]
+
+The observations in Example 13.1 apply for the general case.
+\end{original}
+\begin{translation}
+目标函数的法向量可以表示为约束法向量的正线性组合：
+
+\[
+\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2
+\]
+\[
+\begin{pmatrix} 0.3714 \\ 0.9285 \end{pmatrix} = 0.3448 \begin{pmatrix} 1.8570 \\ 0.7428 \end{pmatrix} + 0.6724 \begin{pmatrix} -0.4 \\ 1 \end{pmatrix}. \tag{13.1}
+\]
+
+例13.1中的观察适用于一般情形。
+\end{translation}
+
+\subsection{Overview / 概述}
+
+\begin{original}
+Given a function $h(x)$, the normal to the function at $x$ is the gradient $\nabla h = (h_{x_1}, \dots, h_{x_n})$. The key characterizing condition for an optimum is that the gradient of the objective may be written as a weighted sum of the gradients of the constraints: $\nabla f = \sum_{j=1}^k \lambda_j \nabla g^j$, with $\lambda_j \ge 0$ for all $j$, as in Theorem 13.1.
+
+Provided a constraint qualification is satisfied, this condition along with complementary slackness conditions determines a system of equations that may be solved to provide necessary conditions for a local optimum. All results here are derived from these conditions. Sufficiency conditions are discussed in Section 13.2.4: concavity of the objective and convexity of the feasible set imply that a solution to the necessary conditions yields a global maximum for the constrained problem. Finally, the necessary conditions can be specialized to include non-negativity conditions in Section 13.2.5.
+\end{original}
+\begin{translation}
+给定函数 $h(x)$，函数在 $x$ 处的法向量即为梯度 $\nabla h = (h_{x_1}, \dots, h_{x_n})$。最优解的核心刻画条件是：目标函数的梯度可以写成各约束梯度的加权和：$\nabla f = \sum_{j=1}^k \lambda_j \nabla g^j$，其中 $\lambda_j \ge 0$，如定理13.1所述。
+
+只要满足约束资格条件，这一条件连同互补松弛条件就确定了一个方程组，可以求解以提供局部最优解的必要条件。本文中的所有结果都从这些条件推导而来。充分条件在第13.2.4节讨论：目标函数的凹性和可行集的凸性意味着必要条件的一个解就是约束问题的全局最大值。最后，必要条件可以在第13.2.5节中特殊化以包含非负性条件。
+\end{translation}
+
+\section{Optimization / 最优化}
+
+\begin{original}
+Since a constraint of the form $g(x) \le c$ may be written as $g(x) - c \le 0$ and constraints of the form $g(x) \ge c$ may be written as $g(x) - c \ge 0$ or as $-g(x) \le -c$, we can express all such constraints in the form $g(x) \le 0$ (or $g(x) \ge 0$). Equality constraints may be dealt with in the same way since $g(x) = c$ is equivalent to $g(x) \le c$ and $g(x) \ge c$, at the cost of having two constraints instead of one. Non-negativity constraints may be expressed by setting $g(x) = -x$, the condition $g(x) \le 0$ implies $x \ge 0$.
+
+An inequality-constrained maximization problem is:
+\[
+\max \; f(x) \quad \text{subject to} \quad g^j(x) \le 0,\; j = 1, \dots, r. \tag{13.2}
+\]
+The function $f(x)$ is the objective and $g^j$ are the constraints.
+\end{original}
+\begin{translation}
+由于 $g(x) \le c$ 形式的约束可写为 $g(x) - c \le 0$，而 $g(x) \ge c$ 形式的约束可写为 $g(x) - c \ge 0$ 或 $-g(x) \le -c$，我们可以将所有此类约束表达为 $g(x) \le 0$（或 $g(x) \ge 0$）的形式。等式约束也可以用同样方式处理，因为 $g(x) = c$ 等价于 $g(x) \le c$ 且 $g(x) \ge c$，代价是需要两个约束而非一个。非负性约束可以通过设 $g(x) = -x$ 来表达，条件 $g(x) \le 0$ 蕴含 $x \ge 0$。
+
+不等式约束最大化问题为：
+\[
+\max \; f(x) \quad \text{subject to} \quad g^j(x) \le 0,\; j = 1, \dots, r. \tag{13.2}
+\]
+函数 $f(x)$ 是目标函数，$g^j$ 是约束集。
+\end{translation}
+
+\begin{original}
+Definition 13.1: A point $x$ is feasible if it satisfies all constraints: $g^j(x) \le 0$, $\forall j$. A constraint $g^j$ is active at feasible $x$ if $g^j(x) = 0$, and otherwise inactive. Let $\mathcal{A}(x)$ be the set of active constraints at $x$: $j \in \mathcal{A}(x)$ iff $g^j(x) = 0$.
+
+Definition 13.2: A point $x$ is a constrained local maximum of $f$ if there is a neighborhood $N(x)$ such that $f(x) \ge f(x')$ for all $x' \in N(x) \cap \{x \mid g^l(x) \le 0,\; l = 1,\dots, r\}$.
+\end{original}
+\begin{translation}
+\textbf{定义13.1：} 如果点 $x$ 满足所有约束 $g^j(x) \le 0$（$\forall j$），则称其为可行点。如果在可行点 $x$ 处有 $g^j(x) = 0$，则称约束 $g^j$ 是积极的，否则是非积极的。令 $\mathcal{A}(x)$ 为 $x$ 处积极约束的集合：$j \in \mathcal{A}(x)$ 当且仅当 $g^j(x) = 0$。
+
+\textbf{定义13.2：} 如果存在邻域 $N(x)$ 使得对所有的 $x' \in N(x) \cap \{x \mid g^l(x) \le 0,\; l = 1,\dots, r\}$ 有 $f(x) \ge f(x')$，则 $x$ 是 $f$ 的约束局部最大值。
+\end{translation}
+
+\begin{original}
+The following discussion identifies necessary conditions using Farkas' lemma (Remark 13.2), applied to the equation system:
+
+\[
+\begin{pmatrix}
+\frac{\partial g^1(x)}{\partial x_1} & \cdots & \frac{\partial g^r(x)}{\partial x_1} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial g^1(x)}{\partial x_n} & \cdots & \frac{\partial g^r(x)}{\partial x_n}
+\end{pmatrix}
+\begin{pmatrix} \lambda_1 \\ \vdots \\ \lambda_r \end{pmatrix}
+=
+\begin{pmatrix} \frac{\partial f(x)}{\partial x_1} \\ \vdots \\ \frac{\partial f(x)}{\partial x_n} \end{pmatrix} \tag{13.3}
+\]
+
+Each row: $\frac{\partial f(x)}{\partial x_i} = \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i}$. \tag{13.4}
+
+Writing $\nabla g(x)$ for the $n \times r$ matrix and $\lambda = (\lambda_1,\dots,\lambda_r)$:
+\[
+\nabla g(x) \cdot \lambda = \nabla f(x). \tag{13.5}
+\]
+
+Subject to a qualification, if the equation system does not have a non-negative solution, then $x$ is not a local optimum.
+\end{original}
+\begin{translation}
+以下讨论利用Farkas引理（注13.2）来确定必要条件，将其应用于方程组：
+
+\[
+\begin{pmatrix}
+\frac{\partial g^1(x)}{\partial x_1} & \cdots & \frac{\partial g^r(x)}{\partial x_1} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial g^1(x)}{\partial x_n} & \cdots & \frac{\partial g^r(x)}{\partial x_n}
+\end{pmatrix}
+\begin{pmatrix} \lambda_1 \\ \vdots \\ \lambda_r \end{pmatrix}
+=
+\begin{pmatrix} \frac{\partial f(x)}{\partial x_1} \\ \vdots \\ \frac{\partial f(x)}{\partial x_n} \end{pmatrix} \tag{13.3}
+\]
+
+每一行：$\frac{\partial f(x)}{\partial x_i} = \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i}$。\tag{13.4}
+
+将 $n \times r$ 矩阵记为 $\nabla g(x)$，$\lambda = (\lambda_1,\dots,\lambda_r)$：
+\[
+\nabla g(x) \cdot \lambda = \nabla f(x). \tag{13.5}
+\]
+
+在满足资格条件的前提下，如果该方程组没有非负解，则 $x$ 不是局部最优解。
+\end{translation}
+
+\begin{original}
+Theorem 13.1: Given program 13.2, suppose that at $x$ there is some $z$ with $\nabla g^j(x) \cdot z < 0$ for each active constraint $j$. If $x$ is a constrained local maximum then the system must have a non-negative solution $\lambda = (\lambda_1,\dots,\lambda_r)$, $\lambda_j \ge 0$, $j = 1,\dots, r$.
+
+REMARK 13.2 (Farkas' lemma): If $A$ is an $n \times r$ matrix then exactly one holds:
+\begin{enumerate}
+\item $Ax = b$ has a solution $x \ge 0$, or
+\item There exists $y$ with $A'y \ge 0$ and $b'y > 0$.
+\end{enumerate}
+
+REMARK 13.3: The program 13.2 includes the possibility of imposing non-negativity constraints. If $g^k(x) = -x_k$, then $g^k(x) \le 0$ is equivalent to $x_k \ge 0$. In Section 13.2.5, a special case is considered where some constraints are non-negativity conditions. There, the Lagrangian together with complementary slackness conditions define the Kuhn--Tucker conditions.
+
+REMARK 13.4: In Equation 13.3, there are $n$ equations in $n+r$ variables $(x,\lambda)$. Complementary slackness asserts $\lambda_j g^j = 0$ for each $j$, giving an additional $r$ equations. Provided the constraint qualification is satisfied, a necessary condition is that the system of $n+r$ equations in $n+r$ unknowns has a solution with $\lambda_j \ge 0$.
+
+REMARK 13.5: At the solution, $\nabla f$ points in the direction of increase of $f$, and $\nabla g$ points out from the feasible region. For $x$ to be an optimum, $\nabla f$ and $\nabla g$ must point in the same direction, so $\nabla f = \lambda \nabla g$ with $\lambda > 0$.
+\end{original}
+\begin{translation}
+\textbf{定理13.1：} 给定规划13.2，假设在 $x$ 处存在某个 $z$ 使得对每个积极约束 $j$ 有 $\nabla g^j(x) \cdot z < 0$。如果 $x$ 是约束局部最大值，则该系统必须有一个非负解 $\lambda = (\lambda_1,\dots,\lambda_r)$，$\lambda_j \ge 0$，$j = 1,\dots, r$。
+
+\textbf{注13.2（Farkas引理）：} 若 $A$ 为 $n \times r$ 矩阵，则以下条件恰有一个成立：
+\begin{enumerate}
+\item $Ax = b$ 有解 $x \ge 0$，或
+\item 存在 $y$ 使得 $A'y \ge 0$ 且 $b'y > 0$。
+\end{enumerate}
+
+\textbf{注13.3：} 规划13.2包含了施加非负性约束的可能性。若 $g^k(x) = -x_k$，则 $g^k(x) \le 0$ 等价于 $x_k \ge 0$。第13.2.5节考虑了部分约束为非负性条件的特殊情况，其中拉格朗日函数与互补松弛条件共同定义了Kuhn--Tucker条件。
+
+\textbf{注13.4：} 方程13.3中有 $n$ 个方程，$n+r$ 个变量 $(x,\lambda)$。互补松弛条件断言对每个 $j$ 有 $\lambda_j g^j = 0$，提供了额外的 $r$ 个方程。在满足约束资格条件的前提下，$n+r$ 个方程与 $n+r$ 个未知数的系统有解（$\lambda_j \ge 0$）是必要条件。
+
+\textbf{注13.5：} 在解处，$\nabla f$ 指向 $f$ 增加的方向，而 $\nabla g$ 指向可行区域之外。要使 $x$ 成为最优解，$\nabla f$ 和 $\nabla g$ 必须指向同一方向，因此 $\nabla f = \lambda \nabla g$（$\lambda > 0$）。
+\end{translation}
+
+\subsection{The constraint qualification / 约束资格条件}
+
+\begin{original}
+In Theorem 13.1, the constraint qualification requires that there exists some $z$ with $\nabla g^j(x) \cdot z < 0$ for each active constraint $j$. An alternative constraint qualification is given in terms of the linear independence of the gradients of the active constraints. Let $\mathcal{A}(x)\nabla g(x)$ be the matrix obtained by deleting the columns corresponding to inactive constraints. Suppose $\mathcal{A}(x)\nabla g(x)$ has rank equal to the number of active constraints -- the gradients of the active constraints are linearly independent (so the number of active constraints must be no greater than $n$). Then there exists some $z$ with $\nabla g^j(x) \cdot z < 0$ for each active constraint $j$.
+\end{original}
+\begin{translation}
+在定理13.1中，约束资格条件要求存在某个 $z$ 使得对每个积极约束 $j$ 有 $\nabla g^j(x) \cdot z < 0$。另一种约束资格条件以积极约束梯度的线性独立性来表达。令 $\mathcal{A}(x)\nabla g(x)$ 为删除非积极约束对应列后得到的矩阵。假设 $\mathcal{A}(x)\nabla g(x)$ 的秩等于积极约束的个数——积极约束的梯度线性无关（因此积极约束的个数必不大于 $n$）。则存在某个 $z$ 使得对每个积极约束 $j$ 有 $\nabla g^j(x) \cdot z < 0$。
+\end{translation}
+
+\begin{original}
+When the constraint qualification fails, the representation in Equation 13.5 may be impossible to satisfy. Example 13.6 illustrates: two circle constraints $g_1(x) = (x_1 - 3)^2 + (x_2 - 3)^2 \le 8$ and $g_2(x) = (x_1 - 7)^2 + (x_2 - 7)^2 \le 8$ have only one point in common $x = (5,5)$. At this point $\nabla g_1(5,5) = (4,4)$ and $\nabla g_2(5,5) = (-4,-4)$, which are linearly dependent. There is no point $z$ with $\nabla g_i(5,5) \cdot z < 0$ for $i = 1,2$. Unless $\nabla f(5,5) = (\theta,\theta)$ for some $\theta$, it is impossible to write $\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2$.
+\end{original}
+\begin{translation}
+当约束资格条件不满足时，方程13.5的表示可能无法做到。例13.6说明了这一点：两个圆约束 $g_1(x) = (x_1 - 3)^2 + (x_2 - 3)^2 \le 8$ 和 $g_2(x) = (x_1 - 7)^2 + (x_2 - 7)^2 \le 8$ 只有一个公共点 $x = (5,5)$。在该点处 $\nabla g_1(5,5) = (4,4)$，$\nabla g_2(5,5) = (-4,-4)$，两者线性相关。不存在点 $z$ 使得对 $i = 1,2$ 有 $\nabla g_i(5,5) \cdot z < 0$。除非 $\nabla f(5,5) = (\theta,\theta)$，否则不可能写出 $\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2$。
+\end{translation}
+
+\subsection{Complementary slackness / 互补松弛}
+
+\begin{original}
+Consider the modified program obtained by deleting constraints not binding at $x$:
+\[
+\max \; f(x) \quad \text{subject to} \quad g^j(x) \le 0,\; j \in \mathcal{A}(x). \tag{13.7}
+\]
+For this program, $x$ is a constrained local maximum. Applying Theorem 13.1, there exists $\tilde{\lambda}_j \ge 0$, $j \in \mathcal{A}(x)$ with $\nabla f(x) = \sum_{j \in \mathcal{A}(x)} \tilde{\lambda}_j \nabla g^j(x)$. For $j \notin \mathcal{A}(x)$, let $\tilde{\lambda}_j = 0$. The condition $\tilde{\lambda}_j g^j = 0$ for all $j$ is the complementary slackness condition.
+
+Theorem 13.2: Given program 13.2, suppose that at $x$ the constraint qualification is satisfied. If $x$ is a constrained local maximum, then there exists $\lambda_j \ge 0$, $j = 1,\dots, r$, with:
+\[
+\frac{\partial f(x)}{\partial x_i} = \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i}, \quad i = 1,\dots, n, \tag{13.8}
+\]
+and $\lambda_j = 0$ if $g^j(x) < 0$ (equivalently $\lambda_j g^j(x) = 0$, $j = 1,\dots, r$).
+\end{original}
+\begin{translation}
+考虑通过删除在 $x$ 处非紧的约束而得到的修正规划：
+\[
+\max \; f(x) \quad \text{subject to} \quad g^j(x) \le 0,\; j \in \mathcal{A}(x). \tag{13.7}
+\]
+对于该规划，$x$ 是约束局部最大值。应用定理13.1，存在 $\tilde{\lambda}_j \ge 0$（$j \in \mathcal{A}(x)$）使得 $\nabla f(x) = \sum_{j \in \mathcal{A}(x)} \tilde{\lambda}_j \nabla g^j(x)$。对于 $j \notin \mathcal{A}(x)$，令 $\tilde{\lambda}_j = 0$。对所有 $j$ 成立的条件 $\tilde{\lambda}_j g^j = 0$ 即为互补松弛条件。
+
+\textbf{定理13.2：} 给定规划13.2，假设在 $x$ 处约束资格条件成立。若 $x$ 是约束局部最大值，则存在 $\lambda_j \ge 0$（$j = 1,\dots, r$）使得：
+\[
+\frac{\partial f(x)}{\partial x_i} = \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i}, \quad i = 1,\dots, n, \tag{13.8}
+\]
+且若 $g^j(x) < 0$ 则 $\lambda_j = 0$（等价地，$\lambda_j g^j(x) = 0$，$j = 1,\dots, r$）。
+\end{translation}
+
+\subsection{Minimization and maximization / 最小化与最大化}
+
+\begin{original}
+Minimizing $f(x)$ subject to $g^j(x) \ge 0$ is equivalent to maximizing $\hat{f}(x) = -f(x)$ subject to $\hat{g}^j(x) = -g^j(x) \le 0$. Applying Theorem 13.2 gives:
+
+Theorem 13.3: If at $x$ there is some $z$ with $\nabla g^l(x) \cdot z > 0$ for each active constraint $l$, and $x$ is a local minimum, then there exists $\lambda_j \ge 0$ such that $\nabla f(x) = \sum_{j=1}^r \lambda_j \nabla g^j(x)$ and $\lambda_j g^j(x) = 0$ for all $j$.
+\end{original}
+\begin{translation}
+在 $g^j(x) \ge 0$ 约束下最小化 $f(x)$ 等价于在 $\hat{g}^j(x) = -g^j(x) \le 0$ 约束下最大化 $\hat{f}(x) = -f(x)$。应用定理13.2即得：
+
+\textbf{定理13.3：} 若在 $x$ 处存在某个 $z$ 使得对每个积极约束 $l$ 有 $\nabla g^l(x) \cdot z > 0$，且 $x$ 是局部最小值，则存在 $\lambda_j \ge 0$ 使得 $\nabla f(x) = \sum_{j=1}^r \lambda_j \nabla g^j(x)$ 且对所有 $j$ 有 $\lambda_j g^j(x) = 0$。
+\end{translation}
+
+\subsection{Global and local optima / 全局最优与局部最优}
+
+\begin{original}
+Theorem 13.4: Suppose $f$ is concave and the feasible region convex. Then, given the constraint qualification, any $x$ satisfying Equation 13.3 solves the optimization problem 13.2.
+
+PROOF: If $f$ is concave, $\nabla f(x) \cdot (x' - x) \ge f(x') - f(x)$. If there is feasible $x'$ with $f(x') > f(x)$, then $\nabla f(x) \cdot (x' - x) > 0$. Because the feasible set is convex, for every binding constraint $j$, $\nabla g^j(x) \cdot (x' - x) \le 0$. Put $z = x' - x$. Then $0 < \nabla f(x) \cdot z$ and $\nabla g^j(x) \cdot z \le 0$ for each binding $j$. From the necessary condition $\nabla f = \sum \lambda_j \nabla g^j$ with $\lambda_j = 0$ for non-binding constraints: $0 < \nabla f \cdot z = \sum \lambda_j \nabla g^j \cdot z \le 0$, a contradiction. An analogous result holds for minimization with $f$ convex.
+\end{original}
+\begin{translation}
+\textbf{定理13.4：} 假设 $f$ 是凹函数且可行区域为凸集。那么，在满足约束资格条件的前提下，任何满足方程13.3的 $x$ 即为最优化问题13.2的解。
+
+\textbf{证明：} 若 $f$ 是凹函数，$\nabla f(x) \cdot (x' - x) \ge f(x') - f(x)$。若存在可行点 $x'$ 使得 $f(x') > f(x)$，则 $\nabla f(x) \cdot (x' - x) > 0$。因可行集为凸集，对每个紧约束 $j$ 有 $\nabla g^j(x) \cdot (x' - x) \le 0$。令 $z = x' - x$。则 $0 < \nabla f(x) \cdot z$ 且对每个紧约束 $j$ 有 $\nabla g^j(x) \cdot z \le 0$。由必要条件 $\nabla f = \sum \lambda_j \nabla g^j$（非紧约束的 $\lambda_j = 0$）：$0 < \nabla f \cdot z = \sum \lambda_j \nabla g^j \cdot z \le 0$，矛盾。对于 $f$ 为凸函数的最小化问题有类似结果成立。
+\end{translation}
+
+\subsection{Non-negativity constraints / 非负性约束}
+
+\begin{original}
+Consider:
+\[
+\max \; f(x) \quad \text{s.t.} \quad g^j(x) \le 0,\; j = 1,\dots, r;\; x_i \ge 0,\; i = 1,\dots, n. \tag{13.11}
+\]
+With $\mu_i$ denoting the multiplier on constraint $x_i \ge 0$ (i.e., $-x_i \le 0$):
+\[
+\frac{\partial f(x)}{\partial x_i} = \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i} - \mu_i, \quad i = 1,\dots, n. \tag{13.14}
+\]
+Complementary slackness gives $\lambda_j g^j(x) = 0$ and $\mu_i x_i = 0$. With $\mu_i \ge 0$:
+\[
+\frac{\partial f(x)}{\partial x_i} - \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i} \le 0, \quad x_i\left[\frac{\partial f(x)}{\partial x_i} - \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i}\right] = 0, \quad x_i \ge 0. \tag{13.15}
+\]
+
+Theorem 13.5 (Kuhn--Tucker conditions for maximization): Let $L = f(x) - \sum_{j=1}^r \lambda_j g^j(x)$. Provided the constraint qualification is satisfied, a local maximum satisfies:
+\[
+\frac{\partial L}{\partial x_i} \le 0;\; x_i \frac{\partial L}{\partial x_i} = 0;\; x_i \ge 0 \quad (i = 1,\dots,n); \qquad
+\frac{\partial L}{\partial \lambda_j} \ge 0;\; \lambda_j \frac{\partial L}{\partial \lambda_j} = 0;\; \lambda_j \ge 0 \quad (j = 1,\dots,r). \tag{13.18}
+\]
+
+Theorem 13.6 (Kuhn--Tucker conditions for minimization): For $\min f(x)$ s.t. $g^j(x) \ge 0$, $x_i \ge 0$, with $L = f(x) - \sum \lambda_j g^j(x)$, a local minimum satisfies:
+\[
+\frac{\partial L}{\partial x_i} \ge 0;\; x_i \frac{\partial L}{\partial x_i} = 0;\; x_i \ge 0; \qquad
+\frac{\partial L}{\partial \lambda_j} \le 0;\; \lambda_j \frac{\partial L}{\partial \lambda_j} = 0;\; \lambda_j \ge 0. \tag{13.22}
+\]
+\end{original}
+\begin{translation}
+考虑：
+\[
+\max \; f(x) \quad \text{s.t.} \quad g^j(x) \le 0,\; j = 1,\dots, r;\; x_i \ge 0,\; i = 1,\dots, n. \tag{13.11}
+\]
+令 $\mu_i$ 表示约束 $x_i \ge 0$（即 $-x_i \le 0$）的乘子：
+\[
+\frac{\partial f(x)}{\partial x_i} = \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i} - \mu_i, \quad i = 1,\dots, n. \tag{13.14}
+\]
+互补松弛条件给出 $\lambda_j g^j(x) = 0$ 和 $\mu_i x_i = 0$。由 $\mu_i \ge 0$：
+\[
+\frac{\partial f(x)}{\partial x_i} - \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i} \le 0, \quad x_i\left[\frac{\partial f(x)}{\partial x_i} - \sum_{j=1}^r \lambda_j \frac{\partial g^j(x)}{\partial x_i}\right] = 0, \quad x_i \ge 0. \tag{13.15}
+\]
+
+\textbf{定理13.5（最大化的Kuhn--Tucker条件）：} 令 $L = f(x) - \sum_{j=1}^r \lambda_j g^j(x)$。在满足约束资格条件的前提下，局部最大值满足：
+\[
+\frac{\partial L}{\partial x_i} \le 0;\; x_i \frac{\partial L}{\partial x_i} = 0;\; x_i \ge 0 \quad (i = 1,\dots,n); \qquad
+\frac{\partial L}{\partial \lambda_j} \ge 0;\; \lambda_j \frac{\partial L}{\partial \lambda_j} = 0;\; \lambda_j \ge 0 \quad (j = 1,\dots,r). \tag{13.18}
+\]
+
+\textbf{定理13.6（最小化的Kuhn--Tucker条件）：} 对于 $\min f(x)$ s.t. $g^j(x) \ge 0$, $x_i \ge 0$，令 $L = f(x) - \sum \lambda_j g^j(x)$，局部最小值满足：
+\[
+\frac{\partial L}{\partial x_i} \ge 0;\; x_i \frac{\partial L}{\partial x_i} = 0;\; x_i \ge 0; \qquad
+\frac{\partial L}{\partial \lambda_j} \le 0;\; \lambda_j \frac{\partial L}{\partial \lambda_j} = 0;\; \lambda_j \ge 0. \tag{13.22}
+\]
+\end{translation}
+
+\subsection{Necessary conditions and non-convexities / 必要条件与非凸性}
+
+\begin{original}
+The necessary conditions for a local optimum are not sufficient. Example 13.11 revisits Example 13.3: maximize $f(x, y) = \beta \ln x + y$ subject to $g_1(x, y) = y^2 + (x-1)^2 \le 2$ and $g_2(x, y) = xy \le k = 1.12$. The necessary conditions are satisfied at two points: the true optimum and a second point that is not a local maximum. At the non-optimal point, the constraint set is not convex, so Theorem 13.4 does not apply.
+\end{original}
+\begin{translation}
+局部最优解的必要条件并非充分的。例13.11重新审视了例13.3：在约束 $g_1(x, y) = y^2 + (x-1)^2 \le 2$ 和 $g_2(x, y) = xy \le k = 1.12$ 下最大化 $f(x, y) = \beta \ln x + y$。必要条件在两个点处得到满足：真正的最大值点，以及另一个不是局部最大值的点。在非最优解点处，约束集不是凸的，因此定理13.4不适用。
+\end{translation}
+
+\subsection{The Lagrange multiplier / 拉格朗日乘子}
+
+\begin{original}
+Consider a maximization program with objective $f$ and a single constraint $g$. At a point $x$ on the boundary, $\nabla f$ should point out from the feasible region. If $\nabla g$ also points out, at a tangency $\nabla f = \lambda \nabla g$ for some positive $\lambda$. For $\nabla g$ to point out from the feasible set, the feasible set must be defined $\{x \mid g(x) \le 0\}$. Conversely, if minimizing, $\nabla f$ should point into the feasible region at the candidate solution $x$ on the boundary. To write $\nabla f = \lambda \nabla g$ with $\lambda > 0$, $\nabla g$ must point into the feasible region, so we define the feasible set as $\{x \mid g(x) \ge 0\}$.
+\end{original}
+\begin{translation}
+考虑具有目标函数 $f$ 和单个约束 $g$ 的最大化问题。在边界上的点 $x$ 处，$\nabla f$ 应指向可行区域之外。若 $\nabla g$ 也指向外部，则在切点处 $\nabla f = \lambda \nabla g$（$\lambda > 0$）。要使 $\nabla g$ 指向可行集之外，可行集必须定义为 $\{x \mid g(x) \le 0\}$。反过来，若是最小化问题，$\nabla f$ 应指向边界上候选解 $x$ 的可行区域内部。要写出 $\nabla f = \lambda \nabla g$（$\lambda > 0$），$\nabla g$ 必须指向可行区域内部，因此我们将可行集定义为 $\{x \mid g(x) \ge 0\}$。
+\end{translation}
+
+\subsection{Equality and inequality constraints / 等式与不等式约束}
+
+\begin{original}
+Consider minimizing $f(x)$ subject to $h^l(x) = 0$, $l = 1,\dots m$; $g^j(x) \le 0$, $j = 1,\dots, r$.
+
+Theorem 13.7: Suppose $f$, $h^l$, $g^j$ are $C^1$. Let $x$ be a local minimum. Then there exist numbers $\gamma$, $\mu_1,\dots,\mu_m$, $\lambda_1,\dots,\lambda_r$, not all 0, such that:
+\[
+\gamma \nabla f(x) + \sum_{l=1}^m \mu_l \nabla h^l(x) + \sum_{j=1}^r \lambda_j \nabla g^j(x) = 0. \tag{13.27}
+\]
+In addition: $\gamma \ge 0$ and $\lambda_j \ge 0$; for each $j$ with $g^j(x) < 0$, $\lambda_j = 0$; if the gradients of all $h^l$ and active $g^j$ are linearly independent, then $\gamma$ can be chosen equal to 1.
+
+Theorem 13.8: Suppose the conditions of Theorem 13.7 hold, the constraint qualification is satisfied, $f$ is convex and the constraint set convex. Then $x$ minimizes $f$ subject to the constraints.
+\end{original}
+\begin{translation}
+考虑在约束 $h^l(x) = 0$（$l = 1,\dots m$）；$g^j(x) \le 0$（$j = 1,\dots, r$）下最小化 $f(x)$。
+
+\textbf{定理13.7：} 假设 $f$, $h^l$, $g^j$ 均为 $C^1$。令 $x$ 为局部最小值。则存在不全为零的数 $\gamma$, $\mu_1,\dots,\mu_m$, $\lambda_1,\dots,\lambda_r$ 使得：
+\[
+\gamma \nabla f(x) + \sum_{l=1}^m \mu_l \nabla h^l(x) + \sum_{j=1}^r \lambda_j \nabla g^j(x) = 0. \tag{13.27}
+\]
+此外：$\gamma \ge 0$ 且 $\lambda_j \ge 0$；对于满足 $g^j(x) < 0$ 的每个 $j$，$\lambda_j = 0$；若所有 $h^l$ 和积极 $g^j$ 的梯度线性无关，则 $\gamma$ 可以取为 1。
+
+\textbf{定理13.8：} 假设定理13.7的条件成立，约束资格条件满足，$f$ 是凸函数且约束集为凸集。则 $x$ 在约束下最小化 $f$。
+\end{translation}
+
+\section*{Exercises for Chapter 13 / 第13章习题}
+
+\begin{original}
+Exercise 13.1: Let $f(x, y) = y - x^\alpha - \beta x$, $\alpha, \beta > 1$, $g(x, y) = y^2 - 1 - \ln(x + 1)$. Solve $\max f(x, y)$ subject to $g(x, y) \le 0$ and $x, y \ge 0$, using the Kuhn--Tucker conditions.
+
+Exercise 13.2: Let $f(x, y) = x^{\alpha} y$, $g_1(x, y) = ax + by - 2a$ ($a = b > 0$), $g_2(x, y) = y + cx - 1$ ($c = \frac{1}{10}$, $\beta = 2$). Solve $\max f(x, y)$ subject to $g_i(x, y) \le 0$ for $i = 1,2$ and $x, y \ge 0$, using Kuhn--Tucker conditions.
+
+Exercise 13.3: Let $f(x, y) = x^2 y$, $g_1(x, y) = ax + by - 2a$ ($a = b > 0$), $g_2(x, y) = y + cx - 1$ ($c = \frac{1}{10}$, $\beta = 2$). Solve using Kuhn--Tucker conditions.
+
+Exercise 13.4: Let $f(x, y) = 14 - x^2 - y^2 - 2x + 2y$, $g(x, y) = x + y - 4$. Solve $\max f(x, y)$ subject to $g(x, y) \le 0$ and $x, y \ge 0$, using Kuhn--Tucker conditions.
+
+Exercise 13.5: Let $f(x, y) = x y$, $g_1(x, y) = 1 - y + (x - 1)^3$, $g_2(x, y) = 2y - 2 + 4(x - 1)^3$. Consider $\max f(x, y)$ subject to $g_i(x, y) \le 0$, $i = 1,2$. Confirm the solution occurs at $(x, y) = (1,1)$, but at this point there is no non-negative solution $(\lambda_1,\lambda_2)$ to $\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2$. Explain why the Kuhn--Tucker conditions fail.
+\end{original}
+\begin{translation}
+\textbf{习题13.1：} 令 $f(x, y) = y - x^\alpha - \beta x$，$\alpha, \beta > 1$，$g(x, y) = y^2 - 1 - \ln(x + 1)$。在 $g(x, y) \le 0$ 且 $x, y \ge 0$ 下求解 $\max f(x, y)$，使用Kuhn--Tucker条件。
+
+\textbf{习题13.2：} 令 $f(x, y) = x^{\alpha} y$, $g_1(x, y) = ax + by - 2a$ ($a = b > 0$), $g_2(x, y) = y + cx - 1$ ($c = \frac{1}{10}$, $\beta = 2$)。在 $g_i(x, y) \le 0$ ($i = 1,2$) 且 $x, y \ge 0$ 下求解 $\max f(x, y)$，使用Kuhn--Tucker条件。
+
+\textbf{习题13.3：} 令 $f(x, y) = x^2 y$，约束条件同习题13.2。使用Kuhn--Tucker条件求解。
+
+\textbf{习题13.4：} 令 $f(x, y) = 14 - x^2 - y^2 - 2x + 2y$, $g(x, y) = x + y - 4$。在 $g(x, y) \le 0$ 且 $x, y \ge 0$ 下求解 $\max f(x, y)$，使用Kuhn--Tucker条件。
+
+\textbf{习题13.5：} 令 $f(x, y) = x y$, $g_1(x, y) = 1 - y + (x - 1)^3$, $g_2(x, y) = 2y - 2 + 4(x - 1)^3$。考虑在 $g_i(x, y) \le 0$ ($i = 1,2$) 下最大化 $f(x, y)$。验证解出现在 $(x, y) = (1,1)$，但在该点处 $\nabla f = \lambda_1 \nabla g_1 + \lambda_2 \nabla g_2$ 没有非负解 $(\lambda_1,\lambda_2)$。解释为什么Kuhn--Tucker条件失效。
+\end{translation}
+
+\setcounter{chapter}{13}
+
+\chapter{Integration / 积分}
+
+\section{Introduction / 引言}
+
+\begin{original}
+The integral of a function $f$ defines a new function, which may have the interpretation of an area or as the "reverse" of differentiation. For example, the computation of consumer surplus and dead-weight loss involve the calculation of area. Given a demand function $P(Q)$ and market price $p$, the consumer surplus is defined as the area under the demand curve above price and is used as a measure of the welfare generated by the existence of that market. The technique of integration provides a means of determining this area. In a second type of problem, it is useful to identify a function as the derivative of another function. For example, the rate of return on an asset -- the change in the value of the asset per unit of time -- may be viewed as the derivative of the value of the asset. Thus, knowing $v'(t)$, it is necessary to determine $v(t)$ from this derivative. These problems are solved by integration.
+
+In what follows, the integral is formally defined. Section 14.4 considers welfare measures of producer and consumer surplus. Section 14.5 considers cost and profit for a firm. Taxation and dead-weight loss are examined in Section 14.6. Sections 14.7, 14.8, 14.9 and 14.10 discuss present-value calculations, Leibnitz's rule, measures of inequality and Ramsey pricing. Section 14.11 explores various measures of welfare.
+\end{original}
+\begin{translation}
+函数 $f$ 的积分定义了一个新函数，它可以理解为面积，也可以理解为微分的"逆运算"。例如，消费者剩余和无谓损失的计算涉及面积计算。给定需求函数 $P(Q)$ 和市场价格 $p$，消费者剩余定义为需求曲线之下、价格之上的面积，用于衡量市场存在所产生的福利。积分技术提供了确定该面积的方法。在第二类问题中，将某个函数识别为另一个函数的导数是很有用的。例如，资产的回报率——资产价值每单位时间的变化——可以视为资产价值的导数。因此，已知 $v'(t)$，需要由此导数确定 $v(t)$。这些问题都可以通过积分解决。
+
+接下来，将正式定义函数的积分。第14.4节考虑生产者和消费者剩余的福利度量。第14.5节考虑企业的成本与利润计算。税收与无谓损失在第14.6节讨论。第14.7、14.8、14.9和14.10节分别讨论现值计算、莱布尼茨法则、不平等度量与拉姆齐定价。第14.11节深入探讨各种福利度量。
+\end{translation}
+
+\section{The integral / 积分}
+
+\begin{original}
+Let $f$ be a continuous function defined on $[a, b]$. The integral is denoted $\int_a^b f(x)dx$. Partition $[a, b]$ into subintervals $[x_1, x_2], [x_2, x_3], \dots, [x_{k-1}, x_k]$ with $a = x_1$ and $b = x_k$. The norm or mesh of the partition is $|P| = \max_i(x_{i+1} - x_i)$. For each $[x_i, x_{i+1}]$, let $s_i \in [x_i, x_{i+1}]$ and consider:
+\[
+R(P, s) = \sum_{i=1}^{k-1} f(s_i)(x_{i+1} - x_i). \tag{14.1}
+\]
+
+Definition 14.1: $f$ is (Riemann) integrable on $[a, b]$ if there is a number $I$ such that for every $\epsilon > 0$ there is a $\delta > 0$ such that if $|P| < \delta$, then $|R(P, s) - I| < \epsilon$ for any $s = (s_1, \dots, s_k)$. In this case, $I = \int_a^b f(x)dx$.
+
+From a different perspective, integration is the "reverse" of differentiation. With $a$ fixed, define $F(b) = \int_a^b f(x)dx$. Then $F(b + \epsilon) - F(b) = \int_b^{b+\epsilon} f(x)dx$. If $\epsilon$ is small, with $f$ continuous, $f$ is approximately constant on $[b, b+\epsilon]$ and equal to $f(b)$. Then $F(b+\epsilon)-F(b) \approx f(b)\epsilon$. As $\epsilon \to 0$, $F'(b) = f(b)$. From this perspective, integration recovers a function $F$ whose derivative is $f$.
+\end{original}
+\begin{translation}
+令 $f$ 为定义在 $[a, b]$ 上的连续函数。积分记为 $\int_a^b f(x)dx$。将 $[a, b]$ 划分为子区间 $[x_1, x_2], [x_2, x_3], \dots, [x_{k-1}, x_k]$，其中 $a = x_1$，$b = x_k$。划分的范数或网格为 $|P| = \max_i(x_{i+1} - x_i)$。对每个 $[x_i, x_{i+1}]$，令 $s_i \in [x_i, x_{i+1}]$，考虑：
+\[
+R(P, s) = \sum_{i=1}^{k-1} f(s_i)(x_{i+1} - x_i). \tag{14.1}
+\]
+
+\textbf{定义14.1：} 如果存在数 $I$，使得对任意 $\epsilon > 0$，存在 $\delta > 0$，当 $|P| < \delta$ 时，对任何 $s = (s_1, \dots, s_k)$ 均有 $|R(P, s) - I| < \epsilon$，则称 $f$ 在 $[a, b]$ 上（黎曼）可积。此时 $I = \int_a^b f(x)dx$。
+
+从另一个角度看，积分是微分的"逆运算"。固定 $a$，定义 $F(b) = \int_a^b f(x)dx$。则 $F(b + \epsilon) - F(b) = \int_b^{b+\epsilon} f(x)dx$。若 $\epsilon$ 很小，由 $f$ 的连续性，$f$ 在 $[b, b+\epsilon]$ 上近似为常数且等于 $f(b)$。则 $F(b+\epsilon)-F(b) \approx f(b)\epsilon$。当 $\epsilon \to 0$ 时，$F'(b) = f(b)$。从这个角度看，积分恢复了一个导数为 $f$ 的函数 $F$。
+\end{translation}
+
+\section{Common integrals and rules of integration / 常见积分与积分法则}
+
+\begin{original}
+It is common to write $\int f(x)dx$ to denote a function $F(x)$ with $F'(x) = f(x)$. $F$ is not unique since adding a constant leaves the derivative unchanged. The definite integral satisfies $F(b) - F(a) = \int_a^b f(x)dx$.
+
+Standard indefinite integrals:
+\[
+\begin{array}{ll}
+\int x^n dx = \frac{1}{n+1}x^{n+1} & \int \frac{1}{x} dx = \ln x,\; x > 0 \\[4pt]
+\int e^{ax} dx = \frac{1}{a} e^{ax} & \int \sin(ax) dx = -\frac{1}{a}\cos(ax) \\[4pt]
+\int \cos(ax) dx = \frac{1}{a}\sin(ax) &
+\end{array}
+\]
+\end{original}
+\begin{translation}
+通常用 $\int f(x)dx$ 表示满足 $F'(x) = f(x)$ 的函数 $F(x)$。$F$ 不唯一，因为加上常数后导数不变。定积分满足 $F(b) - F(a) = \int_a^b f(x)dx$。
+
+标准不定积分：
+\[
+\begin{array}{ll}
+\int x^n dx = \frac{1}{n+1}x^{n+1} & \int \frac{1}{x} dx = \ln x,\; x > 0 \\[4pt]
+\int e^{ax} dx = \frac{1}{a} e^{ax} & \int \sin(ax) dx = -\frac{1}{a}\cos(ax) \\[4pt]
+\int \cos(ax) dx = \frac{1}{a}\sin(ax) &
+\end{array}
+\]
+\end{translation}
+
+\section{Measuring welfare: surplus / 度量福利：剩余}
+
+\subsection{Consumer surplus / 消费者剩余}
+
+\begin{original}
+Suppose six consumers each require one unit of the good with willingness to pay: $wp_1 = 8$, $wp_2 = 6$, $wp_3 = 5$, $wp_4 = 4$, $wp_5 = 3$, $wp_6 = 1$. Each pays $p = 3$. Total consumer surplus is:
+\[
+CS = (8-3) + (6-3) + (5-3) + (4-3) + (3-3) = 11.
+\]
+If $D(p)$ is demand and $p(q)$ inverse demand:
+\[
+CS = \int_3^8 D(p)dp = \int_0^4 [p(q) - 3]dq.
+\]
+\end{original}
+\begin{translation}
+假设有六个消费者，每人需要一单位商品，支付意愿分别为：$wp_1 = 8$, $wp_2 = 6$, $wp_3 = 5$, $wp_4 = 4$, $wp_5 = 3$, $wp_6 = 1$。每人支付 $p = 3$。总消费者剩余为：
+\[
+CS = (8-3) + (6-3) + (5-3) + (4-3) + (3-3) = 11.
+\]
+若 $D(p)$ 为需求函数，$p(q)$ 为反需求函数：
+\[
+CS = \int_3^8 D(p)dp = \int_0^4 [p(q) - 3]dq.
+\]
+\end{translation}
+
+\subsection{Producer surplus / 生产者剩余}
+
+\begin{original}
+Firm supply is given by marginal cost. Let $c_i$ denote the extra cost of the $i$th unit. Producer surplus is the sum of price less cost for each additional unit. With $S(p)$ the supply function, total surplus is:
+\[
+\int_{\frac{1}{2}}^8 [D(p) - S(p)]dp.
+\]
+In inverse form, $p_d(q)$ and $p_s(q)$:
+\[
+\text{Total surplus} = \int_0^{\bar{q}} [p_d(q) - p_s(q)]dq,
+\]
+where $\bar{q}$ satisfies $p_d(\bar{q}) = p_s(\bar{q})$.
+\end{original}
+\begin{translation}
+企业供给由边际成本给出。令 $c_i$ 表示第 $i$ 单位的额外成本。生产者剩余是每单位价格减去成本之和。以 $S(p)$ 表示供给函数，总剩余为：
+\[
+\int_{\frac{1}{2}}^8 [D(p) - S(p)]dp.
+\]
+以反函数形式 $p_d(q)$ 和 $p_s(q)$ 表示：
+\[
+\text{总剩余} = \int_0^{\bar{q}} [p_d(q) - p_s(q)]dq,
+\]
+其中 $\bar{q}$ 满足 $p_d(\bar{q}) = p_s(\bar{q})$。
+\end{translation}
+
+\subsection{Consumer surplus and welfare / 消费者剩余与福利}
+
+\begin{original}
+Suppose utility is $u(x, y) = x^{\frac{1}{2}} + y - px$. Maximizing by choice of $x$ gives $\frac{1}{2}x^{-\frac{1}{2}} - p = 0$, or $x(p) = \frac{1}{4p^2}$, and inverse demand $p(x) = \frac{1}{2\sqrt{x}}$. Without good $x$, welfare is $u_0 = y$. With $x$ available at price $p$, welfare is $u = y + \frac{1}{4p}$. Thus $u - u_0 = \frac{1}{4p}$. Consumer surplus is:
+\[
+CS = \int_p^{\infty} x(t)dt = \frac{1}{4}\int_p^{\infty} t^{-2}dt = \frac{1}{4p}.
+\]
+Thus $u - u_0 = CS$. With quasilinear utility, there is an exact connection between welfare measured by utility variation and consumer surplus.
+\end{original}
+\begin{translation}
+假设效用函数为 $u(x, y) = x^{\frac{1}{2}} + y - px$。通过选择 $x$ 最大化效用给出 $\frac{1}{2}x^{-\frac{1}{2}} - p = 0$，即 $x(p) = \frac{1}{4p^2}$，反需求函数为 $p(x) = \frac{1}{2\sqrt{x}}$。没有商品 $x$ 时，福利为 $u_0 = y$。当 $x$ 以价格 $p$ 可获得时，福利为 $u = y + \frac{1}{4p}$。因此 $u - u_0 = \frac{1}{4p}$。消费者剩余为：
+\[
+CS = \int_p^{\infty} x(t)dt = \frac{1}{4}\int_p^{\infty} t^{-2}dt = \frac{1}{4p}.
+\]
+因此 $u - u_0 = CS$。在拟线性效用下，效用变化度量的福利与消费者剩余之间存在精确联系。
+\end{translation}
+
+\section{Cost, supply and profit / 成本、供给与利润}
+
+\begin{original}
+For a price-taking firm, profit at price $p$ is $\pi(q) = pq - c(q)$, where $c(q)$ is total cost. Fixed cost $F = c(0)$. Variable cost $c_v(q) = c(q) - c(0)$. Maximizing profit gives $p = c'(q) = mc(q)$ -- price equals marginal cost. The area under the marginal cost curve gives variable cost:
+\[
+\int_0^q c'(q)dq = c(q) - c(0) = c_v(q).
+\]
+Producer surplus equals profit plus fixed cost: $\pi(q) + F = pq - c_v(q)$. Average cost $AC(q) = \frac{c(q)}{q} = \frac{c_v(q)}{q} + \frac{F}{q}$. Average cost is minimized where $MC = AC$.
+\end{original}
+\begin{translation}
+对于价格接受企业，在价格 $p$ 下的利润为 $\pi(q) = pq - c(q)$，其中 $c(q)$ 为总成本。固定成本 $F = c(0)$。可变成本 $c_v(q) = c(q) - c(0)$。最大化利润给出 $p = c'(q) = mc(q)$——价格等于边际成本。边际成本曲线下的面积给出可变成本：
+\[
+\int_0^q c'(q)dq = c(q) - c(0) = c_v(q).
+\]
+生产者剩余等于利润加固定成本：$\pi(q) + F = pq - c_v(q)$。平均成本 $AC(q) = \frac{c(q)}{q} = \frac{c_v(q)}{q} + \frac{F}{q}$。平均成本在 $MC = AC$ 处最小化。
+\end{translation}
+
+\section{Taxation and consumer surplus / 税收与消费者剩余}
+
+\begin{original}
+Taxation imposes a burden and changes consumer behavior, leading to dead-weight loss. With demand $P(Q)$ and ad-valorem tax at rate $t$, $P_t = P_0(1+t)$. Dead-weight loss is:
+\[
+D(t) = \int_{Q_t}^{Q_0} P(Q)dQ - P_0(Q_0 - Q_t). \tag{14.2}
+\]
+
+EXAMPLE 14.1: Let $P(Q) = \frac{1}{Q}$ with exogenous $P_0$. Then $Q_0 = \frac{1}{P_0}$, $Q_t = \frac{1}{P_0(1+t)}$. Dead-weight loss: $D(t) = \ln(1+t) - \frac{t}{1+t}$. We have $D'(t) = \frac{t}{(1+t)^2} > 0$ and $D''(t) = \frac{1-t}{(1+t)^3}$. Dead-weight loss is increasing at an increasing rate.
+\end{original}
+\begin{translation}
+税收施加负担并改变消费者行为，导致无谓损失。对于需求函数 $P(Q)$ 和税率为 $t$ 的从价税，$P_t = P_0(1+t)$。无谓损失为：
+\[
+D(t) = \int_{Q_t}^{Q_0} P(Q)dQ - P_0(Q_0 - Q_t). \tag{14.2}
+\]
+
+\textbf{例14.1：} 令 $P(Q) = \frac{1}{Q}$，$P_0$ 为外生给定。则 $Q_0 = \frac{1}{P_0}$，$Q_t = \frac{1}{P_0(1+t)}$。无谓损失：$D(t) = \ln(1+t) - \frac{t}{1+t}$。我们有 $D'(t) = \frac{t}{(1+t)^2} > 0$ 且 $D''(t) = \frac{1-t}{(1+t)^3}$。无谓损失以递增速率增加。
+\end{translation}
+
+\section{Present value / 现值}
+
+\begin{original}
+A firm has revenue flow $R(t)$ and cost $c(T)$ with discount rate $r$. Present value (profit) from operating to period $T$ is:
+\[
+\Pi(T) = \int_0^T R(t)e^{-rt}dt - c(T).
+\]
+For how long should the firm operate? With $R(t) = kt$ and $c(T) = ce^{rT}$:
+\[
+\Pi(T) = k\int_0^T te^{-rt}dt - ce^{rT}.
+\]
+Using integration by parts, $\int_0^T te^{-rt}dt = \frac{1}{r^2} - \frac{1}{r^2}e^{-rT} - \frac{1}{r}Te^{-rT}$. The first-order condition gives $kTe^{-rT} - cre^{rT} = 0$.
+\end{original}
+\begin{translation}
+企业具有收入流 $R(t)$ 和成本 $c(T)$，贴现率为 $r$。运营到时期 $T$ 的现值（利润）为：
+\[
+\Pi(T) = \int_0^T R(t)e^{-rt}dt - c(T).
+\]
+企业应运营多长时间？对于 $R(t) = kt$ 和 $c(T) = ce^{rT}$：
+\[
+\Pi(T) = k\int_0^T te^{-rt}dt - ce^{rT}.
+\]
+使用分部积分法，$\int_0^T te^{-rt}dt = \frac{1}{r^2} - \frac{1}{r^2}e^{-rT} - \frac{1}{r}Te^{-rT}$。一阶条件给出 $kTe^{-rT} - cre^{rT} = 0$。
+\end{translation}
+
+\section{Leibnitz's rule / 莱布尼茨法则}
+
+\begin{original}
+Let $f(x, k)$ be continuous and $g(k) = \int_{a(k)}^{b(k)} f(x, k)dx$. Leibnitz's rule:
+\[
+\frac{dg}{dk} = \int_{a(k)}^{b(k)} \frac{\partial f}{\partial k} dx + f(b(k), k)\frac{db(k)}{dk} - f(a(k), k)\frac{da(k)}{dk}.
+\]
+Applied to the present-value calculation with $a(T) = 0$, $b(T) = T$:
+\[
+\frac{d}{dT}\int_0^T R(t)e^{-rt}dt = \int_0^T \frac{\partial}{\partial T}(R(t)e^{-rt})dt + R(T)e^{-rT}\frac{dT}{dT} - 0 = R(T)e^{-rT}.
+\]
+\end{original}
+\begin{translation}
+令 $f(x, k)$ 连续，$g(k) = \int_{a(k)}^{b(k)} f(x, k)dx$。莱布尼茨法则：
+\[
+\frac{dg}{dk} = \int_{a(k)}^{b(k)} \frac{\partial f}{\partial k} dx + f(b(k), k)\frac{db(k)}{dk} - f(a(k), k)\frac{da(k)}{dk}.
+\]
+应用于现值计算，$a(T) = 0$，$b(T) = T$：
+\[
+\frac{d}{dT}\int_0^T R(t)e^{-rt}dt = \int_0^T \frac{\partial}{\partial T}(R(t)e^{-rt})dt + R(T)e^{-rT}\frac{dT}{dT} - 0 = R(T)e^{-rT}.
+\]
+\end{translation}
+
+\section{Inequality measures / 不平等度量}
+
+\begin{original}
+The Lorenz curve identifies the share of national income belonging to different percentiles of the population, ordered by relative income. Let $F$ be a distribution function of income with density $f(y) > 0$. Given $p = F(y)$, $y(p)$ is the income level such that $100p\%$ have income $\le y(p)$. The Lorenz curve:
+\[
+L(p) = \frac{\int_0^{y(p)} x f(x)dx}{\int_0^{\infty} x f(x)dx} = p\frac{\bar{\mu}_p}{\bar{\mu}},
+\]
+where $\bar{\mu}_p$ is the mean income of the poorest fraction $p$ and $\bar{\mu}$ the population mean.
+
+The Gini coefficient:
+\[
+G = \frac{\frac{1}{2} - \int_0^1 L(p)dp}{\frac{1}{2}} = 1 - 2\int_0^1 L(p)dp = \frac{A}{A+B}.
+\]
+$L(p)$ is convex with $L'(p) = \frac{y(p)}{\bar{\mu}}$ and $L''(p) = \frac{1}{\bar{\mu} f(y(p))} > 0$.
+\end{original}
+\begin{translation}
+洛伦兹曲线表示按相对收入排序后，不同人口百分位所拥有的国民收入份额。令 $F$ 为收入分布函数，密度为 $f(y) > 0$。给定 $p = F(y)$，则 $y(p)$ 是使得 $100p\%$ 人口收入 $\le y(p)$ 的收入水平。洛伦兹曲线：
+\[
+L(p) = \frac{\int_0^{y(p)} x f(x)dx}{\int_0^{\infty} x f(x)dx} = p\frac{\bar{\mu}_p}{\bar{\mu}},
+\]
+其中 $\bar{\mu}_p$ 是最穷的 $p$ 比例人口的平均收入，$\bar{\mu}$ 为总体平均收入。
+
+基尼系数：
+\[
+G = \frac{\frac{1}{2} - \int_0^1 L(p)dp}{\frac{1}{2}} = 1 - 2\int_0^1 L(p)dp = \frac{A}{A+B}.
+\]
+$L(p)$ 是凸的，$L'(p) = \frac{y(p)}{\bar{\mu}}$，$L''(p) = \frac{1}{\bar{\mu} f(y(p))} > 0$。
+\end{translation}
+
+\section{Ramsey pricing / 拉姆齐定价}
+
+\begin{original}
+Efficient pricing sets price equal to marginal cost, but with fixed costs this is not viable. A firm supplies two markets with inverse demands $p_x$ and $p_y$, variable cost $c(x, y)$, and fixed cost $F$. Surplus:
+\[
+S(x, y) = \int_0^x p_x(\tilde{x})d\tilde{x} + \int_0^y p_y(\tilde{y})d\tilde{y} - c(x, y).
+\]
+Maximizing surplus subject to revenue covering cost gives the Ramsey pricing rule: the markup of price over marginal cost in each market is proportional to the reciprocal of the elasticity in that market:
+\[
+\frac{p_x - c_x}{p_x} = \frac{1}{k \epsilon_x}, \qquad \frac{p_y - c_y}{p_y} = \frac{1}{k \epsilon_y}.
+\]
+\end{original}
+\begin{translation}
+有效定价要求价格等于边际成本，但在存在固定成本时这不可行。一家企业供应两个市场，反需求函数为 $p_x$ 和 $p_y$，可变成本为 $c(x, y)$，固定成本为 $F$。剩余为：
+\[
+S(x, y) = \int_0^x p_x(\tilde{x})d\tilde{x} + \int_0^y p_y(\tilde{y})d\tilde{y} - c(x, y).
+\]
+在收入覆盖成本的约束下最大化剩余，得到拉姆齐定价规则：每个市场中价格超出边际成本的加成与该市场需求弹性的倒数成比例：
+\[
+\frac{p_x - c_x}{p_x} = \frac{1}{k \epsilon_x}, \qquad \frac{p_y - c_y}{p_y} = \frac{1}{k \epsilon_y}.
+\]
+\end{translation}
+
+\section{Welfare measures / 福利度量}
+
+\subsection{Consumer surplus / 消费者剩余}
+
+\begin{original}
+Maximizing $u(x_1,\dots, x_n)$ subject to $\sum p_k x_k = m$ yields Marshallian demand $x_i(p_i, p_{-i}, m)$. When $p_i$ increases to $p_i'$, consumer surplus change is:
+\[
+\Delta CS = \int_{p_i}^{p_i'} x_i(\tilde{p}_i, p_j, m) d\tilde{p}_i. \tag{14.8}
+\]
+
+EXAMPLE 14.6: With $u(x_i, x_j) = a\ln x_i + b\ln x_j$, demand is $x_i = \frac{a}{a+b}\frac{m}{p_i}$. For a price rise from $p_i$ to $p_i'$:
+\[
+\Delta CS = \frac{a}{a+b}m[\ln(p_i') - \ln(p_i)].
+\]
+\end{original}
+\begin{translation}
+在 $\sum p_k x_k = m$ 约束下最大化 $u(x_1,\dots, x_n)$ 给出马歇尔需求 $x_i(p_i, p_{-i}, m)$。当 $p_i$ 增加到 $p_i'$ 时，消费者剩余变化为：
+\[
+\Delta CS = \int_{p_i}^{p_i'} x_i(\tilde{p}_i, p_j, m) d\tilde{p}_i. \tag{14.8}
+\]
+
+\textbf{例14.6：} 对于 $u(x_i, x_j) = a\ln x_i + b\ln x_j$，需求为 $x_i = \frac{a}{a+b}\frac{m}{p_i}$。价格从 $p_i$ 上升到 $p_i'$：
+\[
+\Delta CS = \frac{a}{a+b}m[\ln(p_i') - \ln(p_i)].
+\]
+\end{translation}
+
+\subsection{Compensating variation / 补偿变化}
+
+\begin{original}
+When $p_i$ increases to $p_i'$, compensating variation (CV) is the additional income required to maintain the original utility level $u_0$. The expenditure function $e(p_i, p_{-i}, u_0)$ gives the minimum expenditure to achieve utility $u_0$ at prices $(p_i, p_{-i})$. Then:
+\[
+CV = e(p_i', p_{-i}, u_0) - e(p_i, p_{-i}, u_0) = \int_{p_i}^{p_i'} x_i^h(\tilde{p}_i, p_{-i}, u_0) d\tilde{p}_i. \tag{14.14}
+\]
+The derivative of the expenditure function with respect to price gives Hicksian demand:
+\[
+\frac{\partial e(p_i, p_j, u_0)}{\partial p_i} = x_i^h(p_i, p_j, u_0). \tag{14.11}
+\]
+\end{original}
+\begin{translation}
+当 $p_i$ 增加到 $p_i'$ 时，补偿变化（CV）是维持原有效用水平 $u_0$ 所需的额外收入。支出函数 $e(p_i, p_{-i}, u_0)$ 给出在价格 $(p_i, p_{-i})$ 下达到效用 $u_0$ 的最小支出。则：
+\[
+CV = e(p_i', p_{-i}, u_0) - e(p_i, p_{-i}, u_0) = \int_{p_i}^{p_i'} x_i^h(\tilde{p}_i, p_{-i}, u_0) d\tilde{p}_i. \tag{14.14}
+\]
+支出函数对价格的导数给出希克斯需求：
+\[
+\frac{\partial e(p_i, p_j, u_0)}{\partial p_i} = x_i^h(p_i, p_j, u_0). \tag{14.11}
+\]
+\end{translation}
+
+\subsection{Equivalent variation / 等价变化}
+
+\begin{original}
+Equivalent variation (EV) asks what income reduction would have the same impact on utility as the price increase. With original utility $u_0$ and new utility $u_1$ after the price increase:
+\[
+EV = e(p_i', p_{-i}, u_1) - e(p_i, p_{-i}, u_1) = \int_{p_i}^{p_i'} x_i^h(\tilde{p}_i, p_{-i}, u_1) d\tilde{p}_i. \tag{14.20}
+\]
+\end{original}
+\begin{translation}
+等价变化（EV）考察什么样的收入减少会对效用产生与价格上涨相同的影响。设原有效用为 $u_0$，价格上涨后的新效用为 $u_1$：
+\[
+EV = e(p_i', p_{-i}, u_1) - e(p_i, p_{-i}, u_1) = \int_{p_i}^{p_i'} x_i^h(\tilde{p}_i, p_{-i}, u_1) d\tilde{p}_i. \tag{14.20}
+\]
+\end{translation}
+
+\subsection{Comparison of welfare measures / 福利度量的比较}
+
+\begin{original}
+The Slutsky equation connects Hicksian and Marshallian demand:
+\[
+\frac{\partial x_i^h}{\partial p_i} = \frac{\partial x_i}{\partial p_i} + \frac{\partial x_i}{\partial m} x_i^h. \tag{14.23}
+\]
+For a normal good ($\frac{\partial x_i}{\partial m} > 0$), $\frac{\partial x_i^h}{\partial p_i} < 0$:
+\[
+\frac{\partial x_i}{\partial p_i} < \frac{\partial x_i^h}{\partial p_i} < 0. \tag{14.25}
+\]
+Thus for a price increase: $EV < CS < CV$. In the quasilinear case with no income effects, all three measures coincide.
+\end{original}
+\begin{translation}
+斯卢茨基方程将希克斯需求与马歇尔需求联系起来：
+\[
+\frac{\partial x_i^h}{\partial p_i} = \frac{\partial x_i}{\partial p_i} + \frac{\partial x_i}{\partial m} x_i^h. \tag{14.23}
+\]
+对于正常品（$\frac{\partial x_i}{\partial m} > 0$），$\frac{\partial x_i^h}{\partial p_i} < 0$：
+\[
+\frac{\partial x_i}{\partial p_i} < \frac{\partial x_i^h}{\partial p_i} < 0. \tag{14.25}
+\]
+因此对于价格上涨：$EV < CS < CV$。在拟线性情形（无收入效应）下，三种度量一致。
+\end{translation}
+
+\section*{Exercises for Chapter 14 / 第14章习题}
+
+\begin{original}
+Exercise 14.1: With demand $Q = \left(\frac{p}{\alpha}\right)^{1/(\beta-1)}$, $0 < \beta < 1$, and constant marginal cost $c$, calculate consumer surplus under perfect competition.
+
+Exercise 14.2: With demand $Q = \left(\frac{p}{\alpha}\right)^{\frac{1}{\beta-1}}$, $0 < \beta < 1$, calculate consumer surplus with a per-unit tax at rate $t$ (competitive markets, price equals marginal cost $c$).
+
+Exercise 14.3: Compare consumer surplus in Exercises 14.1 and 14.2.
+
+Exercise 14.4: Demand is $q = a + bp$, $b < 0$. If the supplier can perfectly price discriminate, find total revenue $R^D(q)$.
+
+Exercise 14.5: Given $P_d(Q)$ and $P_s(Q)$, with equilibrium $Q_0$ satisfying $P_d(Q_0) = P_s(Q_0)$. A value-added tax gives $Q_t$ defined by $P_d(Q_t) = (1+t)P_s(Q_t)$. With $P_d(Q) = \frac{a}{Q}$ and $P_s(Q) = c + dQ$, $a = \frac{2c^2}{d}$, solve for $Q_0$, $Q_t$ and dead-weight loss.
+
+Exercise 14.6: Repeat Exercise 14.5 with $P_d(Q) = a - bQ^2$ and $P_s(Q) = c + dQ^2$, $a > c$.
+
+Exercise 14.7: With $u(x, y) = \alpha \ln(x) + \beta \ln(y)$, to achieve $u_0$ minimize $px + qy$ s.t. $u_0 = u(x, y)$. If the price of $x$ increases from $p$ to $p' > p$, how much more money is needed to maintain utility $u_0$?
+
+Exercise 14.8: With $u(x, y) = \alpha \ln x + \beta \ln y$, prices $p$, $q$, income $I$, achieving utility level $u$. If $x$'s price rises from $p$ to $p'$, how much more income is needed to be as well off as before?
+\end{original}
+\begin{translation}
+\textbf{习题14.1：} 需求为 $Q = \left(\frac{p}{\alpha}\right)^{1/(\beta-1)}$，$0 < \beta < 1$，边际成本为常数 $c$。计算完全竞争下的消费者剩余。
+
+\textbf{习题14.2：} 需求为 $Q = \left(\frac{p}{\alpha}\right)^{\frac{1}{\beta-1}}$，$0 < \beta < 1$。计算征收每单位税率 $t$ 时的消费者剩余（竞争性市场，价格等于边际成本 $c$）。
+
+\textbf{习题14.3：} 比较习题14.1和14.2中的消费者剩余。
+
+\textbf{习题14.4：} 需求为 $q = a + bp$，$b < 0$。若供应商能够完全价格歧视，求总收入 $R^D(q)$。
+
+\textbf{习题14.5：} 给定 $P_d(Q)$ 和 $P_s(Q)$，均衡量 $Q_0$ 满足 $P_d(Q_0) = P_s(Q_0)$。增值税导致新数量 $Q_t$ 由 $P_d(Q_t) = (1+t)P_s(Q_t)$ 定义。对于 $P_d(Q) = \frac{a}{Q}$ 和 $P_s(Q) = c + dQ$，$a = \frac{2c^2}{d}$，求解 $Q_0$、$Q_t$ 和无谓损失。
+
+\textbf{习题14.6：} 用 $P_d(Q) = a - bQ^2$ 和 $P_s(Q) = c + dQ^2$（$a > c$）重复习题14.5。
+
+\textbf{习题14.7：} 效用为 $u(x, y) = \alpha \ln(x) + \beta \ln(y)$。为达到 $u_0$，在 $u_0 = u(x, y)$ 约束下最小化 $px + qy$。若 $x$ 的价格从 $p$ 上升到 $p' > p$，需要多少额外货币来维持效用 $u_0$？
+
+\textbf{习题14.8：} 效用为 $u(x, y) = \alpha \ln x + \beta \ln y$，价格为 $p$, $q$，收入为 $I$，当前达到效用水平 $u$。若商品 $x$ 的价格从 $p$ 上升到 $p'$，需要多少额外收入才能维持与之前相同的福利水平（即达到效用水平 $u$）？
+\end{translation}
+
+\setcounter{chapter}{14}
+
+\chapter{Eigenvalues and Eigenvectors / 特征值与特征向量}
+
+\section{Introduction / 引言}
+
+\begin{original}
+Eigenvalues and eigenvectors are scalars and vectors associated with any square matrix and identify key properties of the matrix. They have widespread use in economics. Consider a dynamic system $y_{t+1} = A y_t$, where the evolution is governed by powers of $A$: $y_{t+j} = A^j y_t$. This task is greatly simplified by using eigenvectors and eigenvalues. Markov processes evolve according to $x_{t+1} = x_t T$, and a steady state $x^* = x^* T$ is associated with a specific eigenvalue of $T$. In least squares estimation, the distribution of estimated errors involves a matrix $M$ whose eigenvalues play a useful role. In certain optimization problems, the optimum location relates to a symmetric matrix having $x'Ax > 0$ for all $x$. The study of each of these problems is facilitated through eigenvalues and eigenvectors.
+
+Section 15.2 defines eigenvalues and eigenvectors. Section 15.3 describes dynamic models that illustrate their use. The Perron--Frobenius theorem is summarized in Section 15.4. Section 15.5 describes applications to webpage ranking and Leslie matrices. Section 15.6 discusses symmetric matrices. Section 15.7 treats complex eigenvalues. Section 15.8 considers diagonalization. Section 15.9 describes important properties of eigenvalues.
+\end{original}
+\begin{translation}
+特征值和特征向量是与任意方阵相关联的标量和向量，能够识别矩阵的关键性质。它们在经济学中有广泛应用。考虑动态系统 $y_{t+1} = A y_t$，其演化由 $A$ 的幂控制：$y_{t+j} = A^j y_t$。利用特征向量和特征值可以大大简化这一任务。马尔可夫过程按照 $x_{t+1} = x_t T$ 演化，稳态 $x^* = x^* T$ 与矩阵 $T$ 的某个特定特征值相关联。在最小二乘估计中，估计误差的分布涉及矩阵 $M$，其特征值发挥着有用的作用。在某些最优化问题中，最优解的位置与满足 $x'Ax > 0$ 的对称矩阵密切相关。这些问题的研究都通过特征值和特征向量得到简化。
+
+第15.2节定义了特征值和特征向量。第15.3节描述了说明其应用的动态模型。Perron--Frobenius定理在第15.4节总结。第15.5节描述了网页排名和Leslie矩阵的应用。第15.6节讨论了对称矩阵。第15.7节处理复特征值。第15.8节考虑对角化。第15.9节描述了特征值的重要性质。
+\end{translation}
+
+\section{Definitions and basic properties / 定义与基本性质}
+
+\begin{original}
+Consider a square $n \times n$ matrix $A$. Given a vector $x$, this is transformed by $A$ to $y = Ax$. In the special case where $y$ is proportional to $x$, $y = \lambda x$, $x$ is called an eigenvector of $A$.
+
+EXAMPLE 15.1: Let
+\[
+A = \begin{pmatrix} 4 & 6 \\ 2 & 8 \end{pmatrix},\; x_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix},\; x_2 = \begin{pmatrix} -3 \\ 1 \end{pmatrix},\; \lambda_1 = 10,\; \lambda_2 = 2.
+\]
+Notice $Ax_1 = 10x_1$ and $Ax_2 = 2x_2$. Applying $A$ to $x_1$ scales $x_1$ up by 10; applying $A$ to $x_2$ scales $x_2$ up by 2. For both vectors, the direction is unchanged.
+
+Definition 15.1: Given a square matrix $A$, a non-zero vector $x$ is an eigenvector of $A$ if there is some $\lambda$ such that $Ax = \lambda x$. The scalar $\lambda$ is the eigenvalue associated with $x$ (and may be 0).
+
+Note that $Ax = \lambda x \implies A(cx) = \lambda(cx)$, so if $x$ is an eigenvector, so is $cx$ for any $c \neq 0$. Eigenvectors are conventionally normalized.
+
+Since $Ax = \lambda x$ implies $(A - \lambda I)x = 0$, for $x \neq 0$, $(A - \lambda I)$ must be singular, so $|A - \lambda I| = 0$. This determinantal equation defines an $n$th-order polynomial in $\lambda$ called the characteristic equation.
+
+Definition 15.2: The characteristic polynomial of $A$ is $p(\lambda) = |A - \lambda I|$.
+
+For a $2 \times 2$ matrix:
+\[
+|A - \lambda I| = \lambda^2 - \text{tr}(A)\lambda + \det(A). \tag{15.1}
+\]
+The roots are $\lambda_1, \lambda_2 = \frac{\text{tr}(A) \pm \sqrt{\text{tr}(A)^2 - 4\det(A)}}{2}$.
+\end{original}
+\begin{translation}
+考虑 $n \times n$ 方阵 $A$。给定向量 $x$，经 $A$ 变换为 $y = Ax$。在 $y$ 与 $x$ 成比例的特殊情形中，$y = \lambda x$，则称 $x$ 为矩阵 $A$ 的特征向量。
+
+\textbf{例15.1：} 令
+\[
+A = \begin{pmatrix} 4 & 6 \\ 2 & 8 \end{pmatrix},\; x_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix},\; x_2 = \begin{pmatrix} -3 \\ 1 \end{pmatrix},\; \lambda_1 = 10,\; \lambda_2 = 2.
+\]
+注意 $Ax_1 = 10x_1$ 和 $Ax_2 = 2x_2$。将 $A$ 作用于 $x_1$ 将其缩放10倍；作用于 $x_2$ 将其缩放2倍。对两个向量，方向均未改变。
+
+\textbf{定义15.1：} 给定方阵 $A$，若存在某个数 $\lambda$ 使得 $Ax = \lambda x$，则称非零向量 $x$ 为 $A$ 的特征向量。标量 $\lambda$ 称为与 $x$ 相关联的特征值（可以为0）。
+
+注意 $Ax = \lambda x \implies A(cx) = \lambda(cx)$，因此若 $x$ 是特征向量，则对任意 $c \neq 0$，$cx$ 也是特征向量。通常通过标准化来处理这一非唯一性。
+
+由于 $Ax = \lambda x$ 蕴含 $(A - \lambda I)x = 0$，对于 $x \neq 0$，$(A - \lambda I)$ 必为奇异矩阵，故 $|A - \lambda I| = 0$。这个行列式方程定义了关于 $\lambda$ 的 $n$ 次多项式，称为特征方程。
+
+\textbf{定义15.2：} $A$ 的特征多项式为 $p(\lambda) = |A - \lambda I|$。
+
+对于 $2 \times 2$ 矩阵：
+\[
+|A - \lambda I| = \lambda^2 - \text{tr}(A)\lambda + \det(A). \tag{15.1}
+\]
+根为 $\lambda_1, \lambda_2 = \frac{\text{tr}(A) \pm \sqrt{\text{tr}(A)^2 - 4\det(A)}}{2}$。
+\end{translation}
+
+\begin{original}
+REMARK 15.1: Left eigenvectors satisfy $yA = \lambda y$. The set of left eigenvalues is the same as the set of right eigenvalues (since $|A' - \lambda I| = |A - \lambda I|$), but the eigenvectors generally differ. Left and right eigenvectors satisfy orthogonality conditions.
+
+For an $n \times n$ matrix $A$, the characteristic polynomial has $n$ roots, which may be real or complex and may be repeated. From the fundamental theorem of algebra:
+
+Theorem 15.1: Let $p(z) = a_n z^n + \cdots + a_0$ with $a_n \neq 0$. Then $p$ has $n$ roots $z_1, \dots, z_n$.
+
+Even if a matrix has only real entries, eigenvalues and eigenvectors may be complex.
+
+Theorem 15.2: Let $A$ have distinct eigenvalues $\lambda_1, \dots, \lambda_n$ with eigenvectors $x_1, \dots, x_n$. Then $x_1, \dots, x_n$ are linearly independent.
+
+REMARK 15.5 (Cayley--Hamilton theorem): A matrix satisfies its own characteristic equation: $p(A) = a_n A^n + \cdots + a_1 A + a_0 I = 0$.
+
+If the eigenvalues are distinct, eigenvectors are independent. Diagonalization is possible: $AX = X\Lambda$, where $\Lambda$ is diagonal with eigenvalues on the diagonal and $X$ is the matrix of eigenvectors. Then $X^{-1}AX = \Lambda$ and $A = X\Lambda X^{-1}$.
+
+Theorem 15.3: $A$ is diagonalizable iff it has $n$ linearly independent eigenvectors. A sufficient condition is that all eigenvalues be distinct.
+\end{original}
+\begin{translation}
+\textbf{注15.1：} 左特征向量满足 $yA = \lambda y$。左特征值的集合与右特征值的集合相同（因 $|A' - \lambda I| = |A - \lambda I|$），但特征向量通常不同。左、右特征向量满足正交性条件。
+
+对于 $n \times n$ 矩阵 $A$，特征多项式有 $n$ 个根，可以是实的或复的，可以有重根。由代数学基本定理：
+
+\textbf{定理15.1：} 令 $p(z) = a_n z^n + \cdots + a_0$，$a_n \neq 0$。则 $p$ 有 $n$ 个根 $z_1, \dots, z_n$。
+
+即使矩阵只有实元素，特征值和特征向量也可能是复的。
+
+\textbf{定理15.2：} 令 $A$ 有互异的特征值 $\lambda_1, \dots, \lambda_n$ 及相应的特征向量 $x_1, \dots, x_n$。则 $x_1, \dots, x_n$ 线性无关。
+
+\textbf{注15.5（Cayley--Hamilton定理）：} 矩阵满足其自身的特征方程：$p(A) = a_n A^n + \cdots + a_1 A + a_0 I = 0$。
+
+若特征值互异，特征向量线性无关。对角化是可能的：$AX = X\Lambda$，其中 $\Lambda$ 是对角线上为特征值的对角矩阵，$X$ 是特征向量矩阵。则 $X^{-1}AX = \Lambda$ 且 $A = X\Lambda X^{-1}$。
+
+\textbf{定理15.3：} $A$ 可对角化当且仅当它有 $n$ 个线性无关的特征向量。特征值全部互异是充分条件。
+\end{translation}
+
+\section{An application: dynamic models / 应用：动态模型}
+
+\begin{original}
+Consider $y_t = A y_{t-1}$, so $y_t = A^t y_0$. With distinct eigenvalues, $A = X\Lambda X^{-1}$, so $A^k = X\Lambda^k X^{-1}$. Then:
+\[
+y_t = A^t y_0 = X\Lambda^t X^{-1} y_0 = \sum_{j=1}^n (w^j y_0) x_j \lambda_j^t. \tag{15.2}
+\]
+If $\lambda_1$ is the largest eigenvalue in absolute value, then for large $t$, $y_t \approx \lambda_1^t (w^1 y_0) x_1$ -- $y_t$ is approximately proportional to the eigenvector with the largest eigenvalue.
+
+Definition 15.3: The spectral radius of $A$, $\rho(A) = \max\{|\lambda| : \lambda \text{ is an eigenvalue of } A\}$.
+\end{original}
+\begin{translation}
+考虑 $y_t = A y_{t-1}$，故 $y_t = A^t y_0$。对于互异特征值，$A = X\Lambda X^{-1}$，因此 $A^k = X\Lambda^k X^{-1}$。则：
+\[
+y_t = A^t y_0 = X\Lambda^t X^{-1} y_0 = \sum_{j=1}^n (w^j y_0) x_j \lambda_j^t. \tag{15.2}
+\]
+若 $\lambda_1$ 是绝对值最大的特征值，则对大的 $t$，$y_t \approx \lambda_1^t (w^1 y_0) x_1$——$y_t$ 近似正比于具有最大特征值的特征向量。
+
+\textbf{定义15.3：} $A$ 的谱半径，$\rho(A) = \max\{|\lambda| : \lambda \text{ 是 } A \text{ 的特征值}\}$。
+\end{translation}
+
+\subsection{Supply and demand dynamics / 供需动态}
+
+\begin{original}
+Consider excess demand $e = d + Ap$. With equilibrium $p^*$ satisfying $d = -Ap^*$ and price adjustment $p_{t+1} - p_t = e_t = A(p_t - p^*)$. Writing $v_t = p_t - p^*$: $v_{t+1} = (I + A)v_t = Bv_t$. With distinct eigenvalues, $B = Q\Lambda Q^{-1}$, so $v_{t+1} = Q\Lambda^t Q^{-1} v_0$. The price path moves quickly to be proportional to the eigenvector corresponding to the dominant eigenvalue.
+\end{original}
+\begin{translation}
+考虑超额需求 $e = d + Ap$。均衡价格 $p^*$ 满足 $d = -Ap^*$，价格调整 $p_{t+1} - p_t = e_t = A(p_t - p^*)$。记 $v_t = p_t - p^*$：$v_{t+1} = (I + A)v_t = Bv_t$。对于互异特征值，$B = Q\Lambda Q^{-1}$，因此 $v_{t+1} = Q\Lambda^t Q^{-1} v_0$。价格路径迅速趋向与主导特征值相应的特征向量成正比。
+\end{translation}
+
+\subsection{A model of population growth / 人口增长模型}
+
+\begin{original}
+Consider a population where mature individuals produce one offspring per period and never die. Tracking mature and young: $m_{t+1} = m_t + y_t$, $y_{t+1} = m_t$. In matrix form:
+\[
+\begin{pmatrix} m_{t+1} \\ y_{t+1} \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} m_t \\ y_t \end{pmatrix}.
+\]
+The total population follows the Fibonacci equation: $x_t = x_{t-1} + x_{t-2}$, $t \ge 2$, with $x_0 = 0$, $x_1 = 1$. In matrix form:
+\[
+\begin{pmatrix} x_{t+1} \\ z_{t+1} \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} x_t \\ z_t \end{pmatrix}, \quad z_t = x_{t-1}.
+\]
+The eigenvalues are $\lambda_1, \lambda_2 = \frac{1 \pm \sqrt{5}}{2}$ with eigenvectors $q_1 = (\lambda_1, 1)$, $q_2 = (\lambda_2, 1)$. The long-run solution:
+\[
+x_{t+1} = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^{t+1} - \left(\frac{1-\sqrt{5}}{2}\right)^{t+1}\right].
+\]
+\end{original}
+\begin{translation}
+考虑一个种群，成年个体每期产生一个后代且永不死亡。跟踪成年和幼年数量：$m_{t+1} = m_t + y_t$, $y_{t+1} = m_t$。矩阵形式：
+\[
+\begin{pmatrix} m_{t+1} \\ y_{t+1} \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} m_t \\ y_t \end{pmatrix}.
+\]
+总人口遵循斐波那契方程：$x_t = x_{t-1} + x_{t-2}$, $t \ge 2$，$x_0 = 0$, $x_1 = 1$。矩阵形式：
+\[
+\begin{pmatrix} x_{t+1} \\ z_{t+1} \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} x_t \\ z_t \end{pmatrix}, \quad z_t = x_{t-1}.
+\]
+特征值为 $\lambda_1, \lambda_2 = \frac{1 \pm \sqrt{5}}{2}$，特征向量为 $q_1 = (\lambda_1, 1)$, $q_2 = (\lambda_2, 1)$。长期解：
+\[
+x_{t+1} = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^{t+1} - \left(\frac{1-\sqrt{5}}{2}\right)^{t+1}\right].
+\]
+\end{translation}
+
+\section{The Perron--Frobenius theorem / Perron--Frobenius定理}
+
+\begin{original}
+The Perron--Frobenius theorem gives properties of eigenvalues and eigenvectors of square matrices with non-negative or positive entries. A positive matrix (or vector) has all entries $> 0$; a non-negative matrix (or vector) has all entries $\ge 0$.
+
+Theorem 15.4: Let $A$ be a positive square matrix ($A \gg 0$). Then:
+\begin{enumerate}
+\item There is a real positive eigenvalue $\lambda^*$ with $\lambda^* = \rho(A)$. This eigenvalue is simple.
+\item All other eigenvalues $\lambda$ satisfy $|\lambda| < \lambda^*$.
+\item $\lambda^*$ has a real positive eigenvector $x$, $x_i > 0$ for all $i$.
+\item $x$ is the only real non-negative eigenvector.
+\item $\lambda^*$ satisfies: $\min_i \sum_j a_{ij} \le \lambda^* \le \max_i \sum_j a_{ij}$.
+\end{enumerate}
+
+Theorem 15.5: Let $A$ be a non-negative irreducible square matrix. Then similar results hold: there is a real positive $\lambda^* = \rho(A)$ with positive eigenvector, unique up to scalar multiple. For any other eigenvalue $\lambda$, $|\lambda| \le \lambda^*$.
+\end{original}
+\begin{translation}
+Perron--Frobenius定理给出了具有非负或正元素的方阵的特征值和特征向量的性质。正矩阵（或向量）的所有元素 $> 0$；非负矩阵（或向量）的所有元素 $\ge 0$。
+
+\textbf{定理15.4：} 令 $A$ 为正矩阵（$A \gg 0$）。则：
+\begin{enumerate}
+\item 存在正实特征值 $\lambda^*$，$\lambda^* = \rho(A)$，该特征值是简单的。
+\item 所有其他特征值 $\lambda$ 满足 $|\lambda| < \lambda^*$。
+\item $\lambda^*$ 有正实特征向量 $x$，对所有的 $i$ 有 $x_i > 0$。
+\item $x$ 是唯一的实非负特征向量。
+\item $\lambda^*$ 满足：$\min_i \sum_j a_{ij} \le \lambda^* \le \max_i \sum_j a_{ij}$。
+\end{enumerate}
+
+\textbf{定理15.5：} 令 $A$ 为非负不可约方阵。则类似结果成立：存在正实特征值 $\lambda^* = \rho(A)$ 及正特征向量（在标量倍数意义下唯一）。对任何其他特征值 $\lambda$，$|\lambda| \le \lambda^*$。
+\end{translation}
+
+\section{Some applications / 一些应用}
+
+\subsection{Webpage ranking / 网页排名}
+
+\begin{original}
+The Internet can be viewed as a collection of interconnected nodes (webpages). The adjacency matrix $A = \{\ell_{ij}\}$ has $\ell_{ij} = 1$ if page $i$ links to page $j$. Let $h(i)$ be the number of outlinks from $i$. Define transition probabilities $t_{ij} = \frac{1}{h(i)}$ if $\ell_{ij} = 1$ and $h(i) > 0$, else 0. The page rank $r_i$ satisfies:
+\[
+r_i = \sum_{\{j \mid \ell_{ji}=1\}} \frac{r_j}{h(j)} = \sum_j t_{ji} r_j.
+\]
+Writing $r = (r_1, \dots, r_n)$, we seek $r = rT$, or $T'r = r$. By the Perron--Frobenius theorem, there is a unique eigenvalue--eigenvector pair $(\lambda, r)$ with $\lambda > 0$ and $r \ge 0$ satisfying $T'r = r$. Since $T\mathbf{1} = \mathbf{1}$, $\lambda = 1$ and the ranking vector is the eigenvector associated with eigenvalue 1.
+
+Under iteration, $T^k$ converges to a matrix with all rows equal to the (normalized) eigenvector associated with the dominant eigenvalue.
+\end{original}
+\begin{translation}
+互联网可以视为相互连接的节点（网页）的集合。邻接矩阵 $A = \{\ell_{ij}\}$ 中，若网页 $i$ 链接到网页 $j$，则 $\ell_{ij} = 1$。令 $h(i)$ 为从 $i$ 出发的链接数。定义转移概率 $t_{ij} = \frac{1}{h(i)}$（若 $\ell_{ij} = 1$ 且 $h(i) > 0$），否则为 0。网页排名 $r_i$ 满足：
+\[
+r_i = \sum_{\{j \mid \ell_{ji}=1\}} \frac{r_j}{h(j)} = \sum_j t_{ji} r_j.
+\]
+记 $r = (r_1, \dots, r_n)$，我们寻求 $r = rT$，即 $T'r = r$。由Perron--Frobenius定理，存在唯一的特征值--特征向量对 $(\lambda, r)$（$\lambda > 0$，$r \ge 0$）满足 $T'r = r$。因 $T\mathbf{1} = \mathbf{1}$，故 $\lambda = 1$，排名向量即为特征值1对应的特征向量。
+
+在迭代下，$T^k$ 收敛到一个所有行都等于主导特征值对应（标准化）特征向量的矩阵。
+\end{translation}
+
+\subsection{Leslie matrices / Leslie矩阵}
+
+\begin{original}
+Consider a species with maximum lifespan $n$. An individual aged $j$ gives birth to $f_j$ offspring and survives with probability $s_j$. The population evolves as $x_{t+1} = L x_t$, where:
+\[
+L = \begin{pmatrix}
+f_1 & f_2 & \cdots & f_{n-1} & f_n \\
+s_1 & 0 & \cdots & 0 & 0 \\
+0 & s_2 & \cdots & 0 & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & s_{n-1} & 0
+\end{pmatrix}.
+\]
+A long-run steady state satisfies $x = Lx$, so $x$ is an eigenvector of $L$. If there is a positive eigenvalue $\lambda_1$ with norm larger than any other, the long-run population is proportional to $x_1 \lambda_1^t z_{01}$.
+\end{original}
+\begin{translation}
+考虑一个最大寿命为 $n$ 期的物种。年龄为 $j$ 的个体生育 $f_j$ 个后代，并以概率 $s_j$ 存活到下一期。种群按 $x_{t+1} = L x_t$ 演化，其中：
+\[
+L = \begin{pmatrix}
+f_1 & f_2 & \cdots & f_{n-1} & f_n \\
+s_1 & 0 & \cdots & 0 & 0 \\
+0 & s_2 & \cdots & 0 & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & s_{n-1} & 0
+\end{pmatrix}.
+\]
+长期稳态满足 $x = Lx$，因此 $x$ 是 $L$ 的特征向量。若存在范数大于其他所有特征值的正特征值 $\lambda_1$，则长期种群正比于 $x_1 \lambda_1^t z_{01}$。
+\end{translation}
+
+\section{Eigenvalues and eigenvectors of symmetric matrices / 对称矩阵的特征值与特征向量}
+
+\begin{original}
+For symmetric matrices, eigenvalues and eigenvectors have additional properties.
+
+Proposition 15.1: For an $n \times n$ symmetric matrix:
+\begin{enumerate}
+\item The eigenvalues are all real.
+\item If eigenvalues are distinct, eigenvectors are orthogonal.
+\item $n$ linearly independent orthogonal eigenvectors can always be found.
+\end{enumerate}
+
+Definition 15.4: A square matrix $C$ is orthogonal if $C'C = I$.
+
+Proposition 15.2: If $C$ is orthogonal, it is non-singular.
+
+Proposition 15.4: If $A$ is symmetric, there is an orthogonal matrix $C$ such that $C'AC$ is diagonal with eigenvalues on the diagonal.
+
+Proposition 15.8: If $A$ is positive definite, then all eigenvalues are real and $\lambda_i > 0$ for all $i$. If positive semi-definite, $\lambda_i \ge 0$.
+\end{original}
+\begin{translation}
+对于对称矩阵，特征值和特征向量具有额外的性质。
+
+\textbf{命题15.1：} 对于 $n \times n$ 对称矩阵：
+\begin{enumerate}
+\item 所有特征值都是实数。
+\item 若特征值互异，则特征向量正交。
+\item 总能找到 $n$ 个线性无关的正交特征向量。
+\end{enumerate}
+
+\textbf{定义15.4：} 若方阵 $C$ 满足 $C'C = I$，则称其为正交矩阵。
+
+\textbf{命题15.2：} 若 $C$ 正交，则它非奇异。
+
+\textbf{命题15.4：} 若 $A$ 对称，则存在正交矩阵 $C$ 使得 $C'AC$ 为对角矩阵，对角线上为特征值。
+
+\textbf{命题15.8：} 若 $A$ 正定，则所有特征值均为实数且 $\lambda_i > 0$。若半正定，则 $\lambda_i \ge 0$。
+\end{translation}
+
+\section{Real and complex eigenvalues and eigenvectors / 实与复特征值和特征向量}
+
+\begin{original}
+Even if all entries of a matrix are real, eigenvalues and eigenvectors may be complex. Some basic complex algebra is necessary. A complex number $z = a + ib$ has conjugate $\bar{z} = a - bi$, norm $|z| = \sqrt{a^2 + b^2}$.
+
+For complex vectors, the inner product is defined as $x \cdot y = \sum x_i \bar{y}_i$, which is not symmetric: $x \cdot y = \overline{y \cdot x}$.
+
+Definition 15.6: A complex-valued square matrix $A$ with $A^* = A$ is Hermitian (where $A^*$ is the conjugate transpose).
+
+Definition 15.7: $A$ is normal if $A^*A = AA^*$. Hermitian matrices are normal.
+
+Definition 15.8: $A$ is unitary if $A^*A = AA^* = I$, so $A^{-1} = A^*$.
+\end{original}
+\begin{translation}
+即使矩阵的所有元素都是实数，特征值和特征向量也可能是复的。一些基本的复代数知识是必要的。复数 $z = a + ib$ 的共轭为 $\bar{z} = a - bi$，范数为 $|z| = \sqrt{a^2 + b^2}$。
+
+对于复向量，内积定义为 $x \cdot y = \sum x_i \bar{y}_i$，它不对称：$x \cdot y = \overline{y \cdot x}$。
+
+\textbf{定义15.6：} 满足 $A^* = A$ 的复值方阵 $A$ 称为Hermitian矩阵（其中 $A^*$ 是共轭转置）。
+
+\textbf{定义15.7：} 若 $A^*A = AA^*$，则称 $A$ 为正规矩阵。Hermitian矩阵都是正规矩阵。
+
+\textbf{定义15.8：} 若 $A^*A = AA^* = I$，则称 $A$ 为酉矩阵，此时 $A^{-1} = A^*$。
+\end{translation}
+
+\section{Diagonalization / 对角化}
+
+\begin{original}
+Definition 15.9: A square matrix $A$ is diagonalizable if there is a non-singular matrix $Q$ and a diagonal matrix $D$ such that $A = QDQ^{-1}$.
+
+Theorem 15.6: $A$ is diagonalizable iff it has $n$ linearly independent eigenvectors.
+
+Definition 15.10: $A$ is unitarily diagonalizable if there is a unitary matrix $P$ such that $P^{-1}AP = P^*AP = \Lambda$ (diagonal).
+
+Theorem 15.7: $A$ is unitarily diagonalizable iff it is normal.
+\end{original}
+\begin{translation}
+\textbf{定义15.9：} 若存在非奇异矩阵 $Q$ 和对角矩阵 $D$ 使得 $A = QDQ^{-1}$，则方阵 $A$ 可对角化。
+
+\textbf{定理15.6：} $A$ 可对角化当且仅当它有 $n$ 个线性无关的特征向量。
+
+\textbf{定义15.10：} 若存在酉矩阵 $P$ 使得 $P^{-1}AP = P^*AP = \Lambda$（对角矩阵），则称 $A$ 可酉对角化。
+
+\textbf{定理15.7：} $A$ 可酉对角化当且仅当它是正规矩阵。
+\end{translation}
+
+\section{Properties of eigenvalues and eigenvectors / 特征值与特征向量的性质}
+
+\begin{original}
+Theorem 15.8: Let $\lambda_1, \dots, \lambda_n$ be the roots of $A$ (possibly complex). Then:
+\begin{itemize}
+\item $\text{tr}(A) = \sum_{i=1}^n \lambda_i$.
+\item $\det(A) = \prod_{i=1}^n \lambda_i$.
+\item $\text{tr}(A^k) = \sum_i \lambda_i^k$.
+\end{itemize}
+
+Theorem 15.9: If $A$ is Hermitian, all eigenvalues are real.
+
+Theorem 15.10: For any square matrix $A$:
+\begin{itemize}
+\item[(i)] The roots of $A'$ are conjugates of roots of $A$.
+\item[(ii)] If $A$ is non-singular, roots of $A^{-1}$ are $\lambda_i^{-1}$.
+\item[(iii)] If $q$ is real and $\lambda$ an eigenvalue of $A$, then $q\lambda$ is an eigenvalue of $qA$.
+\item[(iv)] If $q$ is a positive integer, $\lambda^q$ is an eigenvalue of $A^q$.
+\end{itemize}
+
+Proposition 15.9: $r(A) =$ number of non-zero roots of $A$.
+\end{original}
+\begin{translation}
+\textbf{定理15.8：} 令 $\lambda_1, \dots, \lambda_n$ 为 $A$ 的（可能为复的）根。则：
+\begin{itemize}
+\item $\text{tr}(A) = \sum_{i=1}^n \lambda_i$。
+\item $\det(A) = \prod_{i=1}^n \lambda_i$。
+\item $\text{tr}(A^k) = \sum_i \lambda_i^k$。
+\end{itemize}
+
+\textbf{定理15.9：} 若 $A$ 是Hermitian矩阵，则所有特征值均为实数。
+
+\textbf{定理15.10：} 对任意方阵 $A$：
+\begin{itemize}
+\item[(i)] $A'$ 的根是 $A$ 的根的共轭。
+\item[(ii)] 若 $A$ 非奇异，则 $A^{-1}$ 的根为 $\lambda_i^{-1}$。
+\item[(iii)] 若 $q$ 为实数，$\lambda$ 为 $A$ 的特征值，则 $q\lambda$ 是 $qA$ 的特征值。
+\item[(iv)] 若 $q$ 为正整数，$\lambda^q$ 是 $A^q$ 的特征值。
+\end{itemize}
+
+\textbf{命题15.9：} $r(A) = $ $A$ 的非零根的个数。
+\end{translation}
+
+\subsection{Largest eigenvalues and eigenvalue multiplicity / 最大特征值与特征值重数}
+
+\begin{original}
+Given eigenvectors $v_1, \dots, v_n$ and eigenvalues $\lambda_1, \dots, \lambda_n$, let $z = \sum \alpha_i v_i$. Then $A^t z = \sum \alpha_i \lambda_i^t v_i$. If $|\lambda_1| > |\lambda_i|$ for $i \neq 1$, then for large $t$, $A^t z \approx \lambda_1^t \alpha_1 v_1$.
+
+More generally, let $\rho = \max_i |\lambda_i|$ and $\hat{\lambda}_i = \lambda_i/\rho$. Assume $\lambda_1 = \rho$. Let $\mathcal{I} = \{i \mid |\lambda_i| = \rho\}$. Then for $j \notin \mathcal{I}$, $\hat{\lambda}_j^t \to 0$ as $t \to \infty$, and $A^t z \approx \rho^t \sum_{j \in \mathcal{I}} \alpha_j v_j$.
+
+Definition 15.11: If root $\lambda_j$ occurs exactly $k$ times, it has algebraic multiplicity $k$. If $k = 1$, it is a simple root.
+
+Definition 15.12: The geometric multiplicity of an eigenvalue is the number of linearly independent eigenvectors with that eigenvalue.
+
+If $n_i$ is the algebraic multiplicity and $m_i$ the geometric multiplicity of $\lambda_i$, then $m_i \le n_i$.
+\end{original}
+\begin{translation}
+给定特征向量 $v_1, \dots, v_n$ 和特征值 $\lambda_1, \dots, \lambda_n$，令 $z = \sum \alpha_i v_i$。则 $A^t z = \sum \alpha_i \lambda_i^t v_i$。若对 $i \neq 1$ 有 $|\lambda_1| > |\lambda_i|$，则对大的 $t$，$A^t z \approx \lambda_1^t \alpha_1 v_1$。
+
+更一般地，令 $\rho = \max_i |\lambda_i|$ 和 $\hat{\lambda}_i = \lambda_i/\rho$。设 $\lambda_1 = \rho$。令 $\mathcal{I} = \{i \mid |\lambda_i| = \rho\}$。则对 $j \notin \mathcal{I}$，当 $t \to \infty$ 时 $\hat{\lambda}_j^t \to 0$，且 $A^t z \approx \rho^t \sum_{j \in \mathcal{I}} \alpha_j v_j$。
+
+\textbf{定义15.11：} 若根 $\lambda_j$ 恰好出现 $k$ 次，则其代数重数为 $k$。若 $k = 1$，则为单根。
+
+\textbf{定义15.12：} 特征值的几何重数是具有该特征值的线性无关特征向量的个数。
+
+若 $n_i$ 为 $\lambda_i$ 的代数重数，$m_i$ 为其几何重数，则 $m_i \le n_i$。
+\end{translation}
+
+\section*{Exercises for Chapter 15 / 第15章习题}
+
+\begin{original}
+Exercise 15.1: Let $A = \begin{pmatrix} 1 & 2 \\ 4 & 3 \end{pmatrix}$. Give the characteristic equation and find eigenvalues and eigenvectors.
+
+Exercise 15.2: Let $B = \begin{pmatrix} 1 & 0 & 0 \\ 2 & 4 & 2 \\ 4 & 0 & 2 \end{pmatrix}$. Give the characteristic equation and find eigenvalues and eigenvectors.
+
+Exercise 15.3: Let $A = \begin{pmatrix} -\frac{6}{4} & \frac{6}{4} \\ -\frac{12}{4} & \frac{11}{4} \end{pmatrix}$. Let $\lambda_1, \lambda_2$ be eigenvalues with eigenvectors $x_1, x_2$. Use $A = X\Lambda X^{-1}$ to show $A^k \to 0$ as $k \to \infty$.
+
+Exercise 15.4: Let $A$ be $n \times n$. Suppose the sum of absolute values of entries in any column is $\le 1$. Show all eigenvalues satisfy $|\lambda| \le 1$.
+
+Exercise 15.5: Show $A$ is non-singular iff all eigenvalues are non-zero.
+
+Exercise 15.6: For $A = \begin{pmatrix} 2 & 5 \\ 4 & 3 \end{pmatrix}$, $p(\lambda) = \lambda^2 - 5\lambda - 14 = 0$. Verify the Cayley--Hamilton theorem: $A^2 - 5A - 14 = 0$.
+
+Exercise 15.7: Using the Cayley--Hamilton theorem, show how to compute $A^k$ in terms of $A$ and $I$ for a $2 \times 2$ matrix.
+
+Exercise 15.8: Show how the Cayley--Hamilton theorem may be used to find the inverse of $A$.
+
+Exercise 15.9: For $B = \begin{pmatrix} 1 & 5 \\ 2 & 3 \end{pmatrix}$, find eigenvalues and eigenvectors.
+
+Exercise 15.10: Find eigenvalues of $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$.
+
+Exercise 15.11: For complex matrix $A = \begin{pmatrix} 2+2i & 4+i \\ 3+2i & 5+2i \end{pmatrix}$, calculate the determinant and inverse.
+\end{original}
+\begin{translation}
+\textbf{习题15.1：} 令 $A = \begin{pmatrix} 1 & 2 \\ 4 & 3 \end{pmatrix}$。给出特征方程并求特征值和特征向量。
+
+\textbf{习题15.2：} 令 $B = \begin{pmatrix} 1 & 0 & 0 \\ 2 & 4 & 2 \\ 4 & 0 & 2 \end{pmatrix}$。给出特征方程并求特征值和特征向量。
+
+\textbf{习题15.3：} 令 $A = \begin{pmatrix} -\frac{6}{4} & \frac{6}{4} \\ -\frac{12}{4} & \frac{11}{4} \end{pmatrix}$。令 $\lambda_1, \lambda_2$ 为特征值，$x_1, x_2$ 为特征向量。利用 $A = X\Lambda X^{-1}$ 证明当 $k \to \infty$ 时 $A^k \to 0$。
+
+\textbf{习题15.4：} 令 $A$ 为 $n \times n$ 矩阵。假设任意列中元素的绝对值之和 $\le 1$。证明所有特征值满足 $|\lambda| \le 1$。
+
+\textbf{习题15.5：} 证明 $A$ 非奇异当且仅当所有特征值非零。
+
+\textbf{习题15.6：} 对于 $A = \begin{pmatrix} 2 & 5 \\ 4 & 3 \end{pmatrix}$，$p(\lambda) = \lambda^2 - 5\lambda - 14 = 0$。验证Cayley--Hamilton定理：$A^2 - 5A - 14 = 0$。
+
+\textbf{习题15.7：} 利用Cayley--Hamilton定理，说明如何对 $2 \times 2$ 矩阵用 $A$ 和 $I$ 来计算 $A^k$。
+
+\textbf{习题15.8：} 说明Cayley--Hamilton定理如何用于求 $A$ 的逆。
+
+\textbf{习题15.9：} 对于 $B = \begin{pmatrix} 1 & 5 \\ 2 & 3 \end{pmatrix}$，求特征值和特征向量。
+
+\textbf{习题15.10：} 求 $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ 的特征值。
+
+\textbf{习题15.11：} 对于复矩阵 $A = \begin{pmatrix} 2+2i & 4+i \\ 3+2i & 5+2i \end{pmatrix}$，计算行列式和逆矩阵。
+\end{translation}

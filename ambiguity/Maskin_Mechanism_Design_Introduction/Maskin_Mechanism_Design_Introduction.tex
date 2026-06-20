@@ -1,0 +1,301 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% === Packages ===
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{float}
+
+% === Color definitions ===
+\definecolor{transblue}{RGB}{25,25,150}
+
+% === Page style ===
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Maskin: Introduction to Mechanism Design and Implementation}
+\fancyhead[R]{\small 双语版 / Bilingual Edition}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% === Custom environments ===
+\newenvironment{original}{%
+  \par\vspace{4pt}\noindent%
+  \color{black}%
+  \ignorespaces
+}{%
+  \par\vspace{2pt}%
+}
+
+\newenvironment{translation}{%
+  \par\vspace{2pt}\noindent%
+  \color{transblue}%
+  \ignorespaces
+}{%
+  \par\vspace{4pt}\hrule\vspace{6pt}%
+}
+
+\title{\textbf{Introduction to Mechanism Design and Implementation\\[4pt]
+\large 机制设计与实施导论}}
+\author{Eric Maskin\\[3pt]
+{\small Harvard University \& Zhejiang University}\\[3pt]
+{\small 哈佛大学与浙江大学}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\vspace{-1cm}
+\begin{center}
+\textit{Transnational Corporations Review}, 2019\\
+DOI: \url{https://doi.org/10.1080/19186444.2019.1591087}
+\end{center}
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\section*{Abstract \hfill 摘要}
+
+\begin{original}
+This article provides a brief introduction to mechanism design and implementation theory. First, it provides a brief definition of mechanism design. It then provides a few concrete examples that should make clear what the subject is all about.
+\end{original}
+\begin{translation}
+本文简要介绍机制设计与实施理论。首先给出机制设计的简要定义，随后通过若干具体例子阐明该学科的研究内容。
+\end{translation}
+
+\medskip
+\noindent\textbf{Keywords:} Mechanism design; implementation; Nash equilibrium; game theory
+
+\noindent\textbf{关键词：} 机制设计；实施；纳什均衡；博弈论
+
+\newpage
+
+% ============================================================
+% SECTION 1: INTRODUCTION
+% ============================================================
+\section{Introduction \hfill 引言}
+
+\begin{original}
+This article is based on a speech that Professor Maskin gave at Zhejiang University on December 30, 2018. Maskin's speech was converted into this article by Dr.\ Gaoju Yang from Zhejiang University's Economics School. The abstracts, keywords, title, subtitles, and references were added by the editors for readers' convenience.
+
+As the Nobel Prize site explains, in the mid-20th century, economists found themselves in need of a new theoretical framework with which to tackle the comparison of fundamentally different types of economic organisations, such as capitalist and socialist institutions. To do so, along with other scholars, Maskin developed mechanism design and implementation theory for achieving particular social or economic goals.
+
+In this article, Maskin starts with the example of a parent wanting to divide a cake between two children. The goal is to divide the cake in such a way that both children are happy. The mechanism he proposes is to have one child cut the cake in two while the other chooses one of the pieces. In this example, the goal is ``fair division,'' and the divide-and-choose mechanism achieves that goal.
+\end{original}
+\begin{translation}
+本文基于Maskin教授2018年12月30日在浙江大学的演讲改编而成。Maskin教授的演讲由浙江大学经济学院杨高举博士整理为本文。摘要、关键词、标题、副标题和参考文献由编辑为方便读者而添加。
+
+正如诺贝尔奖官网所述，在20世纪中叶，经济学家发现自己需要一个新的理论框架来比较根本不同的经济组织类型，如资本主义制度和社会主义制度。为此，Maskin与其他学者一道发展了机制设计与实施理论，以实现特定的社会或经济目标。
+
+本文中，Maskin从一个家长想在两个孩子之间分蛋糕的例子开始。目标是以让两个孩子都满意的方式分配蛋糕。他提出的机制是让一个孩子切蛋糕，另一个孩子选择其中一块。在这个例子中，目标是"公平分配"，而分选机制实现了这一目标。
+\end{translation}
+
+% ============================================================
+% SECTION 2: WHAT IS MECHANISM DESIGN?
+% ============================================================
+\section{What Is Mechanism Design? \hfill 什么是机制设计？}
+
+\begin{original}
+This article provides a brief introduction to the field of mechanism design. First, we provide a brief definition of the subject. However, the definition may be too abstract to convey much to readers who do not already know mechanism design. So we will provide a few concrete examples that should make clear what the subject is all about.
+
+We can think of mechanism design as the engineering part of economic theory. Most of the time in economics, we look at existing economic institutions and try to explain or predict the outcomes that those institutions generate. This is called the positive or predictive part of economics. Perhaps 80\% to 90\% of economists do positive economics.
+
+In mechanism design, we do just the opposite by starting with the outcomes. We identify the outcomes we would like to have. And then we work backwards to see whether we can engineer institutions (mechanisms) that will lead to those outcomes. This is the normative or prescriptive part of economics. It may not be what most economists do, but it is extremely important too. Let us now get much more specific.
+\end{original}
+\begin{translation}
+本文简要介绍机制设计领域。首先给出该学科的简要定义。然而，该定义可能过于抽象，对于尚不了解机制设计的读者来说难以传达很多信息。因此，我们将提供几个具体的例子，以阐明该学科的研究内容。
+
+我们可以将机制设计视为经济理论中的工程学部分。经济学中的大多数时候，我们研究现有的经济制度，试图解释或预测这些制度产生的结果。这被称为经济学的实证或预测部分。大约80\%到90\%的经济学家从事实证经济学研究。
+
+在机制设计中，我们的做法恰恰相反：我们从结果出发。我们确定我们希望实现的结果，然后逆向推导，看我们能否设计出能够实现这些结果的制度（机制）。这是经济学的规范或规定性部分。这可能不是大多数经济学家所做的工作，但它同样极其重要。现在让我们具体展开。
+\end{translation}
+
+% ============================================================
+% SECTION 3: CUTTING A CAKE
+% ============================================================
+\section{Cutting a Cake \hfill 切蛋糕}
+
+\begin{original}
+Imagine that there are two children, Alice and Bob. You have a cake and want to divide it between the two children. Your goal is to divide it so that each child is happy with his or her portion. So this means that Bob should think that he has at least half of the cake, and Alice should think that she also has at least half. This may not sound like the most important problem in the world. However, in a family, it can be critical.
+
+We will say that, if the cake is divided so that each child is happy with his or her piece, we have a fair division. How do you achieve such a fair division? If you know that the children see the cake the same way that you do, there is a simple solution: you just take a knife and cut the cake in half, and give each child one of the pieces. Because we are assuming that they see the cake the same way you do, Alice and Bob will each think that they have half the cake and that is the end of the story. The problem is that, in real life, children almost never see things the same way that an adult does. You might think that you have divided the cake equally, but Bob might think that Alice's piece is bigger. So, here is the problem: you want to achieve a fair division, but you do not actually have enough information to do so because you do not know how the children see the cake. The mechanism design question is this: is there a mechanism or procedure that you can follow that will result in a fair division even though you do not have enough information to say what a fair division is yourself?
+
+This problem is actually very old. It is literally thousands of years old. It is even mentioned in the Old Testament of the western Bible. Specifically, there is a passage where Lot and Abraham want to divide some grazing land between them in a fair way. But dividing grazing land is the same problem as dividing a cake. And just as the Old Testament states the problem, it also provides a solution.
+
+As you will see, the solution is extremely simple but clever. This is a feature of mechanism design quite generally. Solutions tend to be ingenious, but they are so simply ingenious and you wonder after you see why you did not think of this before. That is because these mechanisms are so clever.
+
+So here is the solution for the cake problem. What you should do is to have one of the children, say, Bob cut the cake. Then have the other child, Alice, choose the piece she prefers.
+
+This is called the divide-and-choose mechanism. Why does it work? Well, when Bob cuts the cake, he has a strong incentive to make sure that each piece is the same size from his point of view. Why? Because if one piece is bigger, he knows Alice will take it, and he will be left with the smaller piece. So when he is cutting the cake, he will ensure that whichever piece Alice takes, he is happy with the other. This means Bob will be happy. And Alice will be happy because she can choose her favourite piece. Thus, the divide-and-choose mechanism solves the problem. Of course, it is a simple problem. Nevertheless, it is already complicated enough to illustrate some of the main features of mechanism design.
+
+Specifically, in mechanism design, the mechanism designer himself does not know in advance what outcomes are optimal. In the cake problem, you want to divide the cake fairly, but you do not know what a fair division is because you do not know how the children view the cake. That means you have to proceed indirectly through a mechanism. But there is an additional problem, which is that the participants in the mechanism do not share your goals. The goal in the cake problem is to achieve a fair division, but Alice and Bob do not care about a fair division; they each just want as much cake as possible. They have their own objectives, and the mechanism has to be compatible with those objectives. In other words, it has to be what we call incentive compatible.
+\end{original}
+\begin{translation}
+假设有两个孩子，Alice和Bob。你有一块蛋糕，想在两个孩子之间分配。你的目标是让每个孩子对自己得到的那份感到满意。这意味着Bob应该认为他至少得到了蛋糕的一半，Alice也应该认为她至少得到了一半。这听起来可能不是世界上最重要的问题。然而在一个家庭里，这可能至关重要。
+
+我们要说，如果蛋糕的分配使每个孩子都对自己的一份满意，我们就实现了公平分配。如何实现这样的公平分配？如果你知道孩子们看待蛋糕的方式与你相同，有一个简单的解决方案：你只需拿刀把蛋糕切成两半，给每个孩子一块。因为我们假设他们看待蛋糕的方式与你相同，Alice和Bob都会认为他们得到了半块蛋糕，问题就解决了。问题是，在现实生活中，孩子们几乎从不以成年人的方式看待事物。你可能认为你把蛋糕切得很均匀，但Bob可能认为Alice的那块更大。因此，问题在于：你想实现公平分配，但你实际上没有足够的信息来做到这一点，因为你不知道孩子们如何看待蛋糕。机制设计的问题是：是否存在一种你可以遵循的机制或程序，即使你自己没有足够的信息来判断什么是公平分配，也能实现公平分配？
+
+这个问题实际上非常古老，有数千年历史。它甚至在西方圣经的《旧约》中都有提及。具体来说，有一段经文讲到罗得和亚伯拉罕想以公平的方式在他们之间分配一些牧场。分配牧场的问题与分割蛋糕是同一个问题。正如《旧约》提出这个问题一样，它也提供了解决方案。
+
+正如你将看到的，解决方案极其简单但很巧妙。这是机制设计的一个普遍特征。解决方案往往精妙绝伦，但它们是如此简单灵巧，以至于你看到后会想，为什么自己之前没有想到。那是因为这些机制是如此聪明。
+
+以下是蛋糕问题的解决方案。你应该让其中一个孩子，比如说Bob，来切蛋糕。然后让另一个孩子，Alice，选择她喜欢的那块。
+
+这被称为分选机制。为什么它有效？当Bob切蛋糕时，他有强烈的动机确保从自己的角度看每块蛋糕一样大。为什么？因为如果一块更大，他知道Alice会拿走它，而他将剩下较小的那块。所以当他切蛋糕时，他会确保无论Alice选哪块，他都对剩下的那块满意。这意味着Bob会满意。而Alice会满意，因为她可以选择自己最喜欢的那块。因此，分选机制解决了问题。当然，这是一个简单的问题。然而，它已经足够复杂，足以说明机制设计的一些主要特征。
+
+具体来说，在机制设计中，机制设计者本人事先并不知道什么结果是最优的。在蛋糕问题中，你想公平分配蛋糕，但你不知道什么是公平分配，因为你不知道孩子们如何看待蛋糕。这意味着你必须通过机制间接实现目标。但还有一个额外的问题，即机制中的参与者并不分享你的目标。蛋糕问题的目标是实现公平分配，但Alice和Bob并不关心公平分配；他们各自只想得到尽可能多的蛋糕。他们有自己的目标，而机制必须与这些目标相容。换句话说，它必须是我们所谓的激励相容。
+\end{translation}
+
+% ============================================================
+% SECTION 4: ALLOCATING RADIO SPECTRUM
+% ============================================================
+\section{Allocating Radio Spectrum \hfill 分配无线电频谱}
+
+\begin{original}
+Let us move to a somewhat more complicated example, one that has been critically important to the modern world: the problem of allocating radio spectrum to telecom companies. About 20 years ago, many telecom companies came into existence. Countries around the world realised that it no longer made sense for governments to monopolise the radio broadcasting spectrum. So many governments decided to transfer large parts of the radio spectrum from the public sector to the private sector. These transfers made the information and communication revolution possible. They made mobile phones, satellite TV, and all the other modern miracles we take for granted reality.
+
+Imagine that there is a government who wants to transfer the right to use a particular band of radio frequencies to one of several telecom companies interested in these frequencies. We call the right to use these frequencies a licence. And let us suppose that the goal of the government is to put the licence into the hands of the company that values it the most. In other words, the government wants an efficient outcome (Economists say that resources are allocated efficiently if the companies who control them are the ones getting the most value out of those resources). So how does the government achieve an efficient outcome? Assume that the government does not know how much each company values the licence. Then how can it know which company has the highest value?
+
+The simplest mechanism would be for the government to ask each company how much it values the licence and to award the licence to the one claiming to have the highest value. But you can see that this mechanism is not going to work very well because each company will realise that it has a better chance of getting the licence when it exaggerates its value. So all the companies will exaggerate, and the government will have no idea which one really values it the most. So it needs to try something a bit more sophisticated.
+
+The government could instead have each company make a bid for the licence. A bid is a statement about how much the company is willing to pay for the licence. The government could then award the licence to the company making the highest bid and have the winner pays its bid.
+
+This alternative mechanism is better than the first one because now companies would not exaggerate anymore. If the licence is worth \$10 million to my company, I am not going to bid \$12 million, because if I did bid \$12 million and won, I would have to pay \$12 million, and that is too much. So, companies would not exaggerate. But this mechanism will fail because of the opposite problem: companies now have an incentive to understate the value of the licence. Why? Let us imagine that the licence is worth \$10 million to my company. If I bid \$10 million and I won, I would be getting something worth \$10 million, but I had to pay \$10 million. So my net benefit would be zero. I might as well have stayed home and not bothered. So I am not going to bid \$10 million. I will bid something less, maybe \$8 million. That will reduce my chance of winning. But if I do win, I will get a profit. So now all companies will be underbidding, and once again, there is no guarantee that the company that values it the most will actually win.
+
+At this point, you may be wondering if there is any mechanism that gets things right. In the first mechanism, companies exaggerate. In the second one, companies understate. Is there a mechanism that gives bidders the incentive to bid exactly what the licence is worth to them?
+
+Well, it turns out that the answer to that question is yes. But this was not discovered thousands of years ago. In fact, the discovery was made only about sixty years ago by the American economist William Vickrey. Once again, you will see that the solution is very simple, but very clever. Specifically, Vickrey proposes that every company should make a bid for the licence. As before, the winner is the highest bidder. But now, instead of paying its own bid, the winner pays the second highest bid. So this is sometimes called the second-bid mechanism.
+
+Here is an example. If there are three bidders and one bids \$10 million, one bids \$8 million, and one bids \$5 million, the winner will be \$10 million bidder because that is the highest bid, but it will pay only \$8 million, because that is the second highest.
+
+Now I claim that in this second-bid mechanism, companies will bid exactly what the licence is worth to them. They neither exaggerate nor understate. First, they would not understate because a company now does not pay what it bids anyway, it pays the second highest bid. So if the licence is worth \$10 million to me and I bid \$9 million, I do not pay \$9 million if I win; I pay \$8 million if that is the second highest bid. Reducing my bid to \$9 million does not reduce my payment. In fact, reducing my bid might lose me the licence altogether. For example, if I bid \$7 million, I will lose to a company that bids \$8 million. But If I bid \$10 million, I would have won with a nice two million dollar profit, 10 million minus 8 million. So companies never gain from underbidding in the second bid mechanism. And they might do very badly by underbidding. So they are not going to underbid. But they are also not going to overbid. Let us continue to suppose that the licence worth \$10 million to me, but I exaggerate and bid \$12 million. Could that ever be good for me? Well, if I bid \$12 million and someone else has bid \$11 million, I will win. But I will have to pay \$11 million. And that is too much. So if I overstate, then I run the risk of paying more than the licence is worth to me. So I will bid exactly \$10 million, exactly what the licence is worth to me. But if all companies bid what the licence is worth to them, then the highest bidder will indeed be the company with the highest value. And so the problem is solved.
+\end{original}
+\begin{translation}
+让我们转向一个稍微复杂一些的例子，这个例子对现代世界至关重要：向电信公司分配无线电频谱的问题。大约20年前，许多电信公司应运而生。世界各国意识到，政府垄断无线电广播频谱已不再合理。因此，许多政府决定将大部分无线电频谱从公共部门转移到私营部门。这些转移使信息和通信革命成为可能。它们使手机、卫星电视以及我们视为理所当然的所有其他现代奇迹成为现实。
+
+假设有一个政府想将特定无线电频段的使用权转让给几家对频谱感兴趣的电信公司之一。我们称这些频率的使用权为许可证。假设政府的目标是将许可证授予对其估值最高的公司。换句话说，政府希望实现有效率的配置（经济学家说，如果控制资源的公司是那些从这些资源中获得最大价值的公司，那么资源配置就是有效率的）。那么，政府如何实现有效率的配置？假设政府不知道每家公司对许可证的估值是多少。那么它如何知道哪家公司估值最高？
+
+最简单的机制是政府询问每家公司对许可证的估值，并将许可证授予声称估值最高的公司。但你可以看到，这种机制不会很好地运作，因为每家公司都会意识到，当它夸大其估值时，获得许可证的机会更大。因此所有公司都会夸大其词，而政府将无从知晓哪家公司真正估值最高。因此需要尝试一些更复杂的方法。
+
+政府可以改为让每家公司对许可证投标。投标是关于公司愿意为许可证支付多少金额的声明。政府随后可以将许可证授予出价最高的公司，并让中标者支付其投标金额。
+
+这种替代机制比第一种机制更好，因为现在公司不再夸大其词。如果许可证对我的公司价值1000万美元，我不会出价1200万美元，因为如果我出价1200万美元并中标，我将不得不支付1200万美元，那太高了。因此，公司不会夸大。但这种机制会因相反的问题而失败：公司现在有动机低估许可证的价值。为什么？假设许可证对我的公司价值1000万美元。如果我出价1000万美元并中标，我将得到价值1000万美元的东西，但我必须支付1000万美元。因此我的净收益为零。我还不如待在家里不参与。所以我不会出价1000万美元。我会出价少一些，也许是800万美元。这将降低我中标的概率。但如果我确实中标了，我将获得利润。因此现在所有公司都会低报，同样的，无法保证估值最高的公司真正中标。
+
+此时，你可能会想，是否有任何机制能正确解决问题。在第一种机制中，公司夸大。在第二种机制中，公司低报。是否存在一种机制，能激励竞标者按照许可证对他们的真实价值出价？
+
+答案证明是肯定的。但这不是几千年前发现的。事实上，这一发现仅在大约六十年前由美国经济学家William Vickrey发现。同样，你将看到解决方案非常简单，但非常巧妙。具体来说，Vickrey提议每家公司对许可证投标。和之前一样，中标者是最高出价者。但现在，中标者不支付自己的出价，而是支付第二高的出价。因此这有时被称为次价密封投标机制。
+
+举个例子。如果有三个竞标者，一个出价1000万美元，一个出价800万美元，一个出价500万美元，中标者将是1000万美元的出价者，因为那是最高出价，但它只需支付800万美元，因为那是第二高。
+
+现在我断言，在这种次价密封投标机制中，公司将按照许可证对他们的真实价值出价。他们既不夸大也不低报。首先，他们不会低报，因为公司支付的并不是自己的出价，而是第二高出价。因此，如果许可证价值1000万美元，而我出价900万美元，如果我中标，我并不支付900万美元；如果第二高出价是800万美元，我支付的是800万美元。将我的出价降低到900万美元并不会减少我的支付。事实上，降低出价可能让我完全失去许可证。例如，如果我出价700万美元，我将输给出价800万美元的公司。但如果我出价1000万美元，我本可以以200万美元的可观利润中标，1000万减去800万。因此在次价密封投标机制中，公司从不因低报而获益。相反，低报可能带来严重后果。所以他们不会低报。但他们也不会高报。继续假设许可证对我的价值是1000万美元，但我夸大并出价1200万美元。这对我有好处吗？如果我出价1200万美元，而别人出价1100万美元，我会中标。但我将不得不支付1100万美元。那太高了。因此，如果我高报，我就冒着支付超过许可证价值金额的风险。所以我会恰好出价1000万美元，正是许可证对我的真实价值。但如果所有公司都按照许可证对他们的真实价值出价，那么最高出价者确实将是估值最高的公司。于是问题得以解决。
+\end{translation}
+
+% ============================================================
+% SECTION 5: MECHANISM DESIGN FOR ENERGY
+% ============================================================
+\section{Mechanism Design for Energy \hfill 能源机制设计}
+
+\begin{original}
+Let us look at one more example. This will be slightly more complicated than the previous ones. It is an energy example. Imagine a society in which consumers need energy. To make matters simple, suppose that there are just two consumers. We will call them Alice and Bob again. Let us suppose that there is also an energy authority and its job is to decide what kind of energy Alice and Bob are going to have. There are four possibilities: natural gas, oil, nuclear power, and coal. The energy authority has to choose one of those (it is too expensive to have more than one kind of energy).
+
+Now, which one should it choose? Presumably, the authority wants to choose an energy source that Alice and Bob like; the authority wants to satisfy their preferences. But the problem is that the authority does not know what Alice and Bob want. Assume that there are two possibilities for what Alice and Bob want. We will call them two states of the world. In state 1, Alice and Bob do not care very much about future consumption. They care mainly about current consumption. In state 2, Alice and Bob put a lot of weight on the future, not so much on the present.
+
+Suppose that Alice cares mostly about how convenient the energy source is. In state 1, she likes gas the most, because gas is the easiest to use. Then she likes oil, coal, and nuclear power in that order. Nuclear power is last on the list because it is inconvenient to use. For instance, driving a car with nuclear power will be quite complicated. But in state 2 (where she is putting most of the weight on the future) nuclear power rises to the top because she expects that there will be technological improvements that make nuclear power much easier to use. After nuclear power, her preference is for gas, coal, and oil in that order.
+
+Now, what about Bob? Suppose that Bob cares mostly about how safe the energy source is. So in state 1, he likes nuclear power the most because it is the safest. Then come oil and coal, and gas is at the bottom because he is worried about gas explosions. But if he puts more weight on the future, now nuclear power goes to the bottom because he is worried about the long-term problem of getting rid of nuclear waste. So his ranking is oil, gas, coal, and then nuclear power.
+
+\subsection*{The Energy Authority's Goals}
+What should the energy authority do given that Alice and Bob's preferences are different? We would argue that oil makes a good compromise in state 1. Nuclear power is not a good compromise, because although Bob likes nuclear power, Alice does not like it at all. And Alice likes gas, but Bob does not like gas at all. So nuclear power and gas are not good compromises. And also coal is not a good compromise because both Alice and Bob prefer oil to coal, so oil really makes the best compromise in state 1. And similarly, gas makes a good compromise in state 2. Nuclear power and oil do not make good compromises, because Alice hates oil and Bob hates nuclear power. Coal, once again, is not a good compromise because both Alice and Bob prefer gas to coal. So if the energy authority knew what the state was, it would choose oil in state 1 and gas in state 2.
+
+\subsection*{Energy Mechanisms}
+The problem is that the authority does not know what state it is. So what can it do? Well, the authority could ask Alice and Bob what the state is. But the difficulty is that this is not likely to work very well. Alice is always going to say that state 2 is the state even in state 1, because Alice always prefers gas to oil. She wants to make the authority think that state 2 is the actual state, so that it will choose gas. Bob has just the opposite incentive. Bob prefers oil to gas in both states. So he wants to make the authority think that state 1 is the actual state, so that the authority will choose oil. So he is always going to say state 1. Alice will say state 2. And the poor energy authority will have no idea of the actual state.
+
+So simply asking consumers about their preferences is not going to work. The authority is going to have to do something more sophisticated. What the authority can do is to have Alice and Bob play a mechanism represented as a game in which Alice chooses rows as strategies (Alice can choose the top row or bottom row), and Bob chooses columns as strategies (Bob can choose the left column or the right column). Then the outcome of the game is simply the intersection of Alice and Bob's choices.
+
+Imagine that state 1 is the actual state. What will happen if Alice and Bob play this game in state 1? If Alice predicts that Bob is going to play the left column, Alice is going to play the top row, since if she plays the top row, she gets oil, and if she plays the bottom row, she gets nuclear power. And notice that Alice prefers oil to nuclear power in state 1. But in fact, Bob will want to play the left column, because regardless of what Alice does, Bob is always better off playing the left column. If he plays the left column and Alice chooses the top row, Bob gets oil rather than coal and Bob prefers oil to coal. If Alice chooses the bottom row and Bob goes left, he gets nuclear power rather than gas, but he prefers nuclear power to gas.
+
+And so we have a strong prediction in this game: in state 1, Alice will choose the top row, and Bob will choose the left column. This is what game theory calls a Nash equilibrium, after John Nash, the hero of the movie, \textit{A Beautiful Mind}. One of Nash's great discoveries was how to predict the outcome of a game like this. In state 1 the prediction is that Bob will choose the left column, and Alice will choose the top row. And that will lead to oil, which is exactly the right outcome, according to the energy authority.
+
+So this game works successfully in state 1. It also works in state 2. You can easily work out that Alice is going to play the bottom row and Bob is going to play the right column. Thus, the mechanism leads to gas, and gas is the right outcome in state 2. So this simple mechanism implements the energy authority's goals. It solves the problem.
+\end{original}
+\begin{translation}
+让我们再看一个例子。这将比之前的稍复杂一些。这是一个能源例子。想象一个消费者需要能源的社会。为简单起见，假设只有两个消费者。我们再次称他们为Alice和Bob。假设还有一个能源管理机构，其职责是决定Alice和Bob将使用哪种能源。有四种可能：天然气、石油、核能和煤炭。能源管理机构必须选择其中一种（使用多种能源成本太高）。
+
+那么，应该选择哪一种？据推测，管理机构希望选择Alice和Bob喜欢的能源来源；管理机构希望满足他们的偏好。但问题是，管理机构不知道Alice和Bob想要什么。假设Alice和Bob的偏好存在两种可能性。我们将它们称为两种世界状态。在状态1中，Alice和Bob不太关心未来消费。他们主要关心当前消费。在状态2中，Alice和Bob非常看重未来，而不太关注当下。
+
+假设Alice主要关心能源来源的便利程度。在状态1中，她最喜欢天然气，因为天然气最易使用。然后她依次喜欢石油、煤炭和核能。核能排在最后，因为它使用不便。例如，用核能驱动汽车将相当复杂。但在状态2中（她将大部分权重放在未来），核能上升到首位，因为她预期技术进步将使核能更易使用。在核能之后，她的偏好依次为天然气、煤炭和石油。
+
+现在，Bob呢？假设Bob主要关心能源来源的安全程度。因此在状态1中，他最喜欢核能，因为它最安全。然后是石油和煤炭，天然气排在最后，因为他担心天然气爆炸。但如果他更重视未来，核能现在掉到最后，因为他担心处理核废料的长期问题。因此他的排序是石油、天然气、煤炭，然后是核能。
+
+\subsection*{能源管理机构的目标}
+鉴于Alice和Bob的偏好不同，能源管理机构应该怎么做？我们认为石油在状态1中是一个好的折中选择。核能不是好折中，因为虽然Bob喜欢核能，但Alice完全不喜欢。Alice喜欢天然气，但Bob完全不喜欢天然气。因此核能和天然气不是好折中。煤炭也不是好折中，因为Alice和Bob都偏好石油多于煤炭，所以石油确实是状态1中最好的折中。类似地，天然气在状态2中是一个好的折中。核能和石油不是好折中，因为Alice讨厌石油而Bob讨厌核能。同样，煤炭不是好折中，因为Alice和Bob都偏好天然气多于煤炭。因此，如果能源管理机构知道实际状态，它会在状态1中选择石油，在状态2中选择天然气。
+
+\subsection*{能源机制}
+问题在于，管理机构不知道实际状态是什么。那么它能做什么？它可以问Alice和Bob实际状态是什么。但困难在于这不太可能有效。即使在状态1中，Alice也会总是说状态2是实际状态，因为Alice始终偏好天然气多于石油。她想让管理机构认为状态2是实际状态，以便它选择天然气。Bob的动机恰恰相反。Bob在两种状态中都偏好石油多于天然气。因此他想让管理机构认为状态1是实际状态，以便管理机构选择石油。所以他总是会说状态1。Alice会说状态2。可怜的能源管理机构将无从知晓实际状态。
+
+因此，简单询问消费者的偏好行不通。管理机构必须采取更复杂的方法。管理机构可以做的是，让Alice和Bob参与一个以博弈形式表示的机制，其中Alice选择行作为策略（Alice可以选择上行或下行），Bob选择列作为策略（Bob可以选择左列或右列）。博弈的结果就是Alice和Bob选择的交点。
+
+假设状态1是实际状态。如果Alice和Bob在状态1中玩这个博弈，会发生什么？如果Alice预测Bob将选择左列，Alice将选择上行，因为如果她选上行，她得到石油，如果选下行，她得到核能。注意在状态1中，Alice偏好石油多于核能。但实际上，Bob会想选择左列，因为无论Alice做什么，Bob选择左列总是更好。如果他选择左列且Alice选上行，Bob得到石油而非煤炭，而Bob偏好石油多于煤炭。如果Alice选下行且Bob选左列，他得到核能而非天然气，但他偏好核能多于天然气。
+
+因此在这个博弈中我们有一个强有力的预测：在状态1中，Alice将选择上行，Bob将选择左列。这就是博弈论所谓的纳什均衡，以电影《美丽心灵》的主角John Nash命名。Nash的伟大发现之一是如何预测此类博弈的结果。在状态1中，预测是Bob将选择左列，Alice将选择上行。这将导致石油被选中，根据能源管理机构的判断，这正是正确的结果。
+
+因此这一机制在状态1中成功运作。它在状态2中也运作良好。我们可以容易地推导出Alice将选择下行，Bob将选择右列。因此，该机制导致天然气被选中，而天然气正是状态2的正确结果。因此，这一简单机制实施了能源管理机构的目标。它解决了问题。
+\end{translation}
+
+% ============================================================
+% SECTIONS 6 & 7
+% ============================================================
+\section{More General Results \hfill 更一般的结果}
+
+\begin{original}
+We have shown you three examples: the cake, the telecom, and the energy examples. In all three cases, we showed you a mechanism that solves the problem.
+
+Now you might say, well, that is a little bit unsatisfying, because we did not tell you how we found these mechanisms. We just showed them to you. It is like a magic trick. We pulled a rabbit out of a hat. We did not tell you how we did that trick. You might want to go deeper and understand how we found such mechanisms. In fact, you might ask how we even knew that there were solutions to the problems. So the general questions to ask in mechanism design are: first, how can we tell whether a goal can be implemented or not? And, if it is implementable, how can we find a mechanism that implements it? Those were the questions that ``Nash Equilibrium and Welfare Optimality'' (Maskin 1999) answered many years ago. We are not going to go into the details of the paper here because it is too technical. But if you are interested in reading more about mechanism design, you might look at it. It is not terribly difficult to read.
+\end{original}
+\begin{translation}
+我们向大家展示了三个例子：蛋糕、电信和能源例子。在这三个案例中，我们都展示了解决问题的机制。
+
+现在你可能会说，这有点不尽如人意，因为我们没有告诉你我们是如何找到这些机制的。我们只是把它们展示给你。这就像一个魔术。我们从帽子里变出一只兔子，但没有告诉你我们是如何变这个戏法的。你可能想深入探究，理解我们是如何找到这些机制的。事实上，你可能会问，我们当初怎么知道存在解决这些问题的方案的。因此，机制设计中要问的一般问题是：第一，如何判断一个目标能否被实施？第二，如果它是可实施的，如何找到实施它的机制？这些正是多年前《纳什均衡与福利最优性》（Maskin 1999）所回答的问题。我们不会在此深入该论文的细节，因为它过于技术化。但如果你有兴趣进一步阅读机制设计，可以查阅该文。它并不太难读。
+\end{translation}
+
+\section{Concluding Remarks \hfill 结语}
+
+\begin{original}
+We have looked at three possible applications of mechanism design, but there are literally thousands of others. Over the last 60 years economists have examined many of these.
+
+Let us just mention one important application that has not been completely worked out. This is how to solve the problem of climate change. We all know that the earth's climate is getting warmer. And we all know why that is happening: We humans are responsible for putting greenhouse gases like carbon dioxide into the atmosphere. The obvious solution to the problem is to stop emitting so much greenhouse gas. But the problem is that this goal puts the different countries of the world into conflict with each other. Each country would be happy if other countries made reductions. But it does not want to make reductions itself. Why not? Because making reductions is expensive. It means getting rid of old technology, adopting carbon-free technology, and imposing carbon taxes on companies and citizens. All of that is costly for the economy.
+
+For example, China would be happy if other countries reduced emissions but would prefer not to reduce itself. How do we solve that problem? We can solve it by designing an international treaty for greenhouse gases, which brings down emissions to a safe level and also gives every country the incentive to actually sign the treaty.
+
+If you think about it, an international treaty is simply a mechanism for reducing carbon emissions. Have we designed a successful international treaty for carbon emissions? Not yet. But I am confident that we will solve that problem. And when we do, mechanism design will be at the centre. Mechanism design will be the method by which the problem is solved.
+\end{original}
+\begin{translation}
+我们已经探讨了机制设计的三种可能应用，但实际上还有成千上万种其他应用。在过去六十年中，经济学家们研究了其中的许多。
+
+让我们提及一项尚未完全解决的重要应用：如何解决气候变化问题。我们都知道地球气候正在变暖。我们都知道原因何在：我们人类向大气中排放二氧化碳等温室气体。问题的明显解决方案是停止排放如此多的温室气体。但问题是，这一目标使世界各国相互冲突。每个国家都乐于看到其他国家减少排放，但自己却不想减少排放。为什么不呢？因为减排代价高昂。这意味着淘汰旧技术、采用无碳技术、对公司和个人征收碳税。所有这些对经济来说都是代价高昂的。
+
+例如，中国乐于看到其他国家减少排放，但自己不愿减少。我们如何解决这个问题？我们可以通过设计一项温室气体国际条约来解决，该条约将排放降低到安全水平，同时给予每个国家签署该条约的激励。
+
+如果你仔细思考，国际条约不过是一个减少碳排放的机制。我们是否已经设计出一项成功的碳排放国际条约？还没有。但我相信我们将解决这个问题。当我们做到时，机制设计将处于核心地位。机制设计将是解决该问题的方法。
+\end{translation}
+
+% ============================================================
+% REFERENCES
+% ============================================================
+\section*{References \hfill 参考文献}
+
+\begin{original}
+\begin{enumerate}[leftmargin=2em, itemsep=4pt]
+\item Maskin, E. (1999). Nash Equilibrium and Welfare Optimality. \textit{Review of Economic Studies}, 66, 23--38. doi:10.1111/1467-937X.00076
+\item Maskin, E. (2008). Mechanism Design: How to Implement Social Goals. Revised version of Eric Maskin's Nobel Memorial Prize Lecture delivered at Stockholm on December 8, 2007.
+\item The Nobel Prize Site (2019). The Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel 2007. Retrieved from www.nobelprize.org/prizes/economic-sciences/2007/summary
+\end{enumerate}
+\end{original}
+
+\end{document}

@@ -1,0 +1,1815 @@
+% =============================================================
+% Chapter 7: Systems of Equations, Differentials and Derivatives
+% 第7章：方程组、微分与导数
+% =============================================================
+
+\section{Systems of Equations, Differentials and Derivatives / 方程组、微分与导数}
+
+\subsection{Introduction / 引言}
+
+\begin{original}
+In many economic problems, functions of more than one variable arise naturally. Preferences are represented by a utility function that depends on goods consumed, $u(x_1, x_2, \dots, x_n)$, output in production is represented as a function of inputs, $f(k_1, k_2, \dots, k_n)$, and so on. As with the single-variable case, differential techniques play an important role in a variety of applications, such as comparative statics and optimization. For example, the impact of variation in one variable on the value of a function routinely arises in considering its marginal impact. In the production case, the marginal productivity of input $k_1$ is given by $[f(k_1 + \Delta, k_2, \dots, k_n) - f(k_1, k_2, \dots, k_n)]/\Delta$, and measures the impact on output of a small change in input $k_1$. Such a calculation is called a partial derivative, since only variation in one of a number of variables is considered. Developing these techniques leads to a number of applications and provides the necessary tools to develop some important results --- in particular the implicit function theorem.
+\end{original}
+\begin{translation}
+在许多经济问题中，多元函数自然地出现。偏好由依赖于所消费商品的效用函数表示，$u(x_1, x_2, \dots, x_n)$；生产中的产出表示为投入的函数，$f(k_1, k_2, \dots, k_n)$，等等。与单变量情形一样，微分技术在诸如比较静态分析和最优化等多种应用中发挥着重要作用。例如，一个变量的变化对函数值的影响在考虑其边际效应时常常出现。在生产情形中，投入$k_1$的边际生产率由$[f(k_1 + \Delta, k_2, \dots, k_n) - f(k_1, k_2, \dots, k_n)]/\Delta$给出，它衡量投入$k_1$的微小变化对产出的影响。这种计算称为偏导数，因为只考虑多个变量中的一个的变化。发展这些技术会带来许多应用，并提供了推导某些重要结果——特别是隐函数定理——所需的基本工具。
+\end{translation}
+
+\begin{original}
+Following some introductory discussion, partial derivatives are defined in Section 7.2. This is the natural extension of the derivative of a function of one variable. After this, level contours are introduced (Section 7.3). A level contour identifies the set of $x$ that yields a specific value for the function: in microeconomic theory, indifference curves and isoquants are level contours of utility and production functions respectively. In two dimensions particularly, level contours provide a useful way to visualize the shape of a function. Concepts such as the marginal rate of substitution between goods in consumption or production are explained naturally in terms of level contours and are defined using partial derivatives.
+\end{original}
+\begin{translation}
+在介绍性讨论之后，第7.2节定义了偏导数。这是单变量函数导数的自然推广。此后，第7.3节介绍了水平等高线。水平等高线确定了使得函数取特定值的$x$的集合：在微观经济理论中，无差异曲线和等产量线分别是效用函数和生产函数的水平等高线。特别是在二维情形中，水平等高线提供了一种可视化函数形状的有用方法。消费或生产中商品之间的边际替代率等概念可以自然地用水平等高线来解释，并用偏导数来定义。
+\end{translation}
+
+\begin{original}
+One important use of partial derivatives is in locating maxima and minima of a function: values of $(x_1, \dots, x_n)$ that make the function as large or as small as possible. This technique is illustrated in Section 7.5. The remaining sections consider (non-linear) systems of equations. Section 7.7 outlines some of the basic issues relating to non-linear systems, such as the existence and uniqueness of solutions. Following this, the implicit function theorem is introduced in Section 7.8. This theorem studies how variation of one or more parameters in a system of equations affects each variable in the system.
+\end{original}
+\begin{translation}
+偏导数的一个重要用途是确定函数的最大值和最小值：即使函数尽可能大或尽可能小的$(x_1, \dots, x_n)$的取值。这一技术在第7.5节中加以说明。其余各节考虑（非线性）方程组。第7.7节概述了与非线性系统相关的一些基本问题，如解的存在性和唯一性。此后，第7.8节引入了隐函数定理。该定理研究方程组中一个或多个参数的变化如何影响系统中的每个变量。
+\end{translation}
+
+\begin{original}
+For a linear function of many variables, the impact of parameter variation is easy to determine. The function $f(x_1, x_2) = a x_1 + b x_2$ is a linear function of two variables and $f(x_1, x_2, \dots, x_n) = a_1 x_1 + a_2 x_2 + \dots + a_n x_n$ is a linear function of $n$ variables, $(x_1, x_2, \dots, x_n)$. The impact of a change in $x_1$ on the value of $f(x_1, x_2) = a x_1 + b x_2$ may be computed directly:
+\[
+f(x_1 + \Delta x_1, x_2) - f(x_1, x_2) = (a[x_1 + \Delta x_1] + b x_2) - (a x_1 + b x_2) = a \Delta x_1.
+\]
+From this, the change in $f$ per unit change in $x_1$ may be calculated as:
+\[
+\frac{f(x_1 + \Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1} = a.
+\]
+Similar calculations may be applied for non-linear functions to compute the impact of variation in some variable on the function.
+\end{original}
+\begin{translation}
+对于多元线性函数，参数变化的影响很容易确定。函数$f(x_1, x_2) = a x_1 + b x_2$是二元线性函数，$f(x_1, x_2, \dots, x_n) = a_1 x_1 + a_2 x_2 + \dots + a_n x_n$是$n$元$(x_1, x_2, \dots, x_n)$的线性函数。$x_1$的变化对$f(x_1, x_2) = a x_1 + b x_2$的值的影响可以直接计算：
+\[
+f(x_1 + \Delta x_1, x_2) - f(x_1, x_2) = (a[x_1 + \Delta x_1] + b x_2) - (a x_1 + b x_2) = a \Delta x_1.
+\]
+由此，$f$的单位$x_1$变化的变化量可以计算为：
+\[
+\frac{f(x_1 + \Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1} = a.
+\]
+类似的计算也可以应用于非线性函数，以计算某个变量的变化对函数的影响。
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.1:} Consider
+\[
+f(x_1, x_2) = (x_1 x_2)^2 + \cos(x_1) \sin(x_2),
+\]
+suppose that $x_1$ is increased to $x_1 + \Delta x_1$:
+\begin{align*}
+f(x_1 + \Delta, x_2) &= ([x_1 + \Delta x_1] \cdot x_2)^2 + \cos(x_1 + \Delta x_1) \sin(x_2)\\
+&= [x_1^2 + 2 x_1 \Delta x_1 + (\Delta x_1)^2] \cdot x_2^2 + \cos(x_1 + \Delta x_1) \sin(x_2)\\
+&= x_1^2 \cdot x_2^2 + [2 x_1 \Delta x_1 + (\Delta x_1)^2] \cdot x_2^2 + \cos(x_1 + \Delta x_1) \sin(x_2).
+\end{align*}
+Subtracting $f(x_1, x_2)$, then
+\[
+f(x_1 + \Delta x_1, x_2) - f(x_1, x_2) = [2 x_1 \Delta x_1 + (\Delta x_1)^2] \cdot x_2^2 + [\cos(x_1 + \Delta x_1) - \cos(x_1)] \sin(x_2).
+\]
+Dividing by $\Delta x_1$,
+\[
+\frac{f(x_1 + \Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1} = 2 x_1 x_2^2 + \frac{[\cos(x_1 + \Delta x_1) - \cos(x_1)]}{\Delta x_1} \sin(x_2) + (\Delta x_1) \cdot x_2^2.
+\]
+As $\Delta x_1$ goes to 0, the term $(\Delta x_1) \cdot x_2^2$ goes to 0 and $\frac{[\cos(x_1 + \Delta x_1) - \cos(x_1)]}{\Delta x_1}$ approaches the derivative of $\cos(x_1)$, which is $-\sin(x_1)$. Therefore, as $\Delta x_1$ approaches 0,
+\[
+\frac{f(x_1 + \Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1} \to 2 x_1 x_2^2 - \sin(x_1) \sin(x_2).
+\]
+This example shows that calculating the impact of parameter or variable changes on a function of many variables or parameters is not significantly different from similar computations in the one-variable case.
+\end{original}
+\begin{translation}
+\textbf{例7.1：} 考虑
+\[
+f(x_1, x_2) = (x_1 x_2)^2 + \cos(x_1) \sin(x_2),
+\]
+假设$x_1$增加到$x_1 + \Delta x_1$：
+\begin{align*}
+f(x_1 + \Delta, x_2) &= ([x_1 + \Delta x_1] \cdot x_2)^2 + \cos(x_1 + \Delta x_1) \sin(x_2)\\
+&= [x_1^2 + 2 x_1 \Delta x_1 + (\Delta x_1)^2] \cdot x_2^2 + \cos(x_1 + \Delta x_1) \sin(x_2)\\
+&= x_1^2 \cdot x_2^2 + [2 x_1 \Delta x_1 + (\Delta x_1)^2] \cdot x_2^2 + \cos(x_1 + \Delta x_1) \sin(x_2).
+\end{align*}
+减去$f(x_1, x_2)$，则
+\[
+f(x_1 + \Delta x_1, x_2) - f(x_1, x_2) = [2 x_1 \Delta x_1 + (\Delta x_1)^2] \cdot x_2^2 + [\cos(x_1 + \Delta x_1) - \cos(x_1)] \sin(x_2).
+\]
+除以$\Delta x_1$，
+\[
+\frac{f(x_1 + \Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1} = 2 x_1 x_2^2 + \frac{[\cos(x_1 + \Delta x_1) - \cos(x_1)]}{\Delta x_1} \sin(x_2) + (\Delta x_1) \cdot x_2^2.
+\]
+当$\Delta x_1$趋于0时，项$(\Delta x_1) \cdot x_2^2$趋于0，且$\frac{[\cos(x_1 + \Delta x_1) - \cos(x_1)]}{\Delta x_1}$趋近于$\cos(x_1)$的导数，即$-\sin(x_1)$。因此，当$\Delta x_1$趋近于0时，
+\[
+\frac{f(x_1 + \Delta x_1, x_2) - f(x_1, x_2)}{\Delta x_1} \to 2 x_1 x_2^2 - \sin(x_1) \sin(x_2).
+\]
+这个例子表明，计算参数或变量变化对多元函数的影响与单变量情形中的类似计算并没有显著不同。
+\end{translation}
+
+\begin{original}
+The need for such calculations comes up routinely in economics. Consider maximizing utility $u(x_1, x_2)$ subject to a budget constraint, $p_1 x_1 + p_2 x_2 = y$, where $p_i$ is the price of good $i$ and $y$ is income. Rearranging the budget constraint: $x_2 = \frac{y}{p_2} - \frac{p_1}{p_2} x_1$. Substituting this into the utility function gives
+\[
+\hat{u}(x_1, y, p_1, p_2) = u\!\left(x_1, \frac{y}{p_2} - \frac{p_1}{p_2} x_1\right).
+\]
+Taking $(y, p_1, p_2)$ as fixed (beyond the control of the consumer), maximizing utility amounts to choosing $x_1$ to maximize $\hat{u}(x_1, y, p_1, p_2)$. The impact of variations in $x_1$ on $\hat{u}$ requires calculation of the direct effect via $x_1$ and the indirect effect via $x_2 = \frac{y}{p_2} - \frac{p_1}{p_2} x_1$. When $x_1$ is chosen optimally, the maximized value of $\hat{u}$ gives the utility of the individual from choosing optimally --- let $\bar{u}(y, p_1, p_2) = \max_{x_1} \hat{u}(x_1, y, p_1, p_2)$. The function $\bar{u}$ gives the utility of the individual as a function of $(y, p_1, p_2)$, so one may consider the impact of income and price variations on the individual's welfare. The impact on utility of an increase in income from $y$ to $y + \Delta y$ is given by $\bar{u}(y + \Delta y, p_1, p_2) - \bar{u}(y, p_1, p_2)$, and the per-unit change is given by
+\[
+\frac{\bar{u}(y + \Delta y, p_1, p_2) - \bar{u}(y, p_1, p_2)}{\Delta y}.
+\]
+This expression is a partial derivative --- calculating the impact on $\bar{u}$ of a small change in $y$, with the other parameters affecting $\bar{u}$ held fixed. The partial derivative is the analogous concept to the derivative of a function of one variable, for functions of more than one variable. In this example, partial derivatives appear both in the choice of $x_1$ and the subsequent calculation of the marginal utility of income.
+\end{original}
+\begin{translation}
+对此类计算的需求在经济学中经常出现。考虑在预算约束$p_1 x_1 + p_2 x_2 = y$下最大化效用$u(x_1, x_2)$，其中$p_i$是商品$i$的价格，$y$是收入。重新整理预算约束：$x_2 = \frac{y}{p_2} - \frac{p_1}{p_2} x_1$。将其代入效用函数得
+\[
+\hat{u}(x_1, y, p_1, p_2) = u\!\left(x_1, \frac{y}{p_2} - \frac{p_1}{p_2} x_1\right).
+\]
+将$(y, p_1, p_2)$视为固定的（消费者无法控制），最大化效用等价于选择$x_1$来最大化$\hat{u}(x_1, y, p_1, p_2)$。$x_1$的变化对$\hat{u}$的影响需要计算通过$x_1$的直接效应和通过$x_2 = \frac{y}{p_2} - \frac{p_1}{p_2} x_1$的间接效应。当$x_1$被最优选择时，$\hat{u}$的最大化值给出了个体从最优选择中获得的效用——令$\bar{u}(y, p_1, p_2) = \max_{x_1} \hat{u}(x_1, y, p_1, p_2)$。函数$\bar{u}$给出了个体效用作为$(y, p_1, p_2)$的函数，因此可以考虑收入和价格变化对个体福利的影响。收入从$y$增加到$y + \Delta y$对效用的影响由$\bar{u}(y + \Delta y, p_1, p_2) - \bar{u}(y, p_1, p_2)$给出，单位变化由
+\[
+\frac{\bar{u}(y + \Delta y, p_1, p_2) - \bar{u}(y, p_1, p_2)}{\Delta y}.
+\]
+给出。这个表达式是一个偏导数——计算$y$的微小变化对$\bar{u}$的影响，同时保持影响$\bar{u}$的其他参数不变。偏导数是对多元函数而言与单变量函数导数相类似的概念。在这个例子中，偏导数既出现在$x_1$的选择中，也出现在随后的收入边际效用的计算中。
+\end{translation}
+
+\begin{original}
+In production theory, a production function $f(k, l)$ associates a level of output $Q = f(k, l)$ to inputs of capital ($k$) and labor ($l$). If capital is increased from $k$ to $k + \Delta$, then output increases to $f(k + \Delta, l)$ and the change in output is $f(k + \Delta, l) - f(k, l)$. Dividing this by $\Delta$ gives $[f(k + \Delta, l) - f(k, l)]/\Delta$, the change in output per unit change in the capital input. As $\Delta$ goes to 0, assuming $f$ is differentiable with respect to $k$, the limiting value is called the marginal product of capital.
+\end{original}
+\begin{translation}
+在生产理论中，生产函数$f(k, l)$将产出水平$Q = f(k, l)$与资本($k$)和劳动($l$)的投入联系起来。如果资本从$k$增加到$k + \Delta$，则产出增加到$f(k + \Delta, l)$，产出的变化为$f(k + \Delta, l) - f(k, l)$。将其除以$\Delta$得到$[f(k + \Delta, l) - f(k, l)]/\Delta$，即每单位资本投入变化的产出变化。当$\Delta$趋于0时，假设$f$关于$k$可微，其极限值称为资本的边际产品。
+\end{translation}
+
+\begin{original}
+In demand theory, when a profile of goods $(x_1, \dots, x_n)$ is chosen to maximize utility subject to a budget constraint $p_1 x_1 + \dots + p_n x_n = y$, the resulting demands depend on the profile of prices and income. Thus, the demand for good $i$ is $x_i(p_1, \dots, p_n, y)$. When prices other than $p_i$ and income $y$ are constant, changes in $p_i$ lead to changes in $x_i$, and this connection between $x_i$ and $p_i$ gives the demand function for good $i$. As $p_i$ varies, the resulting change in $x_i$ is
+\[
+\frac{[x_i(p_1, \dots, p_{i-1}, p_i + \Delta p_i, p_{i+1}, p_n, y) - x_i(p_1, \dots, p_{i-1}, p_i, p_{i+1}, p_n, y)]}{\Delta p_i}.
+\]
+The partial derivative with respect to one variable depends on the values of the other variables entering the function. For example, the impact of a price change on demand depends on the prices of other goods and income. In Figure 7.1, the partial derivative with respect to $p_i$ at $(p_1, \dots, p_i, \dots, p_n, y)$ is different from the partial derivative at $(\tilde{p}_1, \dots, p_i, \dots, \tilde{p}_n, \tilde{y})$, since $|\Delta \tilde{x}_i| > |\Delta x_i|$.
+\end{original}
+\begin{translation}
+在需求理论中，当选择商品组合$(x_1, \dots, x_n)$在预算约束$p_1 x_1 + \dots + p_n x_n = y$下最大化效用时，由此产生的需求取决于价格组合和收入。因此，对商品$i$的需求为$x_i(p_1, \dots, p_n, y)$。当除$p_i$以外的其他价格和收入$y$不变时，$p_i$的变化导致$x_i$的变化，$x_i$与$p_i$之间的这种联系给出了商品$i$的需求函数。随着$p_i$的变化，由此产生的$x_i$的变化为
+\[
+\frac{[x_i(p_1, \dots, p_{i-1}, p_i + \Delta p_i, p_{i+1}, p_n, y) - x_i(p_1, \dots, p_{i-1}, p_i, p_{i+1}, p_n, y)]}{\Delta p_i}.
+\]
+关于一个变量的偏导数取决于进入函数的其他变量的值。例如，价格变化对需求的影响取决于其他商品的价格和收入。在图7.1中，在$(p_1, \dots, p_i, \dots, p_n, y)$处关于$p_i$的偏导数与在$(\tilde{p}_1, \dots, p_i, \dots, \tilde{p}_n, \tilde{y})$处不同，因为$|\Delta \tilde{x}_i| > |\Delta x_i|$。
+\end{translation}
+
+\begin{original}
+The next section defines the partial derivative of a function --- a natural extension of the derivative of a function of a single variable, to functions of many variables. Following this, level contours are introduced and then, using partial derivatives, the equilibrium output in a duopoly is determined.
+\end{original}
+\begin{translation}
+下一节定义了函数的偏导数——单变量函数导数向多元函数的自然推广。此后，引入了水平等高线，然后利用偏导数确定了双寡头市场中的均衡产出。
+\end{translation}
+
+\subsection{Partial Derivatives / 偏导数}
+
+\begin{original}
+Let $f : X \to \mathbb{R}$, where $X \subseteq \mathbb{R}^n$, so $f(x) = f(x_1, x_2, \dots, x_n)$. If all the $x$'s except one are held fixed, we can view $f$ as a function of one variable, and then consider the derivative of $f$ with respect to this variable. This is called the partial derivative. The partial derivative of $f$ with respect to $x_i$ is denoted $\frac{\partial f}{\partial x_i}$ and defined as:
+\[
+\frac{\partial f}{\partial x_i} = \lim_{\Delta x_i \to 0} \frac{f(x_1, x_2, \dots, x_{i-1}, x_i + \Delta x_i, x_{i+1}, \dots, x_n) - f(x_1, x_2, \dots, x_n)}{\Delta x_i}.
+\]
+Thus, $\frac{\partial f}{\partial x_i}$ is defined provided this limit exists for all $\Delta x_i \to 0$. The partial derivative of $f$ with respect to $x_i$ measures the change in $f$ due to a small change in $x_i$, when other variables are held constant.
+\end{original}
+\begin{translation}
+设$f : X \to \mathbb{R}$，其中$X \subseteq \mathbb{R}^n$，则$f(x) = f(x_1, x_2, \dots, x_n)$。如果除一个变量外所有$x$保持固定，我们可以将$f$视为单变量函数，然后考虑$f$关于该变量的导数。这称为偏导数。$f$关于$x_i$的偏导数记为$\frac{\partial f}{\partial x_i}$，定义为：
+\[
+\frac{\partial f}{\partial x_i} = \lim_{\Delta x_i \to 0} \frac{f(x_1, x_2, \dots, x_{i-1}, x_i + \Delta x_i, x_{i+1}, \dots, x_n) - f(x_1, x_2, \dots, x_n)}{\Delta x_i}.
+\]
+因此，$\frac{\partial f}{\partial x_i}$在该极限对所有$\Delta x_i \to 0$存在时即有定义。$f$关于$x_i$的偏导数度量了当其他变量保持不变时，$x_i$的微小变化所引起的$f$的变化。
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.2:} With $f(x_1, x_2) = (x_1 x_2)^2 + \cos(x_1) \sin(x_2)$,
+\[
+\frac{\partial f}{\partial x_1} = 2(x_1 x_2) x_2 - \sin(x_1) \sin(x_2) = 2 x_1 x_2^2 - \sin(x_1) \sin(x_2),
+\]
+\[
+\frac{\partial f}{\partial x_2} = 2(x_1 x_2) x_1 + \cos(x_1) \cos(x_2) = 2 x_1^2 x_2 + \cos(x_1) \cos(x_2).
+\]
+\end{original}
+\begin{translation}
+\textbf{例7.2：} 对于$f(x_1, x_2) = (x_1 x_2)^2 + \cos(x_1) \sin(x_2)$，
+\[
+\frac{\partial f}{\partial x_1} = 2(x_1 x_2) x_2 - \sin(x_1) \sin(x_2) = 2 x_1 x_2^2 - \sin(x_1) \sin(x_2),
+\]
+\[
+\frac{\partial f}{\partial x_2} = 2(x_1 x_2) x_1 + \cos(x_1) \cos(x_2) = 2 x_1^2 x_2 + \cos(x_1) \cos(x_2).
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Remark 7.1:} Often, for notational convenience, the partial derivative of $f$ with respect to $x_i$ is denoted $f_{x_i}$ or $f_i$ when no confusion can arise. Also, where there are just two variables in consideration, these may be labeled $x$ and $y$ with partial derivatives $f_x$ and $f_y$. With more than two variables, it is often more convenient to label by index, $x_i$, $i = 1, \dots, n$.
+\end{original}
+\begin{translation}
+\textbf{注7.1：} 通常，为了记号的方便，在不会引起混淆的情况下，$f$关于$x_i$的偏导数记为$f_{x_i}$或$f_i$。此外，当只考虑两个变量时，可以标记为$x$和$y$，偏导数为$f_x$和$f_y$。对于多于两个变量的情形，按指标$x_i$, $i = 1, \dots, n$标记通常更为方便。
+\end{translation}
+
+\begin{original}
+Note that for $f(x_1, x_2, \dots, x_n)$, $\frac{\partial f}{\partial x_i}$ is a function of all the $x_i$. One can take the partial derivative of this function --- the partial derivative of the partial derivative. Thus, the partial derivative of $\frac{\partial f}{\partial x_i}$ with respect to $x_i$ is $\frac{\partial}{\partial x_i}\frac{\partial f}{\partial x_i}$ and the partial derivative of $\frac{\partial f}{\partial x_i}$ with respect to $x_j$ is $\frac{\partial}{\partial x_j}\frac{\partial f}{\partial x_i}$. For ease of notation, these are sometimes written as $\frac{\partial^2 f}{\partial x_i^2}$ and $\frac{\partial^2 f}{\partial x_j \partial x_i}$ or as $f_{x_i x_i}$ and $f_{x_j x_i}$. In the two-variable case with $f(x, y)$, the partial derivatives are $f_x = \frac{\partial f}{\partial x}$ and $f_y = \frac{\partial f}{\partial y}$ and the second partial derivatives are written as $f_{xx} = \frac{\partial}{\partial x}\frac{\partial f}{\partial x}$, $f_{yy} = \frac{\partial}{\partial y}\frac{\partial f}{\partial y}$, $f_{xy} = \frac{\partial}{\partial x}\frac{\partial f}{\partial y}$, and $f_{yx} = \frac{\partial}{\partial y}\frac{\partial f}{\partial x}$.
+\end{original}
+\begin{translation}
+注意，对于$f(x_1, x_2, \dots, x_n)$，$\frac{\partial f}{\partial x_i}$是所有$x_i$的函数。我们可以对该函数求偏导数——即偏导数的偏导数。因此，$\frac{\partial f}{\partial x_i}$关于$x_i$的偏导数是$\frac{\partial}{\partial x_i}\frac{\partial f}{\partial x_i}$，$\frac{\partial f}{\partial x_i}$关于$x_j$的偏导数是$\frac{\partial}{\partial x_j}\frac{\partial f}{\partial x_i}$。为了记号的简便，这些有时写作$\frac{\partial^2 f}{\partial x_i^2}$和$\frac{\partial^2 f}{\partial x_j \partial x_i}$，或者写作$f_{x_i x_i}$和$f_{x_j x_i}$。在二元函数$f(x, y)$的情形中，偏导数为$f_x = \frac{\partial f}{\partial x}$和$f_y = \frac{\partial f}{\partial y}$，二阶偏导数写作$f_{xx} = \frac{\partial}{\partial x}\frac{\partial f}{\partial x}$, $f_{yy} = \frac{\partial}{\partial y}\frac{\partial f}{\partial y}$, $f_{xy} = \frac{\partial}{\partial x}\frac{\partial f}{\partial y}$和$f_{yx} = \frac{\partial}{\partial y}\frac{\partial f}{\partial x}$。
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.3:} To illustrate, consider the two-variable case with $f(x, y) = x^\alpha y^\beta$. Then:
+\[
+f_x(x, y) = \frac{\partial f}{\partial x} = \alpha x^{\alpha-1} y^\beta = \frac{\alpha}{x} f(x, y),
+\]
+\[
+f_y(x, y) = \frac{\partial f}{\partial y} = \beta x^\alpha y^{\beta-1} = \frac{\beta}{y} f(x, y).
+\]
+Notice that $f_x(x, y) = \frac{\partial f}{\partial x}(x, y) = \frac{\partial \{f(x, y)\}}{\partial x} = \alpha x^{\alpha-1} y^\beta$ depends on $x$ and $y$ --- it is a function of $(x, y)$. The function $f_x(x, y)$ has a partial derivative with respect to $x$, which is $\frac{\partial}{\partial x}\frac{\partial f}{\partial x} = \alpha(\alpha-1)x^{\alpha-2} y^\beta$. Similarly, $f_x(x, y)$ has a partial derivative with respect to $y$ given by $\frac{\partial}{\partial y}\frac{\partial f}{\partial x} = \alpha\beta x^{\alpha-1} y^{\beta-1}$.
+\end{original}
+\begin{translation}
+\textbf{例7.3：} 举例来说，考虑二元情形$f(x, y) = x^\alpha y^\beta$。则：
+\[
+f_x(x, y) = \frac{\partial f}{\partial x} = \alpha x^{\alpha-1} y^\beta = \frac{\alpha}{x} f(x, y),
+\]
+\[
+f_y(x, y) = \frac{\partial f}{\partial y} = \beta x^\alpha y^{\beta-1} = \frac{\beta}{y} f(x, y).
+\]
+注意$f_x(x, y) = \frac{\partial f}{\partial x}(x, y) = \frac{\partial \{f(x, y)\}}{\partial x} = \alpha x^{\alpha-1} y^\beta$依赖于$x$和$y$——它是$(x, y)$的函数。函数$f_x(x, y)$有一个关于$x$的偏导数，即$\frac{\partial}{\partial x}\frac{\partial f}{\partial x} = \alpha(\alpha-1)x^{\alpha-2} y^\beta$。类似地，$f_x(x, y)$有一个关于$y$的偏导数，由$\frac{\partial}{\partial y}\frac{\partial f}{\partial x} = \alpha\beta x^{\alpha-1} y^{\beta-1}$给出。
+\end{translation}
+
+\begin{original}
+In Example 7.2, the second partial derivatives are given by:
+\begin{align*}
+f_{x_1 x_1} &= \frac{\partial}{\partial x_1}\frac{\partial f}{\partial x_1} = 2 x_2^2 - \cos(x_1) \sin(x_2),\\
+f_{x_2 x_1} &= \frac{\partial}{\partial x_2}\frac{\partial f}{\partial x_1} = 4 x_1 x_2 - \sin(x_1) \cos(x_2),\\
+f_{x_2 x_2} &= \frac{\partial}{\partial x_1}\frac{\partial f}{\partial x_2} = 2 x_1^2 - \cos(x_1) \sin(x_2),\\
+f_{x_1 x_2} &= \frac{\partial}{\partial x_1}\frac{\partial f}{\partial x_2} = 4 x_1 x_2 - \sin(x_1) \cos(x_2).
+\end{align*}
+Note that in Example 7.3, $f_{x_2 x_1} = f_{x_1 x_2}$. This is not accidental. When the partial derivatives exist and are continuous, then the second partial derivatives satisfy a special relation known as Young's theorem.
+\end{original}
+\begin{translation}
+在例7.2中，二阶偏导数由下列式子给出：
+\begin{align*}
+f_{x_1 x_1} &= \frac{\partial}{\partial x_1}\frac{\partial f}{\partial x_1} = 2 x_2^2 - \cos(x_1) \sin(x_2),\\
+f_{x_2 x_1} &= \frac{\partial}{\partial x_2}\frac{\partial f}{\partial x_1} = 4 x_1 x_2 - \sin(x_1) \cos(x_2),\\
+f_{x_2 x_2} &= \frac{\partial}{\partial x_1}\frac{\partial f}{\partial x_2} = 2 x_1^2 - \cos(x_1) \sin(x_2),\\
+f_{x_1 x_2} &= \frac{\partial}{\partial x_1}\frac{\partial f}{\partial x_2} = 4 x_1 x_2 - \sin(x_1) \cos(x_2).
+\end{align*}
+注意在例7.3中，$f_{x_2 x_1} = f_{x_1 x_2}$。这并非偶然。当偏导数存在且连续时，二阶偏导数满足一个称为杨氏定理的特殊关系。
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 7.1:} Suppose the function $f(x_1, \dots, x_n)$ has continuous partial derivatives, $f_{x_i}(x_1, \dots, x_n)$, in a neighborhood of $(x_1^*, \dots, x_n^*)$, and suppose they are differentiable, $\frac{\partial^2 f}{\partial x_i \partial x_j}$ exists for each $i, j$; then the second partial derivatives are equal:
+\[
+f_{x_i x_j} = \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial}{\partial x_i}\left(\frac{\partial f}{\partial x_j}\right) = \frac{\partial}{\partial x_j}\left(\frac{\partial f}{\partial x_i}\right) = \frac{\partial^2 f}{\partial x_j \partial x_i} = f_{x_j x_i}.
+\]
+\end{original}
+\begin{translation}
+\textbf{定理7.1：} 假设函数$f(x_1, \dots, x_n)$在$(x_1^*, \dots, x_n^*)$的邻域内有连续的偏导数$f_{x_i}(x_1, \dots, x_n)$，并且假设它们是可微的，$\frac{\partial^2 f}{\partial x_i \partial x_j}$对每个$i, j$都存在；则二阶偏导数相等：
+\[
+f_{x_i x_j} = \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial}{\partial x_i}\left(\frac{\partial f}{\partial x_j}\right) = \frac{\partial}{\partial x_j}\left(\frac{\partial f}{\partial x_i}\right) = \frac{\partial^2 f}{\partial x_j \partial x_i} = f_{x_j x_i}.
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.4:} Consider $f(x, y) = \ln(x y) \cdot \sin y$, so that $f_x = \frac{y}{x y} \sin y = \frac{1}{x} \sin y$ and $f_{yx} = \frac{1}{x} \cos y$. Differentiating first with respect to $y$ gives: $f_y = \frac{x}{x y} \sin y + \ln(x y) \cos y = \frac{1}{y} \sin y + \ln(x y) \cos y$. And then differentiating with respect to $x$: $f_{xy} = \frac{y}{x y} \cos y = \frac{1}{x} \cos y$. So, $f_{xy} = f_{yx}$.
+\end{original}
+\begin{translation}
+\textbf{例7.4：} 考虑$f(x, y) = \ln(x y) \cdot \sin y$，则$f_x = \frac{y}{x y} \sin y = \frac{1}{x} \sin y$且$f_{yx} = \frac{1}{x} \cos y$。先对$y$求导得：$f_y = \frac{x}{x y} \sin y + \ln(x y) \cos y = \frac{1}{y} \sin y + \ln(x y) \cos y$。然后再对$x$求导：$f_{xy} = \frac{y}{x y} \cos y = \frac{1}{x} \cos y$。因此，$f_{xy} = f_{yx}$。
+\end{translation}
+
+\subsection{Level Contours / 水平等高线}
+
+\begin{original}
+Level contours arise frequently in economics, for example, as isoquants in production theory or as indifference curves in consumer theory. Given a function of $n$ variables, $f(x_1, \dots, x_n)$, the level contour of $f$ at level or height $\bar{f}$ is the set of values of $(x_1, \dots, x_n)$ such that $f(x_1, \dots, x_n) = \bar{f}$. If this set is denoted $L_{\bar{f}}$, then
+\[
+L_{\bar{f}} = \{(x_1, \dots, x_n) \mid f(x_1, \dots, x_n) = \bar{f}\}.
+\]
+Different values of $\bar{f}$ determine different level contours. The level contour is a way of visualizing a function of more than one variable.
+\end{original}
+\begin{translation}
+水平等高线在经济学中经常出现，例如，作为生产理论中的等产量线或消费者理论中的无差异曲线。给定一个$n$元函数$f(x_1, \dots, x_n)$，$f$在水平或高度$\bar{f}$处的水平等高线是使得$f(x_1, \dots, x_n) = \bar{f}$的$(x_1, \dots, x_n)$的取值的集合。如果该集合记为$L_{\bar{f}}$，则
+\[
+L_{\bar{f}} = \{(x_1, \dots, x_n) \mid f(x_1, \dots, x_n) = \bar{f}\}.
+\]
+不同的$\bar{f}$值确定了不同的水平等高线。水平等高线是可视化多元函数的一种方法。
+\end{translation}
+
+\begin{original}
+In Figure 7.2, the function $f(x, y) = x^{\frac{1}{2}} y^{\frac{1}{2}}$ is plotted, and three level contours graphed, giving the $(x, y)$ pairs associated with the level contours $\{(x, y) \mid f(x, y) = 1\}$, $\{(x, y) \mid f(x, y) = 2\}$ and $\{(x, y) \mid f(x, y) = 3\}$.
+\end{original}
+\begin{translation}
+在图7.2中，绘制了函数$f(x, y) = x^{\frac{1}{2}} y^{\frac{1}{2}}$，并画出了三条水平等高线，给出了与水平等高线$\{(x, y) \mid f(x, y) = 1\}$、$\{(x, y) \mid f(x, y) = 2\}$和$\{(x, y) \mid f(x, y) = 3\}$相关的$(x, y)$对。
+\end{translation}
+
+\begin{original}
+Given a utility function $u(x, y)$, the indifference curve corresponding to utility level $\bar{u}$ is defined as the set of $(x, y)$ combinations that provide that level of utility, $\bar{u}$: $I_{\bar{u}} = \{(x, y) \mid u(x, y) = \bar{u}\}$. The isoquant corresponding to a production function $f$ is the set of input combinations $(x, y)$ that yield a given level of output $Q$: $I_Q = \{(x, y) \mid f(x, y) = Q\}$. Considering the production function $f$, since a small change in $x$ has impact $f_x$ on the value of output and a small change in $y$ has impact $f_y$, the total change in output from small changes $(dx, dy)$ in $(x, y)$ is $df = f_x(x, y) dx + f_y(x, y) dy$. This is called the total derivative of $f$ at $(x, y)$. Note that $df$ depends on $(x, y)$ and $(dx, dy)$. An isoquant is a level contour of the function $f$. Starting from a point $(x, y)$ on the contour, small variations in $x$ and $y$ that leave the value of $f$ unchanged satisfy $df = 0$. This determines the rate of change in $y$ required to offset a change in $x$ so as to leave the output level unchanged (see Figure 7.3):
+\[
+dy = -\frac{f_x(x, y)}{f_y(x, y)} dx.
+\]
+\end{original}
+\begin{translation}
+给定一个效用函数$u(x, y)$，对应于效用水平$\bar{u}$的无差异曲线定义为提供该效用水平$\bar{u}$的$(x, y)$组合的集合：$I_{\bar{u}} = \{(x, y) \mid u(x, y) = \bar{u}\}$。对应于生产函数$f$的等产量线是产生给定产出水平$Q$的投入组合$(x, y)$的集合：$I_Q = \{(x, y) \mid f(x, y) = Q\}$。考虑生产函数$f$，由于$x$的微小变化对产出值有影响$f_x$，$y$的微小变化有影响$f_y$，$(x, y)$的微小变化$(dx, dy)$引起的产出总变化为$df = f_x(x, y) dx + f_y(x, y) dy$。这称为$f$在$(x, y)$处的全导数。注意$df$依赖于$(x, y)$和$(dx, dy)$。等产量线是函数$f$的水平等高线。从等高线上的一点$(x, y)$出发，使得$f$的值保持不变的$x$和$y$的微小变动满足$df = 0$。这确定了为使产出水平保持不变、需要抵消$x$的变化的$y$的变化率（见图7.3）：
+\[
+dy = -\frac{f_x(x, y)}{f_y(x, y)} dx.
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.5:} This type of calculation may be used in other contexts. Consider a government that imposes an ad-valorem tax on all goods at the rate $\tau$. Let $s_i$ be the total sales of good $i$ and let $p_i$ be the price of good $i$, both constant over time. Total tax revenue is $T = \sum_{i=1}^{n} (1+\tau) s_i p_i$. Suppose now that prices increase at the rate $\pi(t)$ so that at time $t$, the price of good $i$ is $p_i(1 + \pi(t))$. Suppose also, that the government adjusts the tax rate $\tau$ over time to keep the total tax revenue constant: $T = \sum_{i=1}^{n} (1+\tau(t))(1+\pi(t)) s_i p_i = (1+\tau(t))(1+\pi(t)) \sum_{i=1}^{n} s_i p_i$. Then, differentiating with respect to $t$,
+\[
+0 = \frac{d\tau(t)}{dt} (1+\pi(t)) + (1+\tau(t)) \frac{d\pi(t)}{dt} \sum_{i=1}^{n} s_i p_i.
+\]
+Therefore,
+\[
+0 = \frac{d\tau(t)}{dt} (1+\pi(t)) + (1+\tau(t)) \frac{d\pi(t)}{dt}.
+\]
+Thus, taxes should be adjusted over time according to the formula:
+\[
+\frac{d\tau(t)}{dt} = -\frac{(1+\tau(t))}{(1+\pi(t))} \frac{d\pi(t)}{dt}.
+\]
+\end{original}
+\begin{translation}
+\textbf{例7.5：} 这类计算可用于其他情境。考虑一个政府对所有商品按税率$\tau$征收从价税。设$s_i$为商品$i$的总销售额，$p_i$为商品$i$的价格，二者均随时间保持不变。总税收收入为$T = \sum_{i=1}^{n} (1+\tau) s_i p_i$。现在假设价格以速率$\pi(t)$上涨，因此在时刻$t$，商品$i$的价格为$p_i(1 + \pi(t))$。再假设政府随时间调整税率$\tau$以保持总税收收入不变：$T = \sum_{i=1}^{n} (1+\tau(t))(1+\pi(t)) s_i p_i = (1+\tau(t))(1+\pi(t)) \sum_{i=1}^{n} s_i p_i$。然后，对$t$求导，
+\[
+0 = \frac{d\tau(t)}{dt} (1+\pi(t)) + (1+\tau(t)) \frac{d\pi(t)}{dt} \sum_{i=1}^{n} s_i p_i.
+\]
+因此，
+\[
+0 = \frac{d\tau(t)}{dt} (1+\pi(t)) + (1+\tau(t)) \frac{d\pi(t)}{dt}.
+\]
+于是，税率应按照以下公式随时间调整：
+\[
+\frac{d\tau(t)}{dt} = -\frac{(1+\tau(t))}{(1+\pi(t))} \frac{d\pi(t)}{dt}.
+\]
+\end{translation}
+
+\subsection{The Elasticity of Substitution / 替代弹性}
+
+\begin{original}
+The elasticity of demand measures the slope $\frac{dQ}{dP}$ of a curve (the demand function) relative to the ratio of the variables at that point on the curve, $\frac{Q}{P}$. This is the slope of the curve at a point, divided by the slope of the ray from the origin to that point. The elasticity of substitution measures how that ray varies as the slope varies (all in percentage terms). In principle, this measure can be applied to the level surface of any function, but two particularly important functions in economics are the utility and production functions. Consider Figure 7.4, where the indifference curve $u$ is given and a change in slope from $a$ to $b$ depicted. The marginal rates of substitution at $a$ and $b$ are denoted $MRS(a)$ and $MRS(b)$ and denote the slope of the indifference curve at the respective points. The ray slope from the origin to $a$ is the ratio of consumption of $x_2$ relative to $x_1$, $\frac{x_2^a}{x_1^a}$, when the marginal rate of substitution is $MRS(a) = \frac{u_{x_1}(a)}{u_{x_2}(a)}$. When the marginal rate of substitution changes to $MRS(b)$, the slope of the ray becomes $\frac{x_2^b}{x_1^b}$. Therefore, the percentage change in the ratio of consumption resulting from the percentage change in the MRS is given by the following expression, called the elasticity of substitution:
+\[
+\sigma = \frac{\frac{x_2^b}{x_1^b} - \frac{x_2^a}{x_1^a}}{\frac{x_2^a}{x_1^a}} \Big/ \frac{MRS(b)-MRS(a)}{MRS(a)} = \frac{\frac{x_2^b}{x_1^b} - \frac{x_2^a}{x_1^a}}{\frac{x_2^a}{x_1^a}} \cdot \frac{MRS(a)}{MRS(b)-MRS(a)}. \tag{7.1}
+\]
+\end{original}
+\begin{translation}
+需求弹性衡量一条曲线（需求函数）的斜率$\frac{dQ}{dP}$相对于曲线上该点的变量比值$\frac{Q}{P}$。这是曲线在某点的斜率除以从原点到该点的射线的斜率。替代弹性衡量该射线如何随斜率变化而变化（均以百分比形式）。原则上，这一度量可以应用于任何函数的水平曲面，但经济学中两个特别重要的函数是效用函数和生产函数。考虑图7.4，其中给出了无差异曲线$u$，并描绘了从$a$到$b$的斜率变化。在$a$和$b$处的边际替代率记为$MRS(a)$和$MRS(b)$，表示无差异曲线在各相应点的斜率。从原点到$a$的射线斜率为$x_2$相对于$x_1$的消费比率$\frac{x_2^a}{x_1^a}$，此时的边际替代率为$MRS(a) = \frac{u_{x_1}(a)}{u_{x_2}(a)}$。当边际替代率变为$MRS(b)$时，射线的斜率变为$\frac{x_2^b}{x_1^b}$。因此，消费比率的百分比变化除以MRS的百分比变化由以下表达式给出，称为替代弹性：
+\[
+\sigma = \frac{\frac{x_2^b}{x_1^b} - \frac{x_2^a}{x_1^a}}{\frac{x_2^a}{x_1^a}} \Big/ \frac{MRS(b)-MRS(a)}{MRS(a)} = \frac{\frac{x_2^b}{x_1^b} - \frac{x_2^a}{x_1^a}}{\frac{x_2^a}{x_1^a}} \cdot \frac{MRS(a)}{MRS(b)-MRS(a)}. \tag{7.1}
+\]
+\end{translation}
+
+\begin{original}
+In Equation 7.1, with $u$ given, the ratio $\frac{x_2}{x_1}$ is viewed as a function of MRS, with the elasticity tracking the change in the ratio resulting from the change in MRS. Considering this measure at a point corresponds to the difference between $MRS(a)$ and $MRS(b)$ becoming small (approaching 0 in the limit). Here, this leads to an expression in terms of the $\ln(x)$ function. Recall that the derivative of $\ln(x)$ is $\frac{1}{x}$ so that $\frac{1}{x} = \frac{d\ln(x)}{dx} \approx \frac{\ln(x+\Delta) - \ln(x)}{\Delta}$. Thus, $\ln(x+\Delta) - \ln(x) \approx \frac{\Delta}{x}$. From this perspective, the numerator in Equation 7.1 is $d\ln\!\left(\frac{x_2}{x_1}\right)$ and the denominator is $d\ln(MRS)$. In differential terms:
+\[
+\sigma = \frac{d\ln\!\left(\frac{x_2}{x_1}\right)}{d\ln(MRS)} = \frac{d\ln\!\left(\frac{x_2}{x_1}\right)}{d\ln\!\left(\frac{u_{x_1}}{u_{x_2}}\right)}, \tag{7.2}
+\]
+recalling the fact that MRS is obtained from $du = 0 = u_{x_1} dx_1 + u_{x_2} dx_2$, giving $\frac{dx_2}{dx_1} = -\frac{u_{x_1}}{u_{x_2}}$, giving $MRS = \frac{u_{x_1}}{u_{x_2}}$ (measuring the slope in absolute terms).
+\end{original}
+\begin{translation}
+在方程(7.1)中，给定$u$，比值$\frac{x_2}{x_1}$被视为MRS的函数，弹性跟踪由MRS变化引起的该比值的变化。在一点上考虑这一度量对应于$MRS(a)$和$MRS(b)$之间的差异变得很小（在极限中趋近于0）。这里，这导致了一个用$\ln(x)$函数表示的表达式。回想$\ln(x)$的导数是$\frac{1}{x}$，因此$\frac{1}{x} = \frac{d\ln(x)}{dx} \approx \frac{\ln(x+\Delta) - \ln(x)}{\Delta}$。于是，$\ln(x+\Delta) - \ln(x) \approx \frac{\Delta}{x}$。从这个角度看，方程(7.1)中的分子是$d\ln\!\left(\frac{x_2}{x_1}\right)$，分母是$d\ln(MRS)$。用微分形式表示：
+\[
+\sigma = \frac{d\ln\!\left(\frac{x_2}{x_1}\right)}{d\ln(MRS)} = \frac{d\ln\!\left(\frac{x_2}{x_1}\right)}{d\ln\!\left(\frac{u_{x_1}}{u_{x_2}}\right)}, \tag{7.2}
+\]
+回想MRS是从$du = 0 = u_{x_1} dx_1 + u_{x_2} dx_2$得到的，给出$\frac{dx_2}{dx_1} = -\frac{u_{x_1}}{u_{x_2}}$，从而$MRS = \frac{u_{x_1}}{u_{x_2}}$（以绝对值衡量斜率）。
+\end{translation}
+
+\begin{original}
+Regarding the sign of $\sigma$, note that, in the movement from $a$ to $b$, the slope of the indifference curve is always negative but increases towards 0. So, in absolute terms, the slope (MRS) declines (is getting smaller). Likewise, the ratio of $x_2$ to $x_1$ gets smaller, moving from $a$ to $b$. Therefore, in moving from $a$ to $b$ both the ratio and MRS decline. Conversely, in the movement from $b$ to $a$ both increase. Consequently, as defined, the elasticity of substitution is non-negative, provided the level surface of the function is convex, as depicted.
+\end{original}
+\begin{translation}
+关于$\sigma$的符号，注意在从$a$到$b$的移动中，无差异曲线的斜率始终为负，但朝0的方向增加。因此，以绝对值来衡量，斜率(MRS)下降（变得更小）。同样地，从$a$移动到$b$，$x_2$与$x_1$的比值也变小。因此，在从$a$到$b$的移动中，比值和MRS都下降。反之，在从$b$到$a$的移动中，两者都增加。因此，按照定义，只要函数的水平曲面是凸的（如图所示），替代弹性就是非负的。
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.6:} The constant elasticity of substitution function is:
+\[
+u(x_1, x_2) = [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}}.
+\]
+Therefore,
+\begin{align*}
+u_{x_1} &= \frac{1}{\rho} [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}-1} \alpha \rho x_1^{\rho-1},\\
+u_{x_2} &= \frac{1}{\rho} [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}-1} (1-\alpha) \rho x_2^{\rho-1}.
+\end{align*}
+Therefore, MRS is:
+\[
+\frac{u_{x_1}}{u_{x_2}} = \frac{\alpha x_1^{\rho-1}}{(1-\alpha) x_2^{\rho-1}} = \frac{\alpha}{1-\alpha}\left(\frac{x_1}{x_2}\right)^{\rho-1}.
+\]
+Taking the $\ln$ of both sides,
+\[
+\ln\frac{u_{x_1}}{u_{x_2}} = \ln\frac{\alpha}{1-\alpha} + (\rho-1)\ln\frac{x_1}{x_2}.
+\]
+Therefore,
+\[
+\ln\frac{x_2}{x_1} = -\frac{1}{\rho-1}\ln\frac{\alpha}{1-\alpha} + \frac{1}{\rho-1}\ln\frac{u_{x_1}}{u_{x_2}}
+\]
+and
+\[
+\sigma = \frac{d\ln\!\left(\frac{x_2}{x_1}\right)}{d\ln\!\left(\frac{u_{x_1}}{u_{x_2}}\right)} = \frac{1}{1-\rho}.
+\]
+\end{original}
+\begin{translation}
+\textbf{例7.6：} 常替代弹性函数为：
+\[
+u(x_1, x_2) = [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}}.
+\]
+因此，
+\begin{align*}
+u_{x_1} &= \frac{1}{\rho} [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}-1} \alpha \rho x_1^{\rho-1},\\
+u_{x_2} &= \frac{1}{\rho} [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}-1} (1-\alpha) \rho x_2^{\rho-1}.
+\end{align*}
+因此，MRS为：
+\[
+\frac{u_{x_1}}{u_{x_2}} = \frac{\alpha x_1^{\rho-1}}{(1-\alpha) x_2^{\rho-1}} = \frac{\alpha}{1-\alpha}\left(\frac{x_1}{x_2}\right)^{\rho-1}.
+\]
+对两边取$\ln$，
+\[
+\ln\frac{u_{x_1}}{u_{x_2}} = \ln\frac{\alpha}{1-\alpha} + (\rho-1)\ln\frac{x_1}{x_2}.
+\]
+因此，
+\[
+\ln\frac{x_2}{x_1} = -\frac{1}{\rho-1}\ln\frac{\alpha}{1-\alpha} + \frac{1}{\rho-1}\ln\frac{u_{x_1}}{u_{x_2}}
+\]
+且
+\[
+\sigma = \frac{d\ln\!\left(\frac{x_2}{x_1}\right)}{d\ln\!\left(\frac{u_{x_1}}{u_{x_2}}\right)} = \frac{1}{1-\rho}.
+\]
+\end{translation}
+
+\begin{original}
+The constant elasticity function can exhibit substantial variation in shape, depending on the value of $\rho$. Figure 7.5 illustrates three possible values for $\rho$. The figure suggests some properties of this function as $\rho$ varies. When $\rho = 1$, the function is linear. As $\rho$ decreases to 0, the function approaches the Cobb--Douglas function, $x_1^\alpha x_2^{1-\alpha}$, while as $\rho$ goes to $-\infty$, the function approaches the Leontief function, $\min\{x_1, x_2\}$ (and as $\rho$ tends to $\infty$, the function tends to $\max\{x_1, x_2\}$).
+\end{original}
+\begin{translation}
+常弹性函数可以根据$\rho$的值展现出形状上的显著变化。图7.5展示了$\rho$的三种可能取值。该图提示了当$\rho$变化时此函数的一些性质。当$\rho = 1$时，函数是线性的。当$\rho$减小到0时，函数趋近于柯布--道格拉斯函数$x_1^\alpha x_2^{1-\alpha}$，而当$\rho$趋于$-\infty$时，函数趋近于里昂惕夫函数$\min\{x_1, x_2\}$（当$\rho$趋于$\infty$时，函数趋于$\max\{x_1, x_2\}$）。
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 7.2:} Given $u(x_1, x_2) = [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}}$, then:
+\begin{itemize}
+\item $[\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}} \to x_1^\alpha x_2^{1-\alpha}$ as $\rho \to 0$,
+\item $[\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}} \to \min\{x_1, x_2\}$ as $\rho \to -\infty$.
+\end{itemize}
+\end{original}
+\begin{translation}
+\textbf{定理7.2：} 给定$u(x_1, x_2) = [\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}}$，则：
+\begin{itemize}
+\item $[\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}} \to x_1^\alpha x_2^{1-\alpha}$，当$\rho \to 0$时，
+\item $[\alpha x_1^\rho + (1-\alpha) x_2^\rho]^{\frac{1}{\rho}} \to \min\{x_1, x_2\}$，当$\rho \to -\infty$时。
+\end{itemize}
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 7.4:} Suppose that $F_i$ has continuous partial derivatives for all $i$ and $|J(x^*)| \ne 0$ at $(y^*, x^*)$. Then there exist continuous functions $f^1, \dots, f^i, \dots, f^n$, such that $y_j = f^j(x)$, $j = 1, 2, \dots, n$, for $x$ in a neighborhood of $x^*$. Furthermore, the effect on $y_j$ of a change in $x_i$, $\frac{\partial y_j}{\partial x_i}$, is given by
+\[
+\frac{\partial y_j}{\partial x_i} = \frac{|J^{ij}|}{|J|}.
+\]
+\end{original}
+\begin{translation}
+\textbf{定理7.4：} 假设$F_i$对所有$i$均有连续偏导数，且在$(y^*, x^*)$处$|J(x^*)| \ne 0$。则存在连续函数$f^1, \dots, f^i, \dots, f^n$，使得对于$x^*$的某个邻域内的$x$，有$y_j = f^j(x)$, $j = 1, 2, \dots, n$。此外，$x_i$的变化对$y_j$的影响$\frac{\partial y_j}{\partial x_i}$由下式给出：
+\[
+\frac{\partial y_j}{\partial x_i} = \frac{|J^{ij}|}{|J|}.
+\]
+\end{translation}
+
+\begin{original}
+To illustrate, return to the production problem discussed in Section 7.6.1 with a different specification of the production and constraint technology. Let demand, $Q$, be exogenously given and determining the required output. Suppose that the technology relating inputs $x$ and $y$ to output is $Q = x^\alpha y^\beta$. In addition, a technology constraint requires that $y = kx$. We wish to consider the impact of changes in the required production level $Q$ on $x$ and $y$. The equations relating the variables may be written:
+\[
+F_1(x, y; Q, \alpha, \beta, k) = Q - x^\alpha y^\beta = 0, \quad F_2(x, y; Q, \alpha, \beta, k) = y - kx = 0.
+\]
+These equations are depicted in Figure 7.11, where the impact of varying $Q$ is illustrated.
+\[
+J = \begin{pmatrix}
+-\alpha x^{\alpha-1} y^\beta & -\beta x^\alpha y^{\beta-1} \\
+-k & 1
+\end{pmatrix}, \quad
+\begin{pmatrix} -\frac{\partial F_1}{\partial Q} \\[2pt] -\frac{\partial F_2}{\partial Q} \end{pmatrix}
+= \begin{pmatrix} 1 \\ 0 \end{pmatrix}.
+\]
+Thus, $|J| = -\frac{Q}{x}(\alpha + \beta)$, and
+\[
+\frac{\partial x}{\partial Q} = \frac{1}{|J|}\begin{vmatrix} 1 & -\beta x^\alpha y^{\beta-1} \\ 0 & 1 \end{vmatrix}
+= \frac{1}{|J|} = -\frac{x}{Q(\alpha + \beta)}, \quad
+\frac{\partial y}{\partial Q} = \frac{1}{|J|}\begin{vmatrix} -\alpha x^{\alpha-1} y^\beta & 1 \\ -k & 0 \end{vmatrix}
+= \frac{k}{|J|} = -\frac{kx}{Q(\alpha + \beta)} = -\frac{y}{Q(\alpha + \beta)}.
+\]
+\end{original}
+\begin{translation}
+为加以说明，回到第7.6.1节讨论的生产问题，但采用不同的生产技术和约束技术设定。设需求$Q$是外生给定的，并决定了必需的产出。假设将投入$x$和$y$与产出联系起来的技术为$Q = x^\alpha y^\beta$。此外，一个技术约束要求$y = kx$。我们希望考虑所需生产水平$Q$的变化对$x$和$y$的影响。将变量联系起来的方程可以写为：
+\[
+F_1(x, y; Q, \alpha, \beta, k) = Q - x^\alpha y^\beta = 0, \quad F_2(x, y; Q, \alpha, \beta, k) = y - kx = 0.
+\]
+这些方程在图7.11中描绘，其中展示了$Q$变化的影响。
+\[
+J = \begin{pmatrix}
+-\alpha x^{\alpha-1} y^\beta & -\beta x^\alpha y^{\beta-1} \\
+-k & 1
+\end{pmatrix}, \quad
+\begin{pmatrix} -\frac{\partial F_1}{\partial Q} \\[2pt] -\frac{\partial F_2}{\partial Q} \end{pmatrix}
+= \begin{pmatrix} 1 \\ 0 \end{pmatrix}.
+\]
+因此，$|J| = -\frac{Q}{x}(\alpha + \beta)$，且
+\[
+\frac{\partial x}{\partial Q} = \frac{1}{|J|}\begin{vmatrix} 1 & -\beta x^\alpha y^{\beta-1} \\ 0 & 1 \end{vmatrix}
+= \frac{1}{|J|} = -\frac{x}{Q(\alpha + \beta)}, \quad
+\frac{\partial y}{\partial Q} = \frac{1}{|J|}\begin{vmatrix} -\alpha x^{\alpha-1} y^\beta & 1 \\ -k & 0 \end{vmatrix}
+= \frac{k}{|J|} = -\frac{y}{Q(\alpha + \beta)}.
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Example 7.13:} Consider a macroeconomic model with two equations:
+\[
+y = c(y - T(y), r) + I(y, r) + G, \quad M = L(y, r).
+\]
+The first equation is called the IS curve and the second the LM curve in macroeconomics. In this widely studied model, a common task is to determine the impact of changes in policy parameters (government expenditure $G$ and the money supply $M$) on income $y$ and the interest rate $r$. These are called policy multipliers and are computed next. For example, $\frac{\partial y}{\partial G}$ is the policy multiplier relating government expenditure to output and measures the impact on output of an increase in government expenditure.
+
+Write $c_1$ for the partial derivative of $c$ with respect to its first argument, $c_r = \frac{\partial c}{\partial r}$, $I_r = \frac{\partial I}{\partial r}$, $L_r = \frac{\partial L}{\partial r}$ and $L_y = \frac{\partial L}{\partial y}$. Then, differentiating the first equation:
+\[
+dy = c_1(1 - T')dy + c_r dr + I_y dy + I_r dr
+\]
+gives the variation in $r$ resulting from a variation in $y$ when restricted to stay on this curve. Rearranging:
+\[
+(1 - c_1(1 - T') + I_y)dy = (c_r + I_r)dr, \quad \frac{dr}{dy} = \frac{(1 - c_1(1 - T') + I_y)}{(c_r + I_r)}.
+\]
+A common economic assumption is that $0 < (1 - c_1(1 - T') + I_y) < 1$ along with $c_r < 0$ and $I_r < 0$, so that $\frac{dr}{dy} < 0$. Similar calculations for the LM curve yield $\frac{dr}{dy} = -\frac{L_y}{L_r}$, which is positive under the assumptions $L_y > 0$ and $L_r < 0$.
+\end{original}
+\begin{translation}
+\textbf{例7.13：} 考虑一个包含两个方程的宏观经济模型：
+\[
+y = c(y - T(y), r) + I(y, r) + G, \quad M = L(y, r).
+\]
+在宏观经济学中，第一个方程称为IS曲线，第二个称为LM曲线。在这个被广泛研究的模型中，一个常见的任务是确定政策参数（政府支出$G$和货币供给$M$）的变化对收入$y$和利率$r$的影响。这些称为政策乘数，接下来加以计算。例如，$\frac{\partial y}{\partial G}$是将政府支出与产出联系起来的政策乘数，衡量了政府支出增加对产出的影响。
+
+记$c_1$为$c$对其第一个自变量的偏导数，$c_r = \frac{\partial c}{\partial r}$, $I_r = \frac{\partial I}{\partial r}$, $L_r = \frac{\partial L}{\partial r}$和$L_y = \frac{\partial L}{\partial y}$。然后，对第一个方程求微分：
+\[
+dy = c_1(1 - T')dy + c_r dr + I_y dy + I_r dr
+\]
+给出了当被限制停留在该曲线上时，$y$的变化所引起的$r$的变化。重新整理：
+\[
+(1 - c_1(1 - T') + I_y)dy = (c_r + I_r)dr, \quad \frac{dr}{dy} = \frac{(1 - c_1(1 - T') + I_y)}{(c_r + I_r)}.
+\]
+一个常见的经济假设是$0 < (1 - c_1(1 - T') + I_y) < 1$，同时$c_r < 0$和$I_r < 0$，因此$\frac{dr}{dy} < 0$。对LM曲线的类似计算得$\frac{dr}{dy} = -\frac{L_y}{L_r}$，在假设$L_y > 0$和$L_r < 0$下该值为正。
+\end{translation}
+
+\begin{original}
+In this model, the exogenous variables are government expenditure ($G$) and the money supply ($M$). The endogenous variables are income ($y$) and the rate of interest ($r$). (As a numerical example, let $T(y) = \frac{1}{2}y$, $c(y - T(y), r) = \frac{y - \frac{1}{2}y}{r}$, $I(y, r) = \frac{y}{r}$ and $L(y, r) = \frac{1}{y^2}r^{-1}$.) These equations may be rearranged in the general form given previously:
+\[
+F_1(y, r, G, M) = y - c(y - T(y), r) - I(y, r) - G = 0, \quad F_2(y, r, G, M) = L(y, r) - M = 0.
+\]
+Provided the Jacobian has full rank, we may view $y$ and $r$ as functions of $G$ and $M$, $y = f^1(G, M)$, $r = f^2(G, M)$, and compute the corresponding partial derivatives according to the rule above. With this rearrangement, the Jacobian is obtained:
+\[
+J = \begin{pmatrix}
+\frac{\partial F_1}{\partial y} & \frac{\partial F_1}{\partial r} \\[4pt]
+\frac{\partial F_2}{\partial y} & \frac{\partial F_2}{\partial r}
+\end{pmatrix}
+= \begin{pmatrix}
+1 - c_1(1 - T_y) - I_y & -(c_r + I_r) \\
+L_y & L_r
+\end{pmatrix}.
+\]
+The Jacobian has determinant $|J| = [1 - c_1(1 - T_y) - I_y]L_r + L_y(c_r + I_r)$.
+
+Observe that
+\[
+-\frac{\partial F_1}{\partial G} = +1, \quad -\frac{\partial F_1}{\partial M} = 0; \quad
+-\frac{\partial F_2}{\partial G} = 0, \quad -\frac{\partial F_2}{\partial M} = +1.
+\]
+Thus,
+\[
+J^{yG} = \begin{pmatrix} 1 & -(c_r + I_r) \\ 0 & L_r \end{pmatrix}, \quad
+J^{yM} = \begin{pmatrix} 0 & -(c_r + I_r) \\ 1 & L_r \end{pmatrix},
+\]
+\[
+J^{rG} = \begin{pmatrix} 1 - c_1(1 - T_y) - I_y & 1 \\ L_y & 0 \end{pmatrix}, \quad
+J^{rM} = \begin{pmatrix} 1 - c_1(1 - T_y) - I_y & 0 \\ L_y & 1 \end{pmatrix}.
+\]
+Applying the theorem:
+\[
+\frac{\partial y}{\partial G} = \frac{|J^{yG}|}{|J|} = \frac{L_r}{|J|}, \quad
+\frac{\partial y}{\partial M} = \frac{|J^{yM}|}{|J|} = \frac{c_r + I_r}{|J|}. \tag{7.11}
+\]
+Similarly,
+\[
+\frac{\partial r}{\partial G} = \frac{|J^{rG}|}{|J|} = -\frac{L_y}{|J|}, \quad
+\frac{\partial r}{\partial M} = \frac{|J^{rM}|}{|J|} = -\frac{[1 - c_1(1 - T_y) - I_y]}{|J|}. \tag{7.12}
+\]
+\end{original}
+\begin{translation}
+在此模型中，外生变量是政府支出($G$)和货币供给($M$)。内生变量是收入($y$)和利率($r$)。（作为一个数值例子，设$T(y) = \frac{1}{2}y$, $c(y - T(y), r) = \frac{y - \frac{1}{2}y}{r}$, $I(y, r) = \frac{y}{r}$且$L(y, r) = \frac{1}{y^2}r^{-1}$。）这些方程可以按先前给出的一般形式重新整理：
+\[
+F_1(y, r, G, M) = y - c(y - T(y), r) - I(y, r) - G = 0, \quad F_2(y, r, G, M) = L(y, r) - M = 0.
+\]
+只要雅可比是满秩的，我们就可以将$y$和$r$视为$G$和$M$的函数，$y = f^1(G, M)$, $r = f^2(G, M)$，并根据上述规则计算相应的偏导数。通过这种重新整理，得到雅可比：
+\[
+J = \begin{pmatrix}
+\frac{\partial F_1}{\partial y} & \frac{\partial F_1}{\partial r} \\[4pt]
+\frac{\partial F_2}{\partial y} & \frac{\partial F_2}{\partial r}
+\end{pmatrix}
+= \begin{pmatrix}
+1 - c_1(1 - T_y) - I_y & -(c_r + I_r) \\
+L_y & L_r
+\end{pmatrix}.
+\]
+雅可比行列式为$|J| = [1 - c_1(1 - T_y) - I_y]L_r + L_y(c_r + I_r)$。
+
+注意到
+\[
+-\frac{\partial F_1}{\partial G} = +1, \quad -\frac{\partial F_1}{\partial M} = 0; \quad
+-\frac{\partial F_2}{\partial G} = 0, \quad -\frac{\partial F_2}{\partial M} = +1.
+\]
+因此，
+\[
+J^{yG} = \begin{pmatrix} 1 & -(c_r + I_r) \\ 0 & L_r \end{pmatrix}, \quad
+J^{yM} = \begin{pmatrix} 0 & -(c_r + I_r) \\ 1 & L_r \end{pmatrix},
+\]
+\[
+J^{rG} = \begin{pmatrix} 1 - c_1(1 - T_y) - I_y & 1 \\ L_y & 0 \end{pmatrix}, \quad
+J^{rM} = \begin{pmatrix} 1 - c_1(1 - T_y) - I_y & 0 \\ L_y & 1 \end{pmatrix}.
+\]
+应用定理：
+\[
+\frac{\partial y}{\partial G} = \frac{|J^{yG}|}{|J|} = \frac{L_r}{|J|}, \quad
+\frac{\partial y}{\partial M} = \frac{|J^{yM}|}{|J|} = \frac{c_r + I_r}{|J|}. \tag{7.11}
+\]
+类似地，
+\[
+\frac{\partial r}{\partial G} = \frac{|J^{rG}|}{|J|} = -\frac{L_y}{|J|}, \quad
+\frac{\partial r}{\partial M} = \frac{|J^{rM}|}{|J|} = -\frac{[1 - c_1(1 - T_y) - I_y]}{|J|}. \tag{7.12}
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Remark 7.7:} It is worth noting that, for a slightly different perspective, these results may be obtained directly by totally differentiating the original equation system.
+\[
+dy = c_1(1 - T_y)dy + c_r dr + I_y dy + I_r dr + dG, \quad L_y dy + L_r dr = dM,
+\]
+\[
+[1 - c_1(1 - T_y) - I_y]dy - (c_r + I_r)dr = dG, \quad L_y dy + L_r dr = dM,
+\]
+\[
+\begin{pmatrix}
+[1 - c_1(1 - T_y) - I_y] & -(c_r + I_r) \\
+L_y & L_r
+\end{pmatrix}
+\begin{pmatrix} dy \\ dr \end{pmatrix}
+= \begin{pmatrix} dG \\ dM \end{pmatrix}.
+\]
+Note that $A = J$ and that $|A| = [1 - c_1(1 - T_y) - I_y]L_r + L_y(c_r + I_r)$. Using Cramer's rule:
+\[
+dy = \frac{1}{|A|}\begin{vmatrix} dG & -(c_r + I_r) \\ dM & L_r \end{vmatrix}
+= \frac{L_r dG + (c_r + I_r)dM}{|A|}
+= \frac{L_r}{|A|} dG + \frac{(c_r + I_r)}{|A|} dM,
+\]
+and
+\[
+dr = \frac{1}{|A|}\begin{vmatrix} [1 - c_1(1 - T_y) - I_y] & dG \\ L_y & dM \end{vmatrix}
+= \frac{[1 - c_1(1 - T_y) - I_y]dM - L_y dG}{|A|}
+= -\frac{L_y}{|A|} dG + \frac{[1 - c_1(1 - T_y) - I_y]}{|A|} dM.
+\]
+This is the same result as appears in Equations 7.11 and 7.12.
+\end{original}
+\begin{translation}
+\textbf{注7.7：} 值得注意的是，从略为不同的角度来看，这些结果可以通过直接对原始方程组进行全微分得到。
+\[
+dy = c_1(1 - T_y)dy + c_r dr + I_y dy + I_r dr + dG, \quad L_y dy + L_r dr = dM,
+\]
+\[
+[1 - c_1(1 - T_y) - I_y]dy - (c_r + I_r)dr = dG, \quad L_y dy + L_r dr = dM,
+\]
+\[
+\begin{pmatrix}
+[1 - c_1(1 - T_y) - I_y] & -(c_r + I_r) \\
+L_y & L_r
+\end{pmatrix}
+\begin{pmatrix} dy \\ dr \end{pmatrix}
+= \begin{pmatrix} dG \\ dM \end{pmatrix}.
+\]
+注意$A = J$且$|A| = [1 - c_1(1 - T_y) - I_y]L_r + L_y(c_r + I_r)$。使用克拉默法则：
+\[
+dy = \frac{1}{|A|}\begin{vmatrix} dG & -(c_r + I_r) \\ dM & L_r \end{vmatrix}
+= \frac{L_r dG + (c_r + I_r)dM}{|A|}
+= \frac{L_r}{|A|} dG + \frac{(c_r + I_r)}{|A|} dM,
+\]
+和
+\[
+dr = \frac{1}{|A|}\begin{vmatrix} [1 - c_1(1 - T_y) - I_y] & dG \\ L_y & dM \end{vmatrix}
+= \frac{[1 - c_1(1 - T_y) - I_y]dM - L_y dG}{|A|}
+= -\frac{L_y}{|A|} dG + \frac{[1 - c_1(1 - T_y) - I_y]}{|A|} dM.
+\]
+这与方程(7.11)和(7.12)中的结果相同。
+\end{translation}
+
+\begin{original}
+The following discussion provides a graphical perspective on the calculations. A highway starts from point $(x, y) = (0,0)$ and follows the path $y = x + x^2 - x^3$ (given the $x$ coordinate, there is a unique $y$ coordinate determined by this equation). The direction $x$ is east and the direction $y$ is north. The point $(x, y)$ on this highway that is a distance $r$ from the starting point satisfies $x^2 + y^2 = r^2$. (We assume that $\frac{2}{3} > r$.) This point is uniquely defined by these two equations.
+
+Suppose that we move slightly further along the highway by increasing the distance $r$; is the direction more northerly or more easterly?
+
+From the starting point at radius $r$, consider an increase in the radius to $r'$ with $r' - r > 0$ small. This changes the coordinates $(x, y)$ slightly to $(x', y')$. The eastward movement is $x' - x$ and the northward movement is $y' - y$. Then
+\[
+\frac{x' - x}{r' - r} \approx \frac{\partial x}{\partial r}, \quad \frac{y' - y}{r' - r} \approx \frac{\partial y}{\partial r}.
+\]
+Thus, the northward movement is greater than the eastward movement if:
+\[
+\frac{y' - y}{x' - x} = \frac{\frac{y'-y}{r'-r}}{\frac{x'-x}{r'-r}} \approx \frac{\frac{\partial y}{\partial r}}{\frac{\partial x}{\partial r}} > 1.
+\]
+
+Note that, along the highway,
+\[
+\frac{dy}{dx} = 1 + 2x - 3x^2 = 1 + (2 - 3x)x = 1 + 3\!\left(\frac{2}{3} - x\right)\!x.
+\]
+So, $\frac{dy}{dx} > 1$ if $\frac{2}{3} - x > 0$ or $(2 - 3x) > 0$. At any point $(x, y)$ on the circle $x^2 + y^2 = r^2$, and since $y^2 \ge 0$, $x^2 \le r^2$, and since the solution is positive, $x < r$, so that $2 - 3x > 2 - 3r$ or $\frac{2}{3} - x > \frac{2}{3} - r$. Since $\frac{2}{3} > r$, $\frac{2}{3} - x \ge 0$. Therefore, at the point on the circle where the curve $y = x + x^2 - x^3$ cuts, the slope of the curve is greater than 1: at the solution, $\frac{dy}{dx} > 1$, and the northward movement is greater than the eastward movement.
+\end{original}
+\begin{translation}
+以下讨论为这些计算提供了一个图形视角。一条公路从点$(x, y) = (0,0)$出发，沿路径$y = x + x^2 - x^3$延伸（给定$x$坐标，由该方程确定了唯一的$y$坐标）。方向$x$为东，方向$y$为北。该公路上距离出发点为$r$的点$(x, y)$满足$x^2 + y^2 = r^2$。（我们假设$\frac{2}{3} > r$。）该点由这两个方程唯一确定。
+
+假设我们通过增加距离$r$而沿公路稍进一步；方向是更偏北还是更偏东？
+
+从半径为$r$的出发点，考虑半径增加到$r'$，其中$r' - r > 0$且很小。这使坐标$(x, y)$略微变化到$(x', y')$。向东移动为$x' - x$，向北移动为$y' - y$。则
+\[
+\frac{x' - x}{r' - r} \approx \frac{\partial x}{\partial r}, \quad \frac{y' - y}{r' - r} \approx \frac{\partial y}{\partial r}.
+\]
+因此，如果：
+\[
+\frac{y' - y}{x' - x} = \frac{\frac{y'-y}{r'-r}}{\frac{x'-x}{r'-r}} \approx \frac{\frac{\partial y}{\partial r}}{\frac{\partial x}{\partial r}} > 1,
+\]
+则向北移动大于向东移动。
+
+注意，沿公路，
+\[
+\frac{dy}{dx} = 1 + 2x - 3x^2 = 1 + (2 - 3x)x = 1 + 3\!\left(\frac{2}{3} - x\right)\!x.
+\]
+因此，如果$\frac{2}{3} - x > 0$或$(2 - 3x) > 0$，则$\frac{dy}{dx} > 1$。在圆$x^2 + y^2 = r^2$上的任意点$(x, y)$处，且由于$y^2 \ge 0$，有$x^2 \le r^2$，又因为解是正的，$x < r$，因此$2 - 3x > 2 - 3r$或$\frac{2}{3} - x > \frac{2}{3} - r$。由于$\frac{2}{3} > r$，得$\frac{2}{3} - x \ge 0$。因此，在曲线$y = x + x^2 - x^3$与圆相交的点处，曲线的斜率大于1：在解处，$\frac{dy}{dx} > 1$，向北移动大于向东移动。
+\end{translation}
+
+\begin{original}
+The following example reconsiders this discussion by calculating the partial derivatives of $y$ and $x$ with respect to $r$, and comparing them.
+
+\textbf{Example 7.14:} Recall:
+\[
+x^2 + y^2 = r^2, \quad y - x - x^2 + x^3 = 0.
+\]
+\[
+2x\,dx + 2y\,dy = 2r\,dr, \quad dy - dx - 2x\,dx + 3x^2 dx = 0.
+\]
+\[
+\begin{pmatrix} 2x & 2y \\ 1 + 2x - 3x^2 & -1 \end{pmatrix}
+\begin{pmatrix} dx \\ dy \end{pmatrix}
+= \begin{pmatrix} 2r\,dr \\ 0 \end{pmatrix},
+\]
+or, since only $r$ is varied,
+\[
+\begin{pmatrix} 2x & 2y \\ 1 + 2x - 3x^2 & -1 \end{pmatrix}
+\begin{pmatrix} \frac{\partial x}{\partial r} \\[2pt] \frac{\partial y}{\partial r} \end{pmatrix}
+= \begin{pmatrix} 2r \\ 0 \end{pmatrix}.
+\]
+Using Cramer's rule, the coefficient determinant is $\Delta = -2x - 2y(1 + 2x - 3x^2)$, while $\Delta_1 = -2r$ and $\Delta_2 = -(1 + 2x - 3x^2)2r$. Then
+\[
+\frac{\partial x}{\partial r} = \frac{\Delta_1}{\Delta}, \quad \frac{\partial y}{\partial r} = \frac{\Delta_2}{\Delta}
+\]
+and
+\[
+\frac{\frac{\partial y}{\partial r}}{\frac{\partial x}{\partial r}} = \frac{\Delta_2}{\Delta_1} = (1 + 2x - 3x^2) = (1 + (2 - 3x)x).
+\]
+\end{original}
+\begin{translation}
+下面的例子通过计算$y$和$x$关于$r$的偏导数并加以比较，重新审视了这一讨论。
+
+\textbf{例7.14：} 回想：
+\[
+x^2 + y^2 = r^2, \quad y - x - x^2 + x^3 = 0.
+\]
+\[
+2x\,dx + 2y\,dy = 2r\,dr, \quad dy - dx - 2x\,dx + 3x^2 dx = 0.
+\]
+\[
+\begin{pmatrix} 2x & 2y \\ 1 + 2x - 3x^2 & -1 \end{pmatrix}
+\begin{pmatrix} dx \\ dy \end{pmatrix}
+= \begin{pmatrix} 2r\,dr \\ 0 \end{pmatrix},
+\]
+或者，由于只有$r$在变化，
+\[
+\begin{pmatrix} 2x & 2y \\ 1 + 2x - 3x^2 & -1 \end{pmatrix}
+\begin{pmatrix} \frac{\partial x}{\partial r} \\[2pt] \frac{\partial y}{\partial r} \end{pmatrix}
+= \begin{pmatrix} 2r \\ 0 \end{pmatrix}.
+\]
+使用克拉默法则，系数行列式为$\Delta = -2x - 2y(1 + 2x - 3x^2)$，而$\Delta_1 = -2r$，$\Delta_2 = -(1 + 2x - 3x^2)2r$。则
+\[
+\frac{\partial x}{\partial r} = \frac{\Delta_1}{\Delta}, \quad \frac{\partial y}{\partial r} = \frac{\Delta_2}{\Delta}
+\]
+且
+\[
+\frac{\frac{\partial y}{\partial r}}{\frac{\partial x}{\partial r}} = \frac{\Delta_2}{\Delta_1} = (1 + 2x - 3x^2) = (1 + (2 - 3x)x).
+\]
+\end{translation}
+
+
+\subsection*{Exercises for Chapter 7 / 第7章习题}
+
+\begin{original}
+\textbf{Exercise 7.1} The following simple macroeconomic model has four equations relating government policy variables to aggregate income and investment. Aggregate income equals consumption plus investment and government expenditure: $y = c + i + g$. Consumption is positively related to the real rate of interest: $c = \alpha + \beta y$, $\alpha, \beta > 0$. Investment is negatively related to the rate of interest, $r$: $i = \gamma - \delta r$, $\gamma, \delta > 0$. The money supply, $m_s$, equals the money demand, $m_d$, and this in turn is positively related to the level of income ($\kappa > 0$) and negatively related to the rate of interest ($\lambda > 0$): $m_s = m_d = \kappa y - \lambda r$. Find the impact on $y$ of (a) a small change in $g$, $\Delta g$, and (b) a small change in $m$, $\Delta m$.
+
+\textbf{Exercise 7.2} Consider a market defined by the following supply and demand curves: $q_d = a + bP_d + c\tilde{Y}$, $q_s = d + eP_s$, where $a, c, d, e > 0$, and $b < 0$, $a > d$. (a) (i) Compute the equilibrium price $P$ and quantity $q$. (ii) Sign the comparative statics partial derivatives $\frac{\partial P}{\partial \tilde{Y}}$, $\frac{\partial q}{\partial \tilde{Y}}$. (b) Suppose a tax $t > 0$ is levied on producers: (i) Compute the new equilibrium price and quantity. (ii) Sign the derivatives $\frac{\partial q}{\partial t}$, $\frac{\partial P_d}{\partial t}$, $\frac{\partial P_s}{\partial t}$.
+
+\textbf{Exercise 7.3} Consider the following macroeconomic model of national income: $C = \alpha + \beta Y$, $\alpha > 0$, $0 < \beta < 1$; $Y = C + I + G$; $I = \gamma Y$, $0 < \gamma < 1$. What are the exogenous and endogenous variables? Write this system in matrix form and solve for the reduced form. Using the reduced form expressions, find the following comparative statics derivatives: $\frac{\partial c}{\partial G}$, $\frac{\partial Y}{\partial G}$, $\frac{\partial I}{\partial G}$.
+
+\textbf{Exercise 7.4} Consider the following macroeconomic model: $y = c(y, r) + i(r) + G$, $m = l(r, y)$. (a) Identify the exogenous and endogenous variables. (b) (i) What is the effect of an increase in government expenditure $G$, on output $y$ and the interest rate $r$? (ii) What is the effect of an increase in the money supply $M$, on output and the interest rate? (c) Consider what happens if we replace the above money market equation with the following: $m = \kappa y$. Repeat part (b) with this assumption. (d) Represent the two different systems in $(y, r)$ space and show the above effect diagrammatically.
+
+\textbf{Exercise 7.5} Consider the following macroeconomic model: $S(Y, r) + T(Y) + IM = I(r) + G + x(e)$, $L(Y, r) = M$, where $Y$ is national income, $S$ is savings, $IM$ is imports, $x$ is exports, $I$ is investment, $G$ is government expenditure, $M$ is money supply and $e$ is the exchange rate. Using this model, determine how the equilibrium values of $Y$ and $r$ change with a change in the exchange rate $e$ and with a change in the exogenous level of imports. Make the usual assumptions: $S_Y > 0$, $S_r > 0$, $T_Y > 0$, $I_r < 0$, $x_e < 0$, $L_Y > 0$, $L_r < 0$.
+
+\textbf{Exercise 7.6} Consider a production process using input $x$ to produce output $y$. The relationship between inputs and outputs must satisfy two conditions: $x^2 + y^2 = \alpha$, $0 < \alpha < 1$; $y = x(1 - x)$, $0 < \beta$. This pair of equations has a unique non-negative solution $(x, y \ge 0)$. Plot these functions in $(x, y)$ space. At this solution, calculate $\frac{dx}{d\alpha}$, $\frac{dy}{d\alpha}$, $\frac{dx}{d\beta}$ and $\frac{dy}{d\beta}$. In relation to your graph, interpret the signs of the derivatives.
+
+\textbf{Exercise 7.7} Repeat the previous question, with input and output required to satisfy the following two conditions: $y - \ln(x + 1) = 0$, $x y = \theta$.
+
+\textbf{Exercise 7.8} Consider the following IS--LM model with an import sector: $y = c(y) + I(i) + G$, $m = L(y, i)$, $x(\rho) = z(y, \rho)$. (a) Calculate the slopes of the IS and LM curves. (b) Find $\frac{dy}{dG}$, $\frac{di}{dG}$ and $\frac{d\rho}{dG}$.
+
+\textbf{Exercise 7.9} An individual has utility function $u(x, y) = x^\alpha y^\beta$, where $0 < \alpha < 1$, $0 < \beta < 1$ and $0 < \alpha + \beta < 1$. The prices of $x$ and $y$, respectively, are $p$ and $q$, and the individual has income $I$. The marginal utility of $x$ is $u_x(x, y) = \alpha x^{\alpha-1} y^\beta = \alpha \frac{u(x,y)}{x}$. Similarly, $u_y(x, y) = \beta x^\alpha y^{\beta-1} = \beta \frac{u(x,y)}{y}$. The utility maximizing levels of $x$ and $y$ are determined by the tangency condition $MRS = \frac{u_x}{u_y} = \frac{p}{q}$ and the budget constraint $px + qy = I$. (a) Write the pair of equations in the form $F_1(x, y; \alpha, \beta, p, q, I) = 0$, $F_2(x, y; \alpha, \beta, p, q, I) = 0$ and calculate $\frac{\partial x}{\partial I}$, $\frac{\partial x}{\partial p}$, $\frac{\partial x}{\partial q}$, $\frac{\partial x}{\partial \alpha}$, $\frac{\partial x}{\partial \beta}$. (b) Solve (1) and (2) directly for $x$ and $y$, then take the partial derivatives of $x$ with respect to the parameters, to confirm your answer in (a).
+
+\textbf{Exercise 7.10} A production possibilities (transformation) curve in two goods, $x$ and $y$, is given by $T(x, y) = k$, where $T(x, y) = x^2 + y$. The social utility function is given by $u(x, y) = \alpha \ln(x) + \beta \ln(y)$. The efficient choices for $x$ and $y$ are given at the point where $MRS = MRT$ or $\frac{u_x}{u_y} = \frac{T_x}{T_y}$. Thus, there are two equations determining the solution. (a) Rearrange these to get two equations in the form $F_1(x, y; \alpha, \beta, k) = 0$, $F_2(x, y; \alpha, \beta, k) = 0$. (b) Use the implicit function theorem to determine $\frac{\partial x}{\partial k}$, $\frac{\partial y}{\partial k}$, $\frac{\partial x}{\partial \alpha}$, $\frac{\partial y}{\partial \alpha}$.
+
+\textbf{Exercise 7.13} A firm is required to produce output $Q$ using inputs $x$ and $y$. The production technology is $x^\alpha y^\beta$. In addition, the firm faces the technology constraint $y = k e^x$, $k > 0$. Find $\frac{\partial y}{\partial Q}$, $\frac{\partial x}{\partial Q}$, $\frac{\partial y}{\partial k}$, $\frac{\partial x}{\partial k}$. Also, try finding $\frac{\partial y}{\partial \alpha}$, $\frac{\partial x}{\partial \alpha}$.
+
+\textbf{Exercise 7.17} An individual has income or wealth, $y$, to allocate between present, $c$, and future, $f$, consumption. Suppose that the individual has utility function $u(c, f) = c \cdot f$. Income not consumed in the current period is invested at interest rate $r$ to yield the amount available for future consumption: $f = (y - c)(1 + r)$. Since $y$ is given, the choice of $c$ determines $f$. Find the impact of a change in income, $y$, on consumption $c$.
+\end{original}
+\begin{translation}
+\textbf{习题7.1} 以下简单的宏观经济模型有四个方程，将政府政策变量与总收入及投资联系起来。总收入等于消费加投资加政府支出：$y = c + i + g$。消费与实际利率正相关：$c = \alpha + \beta y$, $\alpha, \beta > 0$。投资与利率$r$负相关：$i = \gamma - \delta r$, $\gamma, \delta > 0$。货币供给$m_s$等于货币需求$m_d$，而后者与收入水平正相关（$\kappa > 0$），与利率负相关（$\lambda > 0$）：$m_s = m_d = \kappa y - \lambda r$。求(a) $g$的微小变化$\Delta g$对$y$的影响，以及(b) $m$的微小变化$\Delta m$对$y$的影响。
+
+\textbf{习题7.2} 考虑由以下供需曲线定义的市场：$q_d = a + bP_d + c\tilde{Y}$, $q_s = d + eP_s$，其中$a, c, d, e > 0$, $b < 0$, $a > d$。(a) (i) 计算均衡价格$P$和数量$q$。(ii) 确定比较静态偏导数$\frac{\partial P}{\partial \tilde{Y}}$, $\frac{\partial q}{\partial \tilde{Y}}$的符号。(b) 假设对生产者征收税额$t > 0$：(i) 计算新的均衡价格和数量。(ii) 确定导数$\frac{\partial q}{\partial t}$, $\frac{\partial P_d}{\partial t}$, $\frac{\partial P_s}{\partial t}$的符号。
+
+\textbf{习题7.3} 考虑以下国民收入宏观经济模型：$C = \alpha + \beta Y$, $\alpha > 0$, $0 < \beta < 1$; $Y = C + I + G$; $I = \gamma Y$, $0 < \gamma < 1$。外生变量和内生变量分别是什么？将此系统写成矩阵形式并求解简化形式。利用简化形式的表达式，求以下比较静态导数：$\frac{\partial c}{\partial G}$, $\frac{\partial Y}{\partial G}$, $\frac{\partial I}{\partial G}$。
+
+\textbf{习题7.9} 一个体有柯布--道格拉斯效用函数$u(x, y) = x^\alpha y^\beta$，其中$0 < \alpha < 1$, $0 < \beta < 1$且$0 < \alpha + \beta < 1$。商品$x$和$y$的价格分别为$p$和$q$，个体有收入$I$。效用最大化的$x$和$y$水平由切点条件$MRS = \frac{u_x}{u_y} = \frac{p}{q}$和预算约束$px + qy = I$确定。(a) 将方程对写成$F_1(x, y; \alpha, \beta, p, q, I) = 0$, $F_2(x, y; \alpha, \beta, p, q, I) = 0$的形式，计算$\frac{\partial x}{\partial I}$, $\frac{\partial x}{\partial p}$, $\frac{\partial x}{\partial q}$, $\frac{\partial x}{\partial \alpha}$, $\frac{\partial x}{\partial \beta}$。(b) 直接求解$x$和$y$，然后对参数求$x$的偏导数以验证(a)中的答案。
+
+\textbf{习题7.17} 一个体有收入或财富$y$，需在当前消费$c$和未来消费$f$之间分配。假设该个体的效用函数为$u(c, f) = c \cdot f$。当期未消费的收入按利率$r$投资，产生可用于未来消费的金额：$f = (y - c)(1 + r)$。由于$y$是给定的，$c$的选择决定了$f$。求收入$y$的变化对消费$c$的影响。
+\end{translation}
+
+% =============================================================
+% Chapter 8: Taylor Series / 泰勒级数
+% =============================================================
+
+\section{Taylor Series / 泰勒级数}
+
+\subsection{Introduction / 引言}
+
+\begin{original}
+Problems such as maximization of a function $f$ or finding the root of an equation $f(x) = 0$ arise frequently in economics. However, often the function may be difficult to work with, motivating the use of approximations to the function $f$ that are easier to study and provide insight regarding $f$. One relatively simple class of approximating functions are the polynomials. A function $h$ is a polynomial in $x$ if it has the form:
+\[
+h(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_n x^n,
+\]
+where each $a_i$ is a constant. So, $h$ is the sum of terms where each term is a constant multiplied by $x$ to the power of some integer, such as $a_3 x^3$, where $a_3$ is the constant and $x$ is raised to the power of 3. The function $h$ is called an $n$th order polynomial because the highest power is $n$ (assuming $a_n \ne 0$). For example, $h(x) = 2 + x + 5x^2 + 8x^3$ is a third-order polynomial, as is $g(x) = 2x^3$. Under suitable circumstances, a large class of functions can be approximated by a polynomial, so that given the function $f$, one may find a polynomial such as $h$ approximating $f$. This makes it possible to discover properties of $f$ by study of the simpler function $h$ and that fact is a primary motivation for studying these approximations. Taylor's theorem concerns the approximation of functions with polynomials and provides the theoretical basis for the polynomial approximations.
+\end{original}
+\begin{translation}
+诸如函数$f$的最大化或寻找方程$f(x) = 0$的根等问题在经济学中经常出现。然而，函数往往难以处理，这促使人们使用更容易研究并能提供关于$f$的洞见的对$f$的近似。一类相对简单的近似函数是多项式。函数$h$是$x$的多项式，如果它具有如下形式：
+\[
+h(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_n x^n,
+\]
+其中每个$a_i$是常数。因此，$h$是各项之和，其中每一项都是一个常数乘以$x$的某个整数次幂，例如$a_3 x^3$，其中$a_3$是常数，$x$被升到3次幂。函数$h$被称为$n$阶多项式，因为最高次幂为$n$（假设$a_n \ne 0$）。例如，$h(x) = 2 + x + 5x^2 + 8x^3$是一个三阶多项式，$g(x) = 2x^3$也是。在适当的条件下，很大一类函数可以用多项式来近似，因此给定函数$f$，我们可以找到一个多项式如$h$来近似$f$。这使得通过研究更简单的函数$h$来发现$f$的性质成为可能，这一事实是研究这些近似的主要动机。泰勒定理涉及用多项式对函数进行近似，并为多项式近似提供了理论基础。
+\end{translation}
+
+\begin{original}
+Section 8.1.1 motivates the approach by illustrating how a quadratic function may be chosen to approximate a continuous function. Following this, in Section 8.1.2 the main theorem is stated. This asserts that any continuous differentiable function may be approximated by a polynomial function --- the Taylor series expansion. Because Taylor series expansions involve approximation, there is a gap between the approximation and the actual function. However, the quality of the approximation improves as the length of the Taylor series expansion increases --- the higher the order of the polynomial, the better the approximation. The improvement from lengthening the approximation is considered with an example in Section 8.1.3. Sections 8.2 to 8.4 provide a number of applications. Section 8.2 shows how Taylor series expansions may be used to address a variety of problems --- such as relating concavity to the derivatives of a function, finding the roots of an equation, and generating numerical optimization routines to find maxima and minima of a function. In Section 8.3, expected utility is introduced. In this section, the theory is used to provide an approximate measure of utility loss from risk and a monetary measure of the cost incurred from bearing risk. Section 8.4 uses Taylor series to find the approximately optimal solution to a portfolio selection problem. Finally, Section 8.5 describes the multivariate version of Taylor's theorem and Section 8.6 provides a proof of the theorem.
+\end{original}
+\begin{translation}
+第8.1.1节通过说明如何选择一个二次函数来近似一个连续函数来激发该方法。此后，第8.1.2节陈述了主要定理。该定理断言任何连续可微函数都可以用多项式函数——泰勒级数展开——来近似。由于泰勒级数展开涉及近似，在近似与实际函数之间存在差距。然而，随着泰勒级数展开长度的增加，近似的质量会提高——多项式的阶数越高，近似就越好。第8.1.3节通过一个例子考虑了延长近似所带来的改进。第8.2至8.4节提供了若干应用。第8.2节展示了泰勒级数展开如何用于处理各种问题——如将凹性与函数的导数联系起来、寻找方程的根、以及生成数值最优化程序以寻找函数的最大值和最小值。在第8.3节中，引入了期望效用理论。该节利用该理论提供了风险所致效用损失的近似度量以及承担风险所产生成本的货币度量。第8.4节使用泰勒级数来寻找投资组合选择问题的近似最优解。最后，第8.5节描述了泰勒定理的多元版本，第8.6节给出了该定理的证明。
+\end{translation}
+
+\subsection{Taylor Series Approximations: An Example / 泰勒级数近似：一个例子}
+
+\begin{original}
+To illustrate the way in which Taylor series may be used to approximate a function, consider the function:
+\[
+f(x) = \ln(x + 1) \, e^{-\frac{x}{2}}.
+\]
+Although simple to describe mathematically, the function has reasonably complex behavior as $x$ varies. Starting from $x = 0$, the function increases initially and then declines, ``flattening out'' to 0 as $x$ becomes large. Often, functions such as this are difficult to study. For example, the function has a unique maximum, $x^*$, defined by $f'(x^*) = 0$, but this expression is very difficult to solve. One way to address this difficulty is to approximate $f$ by another function, $g$, which is ``close'' to $f$ but simpler to manipulate.
+
+Consider the function, $g(x)$, which is given by the following formula:
+\[
+g(x) = 0.1524 + 0.44285x - 0.17489x^2.
+\]
+Observe that the function $g$ ``tracks'' the function $f(x)$ to some degree --- see Figure 8.1. Both functions, $f$ and $g$, have the same value at $x = 1$ and are close when $x$ is close to 1. So, $g$ is a good approximation to $f$ when $x$ is close to 1 and $g$ has a simple form.
+\end{original}
+\begin{translation}
+为说明泰勒级数可用于近似函数的方式，考虑函数：
+\[
+f(x) = \ln(x + 1) \, e^{-\frac{x}{2}}.
+\]
+虽然在数学上描述简单，但该函数随着$x$的变化具有相当复杂的行为。从$x = 0$开始，函数先增加然后下降，随着$x$变大而``平坦化''趋于0。通常，这样的函数难以研究。例如，该函数有一个唯一的最大值$x^*$，由$f'(x^*) = 0$定义，但这个表达式非常难以求解。解决这一困难的一种方法是用另一个函数$g$来近似$f$，$g$``接近''$f$但更易于操作。
+
+考虑由以下公式给出的函数$g(x)$：
+\[
+g(x) = 0.1524 + 0.44285x - 0.17489x^2.
+\]
+注意到函数$g$在某种程度上``跟踪''了函数$f(x)$——见图8.1。两个函数$f$和$g$在$x = 1$处有相同的值，且当$x$接近1时接近。因此，当$x$接近1时，$g$是$f$的一个良好近似，且$g$具有简单的形式。
+\end{translation}
+
+\begin{original}
+In fact, the function $g$ is a second-order Taylor series expansion of $f$, defined according to the formula:
+\[
+g(x) = f(1) + f'(1)(x - 1) + \frac{1}{2} f''(1)(x - 1)^2. \tag{8.1}
+\]
+The logic for this is discussed later. The following calculations confirm that this formula in Equation 8.1 yields the expression for $g$ given above. Observe that:
+\[
+f'(x) = \frac{e^{-\frac{1}{2}x}}{(x+1)} - \frac{1}{2}\ln(x+1)e^{-\frac{1}{2}x}, \quad
+f'(1) = \frac{1}{2}e^{-\frac{1}{2}} - \frac{1}{2}\ln(2)e^{-\frac{1}{2}},
+\]
+and
+\[
+f''(x) = -\frac{x+2}{(x+1)^2}e^{-\frac{1}{2}x} + \frac{1}{4}\ln(x+1)e^{-\frac{1}{2}x}, \quad
+f''(1) = -\frac{3}{4}e^{-\frac{1}{2}} + \frac{1}{4}\ln(2)e^{-\frac{1}{2}}.
+\]
+With these calculations in place, $g$ may be obtained:
+\begin{align*}
+g(x) &= f(1) + f'(1)(x-1) + \frac{1}{2}f''(1)(x-1)^2 \\
+&= 0.1524 + 0.44285x - 0.17489x^2,
+\end{align*}
+using the fact that $\ln(2) = 0.69314$ and $e^{-\frac{1}{2}} = 0.60653$. The function $g$ is called a second-order Taylor series expansion of $f$ around 1 since we used $f(1)$, $f'(1)$ and $f''(1)$ to obtain $g$.
+\end{original}
+\begin{translation}
+事实上，函数$g$是$f$的一个二阶泰勒级数展开，根据以下公式定义：
+\[
+g(x) = f(1) + f'(1)(x - 1) + \frac{1}{2} f''(1)(x - 1)^2. \tag{8.1}
+\]
+其逻辑将在后面讨论。下面的计算证实了方程(8.1)中的公式确实产生了上述$g$的表达式。注意到：
+\[
+f'(x) = \frac{e^{-\frac{1}{2}x}}{(x+1)} - \frac{1}{2}\ln(x+1)e^{-\frac{1}{2}x}, \quad
+f'(1) = \frac{1}{2}e^{-\frac{1}{2}} - \frac{1}{2}\ln(2)e^{-\frac{1}{2}},
+\]
+和
+\[
+f''(x) = -\frac{x+2}{(x+1)^2}e^{-\frac{1}{2}x} + \frac{1}{4}\ln(x+1)e^{-\frac{1}{2}x}, \quad
+f''(1) = -\frac{3}{4}e^{-\frac{1}{2}} + \frac{1}{4}\ln(2)e^{-\frac{1}{2}}.
+\]
+有了这些计算，$g$可被获得：
+\begin{align*}
+g(x) &= f(1) + f'(1)(x-1) + \frac{1}{2}f''(1)(x-1)^2 \\
+&= 0.1524 + 0.44285x - 0.17489x^2,
+\end{align*}
+利用了$\ln(2) = 0.69314$和$e^{-\frac{1}{2}} = 0.60653$。函数$g$被称为$f$在1附近的二阶泰勒级数展开，因为我们使用$f(1)$, $f'(1)$和$f''(1)$来获得$g$。
+\end{translation}
+
+\begin{original}
+The ability to approximate a function (such as $f$), by a polynomial function, such as the quadratic function $g$, turns out to have many uses. One application is optimization. If the maximum of $f$ is difficult to determine but $g$ is close to $f$, then finding the maximum of $g$ may be a good approximation to maximizing $f$. Note that $f'(x)$ may be written $f'(x) = \left[\frac{1}{(x+1)} - \frac{1}{2}\ln(x+1)\right]e^{-\frac{1}{2}x}$. Since for any $x$, $e^{-\frac{1}{2}x} \ne 0$, $f'(x) = 0$ implies $\frac{1}{(x+1)} - \frac{1}{2}\ln(x+1) = 0$: $x^*$ satisfies $\frac{1}{(x^*+1)} - \frac{1}{2}\ln(x^*+1) = 0$. The solution for $x^*$ is $x^* = 1.34575$. The function $f$ has a unique maximum at $x^*$.
+
+The function $g$ has a maximum at $\hat{x} = 1.266$. Assume that, since $g$ approximates $f$, the maximum of $g$ might be close to the maximum of $f$, so if we now expand $f$ around $\hat{x}$, we obtain a ``new'' function, $\hat{g}$; this should be a better approximation of $f$ close to the maximum:
+\[
+\hat{g}(x) = f(1.266) + f'(1.266)(x - 1.266) + \frac{1}{2}f''(1.266)(x - 1.266)^2 = 0.22901 + 0.307258x - 0.114577x^2.
+\]
+Observe that $\hat{g}$ is maximized at $x = 1.341$, which is very close to $x^*$. These calculations suggest a simple procedure for locating the maximum of a function using a simple algorithm, and illustrate one important use of Taylor series expansions.
+\end{original}
+\begin{translation}
+用多项式函数（如二次函数$g$）来近似一个函数（如$f$）的能力被证明有许多用途。一个应用是最优化。如果$f$的最大值难以确定但$g$接近$f$，那么寻找$g$的最大值可能是最大化$f$的一个良好近似。注意$f'(x)$可以写为$f'(x) = \left[\frac{1}{(x+1)} - \frac{1}{2}\ln(x+1)\right]e^{-\frac{1}{2}x}$。由于对任意$x$, $e^{-\frac{1}{2}x} \ne 0$，$f'(x) = 0$意味着$\frac{1}{(x+1)} - \frac{1}{2}\ln(x+1) = 0$：$x^*$满足$\frac{1}{(x^*+1)} - \frac{1}{2}\ln(x^*+1) = 0$。$x^*$的解为$x^* = 1.34575$。函数$f$在$x^*$处有唯一的最大值。
+
+函数$g$在$\hat{x} = 1.266$处有最大值。假设由于$g$近似$f$，$g$的最大值可能接近$f$的最大值，因此如果我们现在在$\hat{x}$附近展开$f$，就得到一个``新的''函数$\hat{g}$；这应该在最大值附近是$f$的一个更好的近似：
+\[
+\hat{g}(x) = f(1.266) + f'(1.266)(x - 1.266) + \frac{1}{2}f''(1.266)(x - 1.266)^2 = 0.22901 + 0.307258x - 0.114577x^2.
+\]
+注意到$\hat{g}$在$x = 1.341$处被最大化，这与$x^*$非常接近。这些计算提示了使用一个简单算法来定位函数最大值的简单程序，并说明了泰勒级数展开的一个重要用途。
+\end{translation}
+
+\subsection{Taylor Series Expansions / 泰勒级数展开}
+
+\begin{original}
+Taylor's theorem asserts that a continuous function with continuous derivatives may be approximated by a polynomial function. For notational convenience write $f^{(k)}(x) = \frac{d^k f}{dx^k}$ for the $k$th derivative of the function $f$. (As usual the lower derivatives are often written $f'(x) = \frac{df}{dx}$, $f''(x) = \frac{d^2 f}{dx^2}$ and $f'''(x) = \frac{d^3 f}{dx^3}$ instead of $f^{(1)}(x)$, $f^{(2)}(x)$ and $f^{(3)}(x)$.)
+
+\textbf{Theorem 8.1:} Let $f$ be a continuous function on an interval $[a, b]$ with continuous derivatives $f', f'', \dots, f^n$. Then given $x, x_0 \in (a, b)$:
+\[
+f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2!}f''(x_0)(x - x_0)^2 + \frac{1}{3!}f'''(x_0)(x - x_0)^3 + \dots + \frac{1}{n!}f^n(p)(x - x_0)^n \tag{8.2}
+\]
+for some $p$ between $x$ and $x_0$, and
+\[
+f(x) \approx f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2!}f''(x_0)(x - x_0)^2 + \frac{1}{3!}f'''(x_0)(x - x_0)^3 + \dots + \frac{1}{n!}f^n(x_0)(x - x_0)^n, \tag{8.3}
+\]
+when $x$ is close to $x_0$.
+\end{original}
+\begin{translation}
+泰勒定理断言，一个具有连续导数的连续函数可以用一个多项式函数来近似。为了记号的方便，将函数$f$的第$k$阶导数写为$f^{(k)}(x) = \frac{d^k f}{dx^k}$。（与通常一样，较低阶导数常写作$f'(x) = \frac{df}{dx}$, $f''(x) = \frac{d^2 f}{dx^2}$和$f'''(x) = \frac{d^3 f}{dx^3}$，而不是$f^{(1)}(x)$, $f^{(2)}(x)$和$f^{(3)}(x)$。）
+
+\textbf{定理8.1：} 设$f$是区间$[a, b]$上具有连续导数$f', f'', \dots, f^n$的连续函数。则给定$x, x_0 \in (a, b)$：
+\[
+f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2!}f''(x_0)(x - x_0)^2 + \frac{1}{3!}f'''(x_0)(x - x_0)^3 + \dots + \frac{1}{n!}f^n(p)(x - x_0)^n \tag{8.2}
+\]
+其中$p$是$x$与$x_0$之间的某个点，且
+\[
+f(x) \approx f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2!}f''(x_0)(x - x_0)^2 + \frac{1}{3!}f'''(x_0)(x - x_0)^3 + \dots + \frac{1}{n!}f^n(x_0)(x - x_0)^n, \tag{8.3}
+\]
+当$x$接近$x_0$时。
+\end{translation}
+
+\begin{original}
+In Theorem 8.1, the expression on the right side is called a Taylor series expansion of $f$ of order $n$ around $x_0$. Note that in one of the expansions, Equation 8.2, the last term is $\frac{1}{n!}f^n(p)(x - x_0)^n$ --- the point $p$ is chosen to give equality of the expansion with the function (and depends on both $x$ and $x_0$). The second expansion, Equation 8.3, has last term $\frac{1}{n!}f^n(x_0)(x - x_0)^n$, and the expansion is approximately equal to $f(x)$. The term $n!$ is ``$n$ factorial'', defined $n! = n(n-1)(n-2)\cdots 3 \cdot 2 \cdot 1$, so, for example, $3! = 3 \cdot 2 \cdot 1 = 6$. By convention, $0! = 1$. For example, a third-order expansion is:
+\[
+f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2!}f''(x_0)(x - x_0)^2 + \frac{1}{3!}f'''(p)(x - x_0)^3.
+\]
+\end{original}
+\begin{translation}
+在定理8.1中，右边的表达式称为$f$在$x_0$附近的$n$阶泰勒级数展开。注意在其中一种展开(8.2)中，最后一项是$\frac{1}{n!}f^n(p)(x - x_0)^n$——点$p$被选择以使展开与函数相等（且依赖于$x$和$x_0$两者）。第二种展开(8.3)的最后一项为$\frac{1}{n!}f^n(x_0)(x - x_0)^n$，且该展开近似等于$f(x)$。项$n!$是``$n$阶乘''，定义为$n! = n(n-1)(n-2)\cdots 3 \cdot 2 \cdot 1$，因此例如$3! = 3 \cdot 2 \cdot 1 = 6$。按惯例，$0! = 1$。例如，一个三阶展开为：
+\[
+f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2!}f''(x_0)(x - x_0)^2 + \frac{1}{3!}f'''(p)(x - x_0)^3.
+\]
+\end{translation}
+
+\begin{original}
+To illustrate the formula, consider the quadratic function $f(x) = x^2$. The first and second derivatives are $f'(x) = 2x$ and $f''(x) = 2$ for all $x$, so that for any $x_0$ and any number $p$, $f''(x_0) = 2 = f''(p)$. An exact first-order expansion has the form $f(x) = f(x_0) + f'(p)(x - x_0)$ for some $p$, so that for the function $f(x) = x^2$:
+\[
+f(x) = f(x_0) + f'(p) \cdot (x - x_0), \quad x^2 = x_0^2 + 2p \cdot (x - x_0).
+\]
+This equality requires that $p = \frac{x_0 + x}{2}$. To see this, rearrange the equation:
+\[
+x^2 - x_0^2 = 2p \cdot (x - x_0), \quad (x - x_0)(x + x_0) = 2p \cdot (x - x_0), \quad (x_0 + x) = 2p, \quad \frac{(x_0 + x)}{2} = p.
+\]
+Or, with approximation, $f(x) \approx f(x_0) + f'(x_0)(x - x_0) = [f(x_0) - f'(x_0)x_0] + f'(x_0) \cdot x$, a linear equation with intercept $[f(x_0) - f'(x_0)x_0]$ and slope $f'(x_0)$.
+\end{original}
+\begin{translation}
+为说明该公式，考虑二次函数$f(x) = x^2$。一阶和二阶导数对所有$x$分别为$f'(x) = 2x$和$f''(x) = 2$，因此对任意$x_0$和任意数$p$，$f''(x_0) = 2 = f''(p)$。一个精确的一阶展开具有形式$f(x) = f(x_0) + f'(p)(x - x_0)$，其中$p$是某个值，因此对于函数$f(x) = x^2$：
+\[
+f(x) = f(x_0) + f'(p) \cdot (x - x_0), \quad x^2 = x_0^2 + 2p \cdot (x - x_0).
+\]
+这个等式要求$p = \frac{x_0 + x}{2}$。要看到这一点，重新整理方程：
+\[
+x^2 - x_0^2 = 2p \cdot (x - x_0), \quad (x - x_0)(x + x_0) = 2p \cdot (x - x_0), \quad (x_0 + x) = 2p, \quad \frac{(x_0 + x)}{2} = p.
+\]
+或者，对于近似，$f(x) \approx f(x_0) + f'(x_0)(x - x_0) = [f(x_0) - f'(x_0)x_0] + f'(x_0) \cdot x$，这是一个截距为$[f(x_0) - f'(x_0)x_0]$、斜率为$f'(x_0)$的线性方程。
+\end{translation}
+
+\begin{original}
+A second-order Taylor series expansion of $x^2$ gives:
+\[
+f(x) = x_0^2 + 2x_0(x - x_0) + \frac{1}{2} \cdot 2 \cdot (x - x_0)^2 = x_0^2 + 2x_0 x - 2x_0^2 + x^2 - 2x x_0 + x_0^2 = x^2.
+\]
+The expansion is exact because $f''(x) = 2$ for all values of $x$: the second derivative is a constant. Put differently, if $f'''(x) = 0$, so the third derivative is 0, then the second derivative must be constant and so a second-order expansion is exact if the third derivative is 0.
+\end{original}
+\begin{translation}
+$x^2$的一个二阶泰勒级数展开给出：
+\[
+f(x) = x_0^2 + 2x_0(x - x_0) + \frac{1}{2} \cdot 2 \cdot (x - x_0)^2 = x^2.
+\]
+该展开是精确的，因为对所有$x$的值，$f''(x) = 2$：二阶导数是常数。换个说法，如果$f'''(x) = 0$，即三阶导数为0，则二阶导数必为常数，因此如果三阶导数为0，二阶展开是精确的。
+\end{translation}
+
+\subsection{Approximations and Accuracy / 近似与精度}
+
+\begin{original}
+As the length of the Taylor series expansion increases, the accuracy of the approximation increases, but the complexity of the approximation also increases with higher-order polynomials. So, there is a trade-off between increasing accuracy and increasing complexity. To see this, consider $f(x) = x^3$ and expansions around $x_0 = 1$. The first-order Taylor series expansion is $TSE_1(x) = 1 + 3(x - 1) = f(1) + f'(1)(x - 1)$; and the second-order Taylor series expansion is $TSE_2(x) = 1 + 3(x - 1) + 3(x - 1)^2 = f(1) + f'(1)(x - 1) + \frac{1}{2}f''(1)(x - 1)^2$. The error associated with the first-order Taylor series expansion is $E_1(x) = |f(x) - TSE_1(x)|$, and with the second-order expansion, $E_2(x) = |f(x) - TSE_2(x)|$.
+\end{original}
+\begin{translation}
+随着泰勒级数展开长度的增加，近似的精度会提高，但近似的复杂度也随着高阶多项式而增加。因此，在精度提高和复杂度增加之间存在一个权衡。要看到这一点，考虑$f(x) = x^3$和在$x_0 = 1$附近的展开。一阶泰勒级数展开为$TSE_1(x) = 1 + 3(x - 1) = f(1) + f'(1)(x - 1)$；二阶泰勒级数展开为$TSE_2(x) = 1 + 3(x - 1) + 3(x - 1)^2 = f(1) + f'(1)(x - 1) + \frac{1}{2}f''(1)(x - 1)^2$。与一阶泰勒级数展开相关的误差为$E_1(x) = |f(x) - TSE_1(x)|$，与二阶展开相关的误差为$E_2(x) = |f(x) - TSE_2(x)|$。
+\end{translation}
+\subsection{Applications of Taylor Series Expansions / 泰勒级数展开的应用}
+
+\begin{original}
+The following sections consider some applications of Taylor series expansions. The first application is a proof that concavity of a function implies that the second derivative is non-positive. Following this, numerical optimization routines based on Taylor series are developed. Then some applications on decision-making with risk are described.
+\end{original}
+\begin{translation}
+以下各节考虑泰勒级数展开的一些应用。第一个应用是证明函数的凹性意味着二阶导数非正。此后，开发了基于泰勒级数的数值最优化程序。然后描述了关于风险决策的一些应用。
+\end{translation}
+
+\subsubsection{Concavity and the Second Derivative / 凹性与二阶导数}
+
+\begin{original}
+The following theorem shows that concavity implies a non-positive second derivative; a similar argument may be used to show that convex functions have non-negative second derivatives.
+
+\textbf{Theorem 8.2:} If $f$ is concave and $f''(x)$ continuous then for any $x$, $f''(x) \le 0$.
+
+\textbf{Proof:} Pick $x$ and let $\Delta x = \tilde{x} - x$, $\tilde{x}$ close to $x$. Note $\frac{1}{2}(x + \Delta x) + \frac{1}{2}(x - \Delta x) = x$ and $f$ concave gives:
+\[
+f(x) = f\!\left(\frac{1}{2}(x + \Delta x) + \frac{1}{2}(x - \Delta x)\right) \ge \frac{1}{2}f(x + \Delta x) + \frac{1}{2}f(x - \Delta x).
+\]
+Therefore $2f(x) \ge f(x + \Delta x) + f(x - \Delta x)$. Now, Taylor's theorem gives:
+\[
+f(y) = f(y_0) + f'(y_0)(y - y_0) + \frac{1}{2!}f''(\tilde{y})(y - y_0)^2,
+\]
+where $\tilde{y}$ is between $y$ and $y_0$. First, take $y = x + \Delta x$, $y_0 = x$, so $y - y_0 = \Delta x$ and then
+\[
+f(x + \Delta x) = f(x) + f'(x)\Delta x + \frac{1}{2}f''(\bar{x})(\Delta x)^2,
+\]
+$\bar{x}$ between $x$ and $x + \Delta x$. Next, take $y = x - \Delta x$, $y_0 = x$, so $y - y_0 = -\Delta x$ and then
+\[
+f(x - \Delta x) = f(x) - f'(x)\Delta x + \frac{1}{2}f''(\hat{x})(\Delta x)^2,
+\]
+$\hat{x}$ between $x$ and $x - \Delta x$. Adding these together:
+\[
+f(x + \Delta x) + f(x - \Delta x) = 2f(x) + \frac{1}{2}[f''(\bar{x}) + f''(\hat{x})](\Delta x)^2.
+\]
+Recall from concavity that $2f(x) \ge f(x + \Delta x) + f(x - \Delta x)$, so
+\[
+0 \ge f(x + \Delta x) + f(x - \Delta x) - 2f(x) = \frac{1}{2}[f''(\bar{x}) + f''(\hat{x})](\Delta x)^2.
+\]
+Since $(\Delta x)^2 > 0$, this implies that $0 \ge \frac{1}{2}[f''(\bar{x}) + f''(\hat{x})]$. Since $f''$ is continuous, as $\Delta x \to 0$, $\bar{x}, \hat{x} \to x$, and so $f''(\bar{x}), f''(\hat{x}) \to f''(x)$. Therefore, $0 \ge f''(x)$.
+\end{original}
+\begin{translation}
+以下定理表明凹性意味着二阶导数非正；类似的论证可以用来证明凸函数具有非负的二阶导数。
+
+\textbf{定理8.2：} 如果$f$是凹的且$f''(x)$连续，则对任意$x$，$f''(x) \le 0$。
+
+\textbf{证明：} 选$x$并令$\Delta x = \tilde{x} - x$，$\tilde{x}$接近$x$。注意到$\frac{1}{2}(x + \Delta x) + \frac{1}{2}(x - \Delta x) = x$，$f$的凹性给出：
+\[
+f(x) = f\!\left(\frac{1}{2}(x + \Delta x) + \frac{1}{2}(x - \Delta x)\right) \ge \frac{1}{2}f(x + \Delta x) + \frac{1}{2}f(x - \Delta x).
+\]
+因此$2f(x) \ge f(x + \Delta x) + f(x - \Delta x)$。现在，泰勒定理给出：
+\[
+f(y) = f(y_0) + f'(y_0)(y - y_0) + \frac{1}{2!}f''(\tilde{y})(y - y_0)^2,
+\]
+其中$\tilde{y}$在$y$与$y_0$之间。首先，取$y = x + \Delta x$, $y_0 = x$，因此$y - y_0 = \Delta x$，则
+\[
+f(x + \Delta x) = f(x) + f'(x)\Delta x + \frac{1}{2}f''(\bar{x})(\Delta x)^2,
+\]
+$\bar{x}$在$x$与$x + \Delta x$之间。接着，取$y = x - \Delta x$, $y_0 = x$，因此$y - y_0 = -\Delta x$，则
+\[
+f(x - \Delta x) = f(x) - f'(x)\Delta x + \frac{1}{2}f''(\hat{x})(\Delta x)^2,
+\]
+$\hat{x}$在$x$与$x - \Delta x$之间。将这两者相加：
+\[
+f(x + \Delta x) + f(x - \Delta x) = 2f(x) + \frac{1}{2}[f''(\bar{x}) + f''(\hat{x})](\Delta x)^2.
+\]
+回想由凹性知$2f(x) \ge f(x + \Delta x) + f(x - \Delta x)$，因此
+\[
+0 \ge f(x + \Delta x) + f(x - \Delta x) - 2f(x) = \frac{1}{2}[f''(\bar{x}) + f''(\hat{x})](\Delta x)^2.
+\]
+由于$(\Delta x)^2 > 0$，这意味着$0 \ge \frac{1}{2}[f''(\bar{x}) + f''(\hat{x})]$。由于$f''$连续，当$\Delta x \to 0$时，$\bar{x}, \hat{x} \to x$，从而$f''(\bar{x}), f''(\hat{x}) \to f''(x)$。因此，$0 \ge f''(x)$。
+\end{translation}
+
+\subsubsection{Roots of a Function / 函数的根}
+
+\begin{original}
+Given a function $f$, a common problem is to find a root of $f$, a value for $x$ such that $f(x^*) = 0$. Finding a root involves solving the equation $f(x) = 0$. In practice this can be difficult. However, using Taylor series there is a simple procedure that may be used to search for the roots of a function. Consider a first-order Taylor series expansion of $f$ around some $x_0$:
+\[
+f(x) \approx f(x_0) + f'(x_0)(x - x_0).
+\]
+Given $x_0$, suppose $x$ is chosen to set $f(x_0) + f'(x_0)(x - x_0) = 0$, with solution $x_1$. Then $f(x_1) \approx f(x_0) + f'(x_0)(x_1 - x_0) = 0$, so that $x_1$ is ``approximately'' a root of $f$. If this process is repeated with $x_1$ replacing $x_0$, a revised estimate, $x_2$, for a root is obtained: $f(x_2) \approx f(x_1) + f'(x_1)(x_2 - x_1) = 0$. And so on. This process is easy to implement in practice. Assuming $f'(x_0) \ne 0$, the expression can be arranged to give an algorithm:
+\[
+x_1 - x_0 = -\frac{f(x_0)}{f'(x_0)}, \quad x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}, \quad x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}.
+\]
+This is the well-known Newton--Raphson method for finding roots.
+\end{original}
+\begin{translation}
+给定函数$f$，一个常见的问题是寻找$f$的根，即使得$f(x^*) = 0$的$x$的值。寻找根涉及求解方程$f(x) = 0$。在实践中这可能很困难。然而，利用泰勒级数，有一个简单的程序可用于搜索函数的根。考虑$f$在某个$x_0$附近的一阶泰勒级数展开：
+\[
+f(x) \approx f(x_0) + f'(x_0)(x - x_0).
+\]
+给定$x_0$，假设选择$x$使得$f(x_0) + f'(x_0)(x - x_0) = 0$，其解为$x_1$。则$f(x_1) \approx f(x_0) + f'(x_0)(x_1 - x_0) = 0$，因此$x_1$``近似地''是$f$的一个根。如果用$x_1$替换$x_0$重复这一过程，则得到根的一个修正估计$x_2$：$f(x_2) \approx f(x_1) + f'(x_1)(x_2 - x_1) = 0$。以此类推。这一过程在实践中易于实现。假设$f'(x_0) \ne 0$，该表达式可以整理以给出一个算法：
+\[
+x_1 - x_0 = -\frac{f(x_0)}{f'(x_0)}, \quad x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}, \quad x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}.
+\]
+这就是著名的求解根的牛顿--拉弗森方法。
+\end{translation}
+
+\subsubsection{Numerical Optimization / 数值最优化}
+
+\begin{original}
+Suppose we wish to maximize some differentiable function $f(x)$. A maximum has the property that $f'(x) = 0$. How do we solve $f'(x) = 0$? One approach uses Taylor series expansions,
+\[
+f(x) \approx f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2}f''(x_0)(x - x_0)^2.
+\]
+When $x_0$ is ``close'' to $x$, a value of $x$ that maximizes the right-hand side (RHS) will also maximize the LHS. Differentiate with respect to $x$ and set to 0. Since the RHS is a quadratic function of $x$, the derivative is linear in $x$. This yields
+\[
+f'(x_0) + f''(x_0)(x - x_0) = 0.
+\]
+Solving for $x$ (call the solution $x_1$):
+\[
+x_1 = x_0 - \frac{f'(x_0)}{f''(x_0)},
+\]
+assuming that $f''(x_0) \ne 0$. Presumably, $x_1$ will be closer to a maximum of $f(x)$ than $x_0$. We can continue the iteration:
+\[
+x_{n} = x_{n-1} - \frac{f'(x_{n})}{f''(x_{n})},
+\]
+assuming $f''(x_{n-1}) \ne 0$. If $\{x_n\}$ converges it will solve the problem $f'(x) = 0$.
+\end{original}
+\begin{translation}
+假设我们想最大化某个可微函数$f(x)$。最大值具有性质$f'(x) = 0$。如何求解$f'(x) = 0$？一种方法使用泰勒级数展开，
+\[
+f(x) \approx f(x_0) + f'(x_0)(x - x_0) + \frac{1}{2}f''(x_0)(x - x_0)^2.
+\]
+当$x_0$``接近''$x$时，最大化右边(RHS)的$x$的值也将最大化左边(LHS)。对$x$求导并设为零。由于RHS是$x$的二次函数，导数关于$x$是线性的。这给出
+\[
+f'(x_0) + f''(x_0)(x - x_0) = 0.
+\]
+解出$x$（记其解为$x_1$）：
+\[
+x_1 = x_0 - \frac{f'(x_0)}{f''(x_0)},
+\]
+假设$f''(x_0) \ne 0$。大致可以认为，$x_1$会比$x_0$更接近$f(x)$的最大值。我们可以继续迭代：
+\[
+x_{n} = x_{n-1} - \frac{f'(x_{n})}{f''(x_{n})},
+\]
+假设$f''(x_{n-1}) \ne 0$。如果$\{x_n\}$收敛，它将解决$f'(x) = 0$的问题。
+\end{translation}
+
+\begin{original}
+The numerical optimization procedure generalizes directly to multivariate optimization. The second-order Taylor series approximation in the multivariate case is:
+\[
+f(x) \approx f(x_0) + \nabla f(x_0) \cdot (x - x_0) + \frac{1}{2!}(x - x_0)' H(x_0)(x - x_0),
+\]
+where $\nabla f(x_0)$ is the vector of partial derivatives of $f$ evaluated at $x_0$, and where $H(x_0)$ is the Hessian matrix of second-order partial derivatives, also evaluated at $x_0$. Maximizing the right side by choice of the vector $x$ gives:
+\[
+\nabla f(x_0) + H(x_0)(x - x_0) = 0.
+\]
+Assuming the Hessian matrix is non-singular, the solution $x_1$ satisfies
+\[
+x_1 - x_0 = -H(x_0)^{-1}\nabla f(x_0),
+\]
+and the resulting iteration is:
+\[
+x_{i+1} - x_i = -H(x_i)^{-1}\nabla f(x_i).
+\]
+\end{original}
+\begin{translation}
+数值最优化程序可以直接推广到多元最优化。多元情形中的二阶泰勒级数近似为：
+\[
+f(x) \approx f(x_0) + \nabla f(x_0) \cdot (x - x_0) + \frac{1}{2!}(x - x_0)' H(x_0)(x - x_0),
+\]
+其中$\nabla f(x_0)$是$f$在$x_0$处计算的偏导数向量，$H(x_0)$是二阶偏导数的海森矩阵，同样在$x_0$处计算。通过选择向量$x$最大化右边得到：
+\[
+\nabla f(x_0) + H(x_0)(x - x_0) = 0.
+\]
+假设海森矩阵非奇异，解$x_1$满足
+\[
+x_1 - x_0 = -H(x_0)^{-1}\nabla f(x_0),
+\]
+由此产生的迭代为：
+\[
+x_{i+1} - x_i = -H(x_i)^{-1}\nabla f(x_i).
+\]
+\end{translation}
+
+\subsection{Expected Utility Theory and Behavior Towards Risk / 期望效用理论与风险态度}
+
+\begin{original}
+The presence of risk (variability) lowers the value of an asset: other things equal, comparing two assets, the one that has greater risk will have a lower value. In this section, Taylor series expansions are used to determine approximate welfare and monetary measures of the negative impact of risk. Before providing these measures, some introduction to utility and risk is necessary.
+\end{original}
+\begin{translation}
+风险（变异性）的存在降低了资产的价值：在其他条件相同的情况下，比较两种资产，风险较大的资产价值较低。在本节中，泰勒级数展开被用来确定风险负面影响的近似福利度量和货币度量。在提供这些度量之前，有必要对效用和风险作一些介绍。
+\end{translation}
+
+\subsubsection{Expected Utility Theory / 期望效用理论}
+
+\begin{original}
+The usual consumer theory model has $u(x_1, x_2, \dots, x_n) =$ utility from consumption of the $(x_1, \dots, x_n)$ bundle of goods. In this model, the individual receives and consumes $x_1$ of good 1, $x_2$ of good 2 and so on. Suppose that one receives some random return instead of a sure consumption bundle. Then this formulation is inappropriate: when a person receives a random return $X$, we cannot attach a utility to the return in the same way. Let $X$ be a random return with values $x_i$ and associated probabilities $p_i$. According to expected utility theory an individual has a utility function, $u$, defined on income. To calculate the utility associated with the random income or return stream $X$, calculate the utility of income in each state $i$, $u(x_i)$, multiply by the probability $p_i$ to get $p_i u(x_i)$ and sum these terms, $\sum p_i u(x_i)$. This is called expected utility and denoted $E\{u(X)\}$. Now we can compare two random returns $X$ and $Y$ in expected utility terms: the individual prefers $Y$ to $X$ if $\sum q_j u(y_j) > \sum p_i u(x_i)$.
+\end{original}
+\begin{translation}
+通常的消费者理论模型有$u(x_1, x_2, \dots, x_n) = $消费商品组合$(x_1, \dots, x_n)$的效用。在该模型中，个体收到并消费$x_1$单位商品1、$x_2$单位商品2，等等。假设某人收到的是某种随机收益而不是确定的消费组合。那么这种表述就不合适了：当一个人收到随机收益$X$时，我们不能以同样的方式将效用附加到该收益上。设$X$是一个随机收益，取值为$x_i$，相应的概率为$p_i$。根据期望效用理论，个体有一个定义在收入上的效用函数$u$。要计算与随机收入或收益流$X$相关的效用，先计算每个状态$i$中的收入效用$u(x_i)$，乘以概率$p_i$得$p_i u(x_i)$，然后对这些项求和，$\sum p_i u(x_i)$。这称为期望效用，记为$E\{u(X)\}$。现在我们可以用期望效用来比较两个随机收益$X$和$Y$：如果$\sum q_j u(y_j) > \sum p_i u(x_i)$，则个体偏好$Y$胜于$X$。
+\end{translation}
+
+\subsubsection{Risk-Averse Preferences and Welfare Loss / 风险厌恶偏好与福利损失}
+
+\begin{original}
+In general, $u(\cdot)$ is assumed to be concave: this is said to represent risk-averse preferences. An individual is said to be risk averse if $u$ is concave. Loosely speaking, risk-averse individuals prefer low variance for a given mean return.
+
+Suppose $x_1, x_2$ are close to $\mu$, so that we can use a Taylor series approximation:
+\begin{align*}
+u(x_1) &= u(\mu) + u'(\mu)(x_1 - \mu) + \frac{1}{2}u''(\mu)(x_1 - \mu)^2 + \frac{1}{3!}u'''(\xi_1)(x_1 - \mu)^3,\\
+u(x_2) &= u(\mu) + u'(\mu)(x_2 - \mu) + \frac{1}{2}u''(\mu)(x_2 - \mu)^2 + \frac{1}{3!}u'''(\xi_2)(x_2 - \mu)^3.
+\end{align*}
+If $(x_i - \mu)$ is ``small'' then the last term is relatively small and can be ignored. Then,
+\begin{align*}
+E\{u(X)\} &\approx [p_1 u(\mu) + p_2 u(\mu)] + [p_1 u'(\mu)(x_1 - \mu) + p_2 u'(\mu)(x_2 - \mu)] \\
+&\quad + \frac{1}{2}[p_1 u''(\mu)(x_1 - \mu)^2 + p_2 u''(\mu)(x_2 - \mu)^2]\\
+&= [p_1 + p_2]u(\mu) + [p_1(x_1 - \mu) + p_2(x_2 - \mu)]u'(\mu) + \frac{1}{2}[p_1(x_1 - \mu)^2 + p_2(x_2 - \mu)^2]u''(\mu)\\
+&= u(\mu) + \frac{1}{2}u''(\mu)\sigma^2. \tag{8.4}
+\end{align*}
+If we write the last expression as $E\{u(X)\} - u(\mu) = \frac{1}{2}u''(\mu)\sigma^2$, we see that when $u$ is concave, then $u''$ is negative --- so that expected utility is less than $u(\mu)$. Note also that the difference depends on the variance of the random return. Thus, the welfare loss due to small risk is $\frac{1}{2}u''(\mu)\sigma^2$. So, $\frac{1}{2}u''(\mu)\sigma^2$ is the loss in utility or the disutility associated with the risk.
+\end{original}
+\begin{translation}
+一般而言，$u(\cdot)$被假设为凹的：这被称为代表风险厌恶偏好。如果$u$是凹的，则称个体是风险厌恶的。粗略地说，风险厌恶的个体在给定平均收益下偏好低方差。
+
+假设$x_1, x_2$接近$\mu$，因此我们可以使用泰勒级数近似：
+\begin{align*}
+u(x_1) &= u(\mu) + u'(\mu)(x_1 - \mu) + \frac{1}{2}u''(\mu)(x_1 - \mu)^2 + \frac{1}{3!}u'''(\xi_1)(x_1 - \mu)^3,\\
+u(x_2) &= u(\mu) + u'(\mu)(x_2 - \mu) + \frac{1}{2}u''(\mu)(x_2 - \mu)^2 + \frac{1}{3!}u'''(\xi_2)(x_2 - \mu)^3.
+\end{align*}
+如果$(x_i - \mu)$是``小的''，则最后一项相对较小，可以忽略。那么，
+\begin{align*}
+E\{u(X)\} &\approx [p_1 u(\mu) + p_2 u(\mu)] + [p_1 u'(\mu)(x_1 - \mu) + p_2 u'(\mu)(x_2 - \mu)] \\
+&\quad + \frac{1}{2}[p_1 u''(\mu)(x_1 - \mu)^2 + p_2 u''(\mu)(x_2 - \mu)^2]\\
+&= [p_1 + p_2]u(\mu) + [p_1(x_1 - \mu) + p_2(x_2 - \mu)]u'(\mu) + \frac{1}{2}[p_1(x_1 - \mu)^2 + p_2(x_2 - \mu)^2]u''(\mu)\\
+&= u(\mu) + \frac{1}{2}u''(\mu)\sigma^2. \tag{8.4}
+\end{align*}
+如果我们把最后的表达式写为$E\{u(X)\} - u(\mu) = \frac{1}{2}u''(\mu)\sigma^2$，我们看到当$u$是凹的时候，$u''$为负——因此期望效用小于$u(\mu)$。还注意到，该差异依赖于随机收益的方差。因此，微小风险所导致的福利损失为$\frac{1}{2}u''(\mu)\sigma^2$。所以，$\frac{1}{2}u''(\mu)\sigma^2$是与风险相关的效用损失或负效用。
+\end{translation}
+
+\subsubsection{Risk Aversion and the Cost of Small Risk / 风险厌恶与小风险的成本}
+
+\begin{original}
+Let income be represented by a random variable $Y$, where $Y$ takes on the value $y_i$ with probability $p_i$. Thus $\mu_y = \sum p_i y_i$ and $\sigma_y^2 = \sum p_i(y_i - \mu_y)^2$. Instead of asking how risk affects the level of utility, one can focus on the monetary cost of bearing risk. How much would a person pay to avoid facing the risk and receive a sure income $\mu_y$? If the individual receives $\mu_y$ and makes a payment of $c$, the amount received is $y = \mu_y - c$, and the individual is indifferent between the sure income $y$ and facing the random return $Y$. The amount, $c$, is given as the solution of the equation: $u(\mu_y - c) = \sum p_i u(y_i)$. In general, solving this explicitly for $c$ is very difficult. However, we can use Taylor series expansions to find an approximate solution. Expanding each side:
+
+$u(\mu_y - c) = u(\mu_y) - u'(\mu_y)c + [u'(\mu_y) - u'(\xi)]c \approx u(\mu_y) - u'(\mu_y)c$, when $c$ is small.
+
+An expansion of $u(y_i)$ gives: $u(y_i) \approx u(\mu_y) + u'(\mu_y)(y_i - \mu_y) + \frac{1}{2}u''(\mu_y)(y_i - \mu_y)^2$. Multiplying by $p_i$ and summing over $i$ gives:
+\[
+\sum p_i u(y_i) \approx u(\mu_y) + \frac{1}{2}u''(\mu_y)\sigma_y^2.
+\]
+Combining these two approximations:
+\[
+u(\mu_y) - u'(\mu_y)c \approx u(\mu_y) + \frac{1}{2}u''(\mu_y)\sigma_y^2.
+\]
+Solving for $c$ (approximately) gives:
+\[
+c \approx \frac{1}{2}\left[-\frac{u''(\mu_y)}{u'(\mu_y)}\right]\sigma_y^2.
+\]
+Thus the ``cost'' of the risk is proportional to $\sigma_y^2$. The proportionality factor $-\frac{u''(\mu_y)}{u'(\mu_y)}$ is called the ``degree of absolute risk aversion''.
+\end{original}
+\begin{translation}
+设收入由随机变量$Y$表示，其中$Y$以概率$p_i$取值$y_i$。因此$\mu_y = \sum p_i y_i$且$\sigma_y^2 = \sum p_i(y_i - \mu_y)^2$。我们可以不关注风险如何影响效用水平，而是关注承担风险的货币成本。一个人愿意支付多少钱来避免面对风险而获得确定收入$\mu_y$？如果个体收到$\mu_y$并支付$c$，则收到的金额为$y = \mu_y - c$，且个体在确定收入$y$和面对随机收益$Y$之间无差异。金额$c$由方程$u(\mu_y - c) = \sum p_i u(y_i)$的解给出。一般来说，将其显式解出$c$是非常困难的。然而，我们可以使用泰勒级数展开来找到一个近似解。展开两边：
+
+$u(\mu_y - c) = u(\mu_y) - u'(\mu_y)c + [u'(\mu_y) - u'(\xi)]c \approx u(\mu_y) - u'(\mu_y)c$，当$c$很小时。
+
+对$u(y_i)$展开得：$u(y_i) \approx u(\mu_y) + u'(\mu_y)(y_i - \mu_y) + \frac{1}{2}u''(\mu_y)(y_i - \mu_y)^2$。乘以$p_i$并对$i$求和得：
+\[
+\sum p_i u(y_i) \approx u(\mu_y) + \frac{1}{2}u''(\mu_y)\sigma_y^2.
+\]
+结合这两个近似：
+\[
+u(\mu_y) - u'(\mu_y)c \approx u(\mu_y) + \frac{1}{2}u''(\mu_y)\sigma_y^2.
+\]
+解出$c$（近似地）得：
+\[
+c \approx \frac{1}{2}\left[-\frac{u''(\mu_y)}{u'(\mu_y)}\right]\sigma_y^2.
+\]
+因此，风险的``成本''与$\sigma_y^2$成正比。比例因子$-\frac{u''(\mu_y)}{u'(\mu_y)}$被称为``绝对风险厌恶程度''。
+\end{translation}
+
+\subsection{Diversification and Portfolio Selection / 分散化与投资组合选择}
+
+\begin{original}
+Diversification of risk involves combining different random returns that are independent or have low correlation. In that way, the probability of all returns being low (or high) at the same time is small, so that extreme variation in return is less likely. This is briefly discussed and related to the cost of risk. Then approximately optimal portfolio selection using Taylor series expansions is considered.
+\end{original}
+\begin{translation}
+风险分散化涉及组合相互独立或具有低相关性的不同随机收益。通过这种方式，所有收益同时处于低位（或高位）的概率很小，因此收益的极端变动可能性更小。对此进行简要讨论并将其与风险成本联系起来。然后考虑利用泰勒级数展开进行近似最优投资组合选择。
+\end{translation}
+
+\subsubsection{Diversification / 分散化}
+
+\begin{original}
+Suppose that we have $n$ projects. Assume that the return on each project is independent of the return on other projects. Project $j$ has return $Y(j)$, a random variable with mean $\mu(j)$ and variance $\sigma^2(j)$. Let $\mu_j = \mu$, $\sigma^2(j) = \sigma^2$ --- so we assume that each of the random variables has the same mean and variance. If an individual undertakes project $j$, the cost of risk is $c = \frac{1}{2}\left[-\frac{u''(\mu)}{u'(\mu)}\right]\sigma^2$.
+
+Suppose instead the individual forms a portfolio containing $\frac{1}{n}$ of each project. Denote this portfolio $Z = \frac{1}{n}\sum_{j=1}^{n} Y(j)$. The mean is $E(Z) = \frac{1}{n}\sum_j \mu_j = \mu$ and $\operatorname{Var}(Z) = \frac{1}{n}\sigma^2$, assuming the $Y$ are independent. Using our earlier results, the cost of risk for $Z$ is $c = \frac{1}{2}\left[-\frac{u''(\mu)}{u'(\mu)}\right]\frac{\sigma^2}{n}$. We observe that as the number ($n$) of projects increases, the cost of risk goes to 0. The portfolio $Z$ has the same mean return as each of the $Y(j)$ assets but the variance of $Z$ is $\frac{1}{n}$ the variance of each of the $Y(j)$.
+\end{original}
+\begin{translation}
+假设我们有$n$个项目。假设每个项目的收益与其他项目的收益相互独立。项目$j$有收益$Y(j)$，是一个具有均值$\mu(j)$和方差$\sigma^2(j)$的随机变量。设$\mu_j = \mu$, $\sigma^2(j) = \sigma^2$——因此我们假设每个随机变量具有相同的均值和方差。如果一个个体承担项目$j$，风险成本为$c = \frac{1}{2}\left[-\frac{u''(\mu)}{u'(\mu)}\right]\sigma^2$。
+
+假设改为该个体构建一个包含每个项目的$\frac{1}{n}$的投资组合。记该组合为$Z = \frac{1}{n}\sum_{j=1}^{n} Y(j)$。均值为$E(Z) = \frac{1}{n}\sum_j \mu_j = \mu$，且假设$Y$相互独立，$\operatorname{Var}(Z) = \frac{1}{n}\sigma^2$。利用我们之前的结果，$Z$的风险成本为$c = \frac{1}{2}\left[-\frac{u''(\mu)}{u'(\mu)}\right]\frac{\sigma^2}{n}$。我们观察到，随着项目数量($n$)的增加，风险成本趋于0。投资组合$Z$具有与每个$Y(j)$资产相同的平均收益，但$Z$的方差是每个$Y(j)$方差的$\frac{1}{n}$。
+\end{translation}
+
+\subsubsection{Portfolio Selection / 投资组合选择}
+
+\begin{original}
+This section studies the optimal division of a portfolio into a risky and a safe asset. The purchase of $\theta$ units of a risky asset yields an end-of-year gross return $z$ per unit of risky asset purchased. Let $p_i = \operatorname{Prob}(Z = z_i)$. The asset price is $P$ (price at beginning of year), the individual's wealth at the beginning of the year is $W$. Thus, if the individual purchases $\theta$ units of the asset and if at the end of the year the risky asset return turns out to be $z_i$, then the individual's end-of-year wealth is $W - \theta P + \theta z_i = W + \theta(z_i - P)$. Therefore, the (end-of-year) expected utility is given by: $E\{u(W + \theta(Z - P))\} = \sum p_i u(W + \theta(z_i - P))$.
+
+The individual's problem is to choose $\theta$ to solve: $\max_\theta \sum p_i u(W + \theta(z_i - P))$. Differentiating with respect to $\theta$ gives
+\[
+\sum p_i u'(W + \theta(z_i - P))(z_i - P) = 0.
+\]
+Solving this gives the optimal solution for $\theta$. However, this may be difficult to solve, so that finding an approximate solution via a Taylor series approximation is useful. If $z_i - P$ is small,
+\[
+u(W + \theta(z_i - P)) \approx u(W) + u'(W)\theta(z_i - P).
+\]
+Then:
+\[
+\sum p_i\{u(W) + u'(W)\theta(z_i - P)\}(z_i - P) \approx 0,
+\]
+or
+\[
+u'(W)\sum p_i(z_i - P) + u''(W)\theta\sum p_i(z_i - P)^2 \approx 0.
+\]
+Focus on the terms: $\sum p_i(z_i - P) = \mu - P$, and $\sum p_i(z_i - P)^2 = \sigma^2 + (\mu - P)^2$. Therefore, the first-order condition is approximately:
+\[
+u'(W)(\mu - P) + u''(W)\theta[\sigma^2 + (\mu - P)^2] \approx 0.
+\]
+Solving for $\theta$:
+\[
+\theta \approx -\frac{u'(W)}{u''(W)} \frac{(\mu - P)}{\sigma^2 + (\mu - P)^2}.
+\]
+\end{original}
+\begin{translation}
+本节研究将投资组合最优划分为风险资产和安全资产。购买$\theta$单位风险资产，每单位购买的风险资产产生年终总收益$z$。设$p_i = \operatorname{Prob}(Z = z_i)$。资产价格为$P$（年初价格），个体年初的财富为$W$。因此，如果个体购买了$\theta$单位该资产，且如果年终风险资产收益为$z_i$，则个体的年终财富为$W - \theta P + \theta z_i = W + \theta(z_i - P)$。因此，（年终）期望效用由下式给出：$E\{u(W + \theta(Z - P))\} = \sum p_i u(W + \theta(z_i - P))$。
+
+个体的问题是通过选择$\theta$来求解：$\max_\theta \sum p_i u(W + \theta(z_i - P))$。对$\theta$求导得
+\[
+\sum p_i u'(W + \theta(z_i - P))(z_i - P) = 0.
+\]
+解此给出$\theta$的最优解。然而，这可能难以求解，因此通过泰勒级数近似找到一个近似解是有用的。如果$z_i - P$很小，
+\[
+u(W + \theta(z_i - P)) \approx u(W) + u'(W)\theta(z_i - P).
+\]
+则：
+\[
+\sum p_i\{u(W) + u'(W)\theta(z_i - P)\}(z_i - P) \approx 0,
+\]
+或
+\[
+u'(W)\sum p_i(z_i - P) + u''(W)\theta\sum p_i(z_i - P)^2 \approx 0.
+\]
+关注这些项：$\sum p_i(z_i - P) = \mu - P$，且$\sum p_i(z_i - P)^2 = \sigma^2 + (\mu - P)^2$。因此，一阶条件近似为：
+\[
+u'(W)(\mu - P) + u''(W)\theta[\sigma^2 + (\mu - P)^2] \approx 0.
+\]
+解出$\theta$：
+\[
+\theta \approx -\frac{u'(W)}{u''(W)} \frac{(\mu - P)}{\sigma^2 + (\mu - P)^2}.
+\]
+\end{translation}
+
+\subsection{The Multivariate Version of Taylor's Theorem / 泰勒定理的多元版本}
+
+\begin{original}
+Continuous functions of many variables can also be approximated by Taylor series expansions. Let $f(x) : \mathbb{R}^n \to \mathbb{R}$, be a function of $n$ variables. Recall that the partial derivative of $f$ with respect to $x_i$ is denoted $f_{x_i}$ and the second partial $f_{x_i x_j} = \frac{\partial^2 f}{\partial x_i \partial x_j}$. Write:
+\[
+\nabla f = \begin{pmatrix} f_{x_1} \\ f_{x_2} \\ \vdots \\ f_{x_n} \end{pmatrix}, \quad
+H = \begin{pmatrix}
+f_{x_1 x_1} & f_{x_1 x_2} & \dots & f_{x_1 x_n} \\
+f_{x_2 x_1} & f_{x_2 x_2} & \dots & f_{x_2 x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+f_{x_n x_1} & f_{x_n x_2} & \dots & f_{x_n x_n}
+\end{pmatrix}, \quad
+x - x_0 = \begin{pmatrix} x_1 - x_{01} \\ x_2 - x_{02} \\ \vdots \\ x_n - x_{0n} \end{pmatrix}.
+\]
+Also, write $\nabla f(x)$ and $H(x)$ to denote the matrix of derivatives evaluated at $x$. A Taylor series expansion of $f$ to the second order around $x_0$ is
+\[
+f(x) = f(x_0) + \nabla f(x_0) \cdot (x - x_0) + \frac{1}{2!}(x - x_0)' H(p)(x - x_0).
+\]
+\end{original}
+\begin{translation}
+多元连续函数也可以用泰勒级数展开来近似。设$f(x) : \mathbb{R}^n \to \mathbb{R}$是一个$n$元函数。回想$f$关于$x_i$的偏导数记为$f_{x_i}$，二阶偏导数为$f_{x_i x_j} = \frac{\partial^2 f}{\partial x_i \partial x_j}$。记：
+\[
+\nabla f = \begin{pmatrix} f_{x_1} \\ f_{x_2} \\ \vdots \\ f_{x_n} \end{pmatrix}, \quad
+H = \begin{pmatrix}
+f_{x_1 x_1} & f_{x_1 x_2} & \dots & f_{x_1 x_n} \\
+f_{x_2 x_1} & f_{x_2 x_2} & \dots & f_{x_2 x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+f_{x_n x_1} & f_{x_n x_2} & \dots & f_{x_n x_n}
+\end{pmatrix}, \quad
+x - x_0 = \begin{pmatrix} x_1 - x_{01} \\ x_2 - x_{02} \\ \vdots \\ x_n - x_{0n} \end{pmatrix}.
+\]
+同时，记$\nabla f(x)$和$H(x)$表示在$x$处计算的导数矩阵。$f$在$x_0$附近的二阶泰勒级数展开为
+\[
+f(x) = f(x_0) + \nabla f(x_0) \cdot (x - x_0) + \frac{1}{2!}(x - x_0)' H(p)(x - x_0).
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 8.3:} Let $f : \mathbb{R}^n \to \mathbb{R}$, be continuous with continuous first and second partial derivatives. Then given $x, x_0$:
+\[
+f(x) = f(x_0) + \nabla f(x_0) \cdot (x - x_0) + \frac{1}{2!}(x - x_0)' H(p)(x - x_0),
+\]
+where $p$ is on a line between $x$ and $x_0$: for some $\lambda \in (0,1)$, $p = \lambda x_0 + (1-\lambda)x$.
+
+\textbf{Example 8.10:} Let $f(x, y) = x^2 y^3$. So, $f_x(x, y) = 2x y^3$, $f_y(x, y) = 3x^2 y^2$, $f_{xx} = 2y^3$, $f_{yy} = 6x^2 y$ and $f_{xy} = 6x y^2$. Then a first-order Taylor series expansion of $f$ around $x = 1$, $y = 1$ is:
+\[
+f(x, y) \approx f(1,1) + f_x(1,1)(x-1) + f_y(1,1)(y-1) = 1 + 2(x-1) + 3(y-1) = -4 + 3y + 2x.
+\]
+The second-order Taylor series expansion has the form:
+\begin{align*}
+f(x, y) &\approx f(1,1) + f_x(1,1)(x-1) + f_y(1,1)(y-1) \\
+&\quad + \frac{1}{2}[f_{xx}(1,1)(x-1)^2 + 2f_{xy}(1,1)(x-1)(y-1) + f_{yy}(1,1)(y-1)^2]\\
+&= 1 + 2(x-1) + 3(y-1) + (x-1)^2 + 6(x-1)(y-1) + 3(y-1)^2\\
+&= 6 - 9y - 6x + 3y^2 + x^2 + 6xy.
+\end{align*}
+\end{original}
+\begin{translation}
+\textbf{定理8.3：} 设$f : \mathbb{R}^n \to \mathbb{R}$是连续的，且具有连续的一阶和二阶偏导数。则给定$x, x_0$：
+\[
+f(x) = f(x_0) + \nabla f(x_0) \cdot (x - x_0) + \frac{1}{2!}(x - x_0)' H(p)(x - x_0),
+\]
+其中$p$在$x$与$x_0$之间的连线上：对某个$\lambda \in (0,1)$，$p = \lambda x_0 + (1-\lambda)x$。
+
+\textbf{例8.10：} 设$f(x, y) = x^2 y^3$。则$f_x(x, y) = 2x y^3$, $f_y(x, y) = 3x^2 y^2$, $f_{xx} = 2y^3$, $f_{yy} = 6x^2 y$且$f_{xy} = 6x y^2$。$f$在$x = 1$, $y = 1$附近的一阶泰勒级数展开为：
+\[
+f(x, y) \approx f(1,1) + f_x(1,1)(x-1) + f_y(1,1)(y-1) = 1 + 2(x-1) + 3(y-1) = -4 + 3y + 2x.
+\]
+二阶泰勒级数展开具有如下形式：
+\begin{align*}
+f(x, y) &\approx f(1,1) + f_x(1,1)(x-1) + f_y(1,1)(y-1) \\
+&\quad + \frac{1}{2}[f_{xx}(1,1)(x-1)^2 + 2f_{xy}(1,1)(x-1)(y-1) + f_{yy}(1,1)(y-1)^2]\\
+&= 1 + 2(x-1) + 3(y-1) + (x-1)^2 + 6(x-1)(y-1) + 3(y-1)^2\\
+&= 6 - 9y - 6x + 3y^2 + x^2 + 6xy.
+\end{align*}
+\end{translation}
+
+\subsection{Proof of Taylor's Theorem / 泰勒定理的证明}
+
+\begin{original}
+The proof of Taylor's theorem makes use of Rolle's theorem:
+
+\textbf{Theorem 8.4:} Let $f$ be a continuous differentiable function on the interval $[a, b]$. Suppose that $f(a) = f(b) = 0$. Then, there is a point $c \in (a, b)$ with $f'(c) = 0$.
+
+\textbf{Proof of Taylor's Theorem (Theorem 8.5):} Consider the second-order expansion --- the generalization to the $n$th-order case is straightforward. Let
+\[
+g(z) = f(x) - f(z) - f'(z)(x - z) - \frac{K}{2}(x - z)^2.
+\]
+Observe that $g(x) = 0$ and $g(x_0) = f(x) - f(x_0) - f'(x_0)(x - x_0) - \frac{K}{2}(x - x_0)^2$. Choose $K$ to make this 0, so that $g(x_0) = 0$. Then $g(x) = g(x_0)$, so that by Rolle's theorem, there is a point between $x_0$ and $x$, say $\xi$ with $g'(\xi) = 0$. Differentiating $g(z)$:
+\[
+g'(z) = -f'(z) - f''(z)(x - z) + f'(z) + \frac{2K}{2}(x - z) = -f''(z)(x - z) + K(x - z).
+\]
+At $\xi$, $g'(\xi) = -f''(\xi)(x - \xi) + K(x - \xi) = 0$. Since $\xi \ne x$, $f''(\xi) = K$.
+
+For the $n$th-order case:
+\[
+g(z) = f(x) - f(z) - f'(z)(x - z) - \frac{1}{2!}f''(z)(x - z)^2 - \dots - \frac{1}{(n-1)!}f^{(n-1)}(z)(x - z)^{n-1} - \frac{K}{n!}(x - z)^n.
+\]
+Again, $g(x) = 0$ and choose $K$ so that $g(x_0) = 0$. Rolle's theorem implies that there is some $\xi$ between $x_0$ and $x$ with $g'(\xi) = 0$. In the derivative of $g$, all but two terms cancel:
+\[
+g'(z) = -\frac{1}{(n-1)!}f^{(n)}(z)(x - z)^{n-1} + \frac{K}{(n-1)!}(x - z)^{n-1}.
+\]
+At $\xi$, $g'(\xi) = -\frac{1}{(n-1)!}f^{(n)}(\xi)(x - \xi)^{n-1} + \frac{K}{(n-1)!}(x - \xi)^{n-1} = 0$. Since $x \ne \xi$, $f^{(n)}(\xi) = K$.
+
+For the multivariate version, the proof is similar: let $g(t) = f(z + t\bar{z})$ and apply a second-order Taylor series expansion around 0 to this function of one variable.
+\end{original}
+\begin{translation}
+泰勒定理的证明利用了罗尔定理：
+
+\textbf{定理8.4：} 设$f$是区间$[a, b]$上的连续可微函数。假设$f(a) = f(b) = 0$。则存在一点$c \in (a, b)$使得$f'(c) = 0$。
+
+\textbf{泰勒定理的证明（定理8.5）：} 考虑二阶展开——推广到$n$阶情形是直接的。令
+\[
+g(z) = f(x) - f(z) - f'(z)(x - z) - \frac{K}{2}(x - z)^2.
+\]
+注意到$g(x) = 0$且$g(x_0) = f(x) - f(x_0) - f'(x_0)(x - x_0) - \frac{K}{2}(x - x_0)^2$。选择$K$使之为0，因此$g(x_0) = 0$。则$g(x) = g(x_0)$，因此由罗尔定理，存在$x_0$与$x$之间的一点，记作$\xi$，使得$g'(\xi) = 0$。对$g(z)$求导：
+\[
+g'(z) = -f'(z) - f''(z)(x - z) + f'(z) + \frac{2K}{2}(x - z) = -f''(z)(x - z) + K(x - z).
+\]
+在$\xi$处，$g'(\xi) = -f''(\xi)(x - \xi) + K(x - \xi) = 0$。由于$\xi \ne x$，故$f''(\xi) = K$。
+
+对于$n$阶情形：
+\[
+g(z) = f(x) - f(z) - f'(z)(x - z) - \frac{1}{2!}f''(z)(x - z)^2 - \dots - \frac{1}{(n-1)!}f^{(n-1)}(z)(x - z)^{n-1} - \frac{K}{n!}(x - z)^n.
+\]
+同样，$g(x) = 0$并选择$K$使得$g(x_0) = 0$。罗尔定理意味着存在某个$x_0$与$x$之间的$\xi$使得$g'(\xi) = 0$。在$g$的导数中，除两项外所有项都消去了：
+\[
+g'(z) = -\frac{1}{(n-1)!}f^{(n)}(z)(x - z)^{n-1} + \frac{K}{(n-1)!}(x - z)^{n-1}.
+\]
+在$\xi$处，$g'(\xi) = -\frac{1}{(n-1)!}f^{(n)}(\xi)(x - \xi)^{n-1} + \frac{K}{(n-1)!}(x - \xi)^{n-1} = 0$。由于$x \ne \xi$，故$f^{(n)}(\xi) = K$。
+
+对于多元版本，证明是类似的：令$g(t) = f(z + t\bar{z})$并对这个单变量函数应用在0附近的二阶泰勒级数展开。
+\end{translation}
+
+\subsection*{Exercises for Chapter 8 / 第8章习题}
+
+\begin{original}
+\textbf{Exercise 8.1} Consider the following functions: $f(x) = e^x - 1$, $g(x) = \ln(x + 1)$, $h(x) = x^2$, $u(x) = x^{\frac{1}{2}}$, $v(x) = \frac{1}{x}$, $w(x) = \sin(x)$. In all cases take $x > 0$. (a) Plot each function and determine whether each function is concave, convex or neither. (b) For each function, give the second-order Taylor series expansion.
+
+\textbf{Exercise 8.2} Give the second-order Taylor series expansions for the following functions: $f(x) = x^{\frac{1}{3}}$, $f(x) = \ln(x)$, $f(x) = \sin(x)$, $f(x) = \cos(x)$, $f(x) = e^{-rx}$, $f(x) = \sqrt{x}$, $f(x) = a^x$.
+
+\textbf{Exercise 8.5} A monopolist is faced with the following demand curve and cost function: $P(Q) = 154 - 2e^Q$, $C(Q) = 4Q + 6Q^2$. (a) Confirm that the profit function is concave. (b) Find the profit-maximizing level of output using numerical optimization.
+
+\textbf{Exercise 8.11} An individual has utility defined on income according to $u(y) = \ln(y + 1)$. The individual has initial income $\bar{y}$ and accepts a bet on a coin toss: if heads, the individual receives a dollar, if tails, the individual pays a dollar. The coin is fair (50/50 chance of heads or tails), thus the average utility from the bet is $\frac{1}{2}u(\bar{y} - 1) + \frac{1}{2}u(\bar{y} + 1)$. If the individual had not accepted the bet, the utility obtained is $u(\bar{y})$ for sure. Compare the average utility of the bet with the sure utility from not betting. Should the individual have accepted the bet?
+
+\textbf{Exercise 8.12} An individual has the utility function $u(y) = \ln(y + 1)$. The individual faces a random income next period: current income is \$100 and next period income will either fall by \$5 to \$95 or increase by \$5 to \$105 with 50/50 probabilities. The risk premium, $c$, is defined as the amount of money less than \$100 that makes the individual indifferent between accepting that sum for sure and facing the risk: $u(100 - c) = \frac{1}{2}u(95) + \frac{1}{2}u(105)$. Find the approximate value of $c$ using Taylor series expansions.
+
+\textbf{Exercise 8.14} A student has just received a present of a new computer. The student's yearly income is \$50 and the student has a utility function $u(y) = y^{\frac{1}{2}}$. Unfortunately, there is a 10\% chance that the computer will be stolen and the price of a new computer is \$5, so in the event of theft, the replacement will leave the student with only \$45 income for the year. Computer insurance is available at a cost of \$1. Use the calculations from a Taylor series expansion to decide whether the student should buy insurance or not.
+
+\textbf{Exercise 8.19} According to expected utility theory, faced with uncertain outcomes $x_1$ with probability $p$ and $x_2$ with probability $(1-p)$, an individual associates utility $E(u) = p u(x_1) + (1-p)u(x_2)$. The risk premium, $c$, is defined: $u(\mu - c) = E(u)$, where $\mu = p x_1 + (1-p)x_2$. In the case where $u(x) = \sqrt{x}$, $x_1 = 90$, $x_2 = 110$ and $p = \frac{1}{2}$, find $c$. An approximation for $c$ is given by $c \approx -\frac{1}{2}\frac{u''(\mu)}{u'(\mu)}\sigma^2$. Estimate $c$ using this approximation and compare it with the exact solution.
+\end{original}
+\begin{translation}
+\textbf{习题8.1} 考虑以下函数：$f(x) = e^x - 1$, $g(x) = \ln(x + 1)$, $h(x) = x^2$, $u(x) = x^{\frac{1}{2}}$, $v(x) = \frac{1}{x}$, $w(x) = \sin(x)$。在所有情形中取$x > 0$。(a) 画出每个函数并判断它是凹的、凸的还是两者皆非。(b) 对每个函数，给出二阶泰勒级数展开。
+
+\textbf{习题8.2} 给出以下函数的二阶泰勒级数展开：$f(x) = x^{\frac{1}{3}}$, $f(x) = \ln(x)$, $f(x) = \sin(x)$, $f(x) = \cos(x)$, $f(x) = e^{-rx}$, $f(x) = \sqrt{x}$, $f(x) = a^x$。
+
+\textbf{习题8.5} 一个垄断者面临以下需求曲线和成本函数：$P(Q) = 154 - 2e^Q$, $C(Q) = 4Q + 6Q^2$。(a) 确认利润函数是凹的。(b) 使用数值最优化求利润最大化的产出水平。
+
+\textbf{习题8.11} 一个体有定义在收入上的效用$u(y) = \ln(y + 1)$。该个体有初始收入$\bar{y}$并接受一个抛硬币赌局：如果是正面，个体收到一美元；如果是反面，个体支付一美元。硬币是公平的（50/50正面或反面概率），因此该赌局的平均效用为$\frac{1}{2}u(\bar{y} - 1) + \frac{1}{2}u(\bar{y} + 1)$。如果个体没有接受该赌局，则确定获得效用$u(\bar{y})$。比较该赌局的平均效用与不赌博的确定效用。该个体是否应该接受这个赌局？
+
+\textbf{习题8.12} 一个体有效用函数$u(y) = \ln(y + 1)$。该个体下一期面临随机收入：当前收入为\$100，下期收入将以50/50概率下降到\$95或上升到\$105。风险溢价$c$定义为使个体在接受确定金额和面对风险之间无差异的、低于\$100的金额：$u(100 - c) = \frac{1}{2}u(95) + \frac{1}{2}u(105)$。使用泰勒级数展开求$c$的近似值。
+
+\textbf{习题8.19} 根据期望效用理论，面对以概率$p$取值$x_1$、以概率$(1-p)$取值$x_2$的不确定结果，个体关联效用为$E(u) = p u(x_1) + (1-p)u(x_2)$。风险溢价$c$定义为：$u(\mu - c) = E(u)$，其中$\mu = p x_1 + (1-p)x_2$。在$u(x) = \sqrt{x}$, $x_1 = 90$, $x_2 = 110$且$p = \frac{1}{2}$的情形中，求$c$。$c$的一个近似由$c \approx -\frac{1}{2}\frac{u''(\mu)}{u'(\mu)}\sigma^2$给出。用此近似估计$c$并与其精确解进行比较。
+\end{translation}
+
+% =============================================================
+% Chapter 9: Vectors / 向量
+% =============================================================
+
+\section{Vectors / 向量}
+
+\subsection{Introduction / 引言}
+
+\begin{original}
+A vector is an array of numbers, $x = (x_1, x_2, \dots, x_n)$, and may be interpreted in a number of ways: as the values of a set of variables, as a coordinate position in $\mathbb{R}^n$, as a direction (move $x_i$ units in direction $i$, for $i = 1, \dots, n$), and so on. Depending on context, different interpretations are appropriate. In what follows, (Sections 9.2 and 9.3), some of the key summarizing features of a vector are considered: the length of a vector, the distance between vectors and the angle between vectors. As mentioned, from a geometric perspective, vectors can be interpreted as having direction --- in subsequent chapters on optimization, direction of improvement of a function is central to the characterization of an optimal choice. As it turns out, this direction is represented by a vector of partial derivatives of the function, the gradient vector. Vectors implicitly define hyperplanes and halfspaces, key concepts in economic theory --- Section 9.4 discusses these concepts. Finally, Section 9.5 describes Farkas' lemma, an old and important result in optimization theory.
+\end{original}
+\begin{translation}
+一个向量是一个数字阵列，$x = (x_1, x_2, \dots, x_n)$，并且可以用多种方式来解释：作为一组变量的值，作为$\mathbb{R}^n$中的一个坐标位置，作为一个方向（沿方向$i$移动$x_i$个单位，$i = 1, \dots, n$），等等。根据上下文的不同，应使用不同的解释。在下文中（第9.2和9.3节），考虑了向量的一些关键总结特征：向量的长度、向量之间的距离和向量之间的夹角。如前所述，从几何角度来看，向量可以被解释为具有方向——在后续关于最优化的章节中，函数改进的方向对最优选择的刻画至关重要。事实证明，这个方向由函数的偏导数向量——梯度向量——来表示。向量隐式地定义了超平面和半空间，这是经济理论中的关键概念——第9.4节讨论了这些概念。最后，第9.5节描述了法卡斯引理，一个最优化理论中古老而重要的结果。
+\end{translation}
+
+\subsection{Vectors: Length and Distance / 向量：长度与距离}
+
+\begin{original}
+The vector $x = (x_1, x_2, \dots, x_n)$ is a point in $\mathbb{R}^n$, a list of $n$ real numbers. A vector may also be viewed in terms of direction as: $x_1$ units along axis 1, $x_2$ units along axis 2, and so on, as illustrated in Figure 9.1. Expressed that way, the vector $x$ describes a direction from 0 to a point.
+
+What is the length of the vector $x$, labeled $c$ in Figure 9.1? To answer this, from the vector $x$ form a right-angled triangle where the hypotenuse has length $c$ and the adjacent and opposite have lengths $a$ and $b$, respectively. Using Pythagoras' theorem, $a^2 + b^2 = c^2$, so that $c = \sqrt{a^2 + b^2}$. Thus, the length of the vector $x$, denoted $\|x\|$, is the length of the line $c$ given by $\sqrt{x_1^2 + x_2^2}$:
+\[
+\|x\| = \sqrt{x_1^2 + x_2^2}.
+\]
+This extends to $n$ dimensions directly. The length of a vector $x = (x_1, x_2, \dots, x_n)$ is denoted $\|x\|$ and defined
+\[
+\|x\| = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} = \sqrt{\sum_{i=1}^{n} x_i^2} = \sqrt{x \cdot x}.
+\]
+From the definition, the length of $x$ and $-x$ are the same: $\|x\| = \|-x\|$. The sum and difference of two vectors $x$ and $y$ define vectors $x + y$ and $x - y$, as depicted in Figure 9.2.
+
+The distance between two vectors, $x, y$, is the length of the vector $x - y$:
+\[
+\|x - y\| = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}.
+\]
+\end{original}
+\begin{translation}
+向量$x = (x_1, x_2, \dots, x_n)$是$\mathbb{R}^n$中的一个点，一个$n$个实数的列表。向量也可以从方向的角度来看：沿轴1为$x_1$个单位，沿轴2为$x_2$个单位，等等，如图9.1所示。以这种方式表达，向量$x$描述了从0到一个点的方向。
+
+向量$x$的长度（图9.1中标为$c$）是多少？为回答这个问题，从向量$x$构造一个直角三角形，其中斜边长度为$c$，邻边和对边长度分别为$a$和$b$。利用毕达哥拉斯定理，$a^2 + b^2 = c^2$，因此$c = \sqrt{a^2 + b^2}$。于是，向量$x$的长度，记为$\|x\|$，是由$\sqrt{x_1^2 + x_2^2}$给出的线段$c$的长度：
+\[
+\|x\| = \sqrt{x_1^2 + x_2^2}.
+\]
+这直接推广到$n$维。向量$x = (x_1, x_2, \dots, x_n)$的长度记为$\|x\|$，并定义为
+\[
+\|x\| = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} = \sqrt{\sum_{i=1}^{n} x_i^2} = \sqrt{x \cdot x}.
+\]
+由定义，$x$和$-x$的长度相同：$\|x\| = \|-x\|$。两个向量$x$和$y$的和与差定义了向量$x + y$和$x - y$，如图9.2所示。
+
+两个向量$x, y$之间的距离是向量$x - y$的长度：
+\[
+\|x - y\| = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}.
+\]
+\end{translation}
+
+\begin{original}
+Given a vector $x$, its length defines a circle or sphere with $x$ in the boundary, so a circle with center 0 has radius $r = \|x\|$. Thus, the smaller the length of a vector, the smaller the circle on whose boundary it lies, as illustrated in Figure 9.3.
+
+Given a vector $z$, equidistant points from $z$ all lie on a circle centered on $z$ of some fixed radius. The point $w$, closest to $y$ and on the horizontal axis, has the property that $y - w$ is a vector perpendicular (orthogonal) to the horizontal axis. Let $e_1 = (1, 0)$. Then $c e_1$ is the vector $e_1$ scaled by the factor $c$. Any point $w$ on the horizontal axis may be written as $c e_1$, for some value of $c$. Consider the problem of choosing $c$ to minimize the distance from $y$ to the horizontal axis. This requires minimizing $\|y - c e_1\|$, or equivalently, minimizing:
+\[
+\|y - c e_1\|^2 = (y - c e_1) \cdot (y - c e_1) = y \cdot y - 2c\, y \cdot e_1 + c^2 e_1 \cdot e_1.
+\]
+Choosing $c$ to minimize this expression gives: $-2y \cdot e_1 + 2c e_1 \cdot e_1 = 0$, so that
+\[
+c^* = \frac{y \cdot e_1}{e_1 \cdot e_1}.
+\]
+So, $w = c^* e_1$ is the point on the horizontal axis closest to $y$. Observe that
+\[
+(y - w) \cdot e_1 = (y - c^* e_1) \cdot e_1 = y \cdot e_1 - c^* e_1 \cdot e_1 = y \cdot e_1 - y \cdot e_1 = 0.
+\]
+The explanation is simple. The choice of $w$ yields a vector $y - w$ with 0 in the first coordinate. Every vector on the horizontal axis has 0 in the second coordinate, so $(y - w) \cdot x = 0$ for any $x$ on the horizontal axis.
+\end{original}
+\begin{translation}
+给定一个向量$x$，其长度定义了一个圆周或球面，$x$在其边界上，因此一个中心在0的圆具有半径$r = \|x\|$。于是，向量的长度越小，其所在圆周的边界就越小，如图9.3所示。
+
+给定一个向量$z$，到$z$等距离的点都位于以$z$为中心、具有某个固定半径的圆上。点$w$是最接近$y$且在水平轴上的点，它具有性质$y - w$是一个与水平轴垂直（正交）的向量。令$e_1 = (1, 0)$。则$c e_1$是向量$e_1$按因子$c$缩放的结果。水平轴上的任意点$w$可以写为$c e_1$，其中$c$为某个值。考虑选择$c$以最小化从$y$到水平轴的距离的问题。这需要最小化$\|y - c e_1\|$，或等价地，最小化：
+\[
+\|y - c e_1\|^2 = (y - c e_1) \cdot (y - c e_1) = y \cdot y - 2c\, y \cdot e_1 + c^2 e_1 \cdot e_1.
+\]
+选择$c$来最小化此表达式给出：$-2y \cdot e_1 + 2c e_1 \cdot e_1 = 0$，因此
+\[
+c^* = \frac{y \cdot e_1}{e_1 \cdot e_1}.
+\]
+因此，$w = c^* e_1$是水平轴上最接近$y$的点。注意到
+\[
+(y - w) \cdot e_1 = (y - c^* e_1) \cdot e_1 = y \cdot e_1 - c^* e_1 \cdot e_1 = y \cdot e_1 - y \cdot e_1 = 0.
+\]
+解释很简单。$w$的选择产生了一个在第一坐标中为0的向量$y - w$。水平轴上的每个向量在第二坐标中为0，因此对水平轴上的任意$x$，$(y - w) \cdot x = 0$。
+\end{translation}
+
+\subsection{Vectors: Direction and Angles / 向量：方向与角度}
+
+\begin{original}
+Since vectors indicate direction, we may compare the relative directions of different vectors. One particularly important comparison occurs when the vectors are orthogonal or ``perpendicular''.
+
+\textbf{Definition 9.1:} Two vectors $a$ and $b$ are said to be orthogonal if their inner product is 0, $a \cdot b = 0$.
+
+In two dimensions, $a \cdot b = a_1 b_1 + a_2 b_2$, so that if the vectors are orthogonal, then $a_1 b_1 + a_2 b_2 = 0$, and rearranging, $\frac{a_2}{a_1} = -\frac{b_1}{b_2}$, provided $a_1$ and $b_2$ are both not equal to 0. From the definition, if $a$ and $b$ are orthogonal, then so are the vectors $c a$ and $d b$ for any constants $c$ and $d$, since $c a \cdot d b = (cd) a \cdot b = 0$.
+
+Consider two vectors, $v$ and $u$. Two cases are depicted --- where the angle is acute and where the angle is obtuse. In either case, drop a perpendicular line from the point $v$ onto a point lying on the vector $u$, $c u$. Orthogonality requires that this line, $v - c u$, be orthogonal to $u$: $(v - c u) \cdot u = 0$. This implies that $v \cdot u - c u \cdot u = 0$, so that
+\[
+c = \frac{v \cdot u}{u \cdot u} = \frac{v \cdot u}{\|u\|^2}.
+\]
+The point $c u$ is the closest point to $v$ among the set of points $\{w \mid w = \lambda u, \text{ for some number } \lambda\}$.
+
+The angle between vectors may be defined using the previous calculations. Using the cosine formula, considering Figure 9.6:
+\[
+\cos(\theta) = \frac{\|c u\|}{\|v\|} = \frac{v \cdot u}{\|u\| \|v\|}.
+\]
+In the case where the angle is acute, $c > 0$, $v \cdot u > 0$; when the angle is obtuse, $c < 0$, $v \cdot u < 0$. Notice that when $v \cdot u = 0$, $\cos(\theta) = 0$, corresponding to a $90^\circ$ angle.
+\end{original}
+\begin{translation}
+由于向量指明方向，我们可以比较不同向量的相对方向。当向量正交或``垂直''时，这种比较尤为重要。
+
+\textbf{定义9.1：} 如果两个向量$a$和$b$的内积为0，即$a \cdot b = 0$，则称它们正交。
+
+在二维中，$a \cdot b = a_1 b_1 + a_2 b_2$，因此如果向量正交，则$a_1 b_1 + a_2 b_2 = 0$，重新整理得$\frac{a_2}{a_1} = -\frac{b_1}{b_2}$，前提是$a_1$和$b_2$都不等于0。由定义，如果$a$和$b$正交，则对于任意常数$c$和$d$，向量$c a$和$d b$也正交，因为$c a \cdot d b = (cd) a \cdot b = 0$。
+
+考虑两个向量$v$和$u$。两种情形被描绘出来——角度为锐角时和角度为钝角时。在任意一种情形中，从点$v$向位于向量$u$上的点$c u$作垂线。正交性要求这条线$v - c u$与$u$正交：$(v - c u) \cdot u = 0$。这意味着$v \cdot u - c u \cdot u = 0$，因此
+\[
+c = \frac{v \cdot u}{u \cdot u} = \frac{v \cdot u}{\|u\|^2}.
+\]
+点$c u$是点集$\{w \mid w = \lambda u, \text{ 对某个数 } \lambda\}$中最接近$v$的点。
+
+向量之间的角度可以用先前的计算来定义。利用余弦公式，考虑图9.6：
+\[
+\cos(\theta) = \frac{\|c u\|}{\|v\|} = \frac{v \cdot u}{\|u\| \|v\|}.
+\]
+在角度为锐角的情形中，$c > 0$, $v \cdot u > 0$；当角度为钝角时，$c < 0$, $v \cdot u < 0$。注意当$v \cdot u = 0$时，$\cos(\theta) = 0$，对应于$90^\circ$角。
+\end{translation}
+
+\subsection{Hyperplanes and Direction of Increase / 超平面与增加方向}
+
+\begin{original}
+Let $\lambda = (\lambda_1, \dots, \lambda_n) \ne 0$ be a vector of constants, $c$ a constant and consider the equation:
+\[
+\lambda \cdot x = \sum_{i=1}^{n} \lambda_i x_i = c.
+\]
+The set of all $x$ satisfying this equation defines a hyperplane:
+\[
+H(\lambda, c) = \{x \mid \lambda \cdot x = c\}.
+\]
+If $y$ and $z$ are on this hyperplane, then $\lambda \cdot y = \lambda \cdot z = c$, so that $\lambda \cdot (y - z) = 0$. Thus, $\lambda$ and $(y - z)$ are orthogonal, as depicted in Figure 9.9. Movement along the hyperplane defined by $\lambda$ and $c$ is orthogonal to $\lambda$.
+
+A hyperplane $H(\lambda, c) = \{x \mid \lambda \cdot x = c\}$ separates $\mathbb{R}^n$ into three regions:
+\[
+H = \{x \mid \lambda \cdot x = c\}, \quad H^+ = \{x \mid \lambda \cdot x > c\}, \quad H^- = \{x \mid \lambda \cdot x < c\}.
+\]
+On which sides of $H$ do $H^+$ and $H^-$ lie? Consider the point $y$ and move from $y$ along the direction $\lambda$ a fraction $\alpha > 0$ to $y + \alpha\lambda$. Observe that
+\[
+\lambda \cdot (y + \alpha\lambda) = \lambda \cdot y + \alpha\lambda \cdot \lambda = c + \alpha\|\lambda\|^2 > c.
+\]
+Therefore, $\lambda$ points into the region $H^+$: starting at $y$ and moving from $y$ to $w = y + \alpha\lambda$, $w$ is in $H^+$. Equivalently, let $f(x) = \lambda \cdot x$, then $\lambda$ points in the $x$ direction on which $f(x)$ increases.
+
+Furthermore, notice that the direction $\lambda$ gives the greatest increase among all directions of equal length.
+\end{original}
+\begin{translation}
+设$\lambda = (\lambda_1, \dots, \lambda_n) \ne 0$是一个常数向量，$c$是一个常数，考虑方程：
+\[
+\lambda \cdot x = \sum_{i=1}^{n} \lambda_i x_i = c.
+\]
+所有满足此方程的$x$的集合定义了一个超平面：
+\[
+H(\lambda, c) = \{x \mid \lambda \cdot x = c\}.
+\]
+如果$y$和$z$在此超平面上，则$\lambda \cdot y = \lambda \cdot z = c$，因此$\lambda \cdot (y - z) = 0$。于是，$\lambda$与$(y - z)$正交，如图9.9所示。沿由$\lambda$和$c$定义的超平面的移动与$\lambda$正交。
+
+一个超平面$H(\lambda, c) = \{x \mid \lambda \cdot x = c\}$将$\mathbb{R}^n$分成三个区域：
+\[
+H = \{x \mid \lambda \cdot x = c\}, \quad H^+ = \{x \mid \lambda \cdot x > c\}, \quad H^- = \{x \mid \lambda \cdot x < c\}.
+\]
+$H^+$和$H^-$位于$H$的哪一侧？考虑点$y$，从$y$沿方向$\lambda$移动一个分数$\alpha > 0$到$y + \alpha\lambda$。注意到
+\[
+\lambda \cdot (y + \alpha\lambda) = \lambda \cdot y + \alpha\lambda \cdot \lambda = c + \alpha\|\lambda\|^2 > c.
+\]
+因此，$\lambda$指向区域$H^+$：从$y$出发，从$y$移动到$w = y + \alpha\lambda$，$w$位于$H^+$中。等价地，设$f(x) = \lambda \cdot x$，则$\lambda$指向$f(x)$在$x$方向上的增加方向。
+
+此外，注意在所有等长方向中，方向$\lambda$给出了最大的增加。
+\end{translation}
+
+\begin{original}
+If $\lambda$ is normal (perpendicular) to $H$, then for any $\beta \ne 0$, $\beta\lambda$ is normal to the hyperplane. Dividing $\lambda$ by $\|\lambda\|$ gives the unit normal, $\eta$, to the hyperplane $H$ where $\eta = \frac{\lambda}{\|\lambda\|}$. The normal is orthogonal to $H$ and has length 1, since $\|\eta\| = \frac{\|\lambda\|}{\|\lambda\|} = 1$.
+\end{original}
+\begin{translation}
+如果$\lambda$是$H$的法向量（垂直），则对任意$\beta \ne 0$，$\beta\lambda$也是超平面的法向量。将$\lambda$除以$\|\lambda\|$得到超平面$H$的单位法向量$\eta = \frac{\lambda}{\|\lambda\|}$。该法向量与$H$正交且长度为1，因为$\|\eta\| = \frac{\|\lambda\|}{\|\lambda\|} = 1$。
+\end{translation}
+
+\subsection{Farkas' Lemma / 法卡斯引理}
+
+\begin{original}
+These ideas may be used to develop a well-known theorem in linear algebra and linear inequalities called Farkas' lemma. This result is particularly useful in optimization theory. Let $A$ be an $m \times n$ matrix and $b$ an $n \times 1$ vector.
+
+\textbf{Theorem 9.1:} Either (1) $\{Ax = b, x \ge 0\}$, or (2) $\{A'y \ge 0 \text{ and } y'b > 0\}$ has a solution, but not both.
+
+\textbf{Proof:} Suppose that (1) has no solution: $b \notin K \equiv \{Ax \mid x \ge 0\}$. Let $p \in \{Ax \mid x \ge 0\}$ solve $\min_{z \in K} \|b - z\|$. Since $K$ is convex, $p$ is unique. Let $w \ge 0$ satisfy $p = Aw$. The hyperplane perpendicular to $b - p$ separates $b$ and $K$: $z \in K$, $(b - p) \cdot (z - p) \le 0$. Equivalently:
+\[
+(b - p) \cdot (Ax - Aw) \le 0, \quad x \ge 0.
+\]
+Put $y = b - p$, so $y \cdot (Ax - Aw) \le 0$ for all $x \ge 0$. Let $x = w + e_i$, $e_i$ a vector with 1 in the $i$th position and zero elsewhere. Then $A(x - w) = A e_i = a_i$ the $i$th column of $A$. Thus, $y \cdot a_i \le 0$, $\forall i$, or $y'A \le 0$. Taking $x = 0$ in $y \cdot (Ax - Aw) \le 0$ and recalling $Aw = p$ gives $-y \cdot p \le 0$. Substituting $b - y$ for $p$, $-y\cdot(b - y) \le 0$ or $-y\cdot b + y\cdot y \le 0$ or $y \cdot y \le y \cdot b$ and $y \cdot y > 0$ since $y \ne 0$, so $y \cdot b > 0$. Thus, if (1) does not hold, (2) must hold. Finally, (1) and (2) cannot both be satisfied: if $x \ge 0$, $Ax = b$ and if $y'A \le 0$ then $y'b = y'Ax \le 0$. This completes the proof.
+\end{original}
+\begin{translation}
+这些思想可以用来推导线性代数和线性不等式中的一个著名定理——法卡斯引理。该结果在最优化理论中特别有用。设$A$是一个$m \times n$矩阵，$b$是一个$n \times 1$向量。
+
+\textbf{定理9.1：} (1) $\{Ax = b, x \ge 0\}$或(2) $\{A'y \ge 0 \text{ 且 } y'b > 0\}$有解，但两者不能同时成立。
+
+\textbf{证明：} 假设(1)无解：$b \notin K \equiv \{Ax \mid x \ge 0\}$。设$p \in \{Ax \mid x \ge 0\}$求解$\min_{z \in K} \|b - z\|$。由于$K$是凸的，$p$是唯一的。设$w \ge 0$满足$p = Aw$。垂直于$b - p$的超平面将$b$与$K$分离：对$z \in K$，有$(b - p) \cdot (z - p) \le 0$。等价地：
+\[
+(b - p) \cdot (Ax - Aw) \le 0, \quad x \ge 0.
+\]
+令$y = b - p$，则对所有$x \ge 0$有$y \cdot (Ax - Aw) \le 0$。取$x = w + e_i$，其中$e_i$是一个在第$i$个位置为1、其余为零的向量。则$A(x - w) = A e_i = a_i$即$A$的第$i$列。因此，$y \cdot a_i \le 0$, $\forall i$，或$y'A \le 0$。在$y \cdot (Ax - Aw) \le 0$中取$x = 0$并回想$Aw = p$得$-y \cdot p \le 0$。将$b - y$代入$p$，得$-y\cdot(b - y) \le 0$或$-y\cdot b + y\cdot y \le 0$或$y \cdot y \le y \cdot b$。由于$y \ne 0$，$y \cdot y > 0$，因此$y \cdot b > 0$。因此，如果(1)不成立，则(2)必成立。最后，(1)和(2)不能同时满足：如果$x \ge 0$, $Ax = b$且$y'A \le 0$，则$y'b = y'Ax \le 0$。这就完成了证明。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 9.1:} Farkas' lemma has a simple geometric interpretation. In Figure 9.13, $b$ is in the cone generated by the vectors $a_1$ and $a_2$: $b = \lambda_1 a_1 + \lambda_2 a_2$ with $\lambda_i \ge 0$. The shaded region is defined as the set of $y$ satisfying $a_1 \cdot y \le 0$ and $a_2 \cdot y \le 0$ or $A'y \le 0$, where $A$ is the matrix with columns $a_1$ and $a_2$. As the figure illustrates, the region $\{y \mid A'y \le 0\}$ is a subset of the region $\{y \mid b \cdot y \le 0\}$. Thus, $Ax = b$ has a non-negative solution and $A'y \le 0$ implies $b \cdot y \le 0$.
+
+Farkas' lemma may be expressed in other ways. One corollary is:
+
+\textbf{Lemma 2:} Either $\{Ax \le b, \; x \ge 0\}$ has a solution, or $\{A'y \ge 0, \; b \cdot y < 0, \; y \ge 0\}$ has a solution.
+\end{original}
+\begin{translation}
+\textbf{注9.1：} 法卡斯引理有一个简单的几何解释。在图9.13中，$b$位于由向量$a_1$和$a_2$生成的锥中：$b = \lambda_1 a_1 + \lambda_2 a_2$且$\lambda_i \ge 0$。阴影区域定义为满足$a_1 \cdot y \le 0$和$a_2 \cdot y \le 0$（或$A'y \le 0$）的$y$的集合，其中$A$是以$a_1$和$a_2$为列的矩阵。如该图所示，区域$\{y \mid A'y \le 0\}$是区域$\{y \mid b \cdot y \le 0\}$的一个子集。因此，$Ax = b$有一个非负解且$A'y \le 0$意味着$b \cdot y \le 0$。
+
+法卡斯引理还可以用其他方式表达。一个推论是：
+
+\textbf{引理2：} $\{Ax \le b, \; x \ge 0\}$有解，或者$\{A'y \ge 0, \; b \cdot y < 0, \; y \ge 0\}$有解。
+\end{translation}
+
+\subsection*{Exercises for Chapter 9 / 第9章习题}
+
+\begin{original}
+\textbf{Exercise 9.1} Find the distance between the vectors $x = (5,3)$ and $y = (4,6)$.
+
+\textbf{Exercise 9.2} Let $x = (1,3)$, $y = (2,2)$ and $z = (1,-1)$. Find the angle between $x$ and $y$, and that between $x$ and $z$.
+
+\textbf{Exercise 9.3} Let $x = (4,2)$ and $y = (3,3)$. Find $c$ such that $(y - c x) \cdot (y - c x) \le (y - v) \cdot (y - v)$ for all $v = \tilde{c} x$, for some $\tilde{c}$. Confirm that $(y - c x) \cdot x = 0$.
+
+\textbf{Exercise 9.4} (a) Let $\lambda = (1,2)$. Find the hyperplane $\lambda \cdot x = 2$. Noting that $(2,0)$ is on this hyperplane, plot $(2,0) + \lambda$. Identify the region $\{x \mid \lambda \cdot x \ge 2\}$. (b) Let $\lambda = (-1,1)$. Find the hyperplane $\lambda \cdot x = 2$. Noting that $(-1,1)$ is on this hyperplane, plot $(-1,1) + \lambda$. Identify the region $\{x \mid \lambda \cdot x \ge 2\}$.
+
+\textbf{Exercise 9.5} Consider the matrix $R(\theta) = \begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{pmatrix}$, where $\theta$ is an angle measured in degrees. The transformation $R(\theta)x$ moves the vector $x$ through an angle of $\theta$ degrees. (a) Letting $x = (1,1)$, find $x' = R(45)x$. Confirm that $\cos(\theta) = \frac{1}{\sqrt{2}} = \frac{\|c x'\|}{\|x'\|}$. (b) Letting $y = (1,3)$, find $y' = R(30)y$. Confirm that $\cos(\theta) = \frac{\sqrt{3}}{2} = \frac{\|c y'\|}{\|y'\|}$.
+
+\textbf{Exercise 9.7} Consider the following observations on two random variables, $x$ and $y$: $x = (9, 7, 3, 5)'$, $y = (12, 8, 2, 6)'$. The correlation coefficient is defined: $r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}$, where $\bar{x}$ and $\bar{y}$ are the respective means. Find the correlation coefficient and relate it to the angle between the deviations around $x$ and $y$.
+\end{original}
+\begin{translation}
+\textbf{习题9.1} 求向量$x = (5,3)$和$y = (4,6)$之间的距离。
+
+\textbf{习题9.2} 设$x = (1,3)$, $y = (2,2)$和$z = (1,-1)$。求$x$与$y$之间的夹角，以及$x$与$z$之间的夹角。
+
+\textbf{习题9.3} 设$x = (4,2)$和$y = (3,3)$。求$c$使得对所有$v = \tilde{c} x$（对某个$\tilde{c}$），有$(y - c x) \cdot (y - c x) \le (y - v) \cdot (y - v)$。验证$(y - c x) \cdot x = 0$。
+
+\textbf{习题9.4} (a) 设$\lambda = (1,2)$。求超平面$\lambda \cdot x = 2$。注意$(2,0)$在此超平面上，画出$(2,0) + \lambda$。识别区域$\{x \mid \lambda \cdot x \ge 2\}$。(b) 设$\lambda = (-1,1)$。求超平面$\lambda \cdot x = 2$。注意$(-1,1)$在此超平面上，画出$(-1,1) + \lambda$。识别区域$\{x \mid \lambda \cdot x \ge 2\}$。
+
+\textbf{习题9.5} 考虑矩阵$R(\theta) = \begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{pmatrix}$，其中$\theta$是以度为单位的角。变换$R(\theta)x$将向量$x$旋转$\theta$度。(a) 令$x = (1,1)$，求$x' = R(45)x$。验证$\cos(\theta) = \frac{1}{\sqrt{2}} = \frac{\|c x'\|}{\|x'\|}$。(b) 令$y = (1,3)$，求$y' = R(30)y$。验证$\cos(\theta) = \frac{\sqrt{3}}{2} = \frac{\|c y'\|}{\|y'\|}$。
+
+\textbf{习题9.7} 考虑两个随机变量$x$和$y$的以下观测值：$x = (9, 7, 3, 5)'$, $y = (12, 8, 2, 6)'$。相关系数定义为：$r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}$，其中$\bar{x}$和$\bar{y}$是各自的均值。求相关系数并将其与$x$和$y$的离差向量之间的夹角联系起来。
+\end{translation}

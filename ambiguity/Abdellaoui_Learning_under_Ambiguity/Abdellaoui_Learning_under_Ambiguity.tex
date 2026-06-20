@@ -1,0 +1,1011 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% Bilingual TeX: Learning under Ambiguity: An Experimental Investigation
+% English original + Chinese translation
+
+\documentclass[12pt,a4paper]{article}
+
+% --- Packages for Chinese support (XeLaTeX) ---
+\usepackage{xeCJK}
+\usepackage{fontspec}
+\usepackage{ctex}
+
+% --- Page layout ---
+\usepackage[margin=2.5cm]{geometry}
+
+% --- Typography ---
+\usepackage{setspace}
+\onehalfspacing
+
+% --- Colors ---
+\usepackage[dvipsnames,svgnames,table]{xcolor}
+\definecolor{transblue}{RGB}{0,51,102}
+
+% --- Graphics ---
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% --- Math ---
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bm}
+
+% --- Tables ---
+\usepackage{array,booktabs,multirow}
+
+% --- Hyperlinks ---
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue
+}
+
+% --- Bibliography ---
+\usepackage{natbib}
+
+% --- Custom environments ---
+\newenvironment{original}
+  {\par\vspace{0.5em}\noindent\color{black}\ignorespaces}
+  {\par\vspace{0.3em}}
+
+\newenvironment{translation}
+  {\par\noindent\color{transblue}\ignorespaces}
+  {\par\vspace{0.8em}\hrule\vspace{0.5em}}
+
+% --- Section heading commands ---
+\newcommand{\bilingualsection}[2]{%
+  \section{\texorpdfstring{#1 \\[0.3em] {\large\color{transblue}#2}}{#1}}
+}
+
+\newcommand{\bilingualsubsection}[2]{%
+  \subsection{\texorpdfstring{#1 \\[0.2em] {\normalsize\color{transblue}#2}}{#1}}
+}
+
+\newcommand{\bilingualsubsubsection}[2]{%
+  \subsubsection{\texorpdfstring{#1 \\[0.2em] {\small\color{transblue}#2}}{#1}}
+}
+
+\title{\textbf{Learning under Ambiguity: An Experimental Investigation}\\[0.5em]
+       {\Large\color{transblue}\textbf{模糊下的学习：一项实验研究}}
+}
+\author{%
+  M. Abdellaoui$^{a,*}$, B. Hill$^{a,*}$, E. Kemel$^{a,*}$, H. Maafi$^{b}$ \\[0.5em]
+  {\small\color{transblue}穆罕默德·阿卜杜拉维$^{a,*}$, 布莱恩·希尔$^{a,*}$, 艾曼纽埃尔·凯梅尔$^{a,*}$, 哈米德·马菲$^{b}$} \\[0.3em]
+  \small $^a$ HEC Paris, CNRS, France \\
+  {\small\color{transblue}$^a$ 法国巴黎HEC商学院，法国国家科学研究中心} \\
+  \small $^b$ Universit\'{e} Paris VIII, Vincennes-Saint Denis, France \\
+  {\small\color{transblue}$^b$ 法国巴黎第八大学，樊尚-圣但尼}
+}
+\date{%
+  \small Journal of Economic Theory 230 (2025) 106093 \\[0.3em]
+  {\small\color{transblue}《经济理论杂志》第230卷 (2025) 106093} \\[0.3em]
+  \small Received 22 February 2023; Received in revised form 23 June 2025; Accepted 22 September 2025 \\[0.3em]
+  {\small\color{transblue}收稿日期：2023年2月22日；修改稿收稿日期：2025年6月23日；接收日期：2025年9月22日}
+}
+
+\begin{document}
+
+\maketitle
+
+% ================================================================
+% ABSTRACT
+% ================================================================
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+\begin{original}
+We investigate learning in ambiguous situations where subjects bet on a winning event whose probability depends on an unknown proportion of winning chips in an urn. Varying the number of draws prior to choice allows us to ``scan'' ambiguity attitudes across differing amounts of information. By separately eliciting posterior beliefs in addition to matching probabilities, we disentangle the impact of learning on ambiguity attitude from its impact on beliefs, including divergences from Bayesian update. Both ``raw data'' and smooth ambiguity model-based analyses show that learning affects ambiguity attitude in the direction of ambiguity neutrality. Moreover, at small sample sizes, the impact of these changes on preferences is comparable to that of the divergence from Bayesian update.
+\end{original}
+
+\begin{translation}
+我们研究模糊情境下的学习问题，其中被试对一个获胜事件下注，该事件的概率取决于瓮中获胜筹码的未知比例。通过在决策前改变抽取次数，我们能够"扫描"不同信息量下的模糊态度。通过单独引出后验信念以及匹配概率，我们将学习对模糊态度的影响与其对信念的影响（包括对贝叶斯更新的偏离）分离开来。无论是基于"原始数据"还是基于平滑模糊模型的分析都表明，学习会影响模糊态度，使其朝着模糊中性方向发展。此外，在小样本量下，这些变化对偏好的影响程度与偏离贝叶斯更新的影响程度相当。
+\end{translation}
+
+% ================================================================
+% KEYWORDS & JEL
+% ================================================================
+\noindent\textbf{Keywords:} Ambiguity; Ambiguity aversion; Smooth ambiguity preferences; Ambiguity attitude indices; Learning; Bayesian updating; Sampling \\
+{\color{transblue}\textbf{关键词：} 模糊；模糊厌恶；平滑模糊偏好；模糊态度指数；学习；贝叶斯更新；抽样}
+
+\vspace{0.5em}
+\noindent\textbf{JEL classification:} D80; D81; D83 \\
+{\color{transblue}\textbf{JEL分类：} D80; D81; D83}
+
+\vspace{1em}
+\noindent\textbf{Dataset link:} \url{https://doi.org/10.3886/E238604V1}
+
+\newpage% ================================================================
+% SECTION 1: INTRODUCTION
+% ================================================================
+\bilingualsection{1. Introduction}{1. 引言}
+
+\begin{original}
+In classic examples, Ellsberg (1961) has shown that the standard model of choice under uncertainty, Savage's (1954) subjective expected utility (SEU), fails to capture ambiguity attitudes. In particular, people who prefer betting on an urn containing 50 black balls and 50 red balls to betting on an urn containing 100 black and red balls in an unknown proportion, no matter the winning color, display ambiguity aversion. Whilst suggestive, these situations are extreme compared to those encountered in everyday life. More often than not, decision makers are not given the probabilities of the realization of the relevant outcomes, but they are not totally ignorant of them either. They have had some opportunity for learning.
+\end{original}
+
+\begin{translation}
+在经典例子中，Ellsberg (1961) 表明，标准的不确定性下选择模型——Savage (1954) 的主观期望效用理论（SEU）——无法捕捉模糊态度。特别是，无论获胜颜色是什么，相比于在一个装有未知比例的黑球和红球共100个的瓮上下注，人们更偏好在一个装有50个黑球和50个红球的瓮上下注，这表现出模糊厌恶。虽然这些情境具有启发性，但与日常生活中的情境相比，它们是极端的。通常而言，决策者并未被告知相关结果实现的概率，但也并非对其一无所知。他们或多或少有一些学习的机会。
+\end{translation}
+
+\begin{original}
+Standard Bayesianism tells a clear-cut story about choice under learning. Bayesian decision makers choose according to SEU, with a utility function that remains fixed in the face of new information, and beliefs -- or subjective probabilities -- that are updated according to Bayes rule. Since SEU decision makers are ambiguity neutral, there is no issue of whether their ambiguity attitudes change with learning. However, the same cannot be said for decision makers exhibiting a taste for or aversion to ambiguity, such as those making Ellsberg choices. For such decision makers, does learning affect only their beliefs, or does it also impact their ambiguity attitudes?
+\end{original}
+
+\begin{translation}
+标准贝叶斯主义对学习下的选择给出了一个清晰的描述。贝叶斯决策者按照SEU进行选择，效用函数在面对新信息时保持不变，信念——即主观概率——根据贝叶斯规则更新。由于SEU决策者是模糊中性的，因此不存在其模糊态度是否随学习而改变的问题。然而，对于表现出模糊偏好或模糊厌恶的决策者（如做出Ellsberg选择的那些人）而言，情况并非如此。对于这些决策者，学习是仅影响他们的信念，还是也会影响他们的模糊态度？
+\end{translation}
+
+\begin{original}
+This empirical question has been largely unexplored to date. The typical assumption would be that, as a taste, ambiguity aversion, like risk attitude, should remain fixed under learning. However the evidence on source dependence (Fox and Tversky, 1995) suggests another possibility. Source dependence features in several prominent ambiguity models, including source theory (Abdellaoui et al., 2011a) -- where Ellsberg preferences are accommodated via source-dependent probability weighting \`{a} la Tversky and Fox (1995) -- and second-order models, such as the smooth ambiguity model (Klibanoff et al., 2005; Nau, 2006; Ergin and Gul, 2009) -- where the ``ambiguity attitude'' transformation function is often interpreted as reflecting the ``different degrees of aversion to uncertainty across sources'' (Marinacci, 2015, p1052). But since the quantity of information provided is typically assumed to determine a source of uncertainty (Tversky and Fox, 1995), the relevant source varies on learning, leaving space for the possibility that ambiguity attitudes evolve too. Whether learning impacts ambiguity attitudes is thus an open empirical question. This paper undertakes a systematic experimental study of it.
+\end{original}
+
+\begin{translation}
+迄今为止，这一经验问题尚未得到充分探索。典型的假设是，作为一种偏好倾向，模糊厌恶与风险态度一样，应在学习过程中保持固定。然而，关于源依赖的证据（Fox and Tversky, 1995）暗示了另一种可能性。源依赖在几个重要的模糊模型中都有体现，包括源理论（Abdellaoui et al., 2011a）——其中Ellsberg偏好通过源依赖的概率加权（\`{a} la Tversky and Fox, 1995）得以容纳——以及二阶模型，如平滑模糊模型（Klibanoff et al., 2005; Nau, 2006; Ergin and Gul, 2009）——其中"模糊态度"转换函数通常被解释为反映了"不同来源下对不确定性不同程度的厌恶"（Marinacci, 2015, p1052）。但由于所提供的信息量通常被认为决定了不确定性的来源（Tversky and Fox, 1995），相关来源会随着学习而变化，这为模糊态度也可能随之演变的可能性留下了空间。因此，学习是否影响模糊态度是一个开放的经验问题。本文对此进行了系统的实验研究。
+\end{translation}
+
+\begin{original}
+We adopt a simple yet flexible learning setup with urns containing 100 red and black chips in unknown proportions. Subjects receive evidence by sampling with replacement $n$ times, where $n$ reflects the amount of available information. After sampling, the ambiguous prospect $(n, E)$ gives a monetary gain $G$ if the ``winning event'' $E$ occurs, and nothing otherwise. The event $E$ corresponds to drawing a chip of the winning color from the sampled urn, with $p$ denoting the unknown proportion of such chips (e.g. of red chips). Specifically, we investigate the impact of learning on ambiguity attitudes in two experimental investigations: each involves a range of urn compositions, and hence proportions of winning chips $p$, with one focused on small samples ($n = 0, 5, 10$) and the other on large or very large ones ($n = 100, 10000$; see Table 3.1, Section 3). We thus cover the range between choice with no sampling -- corresponding to Ellsberg's ambiguous urn -- and choice after very large samples -- which are closer to his risky urn.
+\end{original}
+
+\begin{translation}
+我们采用一个简单而灵活的学习设置，其中瓮中装有100个红色和黑色筹码，比例为未知。被试通过有放回地抽样 $n$ 次获得证据，其中 $n$ 反映可用信息量。抽样后，如果"获胜事件"$E$ 发生，模糊前景 $(n, E)$ 给予货币收益 $G$，否则为零。事件 $E$ 对应于从被抽样的瓮中抽出一个获胜颜色的筹码，$p$ 表示此类筹码（例如红色筹码）的未知比例。具体而言，我们在两项实验研究中考察学习对模糊态度的影响：每项研究涉及一系列瓮的组成（因而不同的获胜筹码比例 $p$），一项专注于小样本（$n = 0, 5, 10$），另一项专注于大或非常大的样本（$n = 100, 10000$；见表3.1，第3节）。因此，我们覆盖了从无抽样选择——对应于Ellsberg的模糊瓮——到非常大的样本后选择——更接近其风险瓮——的范围。
+\end{translation}
+
+\begin{original}
+A key challenge in learning contexts, which afflicts commonly used ambiguity aversion indices, is to disentangle ambiguity aversion from other behavioral factors, notably beliefs. Consider an ambiguous prospect $(n, E)$ sampled $n$ times. We elicit the matching probability $m_{E,n}$, for which the subject is indifferent between $(n, E)$ and the risky prospect $(G, m_{E,n})$ with (known) probability $m_{E,n}$. For instance, if the winning event is ``the next chip drawn from the urn is black'', then the corresponding matching probability is denoted by $m_{B,n}$. These matching probabilities reflect ambiguity attitudes. Indeed, following Schmeidler (1989), their deviation from complementarity -- as measured by $1 - (m_{B,n} + m_{R,n})$ in our case -- has been proposed as a ``model-free'' index of ambiguity aversion (e.g. Keppe and Weber, 1995; Baillon et al., 2018). However, in most decision models other than the neo-additive special case of Choquet expected utility (Chateauneuf et al., 2007), this index corresponds to some combination of the ambiguity aversion parameter with components representing beliefs (Baillon et al., 2019, Thm 16, Sections 5 \& 7). So whilst we can track this ambiguity aversion index after learning samples of different sizes using our matching probability data, drawing stronger conclusions about ambiguity attitude requires separating it from beliefs.
+\end{original}
+
+\begin{translation}
+在学习情境中，一个关键挑战——也是常用的模糊厌恶指数所面临的难题——是将模糊厌恶与其他行为因素（特别是信念）分离开来。考虑一个经过 $n$ 次抽样的模糊前景 $(n, E)$。我们引出匹配概率 $m_{E,n}$，使得被试在 $(n, E)$ 和具有（已知）概率 $m_{E,n}$ 的风险前景 $(G, m_{E,n})$ 之间无差异。例如，如果获胜事件是"从瓮中下一个抽出的筹码为黑色"，则相应的匹配概率记为 $m_{B,n}$。这些匹配概率反映了模糊态度。事实上，根据 Schmeidler (1989)，它们与互补性的偏离——在我们的案例中以 $1 - (m_{B,n} + m_{R,n})$ 衡量——已被提出作为模糊厌恶的"无模型"指数（例如 Keppe and Weber, 1995; Baillon et al., 2018）。然而，在除Choquet期望效用的新可加特殊情形（Chateauneuf et al., 2007）之外的大多数决策模型中，该指数对应于模糊厌恶参数与代表信念的成分的某种组合（Baillon et al., 2019, Thm 16, Sections 5 \& 7）。因此，虽然我们可以利用匹配概率数据追踪不同样本量学习后的这一模糊厌恶指数，但要就模糊态度得出更有力的结论，则需要将其与信念分离开来。
+\end{translation}
+\begin{original}
+To meet this challenge, we also implement a standalone choice-based elicitation of the subject's posterior probability distribution over the set of possible proportions of winning chips in a given urn -- i.e., over the possible values of $p$. For this, we use an extension of Abdellaoui et al.'s (2011a) exchangeability method, without assuming SEU or any specific ambiguity model. Inspired by Jaffray's (1989) suggestion that ambiguity attitude is reflected in the divergence between a subject's subjective probability and her matching probability, a second ``raw data'' ambiguity aversion index is deduced from the best fitting line between matching and subjective probabilities (e.g. Dimmock et al., 2016, who infer subjective probabilities from symmetry). However, although our data allows us to track variations of this index with sampling, under decision models other than the neo-additive Choquet one, there is no guarantee that it reflects only the ambiguity attitude parameter, independently of beliefs, nor that it coincides with the previous index.
+\end{original}
+
+\begin{translation}
+为应对这一挑战，我们还实施了一种基于选择的独立方法，用于引出被试对给定瓮中获胜筹码可能比例的后验概率分布——即对 $p$ 的可能值的分布。为此，我们使用了Abdellaoui等人（2011a）可交换性方法的扩展，而不假设SEU或任何特定的模糊模型。受Jaffray (1989) 的启发——他认为模糊态度反映在被试的主观概率与其匹配概率之间的差异中——第二个"原始数据"模糊厌恶指数可以从匹配概率和主观概率之间的最佳拟合线推导出来（例如 Dimmock et al., 2016，他们从对称性推断主观概率）。然而，尽管我们的数据允许我们追踪该指数随抽样的变化，但在新可加Choquet模型以外的决策模型下，无法保证它仅反映模糊态度参数（独立于信念），也无法保证它与前一个指数一致。
+\end{translation}
+
+\begin{original}
+We thus complement these raw-data approaches with a model-based analysis, relying on one of the most prominent decision models implementing an explicit separation of beliefs and ambiguity attitudes: the smooth ambiguity model (Klibanoff et al., 2005). This model represents a subject's beliefs by a second-order distribution over the possible probabilities of the winning event, of the sort elicited in our experiment. Moreover, it involves a utility transformation function that has been shown to capture ambiguity attitude. Our elicitations of matching probabilities and subjects' posterior probability distributions allow us to estimate this ``ambiguity attitude'' transformation function after each sample size. Indeed, our standalone elicitation of second-order beliefs allows for an original way to estimate ambiguity attitude under the smooth ambiguity model, by plugging the elicited beliefs into the model to simply infer the aforementioned ``ambiguity attitude'' transformation function from matching probabilities. To our knowledge, this is the first direct choice-based econometric estimation of the transformation function involving an explicit and separate control for beliefs, and may be considered as a contribution in itself, of independent interest (see Section 5).
+\end{original}
+
+\begin{translation}
+因此，我们以基于模型的分析来补充这些原始数据方法，依赖一个最著名的明确区分信念和模糊态度的决策模型：平滑模糊模型（Klibanoff et al., 2005）。该模型通过一个二阶分布——即对获胜事件可能概率的分布——来表示被试的信念，这正是我们实验中所引出的那种分布。此外，它涉及一个已被证明能捕捉模糊态度的效用转换函数。我们对匹配概率和被试后验概率分布的引出，使我们能够在每个样本量后估计这一"模糊态度"转换函数。事实上，我们对二阶信念的独立引出为在平滑模糊模型下估计模糊态度提供了一种原创方法：通过将引出的信念代入模型，直接从匹配概率中推断出前述的"模糊态度"转换函数。据我们所知，这是首次对转换函数进行直接基于选择的经济计量估计，涉及对信念的明确和独立的控制，本身可被视为一项具有独立价值的贡献（见第5节）。
+\end{translation}
+
+\begin{original}
+Our first finding, which emerges from both the raw-data and model-based approaches, is that, in certain ranges, there is a clear impact of sample size on ambiguity aversion: attitudes move in the direction of ambiguity neutrality as sample size increases. We find this effect at small sample sizes (e.g. increasing sample size from 5 to 10), with both aggregate- and individual-level estimates; latent class analysis under the smooth model indicates that around two-thirds of subjects exhibit decreasing ambiguity aversion on learning. By contrast, we find little significant change in ambiguity attitude at large sample sizes. To our knowledge, this is the first study to document an impact of learning on ambiguity aversion (see Section 5).
+\end{original}
+
+\begin{translation}
+我们的第一个发现——从原始数据和基于模型的方法中都显现出来——是，在某些范围内，样本量对模糊厌恶有明确的影响：随着样本量增加，态度朝着模糊中性方向移动。我们在小样本量下（例如从5增加到10）发现了这种效应，包括总体和个体层面的估计；平滑模型下的潜在类别分析表明，约三分之二的被试在学习过程中表现出递减的模糊厌恶。相比之下，我们在大样本量下几乎没有发现模糊态度的显著变化。据我们所知，这是首次记录学习对模糊厌恶影响的研究（见第5节）。
+\end{translation}
+
+\begin{original}
+To gauge the behavioral significance of this ambiguity aversion change, we compare it to divergences from Bayes rule. There is an extensive literature on violations of Bayesian update and its economic importance (Benjamin, 2019), including experimental work in the sort of bag-and-chips setup used here. Drawing on our elicitation of posterior beliefs, we decompose the difference in matching probabilities between our subjects and ``ideal'' agents who have constant ambiguity aversion and update according to Bayes rule into the part due to ambiguity attitude change, and the part due to non-Bayesian update. At most prior probability levels, the former component dominates the latter in our data, suggesting that in our learning context, ambiguity aversion change has at least as large, if not larger impact on choice as violations of Bayes rule.
+\end{original}
+
+\begin{translation}
+为评估这种模糊厌恶变化的行为重要性，我们将其与偏离贝叶斯规则进行比较。关于违反贝叶斯更新的文献非常丰富，且具有重要经济意义（Benjamin, 2019），包括使用本文中这种袋子与筹码设置的实验研究。利用我们对后验信念的引出，我们将被试与具有恒定模糊厌恶并根据贝叶斯规则更新的"理想"代理人之间匹配概率的差异分解为模糊态度变化的部分和非贝叶斯更新的部分。在大多数先验概率水平上，前者在我们的数据中主导后者，这表明在我们的学习情境中，模糊厌恶变化对选择的影响至少与违反贝叶斯规则的影响一样大，甚至更大。
+\end{translation}
+
+\begin{original}
+This paper is organized as follows. In Section 2 we set out the theoretical background, and in Section 3 we describe the experimental design. Section 4.1 presents the raw-data analyses in terms of the two aforementioned ambiguity aversion indices, whereas Section 4.2 reports the model-based analysis. Section 5 discusses related literature and outstanding issues.
+\end{original}
+
+\begin{translation}
+本文结构如下。第2节阐述理论背景，第3节描述实验设计。第4.1节基于上述两个模糊厌恶指数呈现原始数据分析，第4.2节报告基于模型的分析。第5节讨论相关文献和未解决的问题。
+\end{translation}
+
+% ================================================================
+% ACKNOWLEDGMENTS
+% ================================================================
+\subsection*{Acknowledgments}
+\addcontentsline{toc}{subsection}{Acknowledgments}
+
+\begin{original}
+The authors would like to thank, in alphabetical order, Aur\'{e}lien Baillon, Itzhak Gilboa, Jack Stecher, Jean-Marc Tallon, Stefan Trautmann, Peter Wakker and the participants of FUR 2022, D-TEA (HEC), ASFEE Lyon 2013, Decision under Uncertainty and Beyond 2012. This research was supported by HEC Foundation and CNRS (Centre National de la Recherche Scientifique, France), the Investissements d'Avenir program (ANR-11-IDEX-0003/Labex Ecodec/ANR-11-LABX-0047) and the ANR project DUSUCA (ANR-14-CE29-0003-01).
+\end{original}
+
+\begin{translation}
+作者按字母顺序感谢Aur\'{e}lien Baillon、Itzhak Gilboa、Jack Stecher、Jean-Marc Tallon、Stefan Trautmann、Peter Wakker以及FUR 2022、D-TEA（HEC）、ASFEE Lyon 2013、Decision under Uncertainty and Beyond 2012的参与者。本研究得到HEC基金会和法国国家科学研究中心（CNRS）、未来投资计划（ANR-11-IDEX-0003/Labex Ecodec/ANR-11-LABX-0047）以及ANR项目DUSUCA（ANR-14-CE29-0003-01）的资助。
+\end{translation}
+
+\vspace{0.5em}
+\noindent * Corresponding author. \\
+{\color{transblue} * 通讯作者。}
+
+\vspace{0.3em}
+\noindent \textit{E-mail addresses}: abdellaoui@hec.fr (M. Abdellaoui), hill@hec.fr (B. Hill), kemel@hec.fr (E. Kemel), hmaafi@univ-paris8.fr (H. Maafi).
+
+\newpage% ================================================================
+% SECTION 2: THEORETICAL BACKGROUND
+% ================================================================
+\bilingualsection{2. Theoretical background}{2. 理论背景}
+
+\begin{original}
+The present section first introduces preliminaries, including the general setup, notation and basic theoretical definitions. Then it introduces the smooth ambiguity model (Klibanoff et al., 2005). Finally it sets out the theory behind the treatment of beliefs in our studies.
+\end{original}
+
+\begin{translation}
+本节首先介绍预备知识，包括一般设置、符号和基本理论定义。然后介绍平滑模糊模型（Klibanoff et al., 2005）。最后阐述我们研究中处理信念的理论基础。
+\end{translation}
+
+\bilingualsubsection{2.1. Preliminaries}{2.1. 预备知识}
+
+\begin{original}
+We consider decision-making situations where the objects of choice are two-outcome prospects that pay a monetary outcome $G > 0$ with a fixed winning probability, and nothing otherwise. When the winning probability is known to the decision maker from the outset, the prospect is said to be risky and we denote it by $(G, p)$. In contrast, when the winning probability is fixed but unknown to the decision maker, e.g., the proportion of black chips in a given unknown urn containing 100 black and red chips, the prospect is ambiguous and denoted by $(G, E)$, where $E$ stands for a winning event that has an unknown probability $p \in [0, 1]$. Before making a choice involving an ambiguous prospect $(G, E)$, the decision maker samples with replacement from the underlying binomial probability distribution $n \geq 0$ times. The matching probability (henceforth MP) of the ambiguous prospect $(G, E)$ that was sampled $n$ times is the probability $m_{E,n}$ such that $(G, m_{E,n}) \sim (G, E)$, where $\sim$ stands for indifference. Similarly, the matching probability corresponding to $(G, E^c)$ is denoted by $m_{E^c,n}$. For the sake of notational simplicity, the MPs of betting on ``black'' or ``red'' in the aforementioned (sampled) urn are denoted by $m_{B,n}$ and $m_{R,n}$, respectively.
+\end{original}
+
+\begin{translation}
+我们考虑的决策情境中，选择对象是两结果前景：以固定的获胜概率支付货币结果 $G > 0$，否则为零。当获胜概率从一开始就为决策者所知时，该前景被称为风险前景，我们将其记为 $(G, p)$。相反，当获胜概率固定但决策者未知时——例如，一个装有100个黑色和红色筹码的给定未知瓮中黑色筹码的比例——该前景是模糊的，记为 $(G, E)$，其中 $E$ 表示一个获胜事件，其未知概率 $p \in [0, 1]$。在做出涉及模糊前景 $(G, E)$ 的选择之前，决策者从潜在的二元概率分布中有放回地抽样 $n \geq 0$ 次。经过 $n$ 次抽样的模糊前景 $(G, E)$ 的匹配概率（以下简称MP）是概率 $m_{E,n}$，使得 $(G, m_{E,n}) \sim (G, E)$，其中 $\sim$ 表示无差异。类似地，对应于 $(G, E^c)$ 的匹配概率记为 $m_{E^c,n}$。为简化符号，在前述（被抽样的）瓮中押注"黑色"或"红色"的MP分别记为 $m_{B,n}$ 和 $m_{R,n}$。
+\end{translation}
+
+\bilingualsubsection{2.2. Ambiguity aversion indices}{2.2. 模糊厌恶指数}
+
+\begin{original}
+As specified in the Introduction, our ``raw-data'' analysis will involve two ambiguity aversion indices. Following Schmeidler (1989), it has been recognized that non-additivity of matching probabilities for complementary events reveals a non-neutral attitude to ambiguity. Keppe and Weber (1995), for instance, report empirical evidence in Ellsberg-like experiments where the sum of the matching probabilities of an event and its complement is less than one, hence revealing ambiguity aversion. In our setup, the relevant difference is $1 - (m_{B,n} + m_{R,n})$; we call this the complementarity ambiguity aversion index. Elicitation of MPs of complementary events -- the drawing of a red vs a black chip after sampling -- for each sample size allows one to track how this index is impacted by learning.
+\end{original}
+
+\begin{translation}
+如引言所述，我们的"原始数据"分析将涉及两个模糊厌恶指数。按照 Schmeidler (1989) 的观点，互补事件匹配概率的非可加性揭示了非中性的模糊态度。例如，Keppe 和 Weber (1995) 在类似Ellsberg实验的实证研究中报告，一个事件与其互补事件的匹配概率之和小于1，从而揭示模糊厌恶。在我们的设置中，相关差异为 $1 - (m_{B,n} + m_{R,n})$；我们称之为互补性模糊厌恶指数。对每个样本量引出互补事件（抽样后抽出红色与黑色筹码）的MP，可以追踪该指数如何受学习的影响。
+\end{translation}
+
+\begin{original}
+Since the seminal work of Machina and Schmeidler (1992), it has been known that decision makers may exhibit preferences violating expected utility, although they are based on probabilistic beliefs, in the sense that there is a subjective probability for each event, and preferences over bets on events are entirely determined by this probability. By developing the notion of exchangeability, Chew and Sagi (2006) provide mild regularity and richness conditions for such probabilistic sophistication within families of events, i.e. conditions under which these events can be endowed with a subjective probability measure without committing to a specific preference functional on prospects. Under such conditions (which have been tested in subsequent work; Section 2.4), decision makers have well-defined subjective probabilities for events, which may differ from their corresponding MPs. And indeed, an alternative index of ambiguity aversion, initially mooted by Jaffray (1989), focuses on the relationship between a subject's MP for an event and her subjective probability for it. A MP which is higher (lower) that the corresponding subjective probability suggests ambiguity seeking (aversion). Ambiguity neutrality corresponds to the case of equality. Separate elicitation of matching probabilities and subjective probabilities after sampling would thus allow one to infer Jaffray-style indications of ambiguity attitude.
+\end{original}
+
+\begin{translation}
+自 Machina 和 Schmeidler (1992) 的开创性工作以来，人们已经认识到决策者可能表现出违反期望效用的偏好，尽管这些偏好基于概率信念——即每个事件都有一个主观概率，并且对事件下注的偏好完全由该概率决定。通过发展可交换性概念，Chew 和 Sagi (2006) 为事件族内的此类概率复杂性提供了温和的正则性和丰富性条件，即在这些条件下，可以为这些事件赋予一个主观概率测度，而无须对前景指定特定的偏好泛函。在这些条件下（已在后续工作中得到检验；第2.4节），决策者对事件有明确定义的主观概率，这些主观概率可能不同于其相应的MP。事实上，一个由 Jaffray (1989) 最初提出的替代模糊厌恶指数，关注的是被试对某一事件的MP与其对该事件的主观概率之间的关系。MP高于（低于）相应的主观概率意味着模糊寻求（厌恶）。模糊中性对应于相等的情形。因此，在抽样后分别引出匹配概率和主观概率，可以推断出Jaffray式的模糊态度指示。
+\end{translation}
+
+\begin{original}
+To implement such comparisons, we follow Dimmock et al. (2016, Section 3.1) and use the bestfitting line between MPs and the corresponding subjective probabilities -- whether the latter are stipulated as in their experiment, or measured independently as in ours. Denoting the subjective probability by $p_S$, let this line be $m = \alpha + \beta p_S$, where $\alpha$ is the intercept and $\beta$ the slope. Dimmock et al. define two ``global ambiguity attitude indexes'':
+\begin{equation}
+b = 1 - \beta \quad \text{and} \quad a = 1 - \alpha - 2\beta. \label{eq:indices}
+\end{equation}
+As $b$ is inversely related to the average height of the line (elevation), they claim it measures ambiguity aversion. Index $a$ reflects a lack of discrimination of intermediate levels of likelihood, i.e., likelihood insensitivity. Some recent contributions have related this index to ambiguity perception (Anantanasuwong et al., 2019; Baillon et al., 2018). Ambiguity aversion (likelihood insensitivity) increases as $b$ ($a$) increases. Ambiguity neutrality corresponds to the case where $a = b = 0$. We call $b$ the belief-based ambiguity aversion index.
+\end{original}
+
+\begin{translation}
+为实现此类比较，我们遵循 Dimmock 等人（2016, Section 3.1）的方法，使用MP与相应主观概率之间的最佳拟合线——无论后者是如其实验中那样被设定，还是如我们实验中那样被独立测量。将主观概率记为 $p_S$，设该拟合线为 $m = \alpha + \beta p_S$，其中 $\alpha$ 为截距，$\beta$ 为斜率。Dimmock 等人定义了两个"全局模糊态度指数"：
+\begin{equation}
+b = 1 - \beta \quad \text{和} \quad a = 1 - \alpha - 2\beta.
+\end{equation}
+由于 $b$ 与拟合线的平均高度（海拔）呈反向关系，他们认为它衡量模糊厌恶。指数 $a$ 反映了对中间似然水平区分能力的缺乏，即似然不敏感性。近期一些研究将该指数与模糊感知联系起来（Anantanasuwong et al., 2019; Baillon et al., 2018）。模糊厌恶（似然不敏感性）随着 $b$（$a$）的增加而增加。模糊中性对应于 $a = b = 0$ 的情形。我们称 $b$ 为基于信念的模糊厌恶指数。
+\end{translation}
+
+\begin{original}
+The complementarity and belief-based ambiguity aversion indices, measured for the same subject, are not always the same. In fact, they are only guaranteed to be equal for subjects whose preferences adhere to the neo-additive capacity model of Chateauneuf et al. (2007). This belongs to the biseparable preference specification under probabilistic sophistication, in which preferences over prospects $(G, E)$ are represented by
+\begin{equation}
+W(E)u(G) + (1 - W(E))u(0), \label{eq:bisep}
+\end{equation}
+The neo-additive capacity model is the special case where the willingness to bet on event $E$, $W(E) \in [0, 1]$, is a linear function of the subjective probability, for $p_S \in (0, 1)$. For decision models other than this one, the value of the complementarity ambiguity aversion index will depend on the events used to estimate it (Baillon et al., 2021, Thm 16). Moreover, this index reflects some combination of the ambiguity parameter in the model and the belief representation Baillon et al. (2021, Sections 5 \& 7). To this extent, analysis of learning in terms of these indices can only yield precise conclusions under the strong assumption of neo-additive capacities. For more robustness, we also analyze our data under an alternative preference model.
+\end{original}
+
+\begin{translation}
+对同一被试测量的互补性模糊厌恶指数和基于信念的模糊厌恶指数并不总是相同的。事实上，只有当被试的偏好遵循 Chateauneuf 等人（2007）的新可加容量模型时，它们才能保证相等。该模型属于概率复杂性下的双可分偏好设定，其中对前景 $(G, E)$ 的偏好由下式表示：
+\begin{equation}
+W(E)u(G) + (1 - W(E))u(0),
+\end{equation}
+新可加容量模型是其中对事件 $E$ 下注的意愿 $W(E) \in [0, 1]$ 是主观概率的线性函数（对于 $p_S \in (0, 1)$）的特殊情形。对于非此类的决策模型，互补性模糊厌恶指数的值将取决于用于估计它的事件（Baillon et al., 2021, Thm 16）。此外，该指数反映了模型中模糊参数与信念表示的某种组合（Baillon et al. 2021, Sections 5 \& 7）。就此而言，基于这些指数对学习进行的分析只能在新可加容量的强假设下得出精确结论。为增强稳健性，我们还在一个替代偏好模型下分析我们的数据。
+\end{translation}
+\bilingualsubsection{2.3. Smooth ambiguity}{2.3. 平滑模糊}
+
+\begin{original}
+Under the smooth ambiguity model, preferences are represented by the functional assigning the following value to an ambiguous prospect $(G, E)$ after having been sampled $n$ times:
+\begin{equation}
+\phi^{-1}\left( \int_{\Delta(\Sigma)} \phi\left( \int_\Sigma u(f(\omega))\, d\pi(\omega) \right) d\mu_n(\pi) \right), \label{eq:smooth}
+\end{equation}
+where $\Sigma$ is the underlying state space, $\mu_n$ is the posterior second-order probability distribution -- a distribution over the space $\Delta(\Sigma)$ of probability distributions $\pi$ over $\Sigma$ -- $\phi : [0,1] \to \mathbb{R}$ is a strictly increasing function, and $u$ is the usual von Neumann-Morgenstern utility function. As shown by Klibanoff et al. (2005), this model structurally separates the decision maker's beliefs -- which in this model include perceived ambiguity and are represented by the second-order probability $\mu_n$ -- from her ambiguity attitudes -- captured by the transformation function $\phi$. In the case of risk, $\mu_n$ is degenerate and the model coincides with expected utility.
+\end{original}
+
+\begin{translation}
+在平滑模糊模型下，偏好由以下泛函表示，该泛函对经过 $n$ 次抽样后的模糊前景 $(G, E)$ 赋予如下值：
+\begin{equation}
+\phi^{-1}\left( \int_{\Delta(\Sigma)} \phi\left( \int_\Sigma u(f(\omega))\, d\pi(\omega) \right) d\mu_n(\pi) \right),
+\end{equation}
+其中 $\Sigma$ 是基础状态空间，$\mu_n$ 是后验二阶概率分布——即 $\Sigma$ 上的概率分布 $\pi$ 的空间 $\Delta(\Sigma)$ 上的一个分布——$\phi : [0,1] \to \mathbb{R}$ 是一个严格递增函数，$u$ 是通常的冯·诺依曼-摩根斯坦效用函数。如 Klibanoff 等人（2005）所示，该模型在结构上将决策者的信念——在该模型中包括感知模糊，并由二阶概率 $\mu_n$ 表示——与其模糊态度——由转换函数 $\phi$ 捕捉——分离开来。在风险情形下，$\mu_n$ 是退化的，该模型与期望效用一致。
+\end{translation}
+
+\begin{original}
+The formal model (3) is flexible as concerns both ambiguity attitudes -- permitting ambiguity aversion and ambiguity proneness, depending on the form of the transformation function $\phi$ -- and the impact of learning on them. To our knowledge, it remains an open empirical question whether the transformation function varies across situations with differing ``quantities of information''; our investigation will provide evidence on this question, by estimating $\phi$ for various sample sizes $n$.
+
+Under this model then, the decision maker's full subjective beliefs correspond to a distribution $\mu$ over the set of probability distributions governing $E$ -- that is, essentially, over the value of the underlying probability $p$. More concretely, in our studies, where the winning event is the next chip drawn from an urn being of a certain color (Section 3), $\mu$ is a distribution over the possible compositions of the urn. For a fixed monetary gain $G$ with normalized utilities $u(G) = 1$ and $u(0) = 0$, the previous equation thus reduces to the following evaluation of $(G, E)$:
+\begin{equation}
+\phi^{-1}\left( \int_{[0,1]} \phi(p)\, d\mu_n(p) \right), \label{eq:smooth_simple}
+\end{equation}
+where the ambiguity attitude is captured by the transformation function $\phi$, which may depend on the sample size. This expression yields the MP of event $E$ under the smooth model. It thus shows that the second-order belief distribution $\mu_n$ and MPs suffice to determine $\phi$, with no need to estimate the utility $u$.
+\end{original}
+
+\begin{translation}
+形式模型（3）在模糊态度方面是灵活的——允许模糊厌恶和模糊偏好，取决于转换函数 $\phi$ 的形式——在学习对模糊态度的影响方面也是如此。据我们所知，转换函数是否在不同"信息量"的情境中发生变化，仍然是一个开放的经验问题；我们的研究将通过估计不同样本量 $n$ 下的 $\phi$ 来为这一问题提供证据。
+
+在该模型下，决策者的全部主观信念对应于一个分布在控制 $E$ 的概率分布集合上的分布 $\mu$——即本质上是对基础概率 $p$ 的值的分布。更具体地说，在我们的研究中，获胜事件是从瓮中抽出的下一个筹码具有某种颜色（第3节），$\mu$ 是对瓮的可能组成的分布。对于固定的货币收益 $G$，在标准化效用 $u(G) = 1$ 和 $u(0) = 0$ 下，前述方程因此简化为对 $(G, E)$ 的如下评价：
+\begin{equation}
+\phi^{-1}\left( \int_{[0,1]} \phi(p)\, d\mu_n(p) \right),
+\end{equation}
+其中模糊态度由转换函数 $\phi$ 捕捉，该函数可能依赖于样本量。此表达式给出了平滑模型下事件 $E$ 的MP。因此，它表明二阶信念分布 $\mu_n$ 和MP足以确定 $\phi$，而无需估计效用 $u$。
+\end{translation}
+
+\bilingualsubsection{2.4. Beliefs}{2.4. 信念}
+
+\begin{original}
+We elicit posterior beliefs from ex post choices, in the absence of any assumption about the nature of belief update and hence about how the ex post beliefs depend on the frequency of colors in the observed sample and its size. As explained in Sections 2.2 and 2.3, both the belief-based ambiguity aversion index and the smooth ambiguity model involve representations of beliefs which are probabilistic -- in the case of the smooth model, at the second-order level. Our analysis and elicitation of beliefs for a given sample size will thus be probabilistic in nature. This allows us to tap into recent techniques developed for probabilistic belief elicitation under non-SEU preferences. More specifically, we elicit posterior beliefs without committing to any particular decision model or parametric form for beliefs at the outset. To do so, we employ a belief elicitation method that does not assume a specific preference functional under ambiguity.
+\end{original}
+
+\begin{translation}
+我们从事后选择中引出后验信念，不对信念更新的性质——因而也不对事后信念如何依赖于观察样本中颜色的频率及其大小——做任何假设。如第2.2节和第2.3节所解释的，基于信念的模糊厌恶指数和平滑模糊模型都涉及概率性的信念表示——在平滑模型的情形下，是二阶层面的。因此，我们对给定样本量下信念的分析和引出本质上将是概率性的。这使我们能够利用近期为非SEU偏好下概率信念引出而开发的技术。更具体地说，我们在不预先承诺任何特定决策模型或信念参数形式的情况下引出后验信念。为此，我们采用一种不假设模糊下特定偏好泛函的信念引出方法。
+\end{translation}
+
+\begin{original}
+We use a version of the exchangeability method of Abdellaoui et al. (2011a). The theory behind exchangeability, developed by Chew and Sagi (2006, 2008), shows that the conditions guaranteeing its success are precisely those guaranteeing probabilistic sophistication with respect to the relevant events (Section 2.2). Baillon (2008) and Abdellaoui et al. (2011a) have tested these conditions in several contexts, and have failed to reject them. Therefore, the basic method involves no assumptions beyond that of probabilistic beliefs, which is already involved in the decision approaches discussed above.
+
+The winning event $E$ in our studies was realized by the draw of a chip of a certain color (red or black) from a 100-chip urn with a true proportion of red chips that was unknown to the subject. After having sampled from the urn $n$ times, we elicited the posterior belief distribution $\mu$ over $[0, 1]$, the domain of the true proportion of red chips, through choices between prospects $(G, I)$ yielding a positive monetary gain $G$ if the proportion of red chips belongs to interval $I \subseteq [0, 1]$, and nothing otherwise. Two intervals $I$ and $I'$ are said to be exchangeable if $(G, I) \sim (G, I')$. Under the aforementioned weak conditions (Chew and Sagi, 2008), exchangeable intervals have the same subjective probability, i.e. $\mu(I) = \mu(I')$. For a range of intervals $[r_i, r_j]$ (see Table 3.2b, Section 3), we obtained the partition of each interval into two exchangeable subintervals through the elicitation of the proportion of red chips $r$ such that the subject was indifferent between prospects $(G, [r_i, r))$ and $(G, [r, r_j])$. The resulting equations were used to deduce the parameters under parametric specifications for $\mu$: as discussed in Section 2.5 and Appendix A.2, we consider several parametric specifications and retain that with the best fit.
+\end{original}
+
+\begin{translation}
+我们使用 Abdellaoui 等人（2011a）可交换性方法的一个版本。由 Chew 和 Sagi（2006, 2008）发展起来的可交换性理论表明，保证其成功的条件正是保证关于相关事件概率复杂性的条件（第2.2节）。Baillon (2008) 和 Abdellaoui 等人（2011a）已在多个情境中检验了这些条件，且未能拒绝它们。因此，基本方法仅涉及概率信念的假设，而这一假设已包含在上述讨论的决策方法中。
+
+在我们研究中，获胜事件 $E$ 通过从一个装有100个筹码的瓮中抽出一个特定颜色（红色或黑色）的筹码来实现，该瓮中红色筹码的真实比例对被试是未知的。从瓮中抽样 $n$ 次后，我们通过前景之间的选择引出后验信念分布 $\mu$（定义在 $[0, 1]$ 上，即红色筹码真实比例的域）：前景 $(G, I)$ 在红色筹码比例属于区间 $I \subseteq [0, 1]$ 时产生正的货币收益 $G$，否则为零。如果 $(G, I) \sim (G, I')$，则称两个区间 $I$ 和 $I'$ 是可交换的。在上述弱条件下（Chew and Sagi, 2008），可交换区间具有相同的主观概率，即 $\mu(I) = \mu(I')$。对于一系列区间 $[r_i, r_j]$（见表3.2b，第3节），我们通过引出红色筹码比例 $r$（使得被试在 $(G, [r_i, r))$ 和 $(G, [r, r_j])$ 之间无差异）来获得每个区间划分为两个可交换子区间的分割。所得方程用于推断 $\mu$ 的参数设定下的参数：如第2.5节和附录A.2所述，我们考虑几种参数设定，并保留拟合最佳的一种。
+\end{translation}
+
+\begin{original}
+The parameters of the elicited distribution are used to infer the probability the subject assigns to red on the next draw from the urn, as its mean
+\begin{equation}
+p_S = \int_{[0,1]} p\, d\mu(p). \label{eq:subjprob}
+\end{equation}
+This determines the subjective probability of the winning event for a particular ambiguous prospect $(G, E)$ concerning this urn: $p_{S,E} = p_S$ if red is the winning color, and $p_{S,E} = 1 - p_S$ otherwise. Under the smooth ambiguity model, the whole distribution $\mu$ is the relevant second-order probability distribution for Eq. (4).
+\end{original}
+
+\begin{translation}
+引出分布的参数用于推断被试赋予下一次从瓮中抽到红色的概率，即其均值：
+\begin{equation}
+p_S = \int_{[0,1]} p\, d\mu(p).
+\end{equation}
+这决定了关于该瓮的特定模糊前景 $(G, E)$ 的获胜事件的主观概率：如果红色是获胜颜色，则 $p_{S,E} = p_S$，否则 $p_{S,E} = 1 - p_S$。在平滑模糊模型下，整个分布 $\mu$ 就是方程（4）的相关二阶概率分布。
+\end{translation}
+
+\bilingualsubsection{2.5. Parametric specifications}{2.5. 参数设定}
+
+\begin{original}
+We explore several parametric forms, and retain those with the best fit. For the beliefs, we compare the Beta, Binomial, Triangular and Truncated Normal distributions for the posterior subjective probability distribution over urn compositions.
+
+For the smooth ambiguity transformation function $\phi$, we consider the popular power (CARA) and exponential (CRRA) specifications, as well as the following normalized version of the expo-power specification initially proposed by Saha (1993):
+\begin{equation}
+\phi(p) = \frac{1 - e^{-\alpha p^\gamma}}{1 - e^{-\alpha}}, \label{eq:expopower}
+\end{equation}
+with $\alpha \geq 0$, $\gamma > 0$ and $p$ taking values on the utility scale $[0, 1]$ appropriate for risky two-outcome prospects under the utility normalization set out in Section 2.3. As explained by Klibanoff et al. (2005), the transformation function plays an analogous role to the utility function in decision under risk, and the flexible expo-power parametric form has proved popular in the literature on risk because of its ability to encompass a variety of risk attitudes. In particular, the CARA exponential specification is a special case ($\gamma = 1$) and the CRRA power specification is a limiting case (as $\alpha \to 0$; Peel and Zhang (2009)). The expo-power specification thus involves weaker assumptions about subjects' ambiguity attitudes. Moreover, and unlike the power and exponential families, this family includes S-shaped convex-then-concave functions. Such functions reflect ambiguity proneness on the lower end of the (expected utility) scale and ambiguity aversion towards the upper end of the scale. This means that they can represent the preferences of subjects who exhibit an ambiguity seeking attitude for unlikely events -- for which the second-order distribution $\mu$ is concentrated on low first-order probabilities of the winning event -- but exhibit ambiguity aversion for likely events -- and $\mu$ centered on high probabilities of the winning event. Since such behavior has been found in other studies (e.g. Kocher et al., 2018), it is relevant to consider a family encompassing, though not implying it.
+\end{original}
+
+\begin{translation}
+我们探索了几种参数形式，并保留了拟合最佳的形式。对于信念，我们比较了瓮组成后验主观概率分布的Beta、二项、三角和截断正态分布。
+
+对于平滑模糊转换函数 $\phi$，我们考虑了常用的幂（CARA）和指数（CRRA）设定，以及如下由 Saha (1993) 最初提出的expo-power设定的标准化版本：
+\begin{equation}
+\phi(p) = \frac{1 - e^{-\alpha p^\gamma}}{1 - e^{-\alpha}},
+\end{equation}
+其中 $\alpha \geq 0$，$\gamma > 0$，$p$ 在效用尺度 $[0, 1]$ 上取值，适用于第2.3节设定的效用标准化下的风险两结果前景。如 Klibanoff 等人（2005）所解释的，转换函数在模糊决策中扮演着与风险决策中效用函数类似的角色，而灵活的expo-power参数形式由于能够涵盖多种风险态度，在风险文献中已广受欢迎。特别是，CARA指数设定是其特例（$\gamma = 1$），CRRA幂设定是极限情形（当 $\alpha \to 0$；Peel and Zhang (2009)）。因此，expo-power设定对被试的模糊态度假设较弱。此外，与幂和指数族不同，该族包含S形的先凸后凹函数。此类函数反映了在（期望效用）尺度的低端表现为模糊偏好，而在尺度的高端表现为模糊厌恶。这意味着它们可以代表那些对不太可能事件表现出模糊寻求态度——此时二阶分布 $\mu$ 集中在获胜事件的低一阶概率上——但对可能事件表现出模糊厌恶——此时 $\mu$ 集中在获胜事件的高概率上——的被试的偏好。由于此类行为已在其他研究中发现（例如 Kocher et al., 2018），考虑一个涵盖（尽管不蕴含）此类行为的函数族是相关的。
+\end{translation}
+% ================================================================
+% SECTION 3: EXPERIMENTAL DESIGN
+% ================================================================
+\bilingualsection{3. Experimental design}{3. 实验设计}
+
+\begin{original}
+We elicited MPs and posterior subjective probabilities from choice for prospects with unknown winning probabilities, after various amounts of sampling: small samples in study S and large samples in study L (indicated in Table 3.1).
+\end{original}
+
+\begin{translation}
+我们通过选择引出具有未知获胜概率的前景的MP和后验主观概率，实验在不同的抽样量之后进行：研究S中的小样本和研究L中的大样本（见表3.1）。
+\end{translation}
+
+\bilingualsubsection{3.1. Subjects}{3.1. 被试}
+
+\begin{original}
+140 subjects were recruited in total from Laboratoire d'Economie Exp\'{e}rimentale de Paris subject pool (Table 3.1). Their choices were collected through computer-based individual interviews that lasted about one hour in each study. Each individual interview started with a video presentation of the experimental instructions. The information contained in the instructions, including prospect representation and sampling procedures, are reported in Appendix E. Subjects were told that there were no wrong or right answers, and that they could ask any question regarding the experiment.
+\end{original}
+
+\begin{translation}
+总共从巴黎实验经济学实验室被试库招募了140名被试（表3.1）。他们的选择通过基于计算机的个人访谈收集，每项研究持续约一小时。每次个人访谈以实验指导的视频演示开始。指导中包含的信息，包括前景表示和抽样程序，在附录E中报告。被试被告知没有错误或正确的答案，并且他们可以就实验提出任何问题。
+\end{translation}
+
+\bilingualsubsection{3.2. Stimuli and treatments}{3.2. 刺激与处理}
+
+\begin{original}
+\textbf{MPs and beliefs in study S.} The typical experimental condition in study S was characterized by a given sample size $n$ and proportion of $p_C$ of chips of color $C$ in the urn. Specifically, this study consisted of seven conditions: three conditions for each of the $n = 5, 10$ treatments, corresponding to three levels of the proportion $p_C$, i.e., 0.1, 0.25, 0.50; one for $n = 0$, involving the proportion $p_C = 0.3$. Each condition contains four steps corresponding to different tasks, which we now describe, using the case $n = 5$ and $p_C = 0.1$ for illustration; see Fig. 3.1 for a graphical representation.
+\end{original}
+
+\begin{translation}
+\textbf{研究S中的MP和信念。} 研究S中的典型实验条件由给定的样本量 $n$ 和瓮中颜色 $C$ 的筹码比例 $p_C$ 来刻画。具体而言，该研究包含七个条件：每个 $n = 5, 10$ 处理各三个条件，对应比例 $p_C$ 的三个水平，即0.1、0.25、0.50；一个 $n = 0$ 的条件，涉及比例 $p_C = 0.3$。每个条件包含四个步骤，对应不同的任务，我们以 $n = 5$ 和 $p_C = 0.1$ 的情形为例进行说明；见图3.1的图示。
+\end{translation}
+
+\begin{original}
+1. In the first step (sampling task), a color $C$ = red or black was randomly selected. It was used to select the (pre-prepared) physical urn containing 100 chips, $100 \times p_C$ of which were of the color $C$, and the rest of which were of the other color (in our example, supposing that $C$ = red, the urn would contain 10 red chips and 90 black ones). The urn (whose composition was unknown to the subject) was presented to the subject for sampling purposes. The subject was asked to make $n$ draws with replacement from the urn (in our example, 5 draws; e.g., RRBBB). The draws were recorded and remained visible on the computer screen throughout the rest of the condition.
+\end{original}
+
+\begin{translation}
+1. 第一步（抽样任务）：随机选择一种颜色 $C$ = 红色或黑色。该颜色用于选择（预先准备的）装有100个筹码的物理瓮，其中 $100 \times p_C$ 个为颜色 $C$，其余为另一种颜色（在我们的例子中，假设 $C$ = 红色，则瓮中装有10个红色筹码和90个黑色筹码）。将瓮（其组成对被试未知）呈现给被试进行抽样。要求被试从瓮中有放回地抽取 $n$ 次（在我们的例子中为5次；例如，RRBBB）。抽取结果被记录下来，并在该条件的整个剩余过程中保持在计算机屏幕上可见。
+\end{translation}
+
+\begin{original}
+2. In the second step (first MP task), a color (red or black) was randomly selected for betting purposes, and the subject's MP for a bet yielding 50 euros if the next chip drawn from the urn is that color, and nothing otherwise, was elicited. Note that the (unknown) underlying probability of winning depends on the composition of the urn and the color selected. Continuing with our example, if the urn contains 10 red chips, and the selected color was red, the bet is basically a bet on $p = 0.1$, and the subject was effectively answering a series of choice questions that provided the MP of $p = 0.1$. If black was selected, by contrast, then her responses indicate the MP of $p = 0.9$.
+\end{original}
+
+\begin{translation}
+2. 第二步（第一个MP任务）：随机选择一种颜色（红色或黑色）用于投注，引出被试对如下赌注的MP：如果从瓮中抽出的下一个筹码为该颜色，则获得50欧元，否则一无所获。注意，获胜的（未知）基础概率取决于瓮的组成和所选颜色。继续我们的例子，如果瓮中包含10个红色筹码，且所选颜色为红色，则该赌注本质上是对 $p = 0.1$ 的下注，被试实际上在回答一系列提供 $p = 0.1$ 的MP的选择问题。相反，如果选择了黑色，则她的回答表示 $p = 0.9$ 的MP。
+\end{translation}
+
+\begin{original}
+3. The third step (beliefs task) is devoted to the elicitation of the subject's beliefs regarding the proportion of red chips in the urn. Specifically, the subject answered a series of choice questions that elicited the four pairs of exchangeable intervals concerning the composition of the urn listed in Table 3.2b. The order of the four elicitations was randomized.
+\end{original}
+
+\begin{translation}
+3. 第三步（信念任务）：专门用于引出被试关于瓮中红色筹码比例的信念。具体而言，被试回答一系列选择问题，引出表3.2b中列出的关于瓮组成的四对可交换区间。四个引出的顺序是随机的。
+\end{translation}
+
+\begin{original}
+4. Like the second step, in the fourth step (second MP task) the subject answered a new series of choice questions to determine the MP of the bet on the color that was not selected in step 2, i.e. a bet on black if red was selected in step 2. As explained in that step, this is basically eliciting the MP for the complementary event to that determined in step 2, i.e. the MP of $p = 0.9$ if the MP of $p = 0.1$ was elicited in step 2.
+\end{original}
+
+\begin{translation}
+4. 与第二步类似，在第四步（第二个MP任务）中，被试回答一系列新的选择问题，以确定对第二步中未被选中的颜色的赌注的MP，即如果第二步选择了红色，则对黑色下注。如该步骤所解释的，这基本上是引出第二步所确定事件的互补事件的MP，即如果第二步引出了 $p = 0.1$ 的MP，则此处引出 $p = 0.9$ 的MP。
+\end{translation}
+
+\begin{original}
+Overall, the condition characterized by sample size $n > 0$ and proportion $p_C$ resulted in the elicitation of MPs of events $E$ and $E^c$, where $p_E = p_C$ or $p_E = 1 - p_C$ (steps 2 and 4 in Fig. 3.1) after $n$ draws. Additionally, the posterior subjective probabilities of these events were inferred from the second-order posterior distribution estimated from the four pairs of exchangeable intervals (step 3 in Fig. 3.1). All conditions involved independent draws from different urns, and subjects were aware of this. The treatment order was randomized, and the condition order was randomized within treatments.
+\end{original}
+
+\begin{translation}
+总体而言，由样本量 $n > 0$ 和比例 $p_C$ 刻画的条件产生了对事件 $E$ 和 $E^c$ 的MP的引出，其中 $p_E = p_C$ 或 $p_E = 1 - p_C$（图3.1中的步骤2和4），在 $n$ 次抽取之后。此外，这些事件的后验主观概率是从由四对可交换区间（图3.1中的步骤3）估计的二阶后验分布中推断的。所有条件都涉及从不同瓮中独立抽取，被试对此知情。处理顺序是随机的，条件顺序在处理内是随机的。
+\end{translation}
+
+\begin{original}
+\textbf{MPs and beliefs in study L.} The procedure in study L closely resembled that in Study S, but with an emphasis on large samples, $n = 100, 10000$. The only differences concern steps 1 and 3 of Fig. 3.1. Given the infeasibility of physical sampling for these sample sizes, the urns were realized on a computer. In step 1, the participant sampled from the virtual urn by pressing a button, allowing him to observe the cumulative results of the sequence of draws as they accumulated on the screen. In step 3, the difference concerned the intervals used in the exchangeability task. Given the large sample size, the subjective probability distribution $\mu$ was expected to be very concentrated around its mean, and the latter was expected to be close to the Bayesian prediction obtained from the update of a uniform prior, which we denote $\tilde{p}$. Given the concentration, it seemed sufficient to elicit only the mean and variance of the distribution. More specifically, we partition $[0, 1]$ in two fashions (Table 3.2b). On the one hand, as in study S, we elicited $r_1$ such that intervals $[0, r_1)$ and $[r_1, 1]$ were exchangeable, hence obtaining the median of the distribution. On the other hand, we partitioned $[0, 1]$ into an interval centered around the Bayesian prediction $\tilde{p}$, namely $[\tilde{p} - r_2, \tilde{p} + r_2]$, and its complement $[0, \tilde{p} - r_2) \cup (\tilde{p} + r_2, 1]$, through the elicitation of the $r_2$ for which the two sets are exchangeable. This gives an indication about the width of the distribution. We used the Bayesian prediction $\tilde{p}$ as a proxy for the ``middle'' of the distribution, rather than the $r_1$ from the first elicitation, to ensure that the procedure was unchained, hence minimizing error propagation.
+\end{original}
+
+\begin{translation}
+\textbf{研究L中的MP和信念。} 研究L的程序与研究S非常相似，但侧重于大样本，$n = 100, 10000$。唯一的区别涉及图3.1的步骤1和3。鉴于这些样本量下物理抽样的不可行性，瓮是在计算机上实现的。在步骤1中，参与者通过按按钮从虚拟瓮中抽样，使其能够观察屏幕上累积的抽取序列的累积结果。在步骤3中，区别涉及可交换性任务中使用的区间。鉴于大样本量，主观概率分布 $\mu$ 预期会非常集中于其均值附近，而后者预期会接近于从均匀先验更新得到的贝叶斯预测，我们将其记为 $\tilde{p}$。鉴于分布的集中性，似乎仅引出分布的均值和方差就足够了。更具体地说，我们以两种方式划分 $[0, 1]$（表3.2b）。一方面，如同研究S，我们引出 $r_1$ 使得区间 $[0, r_1)$ 和 $[r_1, 1]$ 是可交换的，从而获得分布的中位数。另一方面，我们通过引出使两个集合可交换的 $r_2$，将 $[0, 1]$ 划分为以贝叶斯预测 $\tilde{p}$ 为中心的区间 $[\tilde{p} - r_2, \tilde{p} + r_2]$ 及其补集 $[0, \tilde{p} - r_2) \cup (\tilde{p} + r_2, 1]$。这给出了分布宽度的指示。我们使用贝叶斯预测 $\tilde{p}$ 作为分布"中间"的代理，而非第一次引出中的 $r_1$，以确保该程序是非链式的，从而最大限度地减少误差传播。
+\end{translation}
+\bilingualsubsection{3.3. Elicitation techniques}{3.3. 引出技术}
+
+\begin{original}
+\textbf{MPs.} In both studies, the MP of a given ambiguous prospect was elicited in a two-step procedure. First, a candidate MP was determined through a bisection process (Abdellaoui et al., 2008) that consisted in a series of single pairwise choices between the ambiguous prospect and a risky option. The bisection elicitation procedure aimed at circumventing a possible ``middle-switching heuristic'' effect, i.e. the tendency of subjects to switch in the middle of choice lists (Beauchamp et al., 2015). Then the complete ``confirmation'' scrollbar-based choice list, filled in according to the prior bisection choices, was displayed for verification (see Appendix E.3 for displays). The precision of the elicited MP was to the nearest 0.01. The confirmation step ensured that any errors during the bisection procedure could be corrected by the subject before validation. It was made clear in the instructions of the experiment that only the confirmation scrollbar-based choice list mattered for real incentives (e.g., Abdellaoui et al., 2023).
+\end{original}
+
+\begin{translation}
+\textbf{MP。} 在两项研究中，给定模糊前景的MP通过两步程序引出。首先，通过一个二分过程（Abdellaoui et al., 2008）确定候选MP，该过程包括模糊前景与风险选项之间的一系列单一配对选择。二分引出程序旨在规避可能的"中间切换启发式"效应，即被试倾向于在选项列表中间切换（Beauchamp et al., 2015）。然后，根据先前的二分选择填写的完整"确认"滚动条式选择列表被显示以供验证（显示见附录E.3）。引出的MP精度为最接近的0.01。确认步骤确保二分过程中的任何错误可由被试在验证前纠正。实验指导中明确说明，只有确认滚动条式选择列表才影响真实激励（例如，Abdellaoui et al., 2023）。
+\end{translation}
+
+\begin{original}
+\textbf{Exchangeable intervals.} As concern beliefs, elicitation of pairs of exchangeable intervals proceeded as for MPs, using a bisection process followed by a single scrollbar-based choice list. Both involved choices between a bet $(G, I)$ yielding 50 euros when the proportion of red chips in the urn belonged to the interval $I$ (and nothing otherwise), and a bet $(G, I')$ yielding 50 euros when the proportion of red chips in the urn belonged to the interval $I'$. The precision was 0.01: in the ``confirmation'' choice list, $r$ (and hence the intervals $I$ and $I'$ defined from it) was increased in steps of 0.01 (Appendix E.4).
+\end{original}
+
+\begin{translation}
+\textbf{可交换区间。} 关于信念，可交换区间对的引出与MP的引出方式相同，使用二分过程，随后是一个单一的滚动条式选择列表。两者都涉及在赌注 $(G, I)$（当瓮中红色筹码比例属于区间 $I$ 时产生50欧元，否则为零）和赌注 $(G, I')$（当瓮中红色筹码比例属于区间 $I'$ 时产生50欧元）之间的选择。精度为0.01：在"确认"选择列表中，$r$（从而由其定义的区间 $I$ 和 $I'$）以0.01的步长增加（附录E.4）。
+\end{translation}
+
+\bilingualsubsection{3.4. Incentivizing subjects}{3.4. 对被试的激励}
+
+\begin{original}
+Participants in the experiment received a flat payment of 10 euros. Additionally, a random incentive system was implemented. For each study, a choice list was randomly chosen: it was either from the MP tasks related to the prospects reported in Table 3.2a or from the exchangeability tasks shown in Table 3.2b. Then, one single choice question from the selected choice list was randomly picked, the corresponding chosen option played out, and the resulting outcome paid in cash.
+\end{original}
+
+\begin{translation}
+实验参与者获得10欧元的固定报酬。此外，实施了一个随机激励系统。对每项研究，随机选择一个选择列表：它要么来自与表3.2a报告的前景相关的MP任务，要么来自表3.2b所示的可交换性任务。然后，从选定的选择列表中随机抽取一个单一选择问题，执行相应的被选选项，并以现金支付结果。
+\end{translation}
+
+\begin{original}
+The use of physical urns in study S allowed us to apply the prior incentive system Prince (Johnson et al., 2021) according to which the choice question to be played out for real is randomly selected before the beginning of the experiment and only revealed at the end of it. Specifically, after the presentation of the instructions and before the beginning of the experiment, the subject randomly picked a chip from a bag containing numbered chips corresponding to the choice tasks the subject was to face. Then, she randomly picked a chip from another bag, corresponding to a question (among the possible 101 questions) on the ``confirmation'' choice list for MPs; she proceeded similarly for ``confirmation'' choice lists for exchangeable events (which were of different lengths). The subject was told that the draws determined the choice to be played for real, but that choice would be disclosed to her at the end of the experiment. The values were revealed to the subject at the end of the session, and the corresponding question on the appropriate ``confirmation'' choice list was played for real. If the chosen option involved the color of a chip drawn from an urn (MP question), a chip was physically drawn from this urn. If the chosen option concerned the composition of an unknown urn (exchangeability choice question), the composition (contents) of the urn used in the corresponding choice question was revealed to the subject. In both cases, the subject received the payoff according to her choice.
+\end{original}
+
+\begin{translation}
+研究S中使用物理瓮使我们能够应用事前激励系统Prince（Johnson et al., 2021），根据该系统，真实执行的选择问题在实验开始前随机选定，仅在实验结束时才揭示。具体而言，在呈现指导之后、实验开始之前，被试从装有对应其将面临的选择任务的编号筹码的袋子中随机抽取一个筹码。然后，她从另一个袋子中随机抽取一个筹码，对应该选择列表上的一个问题（在MP的101个可能问题中）；她对可交换事件的"确认"选择列表（长度不同）以类似方式进行。被试被告知，这些抽取决定了真实执行的选择，但该选择将在实验结束时才向她披露。在实验结束时向被试揭示这些值，并在适当的"确认"选择列表上真实执行相应的问题。如果所选选项涉及从瓮中抽取筹码的颜色（MP问题），则从该瓮中物理抽取一个筹码。如果所选选项涉及未知瓮的组成（可交换性选择问题），则向被试揭示相应选择问题中使用的瓮的组成（内容）。在两种情况下，被试均根据其选择获得收益。
+\end{translation}
+
+\begin{original}
+In study L, the Prince procedure could not be implemented because of the use of a computer-based virtual urn. We consequently opted for the standard random incentive mechanism, with a choice-list and a choice on it randomly selected and played for real at the end of the experiment. Both ambiguous and risky prospects were realized on computer.
+\end{original}
+
+\begin{translation}
+在研究L中，由于使用基于计算机的虚拟瓮，无法实施Prince程序。因此，我们采用标准的随机激励机制，在实验结束时随机选择一个选择列表及其上的一个选择并真实执行。模糊前景和风险前景均在计算机上实现。
+\end{translation}
+% ================================================================
+% SECTION 4: RESULTS
+% ================================================================
+\bilingualsection{4. Results}{4. 结果}
+
+\begin{original}
+We now present our results concerning ambiguity attitudes in the presence of learning, while accounting for the effect of learning on beliefs. Basic statistics on the elicited beliefs are given in Appendix B.1; we focus here on the findings regarding ambiguity attitudes. We analyze the impact of learning on ambiguity attitudes without assuming a specific ambiguity model, in terms of the two ambiguity aversion indices introduced in Section 2.2 (Section 4.1). Then we investigate ambiguity attitude under the smooth ambiguity model. By comparing the estimated ambiguity-aversion transformation function across sample sizes, we evaluate how it changes with learning. Moreover, by combining the estimated ambiguity components with our data on posterior beliefs, we gain insight into the relative importance for choice behavior of the change in ambiguity aversion as compared to the deviation from Bayesian update (Section 4.2).
+\end{original}
+
+\begin{translation}
+我们现在呈现关于学习背景下模糊态度的结果，同时考虑学习对信念的影响。引出信念的基本统计量见附录B.1；我们在此聚焦于关于模糊态度的发现。我们基于第2.2节引入的两个模糊厌恶指数，在不假设特定模糊模型的情况下分析学习对模糊态度的影响（第4.1节）。然后，我们研究平滑模糊模型下的模糊态度。通过比较不同样本量下估计的模糊厌恶转换函数，我们评估它如何随学习变化。此外，通过将估计的模糊成分与我们的后验信念数据相结合，我们得以洞察模糊厌恶变化相对于偏离贝叶斯更新对选择行为的相对重要性（第4.2节）。
+\end{translation}
+
+\bilingualsubsection{4.1. Ambiguity-model-free analyses}{4.1. 模糊模型无关的分析}
+
+\begin{original}
+We first analyze our data using the two ambiguity aversion indices proposed in the literature (Section 2.2), which can be calculated without estimating a specific decision model.
+\end{original}
+
+\begin{translation}
+我们首先使用文献中提出的两个模糊厌恶指数（第2.2节）分析我们的数据，这些指数无需估计特定决策模型即可计算。
+\end{translation}
+
+\begin{original}
+\textbf{Ambiguity attitude from matching probabilities.} Fig. 4.1 draws box plots of the average complementarity ambiguity index over all urns, for each of the sample sizes in studies S and L (see Table A.6 for the corresponding empirical distributions of the complementarity index). Note that we recover the standard finding of moderate ambiguity aversion in the (two-color) Ellsberg unknown urn, which corresponds to our $n = 0$ case (Abdellaoui et al., 2023). It shows that in study S the median value of the index declines from 0.21 in the absence of sampling to 0.10 for $n = 5$ on the one hand, and from 0.10 to 0.05 for $n = 10$. Consistent with this pattern, the assumption of constant ambiguity aversion according to this index across sample sizes $n = 0, 5, 10$ is rejected (one-factor ANOVA with repeated measures, $p < 0.001$). Further, as illustrated in the Figure, paired t-tests reject equal ambiguity aversion between sample sizes 0 and 5 on the one hand ($p < 0.001$), and sample sizes 5 and 10 on the other hand ($p < 0.001$). At the individual level, 61 out of 80 subjects exhibited a higher ambiguity aversion for $n = 0$ than for $n = 5$ (Binomial, $p < 0.001$). Similarly, 54 out of 80 subjects exhibited a lower ambiguity aversion when they sampled 10 times than when they sampled 5 times (Binomial, $p < 0.001$).
+\end{original}
+
+\begin{translation}
+\textbf{来自匹配概率的模糊态度。} 图4.1绘制了研究S和L中每个样本量下所有瓮的平均互补性模糊指数的箱线图（互补性指数的对应经验分布见表A.6）。请注意，我们复现了标准发现，即在（两色）Ellsberg未知瓮中存在中等程度的模糊厌恶，这对应于我们的 $n = 0$ 情形（Abdellaoui et al., 2023）。图中显示，在研究S中，该指数的中位数值从无抽样时的0.21下降到 $n = 5$ 时的0.10，另一方面又从 $n = 10$ 时的0.10下降到0.05。与该模式一致，根据该指数，在样本量 $n = 0, 5, 10$ 之间模糊厌恶不变的假设被拒绝（重复测量的单因素ANOVA，$p < 0.001$）。此外，如该图所示，配对t检验拒绝了样本量0与5之间模糊厌恶相等的假设（$p < 0.001$），也拒绝了样本量5与10之间模糊厌恶相等的假设（$p < 0.001$）。在个体层面，80名被试中有61名在 $n = 0$ 时表现出比 $n = 5$ 时更高的模糊厌恶（二项检验，$p < 0.001$）。类似地，80名被试中有54名在抽样10次时表现出比抽样5次时更低的模糊厌恶（二项检验，$p < 0.001$）。
+\end{translation}
+
+\begin{original}
+As for study L, Fig. 4.1 shows a decline of median complementarity ambiguity aversion from 0.04 to 0.01 when the sample size increases from 100 to 10000. The assumption of equal ambiguity aversion across samples sizes is rejected by a paired t-test ($p < 0.001$). Additionally, 46 out of 60 subjects exhibited a higher index of ambiguity aversion for $n = 100$ than for $n = 10000$.
+\end{original}
+
+\begin{translation}
+至于研究L，图4.1显示当样本量从100增加到10000时，中位互补性模糊厌恶从0.04下降到0.01。不同样本量间模糊厌恶相等的假设被配对t检验拒绝（$p < 0.001$）。此外，60名被试中有46名在 $n = 100$ 时表现出比 $n = 10000$ 时更高的模糊厌恶指数。
+\end{translation}
+
+\begin{original}
+Moreover, note that the median ambiguity aversion index is positive, even at very large sample sizes ($n = 10000$); it is larger than 0 for 43 subjects out of 60 (Binomial, $p < 0.001$). This may suggest that even after extensive learning, attitudes toward ambiguity approach but do not fully reach the ambiguity-neutral benchmark of decisions made with known probabilities.
+\end{original}
+
+\begin{translation}
+此外，请注意即使是在非常大的样本量下（$n = 10000$），中位模糊厌恶指数也是正的；60名被试中有43名的该指数大于0（二项检验，$p < 0.001$）。这可能表明，即使经过广泛学习，对模糊的态度接近但并未完全达到已知概率下决策的模糊中性基准。
+\end{translation}
+
+\begin{original}
+\textbf{Ambiguity attitude from subjective vs. matching probabilities.} We now consider the belief-based ambiguity aversion index. Since it requires a regression for calculation (Section 2.2), it cannot be estimated from our data on the $n = 0$ case. Nevertheless, our aggregate results in this case indicate beliefs and ambiguity attitudes in line with standard findings in the literature. On the one hand, the elicited subjective probability distribution exhibits symmetry around 0.5, as would be expected in the absence of information (we find Beta with $\alpha_0 = 1.33$ and $\beta_0 = 1.34$; Appendix A.1, Table A.1 and Appendix B.1). On the other hand, the empirical distributions of MPs point to average values that are clearly smaller than the corresponding subjective probabilities: the mean MPs are around 0.37 and 0.38 respectively, consistent with ambiguity aversion in the style of Ellsberg (see Tables A.1 and A.3 in Appendix A.1).
+\end{original}
+
+\begin{translation}
+\textbf{来自主观概率与匹配概率比较的模糊态度。} 我们现在考虑基于信念的模糊厌恶指数。由于该指数需要通过回归计算（第2.2节），它无法从我们关于 $n = 0$ 情形的数据中估计。尽管如此，我们在此情形下的总体结果表明，信念和模糊态度与文献中的标准发现一致。一方面，引出的主观概率分布在0.5附近表现出对称性，这正是在没有信息的情况下可以预期的（我们发现Beta分布具有 $\alpha_0 = 1.33$ 和 $\beta_0 = 1.34$；附录A.1，表A.1和附录B.1）。另一方面，MP的经验分布指向明显小于相应主观概率的平均值：平均MP分别约为0.37和0.38，与Ellsberg风格的模糊厌恶一致（见附录A.1中的表A.1和A.3）。
+\end{translation}
+
+\begin{original}
+As concerns the other sample sizes, we first check whether the fitting lines for our data are affected by sample size at the aggregate level. One-way ANCOVA analysis shows that in study S elicited subjective probability (covariate), sample size (factor), and their interaction affect MPs ($p < 0.001$ for the three effects). Consequently, the regression lines of $m$ on $p_S$ corresponding to conditions $n = 5$ and $n = 10$ differ both in terms of intercept and slope. Table 4.1 reports the corresponding regression model estimates. We observe a decrease in the intercept ($\alpha_{n=10} - \alpha_{n=5} < 0$) and a parallel increase in the slope ($\beta_{n=10} - \beta_{n=5} > 0$) of the regression line when sample size increases. In summary, the aggregate analysis suggests an impact of sample size on the fitting line -- and in particular on the belief-based ambiguity aversion index -- at small sample sizes.
+\end{original}
+
+\begin{translation}
+对于其他样本量，我们首先在总体层面检查我们数据的拟合线是否受样本量影响。单因素ANCOVA分析显示，在研究S中，引出的主观概率（协变量）、样本量（因子）及其交互作用影响MP（三个效应的 $p < 0.001$）。因此，对应于 $n = 5$ 和 $n = 10$ 条件的 $m$ 对 $p_S$ 的回归线在截距和斜率上都不同。表4.1报告了相应的回归模型估计。我们观察到当样本量增加时，回归线的截距下降（$\alpha_{n=10} - \alpha_{n=5} < 0$），同时斜率上升（$\beta_{n=10} - \beta_{n=5} > 0$）。总之，总体分析表明，在小样本量下，样本量对拟合线——特别是对基于信念的模糊厌恶指数——有影响。
+\end{translation}
+\begin{original}
+Fig. 4.2 reports box plots describing the empirical distributions of the belief-based likelihood insensitivity and ambiguity aversion indices estimated at the level of individual subjects (see also Table B.4, Appendix B.2). We observe that the median likelihood insensitivity $a$ (the horizontal lines in the box plots) is higher for $n = 5$ than for $n = 10$ (Fig. 4.2, left panel; paired $t$-test $p < 0.01$). The situation is similar for the belief-based ambiguity aversion index $b$: the median value of this index is higher for $n = 5$ than for $n = 10$ (paired $t$-test, $p < 0.01$). At the individual level, the value of the ambiguity aversion index is higher in the $n = 5$ condition for 54 out of 80 subjects (Binomial, $p < 0.01$). Recalling that the ambiguity neutral benchmark is $a = b = 0$, both parameters move towards ambiguity neutrality on learning. To the extent that likelihood insensitivity is often considered a cognitive dimension, comparable with ambiguity perception or belief (Wakker, 2004), it is hardly surprising that it changes with learning. The (belief-based) ambiguity aversion index, by contrast, is typically interpreted as reflecting tastes; the finding that it is impacted by learning is more striking. It corroborates the message from our analysis of the complementarity ambiguity aversion index.
+\end{original}
+
+\begin{translation}
+图4.2报告了描述在个体被试层面估计的基于信念的似然不敏感性和模糊厌恶指数的经验分布的箱线图（另见表B.4，附录B.2）。我们观察到，中位似然不敏感性 $a$（箱线图中的水平线）在 $n = 5$ 时高于 $n = 10$ 时（图4.2，左面板；配对 $t$ 检验 $p < 0.01$）。基于信念的模糊厌恶指数 $b$ 的情形类似：该指数的中位数值在 $n = 5$ 时高于 $n = 10$ 时（配对 $t$ 检验，$p < 0.01$）。在个体层面，80名被试中有54名的模糊厌恶指数值在 $n = 5$ 条件下更高（二项检验，$p < 0.01$）。回顾模糊中性基准是 $a = b = 0$，两个参数在学习过程中都朝着模糊中性方向移动。就似然不敏感性通常被视为一个认知维度（可与模糊感知或信念相比较；Wakker, 2004）而言，它随学习而变化并不令人惊讶。相比之下，（基于信念的）模糊厌恶指数通常被解释为反映偏好倾向；发现它受学习影响则更为引人注目。这印证了我们对互补性模糊厌恶指数的分析所得出的信息。
+\end{translation}
+
+\begin{original}
+For study L, the picture regarding the impact of learning on the fitting lines is not as pronounced as in study S. Specifically, an ANCOVA analysis shows that the covariate (subjective probability) and the factor (sample size) affect matching probabilities ($p < 0.01$ in both cases), but their interaction barely has an impact ($p = 0.07$). This suggests different intercepts and identical slopes of the regression lines between conditions $n = 100$ and $n = 10000$. Regression analysis (provided in Table B.3, Appendix B.2) detects a significant, though very small, difference in intercepts. These results point to a constant perception of ambiguity across large samples on the one hand, and a tiny change in the belief-based ambiguity aversion index when samples size increases from 100 to 10000. The belief-based ambiguity aversion index exhibits a significant difference according to sample size (paired $t$-test, $p < 0.01$; Table B.4, Appendix B.2). At the individual level, it is higher when $n = 100$ for 46 vs. 14 subjects (sign-test, $p < 0.01$).
+\end{original}
+
+\begin{translation}
+对于研究L，关于学习对拟合线影响的图景不如研究S中那么明显。具体而言，ANCOVA分析显示，协变量（主观概率）和因子（样本量）影响匹配概率（两种情况下 $p < 0.01$），但它们的交互作用几乎没有影响（$p = 0.07$）。这表明 $n = 100$ 和 $n = 10000$ 条件之间的回归线具有不同的截距和相同的斜率。回归分析（见附录B.2中的表B.3）检测到截距存在显著但非常小的差异。这些结果一方面表明在大样本下模糊感知是恒定的，另一方面表明当样本量从100增加到10000时，基于信念的模糊厌恶指数有微小的变化。基于信念的模糊厌恶指数根据样本量表现出显著差异（配对 $t$ 检验，$p < 0.01$；表B.4，附录B.2）。在个体层面，46名被试在 $n = 100$ 时该指数更高，而14名被试相反（符号检验，$p < 0.01$）。
+\end{translation}
+
+\begin{original}
+Moreover, a $t$-test shows that, in the large sample condition ($n = 10000$), the ambiguity aversion index differs from the ``ambiguity neutral'' benchmark ($H_0: b = 0$, $p < 0.001$). Consistently with the analysis under the complementarity ambiguity aversion index, this could suggest a ``residual gap'' between the ambiguity attitude after having observed very large samples and the ambiguity neutral benchmark (Section 5).
+\end{original}
+
+\begin{translation}
+此外，$t$ 检验显示，在大样本条件下（$n = 10000$），模糊厌恶指数与"模糊中性"基准有差异（$H_0: b = 0$，$p < 0.001$）。与互补性模糊厌恶指数下的分析一致，这可能表明在观察到非常大的样本后的模糊态度与模糊中性基准之间存在"残余差距"（第5节）。
+\end{translation}
+
+\bilingualsubsection{4.2. Analysis under the smooth ambiguity model}{4.2. 平滑模糊模型下的分析}
+
+\begin{original}
+We now analyze our data under smooth ambiguity preferences (Klibanoff et al., 2005). For the sake of generality, we report results on the ``ambiguity attitude'' transformation function $\phi$ under the expo-power parametrization throughout this section. In addition to the fact that this parametric form generalizes the power and exponential specifications, it also performs significantly better in terms of goodness of fit (Appendix A.2).
+\end{original}
+
+\begin{translation}
+我们现在在平滑模糊偏好下分析我们的数据（Klibanoff et al., 2005）。为了一般性，我们在本节中统一报告expo-power参数化下的"模糊态度"转换函数 $\phi$ 的结果。除了这一参数形式可以推广幂和指数设定之外，它在拟合优度方面也显著更优（附录A.2）。
+\end{translation}
+
+\begin{original}
+\textbf{Small sample sizes: ambiguity attitudes.} We first check whether $\phi$ is affected by sample size at the aggregate level, using a maximum likelihood procedure (Appendix D) with the expo-power specification of $\phi$ under the structural equation given in Section 2.3 (Eq. (4)). A likelihood ratio test clearly rejects the model with a single transformation function for both sample sizes in favor of two different $\phi$ for $n = 5$ and $n = 10$ ($p < 0.001$). This suggests that additional sampling affects ambiguity attitude when subjects still face a large amount of ambiguity. In order to refine this result, we introduced dummy variables capturing the possible changes in $\phi$ parameters $\alpha$ and $\gamma$ between $n = 5$ and $n = 10$. Results (Appendix C, Table C.1) indicate statistically-significant effects on these two parameters, pointing towards a reduction in the curvature of $\phi$ when $n$ increases.
+\end{original}
+
+\begin{translation}
+\textbf{小样本量：模糊态度。} 我们首先在总体层面使用最大似然程序（附录D），在第2.3节（方程（4））给出的结构方程下以expo-power设定检验 $\phi$ 是否受样本量影响。似然比检验明确拒绝了两种样本量下具有单一转换函数的模型，而支持 $n = 5$ 和 $n = 10$ 具有两个不同的 $\phi$（$p < 0.001$）。这表明，当被试仍然面临大量模糊时，额外抽样会影响模糊态度。为细化这一结果，我们引入虚拟变量捕捉 $\phi$ 参数 $\alpha$ 和 $\gamma$ 在 $n = 5$ 和 $n = 10$ 之间可能的变化。结果（附录C，表C.1）表明对这两个参数有统计显著的影响，指向当 $n$ 增加时 $\phi$ 的曲率降低。
+\end{translation}
+
+\begin{original}
+We also conduct a latent class analysis of the impact of sample size on $\phi$. Specifically, we consider two classes of subjects. A first class, representing a share $\rho$ of the sample, consists of subjects with a sample-size-independent ambiguity attitude (i.e. $\phi_5 = \phi_{10}$). A second class, representing a share $1 - \rho$ of the sample, contains subjects for which $\phi$ depends on $n$ (i.e. $\phi_5 \neq \phi_{10}$). That resulted in a likelihood estimation of the smooth model with an additional parameter, $\rho$, to estimate (Appendix D and Table C.3). The results point to a non-negligible minority of subjects, $\rho = 0.34$, exhibiting sample-size-invariant ambiguity attitude, with a solid majority of subjects having changed their ambiguity attitude when sample size was increased from $n = 5$ to $n = 10$.
+\end{original}
+
+\begin{translation}
+我们还进行了样本量对 $\phi$ 影响的潜在类别分析。具体而言，我们考虑两类被试。第一类占样本的份额 $\rho$，由具有样本量无关的模糊态度的被试组成（即 $\phi_5 = \phi_{10}$）。第二类占样本的份额 $1 - \rho$，包含 $\phi$ 依赖于 $n$ 的被试（即 $\phi_5 \neq \phi_{10}$）。这产生了对平滑模型的似然估计，包含一个额外参数 $\rho$ 需要估计（附录D和表C.3）。结果表明，不可忽视的少数被试（$\rho = 0.34$）表现出样本量不变的模糊态度，而绝大多数被试在样本量从 $n = 5$ 增加到 $n = 10$ 时改变了他们的模糊态度。
+\end{translation}
+
+\begin{original}
+We also use a maximum likelihood procedure to estimate the parameters of the expo-power specification of $\phi$ at the individual level (see Appendix D for details). Fig. 4.3 draws means, medians and IQRs of the empirical distributions of parameters $\alpha$ and $\gamma$ (numerical details are given in Table C.2, Appendix C). A paired $t$-test detects a significant difference in the $\alpha$ parameter between the $n = 5$ and $n = 10$ treatments (Fig. 4.3, right panel). Moreover, Fig. 4.3 suggests that $\alpha$ declines with sample size; this decline is also confirmed by the regression analysis reported in Table C.1 (Appendix C). As for parameter $\gamma$, our observations are consistent with equal $\gamma$ for $n = 5$ and $n = 10$ (paired $t$-test, $p = 0.10$).
+\end{original}
+
+\begin{translation}
+我们还使用最大似然程序在个体层面估计 $\phi$ 的expo-power设定的参数（详见附录D）。图4.3绘制了参数 $\alpha$ 和 $\gamma$ 的经验分布的均值、中位数和四分位距（数值细节见表C.2，附录C）。配对 $t$ 检验检测到 $n = 5$ 和 $n = 10$ 处理之间 $\alpha$ 参数的显著差异（图4.3，右面板）。此外，图4.3表明 $\alpha$ 随样本量下降；这一下降也被表C.1（附录C）报告的回归分析所确认。至于参数 $\gamma$，我们的观察与 $n = 5$ 和 $n = 10$ 具有相等的 $\gamma$ 一致（配对 $t$ 检验，$p = 0.10$）。
+\end{translation}
+
+\begin{original}
+At the individual level, although a majority of subjects exhibit a decrease in $\alpha$ on the one hand (46 subjects out of 80), and a decrease in $\gamma$ on the other (48 subjects out of 80), the corresponding sign tests are not significant at the 5\% level. These results align with the latent class analysis, where a notable minority of subjects exhibit the same transformation function across treatments, hence explaining why the effect of sampling on $\phi$ is significant only at the aggregate level but not at the individual level.
+\end{original}
+
+\begin{translation}
+在个体层面，虽然大多数被试一方面表现出 $\alpha$ 的下降（80名中的46名），另一方面表现出 $\gamma$ 的下降（80名中的48名），但相应的符号检验在5\%水平上不显著。这些结果与潜在类别分析一致，其中相当一部分少数被试在不同处理下表现出相同的转换函数，从而解释了为什么抽样对 $\phi$ 的影响仅在总体层面显著而在个体层面不显著。
+\end{translation}
+
+\begin{original}
+Fig. 4.4 (left panel) plots the transformation functions $\phi_5$ and $\phi_{10}$ for median estimates of the expo-power parameters in study S. Recall the analogy between the transformation function and the utility function in decision under risk: in particular, as Klibanoff et al. (2005) show, the ambiguity attitude is revealed by the curvature of $\phi$. These authors have defined a ``coefficient of ambiguity aversion'', which is the ambiguity analogue of the Arrow-Pratt coefficient of (absolute) risk aversion; to bring out the relevant comparisons of ambiguity attitude, the right panel of Fig. 4.4 plots these coefficients for the transformation functions illustrated in the left panel. At the middle and top of the (expected utility) scale, subjects exhibit ambiguity aversion (the coefficient of ambiguity aversion is positive), but are more ambiguity averse for the smaller sample size $n = 5$. Indeed, $t$-tests reject the hypothesis of equal coefficients of ambiguity aversion for (utility) levels $u = 0.5$ and $u = 0.9$ ($p < 0.01$ in both cases). So for likely winning events, for which the second-order distribution $\mu$ is more centered on the top of the scale, subjects exhibit ambiguity aversion, which is stronger for the smaller sample size. For unlikely winning events -- and hence $\mu$ concentrated near the bottom of the scale -- there may be a tendency towards an ambiguity seeking attitude (i.e. negative coefficient of ambiguity aversion), but this is once again more pronounced for the smaller sample size. In general, over most of the scale, the finding of a change in ambiguity attitude on learning, in the direction of ambiguity neutrality, is upheld.
+\end{original}
+
+\begin{translation}
+图4.4（左面板）绘制了研究S中expo-power参数中位数估计下的转换函数 $\phi_5$ 和 $\phi_{10}$。回顾转换函数与风险决策中效用函数之间的类比：特别是，如 Klibanoff 等人（2005）所示，模糊态度通过 $\phi$ 的曲率来揭示。这些作者定义了一个"模糊厌恶系数"，它是Arrow-Pratt（绝对）风险厌恶系数在模糊情境中的类比；为了呈现模糊态度的相关比较，图4.4的右面板绘制了左面板所示转换函数的这些系数。在（期望效用）尺度的中部和顶部，被试表现出模糊厌恶（模糊厌恶系数为正），但在较小的样本量 $n = 5$ 下模糊厌恶更强。事实上，$t$ 检验拒绝了（效用）水平 $u = 0.5$ 和 $u = 0.9$ 下模糊厌恶系数相等的假设（两种情况下 $p < 0.01$）。因此，对于可能的获胜事件——此时二阶分布 $\mu$ 更集中于尺度的顶部——被试表现出模糊厌恶，且在较小样本量下更强。对于不太可能的获胜事件——因此 $\mu$ 集中于尺度的底部附近——可能存在模糊寻求态度的趋势（即负的模糊厌恶系数），但这在较小样本量下再次更加明显。总体而言，在尺度的大部分范围内，学习过程中模糊态度朝模糊中性方向变化的发现得以成立。
+\end{translation}
+\begin{original}
+\textbf{Ambiguity attitudes in small sample sizes: Summary.} In summary, our data allows for comparison of ambiguity attitudes across sample sizes, both in terms of indices that do not assume a specific decision model and under the smooth ambiguity model, which permits a clean separation of ambiguity attitudes from beliefs. Under each analysis, we find that ambiguity attitudes -- however they are operationalized -- change with learning. Typically attitudes move towards ambiguity neutrality for larger samples.
+\end{original}
+
+\begin{translation}
+\textbf{小样本量下的模糊态度：总结。} 总之，我们的数据允许在不同样本量之间比较模糊态度，既可以通过不假设特定决策模型的指数，也可以在平滑模糊模型下进行，后者允许将模糊态度与信念进行清晰的分离。在每个分析下，我们都发现模糊态度——无论其如何操作化——随着学习而变化。通常，态度朝着更大样本量的模糊中性方向移动。
+\end{translation}
+
+\begin{original}
+\textbf{Small sample sizes: ambiguity attitudes and belief update.} The previous analysis reveals an effect of learning on ambiguity attitude. To ascertain its importance, we now compare it to the impact of divergence from Bayesian update.
+
+This divergence can be defined by comparing the estimated beliefs after sampling with the posterior beliefs of a proper Bayesian, i.e. the posterior probability distribution resulting from the Bayesian update of an uninformative prior on the observed sample. More specifically, the Bayesian posterior for an observed sample of size $n$ with a frequency $f$ of red is the update of the prior uniform distribution over the probability interval $[0, 1]$, which is Beta$(1, 1)$, yielding:
+\begin{equation}
+\text{Beta}(1 + nf, 1 + n(1 - f)). \label{eq:bayespost}
+\end{equation}
+This is the distribution over possible urn compositions (values of $p$) that a Bayesian would obtain with the same evidence; we denote it by $\mu^B$. Just as the estimated distribution $\mu$ generates a probability of red in a draw from the urn, $p_S$, as its mean (Section 2.4), the Bayesian posterior generates a Bayesian probability of red $p_B$. For a prospect $(G, E)$ after $n$ samples, the Bayesian probability of winning is thus $p_{B,E}$.
+\end{original}
+
+\begin{translation}
+\textbf{小样本量：模糊态度与信念更新。} 前面的分析揭示了学习对模糊态度的影响。为确定其重要性，我们现在将其与偏离贝叶斯更新的影响进行比较。
+
+这种偏离可以通过比较抽样后估计的信念与适当贝叶斯主义的后验信念来定义，即从对观测样本的无信息先验进行贝叶斯更新得到的后验概率分布。更具体地说，对于一个观测到的规模为 $n$、红色频率为 $f$ 的样本，贝叶斯后验是从概率区间 $[0, 1]$ 上的先验均匀分布（即Beta$(1, 1)$）更新而来，产生：
+\begin{equation}
+\text{Beta}(1 + nf, 1 + n(1 - f)),
+\end{equation}
+这就是一个贝叶斯主义者以相同证据获得的关于瓮可能组成（$p$ 的值）的分布；我们将其记为 $\mu^B$。正如估计分布 $\mu$ 产生从瓮中抽到红色的概率 $p_S$ 作为其均值（第2.4节）一样，贝叶斯后验产生贝叶斯红色概率 $p_B$。对于经过 $n$ 次抽样后的前景 $(G, E)$，贝叶斯获胜概率因此为 $p_{B,E}$。
+\end{translation}
+
+\begin{original}
+As an illustration of the extent of divergence from Bayesian update as concerns these means, Fig. 4.5 draws the regression lines for $p_S$ against $p_B$. It suggests a slight divergence of subjects' beliefs compared to Bayesian update. This accords with Fisher tests of the null hypothesis that the regression line is the identity function ($p < 0.05$ for both S and L). We now compare the impact that this divergence has on choice with the impact of changes in ambiguity attitudes.
+\end{original}
+
+\begin{translation}
+作为在均值方面偏离贝叶斯更新程度的示例，图4.5绘制了 $p_S$ 对 $p_B$ 的回归线。它表明被试的信念与贝叶斯更新相比有轻微偏离。这与回归线为恒等函数的原假设的Fisher检验一致（S和L的 $p < 0.05$）。我们现在比较这种偏离对选择的影响与模糊态度变化的影响。
+\end{translation}
+
+\begin{original}
+Recall that, for a decision maker having observed a sample of size $n$ with elicited posterior probability distribution over urn composition $\mu$, the MP of the prospect $(G, E)$ under the smooth ambiguity model is given by $m_{E,n} = \phi^{-1}(\int_{[0,1]} \phi(p)\, d\mu(p))$. If her beliefs change according to Bayesian update -- so $\mu = \mu^B$ -- and her ambiguity attitude transformation function is invariant across sample sizes -- so $\phi_n = \phi_{n'}$ for another sample size $n'$ -- then her matching probability $m_{E,n} = m_{E,n'}$. The divergence from this invariant ambiguity-attitude Bayesian-update benchmark can be decomposed as follows:
+\begin{equation}
+m_{E,n} - m_{E,n'} = \underbrace{m_{E,n} - m^B_{E,n}}_{\text{Amb}} + \underbrace{m^B_{E,n} - m_{E,n'}}_{\text{Upd}}, \label{eq:decomp}
+\end{equation}
+The first term, $\text{Amb}$, gives the difference in MPs due to the change in ambiguity aversion -- as reflected in the transformation function -- between $n$ and $n'$, under fixed (elicited posterior) beliefs $\mu$. The second term, $\text{Upd}$, reflects the MP-based divergence from Bayesian update, with fixed transformation function $\phi_n$. We calculate $\text{Amb}$ and $\text{Upd}$ for $n = 5$, $n' = 10$ both at the aggregate and at the individual levels using aggregate and individual estimates of the transformation function and posterior beliefs, respectively.
+\end{original}
+
+\begin{translation}
+回顾对一位观测了规模为 $n$ 的样本并具有关于瓮组成的引出后验概率分布 $\mu$ 的决策者，平滑模糊模型下前景 $(G, E)$ 的MP由 $m_{E,n} = \phi^{-1}(\int_{[0,1]} \phi(p)\, d\mu(p))$ 给出。如果她的信念按照贝叶斯更新变化——即 $\mu = \mu^B$——并且她的模糊态度转换函数在不同样本量间不变——即对于另一个样本量 $n'$，$\phi_n = \phi_{n'}$——那么她的匹配概率 $m_{E,n} = m_{E,n'}$。偏离这一不变模糊态度贝叶斯更新基准可以分解如下：
+\begin{equation}
+m_{E,n} - m_{E,n'} = \underbrace{m_{E,n} - m^B_{E,n}}_{\text{Amb}} + \underbrace{m^B_{E,n} - m_{E,n'}}_{\text{Upd}},
+\end{equation}
+第一项 $\text{Amb}$ 给出了在固定（引出后验）信念 $\mu$ 下，由于 $n$ 和 $n'$ 之间模糊厌恶的变化——反映在转换函数中——所导致的MP差异。第二项 $\text{Upd}$ 反映了在固定转换函数 $\phi_n$ 下，基于MP的偏离贝叶斯更新。我们对 $n = 5$，$n' = 10$ 计算了 $\text{Amb}$ 和 $\text{Upd}$，包括总体层面和个体层面，分别使用转换函数和后验信念的总体和个体估计。
+\end{translation}
+
+\begin{original}
+Fig. 4.6 plots the values of $\text{Amb}$ and $\text{Upd}$ inferred from aggregate estimates of elicited posterior (second-order) beliefs (Appendix B.1) and the transformation functions $\phi_5$, $\phi_{10}$ (see Table C.4, Appendix C), for different levels of the mean Bayesian update probability $p_{B,10}$. The impact on MPs coming from changes in ambiguity aversion on learning is not dominated across the whole probability range by the impact due to divergence from Bayesian update. Indeed, except for $p_{B,10} = 0.3$ where $|\text{Amb}|$ is clearly smaller than $|\text{Upd}|$, the ratio of $|\text{Amb}|$ to the total absolute discrepancy $|\text{Amb}| + |\text{Upd}|$ is greater than 0.5, and of the order of 0.7 or higher for unlikely and likely winning events, i.e. $p_{B,10} = 0.1, 0.7, 0.9$ (Table C.4, Appendix C).
+\end{original}
+
+\begin{translation}
+图4.6绘制了根据引出后验（二阶）信念的总体估计（附录B.1）和转换函数 $\phi_5$、$\phi_{10}$（见表C.4，附录C）推断的 $\text{Amb}$ 和 $\text{Upd}$ 值，对应不同的均值贝叶斯更新概率 $p_{B,10}$ 水平。学习过程中模糊厌恶变化对MP的影响并未在整个概率范围内被偏离贝叶斯更新的影响所主导。事实上，除了 $p_{B,10} = 0.3$ 时 $|\text{Amb}|$ 明显小于 $|\text{Upd}|$ 以外，$|\text{Amb}|$ 与总绝对差异 $|\text{Amb}| + |\text{Upd}|$ 的比率大于0.5，对于不太可能和可能的获胜事件（即 $p_{B,10} = 0.1, 0.7, 0.9$）达到0.7或更高（表C.4，附录C）。
+\end{translation}
+
+\begin{original}
+We also calculate $\text{Amb}$ and $\text{Upd}$ using individual-level elicited beliefs and transformation functions, for three categories of likelihood: unlikely ($p_{B,10} \leq 0.2$; 75 observations), moderately likely ($p_{B,10} \in [0.4, 0.6]$; 124 observations), and likely ($p_{B,10} \geq 0.8$; 75 observations). For the three categories of likelihood of the winning event, our observations do not conform with equal $|\text{Amb}|$ and $|\text{Upd}|$. Specifically, 64 out of 75, 109 out of 124, and 64 out of 75 observations satisfy $|\text{Amb}| > |\text{Upd}|$ for unlikely ($p_{B,10} \leq 0.2$), moderately likely ($p_{B,10} \in [0.4, 0.6]$), and likely ($p_{B,10} \geq 0.8$) events, respectively (sign-tests: $p < 0.001$).
+\end{original}
+
+\begin{translation}
+我们还使用个体层面的引出信念和转换函数计算了 $\text{Amb}$ 和 $\text{Upd}$，针对三个似然类别：不太可能（$p_{B,10} \leq 0.2$；75个观测）、中等可能（$p_{B,10} \in [0.4, 0.6]$；124个观测）和可能（$p_{B,10} \geq 0.8$；75个观测）。对于获胜事件的三个似然类别，我们的观测不符合 $|\text{Amb}|$ 和 $|\text{Upd}|$ 相等的假设。具体而言，对于不太可能（$p_{B,10} \leq 0.2$）、中等可能（$p_{B,10} \in [0.4, 0.6]$）和可能（$p_{B,10} \geq 0.8$）事件，分别有75个中的64个、124个中的109个和75个中的64个观测满足 $|\text{Amb}| > |\text{Upd}|$（符号检验：$p < 0.001$）。
+\end{translation}
+
+\begin{original}
+These analyses indicate that, for small sample sizes, ambiguity attitude change with learning has an impact on willingness to bet which is not significantly and globally dominated by the impact of divergences from Bayesian update. If anything, the effect of ambiguity aversion change is more important, especially for unlikely and medium-to-likely winning events.
+\end{original}
+
+\begin{translation}
+这些分析表明，对于小样本量，模糊态度随学习的变化对投注意愿的影响并未被偏离贝叶斯更新的影响在统计上和全局上显著主导。如果说有什么不同的话，模糊厌恶变化的影响更为重要，尤其是对于不太可能和中等至可能获胜的事件。
+\end{translation}
+
+\begin{original}
+\textbf{Large sample sizes.} We now briefly report the results from study L, which concentrates on large sample sizes. In aggregate-level analysis under the smooth ambiguity model, a likelihood ratio test fails to reject the model with a single transformation function for both sample sizes in study L ($p = 0.24$). Hence, in contrast with the findings at small sample sizes, our data provides virtually no systematic evidence for significant differences in the ambiguity-attitude transformation function when learning from large sample sizes.
+\end{original}
+
+\begin{translation}
+\textbf{大样本量。} 我们现在简要报告研究L的结果，该研究集中于大样本量。在平滑模糊模型下的总体层面分析中，似然比检验未能拒绝研究L中两种样本量下具有单一转换函数的模型（$p = 0.24$）。因此，与小样本量下的发现相反，我们的数据几乎没有提供系统性证据表明从大样本量学习时模糊态度转换函数有显著差异。
+\end{translation}
+
+\begin{original}
+However, it does suggest non-neutral ambiguity attitudes in all treatments, including at very large sample sizes ($n = 10000$). Recall that ambiguity neutrality corresponds to linear $\phi$, i.e. the limit as $\alpha \to 0$ with $\gamma = 1$. So the better fit under the expo-power specification as compared to the power and exponential specifications (Appendix A.2) suggests ambiguity non-neutrality. This is confirmed at the individual level: the number of positive $\alpha$s is 56 (41) out of 60 for $n = 100$ ($n = 10000$). The corresponding binomial tests are each significant at the level of 1\%.
+\end{original}
+
+\begin{translation}
+然而，它确实表明所有处理中都存在非中性的模糊态度，包括在非常大的样本量下（$n = 10000$）。回顾模糊中性对应于线性 $\phi$，即 $\alpha \to 0$ 且 $\gamma = 1$ 的极限。因此，与幂和指数设定相比，expo-power设定下更好的拟合（附录A.2）表明模糊非中性。这在个体层面得到确认：对于 $n = 100$（$n = 10000$），60名被试中56名（41名）的 $\alpha$ 为正。相应的二项检验在1\%水平上各自显著。
+\end{translation}
+% ================================================================
+% SECTION 5: DISCUSSION
+% ================================================================
+\bilingualsection{5. Discussion}{5. 讨论}
+
+\bilingualsubsection{5.1. The evolution of ambiguity perception and attitudes through learning}{5.1. 模糊感知和态度通过学习而演变}
+
+\begin{original}
+Our studies had an eye to breadth, precision and robustness. Breadth: our experiments scan the range of learning situations -- from no sampling through small and medium-sized samples (5, 10 draws) to large and very large (100, 10000 draws) sample sizes. Precision: by independently separating out beliefs, through explicit elicitation in tandem with preferences, our analyses can identify the impact of learning on ambiguity attitude in isolation from its consequences for probabilistic beliefs. Robustness: by employing standalone choice-based elicitation of beliefs and matching probabilities in a learning context, we gauge the robustness of our central findings, be it under ``raw data'' approaches as well as in terms of the smooth ambiguity model. We find that ambiguity attitudes are impacted by learning, with a move towards ambiguity neutrality as the sample size increases. Under the smooth ambiguity model, the behavioral impact of these effects is of a magnitude comparable to, if not higher than, the behavioral impact of deviations from Bayesian update of probabilistic beliefs.
+\end{original}
+
+\begin{translation}
+我们的研究着眼于广度、精度和稳健性。广度：我们的实验扫描了学习情境的范围——从无抽样到中小样本（5次、10次抽取）再到大和非常大的样本量（100次、10000次抽取）。精度：通过独立地将信念与偏好一起明确引出，我们的分析可以识别学习对模糊态度的影响，并将其与学习对概率信念的影响隔离开来。稳健性：通过学习情境中基于选择的独立的信念和匹配概率引出，我们衡量了我们核心发现的稳健性，无论是在"原始数据"方法下还是在平滑模糊模型下。我们发现模糊态度受学习影响，随着样本量增加朝着模糊中性方向移动。在平滑模糊模型下，这些效应的行为影响幅度与概率信念偏离贝叶斯更新的行为影响幅度相当，甚至可能更高。
+\end{translation}
+
+\begin{original}
+Considering each sample size in our setup to correspond to a source of uncertainty, our finding of an impact of learning on ambiguity attitude can be read in terms of source dependence -- and as such, is perfectly coherent with the insight behind decision models involving it (Marinacci 2015; Ergin and Gul 2009; Tversky and Fox 1995; Chew and Sagi 2008; Abdellaoui et al. 2011a). Whilst source dependence has been documented in the literature (Anantanasuwong et al., 2019; Abdellaoui et al., 2011a), the source dependence of the transformation function in the smooth model remains an open empirical question. The current paper is the first study, to our knowledge, to tackle it via independent econometric estimation of the model components.
+\end{original}
+
+\begin{translation}
+将我们设置中的每个样本量视为对应一个不确定性来源，我们发现学习对模糊态度的影响可以从源依赖的角度来解读——因此，这与涉及源依赖的决策模型背后的洞见完全一致（Marinacci 2015; Ergin and Gul 2009; Tversky and Fox 1995; Chew and Sagi 2008; Abdellaoui et al. 2011a）。虽然源依赖已在文献中被记录（Anantanasuwong et al., 2019; Abdellaoui et al., 2011a），但平滑模型中转换函数的源依赖性仍然是一个开放的经验问题。据我们所知，本文是通过对模型组成部分进行独立经济计量估计来探讨这一问题的第一项研究。
+\end{translation}
+
+\begin{original}
+The comparative behavioral importance of ambiguity attitude change relative to deviations from Bayesian learning suggests the interest of further research in this direction. For instance, financial crises are economic situations involving important changes in the quantity of information, with global capital flows before and after crises having been related to changes in information or ambiguity (Rey, 2015; Giannetti and Laeven, 2016). Though such cases are typically modeled in terms of exogenous information shocks, decision theoretic approaches often invoke violations of Bayesian update (Hill, 2022). Our research motivates an interesting question about the potential role of ambiguity attitude change over and above (non-Bayesian) belief change in such situations.
+\end{original}
+
+\begin{translation}
+模糊态度变化相对于偏离贝叶斯学习的行为重要性比较表明，进一步研究这一方向是有意义的。例如，金融危机是涉及信息量发生重要变化的经济情境，危机前后的全球资本流动已被认为与信息或模糊的变化相关（Rey, 2015; Giannetti and Laeven, 2016）。虽然此类案例通常以外生信息冲击来建模，但决策理论方法通常诉诸违反贝叶斯更新（Hill, 2022）。我们的研究激发了一个有趣的问题：在这些情境中，模糊态度变化可能发挥超越（非贝叶斯）信念变化的潜在作用。
+\end{translation}
+
+\bilingualsubsection{5.2. ``Vanishing ambiguity'' and the long run}{5.2. "消失的模糊"与长期}
+
+\begin{original}
+Our other notable finding -- of residual ambiguity non-neutrality even for very large sample sizes -- speaks to the question of long-run learning, and connects into a strand of the theoretical literature on the long-run behavior of ambiguity models, which has identified conditions under which they tend to standard preferences under risk (Marinacci, 1999, 2002; Maccheroni and Marinacci, 2005; Epstein and Schneider, 2003, 2007).
+\end{original}
+
+\begin{translation}
+我们的另一个显著发现——即使在非常大的样本量下也存在残余的模糊非中性——涉及长期学习的问题，并与关于模糊模型长期行为的理论文献相连接，这些文献已经识别出它们趋于标准风险偏好所需的条件（Marinacci, 1999, 2002; Maccheroni and Marinacci, 2005; Epstein and Schneider, 2003, 2007）。
+\end{translation}
+
+\begin{original}
+The $n = 100, 10000$ treatments in our study L map directly into the sorts of cases considered by this literature. They are consistent with the aforementioned ``vanishing ambiguity'' results (Marinacci, 2002; Epstein and Schneider, 2007), to the extent that they find that ambiguity attitudes ``move towards ambiguity neutrality'' on learning. However, the ambiguity attitudes in the highest sampling treatment ($n = 10000$) never quite reach ambiguity neutrality: there remains a very small but significant gap. This could be because the sample size explored is not high enough. It could also be due to the computer-based implementation of sampling in study L: although all tasks in that study, including the risky prospects, were fully computer-based (Section 3.4), it is possible that specific distrust of sampling may be behind the observed gap between large-sample ambiguity attitudes and risk. A third possibility is that there is a residual gap between decision making on the basis of very large amounts of information and decision making on the basis of given probabilities (i.e. decision making under risk). This may connect into the psychological literature suggesting a difference between ``experience-based decision making'' -- where subjects decide how much to sample, though they typically sample significantly less than 100 times -- and ``description-based decision making'' -- which corresponds to choice under risk (Abdellaoui et al. 2011b; Gl\"{o}ckner et al. 2016 and references therein).
+\end{original}
+
+\begin{translation}
+我们研究L中的 $n = 100, 10000$ 处理直接对应于该文献所考虑的案例类型。它们与前述"消失的模糊"结果（Marinacci, 2002; Epstein and Schneider, 2007）一致，因为研究发现模糊态度在学习过程中"朝着模糊中性移动"。然而，在最高抽样处理（$n = 10000$）中，模糊态度从未完全达到模糊中性：仍然存在一个非常小但显著的差距。这可能是因为所探索的样本量不够高。也可能是由于研究L中基于计算机的抽样实施：尽管该研究中的所有任务（包括风险前景）都完全基于计算机（第3.4节），但对抽样的特定不信任可能是在大样本模糊态度与风险之间观察到的差距的原因。第三种可能性是，基于非常大量信息的决策与基于给定概率的决策（即风险下的决策）之间存在残余差距。这可能与心理学文献相关联，这些文献表明"基于经验的决策"——被试自行决定抽样多少，尽管他们通常抽样显著少于100次——与"基于描述的决策"——对应于风险下的选择（Abdellaoui et al. 2011b; Gl\"{o}ckner et al. 2016 及其参考文献）之间存在差异。
+\end{translation}
+
+\bilingualsubsection{5.3. Methodological contributions and related experimental literature}{5.3. 方法论贡献与相关实验文献}
+
+\begin{original}
+A key experimental innovation in our approach is the conjoint use made of MPs and choice-based elicited beliefs to econometrically estimate the smooth ambiguity model. By contrast, the few recent estimation attempts systematically use the outcome scale to compare prospects, e.g. Cubitt et al. (2018); Berger and Bosetti (2020) used certainty equivalents (CEs), estimating both utility for risk ($u(.)$) and utility for ambiguity ($\phi(u(.))$). Our MP-based evaluation of ambiguous prospects allows for a parsimonious estimation of the transformation function $\phi$ without requiring estimation of utility. In particular, since it does not rely on assumptions about EU holding for risky prospects, it is not subject to biases resulting from the usual discrepancies for EU under risk. Moreover, none of the previous studies explicitly and separately elicits beliefs.
+\end{original}
+
+\begin{translation}
+我们方法中的一个关键实验创新是联合使用MP和基于选择的引出信念来对平滑模糊模型进行经济计量估计。相比之下，少数最近的估计尝试系统地使用结果尺度来比较前景，例如 Cubitt 等人（2018）；Berger 和 Bosetti（2020）使用确定性等价（CE），同时估计风险效用（$u(.)$）和模糊效用（$\phi(u(.))$）。我们基于MP的模糊前景评估允许对转换函数 $\phi$ 进行简约估计，而无需估计效用。特别是，由于它不依赖于EU适用于风险前景的假设，它不会受到通常EU在风险下不一致所产生的偏差的影响。此外，之前的研究没有一项明确且单独地引出信念。
+\end{translation}
+
+\begin{original}
+A further experimental innovation is the strict control of the amount of learning via fixed-length, typically real-time sampling opportunities prior to choice. This contrasts with the psychological literature on the experience-description gap (e.g. Hertwig, 2004), as well as Ert and Trautmann (2014), which allow subjects to decide how much to sample. It also contrasts with recent work on hard-to-interpret signals, uncovering attitudes to the ambiguity of signals (Epstein and Halevy, 2024). A potential direction for future research would be to see how our results extend to situations of learning with differently sized samples of potentially ambiguous signals.
+\end{original}
+
+\begin{translation}
+另一个实验创新是通过固定长度（通常是实时）的抽样机会来严格控制学习量，这些抽样机会在做出选择之前进行。这与关于经验-描述差距的心理学文献（例如 Hertwig, 2004）以及 Ert 和 Trautmann（2014）形成对比，后者允许被试自行决定抽样多少。它也与近期关于难以解释的信号的研究形成对比，后者揭示了人们对信号模糊性的态度（Epstein and Halevy, 2024）。未来研究的一个潜在方向是，看看我们的结果如何扩展到在学习中使用不同大小样本的潜在模糊信号的情境。
+\end{translation}
+
+\begin{original}
+Assuming the neo-additive capacity model (Section 2.2), Baillon et al. (2018) estimate ambiguity attitudes from CEs of bets on NYSE stock returns. Comparing reactions to receiving different amounts of information, their central finding differs considerably from ours: whilst they find a shift in likelihood insensitivity with increased information, they find little evidence for an effect of information on their ambiguity aversion parameter. Experimental design factors could potentially explain this difference. Firstly, whilst they use differently-sized blocks of information (defined in terms of weeks of past data) about real stocks that subjects may have learnt about elsewhere, our treatments differ by the sample size observed, arguably providing more control over the information subjects possess. Secondly, their results rely on a concurrent parametric estimation yielding subjects' utility and complementarity ambiguity aversion index from CEs, adding another source of noise; by contrast, our MP elicitation provides this index immediately (Sections 2.2 and 4.1). Finally, beyond their assumed neo-additive capacity model, this index reflects some combination of ambiguity aversion and beliefs (Section 2.2), complicating interpretation of their results. Our analyses in terms of the smooth ambiguity model show that our conclusions are robust to such issues.
+\end{original}
+
+\begin{translation}
+在新可加容量模型的假设下（第2.2节），Baillon 等人（2018）通过对NYSE股票收益下注的CE来估计模糊态度。比较对接收不同信息量的反应，他们的核心发现与我们有很大不同：虽然他们发现似然不敏感性随信息增加而发生变化，但他们几乎没有发现信息对其模糊厌恶参数有影响的证据。实验设计因素可能可以解释这种差异。首先，虽然他们使用不同大小（以过去数据的周数为定义）的关于真实股票的信息块，被试可能已经在其他地方了解了这些股票，但我们的处理因观测的样本量而异，可以说对被试拥有的信息提供了更多的控制。其次，他们的结果依赖于一个同时进行的参数估计，从CE中得出被试的效用和互补性模糊厌恶指数，这增加了另一个噪音来源；相比之下，我们的MP引出立即提供了这一指数（第2.2节和第4.1节）。最后，在他们假设的新可加容量模型之外，这一指数反映了模糊厌恶和信念的某种组合（第2.2节），这使得对其结果的解释变得复杂。我们在平滑模糊模型下的分析表明，我们的结论对这些问题具有稳健性。
+\end{translation}
+% ================================================================
+% CREDIT AUTHORSHIP / DECLARATION / APPENDIX / REFERENCES
+% ================================================================
+
+\section*{CRediT authorship contribution statement}
+\addcontentsline{toc}{section}{CRediT authorship contribution statement}
+
+\begin{original}
+M. Abdellaoui: Funding acquisition, Visualization, Conceptualization, Methodology, Writing -- review \& editing. B. Hill: Funding acquisition, Conceptualization, Methodology, Writing -- review \& editing. E. Kemel: Conceptualization, Methodology, Software, Visualization, Data curation, Data analysis, Review \& editing. H. Maafi: Conceptualization, Methodology, Data collection, Review \& editing.
+\end{original}
+
+\begin{translation}
+穆罕默德·阿卜杜拉维：资金获取、可视化、概念化、方法论、撰写——审阅与编辑。布莱恩·希尔：资金获取、概念化、方法论、撰写——审阅与编辑。艾曼纽埃尔·凯梅尔：概念化、方法论、软件、可视化、数据管理、数据分析、审阅与编辑。哈米德·马菲：概念化、方法论、数据收集、审阅与编辑。
+\end{translation}
+
+\section*{Declaration of competing interest}
+\addcontentsline{toc}{section}{Declaration of competing interest}
+
+\begin{original}
+No one.
+\end{original}
+
+\begin{translation}
+无。
+\end{translation}
+
+\section*{Appendix. Supplementary material}
+\addcontentsline{toc}{section}{Appendix. Supplementary material}
+
+\begin{original}
+Supplementary material related to this article can be found online at \url{https://doi.org/10.1016/j.jet.2025.106093}.
+\end{original}
+
+\begin{translation}
+与本文相关的补充材料可在线获取：\url{https://doi.org/10.1016/j.jet.2025.106093}。
+\end{translation}
+
+\section*{Data availability}
+\addcontentsline{toc}{section}{Data availability}
+
+\begin{original}
+Data sets are available on \url{https://doi.org/10.3886/E238604V1}.
+\end{original}
+
+\begin{translation}
+数据集可在以下网址获取：\url{https://doi.org/10.3886/E238604V1}。
+\end{translation}
+
+% ================================================================
+% REFERENCES
+% ================================================================
+\bilingualsection{References}{参考文献}
+
+\begin{original}
+\noindent Abdellaoui, M., Baillon, A., Placido, L., Wakker, P.P., 2011a. The rich domain of uncertainty: source functions and their experimental implementation. \textit{Am. Econ. Rev.} 101, 695--723.
+
+\vspace{0.3em}
+\noindent Abdellaoui, M., Bleichrodt, H., Gutierrez, C., 2023. Unpacking overconfident behavior when betting on oneself. \textit{Manag. Sci.}
+
+\vspace{0.3em}
+\noindent Abdellaoui, M., Bleichrodt, H., l'Haridon, O., 2008. A tractable method to measure utility and loss aversion under prospect theory. \textit{J. Risk Uncertain.} 36, 245--266.
+
+\vspace{0.3em}
+\noindent Abdellaoui, M., L'Haridon, O., Paraschiv, C., 2011b. Experienced vs. described uncertainty: do we need two prospect theory specifications? \textit{Manag. Sci.} 57, 1879--1895.
+
+\vspace{0.3em}
+\noindent Anantanasuwong, K., Kouwenberg, R., Mitchell, O.S., Peijnenberg, K., 2019. Ambiguity attitudes about investments: Evidence from the field. Tech. rep. National Bureau of Economic Research.
+
+\vspace{0.3em}
+\noindent Baillon, A., 2008. Eliciting subjective probabilities through exchangeable events: an advantage and a limitation. \textit{Decis. Anal.} 5, 76--87.
+
+\vspace{0.3em}
+\noindent Baillon, A., Bleichrodt, H., Keskin, U., l'Haridon, O., Li, C., 2018. The effect of learning on ambiguity attitudes. \textit{Manag. Sci.} 64, 2181--2198.
+
+\vspace{0.3em}
+\noindent Baillon, A., Bleichrodt, H., Li, C., Wakker, P., 2019. Belief hedges: applying ambiguity measurements to all events and all ambiguity models. \textit{J. Econ. Theory.}
+
+\vspace{0.3em}
+\noindent Baillon, A., Bleichrodt, H., Li, C., Wakker, P.P., 2021. Belief hedges: measuring ambiguity for all events and all models. \textit{J. Econ. Theory} 198, 105353.
+
+\vspace{0.3em}
+\noindent Beauchamp, J.P., Benjamin, D.J., Chabris, C.F., Laibson, D.I., 2015. Controlling for the compromise effect debiases estimates of risk preference parameters. Tech. rep. National Bureau of Economic Research.
+
+\vspace{0.3em}
+\noindent Benjamin, D.J., 2019. Errors in probabilistic reasoning and judgment biases. In: \textit{Handbook of Behavioral Economics: Applications and Foundations 1}, vol. 2, pp. 69--186.
+
+\vspace{0.3em}
+\noindent Berger, L., Bosetti, V., 2020. Characterizing ambiguity attitudes using model uncertainty. \textit{J. Econ. Behav. Organ.} 180, 621--637.
+
+\vspace{0.3em}
+\noindent Berry, D.A., 1996. \textit{Statistics: a Bayesian Perspective}, vol. 4. Duxbury Press, Belmont, CA.
+
+\vspace{0.3em}
+\noindent Chateauneuf, A., Eichberger, J., Grant, S., 2007. Choice under uncertainty with the best and worst in mind: neo-additive capacities. \textit{J. Econ. Theory} 137, 538--567.
+
+\vspace{0.3em}
+\noindent Chew, S.H., Sagi, J.S., 2006. Event exchangeability: probabilistic sophistication without continuity or monotonicity. \textit{Econometrica} 74, 771--786.
+
+\vspace{0.3em}
+\noindent Chew, S.H., Sagi, J.S., 2008. Small worlds: modeling attitudes toward sources of uncertainty. \textit{J. Econ. Theory} 139, 1--24.
+
+\vspace{0.3em}
+\noindent Cubitt, R., Kuilen, G., Mukerji, S., 2018. The strength of sensitivity to ambiguity. \textit{Theory Decis.} 85, 275--302.
+
+\vspace{0.3em}
+\noindent Dimmock, S.G., Kouwenberg, R., Wakker, P.P., 2016. Ambiguity attitudes in a large representative sample. \textit{Manag. Sci.} 62, 1363--1380.
+
+\vspace{0.3em}
+\noindent Ellsberg, D., 1961. Risk, ambiguity, and the Savage axioms. \textit{Q. J. Econ.} 75, 643--669.
+
+\vspace{0.3em}
+\noindent Epstein, L.G., Halevy, Y., 2024. Hard-to-interpret signals. \textit{J. Eur. Econ. Assoc.} 22, 393--427.
+
+\vspace{0.3em}
+\noindent Epstein, L.G., Schneider, M., 2003. IID: independently and indistinguishably distributed. \textit{J. Econ. Theory} 113, 32--50.
+
+\vspace{0.3em}
+\noindent Epstein, L.G., Schneider, M., 2007. Learning under ambiguity. \textit{Rev. Econ. Stud.} 74, 1275--1303.
+
+\vspace{0.3em}
+\noindent Ergin, H., Gul, F., 2009. A theory of subjective compound lotteries. \textit{J. Econ. Theory} 144, 899--929.
+
+\vspace{0.3em}
+\noindent Ert, E., Trautmann, S.T., 2014. Sampling experience reverses preferences for ambiguity. \textit{J. Risk Uncertain.} 49, 31--42.
+
+\vspace{0.3em}
+\noindent Fox, C.R., Tversky, A., 1995. Ambiguity aversion and comparative ignorance. \textit{Q. J. Econ.} 110, 585--603.
+
+\vspace{0.3em}
+\noindent Giannetti, M., Laeven, L., 2016. Local ownership, crises, and asset prices: evidence from US mutual funds. \textit{Rev. Finance} 20 (3), 957--978.
+
+\vspace{0.3em}
+\noindent Gl\"{o}ckner, A., Hilbig, B.E., Henninger, F., Fiedler, S., 2016. The reversed description-experience gap: disentangling sources of presentation format effects in risky choice. \textit{J. Exp. Psychol. Gen.} 145, 486.
+
+\vspace{0.3em}
+\noindent Hertwig, R., 2004. Decisions from experience and the effect of rare events in risky choice. \textit{Psychol. Sci.} 15, 534--539.
+
+\vspace{0.3em}
+\noindent Hill, B., 2022. Updating confidence in beliefs. \textit{J. Econ. Theory} 199.
+
+\vspace{0.3em}
+\noindent Jaffray, J.-Y., 1989. Linear utility theory for belief functions. \textit{Oper. Res. Lett.} 8, 107--112.
+
+\vspace{0.3em}
+\noindent Johnson, C., Baillon, A., Bleichrodt, H., Li, Z., Van Dolder, D., Wakker, P.P., 2021. Prince: an improved method for measuring incentivized preferences. \textit{J. Risk Uncertain.} 62, 1--28.
+
+\vspace{0.3em}
+\noindent Keppe, H.-J., Weber, M., 1995. Judged knowledge and ambiguity aversion. \textit{Theory Decis.} 39, 51--77.
+
+\vspace{0.3em}
+\noindent Klibanoff, P., Marinacci, M., Mukerji, S., 2005. A smooth model of decision making under ambiguity. \textit{Econometrica} 73, 1849--1892.
+
+\vspace{0.3em}
+\noindent Kocher, M.G., Lahno, A.M., Trautmann, S.T., 2018. Ambiguity aversion is not universal. \textit{Eur. Econ. Rev.} 101, 268--283.
+
+\vspace{0.3em}
+\noindent Maccheroni, F., Marinacci, M., 2005. A strong law of large numbers for capacities. \textit{Ann. Probab.}, 1171--1178.
+
+\vspace{0.3em}
+\noindent Machina, M.J., Schmeidler, D., 1992. A more robust definition of subjective probability. \textit{Econometrica}, 745--780.
+
+\vspace{0.3em}
+\noindent Marinacci, M., 1999. Limit laws for non-additive probabilities and their frequentist interpretation. \textit{J. Econ. Theory} 84, 145--195.
+
+\vspace{0.3em}
+\noindent Marinacci, M., 2002. Learning from ambiguous urns. \textit{Stat. Pap.} 43, 143--151.
+
+\vspace{0.3em}
+\noindent Marinacci, M., 2015. Model uncertainty. \textit{J. Eur. Econ. Assoc.} 13, 1022--1100.
+
+\vspace{0.3em}
+\noindent Nau, R.F., 2006. Uncertainty aversion with second-order utilities and probabilities. \textit{Manag. Sci.} 52, 136--145.
+
+\vspace{0.3em}
+\noindent Peel, D., Zhang, J., 2009. The expo-power value function as a candidate for the work-horse specification in parametric versions of cumulative prospect theory. \textit{Econ. Lett.} 105, 326--329.
+
+\vspace{0.3em}
+\noindent Rey, H., 2015. Dilemma not Trilemma: the Global Financial Cycle and Monetary Policy Independence. Working Paper 21162. NBER.
+
+\vspace{0.3em}
+\noindent Saha, A., 1993. Expo-power utility: a flexible form for absolute and relative risk aversion. \textit{Am. J. Agric. Econ.} 75, 905--913.
+
+\vspace{0.3em}
+\noindent Savage, L.J., 1954. \textit{The Foundations of Statistics}. Dover, New York.
+
+\vspace{0.3em}
+\noindent Schmeidler, D., 1989. Subjective probability and expected utility without additivity. \textit{Econometrica}, 571--587.
+
+\vspace{0.3em}
+\noindent Tversky, A., Fox, C.R., 1995. Weighing risk and uncertainty. \textit{Psychol. Rev.} 102, 269--283.
+
+\vspace{0.3em}
+\noindent Wakker, P.P., 2004. On the composition of risk preference and belief. \textit{Psychol. Rev.} 111, 236--241.
+\end{original}
+
+\end{document}

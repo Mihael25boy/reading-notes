@@ -1,0 +1,2373 @@
+% ======================================================================
+% Bergin: Mathematics for Economists with Applications
+% Chapters 10–12: Bilingual (English + Chinese) TeX Part File
+% ======================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHAPTER 10: QUADRATIC FORMS / 二次型
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quadratic Forms / 二次型}
+
+\subsection{10.1 Introduction / 引言}
+
+\begin{original}
+A quadratic form is given by the expression $x'Ax$ where $x$ is an $n \times 1$ vector and $A$ an $n \times n$ matrix. Quadratic forms arise in various branches of economics, and particularly in optimization theory to identify a candidate solution as a maximum or minimum. For example, in the study of quadratic functions, $ax^2 + bx + c = (ax + b)x + c$, this function is either ``u-shaped'' or the opposite, depending on whether $a$ is positive or negative. So, the turning point either locates a minimum or a maximum depending on the sign of $a$. If, for example, $a > 0$, then large values of $x$ correspond with large values of the function and the turning point corresponds to a minimum value of the function.
+\end{original}
+\begin{translation}
+二次型由表达式 $x'Ax$ 给出，其中 $x$ 是 $n \times 1$ 向量，$A$ 是 $n \times n$ 矩阵。二次型出现在经济学的各个分支中，特别是在最优化理论中用于判定候选解是最大值还是最小值。例如，在研究二次函数 $ax^2 + bx + c = (ax + b)x + c$ 时，该函数呈现``U形''或倒U形，取决于 $a$ 为正还是为负。因此，转折点确定的是最小值还是最大值取决于 $a$ 的符号。例如，若 $a > 0$，则 $x$ 的较大取值对应函数的较大取值，而转折点对应函数的最小值。
+\end{translation}
+
+\begin{original}
+Essentially the same situation occurs when the function is a quadratic in many variables: $x'Ax + bx + c$. In this case, the matrix $A$ plays an analogous role to $a$ in the scalar case: whether a ``turning point'' is a maximum or minimum depends on properties of $A$. Letting
+\[
+f(x) = x'Ax + b'x + c = \sum_{i=1}^n \sum_{j=1}^n a_{ij} x_i x_j + \sum_{k=1}^n b_k x_k + c,
+\]
+in the context of optimization, positive and negative definiteness are the central concepts. Section 10.2 introduces quadratic forms and shows how, in the two-variable case, properties of the $A$ matrix determine the shape of the function $f$. In Section 10.3, positive and negative definiteness are defined and the properties of positive and negative matrices are characterized in terms of determinant conditions.
+\end{original}
+\begin{translation}
+当函数是多变量二次函数 $x'Ax + bx + c$ 时，本质上同样的情况也会出现。此时，矩阵 $A$ 扮演着与标量情形中 $a$ 相类似的角色：``转折点''是最大值还是最小值取决于 $A$ 的性质。令
+\[
+f(x) = x'Ax + b'x + c = \sum_{i=1}^n \sum_{j=1}^n a_{ij} x_i x_j + \sum_{k=1}^n b_k x_k + c,
+\]
+在最优化语境中，正定性和负定性是核心概念。第10.2节介绍二次型，并展示在两变量情形中，矩阵 $A$ 的性质如何决定函数 $f$ 的形状。在第10.3节中，定义了正定性和负定性，并用行列式条件刻画了正定和负定矩阵的性质。
+\end{translation}
+
+\begin{original}
+When the function $f(x)$ is arbitrary (not necessarily quadratic), the criteria developed here extend directly by using a second-order quadratic approximation of the function $f$ to identify local maxima or local minima. Finally, Section 10.4 considers the case where there are linear restrictions on $x$. A matrix $A$ is positive definite if for all $x \neq 0$, $x'Ax > 0$ and negative definite when $x'Ax < 0$ for all non-zero $x$. So, for example, positive definiteness requires that for all non-zero $x$, $x'Ax > 0$. Suppose instead, that this requirement applies only to those non-zero $x$ satisfying an additional condition, $Bx = 0$: under what circumstances is $x'Ax > 0$ for all non-zero $x$ satisfying $Bx = 0$? This issue is considered in Section 10.4. The criteria developed there appear in the study of constrained optimization problems.
+\end{original}
+\begin{translation}
+当函数 $f(x)$ 为任意函数（未必是二次函数）时，这里建立的判据可直接推广：通过使用函数 $f$ 的二阶二次逼近来识别局部极大值或局部极小值。最后，第10.4节考虑 $x$ 上存在线性约束的情形。矩阵 $A$ 是正定的，若对所有 $x \neq 0$，有 $x'Ax > 0$；是负定的，若对所有非零 $x$，有 $x'Ax < 0$。例如，正定性要求对所有非零 $x$ 有 $x'Ax > 0$。假设这一要求仅适用于那些满足附加条件 $Bx = 0$ 的非零 $x$：在什么条件下，对所有满足 $Bx = 0$ 的非零 $x$ 有 $x'Ax > 0$？第10.4节考虑了这一问题。那里建立的判据出现在约束最优化问题的研究中。
+\end{translation}
+
+\subsection{10.2 Quadratic Forms / 二次型}
+
+\begin{original}
+A quadratic form in $n$ variables is given as:
+\[
+x'Ax = (x_1, x_2, \ldots, x_n)
+\begin{pmatrix}
+a_{11} & \cdots & a_{1n} \\
+\vdots & \ddots & \vdots \\
+a_{n1} & \cdots & a_{nn}
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\ x_2 \\ \vdots \\ x_n
+\end{pmatrix}
+= \sum_{ij} a_{ij} x_i x_j,
+\]
+where $a_{ij}$ is the element in the $i$th row and $j$th column of $A$.
+In the case of two variables:
+\[
+x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}, \quad
+A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\]
+and
+\[
+x'Ax = \begin{pmatrix} x_1 & x_2 \end{pmatrix}
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+= a_{11}x_1^2 + (a_{12}+a_{21})x_1x_2 + a_{22}x_2^2,
+\]
+which is a quadratic form in the variables $x_1$ and $x_2$.
+An important question concerns the sign of $x'Ax$. Under what conditions is the quadratic form always positive or always negative, regardless of the value of $x$? The question arises in a variety of problems, and in particular in the area of optimization.
+\end{original}
+\begin{translation}
+$n$ 个变量的二次型由下式给出：
+\[
+x'Ax = (x_1, x_2, \ldots, x_n)
+\begin{pmatrix}
+a_{11} & \cdots & a_{1n} \\
+\vdots & \ddots & \vdots \\
+a_{n1} & \cdots & a_{nn}
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\ x_2 \\ \vdots \\ x_n
+\end{pmatrix}
+= \sum_{ij} a_{ij} x_i x_j,
+\]
+其中 $a_{ij}$ 是 $A$ 的第 $i$ 行第 $j$ 列元素。
+在两变量情形中：
+\[
+x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}, \quad
+A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\]
+且
+\[
+x'Ax = \begin{pmatrix} x_1 & x_2 \end{pmatrix}
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+= a_{11}x_1^2 + (a_{12}+a_{21})x_1x_2 + a_{22}x_2^2,
+\]
+这是关于变量 $x_1$ 和 $x_2$ 的二次型。一个重要的问题涉及 $x'Ax$ 的符号：在什么条件下，二次型无论 $x$ 取何值总是正的或总是负的？该问题出现在各种问题中，尤其是在最优化领域。
+\end{translation}
+
+\begin{original}
+\textbf{EXAMPLE 10.1:} For example, if $a_{11}=3$, $a_{22}=4$ and $a_{12}+a_{21}=3$, then the associated quadratic form is $q(x_1,x_2)=3x_1^2+4x_2^2+3x_1x_2$. Let $f(x)$ be the quadratic function plotted in the figure:
+\[
+z = f(x) = x_1 + x_2 + q(x_1,x_2) = x_1 + x_2 + 3x_1^2 + 4x_2^2 + 3x_1x_2.
+\]
+This function is smallest when $(\bar{x}_1, \bar{x}_2) = (-\frac{5}{22}, -\frac{2}{11})$. That is: $f(\bar{x}_1, \bar{x}_2) \leq f(x_1, x_2)$ for all $(x_1, x_2)$.
+Notice that the ``bowl'' shape of the function is crucial: around $(\bar{x}_1, \bar{x}_2)$ the function curves up. This shape property is determined by the quadratic form $q(x_1, x_2)$, which has the property that $q(x_1, x_2) \geq 0$ for all $(x_1, x_2)$, and illustrates the relationship between quadratic forms and optimization.
+\end{original}
+\begin{translation}
+\textbf{例10.1：} 例如，若 $a_{11}=3$，$a_{22}=4$ 且 $a_{12}+a_{21}=3$，则相应的二次型为 $q(x_1,x_2)=3x_1^2+4x_2^2+3x_1x_2$。令 $f(x)$ 为图中绘制的二次函数：
+\[
+z = f(x) = x_1 + x_2 + q(x_1,x_2) = x_1 + x_2 + 3x_1^2 + 4x_2^2 + 3x_1x_2.
+\]
+该函数在 $(\bar{x}_1, \bar{x}_2) = (-\frac{5}{22}, -\frac{2}{11})$ 处取得最小值。即：对所有 $(x_1, x_2)$，有 $f(\bar{x}_1, \bar{x}_2) \leq f(x_1, x_2)$。
+注意函数的``碗状''形状至关重要：在 $(\bar{x}_1, \bar{x}_2)$ 附近，函数向上弯曲。这一形状性质由二次型 $q(x_1, x_2)$ 决定，该二次型具有性质 $q(x_1, x_2) \geq 0$ 对所有 $(x_1, x_2)$ 成立，这说明了二次型与最优化之间的关系。
+\end{translation}
+
+\begin{original}
+In general, the sign of the quadratic form $x'Ax$ depends on both $A$ and the vector $x$, as Example 10.2 illustrates.
+
+\textbf{EXAMPLE 10.2:} Let $A = \begin{pmatrix} a & 0 \\ 0 & -\hat{a} \end{pmatrix}$ where $a > 0$ and $\hat{a} > 0$. Then
+\[
+x'Ax = (x_1, x_2) \begin{pmatrix} a & 0 \\ 0 & -\hat{a} \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = a x_1^2 - \hat{a} x_2^2.
+\]
+Then
+\begin{align*}
+x'Ax > 0 &\quad\text{if}\quad a x_1^2 - \hat{a} x_2^2 > 0 \quad\text{or}\quad \frac{x_1^2}{x_2^2} > \frac{\hat{a}}{a} \\
+x'Ax < 0 &\quad\text{if}\quad a x_1^2 - \hat{a} x_2^2 < 0 \quad\text{or}\quad \frac{x_1^2}{x_2^2} < \frac{\hat{a}}{a}.
+\end{align*}
+So, the sign of $x'Ax$ depends on the value of $x$ and the parameters of $A$. If, instead,
+\[
+A = \begin{pmatrix} a & 0 \\ 0 & \hat{a} \end{pmatrix}
+\]
+then $x'Ax = a x_1^2 + \hat{a} x_2^2$, which is never negative since $a$ and $\hat{a}$ are positive and $x_i^2 \geq 0$.
+\end{original}
+\begin{translation}
+一般而言，二次型 $x'Ax$ 的符号既取决于 $A$ 也取决于向量 $x$，正如例10.2所示。
+
+\textbf{例10.2：} 令 $A = \begin{pmatrix} a & 0 \\ 0 & -\hat{a} \end{pmatrix}$，其中 $a > 0$ 且 $\hat{a} > 0$。则
+\[
+x'Ax = (x_1, x_2) \begin{pmatrix} a & 0 \\ 0 & -\hat{a} \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = a x_1^2 - \hat{a} x_2^2.
+\]
+那么
+\begin{align*}
+x'Ax > 0 &\quad\text{若}\quad a x_1^2 - \hat{a} x_2^2 > 0 \quad\text{或}\quad \frac{x_1^2}{x_2^2} > \frac{\hat{a}}{a} \\
+x'Ax < 0 &\quad\text{若}\quad a x_1^2 - \hat{a} x_2^2 < 0 \quad\text{或}\quad \frac{x_1^2}{x_2^2} < \frac{\hat{a}}{a}.
+\end{align*}
+因此，$x'Ax$ 的符号取决于 $x$ 的取值和 $A$ 的参数。若采用
+\[
+A = \begin{pmatrix} a & 0 \\ 0 & \hat{a} \end{pmatrix},
+\]
+则 $x'Ax = a x_1^2 + \hat{a} x_2^2$，由于 $a$ 和 $\hat{a}$ 为正且 $x_i^2 \geq 0$，该式永远不会为负。
+\end{translation}
+
+\begin{original}
+Thus, as Example 10.2 illustrates, under suitable restrictions on $A$, the sign of a quadratic form, $x'Ax = a x_1^2 + \hat{a} x_2^2$, may be completely determined by the parameters of the $A$ matrix.
+
+Consider again the two-variable quadratic form:
+\begin{align*}
+\begin{pmatrix} x_1 & x_2 \end{pmatrix}
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+&= a_{11}x_1^2 + (a_{12}+a_{21})x_1x_2 + a_{22}x_2^2 \\
+&= a_{11}x_1^2 + 2\tilde{a} x_1x_2 + a_{22}x_2^2, \quad \tilde{a} = \tfrac{1}{2}(a_{12}+a_{21}) \\
+&= \begin{pmatrix} x_1 & x_2 \end{pmatrix}
+\begin{pmatrix} a_{11} & \tilde{a} \\ \tilde{a} & a_{22} \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}. \tag{10.1}
+\end{align*}
+If $a_{11} = 0$, then $x = (1,0)$ gives $x'Ax = 0$, so, for a positive or negative definite matrix, $a_{ii} \neq 0$ for all $i$. The expression $a_{11}x_1^2 + 2\tilde{a}x_1x_2 + a_{22}x_2^2$ may be rearranged (assume $a_{11} \neq 0$ or that $a_{22} \neq 0$ and with a symmetric calculation):
+\[
+a_{11}x_1^2 + 2\tilde{a}x_1x_2 + a_{22}x_2^2 = a_{11}\left(x_1 + \frac{\tilde{a}}{a_{11}}x_2\right)^2 + \left(a_{22} - \frac{\tilde{a}^2}{a_{11}}\right)x_2^2
+\]
+\[
+= a_{11}\left(x_1 + \frac{\tilde{a}}{a_{11}}x_2\right)^2 + \frac{a_{11}a_{22} - \tilde{a}^2}{a_{11}}x_2^2.
+\]
+If $a_{11} > 0$ and $a_{11}a_{22} - \tilde{a}^2 > 0$, then this expression is positive if $(x_1, x_2) \neq (0,0)$. Conversely, if $a_{11} < 0$ and $a_{11}a_{22} - \tilde{a}^2 > 0$, then the expression is negative for all $(x_1, x_2) \neq (0,0)$. In either of the other two cases $[a_{11} > 0,\; a_{11}a_{22} - \tilde{a}^2 < 0]$ and $[a_{11} < 0,\; a_{11}a_{22} - \tilde{a}^2 < 0]$, the sign of $x'Ax$ can be positive or negative depending on the values of $(x_1, x_2)$. Consequently, the quadratic form is strictly positive for all $(x_1, x_2) \neq (0,0)$ if and only if $a_{11} > 0$ and $a_{11}a_{22} - \tilde{a}^2 > 0$; and strictly negative for all $(x_1, x_2) \neq (0,0)$ if and only if $a_{11} < 0$ and $a_{11}a_{22} - \tilde{a}^2 > 0$.
+\end{original}
+\begin{translation}
+因此，如例10.2所示，在对 $A$ 施加适当限制下，二次型 $x'Ax = a x_1^2 + \hat{a} x_2^2$ 的符号可以完全由矩阵 $A$ 的参数决定。
+
+再次考虑两变量二次型：
+\begin{align*}
+\begin{pmatrix} x_1 & x_2 \end{pmatrix}
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+&= a_{11}x_1^2 + (a_{12}+a_{21})x_1x_2 + a_{22}x_2^2 \\
+&= a_{11}x_1^2 + 2\tilde{a} x_1x_2 + a_{22}x_2^2, \quad \tilde{a} = \tfrac{1}{2}(a_{12}+a_{21}) \\
+&= \begin{pmatrix} x_1 & x_2 \end{pmatrix}
+\begin{pmatrix} a_{11} & \tilde{a} \\ \tilde{a} & a_{22} \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}. \tag{10.1}
+\end{align*}
+若 $a_{11} = 0$，则 $x = (1,0)$ 给出 $x'Ax = 0$，因此对于正定或负定矩阵，对所有 $i$ 有 $a_{ii} \neq 0$。表达式 $a_{11}x_1^2 + 2\tilde{a}x_1x_2 + a_{22}x_2^2$ 可重新排列（假设 $a_{11} \neq 0$ 或 $a_{22} \neq 0$，并进行对称计算）：
+\[
+a_{11}x_1^2 + 2\tilde{a}x_1x_2 + a_{22}x_2^2 = a_{11}\left(x_1 + \frac{\tilde{a}}{a_{11}}x_2\right)^2 + \left(a_{22} - \frac{\tilde{a}^2}{a_{11}}\right)x_2^2
+\]
+\[
+= a_{11}\left(x_1 + \frac{\tilde{a}}{a_{11}}x_2\right)^2 + \frac{a_{11}a_{22} - \tilde{a}^2}{a_{11}}x_2^2.
+\]
+若 $a_{11} > 0$ 且 $a_{11}a_{22} - \tilde{a}^2 > 0$，则当 $(x_1, x_2) \neq (0,0)$ 时该表达式为正。反之，若 $a_{11} < 0$ 且 $a_{11}a_{22} - \tilde{a}^2 > 0$，则对所有 $(x_1, x_2) \neq (0,0)$ 该表达式为负。在其余两种情形 $[a_{11} > 0,\; a_{11}a_{22} - \tilde{a}^2 < 0]$ 和 $[a_{11} < 0,\; a_{11}a_{22} - \tilde{a}^2 < 0]$ 中，$x'Ax$ 的符号可正可负，取决于 $(x_1, x_2)$ 的取值。因此，二次型对所有 $(x_1, x_2) \neq (0,0)$ 严格为正当且仅当 $a_{11} > 0$ 且 $a_{11}a_{22} - \tilde{a}^2 > 0$；对所有 $(x_1, x_2) \neq (0,0)$ 严格为负当且仅当 $a_{11} < 0$ 且 $a_{11}a_{22} - \tilde{a}^2 > 0$。
+\end{translation}
+
+\begin{original}
+\textbf{EXAMPLE 10.3:} This example illustrates how different values of the $a_{ij}$ parameters in the $A$ matrix affect the sign of the quadratic form, Equation 10.1:
+\[
+A_1 = \begin{pmatrix} 4 & 3 \\ 1 & 2 \end{pmatrix}, \quad x'A_1x = 4x^2 + 4xy + 2y^2
+\]
+\[
+A_2 = \begin{pmatrix} 4 & 3 \\ 5 & 2 \end{pmatrix}, \quad x'A_2x = 4x^2 + 8xy + 2y^2.
+\]
+Considering $A_1$, $a_{11} = 4 > 0$, $a_{11}a_{22} - \tilde{a}^2 = 4 \cdot 2 - 2^2 = 4 > 0$. Similarly, for $A_2$, $a_{11} = 4 > 0$, $a_{11}a_{22} - \tilde{a}^2 = 4 \cdot 2 - 4^2 = -8 < 0$. The pair of conditions $a_{11} > 0$ and $a_{11}a_{22} - \tilde{a}^2 > 0$ are satisfied by the matrix $A_1$, but not by $A_2$.
+
+In the graphs, the quadratic form based on $A_1$ is always non-negative and strictly positive for $(x_1, x_2) \neq (0,0)$, whereas the quadratic form based on $A_2$ is negative for some values of $(x_1, x_2)$. For example, at $(x_1, x_2) = (-1,1)$, $4x^2 + 8xy + 2y^2 = 4(-1)^2 + 8(-1)(1) + 2(1)^2 = -2$.
+\end{original}
+\begin{translation}
+\textbf{例10.3：} 本例说明矩阵 $A$ 中 $a_{ij}$ 参数的不同取值如何影响方程(10.1)中二次型的符号：
+\[
+A_1 = \begin{pmatrix} 4 & 3 \\ 1 & 2 \end{pmatrix}, \quad x'A_1x = 4x^2 + 4xy + 2y^2
+\]
+\[
+A_2 = \begin{pmatrix} 4 & 3 \\ 5 & 2 \end{pmatrix}, \quad x'A_2x = 4x^2 + 8xy + 2y^2.
+\]
+对于 $A_1$，$a_{11} = 4 > 0$，$a_{11}a_{22} - \tilde{a}^2 = 4 \cdot 2 - 2^2 = 4 > 0$。类似地，对于 $A_2$，$a_{11} = 4 > 0$，$a_{11}a_{22} - \tilde{a}^2 = 4 \cdot 2 - 4^2 = -8 < 0$。条件对 $a_{11} > 0$ 和 $a_{11}a_{22} - \tilde{a}^2 > 0$ 被矩阵 $A_1$ 满足，但不被 $A_2$ 满足。
+
+在图形中，基于 $A_1$ 的二次型总是非负的，且对 $(x_1, x_2) \neq (0,0)$ 严格为正；而基于 $A_2$ 的二次型对某些 $(x_1, x_2)$ 取值为负。例如，在 $(x_1, x_2) = (-1,1)$ 处，$4x^2 + 8xy + 2y^2 = 4(-1)^2 + 8(-1)(1) + 2(1)^2 = -2$。
+\end{translation}
+
+\begin{original}
+The next section describes a test to determine if a matrix is positive or negative definite.
+\end{original}
+\begin{translation}
+下一节将介绍判断矩阵是正定还是负定的检验方法。
+\end{translation}
+
+\subsection{10.3 Positive and Negative Definite Matrices / 正定和负定矩阵}
+
+\begin{original}
+For the following discussion let $A$ be an $n \times n$ square matrix. Any vector $x$ gives a quadratic form, $x'Ax$. Depending on the properties of the matrix, $A$, it may be that the expression $x'Ax$ is always positive or always negative (whenever $x \neq 0$). Definition 10.1 formalizes this concept and the discussion provides criteria for checking when a matrix is positive or negative definite.
+
+\textbf{Definition 10.1: Definite and semi-definite matrices:}
+\begin{itemize}
+\item $A$ is positive definite if $x'Ax > 0$, $x \neq 0$
+\item $A$ is positive semi-definite if $x'Ax \geq 0$
+\item $A$ is negative definite if $x'Ax < 0$, $x \neq 0$
+\item $A$ is negative semi-definite if $x'Ax \leq 0$.
+\end{itemize}
+
+Observe that if $A$ is positive (semi-)definite then $-A$ is negative (semi-)definite. If $A$ is positive definite then $A$ is positive semi-definite since $x'Ax > 0 \Rightarrow x'Ax \geq 0$. The converse is not true:
+\[
+A = \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}, \quad x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix},
+\]
+so $x'Ax = (x_1 + x_2)^2 \geq 0$, but setting $x_1 = -x_2 \neq 0$ gives $x'Ax = 0$.
+\end{original}
+\begin{translation}
+在下面的讨论中，设 $A$ 为 $n \times n$ 方阵。任意向量 $x$ 给出一个二次型 $x'Ax$。根据矩阵 $A$ 的性质，表达式 $x'Ax$ 可能总是正的或总是负的（只要 $x \neq 0$）。定义10.1将此概念形式化，随后的讨论给出了检验矩阵是否为正定或负定的判据。
+
+\textbf{定义10.1：定矩阵与半定矩阵：}
+\begin{itemize}
+\item $A$ 是正定的，若 $x'Ax > 0$，$x \neq 0$
+\item $A$ 是半正定的，若 $x'Ax \geq 0$
+\item $A$ 是负定的，若 $x'Ax < 0$，$x \neq 0$
+\item $A$ 是半负定的，若 $x'Ax \leq 0$.
+\end{itemize}
+
+注意，若 $A$ 是正（半）定的，则 $-A$ 是负（半）定的。若 $A$ 是正定的，则 $A$ 是半正定的，因为 $x'Ax > 0 \Rightarrow x'Ax \geq 0$。反之不成立：
+\[
+A = \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}, \quad x = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix},
+\]
+故 $x'Ax = (x_1 + x_2)^2 \geq 0$，但令 $x_1 = -x_2 \neq 0$ 得到 $x'Ax = 0$。
+\end{translation}
+
+\begin{original}
+How can one determine if a matrix is positive or negative definite? Sometimes the nature of the problem provides an answer. For example, suppose that $B$ is an $n \times k$ matrix and that $A = BB'$. Then $x'Ax = x'BB'x = z'z = \sum_{i=1}^n z_i^2 \geq 0$, where $z = B'x$. So, whenever $A$ can be expressed as $A = BB'$, $x'Ax \geq 0$ for all $x$. Furthermore, if the rank of $B$ is $k$, then for any $x \neq 0$, $z = B'x \neq 0$ so that $x'Ax = \sum_{i=1}^n z_i^2 > 0$ whenever $x \neq 0$.
+
+In general, the matrix $A$ will have no obvious structure implying the sign of the corresponding quadratic form and motivates the need for a systematic procedure to investigate definiteness of the matrix. The systematic procedure is based on the properties of ``minors'' derived from the matrix $A$.
+\end{original}
+\begin{translation}
+如何判断一个矩阵是正定还是负定的？有时问题的性质本身就提供了答案。例如，假设 $B$ 是 $n \times k$ 矩阵且 $A = BB'$。则 $x'Ax = x'BB'x = z'z = \sum_{i=1}^n z_i^2 \geq 0$，其中 $z = B'x$。因此，只要 $A$ 可表示为 $A = BB'$，则对所有 $x$ 有 $x'Ax \geq 0$。此外，若 $B$ 的秩为 $k$，则对任意 $x \neq 0$，$z = B'x \neq 0$，从而只要 $x \neq 0$ 就有 $x'Ax = \sum_{i=1}^n z_i^2 > 0$。
+
+一般而言，矩阵 $A$ 可能没有明显的结构来暗示相应二次型的符号，这就需要一个系统的程序来研究矩阵的定性。该系统程序基于由矩阵 $A$ 导出的``子式''的性质。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 10.2:} Given a square matrix $A$, the determinant of any $k \times k$ matrix $(0 < k \leq n)$ obtained by deleting any $n-k$ rows and $n-k$ columns is called a minor (or a $k$th-order minor to identify the dimensions of the matrix on which the determinant is derived).
+
+\begin{itemize}
+\item The $(i,j)$ minor of a square matrix $A$, denoted $m_{ij}$, is the determinant of the matrix obtained from $A$ by deleting the $i$th row and $j$th column.
+\item A minor obtained from a square matrix $A$ as the determinant of a $k \times k$ matrix given by deleting $n-k$ matching rows and columns is called a ($k$th-order) principal minor.
+\item A principal minor is called a leading principal minor if it is the determinant of a submatrix obtained from $A$ by deleting the last $(n-k)$ rows and columns, $0 < k \leq n$.
+\end{itemize}
+
+\textbf{Definition 10.3:} The trace, $\operatorname{tr}(A)$, of a square matrix, $A$, is the sum of the diagonal elements of the matrix: $\operatorname{tr}(A) = \sum_{i=1}^n a_{ii}$.
+\end{original}
+\begin{translation}
+\textbf{定义10.2：} 给定方阵 $A$，通过删除任意 $n-k$ 行和 $n-k$ 列得到的任意 $k \times k$ 矩阵 $(0 < k \leq n)$ 的行列式称为子式（或 $k$ 阶子式，以标明导出该行列式的矩阵的维数）。
+
+\begin{itemize}
+\item 方阵 $A$ 的 $(i,j)$ 子式，记作 $m_{ij}$，是从 $A$ 中删除第 $i$ 行和第 $j$ 列得到的矩阵的行列式。
+\item 从方阵 $A$ 中通过删除 $n-k$ 个匹配的行和列得到的 $k \times k$ 矩阵的行列式称为（$k$ 阶）主子式。
+\item 若主子式是通过删除 $A$ 的后 $(n-k)$ 行和列得到的子矩阵的行列式，则称为顺序主子式，$0 < k \leq n$。
+\end{itemize}
+
+\textbf{定义10.3：} 方阵 $A$ 的迹，$\operatorname{tr}(A)$，是矩阵对角元素之和：$\operatorname{tr}(A) = \sum_{i=1}^n a_{ii}$。
+\end{translation}
+
+\begin{original}
+\textbf{PROPOSITION 10.1:} The following observations are useful:
+\begin{enumerate}
+\item If $A$ is positive definite then $a_{ii} > 0$, $\forall i$; and if $A$ is positive semi-definite then $a_{ii} \geq 0$, $\forall i$.
+\item If $A$ is positive definite $r(A) = n$.
+\item If $A$ is positive definite then $\operatorname{tr}(A) > 0$.
+\item The determinant of a symmetric positive definite matrix is positive.
+\end{enumerate}
+
+\textbf{PROOF:} Let $x = (0,0,\ldots,1,\ldots,0)$, a vector with 1 in the $i$th position and 0 elsewhere. Then $x'Ax = a_{ii}$. If $A$ is positive definite then $a_{ii} > 0$, $\forall i$; and if $A$ is positive semi-definite then $a_{ii} \geq 0$, $\forall i$. To show the second result, note that if $A$ is positive definite, then for all $x \neq 0$, $x'Ax \neq 0$. Therefore, for all $x \neq 0$, $Ax \neq 0$, which implies linear independence of the columns of $A$, so that $A$ has full rank, $n$. The positive determinant property follows from Theorem 10.1.
+\end{original}
+\begin{translation}
+\textbf{命题10.1：} 以下观察结论是有用的：
+\begin{enumerate}
+\item 若 $A$ 是正定的，则 $a_{ii} > 0$，$\forall i$；且若 $A$ 是半正定的，则 $a_{ii} \geq 0$，$\forall i$。
+\item 若 $A$ 是正定的，则 $r(A) = n$。
+\item 若 $A$ 是正定的，则 $\operatorname{tr}(A) > 0$。
+\item 对称正定矩阵的行列式为正。
+\end{enumerate}
+
+\textbf{证明：} 令 $x = (0,0,\ldots,1,\ldots,0)$，即第 $i$ 个位置为1、其余位置为0的向量。则 $x'Ax = a_{ii}$。若 $A$ 是正定的，则 $a_{ii} > 0$，$\forall i$；若 $A$ 是半正定的，则 $a_{ii} \geq 0$，$\forall i$。为证明第二个结果，注意到若 $A$ 是正定的，则对所有 $x \neq 0$，有 $x'Ax \neq 0$。因此，对所有 $x \neq 0$，有 $Ax \neq 0$，这意味着 $A$ 的列线性无关，故 $A$ 具有满秩 $n$。正行列式性质由定理10.1得出。
+\end{translation}
+
+\begin{original}
+\textbf{EXAMPLE 10.4:} Consider the matrix $A$:
+\[
+A = \begin{pmatrix} 1 & 0 \\ -4 & 1 \end{pmatrix}.
+\]
+This matrix has positive trace, determinant and leading principal minors, but is not positive definite. (With $x = (2,1)$, $x'Ax = -3$.) Notice that the matrix $A$ is not symmetric.
+\end{original}
+\begin{translation}
+\textbf{例10.4：} 考虑矩阵 $A$：
+\[
+A = \begin{pmatrix} 1 & 0 \\ -4 & 1 \end{pmatrix}.
+\]
+该矩阵具有正迹、正行列式和正顺序主子式，但不是正定的。（取 $x = (2,1)$，$x'Ax = -3$。）注意该矩阵 $A$ 不是对称的。
+\end{translation}
+
+\subsubsection{10.3.1 Symmetric Matrices / 对称矩阵}
+
+\begin{original}
+Recall that a matrix $A$ is symmetric if $A = A'$ (or $a_{ij} = a_{ji}$ for all $i,j$). The following considerations show that there is no loss of generality in considering only symmetric matrices when checking for positive definiteness. Consider any non-symmetric matrix $B$. Noting that $x'Bx = x'B'x$, if $B$ is positive definite then so is $B + B'$ since $2x'Bx = x'Bx + x'B'x = x'(B + B')x$, so that $x'Bx > 0$ if and only if $x'(B + B')x > 0$. A matrix $B$ is positive definite (semi-definite) if and only if the matrix $B + B'$ is positive definite (semi-definite). Note that $B + B'$ is symmetric. Therefore, to determine if $B$ is positive definite (positive semi-definite) etc., one need only confirm that $(B + B')$ is positive definite (positive semi-definite). In discussing (semi-)definite matrices we need only consider symmetric matrices.
+\end{original}
+\begin{translation}
+回顾矩阵 $A$ 是对称的，若 $A = A'$（或 $a_{ij} = a_{ji}$ 对所有 $i,j$）。以下讨论表明，在检验正定性时只考虑对称矩阵并不失一般性。考虑任意非对称矩阵 $B$。注意到 $x'Bx = x'B'x$，若 $B$ 是正定的，则 $B + B'$ 也是正定的，因为 $2x'Bx = x'Bx + x'B'x = x'(B + B')x$，故 $x'Bx > 0$ 当且仅当 $x'(B + B')x > 0$。矩阵 $B$ 是正定（半正定）的当且仅当矩阵 $B + B'$ 是正定（半正定）的。注意 $B + B'$ 是对称的。因此，要判断 $B$ 是否为正定（半正定）等，只需确认 $(B + B')$ 是正定（半正定）的即可。在讨论（半）定矩阵时，我们只需考虑对称矩阵。
+\end{translation}
+
+\subsubsection{10.3.2 Criteria for Positive and Negative Definiteness / 正定性和负定性的判据}
+
+\begin{original}
+In general, it is difficult to check positive or negative definiteness by inspecting a matrix. An alternative criterion is based on considering a sequence of determinants. Let $A$ be a symmetric $n \times n$ matrix and let $D_i$ be an $i \times i$ matrix --- the submatrix of $A$ obtained by deleting the last $n-i$ rows and the last $n-i$ columns. Thus $|D_i|$ is the $i$th leading principal minor. In words, for positive definiteness, the leading principal minors $\{|D_i|\}_{i=1}^n$ must all be positive; for negative definiteness they must alternate in sign, starting negative:
+\[
+A =
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1j} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2j} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{j1} & a_{j2} & \cdots & a_{jj} & \cdots & a_{jn} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nj} & \cdots & a_{nn}
+\end{pmatrix},
+\quad
+D_i =
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1i} \\
+a_{21} & a_{22} & \cdots & a_{2i} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{i1} & a_{i2} & \cdots & a_{ii}
+\end{pmatrix}.
+\]
+
+With this notation:
+
+\textbf{Theorem 10.1:} Let $A$ be a symmetric matrix.
+The matrix $A$ is positive definite if and only if $|D_i| > 0$, $i = 1,\ldots,n$. That is:
+\[
+|D_1| > 0,\; |D_2| > 0,\; |D_3| > 0,\; \ldots,\; |D_n| > 0.
+\]
+The matrix $A$ is negative definite if and only if $(-1)^i|D_i| > 0$, $i = 1,\ldots,n$. That is:
+\[
+|D_1| < 0,\; |D_2| > 0,\; |D_3| < 0,\; \ldots,\; (-1)^n|D_n| > 0.
+\]
+
+Thus, with positive definiteness, $|D_i|$ is positive for all $i$, whereas with negative definiteness, $|D_i|$ alternates in sign, beginning negative.
+\end{original}
+\begin{translation}
+一般而言，仅凭观察矩阵来检验正定性或负定性是困难的。另一种判据基于考虑一系列行列式。设 $A$ 为对称 $n \times n$ 矩阵，$D_i$ 为 $i \times i$ 矩阵——通过删除 $A$ 的后 $n-i$ 行和后 $n-i$ 列得到的子矩阵。因此 $|D_i|$ 是第 $i$ 个顺序主子式。简言之，对于正定性，顺序主子式 $\{|D_i|\}_{i=1}^n$ 必须全部为正；对于负定性，它们必须符号交替，且从负开始：
+\[
+A =
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1j} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2j} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{j1} & a_{j2} & \cdots & a_{jj} & \cdots & a_{jn} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nj} & \cdots & a_{nn}
+\end{pmatrix},
+\quad
+D_i =
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1i} \\
+a_{21} & a_{22} & \cdots & a_{2i} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{i1} & a_{i2} & \cdots & a_{ii}
+\end{pmatrix}.
+\]
+
+在此记号下：
+
+\textbf{定理10.1：} 设 $A$ 为对称矩阵。
+矩阵 $A$ 是正定的当且仅当 $|D_i| > 0$，$i = 1,\ldots,n$。即：
+\[
+|D_1| > 0,\; |D_2| > 0,\; |D_3| > 0,\; \ldots,\; |D_n| > 0.
+\]
+矩阵 $A$ 是负定的当且仅当 $(-1)^i|D_i| > 0$，$i = 1,\ldots,n$。即：
+\[
+|D_1| < 0,\; |D_2| > 0,\; |D_3| < 0,\; \ldots,\; (-1)^n|D_n| > 0.
+\]
+
+因此，对于正定性，$|D_i|$ 对所有 $i$ 为正；而对于负定性，$|D_i|$ 符号交替，且从负开始。
+\end{translation}
+
+\begin{original}
+In the $2 \times 2$ case, because the matrix is symmetric, $a_{12} = a_{21}$ and $a_{11} \neq 0$, the quadratic form is:
+\[
+x'Ax = a_{11}x_1^2 + 2a_{12}x_1x_2 + a_{22}x_2^2 = a_{11}\left(x_1 + \frac{a_{12}}{a_{11}}x_2\right)^2 + \left(a_{22} - \frac{a_{12}^2}{a_{11}}\right)x_2^2.
+\]
+From this expression, it is clear that if $a_{11} > 0$ and $a_{11}a_{22} - a_{12}^2 > 0$, then provided $x_1 \neq 0$ or $x_2 \neq 0$, $x'Ax > 0$. Note that $a_{11}$ is the determinant of the matrix $D_1$, and $a_{11}a_{22} - a_{12}^2$ is the determinant of the matrix $D_2$. From these calculations, note that to check positive or negative definiteness, there are at most $n$ determinants to evaluate.
+\end{original}
+\begin{translation}
+在 $2 \times 2$ 情形中，由于矩阵是对称的，$a_{12} = a_{21}$ 且 $a_{11} \neq 0$，二次型为：
+\[
+x'Ax = a_{11}x_1^2 + 2a_{12}x_1x_2 + a_{22}x_2^2 = a_{11}\left(x_1 + \frac{a_{12}}{a_{11}}x_2\right)^2 + \left(a_{22} - \frac{a_{12}^2}{a_{11}}\right)x_2^2.
+\]
+从该表达式可以清楚地看出，若 $a_{11} > 0$ 且 $a_{11}a_{22} - a_{12}^2 > 0$，则只要 $x_1 \neq 0$ 或 $x_2 \neq 0$，就有 $x'Ax > 0$。注意 $a_{11}$ 是矩阵 $D_1$ 的行列式，$a_{11}a_{22} - a_{12}^2$ 是矩阵 $D_2$ 的行列式。从这些计算可知，检验正定性或负定性最多需要计算 $n$ 个行列式。
+\end{translation}
+
+\subsubsection{10.3.3 Positive and Negative Semi-Definiteness / 半正定性和半负定性}
+
+\begin{original}
+The next theorem gives similar conditions for positive and negative semi-definiteness and uses the following notation. Let $\tilde{D}_i$ be any submatrix of $A$ containing $i$ rows and columns obtained by deleting any $n-i$ rows and the corresponding columns (if the $k$th row is deleted, then the $k$th column is also deleted). For example, if $A$ is an $n \times n$ matrix:
+\[
+\tilde{D}_i =
+\begin{pmatrix}
+a_{kk} & a_{kj} & \cdots & a_{kl} & \cdots & a_{kr} \\
+a_{jk} & a_{jj} & \cdots & a_{jl} & \cdots & a_{jr} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{lk} & a_{lj} & \cdots & a_{ll} & \cdots & a_{lr} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{rk} & a_{rj} & \cdots & a_{rl} & \cdots & a_{rr}
+\end{pmatrix}.
+\]
+The determinant of any $\tilde{D}_i$ is an $i$th-order principal minor.
+For example, if $A$ is a $3 \times 3$ matrix:
+\[
+A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix},
+\]
+then there are three $\tilde{D}_i$ matrices:
+\[
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix},\;
+\begin{pmatrix} a_{22} & a_{23} \\ a_{32} & a_{33} \end{pmatrix},\;
+\begin{pmatrix} a_{11} & a_{13} \\ a_{31} & a_{33} \end{pmatrix},
+\]
+and hence three principal minors of order 2.
+
+\textbf{Theorem 10.2:} Let $A$ be a symmetric matrix.
+The matrix $A$ is positive semi-definite if and only if:
+\[
+\text{all } |\tilde{D}_1| \geq 0,\; \text{all } |\tilde{D}_2| \geq 0,\; \ldots\; \text{all } |\tilde{D}_i| \geq 0,\; \ldots\; \text{all } |\tilde{D}_n| \geq 0.
+\]
+The matrix $A$ is negative semi-definite if and only if:
+\[
+\text{all } |\tilde{D}_1| \leq 0,\; \text{all } |\tilde{D}_2| \geq 0,\; \ldots\; \text{all } (-1)^i|\tilde{D}_i| \geq 0,\; \ldots\; \text{all } (-1)^n|\tilde{D}_n| \geq 0.
+\]
+
+Observe that the statements for positive and negative semi-definiteness are not obtained by replacing strict inequalities by non-strict inequalities. To check for positive semi-definiteness, it is necessary to check that all 1st-order principal minors are positive, all 2nd-order principal minors are positive, all 3rd-order principal minors are positive, and so on.
+There are $\binom{n}{1} = \frac{n!}{(n-1)!1!}$ 1st-order principal minors, $\frac{n!}{(n-2)!2!}$ 2nd-order principal minors, $\frac{n!}{(n-3)!3!}$ 3rd-order principal minors, and so on. There are $\sum_{i=1}^n \frac{n!}{(n-i)!i!} = 2^n - 1$ such minors in total.
+\end{original}
+\begin{translation}
+下一个定理给出了半正定性和半负定性的类似条件，并使用了以下记号。设 $\tilde{D}_i$ 是 $A$ 的任意包含 $i$ 行和 $i$ 列的子矩阵，通过删除任意 $n-i$ 行及相应的列（若第 $k$ 行被删除，则第 $k$ 列也被删除）得到。例如，若 $A$ 是 $n \times n$ 矩阵：
+\[
+\tilde{D}_i =
+\begin{pmatrix}
+a_{kk} & a_{kj} & \cdots & a_{kl} & \cdots & a_{kr} \\
+a_{jk} & a_{jj} & \cdots & a_{jl} & \cdots & a_{jr} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{lk} & a_{lj} & \cdots & a_{ll} & \cdots & a_{lr} \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+a_{rk} & a_{rj} & \cdots & a_{rl} & \cdots & a_{rr}
+\end{pmatrix}.
+\]
+任意 $\tilde{D}_i$ 的行列式是一个 $i$ 阶主子式。
+例如，若 $A$ 是 $3 \times 3$ 矩阵：
+\[
+A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix},
+\]
+则有三个 $\tilde{D}_i$ 矩阵：
+\[
+\begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix},\;
+\begin{pmatrix} a_{22} & a_{23} \\ a_{32} & a_{33} \end{pmatrix},\;
+\begin{pmatrix} a_{11} & a_{13} \\ a_{31} & a_{33} \end{pmatrix},
+\]
+因此有三个2阶主子式。
+
+\textbf{定理10.2：} 设 $A$ 为对称矩阵。
+矩阵 $A$ 是半正定的当且仅当：
+\[
+\text{所有 } |\tilde{D}_1| \geq 0,\; \text{所有 } |\tilde{D}_2| \geq 0,\; \ldots\; \text{所有 } |\tilde{D}_i| \geq 0,\; \ldots\; \text{所有 } |\tilde{D}_n| \geq 0.
+\]
+矩阵 $A$ 是半负定的当且仅当：
+\[
+\text{所有 } |\tilde{D}_1| \leq 0,\; \text{所有 } |\tilde{D}_2| \geq 0,\; \ldots\; \text{所有 } (-1)^i|\tilde{D}_i| \geq 0,\; \ldots\; \text{所有 } (-1)^n|\tilde{D}_n| \geq 0.
+\]
+
+注意，半正定性和半负定性的表述并非简单地将严格不等式替换为非严格不等式而得到。要检验半正定性，必须检验所有一阶主子式非负、所有二阶主子式非负、所有三阶主子式非负，等等。一阶主子式有 $\binom{n}{1} = \frac{n!}{(n-1)!1!}$ 个，二阶主子式有 $\frac{n!}{(n-2)!2!}$ 个，三阶主子式有 $\frac{n!}{(n-3)!3!}$ 个，等等。总共有 $\sum_{i=1}^n \frac{n!}{(n-i)!i!} = 2^n - 1$ 个这样的子式。
+\end{translation}
+
+\subsection{10.4 Definiteness with Equality Constraints / 带等式约束的定性}
+
+\begin{original}
+In constrained optimization problems, checking for maxima or minima leads to considering definiteness of a quadratic form subject to linear constraints: for example, that $x'Ax > 0$ for all $x$ satisfying $Bx = 0$, for some $m \times n$ matrix $B$, where
+\[
+B = \begin{pmatrix}
+b_{11} & b_{12} & \cdots & b_{1n} \\
+b_{21} & b_{22} & \cdots & b_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+b_{m1} & b_{m2} & \cdots & b_{mn}
+\end{pmatrix}.
+\]
+
+First, consider the simplest case where there is one constraint so $Bx = 0$ may be written $b'x$ where $b = (b_1, b_2, \ldots, b_n)$. Form the bordered matrix:
+\[
+M_{kk} = \begin{pmatrix}
+0 & b_1 & b_2 & \cdots & b_k \\
+b_1 & a_{11} & a_{12} & \cdots & a_{1k} \\
+b_2 & a_{21} & a_{22} & \cdots & a_{2k} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+b_k & a_{k1} & a_{k2} & \cdots & a_{kk}
+\end{pmatrix},
+\]
+or, writing $b^k$ for the first $k$ elements of $b$ and $A_{kk}$ for the matrix obtained from $A$ by deleting the last $k+1, k+2, \ldots, n$ rows and columns, $M_{kk}$ may be written
+\[
+M_{kk} = \begin{pmatrix} 0 & b^{k'} \\ b^k & A_{kk} \end{pmatrix}.
+\]
+
+\textbf{Theorem 10.3:} Let $A$ be a symmetric matrix and $b_1 \neq 0$. Then,
+\begin{enumerate}
+\item $x'Ax > 0$ for all $x \neq 0$ and $b'x = 0$ if and only if
+\[
+|M_{kk}| < 0,\; k \geq 2
+\]
+\item $x'Ax < 0$ for all $x \neq 0$ and $b'x = 0$ if and only if
+\[
+(-1)^k|M_{kk}| > 0,\; k \geq 2
+\]
+\end{enumerate}
+\end{original}
+\begin{translation}
+在约束最优化问题中，检验最大值或最小值需要考虑在线性约束下二次型的定性：例如，对某个 $m \times n$ 矩阵 $B$，对所有满足 $Bx = 0$ 的 $x$ 有 $x'Ax > 0$，其中
+\[
+B = \begin{pmatrix}
+b_{11} & b_{12} & \cdots & b_{1n} \\
+b_{21} & b_{22} & \cdots & b_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+b_{m1} & b_{m2} & \cdots & b_{mn}
+\end{pmatrix}.
+\]
+
+首先考虑只有一个约束的最简单情形，此时 $Bx = 0$ 可写为 $b'x$，其中 $b = (b_1, b_2, \ldots, b_n)$。构造加边矩阵：
+\[
+M_{kk} = \begin{pmatrix}
+0 & b_1 & b_2 & \cdots & b_k \\
+b_1 & a_{11} & a_{12} & \cdots & a_{1k} \\
+b_2 & a_{21} & a_{22} & \cdots & a_{2k} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+b_k & a_{k1} & a_{k2} & \cdots & a_{kk}
+\end{pmatrix},
+\]
+或者，用 $b^k$ 表示 $b$ 的前 $k$ 个元素，用 $A_{kk}$ 表示从 $A$ 中删除后 $k+1, k+2, \ldots, n$ 行和列得到的矩阵，$M_{kk}$ 可写为
+\[
+M_{kk} = \begin{pmatrix} 0 & b^{k'} \\ b^k & A_{kk} \end{pmatrix}.
+\]
+
+\textbf{定理10.3：} 设 $A$ 为对称矩阵且 $b_1 \neq 0$。则，
+\begin{enumerate}
+\item 对所有 $x \neq 0$ 且 $b'x = 0$ 有 $x'Ax > 0$ 当且仅当
+\[
+|M_{kk}| < 0,\; k \geq 2
+\]
+\item 对所有 $x \neq 0$ 且 $b'x = 0$ 有 $x'Ax < 0$ 当且仅当
+\[
+(-1)^k|M_{kk}| > 0,\; k \geq 2
+\]
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+In the case where $m > 1$, similar computations apply. Then,
+\[
+M_{kk} = \begin{pmatrix}
+0 & \cdots & 0 & b_{11} & b_{12} & \cdots & b_{1k} \\
+\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & b_{m1} & b_{m2} & \cdots & b_{mk} \\
+b_{11} & \cdots & b_{m1} & a_{11} & a_{12} & \cdots & a_{1k} \\
+b_{12} & \cdots & b_{m2} & a_{21} & a_{22} & \cdots & a_{2k} \\
+\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+b_{1k} & \cdots & b_{mk} & a_{k1} & a_{k2} & \cdots & a_{kk}
+\end{pmatrix}.
+\]
+The matrix $M_{kk}$ has $m+k$ rows and columns. Writing $A_{kk}$ and $B_{mk}$ for the component matrices,
+\[
+M_{kk} = \begin{pmatrix} 0 & B_{mk}' \\ B_{mk} & A_{kk} \end{pmatrix}.
+\]
+
+\textbf{Theorem 10.4:} Let $A$ be a symmetric matrix and let $|B_{mm}| \neq 0$. Then,
+\begin{enumerate}
+\item $x'Ax > 0$ for all $x \neq 0$ with $Bx = 0$ if and only if:
+\[
+(-1)^m|M_{kk}| > 0,\; k = m+1, \ldots, n.
+\]
+\item $x'Ax < 0$ for all $x \neq 0$ with $Bx = 0$ if and only if:
+\[
+(-1)^k|M_{kk}| > 0,\; k = m+1, \ldots, n.
+\]
+\end{enumerate}
+\end{original}
+\begin{translation}
+在 $m > 1$ 的情形中，类似的计算适用。此时，
+\[
+M_{kk} = \begin{pmatrix}
+0 & \cdots & 0 & b_{11} & b_{12} & \cdots & b_{1k} \\
+\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & b_{m1} & b_{m2} & \cdots & b_{mk} \\
+b_{11} & \cdots & b_{m1} & a_{11} & a_{12} & \cdots & a_{1k} \\
+b_{12} & \cdots & b_{m2} & a_{21} & a_{22} & \cdots & a_{2k} \\
+\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+b_{1k} & \cdots & b_{mk} & a_{k1} & a_{k2} & \cdots & a_{kk}
+\end{pmatrix}.
+\]
+矩阵 $M_{kk}$ 有 $m+k$ 行和列。用 $A_{kk}$ 和 $B_{mk}$ 表示分量矩阵，
+\[
+M_{kk} = \begin{pmatrix} 0 & B_{mk}' \\ B_{mk} & A_{kk} \end{pmatrix}.
+\]
+
+\textbf{定理10.4：} 设 $A$ 为对称矩阵且 $|B_{mm}| \neq 0$。则，
+\begin{enumerate}
+\item 对所有 $x \neq 0$ 且 $Bx = 0$ 有 $x'Ax > 0$ 当且仅当：
+\[
+(-1)^m|M_{kk}| > 0,\; k = m+1, \ldots, n.
+\]
+\item 对所有 $x \neq 0$ 且 $Bx = 0$ 有 $x'Ax < 0$ 当且仅当：
+\[
+(-1)^k|M_{kk}| > 0,\; k = m+1, \ldots, n.
+\]
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+\textbf{REMARK 10.1:} This characterization may be expressed in different ways. Let $I_p$ be an identity matrix of dimension $p$. Then:
+\[
+\begin{pmatrix} 0 & I_k \\ I_m & 0 \end{pmatrix}
+\begin{pmatrix} 0 & B_{mk}' \\ B_{mk} & A_{kk} \end{pmatrix}
+\begin{pmatrix} 0 & I_m \\ I_k & 0 \end{pmatrix}
+= \begin{pmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{pmatrix}.
+\]
+From this, noting that
+\[
+\begin{vmatrix} 0 & I_m \\ I_k & 0 \end{vmatrix} = \begin{vmatrix} 0 & I_k \\ I_m & 0 \end{vmatrix},
+\]
+\[
+|M_{kk}| = \begin{vmatrix} 0 & I_k \\ I_m & 0 \end{vmatrix}^2
+\begin{vmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{vmatrix}
+= \begin{vmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{vmatrix}.
+\]
+Therefore, the determinental conditions given previously can also be expressed in terms of matrices in the form:
+\[
+\begin{pmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{pmatrix}.
+\]
+
+\textbf{REMARK 10.2:} If there is just one constraint, $m=1$, then constrained positiveness requires $|M_{kk}| < 0$, $k = m+1,\ldots,n$. More generally, with $m>1$, $m$ odd gives $|M_{kk}| < 0$, $k = m+1,\ldots,n$, while with $m$ even the inequality is reversed so that $|M_{kk}| > 0$, $k = m+1,\ldots,n$. In contrast, for constrained negatives $|M_{kk}|$ alternates in sign starting positive at $k = m+1$ if $m$ is odd and starting negative if $m$ is even.
+\end{original}
+\begin{translation}
+\textbf{注记10.1：} 这种刻画可以用不同方式表达。令 $I_p$ 为 $p$ 维单位矩阵。则：
+\[
+\begin{pmatrix} 0 & I_k \\ I_m & 0 \end{pmatrix}
+\begin{pmatrix} 0 & B_{mk}' \\ B_{mk} & A_{kk} \end{pmatrix}
+\begin{pmatrix} 0 & I_m \\ I_k & 0 \end{pmatrix}
+= \begin{pmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{pmatrix}.
+\]
+由此，注意到
+\[
+\begin{vmatrix} 0 & I_m \\ I_k & 0 \end{vmatrix} = \begin{vmatrix} 0 & I_k \\ I_m & 0 \end{vmatrix},
+\]
+\[
+|M_{kk}| = \begin{vmatrix} 0 & I_k \\ I_m & 0 \end{vmatrix}^2
+\begin{vmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{vmatrix}
+= \begin{vmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{vmatrix}.
+\]
+因此，前述行列式条件也可以用如下形式的矩阵表示：
+\[
+\begin{pmatrix} A_{kk} & B_{mk}' \\ B_{mk} & 0 \end{pmatrix}.
+\]
+
+\textbf{注记10.2：} 若只有一个约束，$m=1$，则约束正定性要求 $|M_{kk}| < 0$，$k = m+1,\ldots,n$。更一般地，当 $m>1$ 时，$m$ 为奇数给出 $|M_{kk}| < 0$，$k = m+1,\ldots,n$；而 $m$ 为偶数时不等式反转，即 $|M_{kk}| > 0$，$k = m+1,\ldots,n$。与之相对，对于约束负定性，$|M_{kk}|$ 的符号交替，若 $m$ 为奇数则从 $k = m+1$ 处为正开始，若 $m$ 为偶数则从负开始。
+\end{translation}
+
+
+\subsection*{Exercises for Chapter 10 / 第10章习题}
+
+\begin{original}
+\textbf{Exercise 10.1} Consider the following symmetric matrices:
+\[
+A = \begin{pmatrix} 3 & -1 & 1 \\ -1 & 3 & -2 \\ 1 & -2 & 2 \end{pmatrix}, \quad
+B = \begin{pmatrix} 3 & 2 & 1 \\ 2 & 12 & 4 \\ 1 & 4 & 2 \end{pmatrix}.
+\]
+Confirm that both $A$ and $B$ are positive definite.
+
+\textbf{Exercise 10.2} Consider the following matrices:
+\[
+A = \begin{pmatrix} -3 & 2 & 5 \\ 2 & -6 & 1 \\ 5 & 1 & -13 \end{pmatrix}, \quad
+B = \begin{pmatrix} -5 & 2 & 1 \\ 2 & -1 & -1 \\ 1 & -1 & -7 \end{pmatrix}.
+\]
+Confirm that both $A$ and $B$ are negative definite.
+
+\textbf{Exercise 10.3} Consider the matrix:
+\[
+A = \begin{pmatrix} 4 & -\frac{1}{3} \\ -\frac{1}{3} & \frac{2}{9} \end{pmatrix}.
+\]
+Show that $A$ is positive definite for all $x = (x_1, x_2)$ satisfying $(\frac{1}{2}, \frac{2}{3}) \cdot (x_1, x_2) = 0$.
+
+\textbf{Exercise 10.4} Consider the matrix:
+\[
+A = \begin{pmatrix} 4 & -\frac{4}{3} \\ -\frac{4}{3} & \frac{32}{9} \end{pmatrix}.
+\]
+Show that $A$ is positive definite for all $x = (x_1, x_2)$ satisfying $(2, \frac{8}{3}) \cdot (x_1, x_2) = 0$.
+
+\textbf{Exercise 10.5} Consider the matrix:
+\[
+Q(\alpha, \beta, \gamma) = \begin{pmatrix}
+\alpha(\beta-1) & \alpha(\gamma-1) \\
+\alpha(\beta-1) & \gamma(\beta-1)
+\end{pmatrix}.
+\]
+Let $x'Q(\alpha,\beta,\gamma)x$ be a quadratic form. Also, let $b = (w, r, p)$ be a vector of strictly positive entries. Suppose that $\alpha = \beta = \gamma = \frac{1}{4}$. Show that $x'Q(\alpha,\beta,\gamma)x < 0$ for all $x$ satisfying $b'x = 0$.
+\end{original}
+\begin{translation}
+\textbf{习题10.1} 考虑以下对称矩阵：
+\[
+A = \begin{pmatrix} 3 & -1 & 1 \\ -1 & 3 & -2 \\ 1 & -2 & 2 \end{pmatrix}, \quad
+B = \begin{pmatrix} 3 & 2 & 1 \\ 2 & 12 & 4 \\ 1 & 4 & 2 \end{pmatrix}.
+\]
+验证 $A$ 和 $B$ 都是正定的。
+
+\textbf{习题10.2} 考虑以下矩阵：
+\[
+A = \begin{pmatrix} -3 & 2 & 5 \\ 2 & -6 & 1 \\ 5 & 1 & -13 \end{pmatrix}, \quad
+B = \begin{pmatrix} -5 & 2 & 1 \\ 2 & -1 & -1 \\ 1 & -1 & -7 \end{pmatrix}.
+\]
+验证 $A$ 和 $B$ 都是负定的。
+
+\textbf{习题10.3} 考虑矩阵：
+\[
+A = \begin{pmatrix} 4 & -\frac{1}{3} \\ -\frac{1}{3} & \frac{2}{9} \end{pmatrix}.
+\]
+证明 $A$ 对所有满足 $(\frac{1}{2}, \frac{2}{3}) \cdot (x_1, x_2) = 0$ 的 $x = (x_1, x_2)$ 是正定的。
+
+\textbf{习题10.4} 考虑矩阵：
+\[
+A = \begin{pmatrix} 4 & -\frac{4}{3} \\ -\frac{4}{3} & \frac{32}{9} \end{pmatrix}.
+\]
+证明 $A$ 对所有满足 $(2, \frac{8}{3}) \cdot (x_1, x_2) = 0$ 的 $x = (x_1, x_2)$ 是正定的。
+
+\textbf{习题10.5} 考虑矩阵：
+\[
+Q(\alpha, \beta, \gamma) = \begin{pmatrix}
+\alpha(\beta-1) & \alpha(\gamma-1) \\
+\alpha(\beta-1) & \gamma(\beta-1)
+\end{pmatrix}.
+\]
+令 $x'Q(\alpha,\beta,\gamma)x$ 为二次型。同时，令 $b = (w, r, p)$ 为严格正分量的向量。假设 $\alpha = \beta = \gamma = \frac{1}{4}$。证明对所有满足 $b'x = 0$ 的 $x$ 有 $x'Q(\alpha,\beta,\gamma)x < 0$。
+\end{translation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHAPTER 11: MULTIVARIATE OPTIMIZATION / 多变量最优化
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Multivariate Optimization / 多变量最优化}
+
+\subsection{11.1 Introduction / 引言}
+
+\begin{original}
+This chapter is concerned with multivariate optimization, finding values for $(x_1, x_2, \ldots, x_n)$ to make the function $f(x_1, x_2, \ldots, x_n)$ as large or small as possible. In Section 11.2, the two-variable case is described; Section 11.3 considers the $n$-variable case. The extension from two to $n$ variables is natural. Section 11.2 provides sufficient conditions for a local optimum and provides motivation for those conditions. Also, in this section, the envelope theorem is described. Section 11.3 provides sufficient conditions for both local and global optima. These conditions are developed in terms of concavity of the objective function and the properties of Hessian matrices in Section 11.4.
+\end{original}
+\begin{translation}
+本章讨论多变量最优化，即寻找 $(x_1, x_2, \ldots, x_n)$ 的值以使函数 $f(x_1, x_2, \ldots, x_n)$ 尽可能大或尽可能小。第11.2节描述了两变量情形；第11.3节考虑了 $n$ 变量情形。从两个变量推广到 $n$ 个变量是自然的。第11.2节给出了局部最优的充分条件，并提供了这些条件的动机。此外，该节还描述了包络定理。第11.3节给出了局部和全局最优的充分条件。这些条件在第11.4节中通过目标函数的凹性和Hessian矩阵的性质得到了展开。
+\end{translation}
+
+\subsection{11.2 The Two-Variable Case / 两变量情形}
+
+\begin{original}
+Consider the problem of choosing $(x, y)$ to maximize $z = f(x, y)$, a function of two variables. The first requirement is that no unilateral variations in $x$ or $y$ improve the value of $f$, the first-order conditions:
+\begin{align}
+f_x(x, y) &= \frac{\partial f(x, y)}{\partial x} = 0 \tag{11.1}\\
+f_y(x, y) &= \frac{\partial f(x, y)}{\partial y} = 0.
+\end{align}
+
+The total differential is $dz = f_x dx + f_y dy$. This gives the change in the value of the function due to the variation $(dx, dy)$ in $x$ and $y$ from the value $(x, y)$. Note that $dz$ depends on $(x, y)$ since $dz = f_x(x, y)dx + f_y(x, y)dy$. When the choice of $x$ and $y$ maximizes $f$, there can be no changes $dx$ and $dy$ that raise the value of $f$, as required by the partial derivative conditions above --- that $f_x$ and $f_y$ are both 0. Consider the function plotted in Figure 11.1, $f(x, y) = 1 - x^2 - y^2$. There, at $(0,0)$, $f_x = f_y = 0$, and it is clear from the figure that this point locates the highest point of the function. Confirming that a point is the maximizing value requires a comparison similar to the univariate test $f''(x) < 0$. The next theorem summarizes the key result for local optimality of a point $(x^*, y^*)$.
+\end{original}
+\begin{translation}
+考虑选择 $(x, y)$ 以最大化两变量函数 $z = f(x, y)$ 的问题。第一个要求是 $x$ 或 $y$ 的任何单方面变动都不能改善 $f$ 的值，即一阶条件：
+\begin{align}
+f_x(x, y) &= \frac{\partial f(x, y)}{\partial x} = 0 \tag{11.1}\\
+f_y(x, y) &= \frac{\partial f(x, y)}{\partial y} = 0.
+\end{align}
+
+全微分为 $dz = f_x dx + f_y dy$。这给出了由于 $x$ 和 $y$ 从 $(x, y)$ 处的变动 $(dx, dy)$ 所导致的函数值的变化。注意 $dz$ 依赖于 $(x, y)$，因为 $dz = f_x(x, y)dx + f_y(x, y)dy$。当 $x$ 和 $y$ 的选择使 $f$ 最大化时，不可能存在能提高 $f$ 的值的变动 $dx$ 和 $dy$，这是由上述偏导数条件——即 $f_x$ 和 $f_y$ 均为0——所要求的。考虑图11.1中绘制的函数 $f(x, y) = 1 - x^2 - y^2$。在 $(0,0)$ 处，$f_x = f_y = 0$，从图中可以清楚地看出该点确定了函数的最高点。确认一个点是最大值点需要类似于单变量检验 $f''(x) < 0$ 的比较。下一个定理总结了关于点 $(x^*, y^*)$ 局部最优性的关键结果。
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 11.1:} Suppose that $(x^*, y^*)$ satisfy
+\begin{enumerate}
+\item[(1a)] $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$
+\item[(1b)] $f_{xx}(x^*, y^*) < 0$, $f_{yy}(x^*, y^*) < 0$ and $f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*) > 0$,
+\end{enumerate}
+then $(x^*, y^*)$ is a local maximum.
+\begin{enumerate}
+\item[(2a)] $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$
+\item[(2b)] $f_{xx}(x^*, y^*) > 0$, $f_{yy}(x^*, y^*) > 0$ and $f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*) > 0$,
+\end{enumerate}
+then $(x^*, y^*)$ is a local minimum.
+
+The following examples illustrate the use of the theorem.
+\end{original}
+\begin{translation}
+\textbf{定理11.1：} 假设 $(x^*, y^*)$ 满足
+\begin{enumerate}
+\item[(1a)] $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$
+\item[(1b)] $f_{xx}(x^*, y^*) < 0$, $f_{yy}(x^*, y^*) < 0$ 且 $f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*) > 0$,
+\end{enumerate}
+则 $(x^*, y^*)$ 是局部极大值。
+\begin{enumerate}
+\item[(2a)] $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$
+\item[(2b)] $f_{xx}(x^*, y^*) > 0$, $f_{yy}(x^*, y^*) > 0$ 且 $f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*) > 0$,
+\end{enumerate}
+则 $(x^*, y^*)$ 是局部极小值。
+
+下面的例子说明了该定理的应用。
+\end{translation}
+
+\begin{original}
+\textbf{EXAMPLE 11.1:} Suppose that a firm has a product that is produced at unit cost:
+\[
+\min_{x,y} c(x, y) = e^x e^y - \ln x - \ln y.
+\]
+What are the unit cost minimizing levels of $x$ and $y$? The first-order conditions are:
+\[
+c_x = e^x e^y - \frac{1}{x} = 0, \quad c_y = e^x e^y - \frac{1}{y} = 0.
+\]
+Thus, $\frac{1}{x} = \frac{1}{y}$ and $x = y$. From this, $e^{2x} = \frac{1}{x}$, so that solving $xe^{2x} = 1$ gives the solution $(x = 0.4263)$. The second-order conditions are:
+\[
+c_{xx} = e^x e^y + \frac{1}{x^2}, \quad c_{yy} = e^x e^y + \frac{1}{y^2}, \quad c_{xy} = e^x e^y.
+\]
+So, $c_{xx} > 0$ and
+\begin{align*}
+c_{xx}c_{yy} - c_{xy}^2 &= \left(e^x e^y + \frac{1}{x^2}\right)\left(e^x e^y + \frac{1}{y^2}\right) - [e^x e^y]^2 \\
+&= e^x e^y \frac{1}{y^2} + e^x e^y \frac{1}{x^2} + \frac{1}{x^2}\frac{1}{y^2} > 0.
+\end{align*}
+\end{original}
+\begin{translation}
+\textbf{例11.1：} 假设某企业的产品单位成本为：
+\[
+\min_{x,y} c(x, y) = e^x e^y - \ln x - \ln y.
+\]
+使单位成本最小化的 $x$ 和 $y$ 水平是多少？一阶条件为：
+\[
+c_x = e^x e^y - \frac{1}{x} = 0, \quad c_y = e^x e^y - \frac{1}{y} = 0.
+\]
+因此，$\frac{1}{x} = \frac{1}{y}$ 且 $x = y$。由此，$e^{2x} = \frac{1}{x}$，故解 $xe^{2x} = 1$ 得到解 $(x = 0.4263)$。二阶条件为：
+\[
+c_{xx} = e^x e^y + \frac{1}{x^2}, \quad c_{yy} = e^x e^y + \frac{1}{y^2}, \quad c_{xy} = e^x e^y.
+\]
+因此，$c_{xx} > 0$ 且
+\begin{align*}
+c_{xx}c_{yy} - c_{xy}^2 &= \left(e^x e^y + \frac{1}{x^2}\right)\left(e^x e^y + \frac{1}{y^2}\right) - [e^x e^y]^2 \\
+&= e^x e^y \frac{1}{y^2} + e^x e^y \frac{1}{x^2} + \frac{1}{x^2}\frac{1}{y^2} > 0.
+\end{align*}
+\end{translation}
+
+\begin{original}
+\textbf{EXAMPLE 11.2:} Suppose that a firm has profit function
+\[
+f(x, y) = \sqrt{x} + \ln(y+1) - x - \tfrac{1}{2}y.
+\]
+What values of $x$ and $y$ maximize profit?
+
+In this example, the computations are simplified because the function may be written $f(x, y) = f_1(x) + f_2(y)$: $f(x, y) = [\sqrt{x} - x] + [\ln(y+1) - \frac{1}{2}y]$, and the cross-partial derivatives vanish.
+
+The first-order conditions are:
+\[
+f_x = \frac{1}{2\sqrt{x}} - 1 = 0, \quad f_y = \frac{1}{y+1} - \frac{1}{2} = 0.
+\]
+So, $\frac{1}{\sqrt{x}} = 2$ and $2 = y+1$ giving $x = \frac{1}{4}$, $y = 1$. The second derivatives are:
+\[
+f_{xx} = -\frac{1}{4}x^{-\frac{3}{2}}, \quad f_{yy} = -(y+1)^{-2}, \quad f_{xy} = 0.
+\]
+So, $f_{xx}$ and $f_{yy}$ are both negative in a neighborhood of $(x^*, y^*) = (\frac{1}{4}, 1)$, and $f(x, y) < f(\frac{1}{4}, 1)$ for $(x, y) \neq (\frac{1}{4}, 1)$.
+
+\textbf{REMARK 11.1:} In Example 11.2, the function $f(x, y)$ has cross-partial derivatives that are 0, so that $f_{xy}(x, y) = 0$ for all $(x, y)$. Later, in Equation 11.2, with $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$ and $f_{xy}(x^*, y^*) = f_{yx}(x^*, y^*) = 0$, the Taylor series expansion reduces to:
+\[
+f(x, y) = f(x^*, y^*) + [f_{xx}(\bar{x}, \bar{y})(\Delta x)^2 + f_{yy}(\bar{x}, \bar{y})(\Delta y)^2].
+\]
+So, if $f_{xx}(\bar{x}, \bar{y}) < 0$ and $f_{yy}(\bar{x}, \bar{y}) < 0$, since $(\Delta x)^2$ and $(\Delta y)^2$ are both positive, $f(x, y) < f(x^*, y^*)$. If $f_{xx}(x^*, y^*) < 0$ and $f_{yy}(x^*, y^*) < 0$, then this will also hold for $(x, y)$ close to $(x^*, y^*)$, so that for all $(x, y)$ close to $(x^*, y^*)$, $f(x, y) < f(x^*, y^*)$.
+\end{original}
+\begin{translation}
+\textbf{例11.2：} 假设某企业的利润函数为
+\[
+f(x, y) = \sqrt{x} + \ln(y+1) - x - \tfrac{1}{2}y.
+\]
+什么样的 $x$ 和 $y$ 值能使利润最大化？
+
+在本例中，计算得以简化，因为函数可写为 $f(x, y) = f_1(x) + f_2(y)$：$f(x, y) = [\sqrt{x} - x] + [\ln(y+1) - \frac{1}{2}y]$，且交叉偏导数为零。
+
+一阶条件为：
+\[
+f_x = \frac{1}{2\sqrt{x}} - 1 = 0, \quad f_y = \frac{1}{y+1} - \frac{1}{2} = 0.
+\]
+因此，$\frac{1}{\sqrt{x}} = 2$ 和 $2 = y+1$，得到 $x = \frac{1}{4}$，$y = 1$。二阶导数为：
+\[
+f_{xx} = -\frac{1}{4}x^{-\frac{3}{2}}, \quad f_{yy} = -(y+1)^{-2}, \quad f_{xy} = 0.
+\]
+因此，在 $(x^*, y^*) = (\frac{1}{4}, 1)$ 的邻域内，$f_{xx}$ 和 $f_{yy}$ 均为负，对 $(x, y) \neq (\frac{1}{4}, 1)$ 有 $f(x, y) < f(\frac{1}{4}, 1)$。
+
+\textbf{注记11.1：} 在例11.2中，函数 $f(x, y)$ 的交叉偏导数为0，故对所有 $(x, y)$ 有 $f_{xy}(x, y) = 0$。稍后在方程11.2中，当 $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$ 且 $f_{xy}(x^*, y^*) = 0$ 时，泰勒级数展开简化为：
+\[
+f(x, y) = f(x^*, y^*) + [f_{xx}(\bar{x}, \bar{y})(\Delta x)^2 + f_{yy}(\bar{x}, \bar{y})(\Delta y)^2].
+\]
+因此，若 $f_{xx}(\bar{x}, \bar{y}) < 0$ 且 $f_{yy}(\bar{x}, \bar{y}) < 0$，由于 $(\Delta x)^2$ 和 $(\Delta y)^2$ 均为正，有 $f(x, y) < f(x^*, y^*)$。若在 $(x^*, y^*)$ 处 $f_{xx}(x^*, y^*) < 0$ 且 $f_{yy}(x^*, y^*) < 0$，则在 $(x, y)$ 接近 $(x^*, y^*)$ 时这也成立，从而对所有接近 $(x^*, y^*)$ 的 $(x, y)$ 有 $f(x, y) < f(x^*, y^*)$。
+\end{translation}
+
+\begin{original}
+\textbf{EXAMPLE 11.3:} A problem in physics leads to the following objective. Minimize $f(x_1, x_2)$, where $f$ is defined:
+\[
+f(x_1, x_2) = \frac{1}{2}(\mu_1 x_1^2 + \mu_3(x_2 - x_1)^2 + \mu_2 x_2^2) - bx_2, \quad \mu_i > 0, i = 1,2,3.
+\]
+Differentiating with respect to $x_1$ and $x_2$ gives:
+\[
+f_{x_1} = \mu_1 x_1 - \mu_3(x_2 - x_1) = 0, \quad f_{x_2} = \mu_3(x_2 - x_1) + \mu_2 x_2 - b = 0.
+\]
+The second derivatives are: $f_{x_1x_1} = \mu_1 + \mu_3$, $f_{x_1x_2} = -\mu_3$, $f_{x_2x_2} = \mu_2 + \mu_3$. This gives the matrix $H$ as
+\[
+H = \begin{pmatrix} f_{x_1x_1} & f_{x_1x_2} \\ f_{x_1x_2} & f_{x_2x_2} \end{pmatrix} = \begin{pmatrix} (\mu_1 + \mu_3) & -\mu_3 \\ -\mu_3 & (\mu_2 + \mu_3) \end{pmatrix}.
+\]
+To solve the first-order conditions, observe that they can be rearranged as:
+\[
+\begin{pmatrix} (\mu_1 + \mu_3) & -\mu_3 \\ -\mu_3 & (\mu_2 + \mu_3) \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 0 \\ b \end{pmatrix}.
+\]
+
+Cramer's rule may be used to solve for $x_1$ and $x_2$. The determinant of $H$ is
+\[
+|H| = (\mu_1 + \mu_3)(\mu_2 + \mu_3) - \mu_3^2 = \mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3.
+\]
+So,
+\[
+x_1 = \frac{1}{|H|}\begin{vmatrix} 0 & -\mu_3 \\ b & (\mu_2 + \mu_3) \end{vmatrix}, \quad x_2 = \frac{1}{|H|}\begin{vmatrix} (\mu_1 + \mu_3) & 0 \\ -\mu_3 & b \end{vmatrix}.
+\]
+Since
+\[
+x_1 = \frac{b\mu_3}{\mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3}, \quad x_2 = \frac{b(\mu_1 + \mu_3)}{\mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3}.
+\]
+\[
+f_{x_1x_1} = \mu_1 + \mu_3 > 0, \quad f_{x_1x_1}f_{x_2x_2} - f_{x_1x_2}^2 = \mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3 > 0,
+\]
+the second-order condition for a minimum is satisfied.
+\end{original}
+\begin{translation}
+\textbf{例11.3：} 物理学中的一个问题导出以下目标函数。最小化 $f(x_1, x_2)$，其中 $f$ 定义为：
+\[
+f(x_1, x_2) = \frac{1}{2}(\mu_1 x_1^2 + \mu_3(x_2 - x_1)^2 + \mu_2 x_2^2) - bx_2, \quad \mu_i > 0, i = 1,2,3.
+\]
+对 $x_1$ 和 $x_2$ 求导得：
+\[
+f_{x_1} = \mu_1 x_1 - \mu_3(x_2 - x_1) = 0, \quad f_{x_2} = \mu_3(x_2 - x_1) + \mu_2 x_2 - b = 0.
+\]
+二阶导数为：$f_{x_1x_1} = \mu_1 + \mu_3$，$f_{x_1x_2} = -\mu_3$，$f_{x_2x_2} = \mu_2 + \mu_3$。由此得到矩阵 $H$：
+\[
+H = \begin{pmatrix} (\mu_1 + \mu_3) & -\mu_3 \\ -\mu_3 & (\mu_2 + \mu_3) \end{pmatrix}.
+\]
+为求解一阶条件，注意到它们可重新排列为：
+\[
+\begin{pmatrix} (\mu_1 + \mu_3) & -\mu_3 \\ -\mu_3 & (\mu_2 + \mu_3) \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 0 \\ b \end{pmatrix}.
+\]
+
+可用Cramer法则求解 $x_1$ 和 $x_2$。$H$ 的行列式为
+\[
+|H| = (\mu_1 + \mu_3)(\mu_2 + \mu_3) - \mu_3^2 = \mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3.
+\]
+故
+\[
+x_1 = \frac{b\mu_3}{\mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3}, \quad x_2 = \frac{b(\mu_1 + \mu_3)}{\mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3}.
+\]
+由于
+\[
+f_{x_1x_1} = \mu_1 + \mu_3 > 0, \quad f_{x_1x_1}f_{x_2x_2} - f_{x_1x_2}^2 = \mu_1\mu_2 + \mu_1\mu_3 + \mu_2\mu_3 > 0,
+\]
+极小值的二阶条件得到满足。
+\end{translation}
+
+\subsubsection{11.2.1 Motivation for the Second-Order Conditions / 二阶条件的动机}
+
+\begin{original}
+Recall that in the univariate case, a Taylor series expansion gave:
+\[
+f(x) = f(x^*) + f'(x^*)(x - x^*) + \frac{1}{2!}f''(p)(x - x^*)^2
+\]
+for some $p$ between $x$ and $x^*$. So, with $f'(x^*) = 0$, $f(x) = f(x^*) + \frac{1}{2}f''(p)(x-x^*)^2$, so that if $f''(p) < 0$ for all $p$ close to $x^*$, then $f(x) < f(x^*)$ and $x^*$ is a local maximum. Essentially the same ideas apply to the multivariate case. In the two-variable case, a Taylor series expansion of $f$ around $(x^*, y^*)$, $(x, y) = (x^* + \Delta x, y^* + \Delta y)$ is given by:
+\begin{align}
+f(x, y) &= f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] \tag{11.2}\\
+&\quad + [f_{xx}(\bar{x}, \bar{y})(\Delta x)^2 + 2f_{xy}(\bar{x}, \bar{y})\Delta x\Delta y + f_{yy}(\bar{x}, \bar{y})(\Delta y)^2] \tag{11.3}\\
+&\approx f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] \nonumber\\
+&\quad + [f_{xx}(x^*, y^*)(\Delta x)^2 + 2f_{xy}(x^*, y^*)\Delta x\Delta y + f_{yy}(x^*, y^*)(\Delta y)^2], \nonumber
+\end{align}
+where $(\bar{x}, \bar{y})$ is on the line segment joining the points $(x, y)$ and $(x^*, y^*)$:
+\[
+(\bar{x}, \bar{y}) \in \{(\tilde{x}, \tilde{y}) \mid (\tilde{x}, \tilde{y}) = \theta(x, y) + (1-\theta)(x^*, y^*), \theta \in [0,1]\},
+\]
+and where $\Delta x = x - x^*$ and $\Delta y = y - y^*$. The expression may be written in matrix terms:
+\begin{align}
+f(x, y) &= f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] \tag{11.4}\\
+&\quad + \frac{1}{2}(\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} \tag{11.5}\\
+&\approx f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] \nonumber\\
+&\quad + \frac{1}{2}(\Delta x\; \Delta y) H(x^*, y^*) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix}, \nonumber
+\end{align}
+where
+\[
+H(x, y) = \begin{pmatrix} f_{xx}(x, y) & f_{xy}(x, y) \\ f_{yx}(x, y) & f_{yy}(x, y) \end{pmatrix},
+\]
+is called the Hessian matrix. In the case where $f(x, y) = 1 - x^2 - y^2$,
+\[
+H(x, y) = \begin{pmatrix} -2 & 0 \\ 0 & -2 \end{pmatrix},
+\]
+so, the expression in Equation 11.4 reduces to
+\[
+f(x, y) = f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] - 2[(\Delta x)^2 + (\Delta y)^2],
+\]
+and at $(x^*, y^*)$, if $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$ the expression reduces to $f(x, y) = -2[(\Delta x)^2 + (\Delta y)^2]$. Since this is less than or equal to 0 for all values of $\Delta x$ and $\Delta y$, the value of $f$ at $(x^*, y^*)$ is at least as large as at any other $(x, y)$ value. In this case, and in general, the properties of the Hessian matrix are crucial in determining whether a point satisfying the first-order conditions (Equations 11.1) determines a local maximum (or minimum).
+\end{original}
+\begin{translation}
+回顾在单变量情形中，泰勒级数展开给出：
+\[
+f(x) = f(x^*) + f'(x^*)(x - x^*) + \frac{1}{2!}f''(p)(x - x^*)^2
+\]
+对某个介于 $x$ 和 $x^*$ 之间的 $p$。因此，当 $f'(x^*) = 0$ 时，$f(x) = f(x^*) + \frac{1}{2}f''(p)(x-x^*)^2$，故若对所有接近 $x^*$ 的 $p$ 有 $f''(p) < 0$，则 $f(x) < f(x^*)$ 且 $x^*$ 为局部极大值。本质上相同的思想适用于多变量情形。在两变量情形中，$f$ 在 $(x^*, y^*)$ 附近的泰勒级数展开，$(x, y) = (x^* + \Delta x, y^* + \Delta y)$，由下式给出：
+\begin{align}
+f(x, y) &= f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] \tag{11.2}\\
+&\quad + [f_{xx}(\bar{x}, \bar{y})(\Delta x)^2 + 2f_{xy}(\bar{x}, \bar{y})\Delta x\Delta y + f_{yy}(\bar{x}, \bar{y})(\Delta y)^2] \tag{11.3}
+\end{align}
+其中 $(\bar{x}, \bar{y})$ 在连接点 $(x, y)$ 和 $(x^*, y^*)$ 的线段上：
+\[
+(\bar{x}, \bar{y}) \in \{(\tilde{x}, \tilde{y}) \mid (\tilde{x}, \tilde{y}) = \theta(x, y) + (1-\theta)(x^*, y^*), \theta \in [0,1]\},
+\]
+且 $\Delta x = x - x^*$，$\Delta y = y - y^*$。该表达式可用矩阵形式写出：
+\[
+f(x, y) = f(x^*, y^*) + [f_x(x^*, y^*)\Delta x + f_y(x^*, y^*)\Delta y] + \frac{1}{2}(\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix},
+\]
+其中
+\[
+H(x, y) = \begin{pmatrix} f_{xx}(x, y) & f_{xy}(x, y) \\ f_{yx}(x, y) & f_{yy}(x, y) \end{pmatrix},
+\]
+称为Hessian矩阵。在 $f(x, y) = 1 - x^2 - y^2$ 的情形中，
+\[
+H(x, y) = \begin{pmatrix} -2 & 0 \\ 0 & -2 \end{pmatrix},
+\]
+故上式简化为 $f(x, y) = -2[(\Delta x)^2 + (\Delta y)^2]$。由于这对所有 $\Delta x$ 和 $\Delta y$ 的取值都小于等于0，$f$ 在 $(x^*, y^*)$ 处的值至少与在任何其他 $(x, y)$ 处的值一样大。在这一情形以及一般情形中，Hessian矩阵的性质对于确定满足一阶条件（方程11.1）的点是否为局部极大值（或极小值）至关重要。
+\end{translation}
+
+\begin{original}
+Note that the entries (partial derivatives) in the Hessian matrix depend on $x$ and $y$: writing $H(x, y)$ emphasizes that the entries are evaluated at $(x, y)$. If the first-order conditions hold at $(x^*, y^*)$, then $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$. In this case, Equations 11.2 and 11.3 become:
+\begin{align}
+f(x, y) &= f(x^*, y^*) + [f_{xx}(\bar{x}, \bar{y})(\Delta x)^2 + 2f_{xy}(\bar{x}, \bar{y})\Delta x\Delta y + f_{yy}(\bar{x}, \bar{y})(\Delta y)^2] \tag{11.6}\\
+&\approx f(x^*, y^*) + [f_{xx}(x^*, y^*)(\Delta x)^2 + 2f_{xy}(x^*, y^*)\Delta x\Delta y + f_{yy}(x^*, y^*)(\Delta y)^2], \tag{11.7}
+\end{align}
+where $(\bar{x}, \bar{y})$ is on the line segment joining $(x, y)$ and $(x^*, y^*)$. In terms of the Hessian matrix:
+\begin{align}
+f(x, y) &= f(x^*, y^*) + (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} \tag{11.8}\\
+&\approx f(x^*, y^*) + (\Delta x\; \Delta y) H(x^*, y^*) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix}. \tag{11.9}
+\end{align}
+
+The sign of this expression depends on properties of the matrix:
+\[
+H(x, y) = \begin{pmatrix} f_{xx}(x, y) & f_{xy}(x, y) \\ f_{xy}(x, y) & f_{yy}(x, y) \end{pmatrix}.
+\]
+The key property is called negative definiteness.
+
+\textbf{Definition 11.1:} A square symmetric matrix $A = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$ is said to be negative definite if for all $z = (z_1\; z_2) \neq (0,0)$, $z'Az < 0$. The matrix is said to be positive definite if $z'Az > 0$ for all such $z$.
+
+Recall the criteria for negative and positive definiteness:
+
+\textbf{PROPOSITION 11.1:} In terms of the elements of the matrix, positive definiteness and negative definiteness are characterized as follows:
+\begin{enumerate}
+\item $A$ is negative definite if and only if $a < 0$ and $ac - b^2 > 0$, and
+\item $A$ is positive definite if and only if $a > 0$ and $ac - b^2 > 0$.
+\end{enumerate}
+
+\textbf{REMARK 11.2:} This implies that if $A$ is negative (positive) definite and $\tilde{A}$ is (sufficiently) close to $A$, then $\tilde{A}$ is negative (positive) definite. For example, if $a < 0$ and $ac - b^2 > 0$ and $\tilde{a}, \tilde{b}, \tilde{c}$ are close to $a, b, c$, respectively, then $\tilde{a} < 0$ and $\tilde{a}\tilde{c} - \tilde{b}^2 > 0$, so that $\tilde{A}$ is negative definite.
+\end{original}
+\begin{translation}
+注意Hessian矩阵中的元素（偏导数）依赖于 $x$ 和 $y$：记作 $H(x, y)$ 以强调这些元素是在 $(x, y)$ 处取值的。若一阶条件在 $(x^*, y^*)$ 处成立，则 $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$。此时，方程11.2和11.3变为：
+\begin{align}
+f(x, y) &= f(x^*, y^*) + [f_{xx}(\bar{x}, \bar{y})(\Delta x)^2 + 2f_{xy}(\bar{x}, \bar{y})\Delta x\Delta y + f_{yy}(\bar{x}, \bar{y})(\Delta y)^2] \tag{11.6}\\
+&\approx f(x^*, y^*) + [f_{xx}(x^*, y^*)(\Delta x)^2 + 2f_{xy}(x^*, y^*)\Delta x\Delta y + f_{yy}(x^*, y^*)(\Delta y)^2], \tag{11.7}
+\end{align}
+其中 $(\bar{x}, \bar{y})$ 在连接 $(x, y)$ 和 $(x^*, y^*)$ 的线段上。用Hessian矩阵表示：
+\[
+f(x, y) = f(x^*, y^*) + (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix}.
+\]
+
+该表达式的符号取决于矩阵的性质：
+\[
+H(x, y) = \begin{pmatrix} f_{xx}(x, y) & f_{xy}(x, y) \\ f_{xy}(x, y) & f_{yy}(x, y) \end{pmatrix}.
+\]
+关键的性质称为负定性。
+
+\textbf{定义11.1：} 称对称方阵 $A = \begin{pmatrix} a & b \\ b & c \end{pmatrix}$ 为负定的，若对所有 $z = (z_1\; z_2) \neq (0,0)$，有 $z'Az < 0$。称该矩阵为正定的，若对所有这样的 $z$ 有 $z'Az > 0$。
+
+回顾负定性和正定性的判据：
+
+\textbf{命题11.1：} 用矩阵元素表示，正定性和负定性有如下刻画：
+\begin{enumerate}
+\item $A$ 是负定的当且仅当 $a < 0$ 且 $ac - b^2 > 0$，
+\item $A$ 是正定的当且仅当 $a > 0$ 且 $ac - b^2 > 0$。
+\end{enumerate}
+
+\textbf{注记11.2：} 这意味着若 $A$ 是负（正）定的，且 $\tilde{A}$（充分）接近 $A$，则 $\tilde{A}$ 是负（正）定的。例如，若 $a < 0$ 且 $ac - b^2 > 0$，且 $\tilde{a}, \tilde{b}, \tilde{c}$ 分别接近 $a, b, c$，则 $\tilde{a} < 0$ 且 $\tilde{a}\tilde{c} - \tilde{b}^2 > 0$，故 $\tilde{A}$ 是负定的。
+\end{translation}
+
+\begin{original}
+Consequently, $H(x, y)$ is negative definite at $(x, y)$ if:
+\[
+f_{xx}(x, y) < 0 \quad\text{and}\quad f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0.
+\]
+Likewise, $H(x, y)$ is positive definite at $(x, y)$ if:
+\[
+f_{xx}(x, y) > 0 \quad\text{and}\quad f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0.
+\]
+
+\textbf{REMARK 11.3:} As noted earlier, if $f_{xx}(x^*, y^*) < 0$, then for $[f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*)] > 0$ to hold, it must be that $f_{yy}(x^*, y^*) < 0$, since $f_{xy}^2(x^*, y^*) = (f_{xy}(x^*, y^*))^2 \geq 0$. So, condition 1(b) in Theorem 11.1 is equivalent to $f_{xx}(x^*, y^*) < 0$ and $f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*) > 0$. An analogous equivalence applies in the local minimum case.
+
+Given the previous discussion, the main theorem, Theorem 11.1, is straightforward to prove.
+
+\textbf{PROOF (Theorem 11.1):} Suppose that at $(x^*, y^*)$, $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$, and suppose also that condition 1(b) is satisfied, so that $H(x^*, y^*)$ is negative definite. Given a small number $\varepsilon$, let $-\varepsilon < \Delta x < \varepsilon$ and $-\varepsilon < \Delta y < \varepsilon$. Since $(\bar{x}, \bar{y})$ lies between $(x^*, y^*)$ and $(x^* + \Delta x, y^* + \Delta y)$ in Equation 11.8, $(\bar{x}, \bar{y})$ is within $\varepsilon$ of $(x^*, y^*)$. In view of the preceding observation, it must be that $H(\bar{x}, \bar{y})$ is negative definite for small $\varepsilon$ (since $H(\bar{x}, \bar{y})$ is close to $H(x^*, y^*)$). Therefore,
+\[
+f(x, y) = f(x^*, y^*) + (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} \quad\text{and}\quad (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} < 0,
+\]
+so it must be that $f(x, y) < f(x^*, y^*)$. Similar reasoning applies to the case of a local minimum.
+
+As mentioned in Remark 11.3, the conditions $f_{xx}(x, y) < 0$ and $f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0$ together imply that $f_{yy}(x, y) < 0$ so that the pair of conditions $[f_{xx}(x, y) < 0$ and $f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0]$ are equivalent to $[f_{xx}(x, y) < 0$, $f_{yy}(x, y) < 0$ and $f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0]$. However, as a practical matter, it is often useful to check the simpler conditions $f_{xx}(x, y) < 0$ and $f_{yy}(x, y) < 0$ first: if either fails, then the condition $f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0$ cannot be satisfied.
+\end{original}
+\begin{translation}
+因此，$H(x, y)$ 在 $(x, y)$ 处为负定，若：
+\[
+f_{xx}(x, y) < 0 \quad\text{且}\quad f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0.
+\]
+类似地，$H(x, y)$ 在 $(x, y)$ 处为正定，若：
+\[
+f_{xx}(x, y) > 0 \quad\text{且}\quad f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0.
+\]
+
+\textbf{注记11.3：} 如前所述，若 $f_{xx}(x^*, y^*) < 0$，则要使 $[f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*)] > 0$ 成立，必须有 $f_{yy}(x^*, y^*) < 0$，因为 $f_{xy}^2(x^*, y^*) \geq 0$。因此定理11.1中的条件1(b)等价于 $f_{xx}(x^*, y^*) < 0$ 且 $f_{xx}(x^*, y^*)f_{yy}(x^*, y^*) - f_{xy}^2(x^*, y^*) > 0$。类似的等价性适用于局部极小值情形。
+
+基于上述讨论，主定理（定理11.1）的证明是直接的。
+
+\textbf{证明（定理11.1）：} 假设在 $(x^*, y^*)$ 处，$f_x(x^*, y^*) = f_y(x^*, y^*) = 0$，并假设条件1(b)成立，故 $H(x^*, y^*)$ 是负定的。给定一个小数 $\varepsilon$，令 $-\varepsilon < \Delta x < \varepsilon$ 且 $-\varepsilon < \Delta y < \varepsilon$。由于方程11.8中的 $(\bar{x}, \bar{y})$ 介于 $(x^*, y^*)$ 和 $(x^* + \Delta x, y^* + \Delta y)$ 之间，$(\bar{x}, \bar{y})$ 在 $(x^*, y^*)$ 的 $\varepsilon$ 范围内。鉴于前面的观察，对于小的 $\varepsilon$，必有 $H(\bar{x}, \bar{y})$ 为负定（因为 $H(\bar{x}, \bar{y})$ 接近 $H(x^*, y^*)$）。因此，
+\[
+f(x, y) = f(x^*, y^*) + (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} \quad\text{且}\quad (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix} < 0,
+\]
+故必有 $f(x, y) < f(x^*, y^*)$。类似的推理适用于局部极小值情形。
+
+如注记11.3所述，$f_{xx}(x, y) < 0$ 和 $f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0$ 合在一起意味着 $f_{yy}(x, y) < 0$。然而，在实际操作中，通常先检验较简单的条件 $f_{xx}(x, y) < 0$ 和 $f_{yy}(x, y) < 0$ 是有用的：若其中任何一个不成立，则条件 $f_{xx}(x, y)f_{yy}(x, y) - f_{xy}^2(x, y) > 0$ 不可能满足。
+\end{translation}
+
+\begin{original}
+\textbf{REMARK 11.4:} In fact, since the Taylor series expansion $f(x, y) = f(x^*, y^*) + (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix}$ holds generally (given any $(x, y)$, and $(x^*, y^*)$ with $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$, there is $(\bar{x}, \bar{y})$ such that this equation is satisfied). So, for example, if $H(x, y)$ were negative definite for all $(x, y)$, then $f(x, y) < f(x^*, y^*)$ for all $(x, y) \neq (x^*, y^*)$ and the first-order conditions give a global maximum.
+
+With a view to generalization to the many-variable case, the second-order conditions can be expressed directly in terms of submatrices of the Hessian matrix $H$. Considering $H$, write $H_1$ for the matrix consisting of just the top left entry $H_1 = (f_{xx})$, and $H_2$ for the matrix $H$. Because the determinant of a matrix with one row and column is just the single entry of that matrix (if $A = [a]$, $|A| = a$),
+\[
+|H_1| = f_{xx}
+\]
+and
+\[
+|H_2| = f_{xx}f_{yy} - f_{xy}^2.
+\]
+Consequently:
+
+\textbf{REMARK 11.5:} The second-order conditions for a maximum are
+\[
+|H_1| < 0 \quad\text{and}\quad |H_2| > 0.
+\]
+The second-order conditions for a minimum are
+\[
+|H_1| > 0 \quad\text{and}\quad |H_2| > 0.
+\]
+
+In the case of two variables, the benefit from expressing the second-order conditions in terms of determinants derived from the Hessian matrix is not significant. However, with three or more variables, the matrix presentation is more succinct. (See Section 11.3.)
+\end{original}
+\begin{translation}
+\textbf{注记11.4：} 实际上，由于泰勒级数展开 $f(x, y) = f(x^*, y^*) + (\Delta x\; \Delta y) H(\bar{x}, \bar{y}) \begin{pmatrix} \Delta x \\ \Delta y \end{pmatrix}$ 普遍成立（给定任意 $(x, y)$ 和满足 $f_x(x^*, y^*) = f_y(x^*, y^*) = 0$ 的 $(x^*, y^*)$，存在 $(\bar{x}, \bar{y})$ 使该方程成立）。因此，例如，若 $H(x, y)$ 对所有 $(x, y)$ 是负定的，则对所有 $(x, y) \neq (x^*, y^*)$ 有 $f(x, y) < f(x^*, y^*)$，且一阶条件给出全局极大值。
+
+为向多变量情形推广，二阶条件可直接用Hessian矩阵 $H$ 的子矩阵表示。考虑 $H$，记 $H_1$ 为仅包含左上角元素的矩阵 $H_1 = (f_{xx})$，记 $H_2$ 为矩阵 $H$。由于单行单列矩阵的行列式恰为该矩阵的单个元素（若 $A = [a]$，$|A| = a$），
+\[
+|H_1| = f_{xx}, \quad |H_2| = f_{xx}f_{yy} - f_{xy}^2.
+\]
+因此：
+
+\textbf{注记11.5：} 极大值的二阶条件为
+\[
+|H_1| < 0 \quad\text{且}\quad |H_2| > 0.
+\]
+极小值的二阶条件为
+\[
+|H_1| > 0 \quad\text{且}\quad |H_2| > 0.
+\]
+
+在二变量情形中，用由Hessian矩阵导出的行列式来表示二阶条件的优势并不显著。然而，当有三个或更多变量时，矩阵表示更为简洁。（见第11.3节。）
+\end{translation}
+
+\subsubsection{11.2.2 Failure of the Second-Order Conditions / 二阶条件失效的情形}
+
+\begin{original}
+The second-order conditions confirm that at a candidate optimum, in a neighborhood of that point the function ``bends down'' in all directions in the case of maximization, and ``bends up'' in all directions in the case of minimization. There are a variety of ways in which this condition may fail. The following examples illustrate two common cases. Consider the function
+\[
+f(x, y) = x^2 - y^2.
+\]
+The function is depicted in Figure 11.2 and is sometimes called a saddle function in view of its shape.
+
+As the figure indicates, the point $(0,0)$ satisfies the first-order conditions but from there variations in $x$ raise $f$ while variations in $y$ reduce $f$. Observe that $f_x = 2x$, $f_y = -2y$, $f_{xx} = 2$, $f_{yy} = -2$ and $f_{xy} = 0$, so the Hessian matrix is:
+\[
+H = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}.
+\]
+Thus, $|H_1| = 2$ and $|H_2| = -2$ so that neither the conditions for a local maximum or a local minimum are satisfied.
+
+As a second example, consider the function:
+\[
+f(x, y) = x^2 y.
+\]
+This function is plotted in Figure 11.3. Again, the point $(0,0)$ satisfies the first-order conditions since $f_x = 2xy$, $f_y = x^2$, but the function twists at $(0,0)$. The Hessian matrix is:
+\[
+H = \begin{pmatrix} 2y & 2x \\ 2x & 0 \end{pmatrix}.
+\]
+So $|H_1| = 2y$ and $|H_2| = -4x^2$. Both of these are 0 at $(x, y) = (0,0)$.
+\end{original}
+\begin{translation}
+二阶条件确认了在候选最优点处，极大化时函数在该点邻域内沿所有方向``向下弯曲''，极小化时沿所有方向``向上弯曲''。这一条件可能以多种方式失效。下面的例子说明了两种常见情形。考虑函数
+\[
+f(x, y) = x^2 - y^2.
+\]
+该函数如图11.2所示，因其形状有时被称为鞍形函数。
+
+如图所示，点 $(0,0)$ 满足一阶条件，但从该点出发，$x$ 的变动提高 $f$ 而 $y$ 的变动降低 $f$。注意到 $f_x = 2x$，$f_y = -2y$，$f_{xx} = 2$，$f_{yy} = -2$ 且 $f_{xy} = 0$，故Hessian矩阵为：
+\[
+H = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}.
+\]
+因此，$|H_1| = 2$，$|H_2| = -2$，既不符合局部极大值的条件也不符合局部极小值的条件。
+
+作为第二个例子，考虑函数：
+\[
+f(x, y) = x^2 y.
+\]
+该函数如图11.3所示。同样，点 $(0,0)$ 满足一阶条件，因为 $f_x = 2xy$，$f_y = x^2$，但函数在 $(0,0)$ 处发生扭转。Hessian矩阵为：
+\[
+H = \begin{pmatrix} 2y & 2x \\ 2x & 0 \end{pmatrix}.
+\]
+故 $|H_1| = 2y$，$|H_2| = -4x^2$，两者在 $(x, y) = (0,0)$ 处均为0。
+\end{translation}
+
+\subsubsection{11.2.3 The Envelope Theorem / 包络定理}
+
+\begin{original}
+Consider the problem of maximizing a function of $x$ when the function depends on some exogenous parameter $\theta$: $f(x,\theta)$. For example: $f(x,\theta) = x^{\frac{1}{2}} - \theta x$. The usual procedure is to set the first derivative to zero: $f_x(x,\theta) = 0$. This then gives the solution $x = x(\theta)$ as a function of $\theta$, chosen to satisfy $f_x(x(\theta),\theta) = 0$. Note that if $\theta$ varies, so does $x(\theta)$ to maintain the equality of the partial derivative with 0. As $\theta$ varies, so will the optimal choice of $x$ to maintain the identity $f_x(x(\theta),\theta) \equiv 0$. In the example, $f(x,\theta) = x^{\frac{1}{2}} - \theta x$ gives $f_x(x,\theta) = \frac{1}{2}x^{-\frac{1}{2}} - \theta = 0$. Rearranging, $\frac{1}{2} = \theta x^{\frac{1}{2}}$ or $x(\theta) = \frac{1}{4\theta^2}$. If the optimal choice of $x$ given $\theta$, $x(\theta)$, is substituted into the function $f$, then $f(x(\theta),\theta)$ is the value of the function being maximized, at the solution. Note that $f(x(\theta),\theta)$ depends only on $\theta$; the value of the optimized function may be written $f^*(\theta) \equiv f(x(\theta),\theta)$. In the example:
+\[
+f^*(\theta) = f(x(\theta),\theta) = \left(\frac{1}{4\theta^2}\right)^{\frac{1}{2}} - \theta\left(\frac{1}{4\theta^2}\right) = \frac{1}{2\theta} - \frac{1}{4\theta} = \frac{1}{4\theta}.
+\]
+
+Now consider the following question. If $\theta$ varies, how much will the value of the maximized function vary? That is, what is the value of $\frac{df^*(\theta)}{d\theta}$? Differentiating:
+\[
+\frac{df^*(\theta)}{d\theta} = f_x(x(\theta),\theta)\frac{dx(\theta)}{d\theta} + f_\theta(x(\theta),\theta).
+\]
+
+Note now that from the first-order condition $f_x(x(\theta),\theta) = 0$ at each value of $\theta$, so that for each $\theta$,
+\[
+\frac{df^*(\theta)}{d\theta} = f_\theta(x(\theta),\theta).
+\]
+
+In words, the change in the maximized value of the function, $f^*(\theta)$, as the parameter ($\theta$) changes, is equal to the derivative of the (unoptimized) function, $f(x,\theta)$, with respect to the parameter, with the derivative evaluated at the solution ($x(\theta)$): $f_\theta(x(\theta),\theta)$. In the example, $f^*(\theta) = \frac{1}{4\theta}$, so that
+\[
+\frac{df^*(\theta)}{d\theta} = -\frac{1}{4\theta^2} = -x(\theta).
+\]
+If we differentiate $f(x,\theta) = x^{\frac{1}{2}} - \theta x$ with respect to $\theta$ and evaluate at the solution $x(\theta)$, we get $-x(\theta)$.
+\end{original}
+\begin{translation}
+考虑在函数依赖于某个外生参数 $\theta$ 时最大化 $x$ 的函数的问题：$f(x,\theta)$。例如：$f(x,\theta) = x^{\frac{1}{2}} - \theta x$。通常的做法是令一阶导数为零：$f_x(x,\theta) = 0$。这给出解 $x = x(\theta)$，作为 $\theta$ 的函数，被选定以满足 $f_x(x(\theta),\theta) = 0$。注意若 $\theta$ 变化，$x(\theta)$ 也随之变化以维持偏导数等于零的等式。在例子中，$f(x,\theta) = x^{\frac{1}{2}} - \theta x$ 给出 $f_x(x,\theta) = \frac{1}{2}x^{-\frac{1}{2}} - \theta = 0$。重新排列得 $\frac{1}{2} = \theta x^{\frac{1}{2}}$ 或 $x(\theta) = \frac{1}{4\theta^2}$。若将给定 $\theta$ 下 $x$ 的最优选择 $x(\theta)$ 代入函数 $f$，则 $f(x(\theta),\theta)$ 是在该解处被最大化函数的取值。记最优函数值为 $f^*(\theta) \equiv f(x(\theta),\theta)$。在例子中：
+\[
+f^*(\theta) = f(x(\theta),\theta) = \frac{1}{4\theta}.
+\]
+
+现在考虑以下问题。若 $\theta$ 变化，被最大化函数的值将变化多少？即，$\frac{df^*(\theta)}{d\theta}$ 的值是多少？求导：
+\[
+\frac{df^*(\theta)}{d\theta} = f_x(x(\theta),\theta)\frac{dx(\theta)}{d\theta} + f_\theta(x(\theta),\theta).
+\]
+
+现在注意到由一阶条件 $f_x(x(\theta),\theta) = 0$ 在每个 $\theta$ 值处成立，所以对每个 $\theta$，
+\[
+\frac{df^*(\theta)}{d\theta} = f_\theta(x(\theta),\theta).
+\]
+
+换言之，被最大化函数的值 $f^*(\theta)$ 随参数 $\theta$ 变化而产生的变化，等于（未最优化）函数 $f(x,\theta)$ 对参数的偏导数在解 $x(\theta)$ 处的取值：$f_\theta(x(\theta),\theta)$。在例子中，$f^*(\theta) = \frac{1}{4\theta}$，故
+\[
+\frac{df^*(\theta)}{d\theta} = -\frac{1}{4\theta^2} = -x(\theta).
+\]
+若我们对 $f(x,\theta) = x^{\frac{1}{2}} - \theta x$ 关于 $\theta$ 求偏导并在解 $x(\theta)$ 处取值，得到 $-x(\theta)$。
+\end{translation}
+
+\begin{original}
+This observation extends to the general case. Let $f(x_1, x_2, \ldots, x_n, \alpha_1, \alpha_2, \ldots, \alpha_m)$. For ease of notation write $x = (x_1, x_2, \ldots, x_n)$ and $\alpha = (\alpha_1, \alpha_2, \ldots, \alpha_m)$. The first-order conditions are $f_{x_i}(x,\alpha) = 0$, $i = 1,2,\ldots,n$. Solving these gives $x(\alpha) = (x_1(\alpha), x_2(\alpha), \ldots, x_n(\alpha))$. Then the optimized value of the function is $f^*(\alpha) = f(x(\alpha),\alpha)$. To calculate the change in $f^*$ due to a change in one $\alpha$, say $\alpha_i$, take the partial derivative of $f^*(\alpha)$ with respect to $\alpha_i$. This gives
+\[
+\frac{\partial f^*(\alpha)}{\partial \alpha_i} = \sum_{j=1}^n \frac{\partial f(x(\alpha),\alpha)}{\partial x_j} \frac{\partial x_j(\alpha)}{\partial \alpha_i} + \frac{\partial f(x(\alpha),\alpha)}{\partial \alpha_i}.
+\]
+
+Note now that from the first-order conditions, the partial derivative of $f(x,\alpha)$ evaluated at $x = x(\alpha)$ is equal to 0 for each $j = 1,2,\ldots,n$: $\frac{\partial f(x(\alpha),\alpha)}{\partial x_j} = 0$, $\forall j$. Thus,
+\[
+\frac{\partial f^*(\alpha)}{\partial \alpha_i} = \frac{\partial f(x(\alpha),\alpha)}{\partial \alpha_i}.
+\]
+\end{original}
+\begin{translation}
+这一观察推广到一般情形。设 $f(x_1, x_2, \ldots, x_n, \alpha_1, \alpha_2, \ldots, \alpha_m)$。为记号简便，记 $x = (x_1, x_2, \ldots, x_n)$，$\alpha = (\alpha_1, \alpha_2, \ldots, \alpha_m)$。一阶条件为 $f_{x_i}(x,\alpha) = 0$，$i = 1,2,\ldots,n$。解之得到 $x(\alpha) = (x_1(\alpha), x_2(\alpha), \ldots, x_n(\alpha))$。则最优函数值为 $f^*(\alpha) = f(x(\alpha),\alpha)$。为计算 $f^*$ 因某一 $\alpha_i$ 的变化而产生的变化，求 $f^*(\alpha)$ 对 $\alpha_i$ 的偏导数：
+\[
+\frac{\partial f^*(\alpha)}{\partial \alpha_i} = \sum_{j=1}^n \frac{\partial f(x(\alpha),\alpha)}{\partial x_j} \frac{\partial x_j(\alpha)}{\partial \alpha_i} + \frac{\partial f(x(\alpha),\alpha)}{\partial \alpha_i}.
+\]
+
+现在注意到由一阶条件，$f(x,\alpha)$ 的偏导数在 $x = x(\alpha)$ 处的取值对每个 $j = 1,2,\ldots,n$ 等于0：$\frac{\partial f(x(\alpha),\alpha)}{\partial x_j} = 0$，$\forall j$。因此，
+\[
+\frac{\partial f^*(\alpha)}{\partial \alpha_i} = \frac{\partial f(x(\alpha),\alpha)}{\partial \alpha_i}.
+\]
+\end{translation}
+
+\subsection{11.3 Optimization: $n$ Variables / $n$ 变量最优化}
+
+\begin{original}
+Consider the problem of maximizing or minimizing a function $f$: $\max f(x_1,\ldots,x_n)$ or $\min f(x_1,\ldots,x_n)$. For convenience, write $f(x)$, where $x = (x_1,\ldots,x_n)$. The first derivatives of $f$ are $f_i = \frac{\partial f}{\partial x_i}$, $i = 1,\ldots,n$. Set $\nabla f = (f_1, f_2, \ldots, f_n)$. If it is the case that at a point $x$, the partial derivative of $f$ with respect to $x_i$ is not equal to 0, say $f_i(x) = \frac{\partial f(x)}{\partial x_i} > 0$, this means that at the point $x$ the value of $f$ is increased if $x_i$ is increased from $x_i$. This implies that for $x$ to be a local maximum of the function $f$, it must be the case that every partial derivative is 0. A necessary condition for $x$ to be a local maximum is that partial derivatives at $x$ are 0:
+\[
+\frac{\partial f(x)}{\partial x_i} = 0, \quad i = 1,\ldots,n.
+\]
+
+Under what conditions can one be sure that $x$ is a local maximum? In other words, what are necessary and sufficient conditions for $x$ to be a local maximum? Let $H(p)$ be the Hessian matrix evaluated at $p$:
+\[
+H = \begin{pmatrix}
+\frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+\frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2} & \cdots & \frac{\partial^2 f}{\partial x_2 \partial x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial^2 f}{\partial x_n \partial x_1} & \frac{\partial^2 f}{\partial x_n \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_n^2}
+\end{pmatrix}
+= \begin{pmatrix}
+f_{11} & f_{12} & \cdots & f_{1n} \\
+f_{21} & f_{22} & \cdots & f_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+f_{n1} & f_{n2} & \cdots & f_{nn}
+\end{pmatrix}.
+\]
+
+In general, $H$ will depend on $x$. This dependence is made explicit by writing $H(x)$. Determining if $H$ is positive or negative definite is possible by checking a set of determinental conditions. Define $H_j$ to be the $j \times j$ matrix obtained from $H$ by deleting the last $n-j$ rows and columns:
+\[
+H_j = \begin{pmatrix}
+f_{11} & f_{12} & \cdots & f_{1j} \\
+f_{21} & f_{22} & \cdots & f_{2j} \\
+\vdots & \vdots & \ddots & \vdots \\
+f_{j1} & f_{j2} & \cdots & f_{jj}
+\end{pmatrix}.
+\]
+
+\textbf{Theorem 11.2:} Suppose that $x^*$ satisfies:
+\[
+\frac{\partial f(x^*)}{\partial x_i} = 0, \quad i = 1,\ldots,n.
+\]
+If
+\[
+|H_1| < 0,\; |H_2| > 0,\; |H_3| < 0,\; \ldots,\; \text{or } (-1)^j|H_j| > 0,\; j = 1,\ldots,n,
+\]
+then $x^*$ is a local maximum.
+If
+\[
+|H_1| > 0,\; |H_2| > 0,\; |H_3| > 0,\; \ldots,\; \text{or } |H_j| > 0,\; j = 1,\ldots,n,
+\]
+then $x^*$ is a local minimum.
+\end{original}
+\begin{translation}
+考虑最大化或最小化函数 $f$ 的问题：$\max f(x_1,\ldots,x_n)$ 或 $\min f(x_1,\ldots,x_n)$。为方便起见，记 $f(x)$，其中 $x = (x_1,\ldots,x_n)$。$f$ 的一阶导数为 $f_i = \frac{\partial f}{\partial x_i}$，$i = 1,\ldots,n$。记 $\nabla f = (f_1, f_2, \ldots, f_n)$。若在某点 $x$ 处，$f$ 对 $x_i$ 的偏导数不等于0，譬如 $f_i(x) > 0$，这意味着在点 $x$ 处增加 $x_i$ 会增大 $f$ 的值。这意味着若 $x$ 是函数 $f$ 的局部极大值点，则每个偏导数必须为0。$x$ 成为局部极大值的必要条件是在 $x$ 处偏导数为0：
+\[
+\frac{\partial f(x)}{\partial x_i} = 0, \quad i = 1,\ldots,n.
+\]
+
+在什么条件下可以确信 $x$ 是局部极大值？换言之，$x$ 成为局部极大值的充分必要条件是什么？令 $H(p)$ 为在 $p$ 处取值的Hessian矩阵：
+\[
+H = \begin{pmatrix}
+f_{11} & f_{12} & \cdots & f_{1n} \\
+f_{21} & f_{22} & \cdots & f_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+f_{n1} & f_{n2} & \cdots & f_{nn}
+\end{pmatrix}.
+\]
+
+一般而言，$H$ 依赖于 $x$。这一依赖性通过记作 $H(x)$ 来显式表达。通过检验一组行列式条件可以判断 $H$ 是正定还是负定。定义 $H_j$ 为从 $H$ 中删除后 $n-j$ 行和列得到的 $j \times j$ 矩阵。$H_j$ 由 $H$ 的前 $j$ 行和前 $j$ 列组成。
+
+\textbf{定理11.2：} 假设 $x^*$ 满足：
+\[
+\frac{\partial f(x^*)}{\partial x_i} = 0, \quad i = 1,\ldots,n.
+\]
+若
+\[
+|H_1| < 0,\; |H_2| > 0,\; |H_3| < 0,\; \ldots,\; (-1)^j|H_j| > 0,\; j = 1,\ldots,n,
+\]
+则 $x^*$ 是局部极大值。
+若
+\[
+|H_1| > 0,\; |H_2| > 0,\; |H_3| > 0,\; \ldots,\; |H_j| > 0,\; j = 1,\ldots,n,
+\]
+则 $x^*$ 是局部极小值。
+\end{translation}
+
+\subsubsection{11.3.1 Motivation for the Hessian Conditions / Hessian条件的动机}
+
+\begin{original}
+To motivate the previous discussion, consider a Taylor series expansion of $f$. The matrix version of Taylor's theorem gives:
+\[
+f(\tilde{x}) = f(x) + \nabla f(x) \cdot (\tilde{x} - x) + (\tilde{x} - x)'H(p)(\tilde{x} - x),
+\]
+where $p$ is between $\tilde{x}$ and $x$. If $x$ satisfies: $f_i(x) = 0$, $\forall i$, then
+\[
+f(\tilde{x}) = f(x) + (\tilde{x} - x)'H(p)(\tilde{x} - x). \tag{11.14}
+\]
+
+From this expression, whether $f(\tilde{x})$ is larger or smaller than $f(x)$ depends entirely on $H(p)$. If, for all vectors, $z \neq 0$, $z'H(p)z < 0$, then $H(p)$ is negative definite. From Equation 11.14 this implies $f(\tilde{x}) < f(x)$. If, for all vectors, $z \neq 0$, $z'H(p)z > 0$ the matrix $H(p)$ is positive definite and Equation 11.14 implies $f(\tilde{x}) > f(x)$. So the sufficiency conditions depend on properties of the Hessian matrix $H$, and the associated quadratic form, characterized in terms of positive and negative definiteness.
+
+\textbf{Theorem 11.3:} The matrix $H(x)$ is negative definite if:
+\[
+|H_1(x)| < 0,\; |H_2(x)| > 0,\; |H_3(x)| < 0,\; \ldots,\; (-1)^j|H_j(x)| > 0,\; j = 1,\ldots,n.
+\]
+The matrix $H(x)$ is positive definite if:
+\[
+|H_1(x)| > 0,\; |H_2(x)| > 0,\; |H_3(x)| > 0,\; \ldots,\; |H_j(x)| > 0,\; j = 1,\ldots,n.
+\]
+
+Note that if $H(x)$ satisfies the conditions for positive or negative definiteness, then provided $p$ is close to $x$, $H(p)$ will also satisfy those conditions. If $\tilde{x}$ is close to $x$ in Equation 11.14, then so is $p$. So, for example, if at $x$, $f_i(x) = 0$, for all $i$, and $H(x)$ is negative definite, then so is $H(p)$ and $f(\tilde{x}) < f(x)$.
+\end{original}
+\begin{translation}
+为给出前述讨论的动机，考虑 $f$ 的泰勒级数展开。泰勒定理的矩阵形式给出：
+\[
+f(\tilde{x}) = f(x) + \nabla f(x) \cdot (\tilde{x} - x) + (\tilde{x} - x)'H(p)(\tilde{x} - x),
+\]
+其中 $p$ 介于 $\tilde{x}$ 和 $x$ 之间。若 $x$ 满足：$f_i(x) = 0$，$\forall i$，则
+\[
+f(\tilde{x}) = f(x) + (\tilde{x} - x)'H(p)(\tilde{x} - x). \tag{11.14}
+\]
+
+从该表达式可知，$f(\tilde{x})$ 是大于还是小于 $f(x)$ 完全取决于 $H(p)$。若对所有向量 $z \neq 0$，$z'H(p)z < 0$，则 $H(p)$ 是负定的。由方程11.14，这意味着 $f(\tilde{x}) < f(x)$。若对所有向量 $z \neq 0$，$z'H(p)z > 0$，矩阵 $H(p)$ 是正定的，则方程11.14意味着 $f(\tilde{x}) > f(x)$。因此充分性条件取决于Hessian矩阵 $H$ 的性质，以及相应的二次型，这些性质由正定性和负定性来刻画。
+
+\textbf{定理11.3：} 矩阵 $H(x)$ 是负定的，若：
+\[
+|H_1(x)| < 0,\; |H_2(x)| > 0,\; |H_3(x)| < 0,\; \ldots,\; (-1)^j|H_j(x)| > 0,\; j = 1,\ldots,n.
+\]
+矩阵 $H(x)$ 是正定的，若：
+\[
+|H_1(x)| > 0,\; |H_2(x)| > 0,\; |H_3(x)| > 0,\; \ldots,\; |H_j(x)| > 0,\; j = 1,\ldots,n.
+\]
+
+注意若 $H(x)$ 满足正定性或负定性条件，则只要 $p$ 接近 $x$，$H(p)$ 也将满足那些条件。若方程11.14中 $\tilde{x}$ 接近 $x$，则 $p$ 也接近 $x$。因此，例如，若在 $x$ 处对所有 $i$ 有 $f_i(x) = 0$，且 $H(x)$ 是负定的，则 $H(p)$ 也是负定的，从而 $f(\tilde{x}) < f(x)$。
+\end{translation}
+
+\subsubsection{11.3.2 Definiteness and Second-Order Conditions / 定性与二阶条件}
+
+\begin{original}
+Recall that the Hessian matrix is the matrix of second partial derivatives of the function. Because the order of differentiation does not matter, $f_{x_i x_j} = f_{x_j x_i}$, the Hessian matrix is symmetric and the expression $z'H(p)z$ is a quadratic form. The main theorem giving second-order conditions in terms of the Hessian matrix is:
+
+\textbf{Theorem 11.4:} Let $x^*$ satisfy $f_i(x^*) = 0$, $i = 1,\ldots,n$. Then
+\begin{enumerate}
+\item $x^*$ is a local maximum if $H(\tilde{x})$ is negative semi-definite, $\tilde{x}$ close to $x^*$.
+\item $x^*$ is a unique local maximum if $H(x^*)$ is negative definite.
+\item $x^*$ is a global maximum if $H(x)$ is negative semi-definite $\forall x$.
+\item $x^*$ is a unique global maximum if $H(x)$ is negative definite $\forall x$.
+\item $x^*$ is a local minimum if $H(x)$ is positive semi-definite.
+\item $x^*$ is a unique local minimum if $H(x^*)$ is positive definite, $\tilde{x}$ close to $x^*$.
+\item $x^*$ is a global minimum if $H(x)$ is positive semi-definite $\forall x$.
+\item $x^*$ is a unique global minimum if $H(x)$ is positive definite $\forall x$.
+\end{enumerate}
+
+\textbf{PROOF:} These results are easy to verify by considering the Taylor series expansion:
+\[
+f(\tilde{x}) = f(x^*) + \nabla f(x^*) \cdot (\tilde{x} - x^*) + (\tilde{x} - x^*)'H(p)(\tilde{x} - x^*)
+\]
+and if at $x^*$, $f_i(x^*) = 0$ so $\nabla f(x^*) = 0$, then the expansion gives:
+\[
+f(\tilde{x}) = f(x^*) + (\tilde{x} - x^*)'H(p)(\tilde{x} - x^*).
+\]
+For example, if $H(\tilde{x})$ is negative semi-definite, $\tilde{x}$ close to $x^*$, then this will also be satisfied by $p$ in the Taylor series expansion, since $p$ is between $\tilde{x}$ and $x^*$: $H(\tilde{x})$ is negative semi-definite when $\tilde{x}$ is close to $x^*$. In this case, $(\tilde{x} - x^*)'H(p)(\tilde{x} - x^*) \leq 0$, so that $f(\tilde{x}) \leq f(x^*)$. This confirms that $x^*$ is a local maximum. A similar discussion applies to the other results.
+\end{original}
+\begin{translation}
+回顾Hessian矩阵是函数的二阶偏导数矩阵。由于求导次序无关紧要，$f_{x_i x_j} = f_{x_j x_i}$，故Hessian矩阵是对称的，且表达式 $z'H(p)z$ 是二次型。用Hessian矩阵给出二阶条件的主定理为：
+
+\textbf{定理11.4：} 设 $x^*$ 满足 $f_i(x^*) = 0$，$i = 1,\ldots,n$。则
+\begin{enumerate}
+\item $x^*$ 是局部极大值，若 $H(\tilde{x})$ 是半负定的，$\tilde{x}$ 接近 $x^*$。
+\item $x^*$ 是唯一局部极大值，若 $H(x^*)$ 是负定的。
+\item $x^*$ 是全局极大值，若 $H(x)$ 对所有 $x$ 是半负定的。
+\item $x^*$ 是唯一全局极大值，若 $H(x)$ 对所有 $x$ 是负定的。
+\item $x^*$ 是局部极小值，若 $H(x)$ 是半正定的。
+\item $x^*$ 是唯一局部极小值，若 $H(x^*)$ 是正定的，$\tilde{x}$ 接近 $x^*$。
+\item $x^*$ 是全局极小值，若 $H(x)$ 对所有 $x$ 是半正定的。
+\item $x^*$ 是唯一全局极小值，若 $H(x)$ 对所有 $x$ 是正定的。
+\end{enumerate}
+
+\textbf{证明：} 通过考察泰勒级数展开可容易验证这些结果：
+\[
+f(\tilde{x}) = f(x^*) + \nabla f(x^*) \cdot (\tilde{x} - x^*) + (\tilde{x} - x^*)'H(p)(\tilde{x} - x^*)
+\]
+若在 $x^*$ 处 $f_i(x^*) = 0$，故 $\nabla f(x^*) = 0$，则展开给出：
+\[
+f(\tilde{x}) = f(x^*) + (\tilde{x} - x^*)'H(p)(\tilde{x} - x^*).
+\]
+例如，若 $H(\tilde{x})$ 是半负定的，$\tilde{x}$ 接近 $x^*$，则泰勒级数展开中的 $p$ 也将满足该性质，因为 $p$ 介于 $\tilde{x}$ 和 $x^*$ 之间。此时，$(\tilde{x} - x^*)'H(p)(\tilde{x} - x^*) \leq 0$，故 $f(\tilde{x}) \leq f(x^*)$。这确认了 $x^*$ 是局部极大值。类似的讨论适用于其他结果。
+\end{translation}
+
+\begin{original}
+\textbf{REMARK 11.6:} When $f$ is additively separable, the second order conditions are simpler. The function $f$ is additively separable if $f(x_1,\ldots,x_n) = \sum_{i=1}^n f^i(x_i) = f^1(x_1) + \cdots + f^n(x_n)$. The Hessian has the form:
+\[
+H = \begin{pmatrix}
+\frac{\partial^2 f^1}{\partial x_1^2} & 0 & \cdots & 0 \\
+0 & \frac{\partial^2 f^2}{\partial x_2^2} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \frac{\partial^2 f^n}{\partial x_n^2}
+\end{pmatrix}.
+\]
+Then $f$ is negative definite if and only if $\frac{\partial^2 f^i}{\partial x_i^2} < 0$, $\forall i$.
+\end{original}
+\begin{translation}
+\textbf{注记11.6：} 当 $f$ 是可加分离的时，二阶条件更简单。函数 $f$ 是可加分离的，若 $f(x_1,\ldots,x_n) = \sum_{i=1}^n f^i(x_i)$。Hessian矩阵具有如下形式：
+\[
+H = \begin{pmatrix}
+\frac{\partial^2 f^1}{\partial x_1^2} & 0 & \cdots & 0 \\
+0 & \frac{\partial^2 f^2}{\partial x_2^2} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \frac{\partial^2 f^n}{\partial x_n^2}
+\end{pmatrix}.
+\]
+则 $f$ 是负定的当且仅当 $\frac{\partial^2 f^i}{\partial x_i^2} < 0$，$\forall i$。
+\end{translation}
+
+\subsection{11.4 Concavity, Convexity and the Hessian Matrix / 凹性、凸性与Hessian矩阵}
+
+\begin{original}
+The next theorem relates concavity and convexity to the ``definiteness'' of the Hessian.
+
+\textbf{Theorem 11.5:}
+\begin{enumerate}
+\item If $f$ is strictly concave, then $f$ is concave; and concavity of $f$ is equivalent to negative semi-definiteness of the Hessian matrix $H(x)$, for all $x$.
+\item If the Hessian matrix $H(x)$ is negative definite for all $x$, then $f$ is strictly concave.
+\item If $f$ is strictly convex then $f$ is convex; and convexity of $f$ implies that the Hessian matrix $H(x)$ is positive semi-definite for all $x$.
+\item If the Hessian matrix $H(x)$ is positive definite for all $x$, then $f$ is strictly convex.
+\end{enumerate}
+
+\textbf{REMARK 11.7:} Note that strict concavity of a function $f$ does not imply that $H(x)$ is negative definite for all $x$; and strict convexity does not imply that $H(x)$ is positive definite for all $x$. For example, consider $f(x) = -(x-1)^4$, a strictly concave function. Differentiating gives $f''(x) = -12(x-1)^2$. Note that $f''(1) = 0$ so that $f''$ is only negative semi-definite despite the fact that the function $f$ is strictly concave.
+\end{original}
+\begin{translation}
+下一个定理将凹性和凸性与Hessian矩阵的``定性''联系起来。
+
+\textbf{定理11.5：}
+\begin{enumerate}
+\item 若 $f$ 是严格凹的，则 $f$ 是凹的；且 $f$ 的凹性等价于Hessian矩阵 $H(x)$ 对所有 $x$ 是半负定的。
+\item 若Hessian矩阵 $H(x)$ 对所有 $x$ 是负定的，则 $f$ 是严格凹的。
+\item 若 $f$ 是严格凸的，则 $f$ 是凸的；且 $f$ 的凸性意味着Hessian矩阵 $H(x)$ 对所有 $x$ 是半正定的。
+\item 若Hessian矩阵 $H(x)$ 对所有 $x$ 是正定的，则 $f$ 是严格凸的。
+\end{enumerate}
+
+\textbf{注记11.7：} 注意函数的严格凹性并不意味着 $H(x)$ 对所有 $x$ 是负定的；严格凸性也不意味着 $H(x)$ 对所有 $x$ 是正定的。例如，考虑 $f(x) = -(x-1)^4$，这是一个严格凹函数。求导得 $f''(x) = -12(x-1)^2$。注意 $f''(1) = 0$，因此 $f''$ 仅是半负定的，尽管函数 $f$ 是严格凹的。
+\end{translation}
+
+\subsection*{Exercises for Chapter 11 / 第11章习题}
+
+\begin{original}
+\textbf{Exercise 11.1} The total weekly revenue (in dollars) that a company obtains from selling goods $x$ and $y$ is:
+\[
+R(x, y) = -\frac{1}{4}x^2 - \frac{3}{8}y^2 - \frac{1}{4}xy + 300x + 240y.
+\]
+The total weekly cost attributed to production is
+\[
+C(x, y) = 180x + 140y + 5000.
+\]
+Find the profit-maximizing levels of $x$ and $y$ and check the second-order conditions.
+
+\textbf{Exercise 11.2} A television relay station will serve three towns, A, B and C, located in the $(x, y)$ plane at coordinates $A = (30,20)$, $B = (-20,10)$ and $C = (10,-10)$. Plot the location of the three towns in the $(x, y)$ plane and find the location of a transmitter, chosen to minimize the sum of the squares of the distances of the transmitter from each of the towns. For two points $(x_1, y_1)$ and $(x_2, y_2)$, the distance between them is $[(x_1 - x_2)^2 + (y_1 - y_2)^2]^{\frac{1}{2}}$.
+
+\textbf{Exercise 11.3} Consider the following duopoly model. There are two firms supplying a market where demand is given by $p(Q) = a - bQ$. Firm $i$ produces $q_i$ units of output and so the total level of production is $Q = q_1 + q_2$. Both firms face the same constant marginal cost, so the cost of producing $q_i$ for firm $i$ is $c q_i$. Thus the profit functions of firms 1 and 2 respectively, are given by:
+\begin{align*}
+\pi_1(q_1, q_2) &= p(q_1 + q_2)q_1 - c q_1 = (a - b[q_1 + q_2])q_1 - c q_1 \\
+\pi_2(q_1, q_2) &= p(q_1 + q_2)q_2 - c q_2 = (a - b[q_1 + q_2])q_2 - c q_2.
+\end{align*}
+(a) Suppose that each firm takes the output of the other firm as fixed, and calculates its own best choice of quantity. In this case, firm $i$ solves $\frac{\partial \pi_i}{\partial q_i} = 0$, taking as given the value of $q_j$. Calculate for the linear demand case the equations $\frac{\partial \pi_1}{\partial q_1} = 0$, $\frac{\partial \pi_2}{\partial q_2} = 0$. Solve for $q_1$ and $q_2$ and denote the solutions $q_1^d$ and $q_2^d$, where $d$ denotes duopoly. Compare the value of $Q^d = q_1^d + q_2^d$ with the monopoly level of output.
+(b) Suppose now that we have $n$ firms instead of two. This case is called oligopoly. Let the output of the $i$th firm be $q_i^o$, where $o$ denotes oligopoly, and see if you can solve for $Q^o = q_1^o + q_2^o + \cdots + q_n^o$.
+(c) Suppose now that a government tax per unit of output is imposed on each firm, with tax $t_i$ per unit on firm $i$. Then the profit functions become:
+\begin{align*}
+\pi_1(q_1, q_2; t_1) &= p(q_1 + q_2)q_1 - c q_1 - t_1 q_1 = (a - b[q_1 + q_2])q_1 - c q_1 - t_1 q_1 \\
+\pi_2(q_1, q_2; t_2) &= p(q_1 + q_2)q_2 - c q_2 - t_2 q_2 = (a - b[q_1 + q_2])q_2 - c q_2 - t_2 q_2.
+\end{align*}
+Repeat the exercise in (a), and solve for $q_1$ and $q_2$. Maximize $T$ with respect to $t_1$ and $t_2$, and check that the second-order conditions for a maximum are satisfied.
+
+\textbf{Exercise 11.4} Consider a firm that sells its output, $y$, at a fixed price $p$. In the production process, the firm creates pollution. To control pollution, the firm can engage in pollution abatement, $a$. The technology is as follows: the cost of producing $y$ units of output when operating at abatement level $a$ is given by $c(y, a)$, and the level of pollution emission is $e(y, a)$. We assume that for the cost function, $c_y > 0$, $c_{yy} > 0$, $c_a > 0$ and $c_{aa} > 0$. Similarly, for the emission process, $e$, we assume that $e_y > 0$, $e_{yy} > 0$, $e_a < 0$ and $e_{aa} > 0$. In addition, we assume that $c_{ay}(= c_{ya})$ and $e_{ay}(= e_{ya})$ are both positive. Finally, the government imposes a (unit) tax, $\tau$, on the level of pollution emission. The profit function for the firm is then given by:
+\[
+\pi(y, a) = py - c(y, a) - \tau e(y, a).
+\]
+(a) Find the first-order conditions for profit maximization with respect to choice of $(y, a)$.
+(b) Determine the second-order conditions.
+(c) In the case where $c(y, a) = y^2 a + ay$ and $e(y, a) = y - a^2 + ay$, $\alpha, \beta, \gamma$ parameters, find the profit-maximizing levels of $y$ and $a$. Check the second-order conditions. From the solution to the first-order conditions calculate $\partial y/\partial \tau$ and $\partial a/\partial \tau$.
+
+\textbf{Exercise 11.5} A firm's costs of plant operation are a function of two variables, $x$ and $y$. The cost function is given by:
+\[
+c(x, y) = 3x^2 - 2xy + y^2 + 4x + 3y.
+\]
+Give the solution to the first-order conditions and confirm that the solution minimizes the cost function.
+
+\textbf{Exercise 11.6} A box with edge lengths $x$, $y$ and $z$ has volume $V = xyz$. The surface area of a box with these dimensions (open at the top) is: $S = xy + 2yz + 2xz$. Suppose you have to choose a box size with volume 32; what choice of $x$, $y$ and $z$ is optimal to minimize surface area? Note that, in this question, there are only two choice variables once the volume is fixed. The variable $z$ can be substituted out: $z = 32/xy$. Find the optimal choices of the variables to minimize surface area $S$, and check that the second-order conditions for a minimum are satisfied.
+
+\textbf{Exercise 11.7} Consider a firm that sells its output, $y$, at a fixed price $p$. In the production process, the firm creates pollution. To control pollution, the firm can engage in pollution abatement, $a$. The technology is as follows: the cost of producing $y$ units of output when operating at abatement level $a$ is given by $c(y, a)$, and the level of pollution emission is $e(y, a)$. Finally, the government imposes a (unit) tax, $\tau$, on the level of pollution emission. The profit function for the firm is then given by:
+\[
+\pi(y, a) = py - c(y, a) - \tau e(y, a).
+\]
+Give the first- and second-order conditions for a maximum. Find the profit-maximizing levels of output and abatement when the cost function is given by $c(y, a) = y^2 + \frac{1}{2}a^2$, and $e(y, a) = y(10 - a)$. Check that the second-order conditions are satisfied. We assume that the tax rate is less than $1$ ($0 < \tau < 1$), and $p > 10$.
+
+\textbf{Exercise 11.8} Find the maximizing values of $(x, y)$ for the following function, and confirm that the second-order conditions are satisfied:
+\[
+f(x, y) = \sqrt{x} + \ln y - x^2 - 3y.
+\]
+
+\textbf{Exercise 11.9} Find the maximizing values of $(x, y)$ for the following function, and confirm that the second-order conditions are satisfied:
+\[
+f(x, y) = a\ln x + b\ln y - \tfrac{1}{2}c(x^2 + y^2).
+\]
+
+\textbf{Exercise 11.10} Find the maximizing values of $(x, y)$ for the following function, and confirm that the second-order conditions are satisfied:
+\[
+f(x, y) = \ln(ax + by) - \tfrac{1}{2}c(x^2 + y^2).
+\]
+\end{original}
+\begin{translation}
+\textbf{习题11.1} 某公司销售商品 $x$ 和 $y$ 的每周总收入（美元）为：
+\[
+R(x, y) = -\frac{1}{4}x^2 - \frac{3}{8}y^2 - \frac{1}{4}xy + 300x + 240y.
+\]
+生产相关的每周总成本为
+\[
+C(x, y) = 180x + 140y + 5000.
+\]
+求利润最大化的 $x$ 和 $y$ 水平，并检验二阶条件。
+
+\textbf{习题11.2} 一个电视中继站将为三个城镇 A、B 和 C 服务，它们位于 $(x, y)$ 平面上的坐标分别为 $A = (30,20)$，$B = (-20,10)$ 和 $C = (10,-10)$。在 $(x, y)$ 平面上绘制三个城镇的位置，并求出发射机的位置，使其最小化发射机到每个城镇距离的平方和。对于两点 $(x_1, y_1)$ 和 $(x_2, y_2)$，它们之间的距离为 $[(x_1 - x_2)^2 + (y_1 - y_2)^2]^{\frac{1}{2}}$。
+
+\textbf{习题11.3} 考虑以下双寡头模型。两家企业供应一个市场，需求由 $p(Q) = a - bQ$ 给出。企业 $i$ 生产 $q_i$ 单位产出，因此总生产水平为 $Q = q_1 + q_2$。两家企业面临相同的固定边际成本，故企业 $i$ 生产 $q_i$ 的成本为 $c q_i$。因此企业1和企业2的利润函数分别为：
+\[
+\pi_1(q_1, q_2) = (a - b[q_1 + q_2])q_1 - c q_1, \quad \pi_2(q_1, q_2) = (a - b[q_1 + q_2])q_2 - c q_2.
+\]
+（a）假设每家企业将另一家企业的产出视为给定，并计算自身的最优产量选择。求解 $q_1$ 和 $q_2$ 并将解记为 $q_1^d$ 和 $q_2^d$。比较 $Q^d = q_1^d + q_2^d$ 与垄断产出水平。
+（b）假设有 $n$ 家企业而非两家。求解 $Q^o = q_1^o + q_2^o + \cdots + q_n^o$。
+（c）假设对每家企业征收单位产出税。求解 $q_1$ 和 $q_2$，最大化 $T$ 关于 $t_1$ 和 $t_2$，并检验极大值的二阶条件。
+
+\textbf{习题11.4} 一家企业以固定价格 $p$ 销售其产出 $y$。控制污染的减排水平为 $a$。生产成本为 $c(y, a)$，污染排放水平为 $e(y, a)$。假设 $c_y > 0$, $c_{yy} > 0$, $c_a > 0$, $c_{aa} > 0$；$e_y > 0$, $e_{yy} > 0$, $e_a < 0$, $e_{aa} > 0$。利润函数为 $\pi(y, a) = py - c(y, a) - \tau e(y, a)$。
+（a）求利润最大化的一阶条件。（b）确定二阶条件。
+（c）在 $c(y, a) = y^2 a + ay$ 和 $e(y, a) = y - a^2 + ay$ 的情形下，求利润最大化的 $y$ 和 $a$ 并对 $\tau$ 求偏导。
+
+\textbf{习题11.5} 某企业工厂运营成本是两变量 $x$ 和 $y$ 的函数：$c(x, y) = 3x^2 - 2xy + y^2 + 4x + 3y$。给出一阶条件的解并确认该解最小化成本函数。
+
+\textbf{习题11.6} 一个棱长分别为 $x$、$y$ 和 $z$ 的盒子体积为 $V = xyz$，无盖表面积为 $S = xy + 2yz + 2xz$。假设需选择体积为32的盒子尺寸，求最优的 $x, y, z$ 以最小化表面积 $S$，并检验极小值的二阶条件。
+
+\setcounter{enumi}{6}
+\textbf{习题11.7} 类似习题11.4，当 $c(y, a) = y^2 + \frac{1}{2}a^2$ 和 $e(y, a) = y(10 - a)$ 时，求利润最大化的产出和减排水平，并检验二阶条件。
+
+\textbf{习题11.8} 求函数 $f(x, y) = \sqrt{x} + \ln y - x^2 - 3y$ 的最大化值，并确认二阶条件。
+
+\textbf{习题11.9} 求函数 $f(x, y) = a\ln x + b\ln y - \frac{1}{2}c(x^2 + y^2)$ 的最大化值，并确认二阶条件。
+
+\textbf{习题11.10} 求函数 $f(x, y) = \ln(ax + by) - \frac{1}{2}c(x^2 + y^2)$ 的最大化值，并确认二阶条件。
+\end{translation}
+
+\begin{original}
+\textbf{Exercise 11.11} Consider the problem of maximizing a function, $f(x, y; a)$, by choice of $x$ and $y$, where $a$ is some parameter. Suppose that the solution values for $x$ and $y$ are $x(a)$ and $y(a)$, respectively. The optimized value of the function is then $f^*(a) = f(x(a), y(a); a)$.
+(a) Explain why $\frac{df^*(a)}{da} = \frac{\partial f(x(a), y(a); a)}{\partial a}$.
+(b) Illustrate this in the one-variable case, where $f(x; a) = a\ln(x) - \frac{1}{a}x$.
+
+\textbf{Exercise 11.12} Consider the following problem. Minimize $f(x, y) = (x - a)^2 + (y - b)^2 - \frac{1}{2}cxy$.
+(a) Find the minimizing values for $x$ and $y$. (Assume that $c < 1$.)
+(b) Confirm that the second-order conditions are satisfied. Let $f^*(a, b, c)$ be the value of the function at the solution.
+(c) Find $\frac{\partial f^*(a,b,c)}{\partial a}$ and $\frac{\partial f^*(a,b,c)}{\partial c}$.
+
+\textbf{Exercise 11.13} A firm maximizes profit, where profit is equal to revenue minus cost. Output ($Q$) depends on two inputs, $K$ and $L$, related according to the production function $Q = f(K, L)$. Output sells at price $p$ and the costs of the inputs $K$ and $L$ are $r$ and $w$, respectively. So the profit maximization problem is:
+\[
+\max_{K,L} \pi(K, L) = p f(K, L) - rK - wL.
+\]
+Give the first- and second-order conditions for profit maximization. In the particular case where $f$ is $f(K, L) = K^\alpha L^\beta$ with $\alpha > 0$, $\beta > 0$ and $0 < \alpha + \beta < 1$, verify that the second-order conditions are satisfied and solve for the optimal choice of $(K, L)$.
+
+\textbf{Exercise 11.14} A standard econometric problem is determining the ordinary least squares estimator (OLS). In the underlying model, the $i$th observation on one variable $y$ is denoted $y_i$ and the corresponding observation on another variable $x$ is denoted $x_i$. It is postulated that $y$ and $x$ are linearly related with some error, $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$. If $a$ and $b$ are chosen as the intercept and slope, respectively, then the estimated error associated with the $i$th observation is $e_i = y_i - a - b x_i$. The OLS estimator is obtained by minimizing the sum of squares of the estimated errors, $\sum_{i=1}^n e_i^2$, by choice of $a$ and $b$. Thus, the OLS estimator is obtained by solving the problem:
+\[
+\min_{a,b} S = \sum_{i=1}^n e_i^2 = \min_{a,b} \sum_{i=1}^n (y_i - a - b x_i)^2.
+\]
+Find the OLS estimator and confirm the second-order conditions for a minimum.
+
+\textbf{Exercise 11.15} A monopolist can sell a product in three different countries. The demand in each country is:
+\[
+Q_1 = 50 - \tfrac{1}{2}P_1, \quad Q_2 = 50 - \tfrac{1}{3}P_2, \quad Q_3 = 75 - \tfrac{1}{4}P_3.
+\]
+The cost function for the monopolist is $C(Q) = 30 + Q^2$, where $Q = Q_1 + Q_2 + Q_3$. Calculate the amount of the product that the profit-maximizing monopolist should sell in each country and check the second-order conditions for a maximum.
+
+\textbf{Exercise 11.16} For the following functions, calculate the Hessians and determine if they are positive or negative definite:
+\begin{enumerate}
+\item[(a)] $f(x, y) = -2x^2 - 7y^2 + xy + 12x + 37y$
+\item[(b)] $f(x, y) = 10x^2 + 5y^2 + 3x - 12y + 9xy$
+\item[(c)] $f(x, y, z) = 3x^2 + 12y^2 + 5z^2 - 13x + 12y + 2xz - 3yz$
+\item[(d)] $f(x, y, z) = 2x + 3y - 5xz + 2xy - 6x^2 - 8y^2 - 11z^2$.
+\end{enumerate}
+
+\textbf{Exercise 11.17} For the following function, find all extreme points and check if they are maxima or minima:
+\[
+f(x, y) = 3y^3 + 2x^2 + 4xy + 8y^2 + 2y.
+\]
+
+\textbf{Exercise 11.18} Given the three-input Cobb--Douglas production function, $Y = A L^\alpha K^\beta M^\gamma$, where $L$ is the amount of labour, $K$ the amount of capital and $M$ the amount of other materials used, prove that the second-order conditions for a profit maximization hold if and only if $\alpha + \beta + \gamma < 1$ ($\alpha,\beta,\gamma > 0$). The good sells for a price of a dollar per unit. The costs of labour, capital and materials are, respectively, $w$, $r$ and $p$. Find the Hessian matrix and confirm that it is negative definite.
+
+\textbf{Exercise 11.19} The geometric average of three (positive) numbers $x$, $y$ and $z$ is given by $(xyz)^{\frac{1}{3}}$. Suppose that $x + y + z = k$. Show that the geometric average is maximized when $x = y = z$.
+
+\textbf{Exercise 11.20} A firm uses two inputs $x$, $y$ to produce $Q$ according to $Q = A(x^\alpha + y^\beta)$, with $0 < \alpha, \beta < 1$. The production cost is given by $c(x, y)$, so that profit is $\pi(x, y) = pA(x^\alpha + y^\beta) - c(x, y)$, where $p$ is the price of $Q$. Give the first- and second-order conditions for a maximum. In the case where $c(x, y) = ax + by + dxy$, $a, b, d > 0$, find the maximizing values of $x, y$ and show that the conditions for a maximum are satisfied.
+
+\textbf{Exercise 11.21} For the function $f(x, y) = 10x^2 + 10y^2 + 3x - 12y + 10xy$, show that the Hessian is positive definite.
+
+\textbf{Exercise 11.22} For the function $f(x, y, z) = 2x + 3y - 5xz + 2xy - 6x^2 - 9y^2 - 12z^2$, show that the Hessian is negative definite.
+\end{original}
+\begin{translation}
+\textbf{习题11.11} 考虑通过选择 $x$ 和 $y$ 最大化函数 $f(x, y; a)$ 的问题，其中 $a$ 是某个参数。设 $x(a)$ 和 $y(a)$ 分别为 $x$ 和 $y$ 的解值。最优函数值为 $f^*(a) = f(x(a), y(a); a)$。
+（a）解释为什么 $\frac{df^*(a)}{da} = \frac{\partial f(x(a), y(a); a)}{\partial a}$。
+（b）在单变量情形中说明此结果，其中 $f(x; a) = a\ln(x) - \frac{1}{a}x$。
+
+\textbf{习题11.12} 最小化 $f(x, y) = (x - a)^2 + (y - b)^2 - \frac{1}{2}cxy$。
+（a）求 $x$ 和 $y$ 的最小化值。（假设 $c < 1$。）
+（b）确认二阶条件成立。令 $f^*(a, b, c)$ 为解处的函数值。
+（c）求 $\frac{\partial f^*(a,b,c)}{\partial a}$ 和 $\frac{\partial f^*(a,b,c)}{\partial c}$。
+
+\textbf{习题11.13} 企业最大化利润，产出 $Q = f(K, L)$，价格为 $p$，投入成本为 $r$ 和 $w$。在 $f(K, L) = K^\alpha L^\beta$，$\alpha, \beta > 0$，$0 < \alpha + \beta < 1$ 的情形下，验证二阶条件并求解 $(K, L)$ 的最优选择。
+
+\textbf{习题11.14} 普通最小二乘（OLS）估计量通过最小化 $\sum_{i=1}^n (y_i - a - b x_i)^2$ 得到。求OLS估计量并确认极小值的二阶条件。
+
+\textbf{习题11.15} 垄断者在三个不同国家销售产品。需求为 $Q_1 = 50 - \frac{1}{2}P_1$, $Q_2 = 50 - \frac{1}{3}P_2$, $Q_3 = 75 - \frac{1}{4}P_3$，成本函数为 $C(Q) = 30 + Q^2$。计算利润最大化垄断者在每个国家销售的产品数量并检验二阶条件。
+
+\textbf{习题11.16} 对以下函数，计算Hessian矩阵并判断它们是正定还是负定：
+（a）$f(x, y) = -2x^2 - 7y^2 + xy + 12x + 37y$
+（b）$f(x, y) = 10x^2 + 5y^2 + 3x - 12y + 9xy$
+（c）$f(x, y, z) = 3x^2 + 12y^2 + 5z^2 - 13x + 12y + 2xz - 3yz$
+（d）$f(x, y, z) = 2x + 3y - 5xz + 2xy - 6x^2 - 8y^2 - 11z^2$.
+
+\textbf{习题11.17} 求函数 $f(x, y) = 3y^3 + 2x^2 + 4xy + 8y^2 + 2y$ 的所有极值点，并判断它们是极大值还是极小值。
+
+\textbf{习题11.18} 给定三投入Cobb--Douglas生产函数 $Y = A L^\alpha K^\beta M^\gamma$，证明利润最大化的二阶条件成立当且仅当 $\alpha + \beta + \gamma < 1$。求Hessian矩阵并确认它是负定的。
+
+\textbf{习题11.19} 三个正数 $x, y, z$ 的几何平均为 $(xyz)^{\frac{1}{3}}$。假设 $x + y + z = k$。证明当 $x = y = z$ 时几何平均最大化。
+
+\textbf{习题11.20} 企业使用两种投入 $x, y$ 生产 $Q = A(x^\alpha + y^\beta)$。在 $c(x, y) = ax + by + dxy$ 的情形下，求出 $x, y$ 的最大化值，并证明极大值条件成立。
+
+\textbf{习题11.21} 对函数 $f(x, y) = 10x^2 + 10y^2 + 3x - 12y + 10xy$，证明Hessian矩阵是正定的。
+
+\textbf{习题11.22} 对函数 $f(x, y, z) = 2x + 3y - 5xz + 2xy - 6x^2 - 9y^2 - 12z^2$，证明Hessian矩阵是负定的。
+\end{translation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHAPTER 12: EQUALITY-CONSTRAINED OPTIMIZATION / 等式约束最优化
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Equality-Constrained Optimization / 等式约束最优化}
+
+\subsection{12.1 Introduction / 引言}
+
+\begin{original}
+Optimization of a function $f(x_1,\ldots,x_n)$ involves choosing the $x_i$ variables to make the function $f$ as large or as small as possible. With constrained optimization, permissible choices for the $x_i$ are restricted or constrained. In what follows, such constraints are represented by a function, $g$, whereby the $x_i$ variables must satisfy a condition of the form $g(x_1,\ldots,x_n) = c$. For example, in the standard utility maximization problem, the task is to maximize utility $u(x_1,\ldots,x_n)$ subject to a budget constraint $p_1x_1 + \cdots + p_nx_n = c$, where $p_i$ is the price of good $i$ and $c$ is the income available.
+
+Constraints limit the choices that are feasible. In the case of two goods, the budget constraint is $p_1x_1 + p_2x_2 = c$ so that the feasible pairs lie on a line. In this case, there is one constraint with two choice variables. The choice of one variable determines the choice of the other: given $x_1$, $x_2$ is determined as $x_2 = \frac{c}{p_2} - \frac{p_1}{p_2}x_1$. Suppose that in addition to the budget constraint there is a second constraint -- that the two goods are complements that must be consumed in a set ratio: $\frac{x_2}{x_1} = r$ or $x_2 = rx_1$. Given this, from $p_1x_1 + p_2x_2 = c$ one has $p_1x_1 + p_2rx_1 = c$ or $(p_1 + p_2r)x_1 = c$ or $x_1 = \frac{c}{(p_1 + p_2r)}$ and $x_2 = \frac{cr}{(p_1 + p_2r)}$. Thus, there is a unique pair satisfying the two constraints. This observation is generally true; if the number of constraints equals the number of choice variables, there are generally at most a finite number of solutions to the set of constraints. For this reason, the set of constraints is generally less than the number of choice variables.
+
+The next section provides a motivating example showing how the Lagrangian technique relates to the familiar first-order condition (marginal rate of substitution equals the price ratio) for an optimum in the consumer choice problem. Section 12.2 considers the case of two variables and one constraint. The case of $n$ variables and one constraint is discussed in Section 12.4. It turns out that the Lagrange multiplier appearing in the definition of the Lagrangian has a significant economic interpretation: it provides a measure of the value of the constraint. Specifically, it measures the marginal change in the value of the objective resulting from a small change in the constraint. This is examined in Section 12.5. In the case of unconstrained optimization, identification of sufficient conditions for a global optimum is simplified when the objective has a specific shape, particularly concavity or convexity. Similarly, with constrained optimization, under suitable conditions, discussed in Section 12.6, the local conditions for an optimum are sufficient for the solution to be a global optimum.
+\end{original}
+\begin{translation}
+函数 $f(x_1,\ldots,x_n)$ 的最优化涉及选择 $x_i$ 变量以使函数 $f$ 尽可能大或尽可能小。在约束最优化中，$x_i$ 的容许选择受到限制或约束。在下文中，这种约束由一个函数 $g$ 表示，其中 $x_i$ 变量必须满足形如 $g(x_1,\ldots,x_n) = c$ 的条件。例如，在标准的效用最大化问题中，任务是在预算约束 $p_1x_1 + \cdots + p_nx_n = c$ 下最大化效用 $u(x_1,\ldots,x_n)$，其中 $p_i$ 为商品 $i$ 的价格，$c$ 为可支配收入。
+
+约束限制了可行的选择。在两种商品的情形中，预算约束为 $p_1x_1 + p_2x_2 = c$，因此可行的商品对位于一条直线上。此时，有两个选择变量和一个约束。一个变量的选择决定了另一个变量的选择：给定 $x_1$，$x_2$ 由 $x_2 = \frac{c}{p_2} - \frac{p_1}{p_2}x_1$ 确定。若约束个数等于选择变量的个数，通常至多存在有限个解。因此，约束的个数通常小于选择变量的个数。
+
+接下来的一节给出一个引导性例子，展示拉格朗日方法与消费者选择问题中熟悉的一阶条件（边际替代率等于价格比）之间的关系。第12.2节讨论了二变量单约束的情形。第12.4节讨论了 $n$ 变量单约束的情形。出现在拉格朗日函数定义中的拉格朗日乘数具有重要的经济解释：它提供了约束价值的一个度量。具体而言，它度量了约束的微小变化所导致的目标函数值的边际变化。这在第12.5节中进行了考察。在无约束最优化中，当目标函数具有特定形状（特别是凹性或凸性）时，全局最优的充分条件的识别得以简化。类似地，在约束最优化中，在第12.6节讨论的适当条件下，局部最优条件是全局最优的充分条件。
+\end{translation}
+
+\subsubsection{12.1.1 A Motivating Example / 引导性例子}
+
+\begin{original}
+The optimization techniques described next are based on the use of Lagrangian functions. The discussion here shows how that formulation may be related to optimization ideas introduced earlier. Consider the problem of maximizing $u(y, l)$ where $y$ is income and $l$ is leisure. Work is time not used for leisure, $24 - l$, and income is given by the wage $w$ times the amount of time spent working, so income and leisure are connected according to the equation or constraint $y = w(24-l)$. Assume that the marginal benefit of both income and leisure is positive: $u_y > 0$ and $u_l > 0$. Maximizing $u(y, l)$ subject to the constraint $y = w(24-l)$, is an equality-constrained optimization problem.
+
+The condition $y = w(24-l)$ implies that there is only one variable to be chosen -- once $l$ is chosen, the value of $y$ is determined. Using this fact, $y$ can be eliminated from the problem -- the constraint can be substituted into the objective to give $\hat{u}(l) = u(w(24-l), l)$ and the function $\hat{u}$ can be maximized with respect to $l$ as an unconstrained problem. Differentiating and setting to 0:
+\[
+\hat{u}' = 0 \;\Rightarrow\; -u_y w + u_l = 0 \;\Rightarrow\; \frac{u_l}{u_y} = w.
+\]
+
+For example, if $u(y, l) = \ln y + \ln l$, then $\hat{u}(l) = \ln(w(24-l)) + \ln(l)$. Differentiating $\hat{u}(l)$ and setting the derivative to 0:
+\[
+\hat{u}'(l) = 0 = \frac{-w}{w(24-l)} + \frac{1}{l} \;\Rightarrow\; -l + 24 - l = 0 = 24 - 2l.
+\]
+This has solution $l = \frac{24}{2} = 12$, $y = w(24-12) = 12w$. The second-order condition for a maximum is easy to check: $\hat{u}''(l) = -\frac{1}{(24-l)^2} - \frac{1}{l^2} < 0$. Thus, using the constraint to solve for one variable in terms of the other leads to an unconstrained problem in one variable that can be solved as the unconstrained maximization of a function of one variable.
+
+An alternative approach to constrained optimization is to define a function called a Lagrangian. The Lagrangian is denoted $\mathcal{L}$. It is the original function plus the constraint multiplied by a ``Lagrange multiplier''. The arguments of the function $\mathcal{L}$ are the choice variables and a Lagrange multiplier, $\lambda$. In the present example, the Lagrangian is defined:
+\[
+\mathcal{L}(y, l, \lambda) = U(y, l) + \lambda(y - w(24-l)).
+\]
+This is now viewed as the objective and maximized with respect to all variables, including the Lagrangian multiplier.
+\begin{align}
+\mathcal{L}_y &= u_y + \lambda = 0 \tag{12.1}\\
+\mathcal{L}_l &= u_l + \lambda w = 0 \tag{12.2}\\
+\mathcal{L}_\lambda &= y - w(24-l) = 0. \tag{12.3}
+\end{align}
+
+The first two conditions give $\frac{u_l}{u_y} = w$, and this condition imposes the tangency of the indifference curve to the income-leisure constraint. The third equation gives $y - w(24-l) = 0$. Solving these determines the optimal values for $l$ and $y$.
+
+To illustrate, consider the case where $u(l, y) = \ln l + \ln y$, so that $u_y = \frac{1}{y}$, $u_l = \frac{1}{l}$, and so $w = \frac{u_l}{u_y} = \frac{1/l}{1/y} = \frac{y}{l}$, i.e. $wl = y$. Since $y = w(24-l) = wl$, this gives $wl = 24w - lw$ or $24w = 2lw$. Therefore $l = 12$ and $y = wl = 12w$. This is the same solution as was obtained by substituting the constraint into the objective function. From Equation 12.2, $u_l + \lambda w = 0$. This equation determines $\lambda$: $\lambda = -\frac{u_l}{w} = -\frac{1}{wl} = -\frac{1}{12w}$.
+\end{original}
+\begin{translation}
+接下来描述的最优化技术基于拉格朗日函数的使用。考虑在约束 $y = w(24-l)$ 下最大化 $u(y, l)$ 的问题（收入与闲暇）。将约束代入目标函数可化为无约束问题：$\hat{u}(l) = u(w(24-l), l)$，求导并令其为零：$\hat{u}' = 0 \Rightarrow -u_y w + u_l = 0 \Rightarrow \frac{u_l}{u_y} = w$。
+
+例如，若 $u(y, l) = \ln y + \ln l$，则 $\hat{u}(l) = \ln(w(24-l)) + \ln(l)$，令导数为零得 $l = 12$，$y = 12w$。
+
+另一种方法是定义拉格朗日函数：
+\[
+\mathcal{L}(y, l, \lambda) = U(y, l) + \lambda(y - w(24-l)).
+\]
+将其视为目标函数，对所有变量（包括拉格朗日乘数）求最大化：
+\begin{align}
+\mathcal{L}_y &= u_y + \lambda = 0 \\
+\mathcal{L}_l &= u_l + \lambda w = 0 \\
+\mathcal{L}_\lambda &= y - w(24-l) = 0.
+\end{align}
+前两个条件给出 $\frac{u_l}{u_y} = w$，即无差异曲线与收入-闲暇约束的切点条件。解之得 $l = 12$，$y = 12w$，与代入法结果相同。$\lambda = -\frac{u_l}{w} = -\frac{1}{12w}$。
+\end{translation}
+
+\subsection{12.2 The Two-Variable Case / 两变量情形}
+
+\begin{original}
+The following discussion considers in general terms the case where there are two choice variables and one equality constraint. Let the objective function be $f(x, y)$ and let the constraint be $c = g(x, y)$. Throughout, assume that $(x, y) \in Z$ where $Z$ is an open set in $\mathbb{R}^2$. Thus, if $(x^*, y^*)$ are in $Z$, all points $(x, y)$ sufficiently close to $(x^*, y^*)$ are in $Z$. Furthermore, $f$ and $g$ are assumed to be continuously differentiable. The task is to maximize or minimize $f(x, y)$ subject to $(x, y)$, satisfying the constraint $c = g(x, y)$.
+
+\textbf{Definition 12.1:} A point $(\bar{x}, \bar{y})$ is a constrained local maximum if $g(\bar{x}, \bar{y}) = 0$ and $f(\bar{x}, \bar{y}) \geq f(x, y)$ for all $(x, y)$ in a neighborhood of $(\bar{x}, \bar{y})$ and satisfying $g(x, y) = 0$. A constrained local minimum is similarly defined.
+
+To identify necessary and sufficient conditions for $(\bar{x}, \bar{y})$ to be a constrained local maximum or minimum it is useful to formulate the Lagrangian, $\mathcal{L}$:
+\[
+\mathcal{L}(x, y, \lambda) = f(x, y) + \lambda[c - g(x, y)]. \tag{12.4}
+\]
+
+In addition, define the bordered Hessian, $\bar{H}$:
+\[
+\bar{H} = \begin{pmatrix}
+0 & g_x & g_y \\
+g_x & f_{xx} - \lambda g_{xx} & f_{xy} - \lambda g_{xy} \\
+g_y & f_{xy} - \lambda g_{xy} & f_{yy} - \lambda g_{yy}
+\end{pmatrix}. \tag{12.5}
+\]
+
+With this notation:
+
+\textbf{Theorem 12.1:} Consider the problem of maximizing or minimizing the function $f(x, y)$ subject to a constraint $g(x, y) = c$. Let $\mathcal{L}(x, y, \lambda) = f(x, y, \lambda) + \lambda[c - g(x, y)]$. Suppose $(\bar{x}, \bar{y}, \bar{\lambda})$ satisfies:
+\begin{align}
+\mathcal{L}_x &= f_x(\bar{x}, \bar{y}) - \bar{\lambda} g_x(\bar{x}, \bar{y}) = 0 \tag{12.6}\\
+\mathcal{L}_y &= f_y(\bar{x}, \bar{y}) - \bar{\lambda} g_y(\bar{x}, \bar{y}) = 0 \tag{12.7}\\
+\mathcal{L}_\lambda &= c - g(\bar{x}, \bar{y}) = 0. \tag{12.8}
+\end{align}
+Then,
+\begin{itemize}
+\item if $|\bar{H}| > 0$, $(\bar{x}, \bar{y})$ is a constrained local maximum;
+\item if $|\bar{H}| < 0$, $(\bar{x}, \bar{y})$ is a constrained local minimum.
+\end{itemize}
+
+Assuming the derivatives are non-zero, conditions 12.6 and 12.7 imply that
+\[
+\frac{f_x(\bar{x}, \bar{y})}{f_y(\bar{x}, \bar{y})} = \frac{g_x(\bar{x}, \bar{y})}{g_y(\bar{x}, \bar{y})}.
+\]
+This, along with the constraint, $c - g(\bar{x}, \bar{y}) = 0$, yields two equations in the two unknowns, $(\bar{x}, \bar{y})$. These may be solved for $(\bar{x}, \bar{y})$ and $\bar{\lambda}$ solved residually from Equations 12.6 or 12.7.
+\end{original}
+\begin{translation}
+以下讨论一般情况下两选择变量和一个等式约束的情形。设目标函数为 $f(x, y)$，约束为 $c = g(x, y)$。假设 $f$ 和 $g$ 是连续可微的。任务是在满足约束 $c = g(x, y)$ 的条件下最大化或最小化 $f(x, y)$。
+
+\textbf{定义12.1：} 点 $(\bar{x}, \bar{y})$ 是约束局部极大值，若 $g(\bar{x}, \bar{y}) = 0$ 且对邻域内所有满足 $g(x, y) = 0$ 的 $(x, y)$ 有 $f(\bar{x}, \bar{y}) \geq f(x, y)$。约束局部极小值类似定义。
+
+为找到必要条件与充分条件，构造拉格朗日函数 $\mathcal{L}$：
+\[
+\mathcal{L}(x, y, \lambda) = f(x, y) + \lambda[c - g(x, y)]. \tag{12.4}
+\]
+并定义加边Hessian矩阵 $\bar{H}$：
+\[
+\bar{H} = \begin{pmatrix}
+0 & g_x & g_y \\
+g_x & f_{xx} - \lambda g_{xx} & f_{xy} - \lambda g_{xy} \\
+g_y & f_{xy} - \lambda g_{xy} & f_{yy} - \lambda g_{yy}
+\end{pmatrix}. \tag{12.5}
+\]
+
+\textbf{定理12.1：} 考虑在约束 $g(x, y) = c$ 下最大化或最小化 $f(x, y)$ 的问题。设 $(\bar{x}, \bar{y}, \bar{\lambda})$ 满足一阶条件 $\mathcal{L}_x = 0$, $\mathcal{L}_y = 0$, $\mathcal{L}_\lambda = 0$。则：
+\begin{itemize}
+\item 若 $|\bar{H}| > 0$，$(\bar{x}, \bar{y})$ 是约束局部极大值；
+\item 若 $|\bar{H}| < 0$，$(\bar{x}, \bar{y})$ 是约束局部极小值。
+\end{itemize}
+
+在导数非零的假设下，条件(12.6)和(12.7)意味着 $\frac{f_x}{f_y} = \frac{g_x}{g_y}$。这与约束 $c - g(x, y) = 0$ 一起给出关于 $(\bar{x}, \bar{y})$ 的两个方程。
+\end{translation}
+
+\begin{original}
+\textbf{REMARK 12.2:} Theorem 12.1 gives sufficient conditions for a local maximum. But a local (or global) maximum may fail to satisfy these conditions. Suppose that $f(x, y) = xy$ and $g(x, y) = (x + y - 1)^2$. Consider the problem of maximizing $f$ subject to the constraint $g(x, y) = 0$. The constraint is satisfied if and only if $x + y - 1 = 0$ or $x + y = 1$ or $y = 1 - x$. Substituting $y = 1 - x$ into the objective and maximizing $\hat{f}(x) = x(1-x)$ gives $\hat{f}'(x) = 1-2x$ and $\hat{f}''(x) = -2$ so that the local and global maxima are found at $x = y = \frac{1}{2}$. But observe that $g_x(x, y) = g_y(x, y) = (x + y - 1)$ so that at the solution $(\bar{x}, \bar{y}) = (\frac{1}{2}, \frac{1}{2})$, $g_x(\bar{x}, \bar{y}) = g_y(\bar{x}, \bar{y}) = 0$. However, $(f_x, f_y) = (y, x)$ so that $(f_x(\bar{x}, \bar{y}), f_y(\bar{x}, \bar{y})) = (\frac{1}{2}, \frac{1}{2})$. So, for example, in Theorem 12.1, the condition $f_x(\bar{x}, \bar{y}) = \lambda g_x(\bar{x}, \bar{y})$ fails, although $(\bar{x}, \bar{y})$ is the global optimum. Because $(g_x(\bar{x}, \bar{y}), g_y(\bar{x}, \bar{y})) = (0,0)$, it is impossible to write $f_x(\bar{x}, \bar{y}) = \lambda g_x(\bar{x}, \bar{y})$.
+
+The issue here is that at the solution, $(g_x(\bar{x}, \bar{y}), g_y(\bar{x}, \bar{y})) = (0,0)$. Theorem 12.2 confirms this observation.
+
+\textbf{Theorem 12.2:} Let $f$ and $g$ be continuously differentiable functions on an open set $Z$ in $\mathbb{R}^2$. Suppose that $(\bar{x}, \bar{y})$ is a constrained local maximum or minimum of $f$, subject to the constraint $g(x, y) = c$. Suppose that $(g_x(\bar{x}, \bar{y}), g_y(\bar{x}, \bar{y})) \neq (0,0)$. Then there is a $\lambda$ such that
+\[
+\nabla f(\bar{x}, \bar{y}) = \lambda \nabla g(\bar{x}, \bar{y}).
+\]
+Therefore, when $(g_x(\bar{x}, \bar{y}), g_y(\bar{x}, \bar{y})) \neq (0,0)$, the conditions $f_x = \lambda g_x$, $f_y = \lambda g_y$ and $g = 0$ give three equations in three unknowns, $(\bar{x}, \bar{y}, \lambda)$, which may be solved to identify a candidate solution to the optimization problem.
+\end{original}
+\begin{translation}
+\textbf{注记12.2：} 定理12.1给出了局部极大值的充分条件。但局部（或全局）极大值可能不满足这些条件。设 $f(x, y) = xy$ 且 $g(x, y) = (x + y - 1)^2$。在约束 $g(x, y) = 0$（即 $x+y=1$）下最大化 $f$，代入得 $\hat{f}(x) = x(1-x)$，解之得 $x = y = \frac{1}{2}$。但在该解处，$g_x = g_y = 0$，故 $f_x = \lambda g_x$ 的条件失效。
+
+\textbf{定理12.2：} 设 $f$ 和 $g$ 是 $\mathbb{R}^2$ 中开集 $Z$ 上的连续可微函数。若 $(\bar{x}, \bar{y})$ 是约束局部极值且 $(g_x(\bar{x}, \bar{y}), g_y(\bar{x}, \bar{y})) \neq (0,0)$，则存在 $\lambda$ 使得 $\nabla f(\bar{x}, \bar{y}) = \lambda \nabla g(\bar{x}, \bar{y})$。
+\end{translation}
+
+\subsection{12.3 Motivation for First- and Second-Order Conditions / 一阶与二阶条件的动机}
+
+\subsubsection{12.3.1 The First-Order Condition / 一阶条件}
+
+\begin{original}
+Assume that we can write $y$ as a function of $x$: $y = h(x)$. Then, by substituting for $y$ the problem reduces to $\max_x f(x, h(x))$. The original problem with two choice variables and a constraint has been reduced to a one-variable unconstrained problem -- maximizing the function $\hat{f}(x) \stackrel{\text{def}}{=} f(x, h(x))$. The following calculations show that the solution from $\max_x f(x, h(x))$ is the same as that obtained from the Lagrangian method. Maximizing $f(x, h(x))$ with respect to $x$, the first-order condition is
+\[
+0 = \frac{d\hat{f}}{dx} = f_x + f_y h', \quad \text{where } h' = \frac{dy}{dx} = -\frac{g_x}{g_y}.
+\]
+Thus,
+\[
+0 = f_x + f_y\left(-\frac{g_x}{g_y}\right), \quad \text{so that } \frac{f_x}{g_x} = \frac{f_y}{g_y}.
+\]
+This condition and $c = g(x, y)$ give the same conditions as obtained from the Lagrangian first-order conditions.
+\end{original}
+\begin{translation}
+假设可将 $y$ 写成 $x$ 的函数 $y = h(x)$。代入后问题简化为 $\max_x f(x, h(x))$。计算表明由 $\max_x f(x, h(x))$ 得到的解与拉格朗日方法得到的解相同。最大化 $f(x, h(x))$ 的一阶条件为 $0 = f_x + f_y h'$，其中 $h' = -\frac{g_x}{g_y}$。故 $\frac{f_x}{g_x} = \frac{f_y}{g_y}$。此条件与 $c = g(x, y)$ 给出了与拉格朗日一阶条件相同的条件。
+\end{translation}
+
+\subsubsection{12.3.2 The Second-Order Condition / 二阶条件}
+
+\begin{original}
+Maximizing the function $\hat{f}(x) = f(x, h(x))$ gives a first-order condition for an optimum. The second-order condition, $\hat{f}''(x) < 0$ for a maximum or $\hat{f}''(x) > 0$ for a minimum, may also be related to the bordered Hessian condition. Evaluating the second derivative:
+\[
+\frac{d^2\hat{f}}{dx^2} = f_{xx} + 2f_{xy}h' + f_{yy}(h')^2 + f_y h''.
+\]
+After substantial algebraic manipulation (using $h' = -g_x/g_y$ and $\lambda = f_y/g_y$), one obtains:
+\[
+\frac{d^2\hat{f}}{dx^2} \cdot (g_y^2) = -\{(f_{xx} - \lambda g_{xx})g_y^2 - 2(f_{xy} - \lambda g_{xy})g_x g_y + (f_{yy} - \lambda g_{yy})g_x^2\}.
+\]
+
+Now, consider the determinant $|\bar{H}|$:
+\[
+|\bar{H}| = -\{(f_{xx} - \lambda g_{xx})g_y^2 + 2(f_{xy} - \lambda g_{xy})g_x g_y + (f_{yy} - \lambda g_{yy})g_x^2\}
+= -\frac{d^2\hat{f}}{dx^2} \cdot (g_y^2).
+\]
+
+Therefore, $|\bar{H}|$ has the opposite sign to $\frac{d^2\hat{f}}{dx^2}$. For a maximum, the condition $\frac{d^2\hat{f}}{dx^2} < 0$ is sufficient and this is equivalent to $|\bar{H}| > 0$. For a minimum, $|\bar{H}| < 0$.
+
+Finally, since $\mathcal{L}_{xx} = f_{xx} - \lambda g_{xx}$, etc., the determinant may be written succinctly:
+\[
+|\bar{H}| = \begin{vmatrix}
+0 & g_x & g_y \\
+g_x & \mathcal{L}_{xx} & \mathcal{L}_{xy} \\
+g_y & \mathcal{L}_{yx} & \mathcal{L}_{yy}
+\end{vmatrix}.
+\]
+\end{original}
+\begin{translation}
+最大化 $\hat{f}(x) = f(x, h(x))$ 的二阶条件 $\hat{f}''(x) < 0$（极大值）或 $\hat{f}''(x) > 0$（极小值）可与加边Hessian条件建立联系。计算二阶导数并经过代数运算得到：
+\[
+\frac{d^2\hat{f}}{dx^2} \cdot (g_y^2) = -\{(f_{xx} - \lambda g_{xx})g_y^2 - 2(f_{xy} - \lambda g_{xy})g_x g_y + (f_{yy} - \lambda g_{yy})g_x^2\}.
+\]
+而行列式 $|\bar{H}|$ 恰好等于 $-\frac{d^2\hat{f}}{dx^2} \cdot (g_y^2)$。因此 $|\bar{H}|$ 与 $\frac{d^2\hat{f}}{dx^2}$ 反号。对极大值，$\frac{d^2\hat{f}}{dx^2} < 0$ 等价于 $|\bar{H}| > 0$；对极小值，$|\bar{H}| < 0$。用 $\mathcal{L}$ 表示，可简写为：
+\[
+|\bar{H}| = \begin{vmatrix}
+0 & g_x & g_y \\
+g_x & \mathcal{L}_{xx} & \mathcal{L}_{xy} \\
+g_y & \mathcal{L}_{yx} & \mathcal{L}_{yy}
+\end{vmatrix}.
+\]
+\end{translation}
+
+\subsubsection{12.3.3 A Geometric Perspective / 几何视角}
+
+\begin{original}
+With just one constraint, $g$, and one objective, $f$, constrained optimization involves locating a point where the objective is tangent to the constraint and then confirming that this is an optimum. The perpendicular to a curve $f(x, y) = c$ is proportional to the vector of partial derivatives, $(f_x(x, y), f_y(x, y))$. Furthermore, this vector points in the direction of greatest local increase in the function and therefore has a direct connection to the optimization problem. The slope of the level surface is $-\frac{f_x}{f_y}$. The line perpendicular to the tangent to the level surface is proportional to $(f_x(x^*, y^*), f_y(x^*, y^*))$.
+
+In the economic context of utility maximization where $u(x, y) = x^\alpha y^\beta$, the gradient $\nabla u(x, y) = (\frac{\alpha u}{x}, \frac{\beta u}{y})$ is perpendicular to the level surface (indifference curve). The constraint has the form $g(x, y) = px + qy = c$, so $\nabla g(x, y) = (p, q)$ is constant. At the optimum, $\nabla u(z^*) = \lambda \nabla g(z^*)$, where the gradient of utility is proportional to the price vector -- this is the first-order condition.
+\end{original}
+\begin{translation}
+在只有一个约束 $g$ 和一个目标函数 $f$ 的情形中，约束最优化涉及找到一个点，在该点处目标函数与约束相切，然后确认这是最优解。曲线 $f(x, y) = c$ 的垂线方向与偏导数向量 $(f_x, f_y)$ 成比例。该向量指向函数局部增加最快的方向。在效用最大化的经济语境中，无差异曲线的梯度 $\nabla u(x, y)$ 垂直于无差异曲线。预算约束为 $g(x, y) = px + qy = c$，故 $\nabla g = (p, q)$ 为常数。在最优点处，$\nabla u = \lambda \nabla g$，即效用梯度与价格向量成比例——这是一阶条件。
+\end{translation}
+
+\subsection{12.4 The $n$-Variable Case / $n$ 变量情形}
+
+\begin{original}
+This section considers the problem of maximizing or minimizing a function $f(x_1, x_2, \ldots, x_n)$ subject to the constraint $g(x_1, x_2, \ldots, x_n) = c$. The procedure is similar to the two-variable case: obtain first-order conditions relating the partial derivatives of the objective to those of the constraint and then confirm that the solution to these equations actually is a local maximum or local minimum. The generalization of the Lagrangian to $n$ variables is straightforward. Let
+\[
+\mathcal{L} = f(x_1, x_2, \ldots, x_n) + \lambda(c - g(x_1, \ldots, x_n)).
+\]
+The first-order conditions are:
+\[
+\frac{\partial \mathcal{L}}{\partial x_i} = \mathcal{L}_i = f_i(x) - \lambda g_i(x) = 0, \quad \frac{\partial \mathcal{L}}{\partial \lambda} = \mathcal{L}_\lambda = c - g(x) = 0.
+\]
+Let $(\bar{x}, \bar{\lambda})$ be a solution to these $n+1$ equations.
+\end{original}
+\begin{translation}
+本节考虑在约束 $g(x_1, \ldots, x_n) = c$ 下最大化或最小化 $f(x_1, \ldots, x_n)$ 的问题。过程与两变量情形类似：首先得到联系目标函数偏导数和约束偏导数的一阶条件，然后确认这些方程的解确实是局部极大值或极小值。拉格朗日函数向 $n$ 个变量的推广是直接的：
+\[
+\mathcal{L} = f(x_1, \ldots, x_n) + \lambda(c - g(x_1, \ldots, x_n)).
+\]
+一阶条件为 $\mathcal{L}_i = f_i(x) - \lambda g_i(x) = 0$ 和 $\mathcal{L}_\lambda = c - g(x) = 0$。设 $(\bar{x}, \bar{\lambda})$ 为这 $n+1$ 个方程的解。
+\end{translation}
+
+\subsubsection{12.4.1 Quadratic Forms and Bordered Matrices / 二次型与加边矩阵}
+
+\begin{original}
+A matrix $A$ determines a quadratic form according to the expression $x'Ax$. The matrix $A$ is said to be negative or positive definite if $x'Ax < 0$ or $x'Ax > 0$ for all non-zero vectors $x$. In constrained optimization, there is a comparable criterion based on bordered matrices.
+
+\textbf{Theorem 12.3:} Let $A$ be an $n \times n$ symmetric matrix and let $b$ be an $n \times 1$ vector with $b \neq 0$. Also, let $C = C_n = \begin{pmatrix} 0 & b' \\ b & A \end{pmatrix}$ and
+\[
+C_j = \begin{pmatrix}
+0 & b_1 & b_2 & \cdots & b_j \\
+b_1 & a_{11} & a_{12} & \cdots & a_{1j} \\
+b_2 & a_{21} & a_{22} & \cdots & a_{2j} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+b_j & a_{j1} & a_{j2} & \cdots & a_{jj}
+\end{pmatrix}.
+\]
+Then
+\begin{itemize}
+\item $\xi'A\xi < 0$, for all $\xi \neq 0$ with $b'\xi = 0$, if and only if $(-1)^j|C_j| > 0$, for all $j = 2,3,\ldots,n$.
+\item $\xi'A\xi > 0$ for all $\xi \neq 0$ with $b'\xi = 0$, if and only if $|C_j| < 0$, for all $j = 2,3,\ldots,n$.
+\end{itemize}
+\end{original}
+\begin{translation}
+矩阵 $A$ 通过表达式 $x'Ax$ 确定二次型。在约束最优化中，存在基于加边矩阵的类似判据。
+
+\textbf{定理12.3：} 设 $A$ 为 $n \times n$ 对称矩阵，$b$ 为 $n \times 1$ 向量且 $b \neq 0$。令 $C_j$ 为加边矩阵：
+\[
+C_j = \begin{pmatrix}
+0 & b_1 & \cdots & b_j \\
+b_1 & a_{11} & \cdots & a_{1j} \\
+\vdots & \vdots & \ddots & \vdots \\
+b_j & a_{j1} & \cdots & a_{jj}
+\end{pmatrix}.
+\]
+则对所有 $\xi \neq 0$ 且 $b'\xi = 0$ 有 $\xi'A\xi < 0$ 当且仅当 $(-1)^j|C_j| > 0$，$j = 2,\ldots,n$。类似地，$\xi'A\xi > 0$ 当且仅当 $|C_j| < 0$，$j = 2,\ldots,n$。
+\end{translation}
+
+\subsubsection{12.4.2 Bordered Hessians and Optimization / 加边Hessian与最优化}
+
+\begin{original}
+In the present context of $n$-variable optimization, $(x_1,\ldots,x_n)$ are chosen to maximize the objective $f(x_1,\ldots,x_n)$, subject to the constraint $g(x_1,\ldots,x_n) = c$. Define the bordered Hessian matrices:
+\[
+\bar{H} = \begin{pmatrix}
+0 & g_1 & g_2 & \cdots & g_n \\
+g_1 & \mathcal{L}_{11} & \mathcal{L}_{12} & \cdots & \mathcal{L}_{1n} \\
+g_2 & \mathcal{L}_{21} & \mathcal{L}_{22} & \cdots & \mathcal{L}_{2n} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+g_n & \mathcal{L}_{n1} & \mathcal{L}_{n2} & \cdots & \mathcal{L}_{nn}
+\end{pmatrix}, \quad
+\bar{H}_j = \begin{pmatrix}
+0 & g_1 & g_2 & \cdots & g_j \\
+g_1 & \mathcal{L}_{11} & \mathcal{L}_{12} & \cdots & \mathcal{L}_{1j} \\
+g_2 & \mathcal{L}_{21} & \mathcal{L}_{22} & \cdots & \mathcal{L}_{2j} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+g_j & \mathcal{L}_{j1} & \mathcal{L}_{j2} & \cdots & \mathcal{L}_{jj}
+\end{pmatrix}.
+\]
+
+\textbf{Theorem 12.4:} Let $\mathcal{L}(x_1,\ldots,x_n,\lambda) = f(x_1,\ldots,x_n) + \lambda(c - g(x_1,\ldots,x_n))$ and suppose that at $(\bar{x},\bar{\lambda})$ the following are satisfied:
+\[
+\frac{\partial \mathcal{L}}{\partial x_i} = \mathcal{L}_i = 0,\; i = 1,\ldots,n, \qquad \frac{\partial \mathcal{L}}{\partial \lambda} = \mathcal{L}_\lambda = 0.
+\]
+If, in addition, the bordered Hessian $\bar{H}$ satisfies (1) at $\bar{x}$, then $\bar{x}$ is a local maximum; and if $\bar{H}$ satisfies (2) at $\bar{x}$, then $\bar{x}$ is a local minimum, where
+\begin{enumerate}
+\item $|\bar{H}_2| > 0,\; |\bar{H}_3| < 0,\; |\bar{H}_4| > 0,\; \ldots,\; (-1)^n|\bar{H}_n| > 0$
+\item $|\bar{H}_2| < 0,\; |\bar{H}_3| < 0,\; \ldots,\; |\bar{H}_n| < 0$.
+\end{enumerate}
+\end{original}
+\begin{translation}
+在 $n$ 变量最优化的语境中，定义加边Hessian矩阵 $\bar{H}$ 和 $\bar{H}_j$（如上所示）。
+
+\textbf{定理12.4：} 设 $(\bar{x},\bar{\lambda})$ 满足一阶条件 $\mathcal{L}_i = 0$, $i=1,\ldots,n$ 和 $\mathcal{L}_\lambda = 0$。若加边Hessian $\bar{H}$ 在 $\bar{x}$ 处满足：
+\begin{enumerate}
+\item $|\bar{H}_2| > 0,\; |\bar{H}_3| < 0,\; |\bar{H}_4| > 0,\; \ldots,\; (-1)^n|\bar{H}_n| > 0$，则 $\bar{x}$ 是局部极大值；
+\item $|\bar{H}_2| < 0,\; |\bar{H}_3| < 0,\; \ldots,\; |\bar{H}_n| < 0$，则 $\bar{x}$ 是局部极小值。
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 12.5:} Let $f$ and $g$ be continuously differentiable functions on an open set $Z$ in $\mathbb{R}^n$. Suppose that $(\bar{x})$ is a constrained local maximum or minimum of $f$, subject to the constraint $g(x) = c$. Suppose that $\nabla g(\bar{x}) \neq 0$. Then there is a $\lambda$ such that
+\[
+\nabla f(\bar{x}) = \lambda \nabla g(\bar{x}).
+\]
+
+\textbf{The sign of the Lagrange multiplier:} Sometimes it is useful to know the sign of the Lagrangian multiplier at the solution. However, with equality-constrained optimization, the multiplier may be positive or negative, depending on the way the constraint is expressed. When $\nabla f$ and $\nabla g$ ``point'' in the same direction, then for some $\lambda > 0$, $\nabla f = \lambda \nabla g$. When $\nabla f$ and $\nabla g$ ``point'' in opposite directions, then for some $\lambda < 0$, $\nabla f = \lambda \nabla g$. The sign of the Lagrange multiplier is indeterminate in equality-constrained optimization.
+\end{original}
+\begin{translation}
+\textbf{定理12.5：} 设 $f$ 和 $g$ 是 $\mathbb{R}^n$ 中开集 $Z$ 上的连续可微函数。若 $\bar{x}$ 是约束局部极值且 $\nabla g(\bar{x}) \neq 0$，则存在 $\lambda$ 使得 $\nabla f(\bar{x}) = \lambda \nabla g(\bar{x})$。
+
+\textbf{拉格朗日乘数的符号：} 在等式约束最优化中，乘数可正可负，取决于约束的表达方式。当 $\nabla f$ 和 $\nabla g$ ``指向''相同方向时，$\lambda > 0$；指向相反时，$\lambda < 0$。因此等式约束最优化中拉格朗日乘数的符号是不确定的。
+\end{translation}
+
+\subsection{12.5 Interpretation of the Lagrange Multiplier / 拉格朗日乘数的解释}
+
+\begin{original}
+The Lagrangian is $\mathcal{L} = f(x_1,\ldots,x_n) + \lambda(c - g(x_1,\ldots,x_n))$. This has first-order conditions:
+\[
+f_i(x_1,\ldots,x_n) - \lambda g_i(x_1,\ldots,x_n) = 0, \qquad c - g(x_1,\ldots,x_n) = 0.
+\]
+Let $(\bar{x},\bar{\lambda})$ be a solution. Note that $\bar{x}$ and $\bar{\lambda}$ depend on $c$: as $c$ varies they will also. Thus $\bar{x}$ and $\bar{\lambda}$ may be written as functions of $c$: $\bar{x}(c), \bar{\lambda}(c)$. The value of the objective at $c$ is: $\mathcal{L}^*(c) = f(\bar{x}_1(c),\ldots,\bar{x}_n(c)) + \bar{\lambda}(c)[c - g(\bar{x}_1(c),\ldots,\bar{x}_n(c))]$. This function may be differentiated with respect to $c$ to give:
+\[
+\frac{d\mathcal{L}^*(c)}{dc} = \sum_{i=1}^n [f_i - \bar{\lambda}(c)g_i]\frac{d\bar{x}_i}{dc} + \frac{d\bar{\lambda}}{dc}[c - g(\bar{x}(c))] + \bar{\lambda}(c) = \bar{\lambda}(c).
+\]
+This follows using the first-order conditions. Thus, $\frac{d\mathcal{L}^*}{dc} = \lambda$, the marginal impact on the value of the objective due to changing the constraint ``a little'', is equal to the Lagrange multiplier.
+
+\textbf{EXAMPLE 12.5 (Utility maximization):} Consider the standard utility maximization problem:
+\[
+\max_{x,y} u(x,y) = \ln x + \ln y, \quad\text{subject to}\quad px + qy = I.
+\]
+The Lagrangian is: $\mathcal{L} = \ln x + \ln y + \lambda(I - px - qy)$. First-order conditions give $x = \frac{I}{2p}$, $y = \frac{I}{2q}$, $\lambda = \frac{2}{I}$. The optimized utility is $u(x(I), y(I)) = \ln\frac{I^2}{4pq}$. Differentiating: $\frac{du}{dI} = \frac{2}{I} = \lambda$. Thus the Lagrange multiplier measures the marginal utility of income.
+\end{original}
+\begin{translation}
+拉格朗日函数为 $\mathcal{L} = f(x) + \lambda(c - g(x))$。设 $(\bar{x}, \bar{\lambda})$ 为解。$\bar{x}$ 和 $\bar{\lambda}$ 依赖于 $c$。求导得：
+\[
+\frac{d\mathcal{L}^*(c)}{dc} = \sum_{i=1}^n [f_i - \bar{\lambda} g_i]\frac{d\bar{x}_i}{dc} + \frac{d\bar{\lambda}}{dc}[c - g] + \bar{\lambda} = \bar{\lambda}.
+\]
+因此 $\frac{d\mathcal{L}^*}{dc} = \lambda$：目标函数值因约束``微小''变化而产生的边际影响等于拉格朗日乘数。
+
+\textbf{例12.5（效用最大化）：} $\max \ln x + \ln y$, s.t. $px + qy = I$。解之得 $x = \frac{I}{2p}$, $y = \frac{I}{2q}$, $\lambda = \frac{2}{I}$。最优效用为 $u = \ln\frac{I^2}{4pq}$，故 $\frac{du}{dI} = \frac{2}{I} = \lambda$。因此拉格朗日乘数度量了收入的边际效用。
+\end{translation}
+
+\subsection{12.6 Optimization: Concavity and Convexity / 最优化：凹性与凸性}
+
+\begin{original}
+In a constrained optimization problem, the shape of the objective function and the constraints play an important role in characterizing global optima -- just as in the unconstrained case. For this discussion, assume that the domain of the function is convex.
+
+\textbf{Definition 12.2:} A set $X$ is convex if $x, y \in X \Rightarrow \theta x + (1-\theta)y \in X$, $\forall \theta \in [0,1]$.
+
+\textbf{Definition 12.3:} Concavity and quasiconcavity.
+\begin{enumerate}
+\item A function $f$ is concave if $f(\theta x + (1-\theta)y) \geq \theta f(x) + (1-\theta)f(y)$, $\forall x,y \in X$, $\forall \theta \in [0,1]$.
+\item A function $f$ is strictly concave if $f(\theta x + (1-\theta)y) > \theta f(x) + (1-\theta)f(y)$, $x \neq y$, $\forall \theta \in (0,1)$.
+\item A function $f$ is quasiconcave if $f(\theta x + (1-\theta)y) \geq \min\{f(x), f(y)\}$, $\forall x,y \in X$, $\forall \theta \in [0,1]$.
+\item A function $f$ is strictly quasiconcave if $f(\theta x + (1-\theta)y) > \min\{f(x), f(y)\}$, $x \neq y$, $\forall \theta \in (0,1)$.
+\item A function $f$ is explicitly quasiconcave if it is quasiconcave and $f(x) > f(y) \Rightarrow f(\theta x + (1-\theta)y) > f(y)$, $\forall \theta \in (0,1)$.
+\end{enumerate}
+
+\textbf{PROPOSITION 12.1:} If $f$ is (strictly) concave then $f$ is (strictly) quasiconcave.
+\textbf{PROPOSITION 12.2:} If $f$ is strictly quasiconcave then $f$ is explicitly quasiconcave.
+
+As discussed earlier, if $f$ is concave then the Hessian matrix $H(x)$ is negative semi-definite for all $x$. In fact, $f$ is concave if and only if $H(x)$ is negative semi-definite for all $x$.
+
+\textbf{Theorem 12.6:} Let $\mathcal{L}(x_1,\ldots,x_n,\lambda) = f(x_1,\ldots,x_n) + \lambda(c - g(x_1,\ldots,x_n))$, where
+\begin{itemize}
+\item[(a)] $f$ is explicitly quasiconcave
+\item[(b)] $\{x \mid g(x) = c\}$ is convex.
+\end{itemize}
+If $(\bar{x}, \bar{\lambda})$ satisfy,
+\begin{enumerate}
+\item $\mathcal{L}_i(\bar{x}, \bar{\lambda}) = 0$, $i = 1,\ldots,n$, $\mathcal{L}_\lambda(\bar{x}, \bar{\lambda}) = 0$
+\item $|\bar{H}_2(\bar{x})| > 0$, $|\bar{H}_3(\bar{x})| < 0$, $\ldots$, $(-1)^n|\bar{H}_n(\bar{x})| > 0$,
+\end{enumerate}
+then $\bar{x}$ is a global maximum of the constrained program.
+\end{original}
+\begin{translation}
+在约束最优化问题中，目标函数和约束的形状对刻画全局最优起着重要作用——正如无约束情形一样。
+
+\textbf{定义12.2：} 集合 $X$ 是凸的，若 $x, y \in X \Rightarrow \theta x + (1-\theta)y \in X$, $\forall \theta \in [0,1]$。
+
+\textbf{定义12.3：} 凹性与拟凹性。
+\begin{enumerate}
+\item $f$ 是凹的，若 $f(\theta x + (1-\theta)y) \geq \theta f(x) + (1-\theta)f(y)$。
+\item $f$ 是严格凹的，若 $f(\theta x + (1-\theta)y) > \theta f(x) + (1-\theta)f(y)$, $x \neq y$。
+\item $f$ 是拟凹的，若 $f(\theta x + (1-\theta)y) \geq \min\{f(x), f(y)\}$。
+\item $f$ 是严格拟凹的，若 $f(\theta x + (1-\theta)y) > \min\{f(x), f(y)\}$, $x \neq y$。
+\item $f$ 是显式拟凹的，若它是拟凹的且 $f(x) > f(y) \Rightarrow f(\theta x + (1-\theta)y) > f(y)$。
+\end{enumerate}
+
+\textbf{命题12.1：} 若 $f$（严格）凹，则 $f$（严格）拟凹。
+\textbf{命题12.2：} 若 $f$ 严格拟凹，则 $f$ 显式拟凹。
+
+\textbf{定理12.6：} 若 $f$ 是显式拟凹的，$\{x \mid g(x) = c\}$ 是凸的，且 $(\bar{x}, \bar{\lambda})$ 满足一阶和二阶条件（加边Hessian行列式符号交替），则 $\bar{x}$ 是约束规划的全局极大值。
+\end{translation}
+
+\subsubsection{12.6.1 Quasiconcavity and Bordered Hessians / 拟凹性与加边Hessian}
+
+\begin{original}
+Just as there is a close connection between concavity and the Hessian matrix, there is a similar connection for quasiconcavity, except that the Hessian matrix is replaced by a bordered Hessian matrix. Augment the Hessian matrix with a border of first derivatives as follows. Let
+\[
+Q = \begin{pmatrix}
+0 & f_1 & f_2 & \cdots & f_n \\
+f_1 & f_{11} & f_{12} & \cdots & f_{1n} \\
+f_2 & f_{21} & f_{22} & \cdots & f_{2n} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+f_n & f_{n1} & f_{n2} & \cdots & f_{nn}
+\end{pmatrix}, \quad
+Q_j = \begin{pmatrix}
+0 & f_1 & f_2 & \cdots & f_j \\
+f_1 & f_{11} & f_{12} & \cdots & f_{1j} \\
+f_2 & f_{21} & f_{22} & \cdots & f_{2j} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+f_j & f_{j1} & f_{j2} & \cdots & f_{jj}
+\end{pmatrix}.
+\]
+
+\textbf{Theorem 12.7:}
+\begin{enumerate}
+\item If $f$ is quasiconcave then $|Q_2(x)| \leq 0$, $|Q_3(x)| \geq 0$, $\ldots$, $(-1)^n|Q_n(x)| \geq 0$, $\forall x$.
+\item If $|Q_1(x)| < 0$, $|Q_2(x)| > 0$, $\ldots$, $(-1)^n|Q_n(x)| > 0$, $\forall x$, then $f$ is quasiconcave.
+\item If $f$ is quasiconvex then $|Q_2(x)| \leq 0$, $|Q_3(x)| \leq 0$, $\ldots$, $|Q_n(x)| \leq 0$, $\forall x$.
+\item If $|Q_1(x)| < 0$, $|Q_2(x)| < 0$, $\ldots$, $|Q_n(x)| < 0$, $\forall x$, then $f$ is quasiconvex.
+\end{enumerate}
+
+\textbf{Theorem 12.8:} If the bordered Hessian satisfies the conditions for $f$ to be quasiconcave, then the bordered Hessian satisfies the sufficient conditions for a local maximum.
+\end{original}
+\begin{translation}
+正如凹性与Hessian矩阵之间存在密切联系，拟凹性也有类似联系，只是Hessian矩阵被替换为加边Hessian矩阵。用一阶导数作为边框对Hessian矩阵进行增广，得到矩阵 $Q$ 和 $Q_j$。
+
+\textbf{定理12.7：} 给出了拟凹性/拟凸性与加边Hessian行列式符号条件之间的关系。拟凹性要求 $|Q_2| \leq 0$, $|Q_3| \geq 0$, $\ldots$, $(-1)^n|Q_n| \geq 0$；拟凸性要求 $|Q_j| \leq 0$, $\forall j$。
+
+\textbf{定理12.8：} 若加边Hessian满足拟凹性条件，则该加边Hessian满足局部极大值的充分条件。
+\end{translation}
+
+\subsection{12.7 Optimization with Many Constraints / 多约束最优化}
+
+\begin{original}
+Let $f(x_1,\ldots,x_n)$ be the objective function and $g^k(x_1,\ldots,x_n) = c_k$, $k = 1,\ldots,m$ a collection of $m$ constraints. Assume that $m < n$. Define the Lagrangian:
+\[
+\mathcal{L} = f(x_1,\ldots,x_n) + \lambda_1[c_1 - g^1(x_1,\ldots,x_n)] + \cdots + \lambda_m[c_m - g^m(x_1,\ldots,x_n)].
+\]
+
+Define the matrix $Dg$ as the $m \times n$ Jacobian of the constraints, and define the bordered matrix $C_r$ (combining the constraint Jacobian with the Hessian of $\mathcal{L}$).
+
+\textbf{Theorem 12.9 (Quadratic forms with multiple constraints):} Suppose that $A$ is symmetric and $B_m$ is non-singular.
+\begin{enumerate}
+\item Then $x'Ax > 0$ for every $x$ with $Bx = 0$, if and only if: $(-1)^m|C_r| < 0$, $r = m+1,\ldots,n$.
+\item Then $x'Ax < 0$ for every $x$ with $Bx = 0$, if and only if: $(-1)^r|C_r| > 0$, $r = m+1,\ldots,n$.
+\end{enumerate}
+
+\textbf{Theorem 12.10:} Suppose that $\bar{x}$ is feasible (satisfies all the constraints). If $(\bar{x}, \bar{\lambda}_1,\ldots,\bar{\lambda}_m) = (\bar{x}, \bar{\lambda})$ satisfies:
+\begin{enumerate}
+\item $\mathcal{L}_i(\bar{x}, \bar{\lambda}) = 0$, $i = 1,\ldots,n$, $\mathcal{L}_{\lambda_k}(\bar{x}, \bar{\lambda}) = 0$, $k = 1,\ldots,m$
+\item $(-1)^r|C_r| > 0$, $r = m+1,\ldots,n$,
+\end{enumerate}
+then $\bar{x}$ is a constrained local maximum. If condition 2 is replaced by $(-1)^m|C_r| > 0$, $r = m+1,\ldots,n$, then $\bar{x}$ is a constrained local minimum.
+\end{original}
+\begin{translation}
+设目标函数为 $f$，约束为 $g^k(x) = c_k$, $k = 1,\ldots,m$（$m < n$）。定义拉格朗日函数 $\mathcal{L}$ 包含 $m$ 个拉格朗日乘数。定义约束的雅可比矩阵 $Dg$ 和加边矩阵 $C_r$。
+
+\textbf{定理12.9：} 给出了多约束下二次型正定/负定的行列式条件。
+
+\textbf{定理12.10：} 若 $(\bar{x}, \bar{\lambda})$ 满足一阶条件且 $(-1)^r|C_r| > 0$, $r = m+1,\ldots,n$，则 $\bar{x}$ 是约束局部极大值。若代之以 $(-1)^m|C_r| > 0$，则为约束局部极小值。例如，当 $m = 1$ 时，这与定理12.4的条件一致。
+\end{translation}
+
+\subsection*{Exercises for Chapter 12 / 第12章习题}
+
+\begin{original}
+\textbf{Exercise 12.1} A firm has the production function $Y = 30L^{\frac{1}{2}}K^{\frac{2}{3}}$.
+(a) What is the cost-minimizing level of $L$ and $K$ if the firm must produce 1000 units? Check the second-order conditions.
+(b) By how much will cost increase if the firm must increase output by one unit?
+(c) Given this production function, can we find a profit-maximizing level of output? Why or why not?
+
+\textbf{Exercise 12.2} Assume that a monopolist producing one good can sell to two distinct markets and price discriminate. The demand function in each market is
+\[
+D_1 = 300 - \tfrac{1}{3}P_1, \quad D_2 = 300 - \tfrac{1}{2}P_2.
+\]
+The total cost to the monopolist is $C = 2D_1^2 + 3D_1D_2 + D_2^2$. Also, owing to a government restriction, the total output of the firm must be 100 units. What is the profit-maximizing output in each market? Check the second-order conditions.
+
+\textbf{Exercise 12.3} Consider a firm that produces beer and pretzels. It must sell a bag of pretzels for every four bottles of beer. If its profit function is
+\[
+\pi = 150B - 4B^2 + 150P - 3P^2 + 10BP + 100
+\]
+($P = \#$ of bags of pretzels, $B = \#$ beers), what is the profit-maximizing level of output?
+
+\textbf{Exercise 12.4} The geometric average of two positive numbers, $x$ and $y$, is $(xy)^{\frac{1}{2}}$. Consider the task of minimizing the geometric average, subject to the condition $x + y = 1$. Show, using the method of Lagrange multipliers, that the optimal choice of $(x, y)$ is $(\frac{1}{2}, \frac{1}{2})$ and confirm that this gives the constrained minimum.
+
+\textbf{Exercise 12.5} A swimming pool is 25 meters times 100 meters. In coordinates, a position $(x, y)$ gives length and distance traveled from $(0,0)$. Thus $(15,20)$ denotes the position of a swimmer who swam 20 meters along the $x$ axis and 15 meters along the $y$ axis from $(0,0)$. There are four corners $(0,0)$, $(0,25)$, $(100,0)$ and $(100,25)$. The diagonal line connecting corners $(0,25)$ and $(100,0)$ is given by $4y + x = 100$. The distance from corner $(0,0)$ to coordinate $(x, y)$ is $(x^2 + y^2)^{\frac{1}{2}}$. A swimmer wishes to swim from the $(0,0)$ corner, and cross the diagonal line in the shortest distance possible. What coordinate position should the person swim to? Use the method of Lagrange multipliers to determine the answer.
+
+\textbf{Exercise 12.6} A firm wishes to produce a level of output $Q$ at minimum cost. Two inputs, capital ($K$) and labour ($L$), are used to produce $Q$ with the production function given by $Q = K^\alpha + L^\beta$, where $0 < \alpha, \beta < 1$. The wage rate is $\omega$ and the cost of capital (per unit) is $r$, so that total cost given $(K, L)$ is $C = rK + \omega L$.
+(a) Set up the Lagrangian to solve the problem of finding the cost-minimizing levels of $K$ and $L$ required to produce $Q$.
+(b) Solve for $K$, $L$ and the Lagrange multiplier, $\lambda$.
+(c) Check that the second-order conditions for a minimum are satisfied.
+(d) Observe that in your solution to part (b), both $K$ and $L$ depend on $Q$. To emphasize this dependency, write $K(Q)$ and $L(Q)$. Thus the cost of producing the output level $Q$ is $C(Q) = rK(Q) + \omega L(Q)$. Find $dC(Q)/dQ$ and compare your answer with $\lambda$.
+
+\textbf{Exercise 12.7} Dr. Who lives at coordinates $(x, y) = (3,12)$. A road in the $(x, y)$ plane follows the path: $k = x^2 - 6x + y$, where $0 < k < 3$. On the bus journey home, each traveller must give the driver ``drop-off'' coordinates. Unfortunately for Dr. Who, the bus does not travel by his house.
+(a) What drop-off coordinates should Dr. Who give the driver so that Dr. Who is as close to his house as possible? (Hint: minimize $d = (x_1 - x_2)^2 + (y_1 - y_2)^2$, since minimizing $\sqrt{d}$ is equivalent to minimizing $d$.)
+(b) Confirm that the second-order conditions are satisfied.
+(c) The solution depends on $k$. Let $d(k)$ be the distance at the solution from the drop-off point to Dr. Who's house. Calculate $\frac{d[d(k)]}{dk}$ and relate it to the Lagrange multiplier in (a).
+
+\textbf{Exercise 12.8} A firm sets both price and quantity in a market. It is known that the demand function for this market is $P = k/Q$. By law, the firm is required to choose a price-quantity combination lying on the demand curve. The cost of setting $(P,Q)$ combinations is $C(P,Q) = P + Q^2$.
+(a) Minimize $C(P,Q)$ subject to the demand constraint.
+(b) Confirm that the second-order conditions are satisfied.
+(c) The optimal choices of $P$ and $Q$ depend on $(\alpha, k)$: $P(\alpha, k)$, $Q(\alpha, k)$, so that the cost at the solution is $C^*(\alpha, k) = C(P(\alpha, k), Q(\alpha, k))$. Find $\partial C^*(\alpha, k)/\partial k$ and compare this with the Lagrange multiplier obtained in (a).
+
+\textbf{Exercise 12.9} Maximize $xy$ subject to the constraint $x^2 + y = k$, where $k$ is some positive constant. Confirm that the second-order conditions for a constrained optimum are satisfied. Interpret the Lagrange multiplier.
+
+\textbf{Exercise 12.10} Minimize $(x - 1)^2 + y^2$ subject to the constraint $x^2 + k = y$, where $k$ is some positive constant. Confirm that the second-order conditions for a constrained optimum are satisfied. Interpret the Lagrange multiplier.
+
+\textbf{Exercise 12.11} Consider the following constrained optimization problem: maximize $f(x, y) = y - bx^2$ subject to the constraint: $y = k + a\ln x$. Here $k$, $a$ and $b$ are positive constants.
+(a) Plot the problem.
+(b) Find the solution values for $x$ and $y$.
+(c) Confirm that the second-order conditions are satisfied.
+(d) Let the solution be $x(a, b, k)$ and $y(a, b, k)$. Then the value of the objective at the solution is $f^*(a, b, k) = f(x(a, b, k), y(a, b, k))$. Find $\frac{\partial f^*(a,b,k)}{\partial a}$. Find $\frac{\partial f^*(a,b,k)}{\partial k}$ and interpret this in terms of the Lagrange multiplier.
+
+\textbf{Exercise 12.12} An individual faces the problem of minimizing expenditure subject to reaching some fixed level of utility $\bar{u}$. There are two goods, $x$ and $y$, and the utility function is given by $u(x, y) = x^\alpha y^\beta$, $0 < 2\alpha < 1$, $\beta > 0$. The cost of $x$ (per unit) is $p$ and the cost of $y$ (per unit) is $q$, so the cost of the bundle $(x, y)$ is $px + qy$.
+(a) Set up the Lagrangian for this problem. Find the optimal values of $x$ and $y$ and the value of the Lagrange multiplier. Check the second-order conditions.
+(b) The solution depends on $p$, $q$ and $\bar{u}$ so write $x(p, q, \bar{u})$, $y(p, q, \bar{u})$, $\lambda(p, q, \bar{u})$. The expenditure required to achieve utility level $\bar{u}$ given prices $p$ and $q$ is therefore $e(p, q, \bar{u}) = p x(p, q, \bar{u}) + q y(p, q, \bar{u})$. Show that
+\[
+\frac{\partial e(p, q, \bar{u})}{\partial p} = x(p, q, \bar{u}) \quad\text{and}\quad \frac{\partial e(p, q, \bar{u})}{\partial q} = y(p, q, \bar{u}).
+\]
+\end{original}
+\begin{translation}
+\textbf{习题12.1} 某企业的生产函数为 $Y = 30L^{\frac{1}{2}}K^{\frac{2}{3}}$。
+（a）若企业必须生产1000单位，求成本最小化的 $L$ 和 $K$ 水平，并检验二阶条件。
+（b）若企业必须增加一单位产出，成本将增加多少？
+（c）给定此生产函数，能否找到利润最大化的产出水平？为什么？
+
+\textbf{习题12.2} 假设一家生产单一商品的垄断者可以向两个不同的市场销售并实行价格歧视。每个市场的需求函数为 $D_1 = 300 - \frac{1}{3}P_1$, $D_2 = 300 - \frac{1}{2}P_2$。总成本为 $C = 2D_1^2 + 3D_1D_2 + D_2^2$。由于政府限制，企业的总产出必须为100单位。求每个市场的利润最大化产出并检验二阶条件。
+
+\textbf{习题12.3} 一家企业生产啤酒和椒盐脆饼干，必须每四瓶啤酒搭配一袋脆饼干销售。利润函数为 $\pi = 150B - 4B^2 + 150P - 3P^2 + 10BP + 100$。求利润最大化的产出水平。
+
+\textbf{习题12.4} 两个正数 $x$ 和 $y$ 的几何平均为 $(xy)^{\frac{1}{2}}$。在条件 $x + y = 1$ 下最小化几何平均。使用拉格朗日乘数法证明最优选择为 $(\frac{1}{2}, \frac{1}{2})$，并确认这给出了约束极小值。
+
+\textbf{习题12.5} 游泳池尺寸为25米乘以100米。对角线连接 $(0,25)$ 和 $(100,0)$，方程为 $4y + x = 100$。游泳者希望从 $(0,0)$ 角游到对角线的最短距离。使用拉格朗日乘数法确定坐标位置。
+
+\textbf{习题12.6} 企业用资本 $K$ 和劳动 $L$ 生产 $Q = K^\alpha + L^\beta$（$0 < \alpha, \beta < 1$）。成本为 $C = rK + \omega L$。
+（a）建立拉格朗日函数求解成本最小化的 $K$ 和 $L$。
+（b）求解 $K$、$L$ 和拉格朗日乘数 $\lambda$。
+（c）检验极小值的二阶条件。
+（d）求 $dC(Q)/dQ$ 并与 $\lambda$ 比较。
+
+\textbf{习题12.7} Dr.\ Who的家在 $(3,12)$。道路沿 $k = x^2 - 6x + y$ 延伸。求到家的距离最短的落客坐标。使用拉格朗日乘数法。检验二阶条件。计算 $\frac{d[d(k)]}{dk}$ 并与拉格朗日乘数建立联系。
+
+\textbf{习题12.8} 市场需求为 $P = k/Q$。设定价格-数量组合的成本为 $C(P,Q) = P + Q^2$。
+（a）在需求约束下最小化 $C(P,Q)$。
+（b）确认二阶条件。
+（c）求 $\partial C^*(\alpha, k)/\partial k$ 并与拉格朗日乘数比较。
+
+\textbf{习题12.9} 在约束 $x^2 + y = k$（$k > 0$）下最大化 $xy$。确认约束最优的二阶条件成立。解释拉格朗日乘数。
+
+\textbf{习题12.10} 在约束 $x^2 + k = y$（$k > 0$）下最小化 $(x - 1)^2 + y^2$。确认二阶条件。解释拉格朗日乘数。
+
+\textbf{习题12.11} 在约束 $y = k + a\ln x$ 下最大化 $f(x, y) = y - bx^2$（$k, a, b > 0$）。
+（a）绘制问题图形。（b）求 $x$ 和 $y$ 的解。（c）确认二阶条件。
+（d）求 $\frac{\partial f^*(a,b,k)}{\partial a}$ 和 $\frac{\partial f^*(a,b,k)}{\partial k}$，并用拉格朗日乘数解释。
+
+\textbf{习题12.12} 在达到固定效用水平 $\bar{u}$ 的约束下最小化支出。效用函数 $u(x, y) = x^\alpha y^\beta$，成本为 $px + qy$。
+（a）建立拉格朗日函数，求 $x$、$y$ 和乘数的最优值，检验二阶条件。
+（b）证明 $\frac{\partial e(p, q, \bar{u})}{\partial p} = x(p, q, \bar{u})$ 和 $\frac{\partial e(p, q, \bar{u})}{\partial q} = y(p, q, \bar{u})$。
+\end{translation}

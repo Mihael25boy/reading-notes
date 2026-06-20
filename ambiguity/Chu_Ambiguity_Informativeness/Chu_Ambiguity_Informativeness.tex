@@ -1,0 +1,1780 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% === Packages ===
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{float}
+
+% === Color definitions ===
+\definecolor{transblue}{RGB}{25,25,150}
+\definecolor{darkgray}{RGB}{80,80,80}
+
+% === Page style ===
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Chu: Ambiguity and Informativeness of (Non-)Trading}
+\fancyhead[R]{\small 双语版 / Bilingual Edition}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% === Custom environments ===
+\newenvironment{original}{%
+  \par\vspace{4pt}\noindent%
+  \color{black}%
+  \ignorespaces
+}{%
+  \par\vspace{2pt}%
+}
+
+\newenvironment{translation}{%
+  \par\vspace{2pt}\noindent%
+  \color{transblue}%
+  \ignorespaces
+}{%
+  \par\vspace{4pt}\hrule\vspace{6pt}%
+}
+
+\newenvironment{biblock}{%
+  \par\vspace{2pt}\noindent\small%
+  \ignorespaces
+}{%
+  \par\vspace{2pt}%
+}
+
+% === Theorem environments ===
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}{Assumption}
+
+\title{\textbf{Ambiguity and Informativeness of (Non-)Trading\\[4pt]
+\large 模糊性与（不）交易的信息含量}}
+\author{Yinxiao Chu\\[3pt]
+{\small School of Economics, Huazhong University of Science and Technology, 1037 Luoyu Road, Wuhan, 430074, Hubei, China}\\[3pt]
+{\small 华中科技大学经济学院，中国湖北武汉珞喻路1037号，430074}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\section*{Abstract \hfill 摘要}
+
+\begin{original}
+We study a sequential trading mechanism with ambiguity-averse agents modeled by multiple prior preferences. Informed traders generally mix between trading and non-trading, and their trading probability decreases with ambiguity. If agents are sufficiently ambiguous, informed traders do not trade, and only noise traders place orders; trading becomes uninformative. When signal accuracy is ambiguous, trading can make public beliefs more ambiguous over time, which leads to social learning failures in the long run. Moreover, since informed traders may not trade, no-trade can also be informative when signal accuracy is asymmetric. Even with continuous action spaces, sufficiently high ambiguity stops social learning.
+\end{original}
+\begin{translation}
+我们研究了一个包含模糊厌恶代理人的序贯交易机制，代理人由多先验偏好建模。知情交易者一般在交易和不交易之间混合策略，其交易概率随模糊性增加而降低。若代理人具有足够高的模糊性，知情交易者将不进行交易，市场上仅有噪声交易者下单，交易变得无信息含量。当信号精度存在模糊性时，交易会使公共信念随时间变得更加模糊，这导致了长期中的社会学习失败。此外，由于知情交易者可能不交易，当信号精度不对称时，不交易也具有信息含量。即使在连续行动空间中，足够高的模糊性也会阻止社会学习。
+\end{translation}
+
+\medskip
+\noindent\textbf{JEL classification:} D81, D82, D83, G14
+
+\medskip
+\noindent\textbf{Keywords:} Ambiguity aversion; Sequential trading; Adverse selection; Informational cascade
+
+\noindent\textbf{关键词：} 模糊厌恶；序贯交易；逆向选择；信息级联
+
+\medskip
+\noindent\textit{Journal:} Games and Economic Behavior 148 (2024) 367--384
+
+\noindent\textit{DOI:} \url{https://doi.org/10.1016/j.geb.2024.10.001}
+
+\newpage
+
+% ============================================================
+% ACKNOWLEDGMENTS / FOOTNOTES
+% ============================================================
+\section*{Acknowledgments \hfill 致谢}
+
+\begin{original}
+This paper is revised from the second chapter of my Ph.D. dissertation. I am greatly indebted to Jan Werner and David Rahman for their advising and discussion. I also thank Aldo Rustichini, Hengjie Ai, and seminar participants at the University of Minnesota, the University of International Business and Economics, and PBC School of Finance at Tsinghua University. I have no conflict of interest to declare.
+\end{original}
+\begin{translation}
+本文改写自本人博士论文第二章。衷心感谢Jan Werner和David Rahman的指导与讨论。同时感谢Aldo Rustichini、艾恒杰以及明尼苏达大学、对外经济贸易大学和清华大学五道口金融学院的研讨会参与者。本人无利益冲突需要声明。
+\end{translation}
+
+\vspace{6pt}
+\begin{original}
+E-mail address: chuyinxiao@gmail.com.
+\end{original}
+\begin{translation}
+电子邮箱：chuyinxiao@gmail.com。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 1: INTRODUCTION
+% ============================================================
+\section{Introduction \hfill 引言}
+
+\begin{original}
+Uncertainty pervades the financial markets and significantly shapes them. Natural disasters, economic instability, or political tensions expose traders to uncertainty. Trading volume and market information efficiency decrease when uncertainty increases. For example, asset price volatility and illiquidity spiked when Covid-19 hit (Just and Echaust, 2020; Baig et al., 2021) and when hurricane Sandy struck New York (Rehse et al., 2019). Investors seek safe assets and withdraw from the markets, which causes spreads to widen between risky and safe assets during crises such as the 1997-1998 crisis (Scholes, 2000) and the sub-prime mortgage crisis (Brunnermeier, 2009; Easley and O'Hara, 2010).
+\end{original}
+\begin{translation}
+不确定性弥漫于金融市场并深刻地形塑着市场。自然灾害、经济不稳定或政治紧张局势使交易者暴露于不确定性之中。当不确定性增加时，交易量和市场信息效率下降。例如，在新冠疫情爆发时（Just and Echaust, 2020; Baig et al., 2021）以及飓风桑迪袭击纽约时（Rehse et al., 2019），资产价格波动性和非流动性急剧上升。在危机期间，如1997--1998年危机（Scholes, 2000）和次贷危机（Brunnermeier, 2009; Easley and O'Hara, 2010），投资者寻求安全资产并从市场中撤出，导致风险资产与安全资产之间的利差扩大。
+\end{translation}
+
+\begin{original}
+To study the effect of uncertainty on the financial market, it is useful to distinguish two types of uncertainty: risk and ambiguity. Risk refers to situations where agents know the distribution of uncertain outcomes, while ambiguity refers to situations where agents have no precise knowledge about the distribution of outcomes. The celebrated thought experiments of Ellsberg (1961) show that subjective expected utility (SEU) theory may not explain agents' behavior under ambiguity.
+\end{original}
+\begin{translation}
+为研究不确定性对金融市场的影响，区分两种类型的不确定性是有益的：风险与模糊性。风险指代理人知晓不确定结果分布的情形，而模糊性指代理人对结果分布没有精确知识的情形。Ellsberg (1961)著名的思想实验表明，主观期望效用（SEU）理论可能无法解释代理人在模糊性下的行为。
+\end{translation}
+
+\begin{original}
+In this paper, we investigate how ambiguity affects asset trading and information efficiency. Our models are built upon a trading mechanism similar to that of Glosten and Milgrom (1985), where noise traders trade inelastically and randomly, informed traders trade rationally based on their private signals, and a market maker posts break-even prices based on public beliefs. Trading is sequential, with traders arriving at the market in an exogenous order. Both informed traders and the market maker have multiple prior preferences (Gilboa and Schmeidler, 1989; Casadesus-Masanell et al., 2000), capturing their aversion to ambiguity.
+\end{original}
+\begin{translation}
+本文研究模糊性如何影响资产交易和信息效率。我们的模型建立在与Glosten and Milgrom (1985)类似的交易机制之上，其中噪声交易者无弹性且随机地进行交易，知情交易者基于私人信号理性交易，做市商基于公共信念公布盈亏平衡价格。交易是序贯的，交易者以外生顺序到达市场。知情交易者和做市商均具有多先验偏好（Gilboa and Schmeidler, 1989; Casadesus-Masanell et al., 2000），以刻画其对模糊性的厌恶。
+\end{translation}
+
+\begin{original}
+Our baseline model shows that ambiguity affects asset trading and information efficiency in different ways depending on its degree. To understand the main intuition, we compare three scenarios: low ambiguity, moderate ambiguity, and high ambiguity. In each scenario, we examine how a good signal influences an informed trader's decision to buy the asset and how the market maker sets the ask price.
+\end{original}
+\begin{translation}
+我们的基准模型表明，模糊性根据其程度以不同方式影响资产交易和信息效率。为理解主要直观含义，我们比较三种情形：低模糊性、中等模糊性和高模糊性。在每种情形下，我们考察好消息如何影响知情交易者购买资产的决策以及做市商如何设定卖出价。
+\end{translation}
+
+\begin{original}
+In the low ambiguity scenario, an informed trader is certain to buy an asset if she receives a good signal. It ensures that buy orders reflect a high likelihood of the trader receiving a good signal, and the market maker posts a high ask price to counter the high likelihood of losses from informed traders. However, because the ambiguity is low, the informed trader's reservation prices to buy, i.e., the worst valuation of the asset, remain higher than the ask price. This scenario is akin to the classical sequential trading model with no ambiguity.
+\end{original}
+\begin{translation}
+在低模糊性情形下，知情交易者在收到好消息时一定会购买资产。这确保了买单反映了交易者收到好消息的高概率，做市商公布一个高卖出价以应对来自知情交易者损失的高概率。然而，由于模糊性较低，知情交易者的购买保留价格——即对资产的最差估值——仍然高于卖出价。这种情形类似于无模糊性的经典序贯交易模型。
+\end{translation}
+
+\begin{original}
+Under moderate ambiguity, an informed trader mixes between trading and non-trading. Suppose that, as in the low ambiguity scenario, the market maker posts an ask price below an informed trader's reservation price, and the trader buys the asset surely after seeing a good signal. However, this cannot be an equilibrium because it would lead to losses for the market maker. As ambiguity rises from low to moderate, the ambiguity-averse informed trader's reservation price decreases. And the fact that the ask price being even lower than the trader's reservation price implies the market maker's expected losses from trading with the informed trader would be too high after a good signal.
+\end{original}
+\begin{translation}
+在中等模糊性下，知情交易者在交易和不交易之间混合策略。假设如同低模糊性情形，做市商公布的卖出价低于知情交易者的保留价格，交易者在看到好消息后必然购买资产。然而，这不可能是一个均衡，因为这将导致做市商亏损。随着模糊性从低升至中等，模糊厌恶的知情交易者的保留价格下降。卖出价甚至低于交易者保留价格的事实意味着，在好消息之后，做市商与知情交易者交易的期望损失将过高。
+\end{translation}
+
+\begin{original}
+To prevent these losses, the market maker must raise the ask price. But setting the ask price strictly higher than the informed trader's reservation price does not work, either, in this scenario. The informed trader would never buy the asset even after seeing a good signal, and the high ask price leads to a strict positive profit per trade from only noise traders; however, competition pressures would push down the ask price. Thus, the only solution is for the market maker to set the ask price at the reservation price in this scenario, while the informed trader mixes between buying and non-trading after seeing a good signal. This mixed strategy allows the market maker to break even. As ambiguity increases, the informed trader trades less often to reflect the higher perceived cost.
+\end{original}
+\begin{translation}
+为防止这些损失，做市商必须提高卖出价。但在这种情形下，将卖出价设定为严格高于知情交易者的保留价格也不可行。知情交易者即使在看到好消息后也绝不会购买资产，而高卖出价仅从噪声交易者那里带来严格正的每笔交易利润；然而，竞争压力会压低卖出价。因此，唯一的解决方案是做市商将卖出价设定为保留价格，而知情交易者在看到好消息后在购买和不交易之间混合策略。这种混合策略使做市商能够盈亏平衡。随着模糊性增加，知情交易者交易频率降低，以反映更高的感知成本。
+\end{translation}
+
+\begin{original}
+When ambiguity reaches a high level, informed traders stop trading. In this scenario, the market maker cannot elicit informed traders to trade by setting appropriate prices. The lowest ask price it can set is the break-even price if only noise traders buy. But if an informed trader is very uncertain about the asset value, her worst evaluation can be lower than this price; so they would not buy. This leads to a failure of information aggregation in the market: All informed traders choose not to trade regardless of their signals. No private information is revealed in the market, and social learning gets trapped.
+\end{original}
+\begin{translation}
+当模糊性达到高水平时，知情交易者停止交易。在这种情形下，做市商无法通过设定适当的价格引导知情交易者进行交易。其可设定的最低卖出价是仅有噪声交易者购买时的盈亏平衡价格。但如果知情交易者对资产价值非常不确定，其最差估值可能低于这一价格，因此他们不会购买。这导致市场中信息加总的失败：所有知情交易者无论信号如何都选择不交易。市场上没有私人信息被揭示，社会学习陷入停滞。
+\end{translation}
+
+\begin{original}
+Then, we consider several extensions of the baseline model. First, we assume private signals have ambiguous accuracy. Informed traders' activities partially reveal these signals. Consequently, ambiguity will grow in the public beliefs, and trading tends to be noninformative in the long run. Second, we assume private signals are asymmetrically accurate: a bad signal is less informative than a good one. Informed traders trade less often with a bad signal than a good signal. This implies that no-trade is bad news: when no one trades in the market, it is more likely due to a bad signal than a good one. The asset price will decrease accordingly. Third, we show that the social learning failure result holds even if traders have continuous action spaces.
+\end{original}
+\begin{translation}
+随后，我们考虑基准模型的几个扩展。首先，我们假设私人信号具有模糊的精度。知情交易者的活动部分揭示了这些信号。因此，模糊性将在公共信念中增长，交易在长期中趋于无信息性。其次，我们假设私人信号精度不对称：坏信号的信息量低于好信号。知情交易者在收到坏信号时的交易频率低于好信号时。这意味着不交易是坏消息：当市场上无人交易时，更可能是由于坏信号而非好信号。资产价格将相应下降。第三，我们证明即使交易者具有连续行动空间，社会学习失败的结果仍然成立。
+\end{translation}
+
+\begin{original}
+There is a large strand of literature that examine the effect of ambiguity aversion in the financial market, and our work also contributes to it. Ambiguity aversion influences traders' willingness to trade and can cause portfolio inertia or no-trade (Dow and da Costa Werlang, 1992). This can result in price indeterminacy (Epstein and Wang, 1994), under-diversification (Maccheroni et al., 2013), market incompleteness (Mukerji and Tallon, 2001), low liquidity (Ozsoylev and Werner, 2011), and excess volatility (Illeditsch, 2011). Furthermore, ambiguity aversion has been proposed as a possible solution to the equity premium puzzle (Chen and Epstein, 2002; Trojani and Vanini, 2002; Ju and Miao, 2012). For comprehensive insights into the influence of ambiguity on trading decisions and market dynamics, Epstein and Schneider (2010) and Guidolin and Rinaldi (2012) provide thorough overviews.
+\end{original}
+\begin{translation}
+有大量文献研究模糊厌恶对金融市场的影响，我们的工作也对此做出了贡献。模糊厌恶影响交易者的交易意愿，可导致投资组合惰性或不交易（Dow and da Costa Werlang, 1992）。这可能导致价格不确定性（Epstein and Wang, 1994）、分散不足（Maccheroni et al., 2013）、市场不完备（Mukerji and Tallon, 2001）、低流动性（Ozsoylev and Werner, 2011）和过度波动性（Illeditsch, 2011）。此外，模糊厌恶已被提出作为股权溢价之谜的一个可能解决方案（Chen and Epstein, 2002; Trojani and Vanini, 2002; Ju and Miao, 2012）。关于模糊性对交易决策和市场动态影响的全面见解，Epstein and Schneider (2010)和Guidolin and Rinaldi (2012)提供了详尽的综述。
+\end{translation}
+
+\begin{original}
+This paper studies how ambiguity affects the trading behavior of ambiguity-averse traders in a sequential trading mechanism and finds several novel results. We show that ambiguity-averse traders trade less when there is more ambiguity; this can lead to social learning and information aggregation failures, even with endogenous prices and continuous actions. Chari and Kehoe (2004) summarize the literature and point out that informational cascade results (Bikhchandani et al., 1992; Banerjee, 1992) are subject to price critique and continuous investment critique. That is, these failures disappear if prices are endogenous (Avery and Zemsky, 1998) or investment decisions are continuous (Lee, 1993). In the literature, there are attempts to overturn one or both critiques by introducing endogenous timing (Chari and Kehoe, 2004), transaction costs (Lee, 1998), exogenous gains and loss from trade (Cipriani and Guarino, 2008), and risk-averse traders (Decamps and Lovo, 2006). Our paper is unique in considering ambiguity aversion as a source of these failures, which can overcome both critiques.
+\end{original}
+\begin{translation}
+本文研究了模糊性如何在序贯交易机制中影响模糊厌恶交易者的交易行为，并发现了若干新颖的结果。我们证明，模糊厌恶交易者在模糊性更大时交易更少；即使在内生价格和连续行动下，这也会导致社会学习和信息加总失败。Chari and Kehoe (2004)总结了文献并指出，信息级联结果（Bikhchandani et al., 1992; Banerjee, 1992）受到价格批判和连续投资批判的质疑。即，若价格是内生的（Avery and Zemsky, 1998）或投资决策是连续的（Lee, 1993），这些失败就会消失。在文献中，有尝试通过引入内生时机（Chari and Kehoe, 2004）、交易成本（Lee, 1998）、外生交易收益与损失（Cipriani and Guarino, 2008）以及风险厌恶交易者（Decamps and Lovo, 2006）来推翻其中一个或两个批判。本文的独特之处在于将模糊厌恶视为这些失败的来源，且能够同时克服两个批判。
+\end{translation}
+
+\begin{original}
+Our results also contribute to the literature in market microstructure. We find ambiguity-averse traders generally mix between trading and non-trading, which echoes the findings of de Meyer and Saley (2003). However, we consider that informed traders' randomizing between trading and non-trading emerges under ambiguity aversion and show that, consequently, ambiguity aversion can be an explanation for informativeness of no-trade. Moreover, our study goes beyond the classical microstructure literature, such as Glosten and Milgrom (1985) and Kyle (1985), which typically focuses on how prices eventually aggregate and reveal private information. Instead, our results suggest that the opposite could happen if traders exhibit ambiguity aversion.
+\end{original}
+\begin{translation}
+我们的结果也对市场微观结构文献做出了贡献。我们发现模糊厌恶交易者通常在交易和不交易之间混合策略，这与de Meyer and Saley (2003)的发现相呼应。然而，我们认为知情交易者在交易和不交易之间的随机化是在模糊厌恶下出现的，并表明，因此模糊厌恶可以成为不交易信息含量的一个解释。此外，我们的研究超越了经典微观结构文献，如Glosten and Milgrom (1985)和Kyle (1985)，这些文献通常关注价格如何最终加总并揭示私人信息。相反，我们的结果表明，如果交易者表现出模糊厌恶，相反的情况可能发生。
+\end{translation}
+
+\begin{original}
+Another contribution of our paper is to study belief updating and price adjustment with ambiguity-averse agents. This distinguishes our paper from other studies on the effect of ambiguity. For example, Easley and O'Hara (2010) use Bewley's (2002) model of ambiguity aversion to study how ambiguity leads to a market freeze. However, their analysis is limited to a one-shot trading situation, while our paper shows that social learning failure can persist over time and that learning with ambiguous signal accuracy results in long-term information aggregation failure. Furthermore, Condie and Ganguli (2011; 2017) consider the effect of ambiguity-aversion in a rational expectation equilibrium and find results similar to ours, such as the revelation of private information through no-trade. They show that ambiguity-averse traders' demand remains unchanged with certain private information, leading to only partially revealing prices in the absence of noise traders. In contrast, our study emphasizes the informativeness of no-trade, highlighting that market prices can adjust even when no trading activity occurs.
+\end{original}
+\begin{translation}
+本文的另一个贡献是研究了模糊厌恶代理人的信念更新和价格调整。这将本文与其他关于模糊性影响的研究区分开来。例如，Easley and O'Hara (2010)使用Bewley (2002)的模糊厌恶模型来研究模糊性如何导致市场冻结。然而，他们的分析仅限于一次性交易情境，而本文表明社会学习失败可以随时间持续，并且在模糊信号精度下的学习会导致长期信息加总失败。此外，Condie and Ganguli (2011; 2017)考虑了模糊厌恶在理性预期均衡中的影响，并发现了与我们类似的结果，例如通过不交易揭示私人信息。他们证明模糊厌恶交易者的需求在特定私人信息下保持不变，导致在没有噪声交易者的情况下价格仅能部分揭示信息。相比之下，我们的研究强调了不交易的信息含量，突出了即使在没有交易活动发生时市场价格也可以调整。
+\end{translation}
+
+\begin{original}
+Our results are supported by empirical evidence in the literature. Dimmock et al. (2016a) and Dimmock et al. (2016b) finds that ambiguity averse agents reduce stock market participation, especially during the financial crisis. Kostopoulos et al. (2022) and Ben-Rephael and Izhakian (2020) find that ambiguity reduces trading and exposure to uncertain assets using individual and firm-level data. They also find that ambiguity increases book-depth and lowers price impact, consistent with our model predictions. Some studies, e.g., Hong and Li (2018) and Gao et al. (2022), find that insiders' non-activity reveals their private information in an uncertain environment. Our results of informativeness of no-trade can explain these findings.
+\end{original}
+\begin{translation}
+我们的结果得到了文献中实证证据的支持。Dimmock et al. (2016a)和Dimmock et al. (2016b)发现模糊厌恶代理人减少股票市场参与，特别是在金融危机期间。Kostopoulos et al. (2022)和Ben-Rephael and Izhakian (2020)利用个人和公司层面数据发现，模糊性减少了交易和对不确定资产的敞口。他们还发现模糊性增加了委托深度并降低了价格冲击，这与我们的模型预测一致。一些研究，例如Hong and Li (2018)和Gao et al. (2022)，发现在不确定环境中内部人的不活跃行为揭示了其私人信息。我们关于不交易信息含量的结果可以解释这些发现。
+\end{translation}
+
+\begin{original}
+The paper is organized as follows. Section 2 describes the baseline model and fully characterizes the equilibrium. Then, Section 3 considers several extensions of the baseline model. We first provide a general model in Section 3.1, based on which we show that (i) the market tends to an informational cascade if private signals are ambiguous in Section 3.2 and that (ii) no-trade can be informative when signals are symmetric in Section 3.3. Section 3.4 extends the baseline model with continuous action spaces. Finally, Section 4 concludes. All the proofs are collected in Appendix.
+\end{original}
+\begin{translation}
+本文结构如下。第2节描述基准模型并完全刻画均衡。随后，第3节考虑基准模型的若干扩展。我们首先在第3.1节给出一个一般模型，在此基础上我们证明：(i) 若私人信号具有模糊性，市场趋于信息级联（第3.2节）；(ii) 当信号不对称时，不交易具有信息含量（第3.3节）。第3.4节将基准模型扩展至连续行动空间。最后，第4节进行总结。所有证明收录于附录。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 2: THE BASELINE MODEL
+% ============================================================
+\section{The Baseline Model \hfill 基准模型}
+
+% ============================================================
+% SECTION 2.1: Model Setup
+% ============================================================
+\subsection{Model Setup \hfill 模型设定}
+
+\begin{original}
+We start by describing the baseline model. There are three types of agents, a market maker, informed traders, and noise traders, in the model. Time is discrete and denoted by $t = 1, 2, \ldots, T$ with $T \leq \infty$. There is an asset with an uncertain payoff $v \in \{0, 1\}$, which is not publicly observable until period $T$.
+
+In each period $t$, the market maker first posts an ask price $a_t$ and a bid price $b_t$. Then either an informed trader or a noise trader arrives with probability $\alpha \in (0, 1)$ or $1 - \alpha$, respectively. Each trader can either buy or sell one unit of the asset or choose not to trade. A trader's order is recorded as $d_t \in \{-1, 0, 1\}$, whereas $d_t = -1$ stands for a sell order, $d_t = 0$ for not to trade, and $d_t = 1$ for a buy order. Each trader can trade only once and leave the market forever. Noise traders are assumed to trade for exogenous reasons with inelastic demand. Their actions are randomly chosen with equal probabilities.
+
+The public history or, simply, history $h_t$ denotes all the set of all possible length-$t-1$ histories and contains the sequence of prices $\{a_\tau, b_\tau\}_{\tau=1}^{t-1}$ and orders $\{d_\tau\}_{\tau=1}^{t-1}$, i.e., $h_t = \{a_\tau, b_\tau, d_\tau\}_{\tau=1}^{t-1}$, and as a convention, history with length 0 is an empty set, i.e., $h_1 = \emptyset$.
+\end{original}
+\begin{translation}
+我们首先描述基准模型。模型中有三类代理人：做市商、知情交易者和噪声交易者。时间是离散的，记为 $t = 1, 2, \ldots, T$，其中 $T \leq \infty$。存在一项具有不确定收益 $v \in \{0, 1\}$ 的资产，该收益在时期 $T$ 之前不公开可观测。
+
+在每一期 $t$，做市商首先公布卖出价 $a_t$ 和买入价 $b_t$。然后，一名知情交易者或噪声交易者分别以概率 $\alpha \in (0, 1)$ 或 $1 - \alpha$ 到达市场。每位交易者可以买入或卖出一单位资产，或选择不交易。交易者的订单记为 $d_t \in \{-1, 0, 1\}$，其中 $d_t = -1$ 表示卖单，$d_t = 0$ 表示不交易，$d_t = 1$ 表示买单。每位交易者只能交易一次并永久离开市场。噪声交易者被假定为出于外生原因以无弹性需求进行交易，其行动以等概率随机选择。
+
+公共历史（或简称历史）$h_t$ 表示所有可能的长度为 $t-1$ 的历史集合，包含价格序列 $\{a_\tau, b_\tau\}_{\tau=1}^{t-1}$ 和订单序列 $\{d_\tau\}_{\tau=1}^{t-1}$，即 $h_t = \{a_\tau, b_\tau, d_\tau\}_{\tau=1}^{t-1}$，且按惯例，长度为0的历史为空集，即 $h_1 = \emptyset$。
+\end{translation}
+
+\begin{original}
+A public belief about the uncertain asset payoff can be summarized by $\pi = \Pr(v = 1 \mid h_t) \in [0, 1]$ in each period $t$. Agents can be ambiguous about the asset payoff: there can be uncertainty in their beliefs. Instead of assuming that they have a unique public belief, they have a common set $\Pi(h_t) \subseteq [0, 1]$, or simply $\Pi_t$, of beliefs after history $h_t$. We assume that $\Pi_t$ is closed and convex, and let $\underline{\pi}_t = \min \Pi_t$ and $\bar{\pi}_t = \max \Pi_t$ be its lower and upper bounds, respectively. Then the set $\Pi_t$ of public beliefs can be written as an interval $[\underline{\pi}_t, \bar{\pi}_t]$.
+
+Both the market maker and informed traders are risk-neutral. However, they are ambiguity-averse, and their preferences are represented by maxmin expected utility. To set ask and bid prices in period $t$, the market maker wants to maximize the min-expected profits, $\min_{\pi \in \Pi_t} \mathbb{E}[(a_t - v) \mid d_t = 1]$ and $\min_{\pi \in \Pi_t} \mathbb{E}[(v - b_t) \mid d_t = -1]$, respectively. However, we assume that the market maker can only earn zero profit for each trade because of competition pressure in the background, as similarly argued by Glosten and Milgrom (1985). Suppose that the market maker sets ask and bid prices so that $a_t < \max_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = 1]$ and $b_t > \min_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = -1]$. Both the informed trader and the market maker can earn positive profits from the trade. But the market maker would be undercut by another market maker. Therefore, both $a_t$ and $b_t$ are determined by zero profit conditions in period $t$, satisfying
+\[
+a_t = \max_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = 1, \pi], \qquad
+b_t = \min_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = -1, \pi]. \tag{2.1, 2.2}
+\]
+
+Let $\delta = (\delta_t)_{t=1}^{T}$ denote a pricing rule of the market maker.
+\end{original}
+\begin{translation}
+关于不确定资产收益的公共信念在每一期 $t$ 可总结为 $\pi = \Pr(v = 1 \mid h_t) \in [0, 1]$。代理人可能对资产收益存在模糊性：其信念中可能存在不确定性。我们不假设他们具有唯一的公共信念，而是假设他们在历史 $h_t$ 之后具有一个共同的信念集合 $\Pi(h_t) \subseteq [0, 1]$，或简记为 $\Pi_t$。我们假设 $\Pi_t$ 是闭凸集，并令 $\underline{\pi}_t = \min \Pi_t$ 和 $\bar{\pi}_t = \max \Pi_t$ 分别为其下确界和上确界。则公共信念集合 $\Pi_t$ 可写为区间 $[\underline{\pi}_t, \bar{\pi}_t]$。
+
+做市商和知情交易者均为风险中性。然而，他们是模糊厌恶的，其偏好由最大最小期望效用表示。为在时期 $t$ 设定买卖价格，做市商希望最大化最小期望利润 $\min_{\pi \in \Pi_t} \mathbb{E}[(a_t - v) \mid d_t = 1]$ 和 $\min_{\pi \in \Pi_t} \mathbb{E}[(v - b_t) \mid d_t = -1]$。然而，由于背景中的竞争压力，我们假设做市商每笔交易只能获得零利润，正如 Glosten and Milgrom (1985) 所论证的那样。假设做市商设定买卖价格使得 $a_t < \max_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = 1]$ 且 $b_t > \min_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = -1]$，则知情交易者和做市商均可从交易中获得正利润。但该做市商将被另一个做市商低价抢走交易。因此，$a_t$ 和 $b_t$ 均由时期 $t$ 的零利润条件决定，满足
+\[
+a_t = \max_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = 1, \pi], \qquad
+b_t = \min_{\pi \in \Pi_t} \mathbb{E}[v \mid d_t = -1, \pi]. \tag{2.1, 2.2}
+\]
+
+令 $\delta = (\delta_t)_{t=1}^{T}$ 表示做市商的定价规则。
+\end{translation}
+
+\begin{original}
+Without ambiguity, zero profit conditions result in that the ask and bid prices are the expected value of the asset conditional on a buy order and a sell order, respectively, in period $t$. However, these conditions are slightly modified under ambiguity; ask and bid prices rely on different beliefs. The intuition is that, because of uncertainty aversion, when there is a buy order, the market maker wants to sell the asset at the highest conditional expected value, and, when there is a sell order, the market maker wants to buy the asset at the lowest conditional expected value.
+
+The informed trader who meets the market maker in period $t$ receives a conditionally independent private signal $s \in \{0, 1\}$. In the baseline model, we assume that the conditional probabilities of private signals are as follows:
+\[
+\Pr(s = 1 \mid v = 1) = \Pr(s = 0 \mid v = 0) = \theta \in (\tfrac{1}{2}, 1). \tag{2.3}
+\]
+We simply refer $s = 1$ a good signal and $s = 0$ a bad signal. The parameter $\theta$ captures the signal accuracy, and the assumption that $\theta > \frac{1}{2}$ implies that signals are sufficiently informative. Observing a good signal indicates a higher conditional probability of a valuable asset. Moreover, the assumption also states that the accuracy of private signals is unambiguous and symmetric.
+\end{original}
+\begin{translation}
+在没有模糊性的情况下，零利润条件导致卖出价和买入价分别为时期 $t$ 以买单和卖单为条件的资产期望价值。然而，在模糊性下这些条件略有修正：卖出价和买入价依赖于不同的信念。直觉在于，由于不确定性厌恶，当有买单时，做市商希望以最高的条件期望价值卖出资产；当有卖单时，做市商希望以最低的条件期望价值买入资产。
+
+在时期 $t$ 遇到做市商的知情交易者收到一个条件独立的私人信号 $s \in \{0, 1\}$。在基准模型中，我们假设私人信号的条件概率如下：
+\[
+\Pr(s = 1 \mid v = 1) = \Pr(s = 0 \mid v = 0) = \theta \in (\tfrac{1}{2}, 1). \tag{2.3}
+\]
+我们简称 $s = 1$ 为好信号，$s = 0$ 为坏信号。参数 $\theta$ 刻画了信号精度，$\theta > \frac{1}{2}$ 的假设意味着信号具有足够的信息量。观察到好信号表明资产有价值的条件概率更高。此外，该假设还表明私人信号的精度是无模糊的且对称的。
+\end{translation}
+
+\begin{original}
+Observing new information, agents update the set of prior beliefs in a full Bayesian way (Pires, 2002; Epstein and Schneider, 2003); that is, all the beliefs in the set of prior beliefs are updated by Bayes rule. Given a closed and convex set $\Pi$ of public beliefs, let $\phi_s(\pi)$ denote the updated belief given prior belief $\pi \in \Pi$ for an informed trader observing private signal $s$. Particularly,
+\[
+\phi_1(\pi) = \frac{\theta\pi}{\theta\pi + (1 - \theta)(1 - \pi)}, \qquad
+\phi_0(\pi) = \frac{(1 - \theta)\pi}{(1 - \theta)\pi + \theta(1 - \pi)},
+\]
+for any belief $\pi \in \Pi$. The set of the informed trader's posterior beliefs, $\Phi_s(\Pi)$, in period $t$, is obtained via Bayes rule in a prior-by-prior manner, i.e.,
+\[
+\Phi_s(\Pi) = \{\phi_s(\pi) \mid \pi \in \Pi\}.
+\]
+Note that $\phi_s(\pi)$ is strictly increasing in $\pi$; hence, we have that $\min \Phi_s(\Pi) = \phi_s(\underline{\pi})$ and $\max \Phi_s(\Pi) = \phi_s(\bar{\pi})$. Therefore, $\Phi_s(\Pi) = [\phi_s(\underline{\pi}), \phi_s(\bar{\pi})]$.
+\end{original}
+\begin{translation}
+在观察到新信息时，代理人以完全贝叶斯方式更新先验信念集合（Pires, 2002; Epstein and Schneider, 2003）；即，先验信念集合中的所有信念都通过贝叶斯规则进行更新。给定一个闭凸的公共信念集合 $\Pi$，令 $\phi_s(\pi)$ 表示观察到私人信号 $s$ 的知情交易者基于先验信念 $\pi \in \Pi$ 的更新后信念。具体而言，
+\[
+\phi_1(\pi) = \frac{\theta\pi}{\theta\pi + (1 - \theta)(1 - \pi)}, \qquad
+\phi_0(\pi) = \frac{(1 - \theta)\pi}{(1 - \theta)\pi + \theta(1 - \pi)},
+\]
+对任意信念 $\pi \in \Pi$。知情交易者的后验信念集合 $\Phi_s(\Pi)$ 在时期 $t$ 通过逐先验贝叶斯规则获得，即
+\[
+\Phi_s(\Pi) = \{\phi_s(\pi) \mid \pi \in \Pi\}.
+\]
+注意 $\phi_s(\pi)$ 关于 $\pi$ 严格递增；因此，我们有 $\min \Phi_s(\Pi) = \phi_s(\underline{\pi})$ 且 $\max \Phi_s(\Pi) = \phi_s(\bar{\pi})$。故 $\Phi_s(\Pi) = [\phi_s(\underline{\pi}), \phi_s(\bar{\pi})]$。
+\end{translation}
+
+\begin{original}
+The informed trader chooses a mixed strategy $\sigma_t \in \Delta^2 \subset \mathbb{R}_+^2$, where $\sigma_t = (\beta_t, \sigma_t)$ with $\beta_t$ and $\sigma_t$ being the probabilities of buying and selling, respectively. Denote $\Sigma$ the set of all the possible trading strategies of the informed trader in period $t$. The informed trader chooses her trading strategy $\sigma_t \in \Sigma$ to maximize her min-expected profit,
+\[
+\min_{\pi \in \Pi_t} \mathbb{E}[\beta_t(v - a_t) + \sigma_t(b_t - v) \mid s, \sigma_t, \Pi_t]. \tag{2.4}
+\]
+
+The min-expected profit linearly depends on the trading probabilities, $\beta_t$ and $\sigma_t$. Buying or selling the asset is preferred and played with positive probability only if it is at least as good as the other two actions. Thus, it is straightforward to see the optimal trading strategies stated in the following lemma.
+
+\begin{lemma}[Lemma 2.1]
+Let the set of public beliefs be $\Pi_t$ after history $h_t$. For an informed trader who observes private signal $s$, her optimal trading strategies satisfy the following:
+\[
+(\beta_t, \sigma_t) > 0 \iff v - a_t \geq \max\left\{0, b_t - \phi_0(\underline{\pi}_t)\right\},
+\]
+\[
+(\beta_t, \sigma_t) = 0 \iff b_t - v \geq \max\left\{0, \phi_1(\bar{\pi}_t) - a_t\right\}.
+\]
+Furthermore, if $\beta_t > 0, \sigma_t > 0$, then the above conditions are reduced to
+\[
+\beta_t > 0 \iff a_t \leq v, \qquad \sigma_t > 0 \iff b_t \geq v.
+\]
+\end{lemma}
+
+Lemma 2.1 shows that ambiguity-averse traders decide to buy or sell depending on different beliefs. Whether to buy the asset depends on the worst updated belief $\phi_0(\underline{\pi}_t)$, while selling the asset is determined by the best updated belief $\phi_1(\bar{\pi}_t)$. Let $\sigma = (\sigma_t)_{t=1}^{T}$ denote a trading strategy.
+\end{original}
+\begin{translation}
+知情交易者选择一个混合策略 $\sigma_t \in \Delta^2 \subset \mathbb{R}_+^2$，其中 $\sigma_t = (\beta_t, \sigma_t)$，$\beta_t$ 和 $\sigma_t$ 分别为买入和卖出的概率。记 $\Sigma$ 为时期 $t$ 知情交易者所有可能的交易策略的集合。知情交易者选择其交易策略 $\sigma_t \in \Sigma$ 以最大化其最小期望利润，
+\[
+\min_{\pi \in \Pi_t} \mathbb{E}[\beta_t(v - a_t) + \sigma_t(b_t - v) \mid s, \sigma_t, \Pi_t]. \tag{2.4}
+\]
+
+最小期望利润线性依赖于交易概率 $\beta_t$ 和 $\sigma_t$。只有当买入或卖出资产至少与其他两个行动一样好时，它才会被偏好并以正概率执行。因此，以下引理所陈述的最优交易策略是直观明了的。
+
+\begin{lemma}[引理2.1]
+令 $\Pi_t$ 为历史 $h_t$ 之后的公共信念集合。对于观察到私人信号 $s$ 的知情交易者，其最优交易策略满足：
+\[
+(\beta_t, \sigma_t) > 0 \iff v - a_t \geq \max\left\{0, b_t - \phi_0(\underline{\pi}_t)\right\},
+\]
+\[
+(\beta_t, \sigma_t) = 0 \iff b_t - v \geq \max\left\{0, \phi_1(\bar{\pi}_t) - a_t\right\}.
+\]
+此外，若 $\beta_t > 0, \sigma_t > 0$，则上述条件简化为
+\[
+\beta_t > 0 \iff a_t \leq v, \qquad \sigma_t > 0 \iff b_t \geq v.
+\]
+\end{lemma}
+
+引理2.1表明，模糊厌恶交易者根据不同的信念决定买入或卖出。是否购买资产取决于最差的后验信念 $\phi_0(\underline{\pi}_t)$，而出售资产则由最佳后验信念 $\phi_1(\bar{\pi}_t)$ 决定。令 $\sigma = (\sigma_t)_{t=1}^{T}$ 表示一个交易策略。
+\end{translation}
+
+\begin{original}
+Our solution concept is similar to a perfect Bayesian equilibrium, which consists of a belief system and a strategy profile, and defined as follows:
+
+\begin{definition}[Definition 2.1 (Equilibrium)]
+An equilibrium of the trading mechanism in the baseline model consists of a pricing rule $\delta$, a trading strategy $\sigma$, and a belief system $\Pi = (\Pi_t)_{t=1}^{T}$ such that: (i) The belief system $\Pi$ is consistent w.r.t.\ the prior belief set $\Pi_1$, the pricing rule $\delta$, and the trading strategy $\sigma$; that is, every $\Pi_t$ is obtained by Bayesian updating wherever possible, given $(\delta, \sigma, \Pi_1)$ and some prior belief $\pi_1 \in \Pi_1$. In every period $t = 1, \ldots, T$, (ii) prices, $a_t$ and $b_t$, satisfy zero profit conditions (2.1) and (2.2) given the belief system $\Pi_t$ and the trading strategy $\sigma_t$, and (iii) trading strategy $\sigma_t$ maximizes an informed trader's min-expected profit (2.4) given the belief system $\Pi_t$ and prices, $a_t$ and $b_t$.
+\end{definition}
+\end{original}
+\begin{translation}
+我们的解概念类似于完美贝叶斯均衡，由信念系统和策略组合构成，定义如下：
+
+\begin{definition}[定义2.1（均衡）]
+基准模型中交易机制的一个均衡包括定价规则 $\delta$、交易策略 $\sigma$ 和信念系统 $\Pi = (\Pi_t)_{t=1}^{T}$，使得：(i) 信念系统 $\Pi$ 关于先验信念集 $\Pi_1$、定价规则 $\delta$ 和交易策略 $\sigma$ 是一致的；即，每一个 $\Pi_t$ 在给定 $(\delta, \sigma, \Pi_1)$ 和某个先验信念 $\pi_1 \in \Pi_1$ 的情况下，在可能的地方均通过贝叶斯更新获得。在每一期 $t = 1, \ldots, T$，(ii) 价格 $a_t$ 和 $b_t$ 在给定信念系统 $\Pi_t$ 和交易策略 $\sigma_t$ 下满足零利润条件 (2.1) 和 (2.2)，且 (iii) 交易策略 $\sigma_t$ 在给定信念系统 $\Pi_t$ 和价格 $a_t$、$b_t$ 下最大化知情交易者的最小期望利润 (2.4)。
+\end{definition}
+\end{translation}
+
+\begin{original}
+Note that the usual definition of belief consistency is extended to accommodate a system of belief sets. Given a pricing rule $\delta$ and a trading strategy $\sigma$, the set of public beliefs can be constructed inductively as follows. Suppose that the set of public beliefs in period $t$ is $\Pi_t$. Then the set of public beliefs in period $t+1$ is $\Pi_{t+1} = \{\pi_{t+1} \mid \pi_{t+1} = \Pr_{\pi_t, \delta, \sigma}(v = 1 \mid h_{t+1}), \pi_t \in \Pi_t\}$, where $\Pr_{\pi_t, \delta, \sigma}(\cdot \mid \cdot)$ is the probability conditional on event given a pricing rule $\delta$, a trading strategy $\sigma$, and a prior belief $\pi_t$. We will discuss the belief updating in more depth in Section 2.3.
+\end{original}
+\begin{translation}
+注意，通常的信念一致性定义被扩展以容纳信念集合系统。给定定价规则 $\delta$ 和交易策略 $\sigma$，公共信念集合可归纳构建如下。假设时期 $t$ 的公共信念集合为 $\Pi_t$。则时期 $t+1$ 的公共信念集合为 $\Pi_{t+1} = \{\pi_{t+1} \mid \pi_{t+1} = \Pr_{\pi_t, \delta, \sigma}(v = 1 \mid h_{t+1}), \pi_t \in \Pi_t\}$，其中 $\Pr_{\pi_t, \delta, \sigma}(\cdot \mid \cdot)$ 是给定定价规则 $\delta$、交易策略 $\sigma$ 和先验信念 $\pi_t$ 下事件的条件概率。我们将在第2.3节更深入地讨论信念更新。
+\end{translation}
+
+% ============================================================
+% SECTION 2.2: Equilibrium Trading Strategy and Prices
+% ============================================================
+
+\subsection{Equilibrium Trading Strategy and Prices \hfill 均衡交易策略与价格}
+
+\begin{original}
+In this subsection, we consider an equilibrium $(\sigma, \delta, \Pi)$ and derive the necessary conditions for the trading strategy and compute the prices in the equilibrium. Let us fix a history $h_t$ and its corresponding public belief $\Pi_t$. The first lemma in the following shows that an informed trader must neither buy upon a bad signal nor sell upon a good signal. To see it, suppose that an informed trader buys the asset when seeing a bad signal. It must be that $a_t \leq \phi_0(\underline{\pi}_t)$ by Lemma 2.1. If it is the case, an informed trader must also buy the asset when seeing a good signal. Thus, $s = 1$ is a signal that indicates a higher likelihood of $v = 1$ than an informed trader's signal $s = 0$. Then the zero profit condition (2.1) implies that $a_t > \phi_0(\underline{\pi}_t)$, which is a contradiction since $\phi_0(\underline{\pi}_t) \leq \phi_0(\bar{\pi}_t)$.
+\end{original}
+\begin{translation}
+在本小节中，我们考虑一个均衡 $(\sigma, \delta, \Pi)$，推导交易策略的必要条件并计算均衡中的价格。固定一个历史 $h_t$ 及其对应的公共信念 $\Pi_t$。以下第一个引理表明，知情交易者不得在观察到坏信号时买入，也不得在观察到好信号时卖出。为理解这一点，假设知情交易者在看到坏信号时购买资产。根据引理2.1，必须有 $a_t \leq \phi_0(\underline{\pi}_t)$。若确实如此，知情交易者在看到好信号时也必须购买资产。因此，$s = 1$ 是一个比知情交易者信号 $s = 0$ 更可能表明 $v = 1$ 的信号。那么零利润条件 (2.1) 意味着 $a_t > \phi_0(\underline{\pi}_t)$，这与 $\phi_0(\underline{\pi}_t) \leq \phi_0(\bar{\pi}_t)$ 矛盾。
+\end{translation}
+
+\begin{lemma}[Lemma 2.2]
+In any equilibrium, if the market maker posts prices, $a_t$ and $b_t$, satisfying zero profit conditions, then it must hold that
+\[
+\beta_t(a_t, b_t, h_t, 0) = 0, \quad \beta_t(a_t, b_t, h_t, 1) \geq 0,
+\]
+\[
+\sigma_t(a_t, b_t, h_t, 0) \geq 0, \quad \sigma_t(a_t, b_t, h_t, 1) = 0.
+\]
+\end{lemma}
+\begin{translation}
+\textbf{引理2.2} 在任何均衡中，若做市商公布满足零利润条件的价格 $a_t$ 和 $b_t$，则必须有
+\[
+\beta_t(a_t, b_t, h_t, 0) = 0, \quad \beta_t(a_t, b_t, h_t, 1) \geq 0,
+\]
+\[
+\sigma_t(a_t, b_t, h_t, 0) \geq 0, \quad \sigma_t(a_t, b_t, h_t, 1) = 0.
+\]
+\end{translation}
+
+\begin{original}
+By Lemma 2.2, we can primarily analyze an informed trader's probabilities of buying upon a good signal, $\beta_t(a_t, b_t, h_t, 1)$, and selling upon a bad signal, $\sigma_t(a_t, b_t, h_t, 0)$, henceforth simply denoted as $\beta$ and $\sigma$. It is worth noting that in the absence of ambiguity, we could derive a stronger result: informed traders would always trade after observing their signals, i.e., $\beta = \sigma = 1$. However, as the subsequent analysis will show, with ambiguity aversion the informed trader's decisions depend on the set of public beliefs and mixed strategies can arise in equilibrium.
+\end{original}
+\begin{translation}
+根据引理2.2，我们主要分析知情交易者在观察到好消息时的购买概率 $\beta_t(a_t, b_t, h_t, 1)$ 和在观察到坏消息时的出售概率 $\sigma_t(a_t, b_t, h_t, 0)$，此后简记为 $\beta$ 和 $\sigma$。值得注意的是，在没有模糊性的情况下，我们可以推导出更强的结果：知情交易者在观察到信号后总是会交易，即 $\beta = \sigma = 1$。然而，如下文分析所示，在模糊厌恶下，知情交易者的决策取决于公共信念集合，均衡中可能出现混合策略。
+\end{translation}
+
+\begin{original}
+It turns out that an informed trader's decision is characterized by the set of public beliefs. Let a set $\Pi_t$ of public beliefs be given, and recall the best belief $\bar{\pi}_t = \max \Pi_t$ and worst belief $\underline{\pi}_t = \min \Pi_t$. We propose that $\lambda = \frac{\bar{\pi}_t(1-\underline{\pi}_t)}{\underline{\pi}_t(1-\bar{\pi}_t)}$ measures the level of ambiguity in the public belief, which is a measure of the discrepancy between best and worst beliefs. Moreover, we define two thresholds, $\underline{\lambda}(\theta)$ and $\bar{\lambda}(\theta)$, depending on the signal accuracy, as follows:
+\[
+\underline{\lambda}(\theta) = \frac{1-\theta+\theta\delta}{\theta+(1-\theta)\delta} \quad \text{and} \quad \bar{\lambda}(\theta) = \frac{1}{\underline{\lambda}(\theta)},
+\]
+where $\delta = (1-\mu)^3$. Note that $\underline{\lambda}(\theta) < \bar{\lambda}(\theta)$ since $\frac{1-\theta+\theta\delta}{\theta+(1-\theta)\delta} < 1$.
+\end{original}
+\begin{translation}
+事实证明，知情交易者的决策由公共信念集合刻画。给定一个公共信念集合 $\Pi_t$，回顾最佳信念 $\bar{\pi}_t = \max \Pi_t$ 和最差信念 $\underline{\pi}_t = \min \Pi_t$。我们提出 $\lambda = \frac{\bar{\pi}_t(1-\underline{\pi}_t)}{\underline{\pi}_t(1-\bar{\pi}_t)}$ 衡量公共信念中的模糊性水平，这是最佳信念与最差信念之间差异的一个度量。此外，我们根据信号精度定义两个阈值 $\underline{\lambda}(\theta)$ 和 $\bar{\lambda}(\theta)$ 如下：
+\[
+\underline{\lambda}(\theta) = \frac{1-\theta+\theta\delta}{\theta+(1-\theta)\delta} \quad \text{和} \quad \bar{\lambda}(\theta) = \frac{1}{\underline{\lambda}(\theta)},
+\]
+其中 $\delta = (1-\mu)^3$。注意 $\underline{\lambda}(\theta) < \bar{\lambda}(\theta)$ 因为 $\frac{1-\theta+\theta\delta}{\theta+(1-\theta)\delta} < 1$。
+\end{translation}
+
+\begin{original}
+The following proposition shows that there are three patterns of an informed trader's trading strategy depending on the level of ambiguity: If the level of ambiguity is low, an informed trader trades with certainty. If the level of ambiguity is high, an informed trader never trades. However, when the level of ambiguity is moderate, an informed trader mixes between trading and non-trading.
+\end{original}
+\begin{translation}
+以下命题表明，根据模糊性水平，知情交易者的交易策略有三种模式：若模糊性水平低，知情交易者确定地交易。若模糊性水平高，知情交易者从不交易。然而，当模糊性水平中等时，知情交易者在交易和不交易之间混合策略。
+\end{translation}
+
+\begin{proposition}[Proposition 2.1]
+In any equilibrium, given a history $h_t$ and the set $\Pi_t$ of public beliefs, the following holds:
+\begin{enumerate}[label=(\roman*)]
+\item An informed trader trades with certainty, i.e., $\beta = \sigma = 1$, if and only if $\lambda \leq \underline{\lambda}(\theta)$; in this case, ask and bid prices, respectively, are $a_t = a^*$ and $b_t = b^*$ where
+\begin{align}
+a^* &= \frac{\bar{\pi}_t(\theta + (1-\theta)\delta)}{\bar{\pi}_t(\theta + (1-\theta)\delta) + (1-\bar{\pi}_t)(1-\theta+\theta\delta)}, \tag{2.5}\\
+b^* &= \frac{\underline{\pi}_t(1-\theta + \theta\delta)}{\underline{\pi}_t(1-\theta + \theta\delta) + (1-\underline{\pi}_t)(\theta+(1-\theta)\delta)}. \tag{2.6}
+\end{align}
+\item There exists a unique $\rho \in (0, 1)$ such that an informed trader trades with probability $\rho$, i.e., $\beta = \sigma = \rho$, if and only if
+\[
+\underline{\lambda}(\theta) < \lambda < \bar{\lambda}(\theta); \tag{2.7}
+\]
+in this case, ask and bid prices are $a_t = \phi_1(\bar{\pi}_t)$ and $b_t = \phi_0(\underline{\pi}_t)$, respectively.
+\item An informed trader does not trade, i.e., $\beta = \sigma = 0$, if and only if $\lambda \geq \bar{\lambda}(\theta)$; in this case, ask and bid prices are $a_t = \bar{\pi}_t$ and $b_t = \underline{\pi}_t$, respectively.
+\end{enumerate}
+\end{proposition}
+\begin{translation}
+\textbf{命题2.1} 在任何均衡中，给定历史 $h_t$ 和公共信念集合 $\Pi_t$，以下成立：
+\begin{enumerate}[label=(\roman*)]
+\item 知情交易者确定地交易，即 $\beta = \sigma = 1$，当且仅当 $\lambda \leq \underline{\lambda}(\theta)$；此时，卖出价和买入价分别为 $a_t = a^*$ 和 $b_t = b^*$，其中
+\begin{align}
+a^* &= \frac{\bar{\pi}_t(\theta + (1-\theta)\delta)}{\bar{\pi}_t(\theta + (1-\theta)\delta) + (1-\bar{\pi}_t)(1-\theta+\theta\delta)}, \tag{2.5}\\
+b^* &= \frac{\underline{\pi}_t(1-\theta + \theta\delta)}{\underline{\pi}_t(1-\theta + \theta\delta) + (1-\underline{\pi}_t)(\theta+(1-\theta)\delta)}. \tag{2.6}
+\end{align}
+\item 存在唯一的 $\rho \in (0, 1)$ 使得知情交易者以概率 $\rho$ 交易，即 $\beta = \sigma = \rho$，当且仅当
+\[
+\underline{\lambda}(\theta) < \lambda < \bar{\lambda}(\theta); \tag{2.7}
+\]
+此时，卖出价和买入价分别为 $a_t = \phi_1(\bar{\pi}_t)$ 和 $b_t = \phi_0(\underline{\pi}_t)$。
+\item 知情交易者不交易，即 $\beta = \sigma = 0$，当且仅当 $\lambda \geq \bar{\lambda}(\theta)$；此时，卖出价和买入价分别为 $a_t = \bar{\pi}_t$ 和 $b_t = \underline{\pi}_t$。
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+Note that, if there is no ambiguity, informed traders always trade, which is a special case of part (i) in the proposition. If $\Pi_t$ is a singleton, i.e., no ambiguity, implies that $\lambda = 1$. However, $\underline{\lambda}(\theta)$ is greater than one. Thus, part (i) indicates that ambiguity has no substantial effect on traders' behavior when it is sufficiently small. In fact, the inequality $\lambda \leq \underline{\lambda}(\theta)$ is equivalent to that both $a^* \leq \phi_1(\bar{\pi}_t)$ and $\phi_0(\underline{\pi}_t) \leq b^*$ hold, where the prices $a^*$ and $b^*$ satisfy the zero profit conditions given that an informed trader buys the asset upon a good signal and sells the asset upon a bad signal.
+\end{original}
+\begin{translation}
+注意，如果没有模糊性，知情交易者总是交易，这是命题第(i)部分的一个特例。若 $\Pi_t$ 是单点集，即无模糊性，意味着 $\lambda = 1$。然而，$\underline{\lambda}(\theta)$ 大于1。因此，第(i)部分表明，当模糊性足够小时，它对交易者行为没有实质性影响。事实上，不等式 $\lambda \leq \underline{\lambda}(\theta)$ 等价于 $a^* \leq \phi_1(\bar{\pi}_t)$ 和 $\phi_0(\underline{\pi}_t) \leq b^*$ 同时成立，其中价格 $a^*$ 和 $b^*$ 满足在知情交易者根据好消息购买资产、根据坏消息出售资产的情况下做市商的零利润条件。
+\end{translation}
+
+\begin{original}
+However, when the level of ambiguity surpasses the threshold $\underline{\lambda}(\theta)$, ambiguity takes effect. Suppose, for contradiction, that an informed trader still buys with certainty in this case. Expecting that, the market maker would post an ask price $a^*$ as defined in equation (2.5). However, the level of ambiguity is too high for an informed trader to buy; in fact, inequality (2.7) is equivalent to $\phi_0(\underline{\pi}_t) < b^* < a^* < \phi_1(\bar{\pi}_t)$. Knowing that an informed trader will not buy the asset with an ask price $a^*$, the market maker has to lower the ask price, equating it with an informed trader's reservation price conditional on a good signal, i.e., $\phi_1(\bar{\pi}_t)$.
+\end{original}
+\begin{translation}
+然而，当模糊性水平超过阈值 $\underline{\lambda}(\theta)$ 时，模糊性开始产生效果。假设为了得出矛盾，知情交易者在此情况下仍然确定地购买。预期到这一点，做市商会公布如方程 (2.5) 所定义的卖出价 $a^*$。然而，模糊性水平太高，知情交易者不会购买；事实上，不等式 (2.7) 等价于 $\phi_0(\underline{\pi}_t) < b^* < a^* < \phi_1(\bar{\pi}_t)$。知道知情交易者不会以卖出价 $a^*$ 购买资产后，做市商必须降低卖出价，使其等于知情交易者以好消息为条件的保留价格，即 $\phi_1(\bar{\pi}_t)$。
+\end{translation}
+
+\begin{original}
+Thus, an informed trader is indifferent between buying and no-trade upon a good signal and mixes between trading or not with a trading probability $\rho \in (0, 1)$. Then the observed order $d_t$ becomes a sufficiently noisy observation of traders' private information so that the market maker breaks even by posting an ask price exactly equal to $\phi_1(\bar{\pi}_t)$. Moreover, as the level of ambiguity increases, an informed trader's reservation price decreases; hence, she reduces the probability of buying, and it makes trading orders noisier. Corollary 2.1 summarizes this result.
+\end{original}
+\begin{translation}
+因此，知情交易者在好消息下对购买和不交易无差异，并以交易概率 $\rho \in (0, 1)$ 在交易和不交易之间混合策略。于是，观察到的订单 $d_t$ 成为交易者私人信息的充分嘈杂观测，使得做市商通过公布恰好等于 $\phi_1(\bar{\pi}_t)$ 的卖出价来实现盈亏平衡。此外，随着模糊性水平增加，知情交易者的保留价格下降；因此，她降低购买概率，使交易订单更加嘈杂。推论2.1总结了这一结果。
+\end{translation}
+
+\begin{corollary}[Corollary 2.1]
+Consider a history $h_t$ and the set $\Pi_t$ of public beliefs such that inequality (2.7) holds, i.e., part (ii) of Proposition 2.1. Then, the trading probability $\rho$ strictly decreases with the level of ambiguity $\lambda$.
+\end{corollary}
+\begin{translation}
+\textbf{推论2.1} 考虑一个历史 $h_t$ 和公共信念集合 $\Pi_t$ 使得不等式 (2.7) 成立，即命题2.1的第(ii)部分。那么，交易概率 $\rho$ 随模糊性水平 $\lambda$ 严格递减。
+\end{translation}
+
+\begin{original}
+If the level of ambiguity gets even higher and surpasses the threshold $\bar{\lambda}(\theta)$, an informed trader's trading probability hits the zero lower bound. The market maker cannot post an ask price lower than $\bar{\pi}_t$ and a bid price higher than $\underline{\pi}_t$; otherwise, it makes losses by trading with noise traders. However, the lowest ask price and the highest bid price the market maker can post fall into the no-trade region of an informed trader. An informed trader finds it never optimal to trade under this situation. All the buy and sell orders come from noise traders and convey no information about informed traders' private signals. Consequently, the market maker posts prices relying only on public beliefs.
+\end{original}
+\begin{translation}
+如果模糊性水平进一步升高并超过阈值 $\bar{\lambda}(\theta)$，知情交易者的交易概率触及零下界。做市商不能公布低于 $\bar{\pi}_t$ 的卖出价和高于 $\underline{\pi}_t$ 的买入价；否则，它会因与噪声交易者交易而亏损。然而，做市商可公布的最低卖出价和最高买入价落入知情交易者的不交易区域。在这种情况下，知情交易者发现交易永远不是最优的。所有买卖订单都来自噪声交易者，不传递任何关于知情交易者私人信号的信息。因此，做市商仅依据公共信念公布价格。
+\end{translation}
+
+\begin{original}
+The informed traders do not trade when ambiguity is sufficiently high, which is reminiscent of the no-trade result or portfolio inertia under ambiguity when prices are exogenous (Dow and da Costa Werlang, 1992). However, prices are endogenously determined in our sequential trading mechanism. When there is only a little ambiguity, the market maker can set a sufficiently large ask--bid spread beyond the no-trade region so that an informed trader is willing to (partially) reveal the private information. However, the market maker fails to do so when ambiguity is too high: By posting an ask price equal to $\phi_1(\bar{\pi}_t)$ (or lower), the expected loss from informed traders cannot be compensated by the profit from noise traders in the market maker's worst belief. Hence, the market maker sets an ask (bid) price that breaks even with noise traders and is higher than (lower than) an informed trader's reservation price to buy (sell).
+\end{original}
+\begin{translation}
+当模糊性足够高时，知情交易者不进行交易，这让人联想到价格外生时模糊性下的不交易结果或投资组合惰性（Dow and da Costa Werlang, 1992）。然而，在我们的序贯交易机制中，价格是内生决定的。当仅有少量模糊性时，做市商可以设定足够大的买卖价差，超出不交易区域，以便知情交易者愿意（部分）揭示私人信息。然而，当模糊性过高时，做市商无法做到这一点：通过公布等于 $\phi_1(\bar{\pi}_t)$（或更低）的卖出价，来自知情交易者的期望损失无法在做市商的最差信念下由来自噪声交易者的利润补偿。因此，做市商设定的卖出（买入）价与噪声交易者盈亏平衡，且高于（低于）知情交易者的购买（出售）保留价格。
+\end{translation}
+
+\begin{original}
+Note that, with the ambiguity-averse market maker, the ask--bid spreads must be strictly positive. In the cases where informed traders trade with positive probabilities, each order $d_t$ is a noisy observation of an informed trader's private signal. A buy order acts as a good signal and a sell order as a bad signal. Thus, the ask price must be strictly higher than the bid price given the same prior belief. Moreover, because of ambiguity aversion, the ask price is set according to the upper bound of the public beliefs, and the bid price is set by the lower bound, which further enlarges the ask--bid spreads. In the case where informed traders do not trade, the set of public beliefs must not be a singleton. The ask price is simply the best prior belief, and the bid price is the worst prior belief.
+\end{original}
+\begin{translation}
+注意，对于模糊厌恶的做市商，买卖价差必须严格为正。在知情交易者以正概率交易的情况下，每个订单 $d_t$ 都是知情交易者私人信号的嘈杂观测。买单充当好消息，卖单充当坏消息。因此，在给定相同先验信念的情况下，卖出价必须严格高于买入价。此外，由于模糊厌恶，卖出价根据公共信念的上界设定，买入价根据下界设定，这进一步放大了买卖价差。在知情交易者不交易的情况下，公共信念集合必定不是单点集。卖出价即最佳先验信念，买入价即最差先验信念。
+\end{translation}
+
+\begin{original}
+How does ambiguity affect the ask--bid spread? To answer this question, consider two sets, $\Pi$ and $\Pi'$, of public belief, and $\Pi'$ is said to be more ambiguous than $\Pi$ if $\Pi \subseteq \Pi'$. This relation is consistent with the level of ambiguity. Let $\lambda$ and $\lambda'$ be the level of ambiguity in $\Pi$ and $\Pi'$, respectively. Then that $\Pi'$ is more ambiguous than $\Pi$ implies that $\lambda' > \lambda$. The following result shows that, loosely speaking, the ask--bid spread increases with ambiguity.
+\end{original}
+\begin{translation}
+模糊性如何影响买卖价差？为回答此问题，考虑两个公共信念集合 $\Pi$ 和 $\Pi'$，若 $\Pi \subseteq \Pi'$，则称 $\Pi'$ 比 $\Pi$ 更模糊。这一关系与模糊性水平一致。令 $\lambda$ 和 $\lambda'$ 分别为 $\Pi$ 和 $\Pi'$ 中的模糊性水平。那么 $\Pi'$ 比 $\Pi$ 更模糊意味着 $\lambda' > \lambda$。以下结果表明，粗略地说，买卖价差随模糊性增加而增大。
+\end{translation}
+
+\begin{proposition}[Proposition 2.2]
+Let $(a, b)$ and $(a', b')$ be the equilibrium ask and bid prices as described in Proposition 2.1 corresponding to the beliefs $\Pi$ and $\Pi'$, respectively. If $\Pi'$ is more ambiguous than $\Pi$, then $a' - b' > a - b$.
+\end{proposition}
+\begin{translation}
+\textbf{命题2.2} 令 $(a, b)$ 和 $(a', b')$ 分别为与信念 $\Pi$ 和 $\Pi'$ 对应的如命题2.1所述的均衡卖出价和买入价。若 $\Pi'$ 比 $\Pi$ 更模糊，则 $a' - b' > a - b$。
+\end{translation}
+
+\begin{original}
+When the market maker is ambiguity-averse, it will push up the ask price and press down the bid price to compensate for its aversion to ambiguity. The more ambiguity there is in the market, the larger the ask--bid spread is. Hence, the market maker's ambiguity aversion reinforces the problem of adverse selection, and more uncertainty induces larger ask--bid spreads.
+\end{original}
+\begin{translation}
+当做市商是模糊厌恶的，它会推高卖出价并压低买入价以补偿其对模糊性的厌恶。市场中模糊性越多，买卖价差越大。因此，做市商的模糊厌恶加剧了逆向选择问题，更多的不确定性导致更大的买卖价差。
+\end{translation}
+
+\newpage
+
+\subsection{Belief Updating and Equilibrium \hfill 信念更新与均衡}
+
+\begin{original}
+To specify a consistent belief system, our analysis focuses only on equilibrium paths, i.e., the histories reachable in an equilibrium. In equilibrium, the publicly observed trading orders $d_t$ can also be considered as a public signal with conditional distributions $\Pr(d_t|h_t, \cdot)$. Let $L(d_t) = \frac{\Pr(d_t|h_t, v=1)}{\Pr(d_t|h_t, v=0)}$ be the likelihood ratio function. In a history $h_{t+1}$ on an equilibrium path, a public belief $\pi_{t+1}$ is obtained by Bayes rule given a prior belief $\pi_t \in \Pi_t$ if and only if
+\[
+\frac{\pi_{t+1}}{1 - \pi_{t+1}} = \frac{\pi_t}{1 - \pi_t} \cdot L(d_t)
+\]
+for any $d_t \in \{-1, 0, 1\}$.
+\end{original}
+\begin{translation}
+为具体指定一致的信念系统，我们的分析仅关注均衡路径，即在均衡中可达的历史。在均衡中，公开观察到的交易订单 $d_t$ 也可以被视为具有条件分布 $\Pr(d_t|h_t, \cdot)$ 的公共信号。令 $L(d_t) = \frac{\Pr(d_t|h_t, v=1)}{\Pr(d_t|h_t, v=0)}$ 为似然比函数。在均衡路径上的历史 $h_{t+1}$ 中，公共信念 $\pi_{t+1}$ 当且仅当满足以下条件时通过给定先验信念 $\pi_t \in \Pi_t$ 的贝叶斯规则得到：
+\[
+\frac{\pi_{t+1}}{1 - \pi_{t+1}} = \frac{\pi_t}{1 - \pi_t} \cdot L(d_t)
+\]
+对任意 $d_t \in \{-1, 0, 1\}$。
+\end{translation}
+
+\begin{original}
+Let a history $h_t$ on an equilibrium path and the corresponding set $\Pi_t$ of public beliefs be given, and ask and bid prices, $a_t$ and $b_t$, are as specified in Proposition 2.1. After the trading order $d_t$ is observed, the set $\Pi_{t+1}$ of public beliefs in the subsequent history $h_{t+1} = (h_t, a_t, b_t, d_t)$ on the equilibrium path can be characterized as follows:
+\[
+\Pi_{t+1} = \left\{ \pi_{t+1} \in (0, 1) \;\middle|\; \frac{\pi_{t+1}}{1 - \pi_{t+1}} = \frac{\pi_t}{1 - \pi_t} \cdot L(d_t), \; \pi_t \in \Pi_t \right\}.
+\]
+This characterization of a consistent belief system gives us the following result.
+\end{original}
+\begin{translation}
+给定均衡路径上的历史 $h_t$ 及相应的公共信念集合 $\Pi_t$，卖出价和买入价 $a_t$ 和 $b_t$ 如命题2.1所述。在观察到交易订单 $d_t$ 后，均衡路径上的后续历史 $h_{t+1} = (h_t, a_t, b_t, d_t)$ 中的公共信念集合 $\Pi_{t+1}$ 可刻画如下：
+\[
+\Pi_{t+1} = \left\{ \pi_{t+1} \in (0, 1) \;\middle|\; \frac{\pi_{t+1}}{1 - \pi_{t+1}} = \frac{\pi_t}{1 - \pi_t} \cdot L(d_t), \; \pi_t \in \Pi_t \right\}.
+\]
+对一致信念系统的这一刻画给出了以下结果。
+\end{translation}
+
+\begin{proposition}[Proposition 2.3]
+In any equilibrium, for all the periods $t$, $t = 1, \dots, T$, the level of ambiguity remains the same, i.e., $\lambda_t = \lambda_1$, on the equilibrium path.
+\end{proposition}
+\begin{translation}
+\textbf{命题2.3} 在任何均衡中，对所有时期 $t$，$t = 1, \dots, T$，模糊性水平在均衡路径上保持不变，即 $\lambda_t = \lambda_1$。
+\end{translation}
+
+\begin{original}
+In the baseline model, it turns out that the level of ambiguity is constant along an equilibrium path. This result greatly helps us characterize equilibrium outcomes, i.e., the trading strategies and pricing rules on equilibrium paths, in the baseline model. In any equilibrium, the market maker's pricing rule and an informed trader's decision can always be described by one of the three possible cases in Proposition 2.1. Then Proposition 2.4 follows Proposition 2.2 and 2.3 immediately.
+\end{original}
+\begin{translation}
+在基准模型中，结果表明模糊性水平沿均衡路径是恒定的。这一结果极大地帮助我们刻画基准模型中的均衡结果，即均衡路径上的交易策略和定价规则。在任何均衡中，做市商的定价规则和知情交易者的决策始终可以由命题2.1中三种可能情形之一来描述。那么命题2.4直接由命题2.2和2.3得出。
+\end{translation}
+
+\begin{proposition}[Proposition 2.4]
+One of the following must hold in any equilibrium.
+\begin{enumerate}[label=(\roman*)]
+\item If $\lambda_1 \leq \underline{\lambda}(\theta)$, an informed trader trades with probability one, and ask and bid prices are $a^*$ and $b^*$, respectively, as defined in equation (2.5) and (2.6) for all $t \geq 1$ on equilibrium path.
+\item If $\underline{\lambda}(\theta) < \lambda_1 < \bar{\lambda}(\theta)$, an informed trader trades with probability $\rho \in (0, 1)$, and ask and bid prices are $\phi_1(\bar{\pi}_t)$ and $\phi_0(\underline{\pi}_t)$, respectively, for all $t \geq 1$ on equilibrium path.
+\item If $\lambda_1 \geq \bar{\lambda}(\theta)$, an informed trader never trades, and ask and bid prices are $\bar{\pi}_t$ and $\underline{\pi}_t$, respectively, for all $t \geq 1$ on equilibrium path.
+\end{enumerate}
+\end{proposition}
+\begin{translation}
+\textbf{命题2.4} 在任何均衡中，以下之一必须成立。
+\begin{enumerate}[label=(\roman*)]
+\item 若 $\lambda_1 \leq \underline{\lambda}(\theta)$，知情交易者以概率1交易，且在均衡路径上对所有 $t \geq 1$，卖出价和买入价分别为方程 (2.5) 和 (2.6) 所定义的 $a^*$ 和 $b^*$。
+\item 若 $\underline{\lambda}(\theta) < \lambda_1 < \bar{\lambda}(\theta)$，知情交易者以概率 $\rho \in (0, 1)$ 交易，且在均衡路径上对所有 $t \geq 1$，卖出价和买入价分别为 $\phi_1(\bar{\pi}_t)$ 和 $\phi_0(\underline{\pi}_t)$。
+\item 若 $\lambda_1 \geq \bar{\lambda}(\theta)$，知情交易者从不交易，且在均衡路径上对所有 $t \geq 1$，卖出价和买入价分别为 $\bar{\pi}_t$ 和 $\underline{\pi}_t$。
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+In the first two cases, where informed traders trade with positive probabilities, trading orders act as informative signals for the market maker. Therefore, we can extend the Proposition 4 of Glosten and Milgrom (1985) and the Proposition 4 of Avery and Zemsky (1998) when the ambiguity is sufficiently small. When $\lambda_1 < \bar{\lambda}(\theta)$, ask and bid prices converge to the true asset value as $T \to \infty$ almost surely, and thus ask--bid spreads converge to zero. The set $\Pi_t$ of public beliefs also shrinks in the sense that $\bar{\pi}_t - \underline{\pi}_t$ converges to zero almost surely.
+\end{original}
+\begin{translation}
+在前两种情形中，知情交易者以正概率交易，交易订单对做市商而言充当信息性信号。因此，当模糊性足够小时，我们可以推广Glosten and Milgrom (1985)的命题4和Avery and Zemsky (1998)的命题4。当 $\lambda_1 < \bar{\lambda}(\theta)$ 时，卖出价和买入价在 $T \to \infty$ 时几乎必然收敛到真实资产价值，从而买卖价差收敛到零。公共信念集合 $\Pi_t$ 也在 $\bar{\pi}_t - \underline{\pi}_t$ 几乎必然收敛到零的意义上收缩。
+\end{translation}
+
+\begin{original}
+Fig. 2.1 and 2.2 plot two simulated equilibrium paths of case (i) and (ii), respectively. When informed traders trade certainly, Fig. 2.1 shows that convergence is achieved fairly fast. It only takes several hundreds of periods to make the initial prices around 0.5 converge to the true asset value. However, it may take an extraordinarily long time to converge when informed traders mix between trading and non-trading, even though convergence is predicted by theory. In the sample path depicted in Fig. 2.2, there is no signs of convergence even after 1000 periods.
+\end{original}
+\begin{translation}
+图2.1和图2.2分别绘制了情形(i)和(ii)的两条模拟均衡路径。当知情交易者确定地交易时，图2.1显示收敛相当迅速，仅需数百期即可使初始约0.5的价格收敛到真实资产价值。然而，当知情交易者在交易和不交易之间混合策略时，即使理论预测收敛，也可能需要极长的时间才能收敛。在图2.2描绘的样本路径中，即使在1000期后也没有收敛的迹象。
+\end{translation}
+
+\begin{original}
+In the third case, all the informed traders do not trade, and this decision is independent of her private signal. We call such a state a noninformative trading regime: all the trading becomes uninformative. The state is observationally equivalent to an informational cascade where social learning stops and information aggregation fails in the long run. The ask and bid prices are constant, and the ask--bid spreads never converge. The study of Avery and Zemsky (1998) emphasizes a ``price critique'' on the possibility of information aggregation failure in the sequential trading mechanism \`a la Glosten and Milgrom (1985) without ambiguity: the competitive market maker can adjust the price aligning with the public belief; therefore, traders' optimal response always partially reveals their private signals. However, our result shows such a price critique can be overturned by introducing ambiguity aversion.
+\end{original}
+\begin{translation}
+在第三种情形中，所有知情交易者都不交易，这一决策与其私人信号无关。我们将这种状态称为无信息交易机制：所有交易都变得无信息含量。这种状态在观测上等价于信息级联，其中社会学习停止，信息加总在长期中失败。卖出价和买入价是恒定的，买卖价差永不收敛。Avery and Zemsky (1998)的研究强调了在无模糊性的Glosten and Milgrom (1985)式序贯交易机制中信息加总失败可能性的``价格批判''：竞争性做市商可以调整价格以与公共信念一致；因此，交易者的最优反应总是部分揭示其私人信号。然而，我们的结果表明，通过引入模糊厌恶，这种价格批判可以被推翻。
+\end{translation}
+
+\newpage
+
+\subsection{Ambiguity-Neutral Market Maker \hfill 模糊中性做市商}
+
+\begin{original}
+In this subsection, we consider a variant model where the market maker is assumed to be ambiguity-neutral, in contrast to the ambiguity-averse market maker analyzed thus far. We show that the results are qualitatively the same as the baseline model when the market maker has different preferences towards ambiguity. Thus, our key findings in the baseline model are robust to the assumption of the market maker's ambiguity preferences.
+\end{original}
+\begin{translation}
+在本小节中，我们考虑一个变体模型，其中假设做市商是模糊中性的，不同于迄今为止分析的模糊厌恶做市商。我们证明，当做市商对模糊性具有不同偏好时，结果在性质上与基准模型相同。因此，基准模型中的关键发现对做市商的模糊偏好假设是稳健的。
+\end{translation}
+
+\begin{original}
+Specifically, the market maker's prior belief is $\pi_1 \in \Pi_1$. That is, the market maker is not ambiguous about the asset payoff and, hence, not ambiguity-averse. Note that the sequence $\{\pi_t\}$ of the market maker's belief is also obtained by Bayes updating with public history; therefore, it must be that the market maker's belief is contained in the set of public beliefs, i.e., $\pi_t \in \Pi_t$ in equilibrium.
+\end{original}
+\begin{translation}
+具体而言，做市商的先验信念为 $\pi_1 \in \Pi_1$。即做市商对资产收益不具有模糊性，因此不是模糊厌恶的。注意，做市商信念序列 $\{\pi_t\}$ 也是通过利用公共历史的贝叶斯更新得到的；因此，做市商的信念必须包含在公共信念集合中，即在均衡中 $\pi_t \in \Pi_t$。
+\end{translation}
+
+\begin{original}
+In the variant model, informed traders still perceive ambiguity and they are averse to it. Their beliefs are around the market maker's belief. Proposition 2.5 states an informed trader's optimal trading strategy, where her trading probabilities depend on two measures of ambiguity defined as follows:
+\[
+\lambda^B = \frac{\bar{\pi}_t(1 - \pi_t)}{\pi_t(1 - \bar{\pi}_t)} \quad \text{and} \quad \lambda^S = \frac{\underline{\pi}_t(1 - \pi_t)}{\pi_t(1 - \underline{\pi}_t)}.
+\]
+\end{original}
+\begin{translation}
+在变体模型中，知情交易者仍然感知到模糊性并对其厌恶。其信念围绕在做市商信念周围。命题2.5陈述了知情交易者的最优交易策略，其中其交易概率依赖于如下定义的两个模糊性度量：
+\[
+\lambda^B = \frac{\bar{\pi}_t(1 - \pi_t)}{\pi_t(1 - \bar{\pi}_t)} \quad \text{和} \quad \lambda^S = \frac{\underline{\pi}_t(1 - \pi_t)}{\pi_t(1 - \underline{\pi}_t)}.
+\]
+\end{translation}
+
+\begin{proposition}[Proposition 2.5]
+In any equilibrium of the variant model, given a history $h_t$, the market maker's belief $\pi_t$, and the set $\Pi_t$ of public beliefs, the following holds:
+\begin{enumerate}[label=(\roman*)]
+\item An informed trader buys (resp., sells) surely if and only if $\lambda^B \leq \underline{\lambda}(\theta)$ (resp., $\lambda^S \geq \bar{\lambda}(\theta)$).
+\item There exists a unique $\beta \in (0, 1)$ (resp., $\sigma \in (0, 1)$) such that an informed trader buys (resp., sells) with probability $\beta$ (resp., $\sigma$) if and only if $\underline{\lambda}(\theta) < \lambda^B < \bar{\lambda}(\theta)$ (resp., $\underline{\lambda}(\theta) < \lambda^S < \bar{\lambda}(\theta)$).
+\item An informed trader never buys (resp., sells) if and only if $\lambda^B \geq \bar{\lambda}(\theta)$ (resp., $\lambda^S \leq \underline{\lambda}(\theta)$).
+\end{enumerate}
+\end{proposition}
+\begin{translation}
+\textbf{命题2.5} 在变体模型的任何均衡中，给定历史 $h_t$、做市商信念 $\pi_t$ 和公共信念集合 $\Pi_t$，以下成立：
+\begin{enumerate}[label=(\roman*)]
+\item 知情交易者确定地购买（相应地，出售）当且仅当 $\lambda^B \leq \underline{\lambda}(\theta)$（相应地，$\lambda^S \geq \bar{\lambda}(\theta)$）。
+\item 存在唯一的 $\beta \in (0, 1)$（相应地，$\sigma \in (0, 1)$）使得知情交易者以概率 $\beta$ 购买（相应地，以概率 $\sigma$ 出售）当且仅当 $\underline{\lambda}(\theta) < \lambda^B < \bar{\lambda}(\theta)$（相应地，$\underline{\lambda}(\theta) < \lambda^S < \bar{\lambda}(\theta)$）。
+\item 知情交易者从不购买（相应地，从不出售）当且仅当 $\lambda^B \geq \bar{\lambda}(\theta)$（相应地，$\lambda^S \leq \underline{\lambda}(\theta)$）。
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+Note that the optimal trading strategy in the variant model exhibits a pattern similar to that of the baseline model: trading probabilities decrease as ambiguity increases. Consequently, trading can still become uninformative even when the market maker is ambiguity-neutral. The underlying intuition remains consistent with the baseline model: when ambiguity is sufficiently high, the market maker would incur losses from trading with noise traders if they were to set the ask (bid) price at or below (above) the reservation price of informed traders in order to encourage them to trade.
+\end{original}
+\begin{translation}
+注意，变体模型中的最优交易策略呈现出与基准模型相似的模式：交易概率随模糊性增加而降低。因此，即使当做市商是模糊中性时，交易仍然可能变得无信息含量。其深层直观含义与基准模型一致：当模糊性足够高时，若做市商为鼓励知情交易者交易而将卖出（买入）价设定为等于或低于（高于）其保留价格，则会因与噪声交易者交易而遭受损失。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 3: EXTENSIONS OF THE BASELINE MODEL
+% ============================================================
+\section{Extensions of the Baseline Model \hfill 基准模型的扩展}
+
+\subsection{A General Model \hfill 一般模型}
+
+\begin{original}
+This subsection presents a general model. The model has the same timeline and players as the baseline model. However, we consider the following generalizations: 1) asset payoffs and signals can be drawn from arbitrary finite sets; 2) private signals can have ambiguous distributions; 3) informed traders can be risk-averse.
+
+To be more specific, let $\mathcal{V} \subset \mathbb{R}_+$ be a finite (but non-singleton) set of possible values of the asset. Let $\Delta(\mathcal{V})$ denote all the probability measures on the set $\mathcal{V}$. In each period $t$, agents can have a set $\Pi_t$ of probability measures, which is a closed and convex subset in $\Delta(\mathcal{V})$, to describe their ambiguity in the public beliefs.
+\end{original}
+\begin{translation}
+本小节给出一个一般模型。该模型具有与基准模型相同的时间线和参与人。然而，我们考虑以下推广：1) 资产收益和信号可从任意有限集合中抽取；2) 私人信号可具有模糊分布；3) 知情交易者可以是风险厌恶的。
+
+更具体地说，令 $\mathcal{V} \subset \mathbb{R}_+$ 为资产可能取值的有限（但非单点）集合。令 $\Delta(\mathcal{V})$ 表示集合 $\mathcal{V}$ 上的所有概率测度。在每一期 $t$，代理人可拥有一组概率测度 $\Pi_t$，它是 $\Delta(\mathcal{V})$ 中的一个闭凸子集，用以描述其公共信念中的模糊性。
+\end{translation}
+
+\begin{original}
+The general model extends the signal space and allows ambiguity in private signals. Let $\mathcal{S} \subset \mathbb{R}$ be a finite (but non-singleton) set of possible values of private signals and $\gamma(s|v): \mathcal{S} \times \mathcal{V} \to [0, 1]$ be the conditional probability of signal; that is, $\gamma(s|v) = \Pr(s_t = s|v)$ is the probability of signal $s_t = s$ conditional on that the true value is $v$. Signals can also be ambiguous in the sense that informed agents consider a set $\Gamma$ of conditional probabilities, which is closed and convex. The set $\Gamma$ is assumed to be constant over time.
+
+We impose that every conditional probability of private signals considered by agents satisfies the monotone likelihood ratio property (MLRP), which implies that $\Pr(\cdot|v')$ first-order stochastically dominates (FOSD) $\Pr(\cdot|v)$ if $v' > v$.
+\end{original}
+\begin{translation}
+一般模型扩展了信号空间并允许私人信号存在模糊性。令 $\mathcal{S} \subset \mathbb{R}$ 为私人信号可能取值的有限（但非单点）集合，$\gamma(s|v): \mathcal{S} \times \mathcal{V} \to [0, 1]$ 为信号的条件概率；即 $\gamma(s|v) = \Pr(s_t = s|v)$ 是在真实价值为 $v$ 的条件下信号 $s_t = s$ 的概率。信号也可以是模糊的，即知情代理人考虑一个条件概率集合 $\Gamma$，它是闭凸的。假设集合 $\Gamma$ 随时间保持不变。
+
+我们假定代理人考虑的每一个私人信号的条件概率都满足单调似然比性质（MLRP），这意味着若 $v' > v$，则 $\Pr(\cdot|v')$ 一阶随机占优（FOSD）$\Pr(\cdot|v)$。
+\end{translation}
+
+\begin{assumption}[Assumption 1]
+Any conditional probability distribution $\gamma \in \Gamma$ satisfies MLRP, i.e.,
+\[
+\frac{\gamma(s|v')}{\gamma(s|v)} \geq \frac{\gamma(s'|v')}{\gamma(s'|v)},
+\]
+whenever $s \geq s'$ and $v \leq v'$, with strict inequality if $s > s'$, or $v > v'$, or both.
+\end{assumption}
+\begin{translation}
+\textbf{假设1} 任何条件概率分布 $\gamma \in \Gamma$ 满足MLRP，即
+\[
+\frac{\gamma(s|v')}{\gamma(s|v)} \geq \frac{\gamma(s'|v')}{\gamma(s'|v)},
+\]
+当 $s \geq s'$ 且 $v \leq v'$ 时成立，若 $s > s'$ 或 $v > v'$ 或两者同时成立，则为严格不等式。
+\end{translation}
+
+\begin{original}
+Moreover, the general model allows informed traders to be risk-averse. Specifically, their objective is to maximize the min-expected utility as follows:
+\begin{equation}
+\max_{\delta_t \in \mathcal{D}_t} \min_{\pi \in \Pi_s(h_t)} \mathbb{E}\big[ u\big( \beta_t(v - a_t) + \sigma_t(b_t - v) \big) \big| h_t, s, a_t, b_t \big], \tag{3.1}
+\end{equation}
+where $u$ is a von Neumann-Morgenstern (vNM) utility function, and we impose the following assumption.
+\end{original}
+\begin{translation}
+此外，一般模型允许知情交易者是风险厌恶的。具体而言，其目标是最大化如下所示的最小期望效用：
+\begin{equation}
+\max_{\delta_t \in \mathcal{D}_t} \min_{\pi \in \Pi_s(h_t)} \mathbb{E}\big[ u\big( \beta_t(v - a_t) + \sigma_t(b_t - v) \big) \big| h_t, s, a_t, b_t \big], \tag{3.1}
+\end{equation}
+其中 $u$ 是冯·诺依曼--摩根斯坦（vNM）效用函数，我们施加如下假设。
+\end{translation}
+
+\begin{assumption}[Assumption 2]
+$u$ is continuous, concave, and strictly increasing; and $u(0) = 0$.
+\end{assumption}
+\begin{translation}
+\textbf{假设2} $u$ 是连续的、凹的且严格递增的；且 $u(0) = 0$。
+\end{translation}
+
+\begin{original}
+In the general model, pricing rules, strategies, and beliefs are adapted to the extended payoff and signal spaces. The solution concept is also similarly defined as the baseline model: pricing rules satisfy zero profit conditions and trading decisions are optimal given the belief system, whereas the concept of belief consistency is extended in the general model. Here, it is required that a belief system $\Pi$ is consistent w.r.t. $\Pi_1$, $\Gamma$, and $(\sigma, \delta)$; that is, for any $t > 1$ and history $h_t$, for any $\pi_t \in \Pi_t$, there exists some $\pi_1 \in \Pi_1$ and $\gamma \in \Gamma$ such that $\pi_t$ is updated by Bayes rule given $\pi_1$, $\gamma$, and $(\sigma, \delta)$ wherever possible.
+\end{original}
+\begin{translation}
+在一般模型中，定价规则、策略和信念适应于扩展的收益空间和信号空间。解概念的定义也与基准模型类似：定价规则满足零利润条件，交易决策在给定信念系统下是最优的，而信念一致性的概念在一般模型中得到了扩展。这里，要求信念系统 $\Pi$ 关于 $\Pi_1$、$\Gamma$ 和 $(\sigma, \delta)$ 是一致的；即，对任何 $t > 1$ 和历史 $h_t$，对任何 $\pi_t \in \Pi_t$，存在某个 $\pi_1 \in \Pi_1$ 和 $\gamma \in \Gamma$，使得在可能的情况下 $\pi_t$ 是通过给定 $\pi_1$、$\gamma$ 和 $(\sigma, \delta)$ 的贝叶斯规则更新得到的。
+\end{translation}
+
+\begin{original}
+The first theorem asserts the existence of the equilibrium in the general model. In fact, the zero profit conditions implicitly represent a fixed-point characterization of the equilibrium. Thus, the proof can be done by a fixed-point argument.
+\end{original}
+\begin{translation}
+第一个定理断言一般模型中均衡的存在性。事实上，零利润条件隐含地表示了均衡的不动点刻画。因此，证明可以通过不动点论证完成。
+\end{translation}
+
+\begin{theorem}[Theorem 3.1]
+There exists an equilibrium $(\sigma, \delta, \Pi)$ for the trading game.
+\end{theorem}
+\begin{translation}
+\textbf{定理3.1} 该交易博弈存在一个均衡 $(\sigma, \delta, \Pi)$。
+\end{translation}
+
+\begin{original}
+The next theorem characterizes the trading strategies in equilibrium. The signal set $\mathcal{S}$ is finite and non-singleton, so there exists a minimum and a maximum element, which denoted by $\underline{s} = \min \mathcal{S}$ and $\bar{s} = \max \mathcal{S}$, respectively. The equilibrium trading strategies are monotonic; that is, it can be described as such: there are two cutoff signals, $s^*_{\text{buy}}$ and $s^*_{\text{sell}}$, with $\underline{s} \leq s^*_{\text{sell}} < s^*_{\text{buy}} \leq \bar{s}$, and the active informed traders will buy the asset if her private signal is at least $s^*_{\text{buy}}$ and sell the asset if her private signal is no more than $s^*_{\text{sell}}$, where the determination of $s^*_{\text{buy}}$ and $s^*_{\text{sell}}$ depends on the set of common beliefs. In the case that $s^*_{\text{buy}} = \bar{s}$ and $s^*_{\text{sell}} = \underline{s}$, trading probabilities can be always zero: informed traders do not trade, and social learning stops.
+\end{original}
+\begin{translation}
+下一个定理刻画了均衡中的交易策略。信号集 $\mathcal{S}$ 是有限且非单点的，因此存在最小元和最大元，分别记为 $\underline{s} = \min \mathcal{S}$ 和 $\bar{s} = \max \mathcal{S}$。均衡交易策略是单调的；即可以描述为：存在两个截断信号 $s^*_{\text{buy}}$ 和 $s^*_{\text{sell}}$，满足 $\underline{s} \leq s^*_{\text{sell}} < s^*_{\text{buy}} \leq \bar{s}$，活跃的知情交易者在其私人信号至少为 $s^*_{\text{buy}}$ 时购买资产，在其私人信号不超过 $s^*_{\text{sell}}$ 时出售资产，其中 $s^*_{\text{buy}}$ 和 $s^*_{\text{sell}}$ 的确定取决于公共信念集合。在 $s^*_{\text{buy}} = \bar{s}$ 且 $s^*_{\text{sell}} = \underline{s}$ 的情况下，交易概率可始终为零：知情交易者不交易，社会学习停止。
+\end{translation}
+
+\begin{theorem}[Theorem 3.2]
+In any equilibrium $(\sigma, \delta, \Pi)$, given any history $h_t$ on equilibrium path and prices $(a_t, b_t) = \sigma(h_t)$, it must be that there exists some $s^*_{\text{buy}}, s^*_{\text{sell}} \in \mathcal{S}$ such that $\underline{s} \leq s^*_{\text{sell}} < s^*_{\text{buy}} \leq \bar{s}$ and
+\[
+\beta_t(a_t, b_t, h_t, s) \begin{cases}
+= 0 & s < s^*_{\text{buy}} \\
+\in [0, 1] & s = s^*_{\text{buy}} \\
+= 1 & s > s^*_{\text{buy}}
+\end{cases},
+\qquad
+\sigma_t(a_t, b_t, h_t, s) \begin{cases}
+= 1 & s < s^*_{\text{sell}} \\
+\in [0, 1] & s = s^*_{\text{sell}} \\
+= 0 & s > s^*_{\text{sell}}
+\end{cases}.
+\]
+\end{theorem}
+\begin{translation}
+\textbf{定理3.2} 在任何均衡 $(\sigma, \delta, \Pi)$ 中，给定均衡路径上的任意历史 $h_t$ 和价格 $(a_t, b_t) = \sigma(h_t)$，必定存在某个 $s^*_{\text{buy}}, s^*_{\text{sell}} \in \mathcal{S}$ 使得 $\underline{s} \leq s^*_{\text{sell}} < s^*_{\text{buy}} \leq \bar{s}$，且
+\[
+\beta_t(a_t, b_t, h_t, s) \begin{cases}
+= 0 & s < s^*_{\text{buy}} \\
+\in [0, 1] & s = s^*_{\text{buy}} \\
+= 1 & s > s^*_{\text{buy}}
+\end{cases},
+\qquad
+\sigma_t(a_t, b_t, h_t, s) \begin{cases}
+= 1 & s < s^*_{\text{sell}} \\
+\in [0, 1] & s = s^*_{\text{sell}} \\
+= 0 & s > s^*_{\text{sell}}
+\end{cases}.
+\]
+\end{translation}
+
+\begin{original}
+The general model allows further explore the implications of the effect ambiguity in a more general information structure than the baseline model. In the following, Section 3.2 shows that ambiguity in signals can lead to information aggregation failure in the long run with ambiguous signal accuracy, even though traders' actions are informative at the beginning. Section 3.3 considers that private signals are asymmetric and shows that no-trade can be informative.
+\end{original}
+\begin{translation}
+一般模型允许在比基准模型更一般的信息结构中进一步探索模糊性效应的含义。以下，第3.2节表明在模糊信号精度下，即使交易者的行动在初期具有信息含量，信号中的模糊性也可能导致长期信息加总失败。第3.3节考虑私人信号不对称的情形，并表明不交易可具有信息含量。
+\end{translation}
+
+\newpage
+
+\subsection{Ambiguous Signal Accuracy \hfill 模糊信号精度}
+
+\begin{original}
+In an equilibrium of the baseline model, the level of ambiguity is constant over time on an equilibrium path. To overcome it, we consider a model with ambiguous signal accuracy that extends the baseline model by introducing ambiguity into private signals. Specifically, instead of a commonly known, unique signal accuracy $\theta$, agents are uncertain about signal accuracy, and they consider that
+\[
+\Pr(s = 1|v = 1) = \Pr(s = 0|v = 0) = \theta,
+\]
+which can be any value in an interval $\Theta = [\underline{\theta}, \bar{\theta}]$ with $\frac12 < \underline{\theta} < \bar{\theta} < 1$.
+\end{original}
+\begin{translation}
+在基准模型的均衡中，模糊性水平在均衡路径上随时间保持恒定。为突破这一点，我们考虑一个具有模糊信号精度的模型，通过将模糊性引入私人信号来扩展基准模型。具体而言，代理人不再拥有共同知晓的、唯一的信号精度 $\theta$，而是对信号精度不确定，他们认为
+\[
+\Pr(s = 1|v = 1) = \Pr(s = 0|v = 0) = \theta,
+\]
+其可以取区间 $\Theta = [\underline{\theta}, \bar{\theta}]$ 中的任意值，其中 $\frac12 < \underline{\theta} < \bar{\theta} < 1$。
+\end{translation}
+
+\begin{original}
+Beliefs are updated by a full Bayesian rule, and it is done in a prior-by-prior and likelihood-by-likelihood manner in the model with ambiguous signal accuracy. For a prior belief $\pi$ and a signal accuracy $\theta$, its posterior belief $\pi_{s, \theta}$, given a realized signal $s$ is obtained by Bayes rule, i.e.,
+\[
+\pi_{s, \theta} = \begin{cases}
+\frac{\theta\pi}{\theta\pi + (1-\theta)(1-\pi)} & \text{if } s = 1,\\[4pt]
+\frac{(1-\theta)\pi}{(1-\theta)\pi + \theta(1-\pi)} & \text{if } s = 0.
+\end{cases}
+\]
+
+For a set $\Pi$ of prior beliefs and a set $\Theta$ of signal accuracies, the set of posterior beliefs given a realized signal $s$ is obtained by updating each $\pi \in \Pi$ with each signal accuracy $\theta \in \Theta$, i.e., $\Pi_s = \big\{ \pi_{s,\theta} \big| \pi \in \Pi, \; \theta \in \Theta \big\}$.
+\end{original}
+\begin{translation}
+信念通过完全贝叶斯规则更新，在具有模糊信号精度的模型中，这是以逐个先验和逐个似然的方式完成的。对于先验信念 $\pi$ 和信号精度 $\theta$，给定已实现的信号 $s$，其后验信念 $\pi_{s, \theta}$ 通过贝叶斯规则得到，即
+\[
+\pi_{s, \theta} = \begin{cases}
+\frac{\theta\pi}{\theta\pi + (1-\theta)(1-\pi)} & \text{若 } s = 1,\\[4pt]
+\frac{(1-\theta)\pi}{(1-\theta)\pi + \theta(1-\pi)} & \text{若 } s = 0.
+\end{cases}
+\]
+
+对于先验信念集合 $\Pi$ 和信号精度集合 $\Theta$，给定已实现信号 $s$ 的后验信念集合通过将每个 $\pi \in \Pi$ 与每个信号精度 $\theta \in \Theta$ 更新得到，即 $\Pi_s = \big\{ \pi_{s,\theta} \big| \pi \in \Pi, \; \theta \in \Theta \big\}$。
+\end{translation}
+
+\begin{original}
+Similar to the baseline model, the market maker posts prices satisfying the zero profit conditions. However, ambiguity aversion makes the market maker pick the worst posterior belief against the trading direction. That is, given a history $h_t$ and the corresponding set $\Pi_t$ of public beliefs, ask and bid prices are set as follows:
+\begin{align*}
+a_t &= \max_{\theta\in\Theta} \max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t=1], \\
+b_t &= \min_{\theta\in\Theta} \min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t=-1].
+\end{align*}
+\end{original}
+\begin{translation}
+与基准模型类似，做市商公布满足零利润条件的价格。然而，模糊厌恶使做市商选择与交易方向相反的最差后验信念。即，给定历史 $h_t$ 和相应的公共信念集合 $\Pi_t$，卖出价和买入价设定如下：
+\begin{align*}
+a_t &= \max_{\theta\in\Theta} \max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t=1], \\
+b_t &= \min_{\theta\in\Theta} \min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t=-1].
+\end{align*}
+\end{translation}
+
+\begin{original}
+An ambiguity-averse informed trader also trades based on the worst posterior belief against her trading direction. Therefore, an informed trader decides to buy (with some probability) if $\min_{\theta\in\Theta} \pi_{1,\theta} \geq a_t$ and to sell if $\max_{\theta\in\Theta} \pi_{0,\theta} \leq b_t$.
+
+To understand the effect of ambiguous signal accuracy, we can consider a 3-color urn: there are 90 balls in an urn with 30 being red and the remaining 60 balls being either blue or green. Let $X$ denote the lottery paying 1 if a blue or green ball is drawn, zero otherwise. Without additional information, this lottery is risky but not ambiguous; the probability of winning is 2/3. Instead, suppose that someone else first draws a ball and reveals that the ball is not green. This information serves as an ambiguous signal. Then, the lottery $X$ becomes ambiguous, the probability of winning ranging from 0 to 2/3, conditional on the signal.
+\end{original}
+\begin{translation}
+模糊厌恶的知情交易者同样基于与其交易方向相反的最差后验信念进行交易。因此，知情交易者决定（以某种概率）购买，若 $\min_{\theta\in\Theta} \pi_{1,\theta} \geq a_t$；决定出售，若 $\max_{\theta\in\Theta} \pi_{0,\theta} \leq b_t$。
+
+为理解模糊信号精度的效应，我们可以考虑一个三色罐的例子：罐中有90个球，30个为红色，其余60个为蓝色或绿色。令 $X$ 表示若抽到蓝色或绿色球则支付1、否则支付0的彩票。在没有额外信息时，该彩票是有风险但非模糊的；获胜概率为2/3。相反，假设其他人先抽取一个球并揭示该球不是绿色。这一信息充当了一个模糊信号。于是，彩票 $X$ 变得模糊，以信号为条件的获胜概率范围从0到2/3。
+\end{translation}
+
+\begin{original}
+Back to our model, the observed order $d_t$ is a noisy observation of an informed trader's private signal from the public perspective. Therefore, if a private signal has ambiguous accuracy, the observed order is also ambiguous, i.e., it does not have a unique conditional distribution. Hence, even though there is no ambiguity in the public belief initially, observing an ambiguous trading order makes posterior belief ambiguous. With a sequence of signals with ambiguous accuracy, ambiguity in public beliefs grows over time.
+\end{original}
+\begin{translation}
+回到我们的模型中，从公共视角看，观察到的订单 $d_t$ 是知情交易者私人信号的嘈杂观测。因此，若私人信号具有模糊精度，观察到的订单也是模糊的，即它不具有唯一的条件分布。因此，即使最初公共信念中没有模糊性，观察到模糊的交易订单也会使后验信念变得模糊。伴随着一系列具有模糊精度的信号，公共信念中的模糊性随时间增长。
+\end{translation}
+
+\begin{proposition}[Proposition 3.1]
+Consider a model with ambiguous signal accuracy, in which the initial set $\Pi_1$ of public beliefs satisfies that $\lambda_1 < \bar{\lambda}(\underline{\theta})$. Then $\{\lambda_t\}_{t=1}^T$ is an increasing sequence on an equilibrium path, and it converges to $\bar{\lambda}(\underline{\theta})$ as $T \to \infty$ almost surely.
+\end{proposition}
+\begin{translation}
+\textbf{命题3.1} 考虑一个具有模糊信号精度的模型，其中初始公共信念集合 $\Pi_1$ 满足 $\lambda_1 < \bar{\lambda}(\underline{\theta})$。则 $\{\lambda_t\}_{t=1}^T$ 在均衡路径上是一个递增序列，且当 $T \to \infty$ 时几乎必然收敛到 $\bar{\lambda}(\underline{\theta})$。
+\end{translation}
+
+\begin{original}
+Similar to the baseline model, the sufficient and necessary conditions for an informed trader to trade with positive probability is $\lambda_t < \bar{\lambda}(\underline{\theta})$ in the model with ambiguous signal accuracy. In this case, the order $d_t$ is a noisy observation of ambiguous private signals, making itself an ambiguous signal. Conversely, if $\lambda_t \geq \bar{\lambda}(\underline{\theta})$, informed traders do not trade, and the order $d_t$ is uninformative about private signals. Thus, the market enters a state where social learning stops, and the set of public beliefs remains constant over time.
+\end{original}
+\begin{translation}
+与基准模型类似，在具有模糊信号精度的模型中，知情交易者以正概率交易的充要条件是 $\lambda_t < \bar{\lambda}(\underline{\theta})$。在这种情况下，订单 $d_t$ 是模糊私人信号的嘈杂观测，使其自身成为一个模糊信号。反之，若 $\lambda_t \geq \bar{\lambda}(\underline{\theta})$，知情交易者不交易，订单 $d_t$ 对私人信号无信息含量。因此，市场进入社会学习停止的状态，公共信念集合随时间保持恒定。
+\end{translation}
+
+\begin{original}
+When $\lambda_t < \bar{\lambda}(\underline{\theta})$, the order $d_t$ may contain ambiguous information about private signal accuracy. Hence, public beliefs suffer from dilution: the ambiguity of private signal accuracy is injected into the set $\Pi_{t+1}$ of public beliefs through updating with $d_t$. Consequently, $\lambda_{t+1} \geq \lambda_t$ with strict inequality if $d_t \neq 0$. Inductively, the level of ambiguity is an increasing sequence.
+
+Particularly, when the ambiguity is of a moderate level, i.e., $\underline{\lambda}(\bar{\theta}) < \lambda_t < \bar{\lambda}(\underline{\theta})$, an informed trader mixes between trading or not. The higher the level of ambiguity, the smaller probability an informed trader trades with. The small trading probability chosen by the informed trader makes the observed order slightly contaminated by the ambiguity in the private signal. Hence, it restricts the incremental of ambiguity in the public beliefs, and the level of ambiguity never surpasses $\bar{\lambda}(\underline{\theta})$.
+\end{original}
+\begin{translation}
+当 $\lambda_t < \bar{\lambda}(\underline{\theta})$ 时，订单 $d_t$ 可能包含关于私人信号精度的模糊信息。因此，公共信念遭受稀释：私人信号精度的模糊性通过用 $d_t$ 进行更新而被注入公共信念集合 $\Pi_{t+1}$ 中。因此，$\lambda_{t+1} \geq \lambda_t$，若 $d_t \neq 0$ 则为严格不等式。通过归纳，模糊性水平是一个递增序列。
+
+特别地，当模糊性处于中等水平时，即 $\underline{\lambda}(\bar{\theta}) < \lambda_t < \bar{\lambda}(\underline{\theta})$，知情交易者在交易与不交易之间混合策略。模糊性水平越高，知情交易者交易的概率越小。知情交易者选择的小交易概率使观察到的订单略微受到私人信号中模糊性的污染。因此，这限制了公共信念中模糊性的增量，模糊性水平永远不会超过 $\bar{\lambda}(\underline{\theta})$。
+\end{translation}
+
+\begin{original}
+However, in the long run, the increasing sequence of the level of ambiguity converges to $\bar{\lambda}(\underline{\theta})$ almost surely. As the level of ambiguity increases over time, an informed trader's trading probability decreases and converges to zero in the long run; that is, the market gets arbitrarily close to a noninformative trading regime. The following corollary follows Proposition 3.1 immediately.
+\end{original}
+\begin{translation}
+然而，在长期中，模糊性水平的递增序列几乎必然收敛到 $\bar{\lambda}(\underline{\theta})$。随着模糊性水平随时间增加，知情交易者的交易概率下降并在长期中收敛到零；即市场任意接近无信息交易机制。以下推论直接由命题3.1得出。
+\end{translation}
+
+\begin{corollary}[Corollary 3.1]
+Consider a model with ambiguous signal accuracy with an initial set $\Pi_1$ of public beliefs satisfying $\lambda_1 < \bar{\lambda}(\underline{\theta})$. It converges to a noninformative trading regime almost surely on an equilibrium path.
+\end{corollary}
+\begin{translation}
+\textbf{推论3.1} 考虑一个具有模糊信号精度的模型，初始公共信念集合 $\Pi_1$ 满足 $\lambda_1 < \bar{\lambda}(\underline{\theta})$。在均衡路径上，它几乎必然收敛到一个无信息交易机制。
+\end{translation}
+
+\begin{original}
+Fig. 3.1 illustrates the dynamics of prices and beliefs in the model with ambiguous signal accuracy. Even with small ambiguity ($\underline{\theta} = 0.6$ and $\bar{\theta} = 0.61$) in the signal accuracy, we can see that after several hundred of periods, social learning is almost ceased, and the beliefs and prices becomes almost flat.
+\end{original}
+\begin{translation}
+图3.1展示了具有模糊信号精度模型中价格和信念的动态变化。即使信号精度中仅有很小的模糊性（$\underline{\theta} = 0.6$，$\bar{\theta} = 0.61$），我们可以看到在几百期之后，社会学习几乎停止，信念和价格几乎变得平坦。
+\end{translation}
+
+\newpage
+
+\subsection{Asymmetric Signals \hfill 非对称信号}
+
+\begin{original}
+If no-trade can result from an informed trader's rational decision, it can also convey information about an informed trader's private signal. However, it is not the case in the baseline model where signals are assumed to be symmetric. To make no-trade possibly informative, we breakdown the symmetry assumption in the baseline model and consider a model with asymmetric signals, in which the assumption (2.3) is replaced by
+\[
+\theta_1 = \Pr(s = 1|v = 1) > \Pr(s = 0|v = 0) = \theta_0,
+\]
+with other assumptions in the baseline model unchanged.
+\end{original}
+\begin{translation}
+如果不交易可能源于知情交易者的理性决策，它也可以传递关于知情交易者私人信号的信息。然而，在假设信号对称的基准模型中并非如此。为使不交易可能具有信息含量，我们打破基准模型中的对称性假设，考虑一个具有非对称信号的模型，其中假设 (2.3) 被替换为
+\[
+\theta_1 = \Pr(s = 1|v = 1) > \Pr(s = 0|v = 0) = \theta_0,
+\]
+基准模型中的其他假设保持不变。
+\end{translation}
+
+\begin{original}
+In the baseline model, an informed trader buys upon a good signal and sells upon a bad signal with the same trading probability $\rho$. It is a consequence of the symmetry assumption on signal accuracy. By introducing asymmetry, an informed trader's buy probability, $\beta$, and sell probability, $\sigma$, can be different.
+\end{original}
+\begin{translation}
+在基准模型中，知情交易者在好消息下购买和在坏消息下出售具有相同的交易概率 $\rho$。这是信号精度对称性假设的结果。通过引入非对称性，知情交易者的购买概率 $\beta$ 和出售概率 $\sigma$ 可以不同。
+\end{translation}
+
+\begin{proposition}[Proposition 3.2]
+In an equilibrium of the model with asymmetric signals where $\theta_1 > \theta_0$, $0 \leq \sigma < \beta \leq 1$ if and only if
+\[
+\underline{\lambda}(\theta_0) < \lambda < \bar{\lambda}(\theta_1). \tag{3.2}
+\]
+Moreover, if observing order $d_t = 0$, public evaluation of the asset value decreases in the sense that $\bar{\pi}_{t+1} \leq \bar{\pi}_t$ and $\underline{\pi}_{t+1} \leq \underline{\pi}_t$ with $\bar{\pi}_{t+1} < \bar{\pi}_t$ and $\underline{\pi}_{t+1} < \underline{\pi}_t$.
+\end{proposition}
+\begin{translation}
+\textbf{命题3.2} 在具有非对称信号（其中 $\theta_1 > \theta_0$）的模型的均衡中，$0 \leq \sigma < \beta \leq 1$ 当且仅当
+\[
+\underline{\lambda}(\theta_0) < \lambda < \bar{\lambda}(\theta_1). \tag{3.2}
+\]
+此外，若观察到订单 $d_t = 0$，公众对资产价值的评估下降，即 $\bar{\pi}_{t+1} \leq \bar{\pi}_t$ 且 $\underline{\pi}_{t+1} \leq \underline{\pi}_t$，其中 $\bar{\pi}_{t+1} < \bar{\pi}_t$ 且 $\underline{\pi}_{t+1} < \underline{\pi}_t$。
+\end{translation}
+
+\begin{original}
+The proof of Proposition 3.2 follows a similar approach as that of Proposition 2.1, and hence it is omitted. Instead, we discuss several cases in terms of the ambiguity level, $\lambda$, with a fixed history $h_t$ and a set $\Pi_t$ of public beliefs given. Before discussing the case when inequality (3.2) holds, let us first see what if it does not. If $\lambda \geq \bar{\lambda}(\theta_1)$, the level of ambiguity is so high that both $a_t \leq \phi_1(\bar{\pi}_t)$ and $\phi_0(\underline{\pi}_t) \leq b_t$ hold. Similar to the baseline model, the market maker posts an ask price $\bar{\pi}_t$ and a bid price $\underline{\pi}_t$, and an informed trader finds it optimal not to trade. It makes both buy probability and sell probability equal to zero.
+\end{original}
+\begin{translation}
+命题3.2的证明遵循与命题2.1类似的方法，因此予以省略。相反，我们在给定固定历史 $h_t$ 和公共信念集合 $\Pi_t$ 的情况下，按模糊性水平 $\lambda$ 讨论几种情形。在讨论不等式 (3.2) 成立的情形之前，让我们先看它不成立的情况。若 $\lambda \geq \bar{\lambda}(\theta_1)$，模糊性水平如此之高，使得 $a_t \leq \phi_1(\bar{\pi}_t)$ 和 $\phi_0(\underline{\pi}_t) \leq b_t$ 同时成立。与基准模型类似，做市商公布卖出价 $\bar{\pi}_t$ 和买入价 $\underline{\pi}_t$，知情交易者发现不交易是最优的。这使得购买概率和出售概率均为零。
+\end{translation}
+
+\begin{original}
+On the other hand, if the level of ambiguity is sufficiently low, i.e., $\lambda \leq \underline{\lambda}(\theta_0)$, an informed trader trades with certainty as in the baseline model; that is, her buy probability and sell probability are both equal to one. If buy probability and sell probability are equal, the likelihood of observing $d_t = 0$ is also equal conditional on different true asset values. Then, $d_t = 0$ is not informative about the true asset value.
+\end{original}
+\begin{translation}
+另一方面，若模糊性水平足够低，即 $\lambda \leq \underline{\lambda}(\theta_0)$，则与基准模型中一样，知情交易者确定地交易；即她的购买概率和出售概率均等于1。若购买概率与出售概率相等，观察到的 $d_t = 0$ 的似然性在不同真实资产价值条件下也是相等的。因此，$d_t = 0$ 对真实资产价值没有信息含量。
+\end{translation}
+
+\begin{original}
+However, ambiguity-averse informed traders may mix between trading or not when the level of ambiguity is moderate, which can make no-trade informative when it is combined with asymmetry in signal accuracy. Consider different situations when inequality (3.2) holds. If $\underline{\lambda}(\theta_0) < \lambda \leq \underline{\lambda}(\theta_1)$, an informed trader with a good signal views that the level of ambiguity is small, while an informed trader with a bad signal considers that the level of ambiguity is moderate. It follows that an informed trader buys the asset with certainty upon a good signal while selling the asset with a probability less than one upon a bad signal.
+
+If $\bar{\lambda}(\theta_0) \leq \lambda < \bar{\lambda}(\theta_1)$, it is the case that an informed trader with a good signal thinks that the level of ambiguity is moderate while an informed trader with a bad signal feels that the level of ambiguity is large. It follows that an informed trader buys the asset with a positive probability upon a good signal but never sells the asset upon a bad signal. Put it differently, it is likely that an informed trader has seen a bad signal if there is no trade. Moreover, a sell order, $d_t = -1$, is not informative about the asset value since it must come from a noise trader.
+\end{original}
+\begin{translation}
+然而，当模糊性水平中等时，模糊厌恶的知情交易者可能在交易和不交易之间混合策略，当与信号精度的非对称性结合时，这可能使不交易具有信息含量。考虑不等式 (3.2) 成立时的不同情形。若 $\underline{\lambda}(\theta_0) < \lambda \leq \underline{\lambda}(\theta_1)$，收到好消息的知情交易者认为模糊性水平低，而收到坏消息的知情交易者认为模糊性水平中等。由此，知情交易者在好消息下确定地购买资产，而在坏消息下以小于1的概率出售资产。
+
+若 $\bar{\lambda}(\theta_0) \leq \lambda < \bar{\lambda}(\theta_1)$，则收到好消息的知情交易者认为模糊性水平中等，而收到坏消息的知情交易者感到模糊性水平高。由此，知情交易者在好消息下以正概率购买资产，但在坏消息下从不卖出资产。换言之，若没有交易发生，很可能是因为知情交易者看到了坏消息。此外，卖单 $d_t = -1$ 对资产价值没有信息含量，因为它必定来自噪声交易者。
+\end{translation}
+
+\begin{original}
+If $\underline{\lambda}(\theta_0) \ll \lambda \ll \bar{\lambda}(\theta_1)$, it is possible that $\underline{\lambda}(\theta_1) < \lambda < \bar{\lambda}(\theta_0)$. There is an overlap of the two situations mentioned above, where an informed trader buys the asset upon a good signal and never sells the asset. If $\bar{\lambda}(\theta_1) < \bar{\lambda}(\theta_0)$, it can be the case that $\bar{\lambda}(\theta_1) < \lambda < \bar{\lambda}(\theta_0)$. Then an informed trader mixes between trading or not whenever seeing a good or bad signal. However, since a bad signal is less accurate than a good signal, the informed trader is more conservative in placing a sell order upon a bad signal than placing a buy order upon a good signal. Thus, an informed trader's sell probability is strictly less than buy probability in this case.
+
+To sum up, no-trade is more likely to result from a bad signal than a good signal when inequality (3.2) holds. Therefore, if no-trade occurs, the valuation of the asset will decrease in the market: no news is bad news, given that a bad signal is less accurate than a good one.
+\end{original}
+\begin{translation}
+若 $\underline{\lambda}(\theta_0) \ll \lambda \ll \bar{\lambda}(\theta_1)$，可能出现 $\underline{\lambda}(\theta_1) < \lambda < \bar{\lambda}(\theta_0)$。上述两种情形存在重叠，即知情交易者在好消息下购买资产，但从不卖出资产。若 $\bar{\lambda}(\theta_1) < \bar{\lambda}(\theta_0)$，可能出现 $\bar{\lambda}(\theta_1) < \lambda < \bar{\lambda}(\theta_0)$。那么，知情交易者无论看到好消息还是坏消息，都在交易与不交易之间混合策略。然而，由于坏信号的精度低于好信号，知情交易者在坏信号下挂出卖单比在好消息下挂出买单更为保守。因此，在这种情况下，知情交易者的出售概率严格小于购买概率。
+
+总而言之，当不等式 (3.2) 成立时，不交易更可能源于坏信号而非好消息。因此，若不交易发生，市场中资产估值将下降：考虑到坏信号不如好消息精确，没有消息就是坏消息。
+\end{translation}
+
+\newpage
+
+\subsection{Continuous Action Spaces \hfill 连续行动空间}
+
+\begin{original}
+Besides the price critique, Chari and Kehoe (2004) also point out a continuous investment critique (Lee, 1993) on the possibility of information aggregation failure. That is, the informational cascade disappears if agents' action spaces are continuous. Moreover, Decamps and Lovo (2006) show that, with risk-averse traders, a ``non-informative trade'' can occur when prices are endogenous. In their model, discreteness in action spaces is a necessary condition. However, in our model, the non-informative trading regime with ambiguity-averse agents is robustly attributed to the non-differentiability of the multiple prior preferences, and it can occur even when traders have continuous action spaces.
+\end{original}
+\begin{translation}
+除了价格批判外，Chari and Kehoe (2004)还指出了关于信息加总失败可能性的连续投资批判（Lee, 1993）。即，若代理人的行动空间是连续的，信息级联就会消失。此外，Decamps and Lovo (2006)表明，在风险厌恶交易者下，当价格内生时可能出现``无信息交易''。在他们的模型中，行动空间的离散性是一个必要条件。然而，在我们的模型中，具有模糊厌恶代理人的无信息交易机制稳健地归因于多先验偏好的不可微性，即使在交易者具有连续行动空间时也会发生。
+\end{translation}
+
+\begin{original}
+Let us consider a model with continuous action spaces; specifically, the baseline model is extended by allowing the informed traders to buy or sell the risky asset at any amount up to one unit. An order $d_t$ can take any value in the interval $[-1, 1]$. A positive number indicates a buy order, and a negative number is a sell order. Moreover, a noise trader's order is randomly drawn from a continuous distribution with support $[-1, 1]$. This assumption can be justified by the fact that noise traders have different demands for the asset. Moreover, it also guarantees that an informed trader is indistinguishable from a noise trader. For simplicity, assume that a noise trader's order is drawn from a uniform distribution. The market maker, besides posting prices, is also allowed to reject some trades. We maintain other assumptions in the baseline model.
+\end{original}
+\begin{translation}
+让我们考虑一个具有连续行动空间的模型；具体而言，基准模型被扩展为允许知情交易者以任意数量（最多一单位）买入或卖出风险资产。订单 $d_t$ 可取值于区间 $[-1, 1]$ 中的任意值。正数表示买单，负数表示卖单。此外，噪声交易者的订单从支撑为 $[-1, 1]$ 的连续分布中随机抽取。这一假设可由噪声交易者对资产具有不同需求这一事实来论证。此外，它也保证了知情交易者与噪声交易者不可区分。为简单起见，假设噪声交易者的订单从均匀分布中抽取。做市商除了公布价格外，还被允许拒绝部分交易。我们保持基准模型中的其他假设。
+\end{translation}
+
+\begin{original}
+Instead of solving all the possible equilibria, we aim to find an equilibrium where a non-informative trading may exist. For this purpose, we construct a set of trading strategies and pricing rules that can be supported in equilibrium. That is, there exists a belief system, along with which the trading strategies and pricing rules constitute an equilibrium.
+
+For an informed trader, we conjecture that their optimal trading decisions have a similar pattern as those in the baseline model. If the level of ambiguity is low, she trades with certainty; if the level of ambiguity is moderate, she mixes between trading and non-trading; if the level of ambiguity is high, she does not trade at all. Moreover, it is reasonable to expect the prices posted by the market maker to make an informed trader trade with random order size to mimic a noise trader. If an informed trader always places an order with a fixed size, the market maker can distinguish them from noise traders.
+\end{original}
+\begin{translation}
+我们并非求解所有可能的均衡，而是旨在找到一个可能存在无信息交易的均衡。为此，我们构造一组可在均衡中支持的交易策略和定价规则。即存在一个信念系统，交易策略和定价规则与之共同构成一个均衡。
+
+对于知情交易者，我们推测其最优交易决策具有与基准模型相似的模式。若模糊性水平低，她确定地交易；若模糊性水平中等，她在交易与不交易之间混合策略；若模糊性水平高，她根本不交易。此外，合理预期做市商公布的价格会使知情交易者以随机订单规模进行交易，以模仿噪声交易者。若知情交易者总是以固定规模下单，做市商则可将他们与噪声交易者区分开来。
+\end{translation}
+
+\begin{original}
+To further understand how the market maker sets prices, let us focus on the intuition of setting an ask price in the following. Consider that the level of ambiguity is sufficiently low, and suppose an informed trader must place a buy order upon a good signal. If the market maker accepts trade of any size, ask price must be $\max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t > 0]$ for each unit of the asset to conform to zero profit conditions. However, the low level of ambiguity implies that an informed trader's worst belief $\phi_1(\bar{\pi}_t)$ can be strictly higher than $\max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t > 0]$. Thus, the informed trader will always place an order of size one to maximize her expected profit. If it is the case, such an adverse selection allows the market maker to distinguish an informed trader from a noise trader.
+
+Nevertheless, the market maker can reject orders of size above a cutoff $\kappa \in [0, 1]$ to make it possible that ask price equal to an informed trader's worst belief upon a good signal, and thus an informed trader trade with random size. Restricting the order size forces the informed traders to place an order of size below $\kappa$. Moreover, by lowering the cutoff $\kappa$ of order size, it increases the likelihood of that an acceptable buy order is placed by an informed trader given that an informed trader trades with certainty. Thus, the market maker can increase the ask price (for orders of acceptable size) to match the worst belief of an informed trader upon a good signal.
+\end{original}
+\begin{translation}
+为进一步理解做市商如何设定价格，我们在下文中聚焦于设定卖出价的直觉。考虑模糊性水平足够低的情形，假设知情交易者在看到好消息时必须挂出买单。若做市商接受任意规模的交易，卖出价必须为 $\max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t > 0]$ 每单位资产以满足零利润条件。然而，低模糊性水平意味着知情交易者的最差信念 $\phi_1(\bar{\pi}_t)$ 可能严格高于 $\max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t > 0]$。因此，知情交易者将总是挂出规模为1的订单以最大化其期望利润。若情况如此，这种逆向选择使做市商能够区分知情交易者与噪声交易者。
+
+尽管如此，做市商可以拒绝规模超过截断值 $\kappa \in [0, 1]$ 的订单，使卖出价可能等于知情交易者在好消息下的最差信念，从而使知情交易者以随机规模交易。限制订单规模迫使知情交易者挂出规模低于 $\kappa$ 的订单。此外，通过降低订单规模截断值 $\kappa$，在知情交易者确定交易的情况下，可接受的买单由知情交易者挂出的似然性增加。因此，做市商可以提高（可接受规模订单的）卖出价以匹配知情交易者在好消息下的最差信念。
+\end{translation}
+
+\begin{original}
+When the level of ambiguity is moderate, informed traders trade with some probability $\rho \in (0, 1)$. Suppose that informed traders still trade with certainty given a moderate level of ambiguity. Then, to meet zero profit conditions, the ask price posted by the market maker would be strictly higher than an informed trader's worst belief upon seeing a good signal, i.e., $a_t > \phi_1(\bar{\pi}_t)$. However, by choosing a probability $\rho < 1$, it reduces the informativeness of the signal $\{d_t > 0\}$ to the market maker and makes the break-even ask price equal to $\phi_1(\bar{\pi}_t)$ exactly. However, when ambiguity is sufficiently high so that $\lambda_t \geq \bar{\lambda}(\theta)$, there is no way to post an ask price to make an informed trader to trade while the market maker does not incur a loss. As the baseline model, the market maker simply posts an ask price equal to $\bar{\pi}_t$ to guarantee zero profit from noise traders, and no informed traders want to trade.
+\end{original}
+\begin{translation}
+当模糊性水平中等时，知情交易者以某个概率 $\rho \in (0, 1)$ 交易。假设在中等模糊性水平下，知情交易者仍然确定地交易。那么，为满足零利润条件，做市商公布的卖出价将严格高于知情交易者在看到好消息时的最差信念，即 $a_t > \phi_1(\bar{\pi}_t)$。然而，通过选择概率 $\rho < 1$，它降低了信号 $\{d_t > 0\}$ 对做市商的信息含量，使盈亏平衡卖出价恰好等于 $\phi_1(\bar{\pi}_t)$。然而，当模糊性足够高使得 $\lambda_t \geq \bar{\lambda}(\theta)$ 时，无法公布一个能让知情交易者交易而做市商不遭受损失的卖出价。如同基准模型，做市商简单地公布等于 $\bar{\pi}_t$ 的卖出价以保证来自噪声交易者的零利润，且没有知情交易者愿意交易。
+\end{translation}
+
+\begin{original}
+We verify that the above construction of trading strategies and pricing rule can be supported in equilibrium, and summarize this result in Proposition 3.3. It also verifies that there exists an equilibrium where there can be a non-informative trading regime if ambiguity is sufficiently high.
+\end{original}
+\begin{translation}
+我们验证了上述交易策略和定价规则的构造可在均衡中得到支持，并将此结果总结于命题3.3。它还验证了存在一个均衡，其中若模糊性足够高，则可能出现无信息交易机制。
+\end{translation}
+
+\begin{proposition}[Proposition 3.3]
+Consider a model with a continuous action space with an initial set $\Pi_1$ of public beliefs.
+\begin{enumerate}[label=(\roman*)]
+\item If $\underline{\lambda}(\theta) < \lambda_1 < \bar{\lambda}(\theta)$, then the following can be supported in an equilibrium: (i.a) There exists a $\kappa \in (0, 1]$ such that the market maker rejects all trades of size above $\kappa$, and the ask and bid prices are $\phi_1(\bar{\pi}_t)$ and $\phi_0(\underline{\pi}_t)$, respectively, in each period $t \geq 1$. (i.b) There exists a probability $\rho \in (0, 1]$ such that an informed trader trades with probability $\rho$, and her trading size is drawn randomly from a uniform distribution with support $[0, \kappa]$.
+\item If $\lambda_1 \geq \bar{\lambda}(\theta)$, then the following can be supported in an equilibrium: (ii.a) The market maker accepts all trades, and ask and bid prices are $\bar{\pi}_t$ and $\underline{\pi}_t$, respectively. (ii.b) An informed trader never trades.
+\end{enumerate}
+\end{proposition}
+\begin{translation}
+\textbf{命题3.3} 考虑一个具有连续行动空间的模型，初始公共信念集合为 $\Pi_1$。
+\begin{enumerate}[label=(\roman*)]
+\item 若 $\underline{\lambda}(\theta) < \lambda_1 < \bar{\lambda}(\theta)$，则以下可在均衡中得到支持：(i.a) 存在 $\kappa \in (0, 1]$ 使得做市商拒绝所有规模超过 $\kappa$ 的交易，且在第 $t \geq 1$ 期，卖出价和买入价分别为 $\phi_1(\bar{\pi}_t)$ 和 $\phi_0(\underline{\pi}_t)$。(i.b) 存在概率 $\rho \in (0, 1]$ 使得知情交易者以概率 $\rho$ 交易，且其交易规模从支撑为 $[0, \kappa]$ 的均匀分布中随机抽取。
+\item 若 $\lambda_1 \geq \bar{\lambda}(\theta)$，则以下可在均衡中得到支持：(ii.a) 做市商接受所有交易，卖出价和买入价分别为 $\bar{\pi}_t$ 和 $\underline{\pi}_t$。(ii.b) 知情交易者从不交易。
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+Therefore, the non-informative trading regime, which leads to failure of information aggregation, emerges when the ambiguity is high, even though traders' action spaces are continuous. Such an information aggregation failure that arises from agents' multiple prior preferences is robust to endogenous prices and continuous action spaces. As aforementioned, a no-trade region exists for traders with multiple prior preferences due to the non-differentiability in their indifference curves. When ambiguity is sufficiently high, the market maker wants a sufficiently large ask--bid spread to elicit informed traders to trade. However, its pricing cannot be competitive in the market.
+\end{original}
+\begin{translation}
+因此，导致信息加总失败的无信息交易机制在模糊性高时出现，即使交易者的行动空间是连续的。这种源于代理人多先验偏好的信息加总失败对内生价格和连续行动空间是稳健的。如前所述，由于无差异曲线的不可微性，具有多先验偏好的交易者存在一个不交易区域。当模糊性足够高时，做市商希望有足够大的买卖价差以引导知情交易者进行交易。然而，其定价在市场上无法具有竞争力。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 4: CONCLUDING REMARKS
+% ============================================================
+\section{Concluding Remarks \hfill 结论}
+
+\begin{original}
+In this paper, we examine how ambiguity aversion affects sequential trading. Ambiguity-averse traders trade less with private information when they face ambiguous information. They may avoid holding any uncertain asset if the ambiguity is too high. The main contribution of the paper is to show that ambiguity aversion may cause information aggregation failure even with endogenous prices and continuous actions spaces. In our model, the key reason for these results is attributed to the non-smoothness of the multiple prior preferences. Therefore, we conjecture that the result can be extended to a broader class of ambiguity-averse preferences, for example, Choquet expected utility model (Schmeidler, 1989) and $\alpha$-maxmin model (Ghirardato et al., 2004).
+\end{original}
+\begin{translation}
+本文考察了模糊厌恶如何影响序贯交易。模糊厌恶的交易者在面对模糊信息时，利用私人信息进行交易的频率降低。若模糊性过高，他们可能避免持有任何不确定资产。本文的主要贡献在于表明，即使在内生价格和连续行动空间下，模糊厌恶也可能导致信息加总失败。在我们的模型中，这些结果的关键原因归因于多先验偏好的非光滑性。因此，我们推测该结果可以推广到更广泛的模糊厌恶偏好类别，例如Choquet期望效用模型（Schmeidler, 1989）和 $\alpha$-maxmin模型（Ghirardato et al., 2004）。
+\end{translation}
+
+\begin{original}
+Our results hold for other model extensions, such as ambiguous signal accuracy, general finite signal and action spaces, and continuous action spaces. We also find interesting results in these extensions. For example, when signals are ambiguous, trading activities make public beliefs more ambiguous over time. This depends on a key property that full Bayesian updating widens the posterior beliefs. Moreover, our model shows how no-trade can inform the market when ambiguity-averse traders may abstain. The type of information conveyed by no-trade depends on signal accuracy. For example, if bad signals are less accurate than good signals, informed traders with bad signals order less. Thus, no news is bad news for the market, and prices can drop when trading is inactive.
+\end{original}
+\begin{translation}
+我们的结果对其他模型扩展也成立，例如模糊信号精度、一般有限信号和行动空间以及连续行动空间。我们在这些扩展中也发现了有趣的结果。例如，当信号是模糊的时，交易活动使公共信念随时间变得更加模糊。这依赖于完全贝叶斯更新会扩宽后验信念这一关键性质。此外，我们的模型展示了当模糊厌恶交易者可能放弃交易时，不交易如何向市场传递信息。不交易所传递的信息类型取决于信号精度。例如，若坏信号不如好信号精确，收到坏信号的知情交易者下单更少。因此，没有消息对市场而言就是坏消息，在交易不活跃时价格可能下跌。
+\end{translation}
+
+\begin{original}
+\noindent\textbf{Declaration of competing interest}
+
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+\end{original}
+\begin{translation}
+\textbf{利益冲突声明}
+
+作者声明，他们没有已知的可能影响本文所报告工作的竞争性财务利益或个人关系。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% APPENDIX: PROOFS
+% ============================================================
+\section*{Appendix A. Proofs \hfill 附录A. 证明}
+
+\subsection*{Proof of Proposition 2.1 \hfill 命题2.1的证明}
+
+\begin{original}
+We only prove the results regarding $\beta$, and the proof of results regarding $\sigma$ is similar. We first show the if sides of (i)--(iii).
+
+\textbf{(i)} Let the inequality $\lambda \leq \underline{\lambda}(\theta)$ hold. And suppose, for contradiction, $\beta < 1$. Then, there are two cases.
+
+\textit{Case (i.a):} $\beta \in (0, 1)$. In this case, by zero profit condition (2.1),
+\[
+a_t = \frac{\bar{\pi}_t(\beta\theta + (1-\theta)\delta)}{\bar{\pi}_t(\beta\theta + (1-\theta)\delta) + (1-\bar{\pi}_t)(\beta(1-\theta) + \theta\delta)}.
+\]
+However, the fact that an informed trader mixes buying and not buying upon a good signal implies that $a_t = \phi_1(\bar{\pi}_t)$, i.e.,
+\[
+a_t = \frac{\theta\bar{\pi}_t}{\theta\bar{\pi}_t + (1-\theta)(1-\bar{\pi}_t)}.
+\]
+Therefore, we obtain that
+\[
+\lambda = \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta}. \tag{A.1}
+\]
+Note that $\beta < 1$ implies that
+\[
+\frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} > \frac{1 - \theta + \theta\delta}{\theta + (1-\theta)\delta}. \tag{A.2}
+\]
+Then, we obtain a contradiction that $\lambda > \underline{\lambda}(\theta)$ from inequalities (A.1) and (A.2).
+
+\textit{Case (i.b)} $\beta = 0$. In this case, it must be that $a_t = \bar{\pi}_t$ since all buy orders come from noise traders. Moreover, by Lemma 2.1, $\beta = 0$ implies that $a_t \geq \phi_1(\bar{\pi}_t)$. Hence, it follows that
+\[
+\bar{\pi}_t \geq \phi_1(\bar{\pi}_t) \implies \lambda \geq \bar{\lambda}(\theta).
+\]
+Since $\bar{\lambda}(\theta) > \underline{\lambda}(\theta)$, we again obtain a contradiction that $\lambda > \underline{\lambda}(\theta)$.
+
+\textbf{(ii)} Let inequality (2.7) hold.
+
+Suppose, for contradiction, $\beta = 1$. In this case, we can explicitly compute ask price, which equals to $a^*$ as defined in (2.5). Then, for an informed trader optimally choosing $\beta = 1$, by Lemma 2.1, it follows that $\phi_1(\bar{\pi}_t) \geq a^*$. It further implies that $\lambda \leq \underline{\lambda}(\theta)$, which contradicts with inequality (2.7).
+
+Suppose, for contradiction, $\beta = 0$. Following a similar argument as Case (i.b), it implies that $\lambda \geq \bar{\lambda}(\theta)$, which contradicts with inequality (2.7).
+
+Hence, we conclude that it must be that $\beta \in (0, 1)$. Moreover, following the argument in Case (i.b), equation (A.1) must hold. Its right-hand side strictly decreases with $\beta$ with
+\[
+\lim_{\beta \to 0} \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} = \frac{1-\theta}{\theta} > \bar{\lambda}(\theta),
+\]
+\[
+\lim_{\beta \to 1} \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} = \frac{1 - \theta + \theta\delta}{\theta + (1-\theta)\delta} < \underline{\lambda}(\theta).
+\]
+Thus, there must exist a unique $\rho \in (0, 1)$ that makes equality (A.1) hold when $\lambda = \rho$. Moreover, Corollary 2.1 directly follows the fact that right-hand side of equation (A.1) strictly decreases with $\beta$.
+
+\textbf{(iii)} Let the inequality $\lambda > \bar{\lambda}(\theta)$ hold. Suppose, for contradiction, $\beta > 0$.
+
+\textit{Case (iii.a):} $\beta \in (0, 1)$. Following a similar argument as Case (i.a), it implies that
+\[
+\lambda = \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} < \bar{\lambda}(\theta),
+\]
+a contradiction.
+
+\textit{Case (iii.b):} $\beta = 1$. Following a similar argument as Case (ii), it also implies that $\lambda < \bar{\lambda}(\theta)$, a contradiction.
+
+For only if sides of (i)--(iii), we simply reverse the above arguments.
+\end{original}
+\begin{translation}
+我们仅证明关于 $\beta$ 的结果，关于 $\sigma$ 的结果证明类似。我们首先证明 (i)--(iii) 的充分性方向。
+
+\textbf{(i)} 假设不等式 $\lambda \leq \underline{\lambda}(\theta)$ 成立。为导出矛盾，假设 $\beta < 1$。那么有两种情形。
+
+\textit{情形 (i.a):} $\beta \in (0, 1)$。在此情形下，由零利润条件 (2.1)，
+\[
+a_t = \frac{\bar{\pi}_t(\beta\theta + (1-\theta)\delta)}{\bar{\pi}_t(\beta\theta + (1-\theta)\delta) + (1-\bar{\pi}_t)(\beta(1-\theta) + \theta\delta)}.
+\]
+然而，知情交易者在好消息下在购买与不购买之间混合这一事实意味着 $a_t = \phi_1(\bar{\pi}_t)$，即
+\[
+a_t = \frac{\theta\bar{\pi}_t}{\theta\bar{\pi}_t + (1-\theta)(1-\bar{\pi}_t)}.
+\]
+因此，我们得到
+\[
+\lambda = \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta}. \tag{A.1}
+\]
+注意 $\beta < 1$ 意味着
+\[
+\frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} > \frac{1 - \theta + \theta\delta}{\theta + (1-\theta)\delta}. \tag{A.2}
+\]
+那么，由不等式 (A.1) 和 (A.2) 我们得到矛盾 $\lambda > \underline{\lambda}(\theta)$。
+
+\textit{情形 (i.b)} $\beta = 0$。在此情形下，因为所有买单来自噪声交易者，必有 $a_t = \bar{\pi}_t$。此外，由引理2.1，$\beta = 0$ 意味着 $a_t \geq \phi_1(\bar{\pi}_t)$。因此，有
+\[
+\bar{\pi}_t \geq \phi_1(\bar{\pi}_t) \implies \lambda \geq \bar{\lambda}(\theta).
+\]
+因为 $\bar{\lambda}(\theta) > \underline{\lambda}(\theta)$，我们再次得到矛盾 $\lambda > \underline{\lambda}(\theta)$。
+
+\textbf{(ii)} 假设不等式 (2.7) 成立。
+
+为导出矛盾，假设 $\beta = 1$。在此情形下，我们可以明确地计算卖出价，它等于 (2.5) 中定义的 $a^*$。那么，对于最优选择 $\beta = 1$ 的知情交易者，由引理2.1，有 $\phi_1(\bar{\pi}_t) \geq a^*$。这进一步意味着 $\lambda \leq \underline{\lambda}(\theta)$，与不等式 (2.7) 矛盾。
+
+为导出矛盾，假设 $\beta = 0$。遵循与情形 (i.b) 类似的论证，这意味着 $\lambda \geq \bar{\lambda}(\theta)$，与不等式 (2.7) 矛盾。
+
+因此，我们得出结论：必须有 $\beta \in (0, 1)$。此外，遵循情形 (i.b) 中的论证，方程 (A.1) 必须成立。其右端关于 $\beta$ 严格递减，且
+\[
+\lim_{\beta \to 0} \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} = \frac{1-\theta}{\theta} > \bar{\lambda}(\theta),
+\]
+\[
+\lim_{\beta \to 1} \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} = \frac{1 - \theta + \theta\delta}{\theta + (1-\theta)\delta} < \underline{\lambda}(\theta).
+\]
+因此，当 $\lambda = \rho$ 时，必定存在唯一的 $\rho \in (0, 1)$ 使等式 (A.1) 成立。此外，推论2.1直接由方程 (A.1) 右端关于 $\beta$ 严格递减这一事实得出。
+
+\textbf{(iii)} 假设不等式 $\lambda > \bar{\lambda}(\theta)$ 成立。为导出矛盾，假设 $\beta > 0$。
+
+\textit{情形 (iii.a):} $\beta \in (0, 1)$。遵循与情形 (i.a) 类似的论证，这意味着
+\[
+\lambda = \frac{1 - \theta + \beta\theta\delta}{\theta + \beta(1-\theta)\delta} < \bar{\lambda}(\theta),
+\]
+矛盾。
+
+\textit{情形 (iii.b):} $\beta = 1$。遵循与情形 (ii) 类似的论证，这也意味着 $\lambda < \bar{\lambda}(\theta)$，矛盾。
+
+对于 (i)--(iii) 的必要性方向，我们只需逆转上述论证。
+\end{translation}
+
+\subsection*{Proof of Proposition 2.2 \hfill 命题2.2的证明}
+
+\begin{original}
+Let $\Pi = [\underline{\pi}, \bar{\pi}]$ and $\Pi' = [\underline{\pi}', \bar{\pi}']$ be given, and $\Pi'$ is more ambiguous than $\Pi$. $\Pi'$ is more ambiguous than $\Pi$ implies that
+\[
+\lambda' = \frac{\bar{\pi}'(1 - \underline{\pi}')}{\underline{\pi}'(1 - \bar{\pi}')} > \frac{\bar{\pi}(1 - \underline{\pi})}{\underline{\pi}(1 - \bar{\pi})} = \lambda.
+\]
+Moreover, let $\rho$ and $\rho'$ be the corresponding trading probability given $\Pi$ and $\Pi'$.
+
+First, an equilibrium ask price, given $\Pi = [\underline{\pi}, \bar{\pi}]$ and $\rho$, can be written explicitly by
+\[
+a = \bar{\pi} + \frac{\rho[\bar{\pi}(\theta + (1-\theta)\delta) - \bar{\pi}]}{\bar{\pi}(\theta + (1-\theta)\delta) + (1-\bar{\pi})(1-\theta+\theta\delta)},
+\]
+which strictly increases with $\bar{\pi}$ and $\rho$. Moreover, by Corollary 2.1, $\lambda' > \lambda$ implies that $\rho' \leq \rho$. Hence,
+\[
+a' = \bar{\pi}' + \frac{\rho'[\bar{\pi}'(\theta + (1-\theta)\delta) - \bar{\pi}']}{\bar{\pi}'(\theta + (1-\theta)\delta) + (1-\bar{\pi}')(1-\theta+\theta\delta)}
+> \bar{\pi} + \frac{\rho[\bar{\pi}(\theta + (1-\theta)\delta) - \bar{\pi}]}{\bar{\pi}(\theta + (1-\theta)\delta) + (1-\bar{\pi})(1-\theta+\theta\delta)} = a,
+\]
+where the inequality holds due to that $\bar{\pi}' > \bar{\pi}$ and $\rho' \leq \rho$. It can be similarly shown that $b' < b$, and our desired result follows immediately.
+\end{original}
+\begin{translation}
+给定 $\Pi = [\underline{\pi}, \bar{\pi}]$ 和 $\Pi' = [\underline{\pi}', \bar{\pi}']$，且 $\Pi'$ 比 $\Pi$ 更模糊。$\Pi'$ 比 $\Pi$ 更模糊意味着
+\[
+\lambda' = \frac{\bar{\pi}'(1 - \underline{\pi}')}{\underline{\pi}'(1 - \bar{\pi}')} > \frac{\bar{\pi}(1 - \underline{\pi})}{\underline{\pi}(1 - \bar{\pi})} = \lambda.
+\]
+此外，令 $\rho$ 和 $\rho'$ 分别为给定 $\Pi$ 和 $\Pi'$ 时对应的交易概率。
+
+首先，给定 $\Pi = [\underline{\pi}, \bar{\pi}]$ 和 $\rho$，均衡卖出价可明确写为
+\[
+a = \bar{\pi} + \frac{\rho[\bar{\pi}(\theta + (1-\theta)\delta) - \bar{\pi}]}{\bar{\pi}(\theta + (1-\theta)\delta) + (1-\bar{\pi})(1-\theta+\theta\delta)},
+\]
+它关于 $\bar{\pi}$ 和 $\rho$ 严格递增。此外，由推论2.1，$\lambda' > \lambda$ 意味着 $\rho' \leq \rho$。因此，
+\[
+a' = \bar{\pi}' + \frac{\rho'[\bar{\pi}'(\theta + (1-\theta)\delta) - \bar{\pi}']}{\bar{\pi}'(\theta + (1-\theta)\delta) + (1-\bar{\pi}')(1-\theta+\theta\delta)}
+> \bar{\pi} + \frac{\rho[\bar{\pi}(\theta + (1-\theta)\delta) - \bar{\pi}]}{\bar{\pi}(\theta + (1-\theta)\delta) + (1-\bar{\pi})(1-\theta+\theta\delta)} = a,
+\]
+其中不等式成立是因为 $\bar{\pi}' > \bar{\pi}$ 且 $\rho' \leq \rho$。类似可证 $b' < b$，期望结果直接得出。
+\end{translation}
+
+\subsection*{Proof of Proposition 2.3 \hfill 命题2.3的证明}
+
+\begin{original}
+Fix an equilibrium and a history $h_t$ on equilibrium path. For an arbitrary $\bar{\pi} \in \Pi_t$, use $\bar{\pi}$ as short for $\bar{\pi}_t$.
+\begin{align*}
+\bar{\pi}_{t+1} &= \max \Pi_{t+1}(h_t, a_t, b_t, d_t) \\
+&= \max_{\pi\in\Pi_t} \frac{\pi \Pr(d_t|h_t, v = 1)}{\pi \Pr(d_t|h_t, v = 1) + (1 - \pi) \Pr(d_t|h_t, v = 0)} \\
+&= \frac{\bar{\pi} \Pr(d_t|h_t, v = 1)}{\bar{\pi} \Pr(d_t|h_t, v = 1) + (1 - \bar{\pi}) \Pr(d_t|h_t, v = 0)};
+\end{align*}
+therefore,
+\[
+\frac{\bar{\pi}_{t+1}}{1 - \bar{\pi}_{t+1}} = \frac{\bar{\pi}}{1 - \bar{\pi}} \cdot L(d_t).
+\]
+Similarly,
+\[
+\frac{\underline{\pi}_{t+1}}{1 - \underline{\pi}_{t+1}} = \frac{\underline{\pi}}{1 - \underline{\pi}} \cdot L(d_t).
+\]
+Hence,
+\[
+\frac{\bar{\pi}_{t+1}(1 - \underline{\pi}_{t+1})}{\underline{\pi}_{t+1}(1 - \bar{\pi}_{t+1})} = \frac{\bar{\pi}(1 - \underline{\pi})}{\underline{\pi}(1 - \bar{\pi})},
+\]
+and rest of the proof is done by mathematical induction.
+\end{original}
+\begin{translation}
+固定一个均衡以及均衡路径上的历史 $h_t$。对任意 $\bar{\pi} \in \Pi_t$，用 $\bar{\pi}$ 作为 $\bar{\pi}_t$ 的简写。
+\begin{align*}
+\bar{\pi}_{t+1} &= \max \Pi_{t+1}(h_t, a_t, b_t, d_t) \\
+&= \max_{\pi\in\Pi_t} \frac{\pi \Pr(d_t|h_t, v = 1)}{\pi \Pr(d_t|h_t, v = 1) + (1 - \pi) \Pr(d_t|h_t, v = 0)} \\
+&= \frac{\bar{\pi} \Pr(d_t|h_t, v = 1)}{\bar{\pi} \Pr(d_t|h_t, v = 1) + (1 - \bar{\pi}) \Pr(d_t|h_t, v = 0)};
+\end{align*}
+因此，
+\[
+\frac{\bar{\pi}_{t+1}}{1 - \bar{\pi}_{t+1}} = \frac{\bar{\pi}}{1 - \bar{\pi}} \cdot L(d_t).
+\]
+类似地，
+\[
+\frac{\underline{\pi}_{t+1}}{1 - \underline{\pi}_{t+1}} = \frac{\underline{\pi}}{1 - \underline{\pi}} \cdot L(d_t).
+\]
+因此，
+\[
+\frac{\bar{\pi}_{t+1}(1 - \underline{\pi}_{t+1})}{\underline{\pi}_{t+1}(1 - \bar{\pi}_{t+1})} = \frac{\bar{\pi}(1 - \underline{\pi})}{\underline{\pi}(1 - \bar{\pi})},
+\]
+证明的其余部分由数学归纳法完成。
+\end{translation}
+
+\subsection*{Proof of Proposition 3.1 \hfill 命题3.1的证明}
+
+\begin{original}
+Consider an equilibrium in the model with ambiguous signal accuracy. First, we show that $\lambda_t$ is increasing over time. Further consider a period $t$ in a history $h_t$ on equilibrium path. As a similar argument in the baseline model, given that $\lambda_t < \bar{\lambda}(\underline{\theta})$, an informed trader's strategy must be that $\beta = \sigma = \rho$ for some $\rho \in (0, 1]$. Then, consider an extended likelihood function $\ell(d; \theta)$ as follows
+\[
+\ell(d; \theta) = \begin{cases}
+\frac{\rho\theta + \delta}{\rho(1-\theta) + \delta} & \text{if } d = 1,\\
+\frac{\rho(1-\theta) + \delta}{\rho\theta + \delta} & \text{if } d = -1,\\
+1 & \text{if } d = 0.
+\end{cases}
+\]
+
+By updating beliefs in a prior-by-prior and likelihood-by-likelihood manner,
+\[
+\frac{\bar{\pi}_{t+1}}{1 - \bar{\pi}_{t+1}} = \frac{\bar{\pi}_t}{1 - \bar{\pi}_t} \cdot \max_{\theta\in\Theta} \ell(d_t; \theta),
+\]
+\[
+\frac{\underline{\pi}_{t+1}}{1 - \underline{\pi}_{t+1}} = \frac{\underline{\pi}_t}{1 - \underline{\pi}_t} \cdot \min_{\theta\in\Theta} \ell(d_t; \theta).
+\]
+
+Therefore,
+\[
+\frac{\lambda_{t+1}}{\lambda_t} = \frac{\max_{\theta\in\Theta} \ell(d_t; \theta)}{\min_{\theta\in\Theta} \ell(d_t; \theta)}
+= \frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta} > 1 \quad \text{if } d_t \neq 0,
+\]
+whereas $\lambda_{t+1} = \lambda_t$ if $d_t = 0$.
+
+We next show that $\lambda_t < \bar{\lambda}(\underline{\theta})$ for all $t = 1, 2, \dots$ on equilibrium path by mathematical induction. It is true when $t = 1$ by our assumption, and suppose that it is true for some $t < T$ in a history $h_t$ on equilibrium path. We show that $\lambda_{t+1} < \bar{\lambda}(\underline{\theta})$. If $d_t = 0$, then $\max_{\theta} \ell(d_t; \theta) / \min_{\theta} \ell(d_t; \theta) = 1$, and it follows immediately that $\lambda_{t+1} = \lambda_t < \bar{\lambda}(\underline{\theta})$. Suppose that $d_t \neq 0$. First, note that, if $d_t \neq 0$,
+\[
+\frac{\max_{\theta} \ell(d_t; \theta)}{\min_{\theta} \ell(d_t; \theta)} = \frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta}.
+\]
+
+Second, in equilibrium, given an informed trader's probability $\rho$ of trading, it can be shown that
+\[
+\lambda_t = \frac{1-\underline{\theta} + \rho\underline{\theta}\delta}{\underline{\theta} + \rho(1-\underline{\theta})\delta},
+\]
+with equality hold when $\lambda_t = \frac{1-\underline{\theta} + \rho\underline{\theta}\delta}{\underline{\theta} + \rho(1-\underline{\theta})\delta}$. By the above argument,
+\[
+\frac{\lambda_{t+1}}{\lambda_t} = \frac{\max_{\theta} \ell(d_t; \theta)}{\min_{\theta} \ell(d_t; \theta)}
+\leq \frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta} < \frac{1}{\underline{\lambda}(\underline{\theta})},
+\]
+where the last inequality follows that $\frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta} < \frac{1}{\underline{\lambda}(\underline{\theta})}$.
+
+Fix some $\epsilon > 0$, I claim that there exists some $\tau < \infty$ such that $\lambda_\tau > \bar{\lambda}(\underline{\theta}) - \epsilon$ if $d_t \neq 0$ for all $t = 1, \dots, \tau$. This is because $\lambda_t$ is a strictly increasing sequence given $d_t \neq 0$ with supremum $\bar{\lambda}(\underline{\theta})$. Then, we can show that for $T$ large enough,
+\[
+\Pr\left( \left| \frac{\lambda_T}{\bar{\lambda}(\underline{\theta})} - 1 \right| > \epsilon \right) = \Pr\left( \#\{t: d_t \neq 0, t \leq T\} < \tau \right)
+\]
+\[
+= \sum_{k=0}^{\tau-1} \binom{T}{k} \big(2(1-\mu)\rho + \mu\rho^3\big)^k \big(1 - 2(1-\mu)\rho - \mu\rho^3\big)^{T-k}
+< \frac{\tau^3}{T^2}.
+\]
+
+Note that $\sum_{T=1}^{\infty} \frac{\tau^3}{T^2} < \infty$, so we have $\sum_{T=1}^{\infty} \Pr\left( \left| \frac{\lambda_T}{\bar{\lambda}(\underline{\theta})} - 1 \right| > \epsilon \right) < \infty$, and we can conclude the almost sure convergence.
+\end{original}
+\begin{translation}
+考虑模糊信号精度模型中的一个均衡。首先，我们证明 $\lambda_t$ 随时间递增。进一步考虑均衡路径上历史 $h_t$ 中的时期 $t$。与基准模型中类似的论证，给定 $\lambda_t < \bar{\lambda}(\underline{\theta})$，知情交易者的策略对于某个 $\rho \in (0, 1]$ 必须是 $\beta = \sigma = \rho$。那么，考虑一个扩展似然函数 $\ell(d; \theta)$ 如下
+\[
+\ell(d; \theta) = \begin{cases}
+\frac{\rho\theta + \delta}{\rho(1-\theta) + \delta} & \text{若 } d = 1,\\
+\frac{\rho(1-\theta) + \delta}{\rho\theta + \delta} & \text{若 } d = -1,\\
+1 & \text{若 } d = 0.
+\end{cases}
+\]
+
+通过逐个先验和逐个似然的信念更新方式，
+\[
+\frac{\bar{\pi}_{t+1}}{1 - \bar{\pi}_{t+1}} = \frac{\bar{\pi}_t}{1 - \bar{\pi}_t} \cdot \max_{\theta\in\Theta} \ell(d_t; \theta),
+\]
+\[
+\frac{\underline{\pi}_{t+1}}{1 - \underline{\pi}_{t+1}} = \frac{\underline{\pi}_t}{1 - \underline{\pi}_t} \cdot \min_{\theta\in\Theta} \ell(d_t; \theta).
+\]
+
+因此，
+\[
+\frac{\lambda_{t+1}}{\lambda_t} = \frac{\max_{\theta\in\Theta} \ell(d_t; \theta)}{\min_{\theta\in\Theta} \ell(d_t; \theta)}
+= \frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta} > 1 \quad \text{若 } d_t \neq 0,
+\]
+而若 $d_t = 0$，则 $\lambda_{t+1} = \lambda_t$。
+
+接下来，我们通过数学归纳法证明在均衡路径上对所有 $t = 1, 2, \dots$ 有 $\lambda_t < \bar{\lambda}(\underline{\theta})$。由我们的假设可知 $t = 1$ 时成立，假设在均衡路径上某个历史 $h_t$ 中对某个 $t < T$ 成立。我们证明 $\lambda_{t+1} < \bar{\lambda}(\underline{\theta})$。若 $d_t = 0$，则 $\max_{\theta} \ell(d_t; \theta) / \min_{\theta} \ell(d_t; \theta) = 1$，因此直接有 $\lambda_{t+1} = \lambda_t < \bar{\lambda}(\underline{\theta})$。假设 $d_t \neq 0$。首先，注意若 $d_t \neq 0$，
+\[
+\frac{\max_{\theta} \ell(d_t; \theta)}{\min_{\theta} \ell(d_t; \theta)} = \frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta}.
+\]
+
+其次，在均衡中，给定知情交易者的交易概率 $\rho$，可以证明
+\[
+\lambda_t = \frac{1-\underline{\theta} + \rho\underline{\theta}\delta}{\underline{\theta} + \rho(1-\underline{\theta})\delta},
+\]
+当 $\lambda_t = \frac{1-\underline{\theta} + \rho\underline{\theta}\delta}{\underline{\theta} + \rho(1-\underline{\theta})\delta}$ 时等号成立。由上述论证，
+\[
+\frac{\lambda_{t+1}}{\lambda_t} = \frac{\max_{\theta} \ell(d_t; \theta)}{\min_{\theta} \ell(d_t; \theta)}
+\leq \frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta} < \frac{1}{\underline{\lambda}(\underline{\theta})},
+\]
+其中最后一个不等式由 $\frac{\rho\bar{\theta} + \delta}{\rho(1-\bar{\theta}) + \delta} \cdot \frac{\rho\underline{\theta} + \delta}{\rho(1-\underline{\theta}) + \delta} < \frac{1}{\underline{\lambda}(\underline{\theta})}$ 得出。
+
+固定某个 $\epsilon > 0$，我断言存在某个 $\tau < \infty$ 使得若对所有 $t = 1, \dots, \tau$ 有 $d_t \neq 0$，则 $\lambda_\tau > \bar{\lambda}(\underline{\theta}) - \epsilon$。这是因为在 $d_t \neq 0$ 时 $\lambda_t$ 是一个严格递增序列，其上确界为 $\bar{\lambda}(\underline{\theta})$。那么，我们可以证明对于足够大的 $T$，
+\[
+\Pr\left( \left| \frac{\lambda_T}{\bar{\lambda}(\underline{\theta})} - 1 \right| > \epsilon \right) = \Pr\left( \#\{t: d_t \neq 0, t \leq T\} < \tau \right)
+\]
+\[
+= \sum_{k=0}^{\tau-1} \binom{T}{k} \big(2(1-\mu)\rho + \mu\rho^3\big)^k \big(1 - 2(1-\mu)\rho - \mu\rho^3\big)^{T-k}
+< \frac{\tau^3}{T^2}.
+\]
+
+注意 $\sum_{T=1}^{\infty} \frac{\tau^3}{T^2} < \infty$，因此我们有 $\sum_{T=1}^{\infty} \Pr\left( \left| \frac{\lambda_T}{\bar{\lambda}(\underline{\theta})} - 1 \right| > \epsilon \right) < \infty$，由此可得出几乎必然收敛。
+\end{translation}
+
+\subsection*{Proof of Proposition 3.3 \hfill 命题3.3的证明}
+
+\begin{original}
+We simply construct a belief system consistent to the trading strategies and pricing rules specified in case (i) and (ii), respectively, and show that they support the corresponding strategies and rules in equilibrium.
+
+\textbf{Case (i):} Consider a belief system consistent to the trading strategy and pricing rule specified in case (i), where beliefs are obtained by prior-by-prior Bayesian updating on all histories reachable by the trading strategy and pricing rule. Applying a similar argument as Proposition 2.3, we can show that $\lambda_t = \lambda_1$ for all $t > 1$. We show that trading strategy and pricing rule satisfy equilibrium conditions on all reachable histories given such a belief system.
+
+First, the optimality of informed traders' strategies is straightforward given that $a_t = \phi_1(\bar{\pi}_t)$ and $b_t = \phi_0(\underline{\pi}_t)$. Second, given that informed traders' strategies, the market maker posts prices to meet zero profit conditions as follows:
+\begin{align*}
+a_t &= \max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, 0 < d_t \leq \kappa], \\
+&= \frac{\bar{\pi}_t(\rho\theta\kappa + (1-\theta)\delta)}{\bar{\pi}_t(\rho\theta + (1-\theta)\delta) + (1-\bar{\pi}_t)[(1-\theta)\rho\kappa + \theta\delta]}, \\
+b_t &= \min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, -\kappa \leq d_t < 0], \\
+&= \frac{\underline{\pi}_t[(1-\theta)\rho\kappa + \theta\delta]}{\underline{\pi}_t[(1-\theta)\rho\kappa + \theta\delta] + (1-\underline{\pi}_t)(\rho\theta\kappa + (1-\theta)\delta)},
+\end{align*}
+where $\delta = (1-\mu)^2$. By equating $\phi_1(\bar{\pi}_t)$ and $\phi_0(\underline{\pi}_t)$ with $\max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, 0 < d_t \leq \kappa]$ and $\min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, -\kappa \leq d_t < 0]$ respectively, either of them yields that
+\[
+\lambda_t = \frac{1}{\rho} \cdot \frac{(1-\theta)\rho\kappa + \theta\delta}{\theta\rho\kappa + (1-\theta)\delta}. \tag{A.3}
+\]
+
+If
+\[
+\frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta} < \frac{1}{\underline{\lambda}(\theta)},
+\]
+we can pick $\rho = 1$ and some $\kappa \in (0, 1]$ to make equation (A.3) hold. This is because, given $\rho = 1$, its right-hand side equals $(1-\theta)$ if $\kappa = 0$, and it equals $\frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta}$ if $\kappa = 1$. If
+\[
+\frac{1}{\underline{\lambda}(\theta)} < \lambda_t < \frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta},
+\]
+we can pick some $\rho \in (0, 1)$ and $\kappa = 1$ to make equation (A.3) hold. This is because, given $\kappa = 1$, its right-hand side equals to $\frac{1}{\underline{\lambda}(\theta)}$ if $\rho = 0$ and equals $\frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta}$ if $\rho = 1$.
+
+\textbf{Case (ii):} Consider a belief system $\Pi_t = \Pi_1$ for all $t \geq 1$. It is consistent to the trading strategy and pricing rule. In each reachable history, the market maker learns nothing about the asset value since informed traders do not trade. Without informative signals, prior-by-prior Bayesian updating yields an exactly same set of posteriors as the set of priors. Then, $\lambda_t = \lambda_1 > \bar{\lambda}(\underline{\theta})$ implies that $\phi_1(\bar{\pi}_t) > a_t = \bar{\pi}_t$ and $\phi_0(\underline{\pi}_t) < b_t = \underline{\pi}_t$. It justifies the optimality of an informed trader's strategy. Thus, it simply set prices as follows to meet zero profit conditions,
+\begin{align*}
+a_t &= \max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t > 0] = \bar{\pi}_t,\\
+b_t &= \min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t < 0] = \underline{\pi}_t,
+\end{align*}
+since observed order $d_t$ is not informative.
+\end{original}
+\begin{translation}
+我们仅需构造一个与情形(i)和(ii)中分别指定的交易策略和定价规则相一致的信念系统，并证明它们在均衡中支持相应的策略和规则。
+
+\textbf{情形 (i):} 考虑一个与情形(i)中指定的交易策略和定价规则相一致的信念系统，其中信念通过在所有可由该交易策略和定价规则达到的历史上进行逐个先验的贝叶斯更新得到。应用与命题2.3类似的论证，我们可以证明对所有 $t > 1$ 有 $\lambda_t = \lambda_1$。我们证明，在给定这样一个信念系统的情况下，交易策略和定价规则在所有可达历史上满足均衡条件。
+
+首先，给定 $a_t = \phi_1(\bar{\pi}_t)$ 和 $b_t = \phi_0(\underline{\pi}_t)$，知情交易者策略的最优性是直接的。其次，给定知情交易者的策略，做市商公布价格以满足如下零利润条件：
+\begin{align*}
+a_t &= \max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, 0 < d_t \leq \kappa], \\
+&= \frac{\bar{\pi}_t(\rho\theta\kappa + (1-\theta)\delta)}{\bar{\pi}_t(\rho\theta + (1-\theta)\delta) + (1-\bar{\pi}_t)[(1-\theta)\rho\kappa + \theta\delta]}, \\
+b_t &= \min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, -\kappa \leq d_t < 0], \\
+&= \frac{\underline{\pi}_t[(1-\theta)\rho\kappa + \theta\delta]}{\underline{\pi}_t[(1-\theta)\rho\kappa + \theta\delta] + (1-\underline{\pi}_t)(\rho\theta\kappa + (1-\theta)\delta)},
+\end{align*}
+其中 $\delta = (1-\mu)^2$。通过分别令 $\phi_1(\bar{\pi}_t)$ 和 $\phi_0(\underline{\pi}_t)$ 等于 $\max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, 0 < d_t \leq \kappa]$ 和 $\min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, -\kappa \leq d_t < 0]$，其中任一都得到
+\[
+\lambda_t = \frac{1}{\rho} \cdot \frac{(1-\theta)\rho\kappa + \theta\delta}{\theta\rho\kappa + (1-\theta)\delta}. \tag{A.3}
+\]
+
+若
+\[
+\frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta} < \frac{1}{\underline{\lambda}(\theta)},
+\]
+我们可以选择 $\rho = 1$ 和某个 $\kappa \in (0, 1]$ 使方程 (A.3) 成立。这是因为，给定 $\rho = 1$，其右端当 $\kappa = 0$ 时等于 $(1-\theta)$，当 $\kappa = 1$ 时等于 $\frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta}$。若
+\[
+\frac{1}{\underline{\lambda}(\theta)} < \lambda_t < \frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta},
+\]
+我们可以选择某个 $\rho \in (0, 1)$ 和 $\kappa = 1$ 使方程 (A.3) 成立。这是因为，给定 $\kappa = 1$，其右端当 $\rho = 0$ 时等于 $\frac{1}{\underline{\lambda}(\theta)}$，当 $\rho = 1$ 时等于 $\frac{(1-\theta)\kappa + \theta\delta}{\theta\kappa + (1-\theta)\delta}$。
+
+\textbf{情形 (ii):} 考虑对所有 $t \geq 1$ 有 $\Pi_t = \Pi_1$ 的信念系统。它与交易策略和定价规则一致。在每个可达历史中，由于知情交易者不交易，做市商对资产价值一无所知。在没有信息性信号的情况下，逐个先验的贝叶斯更新产生的后验集合恰好等于先验集合。那么，$\lambda_t = \lambda_1 > \bar{\lambda}(\underline{\theta})$ 意味着 $\phi_1(\bar{\pi}_t) > a_t = \bar{\pi}_t$ 且 $\phi_0(\underline{\pi}_t) < b_t = \underline{\pi}_t$。这证明了知情交易者策略的最优性。因此，仅需如下设定价格以满足零利润条件：
+\begin{align*}
+a_t &= \max_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t > 0] = \bar{\pi}_t,\\
+b_t &= \min_{\pi\in\Pi_t} \mathbb{E}[v|h_t, d_t < 0] = \underline{\pi}_t,
+\end{align*}
+因为观察到的订单 $d_t$ 不具有信息含量。
+\end{translation}
+
+\vspace{12pt}
+\begin{original}
+\noindent\textbf{Data availability}
+
+No data was used for the research described in the article.
+\end{original}
+\begin{translation}
+\textbf{数据可用性}
+
+本文所述研究未使用任何数据。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% REFERENCES
+% ============================================================
+\section*{References \hfill 参考文献}
+
+\begin{biblock}
+Avery, C., Zemsky, P., 1998. Multidimensional uncertainty and herd behavior in financial markets. Am. Econ. Rev., 724--748.
+\end{biblock}
+
+\begin{biblock}
+Baig, A.S., Butt, H.A., Haroon, O., Rizvi, S.A.R., 2021. Deaths, panic, lockdowns and US equity markets: the case of COVID-19 pandemic. Finance Res. Lett. 38, 101701. \url{https://doi.org/10.1016/j.frl.2020.101701}.
+\end{biblock}
+
+\begin{biblock}
+Banerjee, A.V., 1992. A simple model of herd behavior. Q. J. Econ., 797--817.
+\end{biblock}
+
+\begin{biblock}
+Ben-Rephael, A., Izhakian, Y.Y., 2020. Should I stay or should I go? Trading behavior under ambiguity. Technical Report, Available at SSRN: \url{https://ssrn.com/abstract=3628757}.
+\end{biblock}
+
+\begin{biblock}
+Bewley, T.F., 2002. Knightian decision theory. Part I. Decis. Econ. Finance 25, 79--110.
+\end{biblock}
+
+\begin{biblock}
+Bikhchandani, S., Hirshleifer, D., Welch, I., 1992. A theory of fads, fashion, custom, and cultural change as informational cascades. J. Polit. Econ., 992--1026.
+\end{biblock}
+
+\begin{biblock}
+Brunnermeier, M.K., 2009. Deciphering the liquidity and credit crunch 2007--2008. J. Econ. Perspect. 23, 77--100. \url{https://doi.org/10.1257/jep.23.1.77}.
+\end{biblock}
+
+\begin{biblock}
+Casadesus-Masanell, R., Klibanoff, P., Ozdenoren, E., 2000. Maxmin expected utility over savage acts with a set of priors. J. Econ. Theory 92, 35--65. \url{https://doi.org/10.1006/jeth.1999.2630}.
+\end{biblock}
+
+\begin{biblock}
+Chari, V.V., Kehoe, P.J., 2004. Financial crises as herds: overturning the critiques. J. Econ. Theory 119, 128--150.
+\end{biblock}
+
+\begin{biblock}
+Chen, Z., Epstein, L., 2002. Ambiguity, risk, and asset returns in continuous time. Econometrica 70, 1403--1443.
+\end{biblock}
+
+\begin{biblock}
+Cheng, X., 2022. Relative maximum likelihood updating of ambiguous beliefs. J. Math. Econ. 99, 102587. \url{https://doi.org/10.1016/j.jmateco.2021.102587}.
+\end{biblock}
+
+\begin{biblock}
+Chu, Y., 2018. Essays on ambiguity in financial markets. Ph.D. thesis, University of Minnesota.
+\end{biblock}
+
+\begin{biblock}
+Cipriani, M., Guarino, A., 2008. Herd behavior and contagion in financial markets. B.E. J. Theor. Econ. 8.
+\end{biblock}
+
+\begin{biblock}
+Condie, S., Ganguli, J., 2011. Ambiguity and rational expectations equilibria. Rev. Econ. Stud. 78, 821--845. \url{https://doi.org/10.1093/restud/rdq032}.
+\end{biblock}
+
+\begin{biblock}
+Condie, S., Ganguli, J., 2017. The pricing effects of ambiguous private information. J. Econ. Theory 172, 512--557. \url{https://doi.org/10.1016/j.jet.2017.06.005}.
+\end{biblock}
+
+\begin{biblock}
+Couso, I., Moral, S., Walley, P., 1999. Examples of independences for imprecise probabilities. In: Proceedings of 1st International Symposium on Imprecise Probabilities and Their Applications.
+\end{biblock}
+
+\begin{biblock}
+Decamps, J.P., Lovo, S., 2006. Informational cascades with endogenous prices: the role of risk aversion. J. Math. Econ. 42, 109--120.
+\end{biblock}
+
+\begin{biblock}
+de Meyer, B., Saley, H.M., 2003. On the strategic origin of Brownian motion in finance. Int. J. Game Theory 31, 285--319. \url{https://doi.org/10.1007/s001820200120}.
+\end{biblock}
+
+\begin{biblock}
+Dimmock, S.G., Kouwenberg, R., Mitchell, O.S., Peijnenburg, K., 2016a. Ambiguity aversion and household portfolio choice puzzles: empirical evidence. J. Financ. Econ. 119, 559--577. \url{https://doi.org/10.1016/j.jfineco.2016.01.003}.
+\end{biblock}
+
+\begin{biblock}
+Dimmock, S.G., Kouwenberg, R., Wakker, P.P., 2016b. Ambiguity attitudes in a large representative sample. Manag. Sci. 62, 1363--1380. \url{https://doi.org/10.1287/mnsc.2015.2198}.
+\end{biblock}
+
+\begin{biblock}
+Dong, Z., Gu, Q., Han, X., 2010. Ambiguity aversion and rational herd behaviour. Appl. Financ. Econ. 20, 331--343. \url{https://doi.org/10.1080/09603100903299675}.
+\end{biblock}
+
+\begin{biblock}
+Dow, J., da Costa Werlang, S.R., 1992. Uncertainty aversion, risk aversion, and the optimal choice of portfolio. Econometrica, 197--204.
+\end{biblock}
+
+\begin{biblock}
+Easley, D., O'Hara, M., 2010. Liquidity and valuation in an uncertain world. J. Financ. Econ. 97, 1--11. \url{https://doi.org/10.1016/j.jfineco.2010.03.004}.
+\end{biblock}
+
+\begin{biblock}
+Ellsberg, D., 1961. Risk, ambiguity, and the savage axioms. Q. J. Econ., 643--669.
+\end{biblock}
+
+\begin{biblock}
+Epstein, L.G., Schneider, M., 2003. Recursive multiple-priors. J. Econ. Theory 113, 1--31.
+\end{biblock}
+
+\begin{biblock}
+Epstein, L.G., Schneider, M., 2007. Learning under ambiguity. Rev. Econ. Stud. 74, 1275--1303. \url{https://doi.org/10.1111/j.1467-937x.2007.00464.x}.
+\end{biblock}
+
+\begin{biblock}
+Epstein, L.G., Schneider, M., 2010. Ambiguity and asset markets. Annu. Rev. Financ. Econ. 2, 315--346. \url{https://doi.org/10.1146/annurev-financial-120209-133940}.
+\end{biblock}
+
+\begin{biblock}
+Epstein, L.G., Wang, T., 1994. Intertemporal asset pricing under Knightian uncertainty. Econometrica, 283--322.
+\end{biblock}
+
+\begin{biblock}
+Ford, J., Kelsey, D., Pang, W., 2013. Information and ambiguity: herd and contrarian behaviour in financial markets. Theory Decis. 75, 1--15.
+\end{biblock}
+
+\begin{biblock}
+Gao, G.P., Ma, Q., Ng, D.T., Wu, Y., 2022. The sound of silence: what do we know when insiders do not trade? Manag. Sci. 68, 4835--4857. \url{https://doi.org/10.1287/mnsc.2021.4113}.
+\end{biblock}
+
+\begin{biblock}
+Ghirardato, P., Maccheroni, F., Marinacci, M., 2004. Differentiating ambiguity and ambiguity attitude. J. Econ. Theory 118, 133--173. \url{https://doi.org/10.1016/j.jet.2003.12.004}.
+\end{biblock}
+
+\begin{biblock}
+Gilboa, I., Schmeidler, D., 1989. Maxmin expected utility with non-unique prior. J. Math. Econ. 18, 141--153.
+\end{biblock}
+
+\begin{biblock}
+Gilboa, I., Schmeidler, D., 1993. Updating ambiguous beliefs. J. Econ. Theory 59, 33--49. \url{https://doi.org/10.1006/jeth.1993.1003}.
+\end{biblock}
+
+\begin{biblock}
+Glosten, L.R., Milgrom, P.R., 1985. Bid, ask and transaction prices in a specialist market with heterogeneously informed traders. J. Financ. Econ. 14, 71--100.
+\end{biblock}
+
+\begin{biblock}
+Guidolin, M., Rinaldi, F., 2012. Ambiguity in asset pricing and portfolio choice: a review of the literature. Theory Decis. 74, 183--217. \url{https://doi.org/10.1007/s11238-012-9343-2}.
+\end{biblock}
+
+\begin{biblock}
+Hong, C.Y., Li, F.W., 2018. The information content of sudden insider silence. J. Financ. Quant. Anal. 54, 1499--1538. \url{https://doi.org/10.1017/s0022109018001059}.
+\end{biblock}
+
+\begin{biblock}
+Illeditsch, P.K., 2011. Ambiguous information, portfolio inertia, and excess volatility. J. Finance 66, 2213--2247. \url{https://doi.org/10.1111/j.1540-6261.2011.01693.x}.
+\end{biblock}
+
+\begin{biblock}
+Ju, N., Miao, J., 2012. Ambiguity, learning, and asset returns. Econometrica 80, 559--591.
+\end{biblock}
+
+\begin{biblock}
+Just, M., Echaust, K., 2020. Stock market returns, volatility, correlation and liquidity during the COVID-19 crisis: evidence from the Markov switching approach. Finance Res. Lett. 37, 101775. \url{https://doi.org/10.1016/j.frl.2020.101775}.
+\end{biblock}
+
+\begin{biblock}
+Ke, S., Zhang, Q., 2020. Randomization and ambiguity aversion. Econometrica 88, 1159--1195. \url{https://doi.org/10.3982/ecta15182}.
+\end{biblock}
+
+\begin{biblock}
+Kostopoulos, D., Meyer, S., Uhr, C., 2022. Ambiguity about volatility and investor behavior. J. Financ. Econ. 145, 277--296. \url{https://doi.org/10.1016/j.jfineco.2021.07.004}.
+\end{biblock}
+
+\begin{biblock}
+Kuzmics, C., 2017. Abraham Wald's complete class theorem and Knightian uncertainty. Games Econ. Behav. 104, 666--673. \url{https://doi.org/10.1016/j.geb.2017.06.012}.
+\end{biblock}
+
+\begin{biblock}
+Kyle, A.S., 1985. Continuous auctions and insider trading. Econometrica 53, 1315. \url{https://doi.org/10.2307/1913210}.
+\end{biblock}
+
+\begin{biblock}
+Lee, I.H., 1993. On the convergence of informational cascades. J. Econ. Theory 61, 395--411. \url{https://doi.org/10.1006/jeth.1993.1074}.
+\end{biblock}
+
+\begin{biblock}
+Lee, I.H., 1998. Market crashes and informational avalanches. Rev. Econ. Stud. 65, 741--759.
+\end{biblock}
+
+\begin{biblock}
+Maccheroni, F., Marinacci, M., Ruffino, D., 2013. Alpha as ambiguity: robust mean-variance portfolio analysis. Econometrica 81, 1075--1113. \url{https://doi.org/10.3982/ecta9678}.
+\end{biblock}
+
+\begin{biblock}
+Maccheroni, F., Marinacci, M., Rustichini, A., 2006. Ambiguity aversion, robustness, and the variational representation of preferences. Econometrica 74, 1447--1498. \url{https://doi.org/10.1111/j.1468-0262.2006.00716.x}.
+\end{biblock}
+
+\begin{biblock}
+Mukerji, S., Tallon, J.M., 2001. Ambiguity aversion and incompleteness of financial markets. Rev. Econ. Stud. 68, 883--904.
+\end{biblock}
+
+\begin{biblock}
+Oechssler, J., Roomets, A., 2015. A test of mechanical ambiguity. J. Econ. Behav. Organ. 119, 153--162. \url{https://doi.org/10.1016/j.jebo.2015.08.004}.
+\end{biblock}
+
+\begin{biblock}
+Ozdenoren, E., Peck, J., 2008. Ambiguity aversion, games against nature, and dynamic consistency. Games Econ. Behav. 62, 106--115. \url{https://doi.org/10.1016/j.geb.2007.01.010}.
+\end{biblock}
+
+\begin{biblock}
+Ozsoylev, H., Werner, J., 2011. Liquidity and asset prices in rational expectations equilibrium with ambiguous information. Econ. Theory 48, 469--491. \url{https://doi.org/10.1007/s00199-011-0648-0}.
+\end{biblock}
+
+\begin{biblock}
+Pires, C.P., 2002. A rule for updating ambiguous beliefs. Theory Decis. 53, 137--152. \url{https://doi.org/10.1023/a:1021255808323}.
+\end{biblock}
+
+\begin{biblock}
+Raiffa, H., 1961. Risk, ambiguity, and the savage axioms: comment. Q. J. Econ. 75, 690. \url{https://doi.org/10.2307/1884326}.
+\end{biblock}
+
+\begin{biblock}
+Rehse, D., Riordan, R., Rottke, N., Zietz, J., 2019. The effects of uncertainty on market liquidity: evidence from hurricane sandy. J. Financ. Econ. 134, 318--332. \url{https://doi.org/10.1016/j.jfineco.2019.04.006}.
+\end{biblock}
+
+\begin{biblock}
+Saito, K., 2015. Preferences for flexibility and randomization under uncertainty. Am. Econ. Rev. 105, 1246--1271. \url{https://doi.org/10.1257/aer.20131030}.
+\end{biblock}
+
+\begin{biblock}
+Schmeidler, D., 1989. Subjective probability and expected utility without additivity. Econometrica 57, 571. \url{https://doi.org/10.2307/1911053}.
+\end{biblock}
+
+\begin{biblock}
+Scholes, M.S., 2000. Crisis and risk management. Am. Econ. Rev. 90, 17--21. \url{https://doi.org/10.1257/aer.90.2.17}.
+\end{biblock}
+
+\begin{biblock}
+Trojani, F., Vanini, P., 2002. A note on robustness in Merton's model of intertemporal consumption and portfolio choice. J. Econ. Dyn. Control 26, 423--435.
+\end{biblock}
+
+\end{document}

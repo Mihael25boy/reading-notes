@@ -1,0 +1,1875 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% ---- Chinese support ----
+\usepackage{ctex}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}[AutoFakeBold=2.5]
+
+% ---- Page layout ----
+\usepackage[top=1in, bottom=1in, left=1.1in, right=1.1in]{geometry}
+
+% ---- Packages ----
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{setspace}
+\onehalfspacing
+
+% ---- Colors ----
+\definecolor{transblue}{RGB}{25,25,150}
+\definecolor{darkgreen}{RGB}{0,100,0}
+
+% ---- Environments ----
+\newenvironment{original}
+  {\par\noindent\ignorespaces}
+  {\par}
+
+\newenvironment{translation}
+  {\par\noindent{\color{transblue}\ignorespaces}}
+  {\par\medskip}
+
+% ---- Theorem environments ----
+\newtheorem{theorem}{}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{axiom}{Axiom}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+% ---- Headers ----
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Cautiousness when Experts Disagree / 专家分歧时的谨慎性}
+\fancyhead[R]{\small Bommier, Fabre, Gousseba\"{i}le, Heyen}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---- Title formatting ----
+\titleformat{\section}[hang]{\LARGE\bfseries}{}{0pt}{}
+\titleformat{\subsection}[hang]{\Large\bfseries}{}{0pt}{}
+\titleformat{\subsubsection}[hang]{\large\bfseries}{}{0pt}{}
+
+% ---- Math shortcuts ----
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\cA}{\mathcal{A}}
+\renewcommand{\r}{\mathbb{R}}
+
+\begin{document}
+
+% ============ TITLE PAGE ============
+\begin{center}
+{\LARGE \textbf{Cautiousness when Experts Disagree}}\\[8pt]
+{\Large \textbf{\color{transblue}专家分歧时的谨慎性}}\\[18pt]
+
+{\large
+Antoine Bommier${}^{a,*}$, \ Adrien Fabre${}^{a,b,c}$, \ Arnaud Gousseba\"{i}le${}^{a,d}$, \ Daniel Heyen${}^{a,e}
+}
+
+\vspace{10pt}
+
+{\small
+${}^{a}$ ETH Zurich, Department of Management, Technology, and Economics, Weinbergstrasse 56/58, Zurich, 8092, Switzerland\\
+${}^{b}$ CNRS, CIRED, 45 Bis, Avenue de la Belle Gabrielle, Nogent-sur-Marne Cedex, 94736, France\\
+${}^{c}$ Global Redistribution Advocates, 114 av Philippe Auguste, 75011, France\\
+${}^{d}$ ENPC, CIRED, 45 Bis, Avenue de la Belle Gabrielle, Nogent-sur-Marne Cedex, 94736, France\\
+${}^{e}$ RPTU University Kaiserslautern-Landau, Gottlieb-Daimler-Stra{\ss}e 42, Kaiserslautern, 67663, Germany
+}
+
+\vspace{16pt}
+{\small \textit{Journal of Economic Theory} 234 (2026) 106181}
+\end{center}
+
+\vspace{4pt}
+\hrule
+\vspace{8pt}
+
+% ---- Article info + Abstract ----
+\begin{original}
+\textbf{JEL classification:} D81, D83, D71
+
+\textbf{Keywords:} Cautiousness; Expert disagreement; Ambiguity aversion; Belief aggregation; Decision under uncertainty; Precautionary principle
+
+\textbf{Abstract:} Experts often disagree. A decision-maker may want to be cautious and prefer alternatives that have expert consensus over those that do not. Existing models of decision making under expert disagreement rest on ambiguity-averse preferences adopting a unanimity principle: If all experts consider one choice better than another, so should the decision-maker. Such unanimity among experts, however, can be spurious, masking substantial disagreement on the underlying reasons. We introduce a novel notion of cautiousness to distinguish spurious from genuine unanimity and develop a model that can capture cautiousness in our sense. The central element of our model is the cautious aggregation of experts' beliefs.
+\end{original}
+
+\begin{translation}
+\textbf{JEL分类:} D81, D83, D71
+
+\textbf{关键词:} 谨慎性；专家分歧；模糊厌恶；信念聚合；不确定性下的决策；预防原则
+
+\textbf{摘要:} 专家之间常常存在分歧。决策者可能希望保持谨慎，并偏好那些获得专家共识的选项，而非那些未获得共识的选项。现有的专家分歧下的决策模型依赖于采纳一致性原则的模糊厌恶偏好：即如果所有专家认为一个选择优于另一个选择，那么决策者也应如此认为。然而，专家之间的这种一致性可能是虚假的，掩盖了在根本原因上的实质性分歧。我们引入了一种新颖的谨慎性概念，以区分虚假一致性和真实一致性，并构建了一个能够刻画我们意义上的谨慎性的模型。我们模型的核心要素是对专家信念的谨慎聚合。
+\end{translation}
+
+\vspace{8pt}
+\hrule
+\newpage
+
+% ============ SECTION 1: INTRODUCTION ============
+\section{1. Introduction}
+{\color{transblue}\subsection*{1. 引言}}
+
+\begin{original}
+Experts disagree. Such expert disagreement complicates decisions on topics as diverse as climate change, macroeconomics, and the Covid-19 pandemic. The different, potentially conflicting scientific opinions force a decision-maker to act without precise knowledge of the likelihoods of the possible outcomes. In such a situation, the decision-maker may conclude that there is scientific uncertainty and that most likely none of the experts is completely right. As a form of precaution, she may decide to opt for ``safer'' actions on which experts differ less. This paper introduces a novel notion of cautiousness when experts disagree and illustrates its implications.
+\end{original}
+
+\begin{translation}
+专家之间存在分歧。这种专家分歧使得气候变化、宏观经济学和新冠疫情等各种主题的决策变得复杂。不同的、可能相互冲突的科学意见迫使决策者在无法精确了解可能结果发生概率的情况下采取行动。在这种情况下，决策者可能得出结论，认为存在科学上的不确定性，且很可能没有哪位专家是完全正确的。作为一种预防措施，她可能决定选择那些专家分歧较小的"更安全"的行动。本文引入了一种专家分歧时的新颖谨慎性概念，并阐述了其含义。
+\end{translation}
+
+\begin{original}
+There are several papers in the decision theory and applied literature on how to make decisions when facing imprecise or conflicting information (Mongin, 1995, 1998; Gajdos et al., 2008; Cr\`{e}s et al., 2011; Baillon et al., 2012; Hill, 2012, 2023; Nascimento, 2012; Gajdos and Vergnaud, 2013; Berger et al., 2021; Stanca, 2021). All these papers keep as a fundamental assumption a unanimity principle.\footnote{Various terminology is used to refer to this unanimity principle. For example, Gajdos et al. (2008) call it ``dominance'', while it is named ``unanimity'' in Cr\`{e}s et al. (2011); Stanca (2021) refers to it as the ``Pareto condition''.} According to this principle, if all experts prefer one action over another, then the decision-maker should also prefer that action.
+\end{original}
+
+\begin{translation}
+决策理论和应用文献中有多篇论文探讨了面对不精确或冲突信息时如何决策的问题（Mongin, 1995, 1998; Gajdos et al., 2008; Cr\`{e}s et al., 2011; Baillon et al., 2012; Hill, 2012, 2023; Nascimento, 2012; Gajdos and Vergnaud, 2013; Berger et al., 2021; Stanca, 2021）。所有这些论文都保留了一个基本假设，即一致性原则。\footnote{指称这一一致性原则的术语各不相同。例如，Gajdos等人（2008）称之为"占优"（dominance），而Crès等人（2011）称之为"一致性"（unanimity）；Stanca（2021）将其称为"帕累托条件"（Pareto condition）。}根据这一原则，如果所有专家认为一个行动优于另一个行动，那么决策者也应偏好该行动。
+\end{translation}
+
+\begin{original}
+However, several papers have criticized the unanimity principle in the context of preference aggregation under uncertainty, with Gilboa et al.\ (2004), Mongin (2016) being prominent examples.\footnote{Other critiques include Machina and Siniscalchi (2014), Skiadas (2013).} Both argue against the unanimity principle (or Pareto condition) when people hold different beliefs and tastes. Mongin (2016) goes further, arguing that unanimous agreement can be spurious if it masks disagreement about the underlying reasons. In such cases, belief divergence alone justifies departing from the unanimity principle, even when tastes are aligned.
+\end{original}
+
+\begin{translation}
+然而，多篇论文对不确定性下偏好聚合背景中的一致性原则提出了批评，其中Gilboa等人（2004）和Mongin（2016）是突出的例子。\footnote{其他批评包括Machina和Siniscalchi（2014）、Skiadas（2013）。}两者都反对在人们持有不同信念和偏好的情况下使用一致性原则（或帕累托条件）。Mongin（2016）更进一步，认为如果一致性掩盖了在根本原因上的分歧，那么这种一致性可能是虚假的。在这种情况下，即使偏好一致，信念分歧本身就足以成为偏离一致性原则的理由。
+\end{translation}
+
+\begin{original}
+To illustrate this point, consider the following simple example summarized in Table~1. A regulator must decide whether to approve the use of a new fuel additive, similar to historical decisions such as the approval of lead as a fuel additive in the early 20th century. The societal impact of adopting the additive depends on outcomes beyond the regulator's control. The net impact is +10 in the ``beneficial'' state, 0 in the ``neutral'' state, and $-$10 in the ``harmful'' state (we assume that the regulator is risk-neutral, or that the numbers in Table~1 are utils). To inform this decision, the regulator consults two scientific experts for their assessments of the likelihood of the different states.
+\end{original}
+
+\begin{translation}
+为了说明这一点，考虑表1中总结的以下简单例子。监管者必须决定是否批准使用一种新的燃料添加剂，类似于20世纪初批准铅作为燃料添加剂等历史决策。采用该添加剂的社会影响取决于超出监管者控制的结果。净影响在"有利"状态下为+10，在"中性"状态下为0，在"有害"状态下为$-10$（我们假设监管者是风险中性的，或者表1中的数字是用效用单位衡量的）。为了辅助这一决策，监管者咨询了两位科学专家，以获取他们对不同状态发生概率的评估。
+\end{translation}
+
+\begin{original}
+Assuming no conflict in tastes, with all experts agreeing on maximizing expected payoffs, both experts conclude that introducing the additive is equivalent to not introducing it. According to both experts' assessments, both options yield the same expected payoff of zero. However, this agreement is ``spurious'' as each expert reaches the conclusion for different reasons: Expert~1 believes the additive has neither benefits nor costs, while Expert~2 contends that it could bring substantial benefits (such as improved vehicle performance) but also generate significant costs (such as health issues).
+\end{original}
+
+\begin{translation}
+假设偏好上没有冲突，所有专家都同意最大化期望收益，两位专家都得出结论，引入添加剂与不引入添加剂是等价的。根据两位专家的评估，两种选择产生相同的零期望收益。然而，这种一致性是"虚假的"，因为每位专家基于不同的理由得出这一结论：专家1认为添加剂既没有好处也没有成本，而专家2认为它可能带来大量好处（如改善车辆性能）但也产生显著成本（如健康问题）。
+\end{translation}
+
+\begin{original}
+We argue that the regulator does not have to adhere to the experts' unanimous conclusion. A cautious regulator might consider the possibility that the expected societal impact could be worse than what either expert predicts and decide to cautiously aggregate beliefs such that pessimistic predictions receive more weight. For instance, corresponding to maximal caution, the regulator may choose to follow Expert~2's assessment of a 50\% chance of harmful outcomes and, for the remaining 50\%, follow Expert~1's assessment of the absence of beneficial outcomes. Under such a pessimistic aggregation of experts' beliefs, the no-additive option yields a strictly higher expected utility than the additive option and is therefore strictly preferred.
+\end{original}
+
+\begin{translation}
+我们认为，监管者不必遵守专家们的一致性结论。谨慎的监管者可能考虑到，预期的社会影响可能比任何一位专家预测的更糟，并决定以谨慎的方式聚合信念，使得悲观的预测获得更大的权重。例如，对应于最大程度的谨慎，监管者可能选择遵循专家2对有害结果50\%概率的评估，而对于剩余的50\%，则遵循专家1对不存在有利结果的评估。在这种专家信念的悲观聚合下，不添加添加剂的选择产生的期望效用严格高于添加添加剂的选择，因此被严格偏好。
+\end{translation}
+
+\begin{original}
+This paper makes three contributions. The first is to formalize a novel notion of cautiousness that has traction even in the presence of spurious unanimity resulting exclusively from diverging beliefs, as in our introductory example. Intuitively, cautiousness is a tendency to prefer choices on which experts have reached consensus. However, what is meant by ``consensus'' merits further consideration. One possible interpretation of consensus on a choice option is that all experts agree on the associated expected utility. However, as explained above, such utility-consensus may be ``spurious'' and obtained despite fundamental heterogeneity in expert beliefs. For this reason, we introduce a stronger notion of consensus, distribution-consensus, which requires that all experts not only agree on the expected utility but even hold a consensus on the distribution of outcomes. The different notions of aversion to expert disagreement defined in the literature, such as ``ambiguity aversion'' (Ghirardato and Marinacci, 2002) or ``imprecision aversion'' (Gajdos et al., 2008), all rest on the unanimity principle and are thus intimately tied to the concept of utility-consensus. The existing notions of aversion to expert disagreement, therefore, do not have bite if experts have diverging beliefs but happen to agree on the expected utility of a choice option. Our novel notion of cautiousness, in contrast, captures a decision-maker's aversion to a lack of distribution-consensus. Going back to the introductory example, both the ``no-additive'' and the ``additive'' options are utility-consensual; therefore, under any model that fulfills the unanimity principle, the decision-maker is necessarily indifferent between both options. In contrast, only the ``no-additive'' option is distribution-consensual. Accordingly, as experts have no distribution-consensus on the ``additive'' option, a decision-maker who is cautious (in our sense) rules against the introduction of the fuel additive.
+\end{original}
+
+\begin{translation}
+本文做出三个贡献。首先，我们形式化了一种新颖的谨慎性概念，该概念即使在仅由信念分歧导致的虚假一致性情况下也具有效力，如我们的引言例子所示。直观地说，谨慎性是一种偏好专家达成共识的选项的倾向。然而，"共识"的含义值得进一步考量。对某一选项的共识的一种可能解释是，所有专家都同意相关的期望效用。然而，如上所述，这种效用共识可能是"虚假的"，尽管专家信念存在根本性的异质性仍能达成。因此，我们引入了更强的共识概念，即分布共识，它要求所有专家不仅同意期望效用，甚至对结果的分布也达成共识。文献中定义的对专家分歧厌恶的不同概念，如"模糊厌恶"（Ghirardato and Marinacci, 2002）或"不精确厌恶"（Gajdos et al., 2008），都基于一致性原则，因此与效用共识的概念密切相关。因此，如果专家信念分歧但在某一选项的期望效用上恰好达成一致，现有的专家分歧厌恶概念就不起作用。相比之下，我们的新颖谨慎性概念捕捉了决策者对缺乏分布共识的厌恶。回到引言例子，"不添加添加剂"和"添加添加剂"两个选项都是效用共识性的；因此，在任何满足一致性原则的模型下，决策者必然对两个选项无差异。相比之下，只有"不添加添加剂"选项是分布共识性的。因此，由于专家对"添加添加剂"选项没有分布共识，谨慎的（在我们意义上的）决策者会反对引入该燃料添加剂。
+\end{translation}
+
+\begin{original}
+Our second contribution is to introduce a model that allows for cautiousness. Like most previous contributions, we borrow from the ambiguity aversion literature. However, since cautiousness requires abandoning the unanimity principle, we cannot rely on the most common ambiguity models. Indeed, these ``monotone models'' assume a property of monotonicity (in terms of states) which in our setting translates to the unanimity principle (in terms of experts). We instead build upon the dual model of ambiguity aversion by Bommier (2017) and introduce a ``distribution-averaging model''. In this model, for each choice option separately, the decision-maker aggregates the distribution functions of outcomes provided by the experts and uses that aggregated distribution function to evaluate the choice option. Importantly, the aggregation is specific to the choice option, leaving the possibility of a cautious aggregation that gives greater weight to more pessimistic views. Formally, this aggregated distribution function is obtained by aggregating pointwise the decumulative distribution functions provided by all experts into a single decumulative function.\footnote{If $F$ denotes the cumulative distribution function of a continuous random variable, $1-F$ is the decumulative distribution function. We work with decumulative (rather than cumulative) distribution functions to obtain the result that cautiousness is implied by a concave (rather than convex) aggregator.} Intuitive characteristics of the aggregator such as concavity ensure that the decision-rule is cautious according to our novel notion. Both our distribution-averaging model as well as the usual monotone ambiguity models rely on some form of cautious aggregation. The fundamental difference is that in our model the aggregation occurs at the level of experts' beliefs, while in monotone ambiguity models the aggregation occurs at the level of expected utility values, yielding what we call ``expected-utility-averaging models''. Although structurally different, these approaches can be compared in terms of ambiguity aversion. In particular, once utility is normalized to take values in $[0,1]$, like probabilities, we show that for a given strictly concave aggregator and given risk preferences, our specification exhibits greater ambiguity aversion than the corresponding expected-utility-averaging model. Our paper allows therefore for a greater sensitivity to expert disagreement than standard ambiguity models.
+\end{original}
+
+\begin{translation}
+我们的第二个贡献是引入了一个能够容纳谨慎性的模型。与大多数先前贡献一样，我们借鉴了模糊厌恶文献。然而，由于谨慎性要求放弃一致性原则，我们不能依赖最常见的模糊模型。实际上，这些"单调模型"假设了一个单调性（在状态方面），在我们的设定中转化为一致性原则（在专家方面）。我们转而基于Bommier（2017）的模糊厌恶对偶模型，引入了一个"分布平均模型"。在该模型中，对于每个选择选项，决策者分别聚合专家提供的结果分布函数，并使用该聚合的分布函数来评估该选择选项。重要的是，聚合是针对选择选项特定的，从而允许一种谨慎的聚合，给予更悲观的看法更大的权重。形式上，这种聚合的分布函数是通过将所有专家提供的去累积分布函数逐点聚合成一个单一的去累积函数而获得的。\footnote{如果$F$表示连续型随机变量的累积分布函数，则$1-F$是去累积分布函数。我们使用去累积（而非累积）分布函数，是为了得到谨慎性由凹（而非凸）聚合器所蕴含的结果。}聚合器的直观特征（如凹性）确保了决策规则根据我们的新颖概念是谨慎的。我们的分布平均模型以及通常的单调模糊模型都依赖于某种形式的谨慎聚合。根本区别在于，在我们的模型中，聚合发生在专家信念层面，而在单调模糊模型中，聚合发生在期望效用值层面，产生了我们所谓的"期望效用平均模型"。尽管结构上不同，但这些方法可以在模糊厌恶方面进行比较。特别是，一旦效用被归一化到$[0,1]$（与概率一样），我们证明，对于给定的严格凹聚合器和给定的风险偏好，我们的设定表现出比相应的期望效用平均模型更大的模糊厌恶。因此，我们的论文允许比标准模糊模型对专家分歧更大的敏感性。
+\end{translation}
+
+\begin{original}
+The third contribution is to highlight the implications of our novel notion of cautiousness in concrete applications. We show that greater cautiousness always results in choices that reduce the dispersion of ex-post utility, such as higher climate mitigation or higher precautionary savings. We compare our findings to those obtained with expected-utility-averaging models. When experts' beliefs can be unambiguously ranked from the most optimistic to the least optimistic (in terms of first-order stochastic dominance), then more ambiguity aversion also leads to more cautious choices in expected-utility-averaging models. The result, however, does not extend to the case where experts' beliefs cannot be ranked in terms of first-order stochastic dominance. We give two examples---on climate mitigation and precautionary savings, respectively---where an increase in ambiguity aversion in expected-utility-averaging models leads to less cautious choices, namely lower mitigation and lower savings. The effects are thus in direct opposition to what we obtain with distribution-averaging models for which an increase in ambiguity aversion (or cautiousness) leads to more cautious choices.
+\end{original}
+
+\begin{translation}
+第三个贡献是展示我们新颖谨慎性概念在具体应用中的含义。我们证明，更大的谨慎性总是导致减少事后效用分散的选择，例如更高的气候减缓或更高的预防性储蓄。我们将我们的发现与使用期望效用平均模型得到的结果进行比较。当专家的信念可以从最乐观到最不乐观明确排序（按一阶随机占优）时，那么在期望效用平均模型中，更大的模糊厌恶也导致更谨慎的选择。然而，当专家的信念不能按一阶随机占优排序时，这一结果不成立。我们给出两个例子——分别关于气候减缓和预防性储蓄——其中期望效用平均模型中模糊厌恶的增加导致更不谨慎的选择，即更低的减排和更低的储蓄。因此，这些效应与我们使用分布平均模型得到的结果直接相反，在分布平均模型中，模糊厌恶（或谨慎性）的增加导致更谨慎的选择。
+\end{translation}
+
+\begin{original}
+Our paper is related to several strands of the literature. There is a vast corpus of works on opinion pooling, in particular linear opinion pools in which the decision-maker uses a weighted average of expert opinions (Stone, 1961; Morris, 1977; McConway, 1981; Genest and Zidek, 1986; DeGroot and Mortera, 1991; Larrick and Soll, 2006; Jose et al., 2013). In line with that literature, we aggregate beliefs of experts. The key difference is that the literature on opinion pooling does not assume any ordering on the set of outcomes. With the notions of good and bad outcomes thus undefined, there cannot be anything such as the cautious aggregation of beliefs that is key in our contribution.
+\end{original}
+
+\begin{translation}
+我们的论文与多个文献分支相关。有大量关于意见汇集的文献，特别是线性意见汇集，其中决策者使用专家意见的加权平均（Stone, 1961; Morris, 1977; McConway, 1981; Genest and Zidek, 1986; DeGroot and Mortera, 1991; Larrick and Soll, 2006; Jose et al., 2013）。与这些文献一致，我们聚合专家的信念。关键区别在于，意见汇集文献没有对结果集假设任何排序。由于好坏结果的概念未定义，因此不可能存在我们贡献中关键的谨慎信念聚合。
+\end{translation}
+
+\begin{original}
+Another relevant literature strand discusses decision-making under imprecise information. In line with other papers (Hansen and Sargent, 2001; Cr\`{e}s et al., 2011; Gajdos and Vergnaud, 2013; Millner et al., 2013; Berger et al., 2016; Heal and Millner, 2018; Basili and Chateauneuf, 2020; Berger et al., 2021), we borrow from the decision-theoretic literature on ambiguity aversion to model cautiousness.\footnote{See Machina and Siniscalchi (2014) for an excellent review of the ambiguity aversion literature.} The key difference is that, in order to capture aversion to the lack of distribution-consensus, we follow the dual approach to ambiguity aversion suggested by Bommier (2017) and depart from the standard unanimity principle. Cerreia-Vioglio et al.\ (2026) consider model-misspecification, i.e.\ the possibility that all experts might be wrong and also abandon the unanimity principle. Robust decisions in their framework are found by optimizing over models (which correspond to ``expert beliefs'' in our setting) distorted towards pessimism. Different from our approach, however, a cautious decision-maker in their setting would use a more pessimistic approach even when experts fully agree (i.e., with their terminology, when the set of structured models is reduced to a singleton). Hill (2023) addresses a lack of confidence in one's belief or a disagreement between experts by using incomplete preferences. More specifically, a choice option is preferred to another if it is preferred in all beliefs considered, where this set of beliefs depends on the decision-maker's cautiousness and on the levels of confidence of experts. Gilboa et al.\ (2010) differentiate objective and subjective rationality. In contrast to our approach, they hold on to the unanimity principle; in fact, their ``objective'' preference relation is centered around the unanimity principle. Their subjective preference relation however---which only becomes relevant if the objective does not provide any guidance---has in the ``caution'' property a feature similar to our setting, namely a preference for acts on which experts agree.
+\end{original}
+
+\begin{translation}
+另一个相关的文献分支讨论了不精确信息下的决策。与其他论文一致（Hansen and Sargent, 2001; Crès et al., 2011; Gajdos and Vergnaud, 2013; Millner et al., 2013; Berger et al., 2016; Heal and Millner, 2018; Basili and Chateauneuf, 2020; Berger et al., 2021），我们借鉴了关于模糊厌恶的决策理论文献来建模谨慎性。\footnote{见Machina和Siniscalchi（2014）对模糊厌恶文献的精彩综述。}关键区别在于，为了捕捉对缺乏分布共识的厌恶，我们遵循Bommier（2017）提出的模糊厌恶对偶方法，并偏离了标准的一致性原则。Cerreia-Vioglio等人（2026）考虑模型误设的可能性，即所有专家可能都错了，也放弃了一致性原则。他们框架中的稳健决策是通过在朝悲观方向扭曲的模型（对应于我们设定中的"专家信念"）上进行优化而找到的。然而，与我们的方法不同，他们的设定中谨慎的决策者即使在专家完全同意时也会使用更悲观的方法（用他们的术语，即当结构化模型集缩减为单例时）。Hill（2023）通过使用不完全偏好来处理对自身信念缺乏信心或专家之间存在分歧的问题。更具体地说，如果一个选项在所有被考虑的信念中都被偏好，则该选项优于另一个选项，其中这组信念取决于决策者的谨慎性和专家的置信水平。Gilboa等人（2010）区分了客观理性和主观理性。与我们的方法不同，他们坚持一致性原则；事实上，他们的"客观"偏好关系是围绕一致性原则展开的。然而，他们的主观偏好关系——仅在客观偏好关系无法提供任何指导时才有意义——在"谨慎"属性中具有与我们设定相似的特征，即偏好专家达成一致的行动。
+\end{translation}
+
+\begin{original}
+Our paper is also connected to the general discussion in economics and social choice on how to extend the well-known preference aggregation result in Harsanyi (1955) from risk to uncertainty (Hylland and Zeckhauser, 1979; Mongin, 1995; Alon and Gayer, 2016; Danan et al., 2016; Brandl, 2021). In seminal contributions (Gilboa et al., 2004, 2014; Gayer et al., 2014), Brunnermeier et al.\ (2014) suggested various dominance criteria---all of them relaxing the Pareto principle---when experts disagree both in terms of tastes and beliefs. In our paper, however, like Stanca (2021), we exclusively focus on heterogeneity in beliefs; all experts are assumed to adopt the risk preferences of the decision-maker. In the absence of taste heterogeneity, the dominance criteria proposed in Gilboa et al.\ (2004, 2014), Gayer et al.\ (2014), Brunnermeier et al.\ (2014) boil down to the Pareto principle and thus prevent the expression of cautiousness. We propose a novel route where the Pareto condition is replaced by a property of monotonicity with respect to first-order stochastic dominance: If all experts believe that a choice $f$ dominates a choice $g$ in the sense of first-order stochastic dominance (when looking at the distribution of outcomes), then the decision-maker should prefer $f$ to $g$.
+\end{original}
+
+\begin{translation}
+我们的论文还与经济学和社会选择中关于如何将Harsanyi（1955）著名的偏好聚合结果从风险扩展到不确定性的广泛讨论相关（Hylland and Zeckhauser, 1979; Mongin, 1995; Alon and Gayer, 2016; Danan et al., 2016; Brandl, 2021）。在开创性贡献中，Gilboa等人（2004, 2014）、Gayer等人（2014）、Brunnermeier等人（2014）提出了各种占优标准——所有这些标准都放松了帕累托原则——当专家在偏好和信念上都存在分歧时。然而，在我们的论文中，与Stanca（2021）一样，我们仅关注信念上的异质性；假设所有专家都采用决策者的风险偏好。在没有偏好异质性的情况下，Gilboa等人（2004, 2014）、Gayer等人（2014）、Brunnermeier等人（2014）提出的占优标准归结为帕累托原则，因此阻碍了谨慎性的表达。我们提出了一条新的路径，用关于一阶随机占优的单调性属性替代帕累托条件：如果所有专家认为选择$f$在一阶随机占优意义上（从结果的分布来看）优于选择$g$，则决策者应偏好$f$而非$g$。
+\end{translation}
+
+\begin{original}
+Closest to our paper are contributions that study the aggregation of individual beliefs (or set of beliefs) when there is agreement on tastes (Stanca, 2021; Cr\`{e}s et al., 2011; Gajdos and Vergnaud, 2013; Alon and Gayer, 2016, 2024; Hill, 2012). Often the explicit interpretation (in line with our work) is that the individual beliefs are assessments by different experts that a decision-maker wants to aggregate. As in our paper, all these contributions focus on how the decision-maker can exhibit caution against disagreement among experts. The specific modeling assumptions vary: Some models focus on experts that, as in our case, have unique beliefs (Alon and Gayer, 2024; Stanca, 2021), others consider experts that exhibit ambiguity themselves (Cr\`{e}s et al., 2011; Gajdos et al., 2008; Hill, 2012). Some consider an Anscombe-Aumann setting with objective probabilities (Gajdos and Vergnaud, 2013; Cr\`{e}s et al., 2011), others adopt (as we do) a purely subjective belief setting (Alon and Gayer, 2024). What connects these contributions, however, is that all of them impose some form of the unanimity principle, as described above: if all experts prefer one action over another, then the decision-maker should also prefer that action. To use the instructive example in Alon and Gayer (2016): if captain and manager (the two experts) prefer the substitute player over the injured star, then the unanimity principle states that so should the coach. We do not adopt this unanimity principle and argue that captain and manager may agree on the expected utility without agreeing on the underlying belief. If the experts' disparity in underlying beliefs is greater for the substitute player compared to the injured star, then---according to our approach---the coach might choose to keep the injured star on the pitch.
+\end{original}
+
+\begin{translation}
+与我们的论文最接近的是那些研究在偏好一致时个体信念（或信念集）聚合的贡献（Stanca, 2021; Crès et al., 2011; Gajdos and Vergnaud, 2013; Alon and Gayer, 2016, 2024; Hill, 2012）。通常的明确解释（与我们的工作一致）是，个体信念是决策者想要聚合的不同专家的评估。与我们论文一样，所有这些贡献都关注决策者如何对专家之间的分歧表现出谨慎。具体的建模假设各不相同：一些模型关注的是与我们情况一样具有唯一信念的专家（Alon and Gayer, 2024; Stanca, 2021），另一些则考虑专家自身也表现出模糊性（Crès et al., 2011; Gajdos et al., 2008; Hill, 2012）。一些考虑具有客观概率的Anscombe-Aumann设定（Gajdos and Vergnaud, 2013; Crès et al., 2011），另一些则采用（与我们一样）纯粹主观信念设定（Alon and Gayer, 2024）。然而，这些贡献的共同点是，它们都施加了某种形式的一致性原则，如上所述：如果所有专家认为一个行动优于另一个行动，那么决策者也应该偏好该行动。用Alon和Gayer（2016）中的启发式例子来说：如果队长和经理（两位专家）偏好替补球员胜过受伤的明星球员，那么一致性原则规定教练也应该如此。我们不采纳这一一致性原则，并认为队长和经理可能在期望效用上一致，但在潜在信念上不一致。如果专家在替补球员上的潜在信念差异大于受伤明星球员上的差异，那么——根据我们的方法——教练可能选择让受伤的明星球员留在场上。
+\end{translation}
+
+\begin{original}
+Finally, the distribution-averaging models we propose constitute a new way of taking cautious decisions when robust scientific knowledge is lacking. As such we contribute to the economic literature on the precautionary principle (Gollier et al., 2000; Gollier and Treich, 2003; Barrieu and Sinclair-Desgagn\'{e}, 2006; Guillouet and Martimort, 2009). We offer a convenient and tractable framework where the degree of cautiousness is reflected in a simple averaging function. The framework is flexible and benefits from previous contributions as a number of parametric forms for the averaging function can be directly imported from the literature on ambiguity aversion.
+\end{original}
+
+\begin{translation}
+最后，我们提出的分布平均模型构成了一种在缺乏稳健科学知识时做出谨慎决策的新方式。因此，我们为关于预防原则的经济学文献做出了贡献（Gollier et al., 2000; Gollier and Treich, 2003; Barrieu and Sinclair-Desgagné, 2006; Guillouet and Martimort, 2009）。我们提供了一个方便且易处理的框架，其中谨慎程度通过一个简单的平均函数反映出来。该框架是灵活的，并得益于先前的贡献，因为平均函数的许多参数形式可以直接从模糊厌恶文献中引入。
+\end{translation}
+
+\begin{original}
+We proceed as follows. Section~2 defines the notion of cautiousness, introduces distribution-averaging decision-rules, and clarifies the relation to common expected-utility-averaging models that rest on the unanimity principle. Section~3 compares cautiousness and ambiguity aversion in the context of concrete applications and can be read independently. Section~4 concludes.
+\end{original}
+
+\begin{translation}
+本文的结构如下。第2节定义了谨慎性的概念，引入了分布平均决策规则，并阐明了其与依赖于一致性原则的常见期望效用平均模型的关系。第3节在具体应用的背景下比较了谨慎性和模糊厌恶，可以独立阅读。第4节总结全文。
+\end{translation}
+
+\newpage
+
+% ============ SECTION 2: THEORETICAL FRAMEWORK ============
+\section{2. Theoretical Framework}
+{\color{transblue}\subsection*{2. 理论框架}}
+
+\subsection{2.1 Setting}
+{\color{transblue}\subsubsection*{2.1 设定}}
+
+\begin{original}
+We consider a decision-maker with preferences over uncertain prospects informed by experts' beliefs.
+\end{original}
+
+\begin{translation}
+我们考虑一个决策者，其偏好涉及基于专家信念的不确定前景。
+\end{translation}
+
+\begin{original}
+\textbf{Prospects.} Let $\mathcal{X} = [x^{-}, x^{+}] \subset \R$, a closed interval of $\R$ with $x^{-} < x^{+}$, be the space of outcomes. Given a set of states of the world $\Omega$, which contains at least three different states, we define (simple) prospects as mappings from states of the world to outcomes.\footnote{Prospects are therefore just acts \`{a} la Savage (1954). We nevertheless opted for a different terminology to avoid the confusion with the notion of acts in the two-stage setting of Anscombe and Aumann (1963) where outcomes are lotteries, i.e.\ probabilistic objects.} Prospects are assumed to have finite images, and for any prospect $f$, we will denote by $n$ the number of values taken by $f$, and by $(x_{1}, \dots, x_{n})$ the values taken by $f$ in increasing order (i.e.\ $x_{1} < \dots < x_{n}$). For any outcome $x$, the sure prospect with outcome $x$, also denoted $x$, is the prospect that equals $x$ in all states of the world.
+\end{original}
+
+\begin{translation}
+\textbf{前景。} 设$\mathcal{X} = [x^{-}, x^{+}] \subset \R$，即$\R$的一个满足$x^{-} < x^{+}$的闭区间，为结果空间。给定一个世界状态集$\Omega$，其中至少包含三个不同的状态，我们定义（简单）前景为从世界状态到结果的映射。\footnote{因此前景就是Savage（1954）意义上的行动。但我们选择了不同的术语，以避免与Anscombe和Aumann（1963）两阶段设定中行动的概念混淆，其中结果是彩票，即概率性对象。}前景被假定为具有有限像，对于任何前景$f$，我们将用$n$表示$f$取值的数量，用$(x_{1}, \dots, x_{n})$表示$f$按递增顺序取的数值（即$x_{1} < \dots < x_{n}$）。对于任何结果$x$，具有结果$x$的确定前景，也记作$x$，是在所有世界状态中等于$x$的前景。
+\end{translation}
+
+\begin{original}
+\textbf{Expertise.} We consider $K$ experts. Expert $k \in \{1, \dots, K\}$ holds belief $\mu_{k}$, a subjective probability measure on the set of the states of the world $\Omega$. We call expertise the list of experts' beliefs $\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$. Making a slight abuse of notation, the expertise $\mathcal{E} = (\mu, \dots, \mu)$ where all experts share the same belief $\mu$ will also be denoted $\mu$. Confusion will be avoided by using calligraphic symbols (like $\mathcal{E}$) for expertise where experts may disagree, and Roman symbols (like $\mu$ or $\pi$) for expertise where all experts agree. Given some belief $\pi$ and an outcome $x$, we denote by $\pi^{f}(x)$ the probability that $f$ yields an outcome larger or equal to $x$, i.e.\ $\pi^{f}(x) = \pi(\{\omega \in \Omega \mid f(\omega) \geq x\})$. The mapping $x \mapsto \pi^{f}(x)$ is thus the decumulative distribution function of the lottery generated by the prospect $f$ when holding belief $\pi$.
+\end{original}
+
+\begin{translation}
+\textbf{专家知识。} 我们考虑$K$位专家。专家$k \in \{1, \dots, K\}$持有信念$\mu_{k}$，即世界状态集$\Omega$上的一个主观概率测度。我们将专家信念列表$\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$称为专家知识。稍微滥用符号，所有专家共享相同信念$\mu$的专家知识$\mathcal{E} = (\mu, \dots, \mu)$也将被记作$\mu$。通过使用花体符号（如$\mathcal{E}$）表示专家可能存在分歧的专家知识，使用罗马符号（如$\mu$或$\pi$）表示所有专家一致的专家知识，可以避免混淆。给定某个信念$\pi$和一个结果$x$，我们用$\pi^{f}(x)$表示$f$产生大于或等于$x$的结果的概率，即$\pi^{f}(x) = \pi(\{\omega \in \Omega \mid f(\omega) \geq x\})$。因此，映射$x \mapsto \pi^{f}(x)$是在持有信念$\pi$时，由前景$f$生成的彩票的去累积分布函数。
+\end{translation}
+
+\begin{original}
+\textbf{Decision-rule.} A decision-rule $\mathcal{R}$ is a mapping $\mathcal{E} \mapsto \succsim_{\mathcal{E}}$ that associates an expertise $\mathcal{E}$ with a preference relation (i.e.\ a weak order) $\succsim_{\mathcal{E}}$ over the set of prospects. We denote by $\succ_{\mathcal{E}}$ the associated strict order and $\sim_{\mathcal{E}}$ the indifference relation.
+\end{original}
+
+\begin{translation}
+\textbf{决策规则。} 决策规则$\mathcal{R}$是一个映射$\mathcal{E} \mapsto \succsim_{\mathcal{E}}$，它将专家知识$\mathcal{E}$与前景集上的一个偏好关系（即弱序）$\succsim_{\mathcal{E}}$联系起来。我们用$\succ_{\mathcal{E}}$表示相关的严格序，用$\sim_{\mathcal{E}}$表示无差异关系。
+\end{translation}
+
+\begin{original}
+\textbf{Consensual prospects.} We will say that a prospect $f$ is utility-consensual if the prospect's appeal does not depend on the expert the decision-maker might rely on, i.e.\ when there exists $c \in \R$ such that $f \sim_{\mu_{k}} c$ for all $k$. Crucial for our analysis, a prospect may be utility-consensual while experts still fundamentally disagree on the risk implied by such a prospect. An illustration is given in our introductory example: No matter which expert the decision-maker might rely on, the introduction of fuel additive is seen as good as abstaining from it, but one expert thinks that using fuel additive is risky and the other not.
+\end{original}
+
+\begin{translation}
+\textbf{共识性前景。} 如果一个前景的吸引力不依赖于决策者可能依赖的专家，即存在$c \in \R$使得对所有$k$有$f \sim_{\mu_{k}} c$，我们称该前景是效用共识性的。对我们的分析至关重要的一点是，一个前景可能是效用共识性的，而专家在关于该前景所隐含的风险上仍然存在根本性的分歧。我们的引言例子提供了一个说明：无论决策者可能依赖哪位专家，引入燃料添加剂都被视为与不引入同样好，但一位专家认为使用燃料添加剂是有风险的，而另一位则不这么认为。
+\end{translation}
+
+\begin{original}
+As stressed in the introduction, the decision-maker may want to treat cases of complete expert agreement and cases of ``spurious agreement'' differently. This leads us to introduce a second notion of consensus. We say that a prospect $f$ is distribution-consensual when experts agree on the distribution of outcomes it entails (i.e.\ $\mu_{k}^{f} = \mu_{\ell}^{f}$ for all experts $k$ and $\ell$). Distribution-consensus corresponds to the definition of an unambiguous act in Alon and Gayer (2024). The concept of cautiousness introduced in Section~2.2 will directly rely on the notion of distribution-consensus. In contrast to utility-consensus, distribution-consensus is defined independently of the decision-rule. All sure prospects are both utility- and distribution-consensual, reflecting that experts' beliefs are irrelevant for the evaluation of sure prospects. More generally, the domain of validity of our framework is where disagreement over states' likelihoods is irrelevant to the decision-maker unless they translate into disagreement over the distribution of outcomes. Note, however, that when states can be strictly ordered from worst to best independently of the action of the decision-maker, any disagreement becomes relevant in our approach, since any disagreement on state probabilities generates a disagreement over the distribution of outcomes. Section~3 will emphasize how powerful our approach is whenever this is the case, with cautiousness having then an unambiguous and intuitive impact.
+\end{original}
+
+\begin{translation}
+如引言中所强调的，决策者可能希望对专家完全一致的情况和"虚假一致"的情况区别对待。这促使我们引入第二个共识概念。当专家对某一前景所带来的结果分布达成一致时（即对所有专家$k$和$\ell$有$\mu_{k}^{f} = \mu_{\ell}^{f}$），我们说该前景$f$是分布共识性的。分布共识对应于Alon和Gayer（2024）中无歧义行动的定义。第2.2节中引入的谨慎性概念将直接依赖于分布共识的概念。与效用共识不同，分布共识是独立于决策规则定义的。所有确定前景既具有效用共识性又具有分布共识性，这反映了专家的信念与确定前景的评估无关。更一般地，我们框架的有效性领域是，对状态概率的分歧与决策者无关，除非这些分歧转化为对结果分布的分歧。然而，需要注意的是，当状态可以从最差到最好严格排序且独立于决策者的行动时，任何分歧在我们的方法中都变得相关，因为任何关于状态概率的分歧都会产生关于结果分布的分歧。第3节将强调在这种情况下我们的方法有多么强大，谨慎性将产生明确且直观的影响。
+\end{translation}
+
+\begin{original}
+\textbf{Aggregators.} The specifications we will introduce later on make use of ``aggregator'' functionals, which generalize weighted averages. Formally, an aggregator is just a continuous, component-wise strictly increasing\footnote{By ``component-wise'' order we mean that for any $p = (p_{1}, \dots, p_{K})$ and $p' = (p'_{1}, \dots, p'_{K})$ in $[0,1]^{K}$, the statement $p \geq p'$ is to be understood as $p_{k} \geq p'_{k}$ for all $k \in \{1, \dots, K\}$. The strict inequality $p > p'$ is used to mean that $p \geq p'$ and $p \neq p'$.} function $I: [0,1]^{K} \to [0,1]$ fulfilling $I(p, \dots, p) = p$. Analogous functionals appear in the literature on biseparable preferences (Ghirardato and Marinacci, 2001; Cerreia-Vioglio et al., 2011).
+\end{original}
+
+\begin{translation}
+\textbf{聚合器。} 我们稍后将引入的设定使用了"聚合器"泛函，它是对加权平均的推广。形式上，聚合器只是一个连续、逐分量严格递增\footnote{我们说的"逐分量"顺序是指，对于$[0,1]^{K}$中的任何$p = (p_{1}, \dots, p_{K})$和$p' = (p'_{1}, \dots, p'_{K})$，$p \geq p'$应理解为对所有$k \in \{1, \dots, K\}$有$p_{k} \geq p'_{k}$。严格不等式$p > p'$用于表示$p \geq p'$且$p \neq p'$。}的函数$I: [0,1]^{K} \to [0,1]$，满足$I(p, \dots, p) = p$。类似泛函出现在关于双可分偏好的文献中（Ghirardato and Marinacci, 2001; Cerreia-Vioglio et al., 2011）。
+\end{translation}
+
+\begin{original}
+Linear aggregators (or weighted means) take the form $I(p_{1}, \dots, p_{K}) = \sum_{k=1}^{K} w_{k} p_{k}$, with numbers (so-called ``weights'') $w_{1}, \dots, w_{K} \geq 0$ summing to 1. Linear aggregators take a prominent place in the literature on belief aggregation, as they correspond to the ambiguity neutral case. The literature on ambiguity aversion, however, suggests many non-linear aggregators. For example, inspired by Klibanoff et al.\ (2005), one can consider smooth ``KMM'' aggregators of the form:\footnote{More precisely, such aggregators, also called quasi-arithmetic mean or Kolmogorov-Nagumo-de Finetti mean, are used in the Second-Order EU model (see e.g., Nau, 2006), the most common specification of the model introduced by Klibanoff et al.\ (2005).}
+\[
+I(p_{1}, \dots, p_{K}) = \phi^{-1}\!\left( \sum_{k=1}^{K} w_{k} \, \phi(p_{k}) \right) \tag{1}
+\]
+for some increasing smooth function $\phi: [0,1] \to [0,1]$ and some weights $(w_{k})_{1}^{K}$. Alternatively, in the spirit of Gilboa and Schmeidler (1989), one can use aggregators of the max-min kind,
+\[
+I(p_{1}, \dots, p_{K}) = \min_{(w_{k})_{1}^{K} \in W} \sum_{k=1}^{K} w_{k} p_{k}, \tag{2}
+\]
+where $W$ is a closed and convex set of weights. The KMM and max-min are just two specific forms of aggregators, but the literature on ambiguity aversion offers many aggregators, such as those related to the variational model of Maccheroni et al.\ (2006) or the model of Siniscalchi (2009).
+\end{original}
+
+\begin{translation}
+线性聚合器（或加权平均）取形式$I(p_{1}, \dots, p_{K}) = \sum_{k=1}^{K} w_{k} p_{k}$，其中数字（所谓的"权重"）$w_{1}, \dots, w_{K} \geq 0$且和为1。线性聚合器在信念聚合文献中占据重要地位，因为它们对应于模糊中性的情形。然而，模糊厌恶文献提出了许多非线性聚合器。例如，受Klibanoff等人（2005）的启发，可以考虑如下形式的光滑"KMM"聚合器：\footnote{更准确地说，这样的聚合器，也称为拟算术平均或Kolmogorov-Nagumo-de Finetti平均，被用于二阶EU模型（参见例如Nau, 2006），这是Klibanoff等人（2005）引入的模型的最常见设定。}
+\[
+I(p_{1}, \dots, p_{K}) = \phi^{-1}\!\left( \sum_{k=1}^{K} w_{k} \, \phi(p_{k}) \right) \tag{1}
+\]
+其中$\phi: [0,1] \to [0,1]$是某个递增光滑函数，$(w_{k})_{1}^{K}$是某个权重。另一种方式，秉承Gilboa和Schmeidler（1989)的精神，可以使用如下最大最小形式的聚合器：
+\[
+I(p_{1}, \dots, p_{K}) = \min_{(w_{k})_{1}^{K} \in W} \sum_{k=1}^{K} w_{k} p_{k}, \tag{2}
+\]
+其中$W$是一个闭凸权重集。KMM和最大最小仅仅是聚合器的两种特定形式，但模糊厌恶文献提供了许多聚合器，例如与Maccheroni等人（2006）的变分模型或Siniscalchi（2009）的模型相关的聚合器。
+\end{translation}
+
+\begin{original}
+\textbf{Risk preferences.} Throughout the paper, we assume that distribution-consensual prospects are evaluated through a rank-dependent expected utility (RDU) model. RDU is a well-known generalization of the expected utility (EU) theory, introduced by Quiggin (1982).
+
+To gain intuition, recall EU, assuming a utility index $u: \mathcal{X} \to [0,1]$. Take a prospect $f$ which is distribution-consensual under the expertise $\mathcal{E} = (\mu, \dots, \mu)$. Denote $p_{i} = \mu^{f}(x_{i})$ for all $1 \leq i \leq n$. Since $f$ is distribution-consensual, one also has $p_{i} = \mu^{f}(x_{i})$ for all $1 \leq i \leq n$ and the expected utility of $f$ under any of the experts' beliefs is given by:
+\[
+V_{\mu}(f) = \sum_{i=1}^{n} \big(u(x_{i}) - u(x_{i-1})\big) \, p_{i} + u(x_{0}) \tag{3}
+\]
+with the convention $u(x_{0}) = u(x^{-}) = 0$.
+
+As emphasized by Castagnoli and LiCalzi (1996), we can present EU in a different way using a summation by part. Denoting $\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$ for $i \in \{2, \dots, n\}$ and $\sigma_{1} = u(x_{1})$, Eq.\ (3) rewrites:
+\[
+V_{\mu}(f) = \sum_{i=1}^{n} \sigma_{i} \, p_{i}. \tag{4}
+\]
+
+In order to introduce cautiousness, it will prove more convenient to build on formulation (4). While we could use EU, we consider the more general RDU framework, obtained by distorting decumulative probabilities $p_{i}$ through some increasing function $\psi$. This allows extra sensitivity to rare and extreme events to be expressed.
+\end{original}
+
+\begin{translation}
+\textbf{风险偏好。} 在整篇论文中，我们假设分布共识性前景通过秩依赖期望效用（RDU）模型进行评估。RDU是期望效用（EU）理论的一个众所周知的推广，由Quiggin（1982）引入。
+
+为了获得直观理解，回顾EU，假设一个效用指数$u: \mathcal{X} \to [0,1]$。取一个在专家知识$\mathcal{E} = (\mu, \dots, \mu)$下具有分布共识性的前景$f$。对所有$1 \leq i \leq n$记$p_{i} = \mu^{f}(x_{i})$。由于$f$是分布共识性的，对所有$1 \leq i \leq n$也有$p_{i} = \mu^{f}(x_{i})$，且$f$在任何专家信念下的期望效用由下式给出：
+\[
+V_{\mu}(f) = \sum_{i=1}^{n} \big(u(x_{i}) - u(x_{i-1})\big) \, p_{i} + u(x_{0}) \tag{3}
+\]
+其中约定$u(x_{0}) = u(x^{-}) = 0$。
+
+正如Castagnoli和LiCalzi（1996）所强调的，我们可以使用分部求和以不同的方式呈现EU。对$i \in \{2, \dots, n\}$记$\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$，$\sigma_{1} = u(x_{1})$，式（3）可重写为：
+\[
+V_{\mu}(f) = \sum_{i=1}^{n} \sigma_{i} \, p_{i}. \tag{4}
+\]
+
+为了引入谨慎性，建立在公式（4）的基础上将证明更加方便。虽然我们可以使用EU，但我们考虑更一般的RDU框架，通过某个递增函数$\psi$对去累积概率$p_{i}$进行扭曲来获得。这使得可以对稀有和极端事件表达额外的敏感性。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 1 (RDU on distribution-consensual prospects).} A decision-rule $\mathcal{R}$ is RDU on distribution-consensual prospects if there exist two increasing bijections $\psi: [0,1] \to [0,1]$, $u: \mathcal{X} \to [0,1]$\footnote{Normalizing the ranges of $u$ and $\psi$ implies that the representation is unique, without loss of generality. It will also be convenient for comparing expected-utility-averaging and distribution-averaging decision-rules in Appendix~B.1 since having utility levels and transformed probabilities covering the same interval $[0,1]$ will make it possible to consider identical aggregator functions, be it to aggregate utilities or to aggregate probabilities.} such that for any expertise $\mathcal{E}$, the weak order $\succsim_{\mathcal{E}}$ restricted on distribution-consensual prospects is represented by:
+\[
+V_{\mathcal{E}}(f) = \sum_{i=1}^{n} \sigma_{i} \, \psi(p_{i}) \tag{5}
+\]
+where $\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$ for $i \in \{2, \dots, n\}$, $\sigma_{1} = u(x_{1})$, and $p_{i} = \mu_{1}^{f}(x_{i})$.
+
+For the sake of conciseness, we will refer to $V_{\mu}(f)$ as an ``expected utility'', even though (5) uses transformed probabilities $\psi(p_{i})$. It directly follows from (5) that for any sure prospect $c$ and any expertise $\mathcal{E}$, one has $V_{\mathcal{E}}(c) = u(c)$.
+\end{original}
+
+\begin{translation}
+\textbf{定义1（分布共识性前景上的RDU）。} 如果存在两个递增双射$\psi: [0,1] \to [0,1]$, $u: \mathcal{X} \to [0,1]$\footnote{将$u$和$\psi$的取值范围归一化意味着表示是唯一的，且不失一般性。这也便于在附录B.1中比较期望效用平均和分布平均决策规则，因为让效用水平和变换后的概率覆盖相同的区间$[0,1]$将使考虑相同的聚合器函数成为可能，无论是用于聚合效用还是聚合概率。}，使得对于任何专家知识$\mathcal{E}$，弱序$\succsim_{\mathcal{E}}$在分布共识性前景上的限制由以下公式表示：
+\[
+V_{\mathcal{E}}(f) = \sum_{i=1}^{n} \sigma_{i} \, \psi(p_{i}) \tag{5}
+\]
+其中$\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$对于$i \in \{2, \dots, n\}$，$\sigma_{1} = u(x_{1})$，$p_{i} = \mu_{1}^{f}(x_{i})$，则决策规则$\mathcal{R}$在分布共识性前景上是RDU。
+
+为简洁起见，我们将$V_{\mu}(f)$称为"期望效用"，尽管（5）使用了变换后的概率$\psi(p_{i})$。由（5）直接可得，对于任何确定前景$c$和任何专家知识$\mathcal{E}$，有$V_{\mathcal{E}}(c) = u(c)$。
+\end{translation}
+
+% ============ SECTION 2.2: CAUTIOUSNESS ============
+\subsection{2.2 Cautiousness}
+{\color{transblue}\subsubsection*{2.2 谨慎性}}
+
+\begin{original}
+We define cautiousness as an aversion to prospects that are not distribution-consensual:
+\end{original}
+
+\begin{translation}
+我们将谨慎性定义为对非分布共识性前景的厌恶：
+\end{translation}
+
+\begin{original}
+\textbf{Definition 2 (Cautiousness).} A decision-rule $\mathcal{R}$ is cautious if for every expertise $\mathcal{E}$, every prospect $f$ that is not distribution-consensual, and every sure prospect $c$, the following implication holds:
+\[
+(\forall k,\ f \succsim_{\mu_{k}} c) \implies c \succ_{\mathcal{E}} f.
+\]
+\end{original}
+
+\begin{translation}
+\textbf{定义2（谨慎性）。} 如果对于每个专家知识$\mathcal{E}$、每个非分布共识性前景$f$和每个确定前景$c$，以下蕴含关系成立，则决策规则$\mathcal{R}$是谨慎的：
+\[
+(\forall k,\ f \succsim_{\mu_{k}} c) \implies c \succ_{\mathcal{E}} f.
+\]
+\end{translation}
+
+\begin{original}
+Intuitively, if all experts think that $f$ (consensual or not) is not better than $c$, disagreement among experts cannot make the decision-maker strictly prefer $f$ to $c$. In addition, cautiousness requires that when $f$ is not distribution-consensual, then the decision-maker strictly prefers the sure prospect $c$.
+\end{original}
+
+\begin{translation}
+直观地说，如果所有专家认为$f$（无论是否具有共识性）不优于$c$，专家之间的分歧不能使决策者严格偏好$f$胜过$c$。此外，谨慎性要求当$f$不是分布共识性时，决策者严格偏好确定前景$c$。
+\end{translation}
+
+\begin{original}
+In the most standard way, we can follow Yaari (1969)'s general approach---initially introduced to compare risk aversion---to compare cautiousness. Formally:
+\end{original}
+
+\begin{translation}
+以最标准的方式，我们可以遵循Yaari（1969）的一般方法——最初引入用于比较风险厌恶——来比较谨慎性。形式化地：
+\end{translation}
+
+\begin{original}
+\textbf{Definition 3 (Comparative cautiousness).} A decision-rule $\mathcal{R}$ exhibits greater cautiousness (or: is more cautious) than a decision-rule $\mathcal{R}'$ if for every expertise $\mathcal{E}$, every prospect $f$ and every distribution-consensual prospect $g$,
+\[
+f \succsim_{\mathcal{E}} g \implies f \succsim'_{\mathcal{E}} g; \qquad f \succ'_{\mathcal{E}} g \implies f \succ_{\mathcal{E}} g;
+\]
+and
+\[
+f \succsim_{\mathcal{E}} g \implies f \succ'_{\mathcal{E}} g \quad \text{if $f$ is not distribution-consensual}.
+\]
+\end{original}
+
+\begin{translation}
+\textbf{定义3（比较谨慎性）。} 如果对于每个专家知识$\mathcal{E}$、每个前景$f$和每个分布共识性前景$g$，有
+\[
+f \succsim_{\mathcal{E}} g \implies f \succsim'_{\mathcal{E}} g; \qquad f \succ'_{\mathcal{E}} g \implies f \succ_{\mathcal{E}} g;
+\]
+且
+\[
+f \succsim_{\mathcal{E}} g \implies f \succ'_{\mathcal{E}} g \quad \text{若$f$不是分布共识性的},
+\]
+则决策规则$\mathcal{R}$比决策规则$\mathcal{R}'$表现出更大的谨慎性（或者说：更谨慎）。
+\end{translation}
+
+\begin{original}
+Intuitively, what this definition says is that if according to the decision-rule $\mathcal{R}$ the prospect $f$ looks preferable to the distribution-consensual $g$ (despite potential disagreement about the riskiness of $f$), it must also be the case when considering a less cautious decision-rule. Moreover, in case $f$ is not consensual, and seen just as good as $g$ when using the more cautious decision-rule, it must be seen as strictly better than $g$ under the less cautious decision-rule. Note that if $\mathcal{R}$ and $\mathcal{R}'$ are comparable in terms of cautiousness, in the sense that one is more cautious than the other, they must necessarily agree on the ranking of distribution-consensual prospects (see proof in Appendix~C.2). This parallels the literature on risk aversion, where agents are comparable in terms of risk aversion only if they agree on the ranking of deterministic outcomes (see Kihlstrom and Mirman, 1974).
+\end{original}
+
+\begin{translation}
+直观地说，这个定义表明，如果根据决策规则$\mathcal{R}$，前景$f$看起来优于分布共识性前景$g$（尽管在$f$的风险性上存在潜在分歧），那么当考虑一个较不谨慎的决策规则时，也必须如此。此外，在$f$不是共识性的情况下，当使用更谨慎的决策规则时$f$与$g$被视为同样好，那么在使用较不谨慎的决策规则时，$f$必须被视为严格优于$g$。注意，如果$\mathcal{R}$和$\mathcal{R}'$在谨慎性方面是可比较的，即其中一个比另一个更谨慎，那么它们必然在分布共识性前景的排序上达成一致（见附录C.2中的证明）。这与风险厌恶文献相似，在风险厌恶文献中，只有当代理人就确定性结果的排序达成一致时，它们才能在风险厌恶方面进行比较（见Kihlstrom和Mirman, 1974）。
+\end{translation}
+
+\begin{original}
+\textbf{Violation of the Pareto condition.} Cautiousness is incompatible with the Pareto (or unanimity) condition. To see this, we introduce the notion of Paretian decision-rule.
+\end{original}
+
+\begin{translation}
+\textbf{帕累托条件的违背。} 谨慎性与帕累托（或一致性）条件不相容。为说明这一点，我们引入了帕累托决策规则的概念。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 4 (Paretian decision-rule).} A decision-rule $\mathcal{R}$ is Paretian if for every expertise $\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$ and all prospects $f, g$:
+\[
+(\forall k,\ f \succsim_{\mu_{k}} g) \implies f \succsim_{\mathcal{E}} g.
+\]
+\end{original}
+
+\begin{translation}
+\textbf{定义4（帕累托决策规则）。} 如果对于每个专家知识$\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$和所有前景$f, g$:
+\[
+(\forall k,\ f \succsim_{\mu_{k}} g) \implies f \succsim_{\mathcal{E}} g,
+\]
+则决策规则$\mathcal{R}$是帕累托的。
+\end{translation}
+
+\begin{original}
+A Paretian decision-rule cannot exhibit cautiousness. The incompatibility between cautiousness and the Pareto condition is formally stated and proven in Appendix~A.1. Our introductory example can help the reader make up their own mind about these respective properties. Indeed, (strict) preference for the no-fuel additive option would be required under cautiousness, and ruled out under the Pareto condition.
+\end{original}
+
+\begin{translation}
+帕累托决策规则不能表现出谨慎性。谨慎性与帕累托条件之间的不相容性在附录A.1中被正式陈述和证明。我们的引言例子可以帮助读者就这些各自的属性做出自己的判断。实际上，在谨慎性下，对不添加燃料添加剂选项的（严格）偏好将是必需的，而在帕累托条件下则被排除。
+\end{translation}
+
+\begin{original}
+This incompatibility naturally leads to questioning whether the most appealing property is cautiousness or the Pareto condition. If the decision-maker could be sure that one expert is right, then the Pareto condition would seem natural. However, if the decision-maker interprets the divergence in experts' beliefs as reflecting some fundamental imprecision in knowledge (meaning that all experts could be mistaken), then cautiousness seems a natural way to model cautious decision-making.
+\end{original}
+
+\begin{translation}
+这种不相容性自然地引出了一个问题：最吸引人的性质是谨慎性还是帕累托条件。如果决策者能够确定某一位专家是正确的，那么帕累托条件似乎是自然的。然而，如果决策者将专家信念的分歧解释为反映了知识中的某种根本性不精确（意味着所有专家都可能犯错），那么谨慎性似乎是对谨慎决策建模的自然方式。
+\end{translation}
+
+\begin{original}
+The highlighted incompatibility makes it clear that in order to model cautiousness, we need to relax the Pareto condition. An indirect consequence is that we cannot build upon the major ambiguity models discussed in the literature (e.g., in Machina and Siniscalchi, 2014; Strzalecki, 2013), as they rely on a monotonicity axiom which in our setting translates to the Pareto condition. An exception in the ambiguity aversion literature is Bommier (2017), who explicitly relaxes the monotonicity axiom. We will borrow from this paper to suggest a class of decision-rules exhibiting cautiousness.
+\end{original}
+
+\begin{translation}
+所突显的不相容性清楚地表明，为了对谨慎性建模，我们需要放松帕累托条件。一个间接的结果是，我们不能建立在文献中讨论的主要模糊模型之上（例如，Machina和Siniscalchi, 2014；Strzalecki, 2013），因为它们依赖于一个单调性公理，该公理在我们的设定中转化为帕累托条件。模糊厌恶文献中的一个例外是Bommier（2017），他明确放松了单调性公理。我们将借鉴这篇论文，提出一类表现出谨慎性的决策规则。
+\end{translation}
+
+% ============ SECTION 2.3: DISTRIBUTION-AVERAGING ============
+\subsection{2.3 Distribution-averaging decision-rules}
+{\color{transblue}\subsubsection*{2.3 分布平均决策规则}}
+
+\begin{original}
+The following definition introduces the class of distribution-averaging decision rules for which disagreement may matter, possibly to exhibit cautiousness, disagreement-loving or some ambiguous patterns of sensitivity to expert disagreement. Below the definition, we explain how such a specification may be derived from a formal set of axioms.
+\end{original}
+
+\begin{translation}
+以下定义引入了分布平均决策规则类，对于这些规则，分歧可能是重要的，可能表现出谨慎性、分歧偏好或对专家分歧的某些模糊敏感性模式。在定义之后，我们解释了这样的设定如何从一组形式公理中推导出来。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 5 (Distribution-averaging decision-rule).} A decision-rule $\mathcal{R}$ is distribution-averaging with representation $(u, \psi, I)$ if there exist two increasing bijections $u: \mathcal{X} \to [0,1]$, $\psi: [0,1] \to [0,1]$, and an aggregator $I: [0,1]^{K} \to [0,1]$ such that for any expertise $\mathcal{E}$, the weak order $\succsim_{\mathcal{E}}$ is represented by:
+\[
+V_{\mathcal{E}}(f) = \sum_{i=1}^{n} \sigma_{i} \; I\!\big(\psi(p^{1}_{i}), \dots, \psi(p^{K}_{i})\big) \tag{6}
+\]
+where $\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$ for $i \in \{2, \dots, n\}$, $\sigma_{1} = u(x_{1})$, and $p^{k}_{i} = \mu_{k}^{f}(x_{i})$.
+
+We will refer to $u$ as the utility index and to $\psi$ as the probability transformation function.
+\end{original}
+
+\begin{translation}
+\textbf{定义5（分布平均决策规则）。} 如果存在两个递增双射$u: \mathcal{X} \to [0,1]$, $\psi: [0,1] \to [0,1]$和一个聚合器$I: [0,1]^{K} \to [0,1]$，使得对于任何专家知识$\mathcal{E}$，弱序$\succsim_{\mathcal{E}}$由以下公式表示：
+\[
+V_{\mathcal{E}}(f) = \sum_{i=1}^{n} \sigma_{i} \; I\!\big(\psi(p^{1}_{i}), \dots, \psi(p^{K}_{i})\big) \tag{6}
+\]
+其中$\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$对于$i \in \{2, \dots, n\}$，$\sigma_{1} = u(x_{1})$，$p^{k}_{i} = \mu_{k}^{f}(x_{i})$，则决策规则$\mathcal{R}$是具有表示$(u, \psi, I)$的分布平均决策规则。
+
+我们将$u$称为效用指数，将$\psi$称为概率变换函数。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 1.} Because the range of $u$ is normalized to $[0,1]$, the representation is unique, in the sense that a decision-rule admits only one $(u, \psi, I)$ representation. A distribution-averaging decision rule is necessarily RDU on consensual prospects, as in Eq.\ (5).
+\end{original}
+
+\begin{translation}
+\textbf{注1。} 因为$u$的取值范围被归一化到$[0,1]$，表示是唯一的，即一个决策规则只允许一个$(u, \psi, I)$表示。分布平均决策规则在共识性前景上必然是RDU，如式（5）所示。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 2.} Defining $\tilde{I}(p_{1}, \dots, p_{K}) = \psi^{-1}\!\big(I(\psi(p_{1}), \dots, \psi(p_{K}))\big)$, Eq.\ (6) rewrites:
+\[
+V_{\mathcal{E}}(f) = \sum_{i=1}^{n} \sigma_{i} \; \psi\!\big(\tilde{I}(p^{1}_{i}, \dots, p^{K}_{i})\big). \tag{7}
+\]
+
+Thus, as shown in Fig.\ 1, a distribution-averaging decision-rule can be seen as one where the values of the decumulative distribution functions provided by each expert are ``averaged'' through the function $\tilde{I}$ in order to provide some equivalent decumulative distribution function (i.e.\ some equivalent belief). The prospect is then evaluated with the RDU specification using this equivalent belief, which depends on both the expertise and the prospect. Thus, aggregating decumulative distribution functions associated with a given prospect is not equivalent to a mere aggregation of beliefs, which would be made independently of whether states provide high or low pay-offs.\footnote{This is a fundamental difference with the linear opinion pooling.}
+\end{original}
+
+\begin{translation}
+\textbf{注2。} 定义$\tilde{I}(p_{1}, \dots, p_{K}) = \psi^{-1}\!\big(I(\psi(p_{1}), \dots, \psi(p_{K}))\big)$，式（6）可重写为：
+\[
+V_{\mathcal{E}}(f) = \sum_{i=1}^{n} \sigma_{i} \; \psi\!\big(\tilde{I}(p^{1}_{i}, \dots, p^{K}_{i})\big). \tag{7}
+\]
+
+因此，如图1所示，分布平均决策规则可以被视为这样一种规则：每位专家提供的去累积分布函数的值通过函数$\tilde{I}$进行"平均"，以提供某个等价的去累积分布函数（即某个等价信念）。然后，使用这个等价信念通过RDU设定对前景进行评估，该等价信念同时依赖于专家知识和前景。因此，聚合与给定前景相关联的去累积分布函数并不等同于单纯的信念聚合，后者的聚合将独立于状态提供的是高回报还是低回报。\footnote{这与线性意见汇集有根本区别。}
+\end{translation}
+
+% ============ SECTION 2.4: AXIOMATIZATION ============
+\subsection{2.4 Axiomatization}
+{\color{transblue}\subsubsection*{2.4 公理化}}
+
+\begin{original}
+In this section, we show how the class of distribution-averaging decision-rules can be obtained from a set of axioms. This part heavily relies on Bommier (2017), and thus indirectly on Chateauneuf (1999), Wakker (1993).
+\end{original}
+
+\begin{translation}
+在本节中，我们展示了如何从一组公理推导出分布平均决策规则类。这部分很大程度上依赖于Bommier（2017），因此间接依赖于Chateauneuf（1999）、Wakker（1993）。
+\end{translation}
+
+\begin{original}
+We denote by $\mathcal{D}$ the set of decumulative distribution functions. Given an expertise $\mathcal{E}$, we define the assessment of a prospect $f$ as $\mathbf{D}_{\mathcal{E}}^{f} = (\mu_{1}^{f}, \dots, \mu_{K}^{f})$. We shall assume that assessments are the ``common language'' of expertises, in the sense that the decision-rule is indifferent between two prospects with the same assessment. More precisely, a prospect assessed by a certain expertise is equivalent to a certainty-equivalent sure prospect that only depends on its assessment. In other words, disagreement on the probabilities of the states of the world matters only to the extent that it translates into disagreement on the distribution of outcomes.\footnote{Since outcomes are already given in the form of real numbers, no axiom is needed to ensure that evaluation of sure prospects is independent of opinion profiles.}
+\end{original}
+
+\begin{translation}
+我们用$\mathcal{D}$表示去累积分布函数的集合。给定一个专家知识$\mathcal{E}$，我们将前景$f$的评估定义为$\mathbf{D}_{\mathcal{E}}^{f} = (\mu_{1}^{f}, \dots, \mu_{K}^{f})$。我们将假设评估是专家知识的"共同语言"，即决策规则对具有相同评估的两个前景无差异。更准确地说，由某专家知识评估的前景等价于一个仅取决于其评估的确定性等价确定前景。换句话说，对世界状态概率的分歧仅在转化为对结果分布的分歧时才重要。\footnote{由于结果已经以实数形式给出，因此不需要公理来确保对确定前景的评估独立于意见组合。}
+\end{translation}
+
+\begin{original}
+\textbf{Axiom 1. Common language of expertises.} For all expertises $\mathcal{E}, \mathcal{E}'$ and all prospects $f, g$ such that $\mathbf{D}_{\mathcal{E}}^{f} = \mathbf{D}_{\mathcal{E}'}^{g}$, there exists $c \in \mathcal{X}$ such that $f \sim_{\mathcal{E}} c$ and $g \sim_{\mathcal{E}'} c$.
+\end{original}
+
+\begin{translation}
+\textbf{公理1. 专家知识的共同语言。} 对于所有专家知识$\mathcal{E}, \mathcal{E}'$和所有满足$\mathbf{D}_{\mathcal{E}}^{f} = \mathbf{D}_{\mathcal{E}'}^{g}$的前景$f, g$，存在$c \in \mathcal{X}$使得$f \sim_{\mathcal{E}} c$且$g \sim_{\mathcal{E}'} c$。
+\end{translation}
+
+\begin{original}
+The following axiom mainly states continuity and non-triviality conditions.
+\end{original}
+
+\begin{translation}
+以下公理主要陈述了连续性和非平凡性条件。
+\end{translation}
+
+\begin{original}
+\textbf{Axiom 2. Well-behaved weak order.} Take any expertise $\mathcal{E}$. The weak order $\succsim_{\mathcal{E}}$ on prospects is non-trivial (i.e.\ there exist $f, g$ such that $f \succ_{\mathcal{E}} g$) and continuous: For all prospect $f$, the sets $\{g \mid g \succsim_{\mathcal{E}} f\}$ and $\{g \mid f \succsim_{\mathcal{E}} g\}$ are closed subsets of $\mathcal{X}^{\Omega}$. Furthermore, for any $c, c' \in \mathcal{X}$ and $f, g \in \mathcal{X}^{\Omega}$, $c \geq c' \implies c \succsim_{\mathcal{E}} c'$. Finally, the mapping $\mathcal{E} \mapsto \succsim_{\mathcal{E}}$ is continuous, in the following sense. For all sequence $(\mathcal{E}_{n})$ that converges to an expertise $\mathcal{E}$ and all sequence $(f_{n})$ that converges to a prospect $f$, we have that for all $g$, $f_{n} \succsim_{\mathcal{E}_{n}} g \implies f \succsim_{\mathcal{E}} g$.
+\end{original}
+
+\begin{translation}
+\textbf{公理2. 良态的弱序。} 取任何专家知识$\mathcal{E}$。前景上的弱序$\succsim_{\mathcal{E}}$是非平凡的（即存在$f, g$使得$f \succ_{\mathcal{E}} g$）且连续的：对所有前景$f$，集合$\{g \mid g \succsim_{\mathcal{E}} f\}$和$\{g \mid f \succsim_{\mathcal{E}} g\}$是$\mathcal{X}^{\Omega}$的闭子集。此外，对任何$c, c' \in \mathcal{X}$和$f, g \in \mathcal{X}^{\Omega}$，$c \geq c' \implies c \succsim_{\mathcal{E}} c'$。最后，映射$\mathcal{E} \mapsto \succsim_{\mathcal{E}}$在下述意义上是连续的：对于所有收敛到专家知识$\mathcal{E}$的序列$(\mathcal{E}_{n})$和所有收敛到前景$f$的序列$(f_{n})$，对所有的$g$，有$f_{n} \succsim_{\mathcal{E}_{n}} g \implies f \succsim_{\mathcal{E}} g$。
+\end{translation}
+
+\begin{original}
+The specificity of our axiomatization lies in our monotonicity axiom. This axiom is weaker than the Pareto condition. It requires that a prospect $f$ is preferred to another $g$ if $f$ dominates $g$ with respect to first-order stochastic dominance, i.e.\ if for all experts the decumulative distribution function of $f$ is never below that of $g$. In effect, the usual monotonicity axiom is relaxed by replacing the notion of utility-consensus it relies on with the stronger notion of distribution-consensus.
+\end{original}
+
+\begin{translation}
+我们公理化的特殊性在于我们的单调性公理。该公理弱于帕累托条件。它要求，如果前景$f$在一阶随机占优意义上优于另一个前景$g$，即对所有专家而言，$f$的去累积分布函数从不低于$g$的去累积分布函数，则偏好$f$。实际上，常见的单调性公理通过将其依赖的效用共识概念替换为更强的分布共识概念而得到放松。
+\end{translation}
+
+\begin{original}
+\textbf{Axiom 3. Monotonicity with respect to first-order stochastic dominance.} For all expertise $\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$ and all prospects $f, g$, if $\mu_{k}^{f}(x) \geq \mu_{k}^{g}(x)$ for all $k \in \{1, \dots, K\}$ and $x \in \mathcal{X}$, then $f \succsim_{\mathcal{E}} g$, and if in addition $\mu_{k}^{f}(x) > \mu_{k}^{g}(x)$ for some $k$ and $x$, then $f \succ_{\mathcal{E}} g$.
+\end{original}
+
+\begin{translation}
+\textbf{公理3. 关于一阶随机占优的单调性。} 对于所有专家知识$\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$和所有前景$f, g$，若对所有$k \in \{1, \dots, K\}$和$x \in \mathcal{X}$有$\mu_{k}^{f}(x) \geq \mu_{k}^{g}(x)$，则$f \succsim_{\mathcal{E}} g$，此外，若对某些$k$和$x$有$\mu_{k}^{f}(x) > \mu_{k}^{g}(x)$，则$f \succ_{\mathcal{E}} g$。
+\end{translation}
+
+\begin{original}
+The next axiom specifies that a common outcome of two prospects at some state of the world can be changed without impacting the comparison between those prospects, if the change does not affect the rankings of each prospect's outcomes.
+\end{original}
+
+\begin{translation}
+下一个公理规定，两个前景在某个世界状态上的共同结果可以被改变而不影响这些前景之间的比较，如果该改变不影响每个前景结果的排序。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 6 (Comonotonic substitution).} Let $\omega \in \Omega$ and $x \in \mathcal{X}$. Denote $y = f(\omega)$. Let $x' \in \mathcal{X}$. If $x'$ is such that there does not exist an outcome $x_{i} \in \{x_{1}, \dots, x_{n}\}$ with $x_{i} < x' < x_{i+1}$ or $x_{i} < x' < x_{i+1}$, we call $x'$ a comonotonic substitute of $x$ for $f$ and denote by $f^{x'}_{\omega}$ the prospect which is derived from $f$ by substituting $x'$ for $x$ at $\omega$, i.e.\ the prospect defined by
+\[
+f^{x'}_{\omega}(\omega') =
+\begin{cases}
+x' & \text{if } \omega' = \omega\\
+f(\omega') & \text{otherwise}.
+\end{cases}
+\]
+\end{original}
+
+\begin{translation}
+\textbf{定义6（共单调替代）。} 令$\omega \in \Omega$和$x \in \mathcal{X}$。记$y = f(\omega)$。令$x' \in \mathcal{X}$。如果$x'$使得不存在结果$x_{i} \in \{x_{1}, \dots, x_{n}\}$满足$x_{i} < x' < x_{i+1}$或$x_{i} < x' < x_{i+1}$，我们称$x'$是$x$对于$f$的共单调替代，并用$f^{x'}_{\omega}$表示通过将$\omega$处的$x$替换为$x'$而从$f$导出的前景，即由下式定义的前景：
+\[
+f^{x'}_{\omega}(\omega') =
+\begin{cases}
+x' & \text{若 } \omega' = \omega\\
+f(\omega') & \text{否则}.
+\end{cases}
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Axiom 4. Comonotonic sure-thing principle.} Take any expertise $\mathcal{E}$. Let $f, g \in \mathcal{X}^{\Omega}$ and $\omega \in \Omega$ such that $f(\omega) = g(\omega) = x$. If $x'$ is a comonotonic substitute of $x$ both for $f$ and $g$ then $f^{x'}_{\omega} \succsim_{\mathcal{E}} g^{x'}_{\omega} \iff f \succsim_{\mathcal{E}} g$.
+\end{original}
+
+\begin{translation}
+\textbf{公理4. 共单调确定性事件原则。} 取任何专家知识$\mathcal{E}$。令$f, g \in \mathcal{X}^{\Omega}$和$\omega \in \Omega$使得$f(\omega) = g(\omega) = x$。如果$x'$既是$x$对于$f$也是对于$g$的共单调替代，则$f^{x'}_{\omega} \succsim_{\mathcal{E}} g^{x'}_{\omega} \iff f \succsim_{\mathcal{E}} g$。
+\end{translation}
+
+\begin{original}
+Our setting allows for different preferences with respect to expert disagreement. We add an axiom to restrict the type of preferences that the decision-rule can exhibit; namely, we require that when experts disagree over the probability of an outcome, the way disagreement is resolved does not depend on the outcome but just on the probabilities. This axiom is introduced to obtain a simpler formula for our representation result, but it is not required to derive our results on cautiousness (see Bommier (2017) for a representation result without this axiom in a similar setting). The axiom is best stated as a property on two-outcome prospects with common outcomes, although one cannot characterize cautiousness on such prospects (as agreement on the certainty-equivalent would imply agreement on the probabilities).
+\end{original}
+
+\begin{translation}
+我们的设定允许对专家分歧有不同的偏好。我们添加一个公理来限制决策规则可以表现出的偏好类型；即，我们要求当专家对某个结果的概率存在分歧时，解决分歧的方式不依赖于结果而仅依赖于概率。引入该公理是为了为我们表示结果获得一个更简单的公式，但推导我们关于谨慎性的结果并不需要它（见Bommier（2017）在类似设定中无需该公理的表示结果）。该公理最好作为具有共同结果的双结果前景上的一个属性来陈述，尽管人们无法在这种前景上刻画谨慎性（因为对确定性等价的一致将意味着对概率的一致）。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 7 (Double substitution on binomial bets).} Let $x^{-} < x^{+}$. Let $\omega, \omega' \in \Omega$ such that $\omega \neq \omega'$, $\omega, \omega' \in \{\omega_{1}, \dots, \omega_{K}\}$. We define $\mathbf{B}^{x^{+},x^{-}}_{\omega}$ by:
+\[
+\mathbf{B}^{x^{+},x^{-}}_{\omega}(\tilde{\omega}) =
+\begin{cases}
+x^{-} & \text{for } \tilde{\omega} = \omega\\
+x^{+} & \text{for } \tilde{\omega} \neq \omega.
+\end{cases}
+\]
+\end{original}
+
+\begin{translation}
+\textbf{定义7（二项赌注上的双重替代）。} 令$x^{-} < x^{+}$。令$\omega, \omega' \in \Omega$使得$\omega \neq \omega'$, $\omega, \omega' \in \{\omega_{1}, \dots, \omega_{K}\}$。我们定义$\mathbf{B}^{x^{+},x^{-}}_{\omega}$为：
+\[
+\mathbf{B}^{x^{+},x^{-}}_{\omega}(\tilde{\omega}) =
+\begin{cases}
+x^{-} & \text{对于 } \tilde{\omega} = \omega\\
+x^{+} & \text{对于 } \tilde{\omega} \neq \omega.
+\end{cases}
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Axiom 5. Level-independent disagreement preference.} Take any expertise $\mathcal{E}$. For all $x^{-} < x^{+}$ and all $\omega, \omega' \in \Omega$ such that $\omega, \omega' \in \{\omega_{1}, \dots, \omega_{K}\}$, we have $\mathbf{B}^{x^{+},x^{-}}_{\omega} \sim_{\mathcal{E}} \mathbf{B}^{x^{+},x^{-}}_{\omega'}$.
+\end{original}
+
+\begin{translation}
+\textbf{公理5. 水平独立的分歧偏好。} 取任何专家知识$\mathcal{E}$。对于所有$x^{-} < x^{+}$和所有$\omega, \omega' \in \Omega$使得$\omega, \omega' \in \{\omega_{1}, \dots, \omega_{K}\}$，有$\mathbf{B}^{x^{+},x^{-}}_{\omega} \sim_{\mathcal{E}} \mathbf{B}^{x^{+},x^{-}}_{\omega'}$。
+\end{translation}
+
+\begin{original}
+Our last axiom requires that the decision-rule reduces to rank-dependent expected utility (RDU) on distribution-consensual prospects. In other words, when experts all agree on the distribution of outcomes, the prospect is evaluated through RDU.\footnote{This axiom could be replaced by an alternative axiom: Comonotonic mixture independence (see Chateauneuf, 1999).}
+\end{original}
+
+\begin{translation}
+我们的最后一个公理要求决策规则在分布共识性前景上归结为秩依赖期望效用（RDU）。换句话说，当专家对结果的分布都达成一致时，前景通过RDU进行评估。\footnote{该公理可以用一个替代公理替换：共单调混合独立性（见Chateauneuf, 1999）。}
+\end{translation}
+
+\begin{original}
+\textbf{Axiom 6. RDU on distribution-consensual prospects.} The decision-rule $\mathcal{R}$ is RDU on distribution-consensual prospects (see Definition~1).
+\end{original}
+
+\begin{translation}
+\textbf{公理6. 分布共识性前景上的RDU。} 决策规则$\mathcal{R}$在分布共识性前景上是RDU（见定义1）。
+\end{translation}
+
+\begin{original}
+We can now state our representation result, proven in Appendix~D.
+\end{original}
+
+\begin{translation}
+我们现在可以陈述我们的表示结果，该结果在附录D中证明。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 1.} A decision-rule $\mathcal{R}$ fulfills Axioms~1 to~6 if and only if it is distribution-averaging.
+\end{original}
+
+\begin{translation}
+\textbf{命题1。} 决策规则$\mathcal{R}$满足公理1至6当且仅当它是分布平均的。
+\end{translation}
+
+\begin{original}
+\textbf{Sketch of the proof.} Our full proof in Appendix~D follows the same structure as the one in Chateauneuf (1999) and is similar to the one in Bommier (2017). We start by proving the representation result for prospects with one or two outcomes ($n = 1$, $n = 2$). The monotonicity of $I$ is implied by the monotonicity with respect to first-order stochastic dominance. Then, we prove the general case ($n > 2$) by induction on the number of outcomes $n$, reducing to the case $n-1$ by continuity and the comonotonic sure-thing principle.
+\end{original}
+
+\begin{translation}
+\textbf{证明概要。} 我们在附录D中的完整证明遵循与Chateauneuf（1999）相同的结构，并且与Bommier（2017）中的证明类似。我们首先证明具有一个或两个结果的前景的表示结果（$n = 1$, $n = 2$）。$I$的单调性由关于一阶随机占优的单调性所蕴含。然后，我们通过对结果数量$n$的归纳来证明一般情况（$n > 2$），通过连续性和共单调确定性事件原则归约到$n-1$情况。
+\end{translation}
+
+% 2.5 Characterization of cautiousness
+\subsection{2.5 Characterization of cautiousness}
+{\color{transblue}\subsubsection*{2.5 谨慎性的刻画}}
+
+\begin{original}
+Beyond the abstract definition, we describe how the notion of cautiousness translates into the formulaic representation of distribution-averaging decision-rules. While Appendix~A.2 provides a necessary and sufficient condition, we focus here on two sufficient conditions to identify cautiousness in concrete applications.
+\end{original}
+
+\begin{translation}
+在抽象定义之外，我们描述了谨慎性的概念如何转化为分布平均决策规则的公式化表示。虽然附录A.2提供了必要且充分的条件，但我们在此关注两个用于在具体应用中识别谨慎性的充分条件。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 2.} Each of the conditions below is sufficient to imply cautiousness:
+
+\textbf{Condition 1:} There exist numbers $w_{k} \geq 0$ (also called weights), which are non-negative and sum to 1 such that $I(p_{1}, \dots, p_{K}) \leq \sum_{k=1}^{K} w_{k} p_{k}$ for all $(p_{1}, \dots, p_{K}) \in [0,1]^{K}$, with a strict inequality when $p_{k} \neq p_{\ell}$ for some $k$ and $\ell$.
+
+\textbf{Condition 2:} The function $(p_{1}, \dots, p_{K}) \mapsto I(p_{1}, \dots, p_{K})$ is strictly concave except on the diagonal.\footnote{By strictly concave except on the diagonal, we mean that the strict concavity inequality holds for any pair of vectors of which at least one is not constant.}
+\end{original}
+
+\begin{translation}
+\textbf{命题2。} 以下每个条件都足以蕴含谨慎性：
+
+\textbf{条件1：} 存在数字$w_{k} \geq 0$（也称为权重），它们非负且和为1，使得对所有$(p_{1}, \dots, p_{K}) \in [0,1]^{K}$有$I(p_{1}, \dots, p_{K}) \leq \sum_{k=1}^{K} w_{k} p_{k}$，且当$p_{k} \neq p_{\ell}$对某些$k$和$\ell$成立时严格不等式成立。
+
+\textbf{条件2：} 函数$(p_{1}, \dots, p_{K}) \mapsto I(p_{1}, \dots, p_{K})$除对角线外是严格凹的。\footnote{除对角线外严格凹是指，严格凹性不等式对至少有一个向量不是常向量的任何一对向量都成立。}
+\end{translation}
+
+\begin{original}
+Condition~1 is convenient, as it makes it possible to borrow from the literature on ambiguity aversion where such an inequality (considered then for aggregators that average utilities rather than probabilities) is the one that usually defines ambiguity aversion (e.g., Cerreia-Vioglio et al., 2011).
+\end{original}
+
+\begin{translation}
+条件1很方便，因为它使得可以借鉴模糊厌恶文献，其中这样的不等式（在那时针对的是平均效用而非概率的聚合器）通常是定义模糊厌恶的不等式（例如，Cerreia-Vioglio et al., 2011）。
+\end{translation}
+
+\begin{original}
+The last result of this section is about comparative cautiousness.
+\end{original}
+
+\begin{translation}
+本节的最后一个结果涉及比较谨慎性。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 3.} Consider two distribution-averaging decision-rules $\mathcal{R}$ and $\mathcal{R}'$ with representation $(u, \psi, I)$ and $(u', \psi', I')$. Then $\mathcal{R}$ is more cautious than $\mathcal{R}'$ if and only if $u = u'$, $\psi = \psi'$ and $I(\mathbf{p}) < I'(\mathbf{p})$ for every non-constant vector $\mathbf{p} = (p_{1}, \dots, p_{K}) \in [0,1]^{K}$.
+\end{original}
+
+\begin{translation}
+\textbf{命题3。} 考虑两个分布平均决策规则$\mathcal{R}$和$\mathcal{R}'$，分别具有表示$(u, \psi, I)$和$(u', \psi', I')$。则$\mathcal{R}$比$\mathcal{R}'$更谨慎当且仅当$u = u'$,$\psi = \psi'$且对所有非常向量$\mathbf{p} = (p_{1}, \dots, p_{K}) \in [0,1]^{K}$有$I(\mathbf{p}) < I'(\mathbf{p})$。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.2.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.2。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 3.} We can define a comparative notion of ambiguity aversion following the approach of Definition~3, just replacing the notion of distribution-consensus with that of utility-consensus. We can then show that a distribution-averaging decision-rule $\mathcal{R}$ exhibits greater ambiguity aversion than another $\mathcal{R}'$ if and only if $I < I'$, just as for comparative cautiousness in Proposition~3 (see Appendix~B.1).
+\end{original}
+
+\begin{translation}
+\textbf{注3。} 我们可以按照定义3的方法定义比较模糊厌恶的概念，只需将分布共识的概念替换为效用共识的概念。然后我们可以证明，分布平均决策规则$\mathcal{R}$比另一个$\mathcal{R}'$表现出更大的模糊厌恶当且仅当$I < I'$，正如命题3中的比较谨慎性一样（见附录B.1）。
+\end{translation}
+
+\begin{original}
+The degree of cautiousness is thus fully determined by the aggregator, with ``smaller'' aggregators yielding more cautious decision-rules. This shows similarity with results from the ambiguity aversion literature, where ambiguity aversion is driven by how ``pessimistic'' the aggregators (which aggregate utilities in that literature) are. We can thus import knowledge from the ambiguity literature to determine what it means to increase cautiousness. For example, if we consider smooth KMM aggregators as in Eq.\ (1), we know that increasing cautiousness is equivalent to increasing the concavity of the function $\phi$. Similarly, if we use the max-min aggregators of Eq.\ (2), we know that increasing cautiousness involves using a larger set of weights $W$.
+\end{original}
+
+\begin{translation}
+谨慎性的程度因此完全由聚合器决定，"更小"的聚合器产生更谨慎的决策规则。这表明了与模糊厌恶文献中结果的相似性，其中模糊厌恶由聚合器（在该文献中聚合效用）的"悲观"程度所驱动。因此，我们可以从模糊文献中引入知识来确定增加谨慎性意味着什么。例如，如果我们考虑式（1）中的光滑KMM聚合器，我们知道增加谨慎性等价于增加函数$\phi$的凹性。类似地，如果我们使用式（2）中的最大最小聚合器，我们知道增加谨慎性涉及使用更大的权重集$W$。
+\end{translation}
+
+% 2.6 Relation with Paretian decision-rules
+\subsection{2.6 Relation with Paretian decision-rules}
+{\color{transblue}\subsubsection*{2.6 与帕累托决策规则的关系}}
+
+\begin{original}
+In order to explain how our work relates to previous contributions, we introduce a class of decision-rules that rest on the unanimity principle.
+\end{original}
+
+\begin{translation}
+为了解释我们的工作如何与此前贡献相关联，我们引入了一类基于一致性原则的决策规则。
+\end{translation}
+
+\begin{original}
+\textbf{Definition 8 (Expected-utility-averaging decision-rule).} A decision-rule $\mathcal{R}$ is expected-utility-averaging with representation $(u, \psi, I)$ if there exist two increasing bijections $u: \mathcal{X} \to [0,1]$, $\psi: [0,1] \to [0,1]$, and an aggregator $I: [0,1]^{K} \to [0,1]$ such that for any expertise $\mathcal{E}$, the weak order $\succsim_{\mathcal{E}}$ is represented by:
+\[
+V_{\mathcal{E}}(f) = I\!\left( \sum_{i=1}^{n} \sigma_{i} \, \psi(p^{1}_{i}), \;\dots, \sum_{i=1}^{n} \sigma_{i} \, \psi(p^{K}_{i}) \right) \tag{8}
+\]
+where $\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$ for $i \in \{2, \dots, n\}$, $\sigma_{1} = u(x_{1})$, and $p^{k}_{i} = \mu_{k}^{f}(x_{i})$.
+\end{original}
+
+\begin{translation}
+\textbf{定义8（期望效用平均决策规则）。} 如果存在两个递增双射$u: \mathcal{X} \to [0,1]$, $\psi: [0,1] \to [0,1]$和一个聚合器$I: [0,1]^{K} \to [0,1]$，使得对于任何专家知识$\mathcal{E}$，弱序$\succsim_{\mathcal{E}}$由以下公式表示：
+\[
+V_{\mathcal{E}}(f) = I\!\left( \sum_{i=1}^{n} \sigma_{i} \, \psi(p^{1}_{i}), \;\dots, \sum_{i=1}^{n} \sigma_{i} \, \psi(p^{K}_{i}) \right) \tag{8}
+\]
+其中$\sigma_{i} = u(x_{i}) - u(x_{i-1}) \geq 0$对于$i \in \{2, \dots, n\}$，$\sigma_{1} = u(x_{1})$，$p^{k}_{i} = \mu_{k}^{f}(x_{i})$，则决策规则$\mathcal{R}$是具有表示$(u, \psi, I)$的期望效用平均决策规则。
+\end{translation}
+
+\begin{original}
+The qualification of expected-utility-averaging comes from the fact that (8) can be rewritten as $V_{\mathcal{E}}(f) = I(V_{\mu_{1}}(f), \dots, V_{\mu_{K}}(f))$ where $V_{\mu_{k}}(f) = \sum_{i=1}^{n} \sigma_{i} \psi(p^{k}_{i})$ is the RDU utility obtained when holding belief $\mu_{k}$. It directly follows from the monotonicity of the aggregator $I$ that such decision-rules are Paretian in the sense of Definition~4. This class of expected-utility-averaging models embeds all major models listed in Machina and Siniscalchi (2014). The representation (8) is actually very similar to that of Cerreia-Vioglio et al.\ (2011), a very general specification that encompasses most ambiguity models.\footnote{Compared to the Monotonic, Bernoullian and Archimedean (MBA) model of Cerreia-Vioglio et al.\ (2011), our expected-utility-averaging model evaluates risk using RDU instead of EU. In so doing, we drop the Bernoullian assumption in MBA and consider an even broader class of models.} In those ambiguity models, the aggregator $I$ is what characterizes ambiguity aversion.
+\end{original}
+
+\begin{translation}
+期望效用平均这一限定来自如下事实：（8）可以重写为$V_{\mathcal{E}}(f) = I(V_{\mu_{1}}(f), \dots, V_{\mu_{K}}(f))$，其中$V_{\mu_{k}}(f) = \sum_{i=1}^{n} \sigma_{i} \psi(p^{k}_{i})$是持有信念$\mu_{k}$时获得的RDU效用。从聚合器$I$的单调性直接可得，此类决策规则在定义4的意义上是帕累托的。这类期望效用平均模型包含了Machina和Siniscalchi（2014）中列出的所有主要模型。表示（8）实际上与Cerreia-Vioglio等人（2011）的设定非常相似，后者是一个非常一般的设定，涵盖了大多数模糊模型。\footnote{与Cerreia-Vioglio等人（2011）的单调、伯努利和阿基米德（MBA）模型相比，我们的期望效用平均模型使用RDU而非EU来评估风险。这样，我们放弃了MBA中的伯努利假设，考虑了一个更广泛的模型类。}在这些模糊模型中，聚合器$I$是刻画模糊厌恶的因素。
+\end{translation}
+
+\begin{original}
+Comparing Eqs.\ (6) and (8), we see that distribution-averaging and expected-utility-averaging decision-rules only differ by the stage where the aggregator is applied. In the former case, $I$ aggregates the distributions and expected utility is computed afterwards. In the latter, one starts by computing expected utility levels, which are then aggregated through the aggregator $I$. Aggregating distributions first (as with distribution-averaging decision-rules) makes it possible to exhibit aversion to divergences in probabilities reported by experts and thus to exhibit cautiousness. On the other hand, computing expected utilities first (as with expected-utility-averaging decision-rules) may lead to losing track of some divergence in expert opinions, preventing the expression of cautiousness.
+\end{original}
+
+\begin{translation}
+比较式（6）和（8），我们看到分布平均和期望效用平均决策规则仅在于应用聚合器的阶段不同。在前一种情况下，$I$聚合分布，然后计算期望效用。在后一种情况下，先计算期望效用水平，然后通过聚合器$I$进行聚合。先聚合分布（如分布平均决策规则）使得可以对专家报告的概率分歧表现出厌恶，从而表现出谨慎性。另一方面，先计算期望效用（如期望效用平均决策规则）可能导致失去对专家意见中某些分歧的跟踪，从而阻碍谨慎性的表达。
+\end{translation}
+
+\begin{original}
+When the aggregator $I$ is linear, both approaches are equivalent, and the decision-rule is both distribution-averaging and expected-utility-averaging. The reciprocal is also true. We actually provide a stronger result, showing that a distribution-averaging decision-rule is Paretian if and only if its aggregator is linear. Since expected-utility-averaging decision-rules are Paretian, it directly follows that if a distribution-averaging decision-rule is also expected-utility-averaging, then its aggregator $I$ is linear. This amounts to linear pooling and is usually considered as characterizing ambiguity neutrality. Formally:
+\end{original}
+
+\begin{translation}
+当聚合器$I$是线性的时，两种方法是等价的，决策规则既可以是分布平均的也可以是期望效用平均的。反之亦然。我们实际上提供了一个更强的结果，表明分布平均决策规则是帕累托的当且仅当其聚合器是线性的。由于期望效用平均决策规则是帕累托的，直接可得，如果一个分布平均决策规则也是期望效用平均的，那么其聚合器$I$是线性的。这相当于线性汇集，通常被认为刻画了模糊中性。形式化地：
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 4.} Let $\mathcal{R}$ be a distribution-averaging decision-rule. $\mathcal{R}$ is Paretian if and only if there are positive weights $\mathbf{w} = (w_{1}, \dots, w_{K})$ summing to 1 such that $I(p_{1}, \dots, p_{K}) = \sum_{k=1}^{K} w_{k} p_{k}$.
+\end{original}
+
+\begin{translation}
+\textbf{命题4。} 设$\mathcal{R}$是一个分布平均决策规则。$\mathcal{R}$是帕累托的当且仅当存在正权重$\mathbf{w} = (w_{1}, \dots, w_{K})$和为1，使得$I(p_{1}, \dots, p_{K}) = \sum_{k=1}^{K} w_{k} p_{k}$。
+\end{translation}
+
+\begin{original}
+\textbf{Sketch of the proof.} The difficult part of this proof is to show that the Pareto condition necessarily implies linearity. We give here a sketch of this proof and refer to Appendix~C.3 for the full proof. First, we construct a utility-consensual three-outcome prospect with a particular structure (namely, that the cumulative probabilities of the different experts for a given outcome are confined in an interval that does not overlap with the intervals of the other outcomes). We also construct very close prospects by holding the probabilities attached to one outcome and varying by infinitesimal but opposite amounts the probabilities attached to the two other outcomes by a given expert. Second, as these prospects are utility-consensual (for the same utility level), and by the Pareto condition, we equate their representation formulas and obtain a property for the function $I$. This property is akin to the equality of some partial derivative at two points, i.e.\ vectors; we then transform it so that the vectors involved differ only along one variable. Third, we use a Lemma to show that this local property amounts to linearity along one variable. Last, we assemble the linearity along each variable to prove the linearity of $I$.
+\end{original}
+
+\begin{translation}
+\textbf{证明概要。} 该证明的难点在于证明帕累托条件必然蕴含线性性。我们在此给出该证明的概要，完整证明见附录C.3。首先，我们构造一个具有特定结构的效用共识性三结果前景（即，不同专家对给定结果的累积概率被限制在一个区间内，该区间不与其他结果的区间重叠）。我们也通过保持与某一结果相关的概率不变，并由给定专家以无穷小但相反的数量改变与其他两个结果相关的概率来构造非常接近的前景。其次，由于这些前景是效用共识性的（对于相同的效用水平），并且根据帕累托条件，我们将它们的表示公式等同起来，获得函数$I$的一个性质。这个性质类似于两点（即向量）处某些偏导数的相等；我们然后对其进行变换，使得所涉及的向量仅在一个变量上不同。第三，我们使用一个引理来证明这个局部性质相当于沿一个变量的线性性。最后，我们将沿每个变量的线性性组合起来以证明$I$的线性性。
+\end{translation}
+
+\begin{original}
+The distribution-averaging and expected-utility-averaging approaches differ as soon as non-linear aggregators are assumed. In Appendix~B.2, we show that a distribution-averaging decision-rule exhibits more cautiousness and more ambiguity aversion than the expected-utility-averaging decision-rule sharing the same utility index $u$, probability transformation $\psi$, and aggregator $I$, provided $I$ respects some concavity condition.
+\end{original}
+
+\begin{translation}
+一旦假设非线性聚合器，分布平均和期望效用平均方法就不同了。在附录B.2中，我们证明，如果$I$满足某种凹性条件，分布平均决策规则比共享相同效用指数$u$、概率变换$\psi$和聚合器$I$的期望效用平均决策规则表现出更大的谨慎性和更大的模糊厌恶。
+\end{translation}
+
+\begin{original}
+Fig.\ 2 provides a global picture of how distribution-averaging and expected-utility-averaging decision-rules relate to each other. Starting from the linear pooling case where the decision-maker's utility is a linear average of experts' utilities, the distribution-averaging and expected-utility-averaging frameworks offer two different ways to introduce ambiguity aversion. The expected-utility-averaging framework does so while preserving the unanimity principle. This prevents however the expression of cautiousness. The distribution-averaging framework allows for further ambiguity aversion, by aggregating probabilities first, and then computing expected utilities. This is what produces cautiousness.
+\end{original}
+
+\begin{translation}
+图2提供了分布平均和期望效用平均决策规则之间如何相互关联的全局图景。从决策者效用是专家效用的线性平均的线性汇集情况出发，分布平均和期望效用平均框架提供了两种引入模糊厌恶的不同方式。期望效用平均框架在保留一致性原则的同时做到了这一点。然而，这阻碍了谨慎性的表达。分布平均框架通过先聚合概率然后计算期望效用，允许进一步的模糊厌恶。这就是产生谨慎性的原因。
+\end{translation}
+
+\begin{original}
+Our motivation for formalizing the notion of cautiousness and suggesting the distribution-averaging model is not purely theoretical but also rooted in the challenge of expert disagreement in concrete applications. Accounting for cautiousness may indeed justify more precautionary decisions when experts disagree and provide insights on how scientific expertise should be used for decision-making. We develop these aspects in the following section.
+\end{original}
+
+\begin{translation}
+我们形式化谨慎性概念并提出分布平均模型的动机不仅仅是理论上的，还植根于具体应用中专家分歧的挑战。考虑谨慎性确实可能为专家分歧时做出更预防性的决策提供正当理由，并为科学专业知识如何被用于决策提供见解。我们在下一节中展开这些方面。
+\end{translation}
+
+\newpage
+% ============ SECTION 3: APPLICATIONS ============
+\section{3. Applications}
+{\color{transblue}\subsection*{3. 应用}}
+
+\begin{original}
+We consider a decision-maker whose ex-post utility $u(x, \theta)$ depends on an action $x \in [\underline{x}, \overline{x}]$ and a contingency $\theta \in [\underline{\theta}, \overline{\theta}]$ over which she has no control. We assume that the function $(x, \theta) \mapsto u(x, \theta)$ is increasing in $\theta$, which is without loss of generality when contingencies can be ranked from ``adverse'' to ``favorable'' independently of the decision-maker's action. Ex-ante, when the decision-maker has to decide about $x$, the value of the contingency $\theta$ is uncertain. There are $K$ experts who provide potentially diverging views about the distribution of $\theta$. To make the link with the theory section, we assume that the distributions provided by the experts have finite support, with $\theta \in \{\theta_{1}, \dots, \theta_{N}\}$ where $(\theta_{n})_{1}^{N}$ is an increasing sequence of real numbers ($\theta_{1} < \dots < \theta_{N}$). Each expert $k \in \{1, \dots, K\}$ provides a probability vector $(\pi^{k}_{n})_{1}^{N}$, where $\pi^{k}_{n}$ is the probability of $\theta = \theta_{n}$ according to expert $k$. We assume that there is some disagreement among experts ($\pi^{k} \neq \pi^{\ell}$ for some $k, \ell$).
+\end{original}
+
+\begin{translation}
+我们考虑这样一个决策者，其事后效用$u(x, \theta)$取决于一个行动$x \in [\underline{x}, \overline{x}]$和一个她无法控制的偶然状态$\theta \in [\underline{\theta}, \overline{\theta}]$。我们假设函数$(x, \theta) \mapsto u(x, \theta)$关于$\theta$递增，当偶然状态可以独立于决策者的行动从"不利"到"有利"排序时，这并不失一般性。事前，当决策者必须就$x$做出决定时，偶然状态$\theta$的值是不确定的。有$K$位专家就$\theta$的分布提供了可能存在分歧的观点。为了与理论部分建立联系，我们假设专家提供的分布具有有限支撑，$\theta \in \{\theta_{1}, \dots, \theta_{N}\}$，其中$(\theta_{n})_{1}^{N}$是一个递增的实数序列（$\theta_{1} < \dots < \theta_{N}$）。每位专家$k \in \{1, \dots, K\}$提供一个概率向量$(\pi^{k}_{n})_{1}^{N}$，其中$\pi^{k}_{n}$是根据专家$k$的$\theta = \theta_{n}$的概率。我们假设专家之间存在某些分歧（$\pi^{k} \neq \pi^{\ell}$对某些$k, \ell$成立）。
+\end{translation}
+
+\subsection{3.1 A general result on the impact of cautiousness}
+{\color{transblue}\subsubsection*{3.1 关于谨慎性影响的一般性结果}}
+
+\begin{original}
+We assume here that decision-makers use distribution-averaging decision-rules as introduced in Definition~5, with the only difference that we no longer require the utility to be normalized to values in $[0,1]$. Since our aim is to discuss the impact of cautiousness, we will consider two decision-makers, $A$ and $B$, who only differ by their aggregators $I^{A}$ and $I^{B}$. Formally speaking, the decision-maker $d = A, B$ has the following program:
+\[
+\max_{x \in [\underline{x}, \overline{x}]} \; \sum_{n=1}^{N} \sigma_{n}(x) \; I^{d}\!\big(\psi(p^{1}_{n}(x)), \dots, \psi(p^{K}_{n}(x))\big), \tag{9}
+\]
+where $p^{k}_{n}(x) = \sum_{m=n}^{N} \pi^{k}_{m}$, $\sigma_{n}(x) = u(x, \theta_{n}) - u(x, \theta_{n-1})$ for $n > 1$ and $\sigma_{1}(x) = u(x, \theta_{1})$. The function $\psi$ is an increasing bijection over $[0,1]$ and the aggregator $I^{d}$ is a continuous and componentwise strictly increasing function $I^{d}: [0,1]^{K} \to [0,1]$ fulfilling $I^{d}(p, \dots, p) = p$. We assume that the decision-maker's problem always has an interior solution denoted $x^{d}(I^{d})$.
+\end{original}
+
+\begin{translation}
+我们在此假设决策者使用如定义5中引入的分布平均决策规则，唯一区别是我们不再要求效用归一化到$[0,1]$中的值。由于我们的目标是讨论谨慎性的影响，我们将考虑两个决策者$A$和$B$，他们仅在其聚合器$I^{A}$和$I^{B}$上有所不同。形式化地说，决策者$d = A, B$有如下规划：
+\[
+\max_{x \in [\underline{x}, \overline{x}]} \; \sum_{n=1}^{N} \sigma_{n}(x) \; I^{d}\!\big(\psi(p^{1}_{n}(x)), \dots, \psi(p^{K}_{n}(x))\big), \tag{9}
+\]
+其中$p^{k}_{n}(x) = \sum_{m=n}^{N} \pi^{k}_{m}$，$\sigma_{n}(x) = u(x, \theta_{n}) - u(x, \theta_{n-1})$对于$n > 1$以及$\sigma_{1}(x) = u(x, \theta_{1})$。函数$\psi$是$[0,1]$上的一个递增双射，聚合器$I^{d}$是一个连续且逐分量严格递增的函数$I^{d}: [0,1]^{K} \to [0,1]$，满足$I^{d}(p, \dots, p) = p$。我们假设决策者的问题始终有一个内部解，记作$x^{d}(I^{d})$。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 5.} Assume that $(x, \theta) \mapsto u(x, \theta)$ is twice continuously differentiable and strictly concave in $x$, and that distribution-averaging decision-maker $A$ is more cautious than $B$, i.e.\ $I^{A}(p_{1}, \dots, p_{K}) < I^{B}(p_{1}, \dots, p_{K})$ for all non-constant vectors $(p_{1}, \dots, p_{K}) \in [0,1]^{K}$. Then:
+
+$\bullet$ If $\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0$ for all $x \in [\underline{x}, \overline{x}]$ and $\theta \in [\underline{\theta}, \overline{\theta}]$, then $x^{A} < x^{B}$.
+
+$\bullet$ If $\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} < 0$ for all $x \in [\underline{x}, \overline{x}]$ and $\theta \in [\underline{\theta}, \overline{\theta}]$, then $x^{A} > x^{B}$.
+\end{original}
+
+\begin{translation}
+\textbf{命题5。} 假设$(x, \theta) \mapsto u(x, \theta)$是二次连续可微的且关于$x$严格凹，且分布平均决策者$A$比$B$更谨慎，即对所有非常向量$(p_{1}, \dots, p_{K}) \in [0,1]^{K}$有$I^{A}(p_{1}, \dots, p_{K}) < I^{B}(p_{1}, \dots, p_{K})$。则：
+
+$\bullet$ 若对所有$x \in [\underline{x}, \overline{x}]$和$\theta \in [\underline{\theta}, \overline{\theta}]$有$\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0$，则$x^{A} < x^{B}$。
+
+$\bullet$ 若对所有$x \in [\underline{x}, \overline{x}]$和$\theta \in [\underline{\theta}, \overline{\theta}]$有$\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} < 0$，则$x^{A} > x^{B}$。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.4.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.4。
+\end{translation}
+
+\begin{original}
+This proposition shows that when the cross-derivative of the function $u$ has a constant sign, an increase of cautiousness has an unambiguous impact on the optimal action. The reason is as follows. If the cross-derivative is positive, an increase of $x$ widens the distance between any two possible ex-post utility levels. This makes the disagreement between experts (i.e.\ the difference in their distribution functions) more significant, which, in turn, implies that an increase in cautiousness leads to a decrease in the optimal action $x$. Vice versa for a negative cross-derivative. It is worth noting that to obtain this result we did not have to assume a particular functional form for the aggregator. It thus holds for KMM types or max-min aggregators, as with other aggregators that can be found in the ambiguity aversion literature.
+\end{original}
+
+\begin{translation}
+该命题表明，当函数$u$的交叉导数为恒定符号时，谨慎性的增加对最优行动有明确的影响。原因如下。如果交叉导数为正，增加$x$会扩大任何两个可能的事后效用水平之间的距离。这使得专家之间的分歧（即他们分布函数的差异）更加显著，这反过来意味着谨慎性的增加导致最优行动$x$的减少。对于负的交叉导数则反之。值得注意的是，为了获得这个结果，我们不需要假设聚合器的特定函数形式。因此，它适用于KMM类型或最大最小聚合器，也适用于模糊厌恶文献中可以找到的其他聚合器。
+\end{translation}
+
+\begin{original}
+Below, we illustrate the general result in Proposition~5 with two examples, climate mitigation and precautionary savings.
+\end{original}
+
+\begin{translation}
+下面，我们用两个例子——气候减缓和预防性储蓄——来说明命题5中的一般性结果。
+\end{translation}
+
+\subsubsection{3.1.1 A climate mitigation example}
+{\color{transblue}\textbf{3.1.1 气候减缓的例子}}
+
+\begin{original}
+As highlighted by the literature (e.g., Meinshausen et al.\ 2009), experts in climate physics substantially disagree on climate sensitivity, i.e.\ by how much global average temperatures increase as a result of increased greenhouse gas levels. Climate sensitivity is a key parameter for determining the optimal level of greenhouse gas abatement. Should disagreement among experts lead to choosing a higher or lower emission abatement target?
+\end{original}
+
+\begin{translation}
+正如文献所强调的（例如，Meinshausen等人2009），气候物理学的专家在气候敏感性方面存在实质性分歧，即全球平均气温因温室气体水平增加而上升的幅度。气候敏感性是确定最优温室气体减排水平的关键参数。专家之间的分歧应导致选择更高还是更低的减排目标？
+\end{translation}
+
+\begin{original}
+In order to give insights on this question we consider a two-period model. In period~1, the decision-maker is endowed with wealth $Y_{1}$ of which an amount $c(x)$, increasing and convex in $x$, can be taken to finance an abatement level $x \in [0, \overline{x}]$, leaving $Y_{1} - c(x)$ for consumption. In period~2, consumption equals wealth $Y_{2}$ minus climate-related damages. These damages depend on the abatement level $x$ chosen in period~1 and climate sensitivity $\theta \in [\underline{\theta}, \overline{\theta}]$, which is ex-ante uncertain. We denote by $D(x, \theta) \mapsto D(x, \theta)$ the damage function and assume that $\frac{\partial D}{\partial x} < 0$, $\frac{\partial D}{\partial \theta} > 0$, $\frac{\partial^{2} D}{\partial \theta^{2}} > 0$ and $\frac{\partial^{2} D}{\partial x \partial \theta} < 0$; the last inequality means that abatement is more efficient in reducing damages when climate sensitivity is high. The ex-post utility is given by:
+\[
+u(x, \theta) = U(Y_{1} - c(x)) + \beta \, U(Y_{2} - D(x, \theta))
+\]
+where $U$ is the (increasing and concave) instantaneous utility function and $\beta > 0$ the time discount factor. One can easily check that:
+\[
+\frac{\partial u(x,\theta)}{\partial x} < 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x^{2}} < 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0.
+\]
+To conform with the setting of Proposition~5, we set $\tilde{\theta} = -\theta$, so that utility increases with $\tilde{\theta}$. It then directly follows from Proposition~5 that if the solution is interior, an increase of cautiousness leads to a strict increase of emission abatement. The interpretation is simple: Both in terms of ex-post wealth and ex-post utility, the marginal benefit of emission abatement is higher in bad states of nature than in good states of nature. Thus abatement is able to reduce the distance between ex-post utilities, which implies that greater cautiousness leads to an increase of optimal abatement.
+\end{original}
+
+\begin{translation}
+为了对此问题提供见解，我们考虑一个两期模型。在第1期，决策者拥有财富$Y_{1}$，其中一部分$c(x)$（关于$x$递增且凸）可用于资助减排水平$x \in [0, \overline{x}]$，留出$Y_{1} - c(x)$用于消费。在第2期，消费等于财富$Y_{2}$减去与气候相关的损害。这些损害取决于第1期选择的减排水平$x$和气候敏感性$\theta \in [\underline{\theta}, \overline{\theta}]$，后者事前不确定。我们用$D(x, \theta)$表示损害函数，并假设$\frac{\partial D}{\partial x} < 0$，$\frac{\partial D}{\partial \theta} > 0$，$\frac{\partial^{2} D}{\partial \theta^{2}} > 0$以及$\frac{\partial^{2} D}{\partial x \partial \theta} < 0$；最后一个不等式意味着当气候敏感性高时，减排在减少损害方面更有效。事后效用由下式给出：
+\[
+u(x, \theta) = U(Y_{1} - c(x)) + \beta \, U(Y_{2} - D(x, \theta))
+\]
+其中$U$是（递增且凹的）瞬时效用函数，$\beta > 0$是时间折现因子。可以容易验证：
+\[
+\frac{\partial u(x,\theta)}{\partial x} < 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x^{2}} < 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0.
+\]
+为了符合命题5的设定，我们设$\tilde{\theta} = -\theta$，使得效用随$\tilde{\theta}$递增。那么从命题5直接可得，如果解是内部的，谨慎性的增加导致排放减排的严格增加。解释很简单：无论是从事后财富还是事后效用的角度看，减排的边际收益在自然状态差时高于自然状态好时。因此，减排能够缩小事后效用之间的差距，这意味着更大的谨慎性导致最优减排的增加。
+\end{translation}
+
+\subsubsection{3.1.2 A precautionary savings example}
+{\color{transblue}\textbf{3.1.2 预防性储蓄的例子}}
+
+\begin{original}
+We now consider a standard precautionary savings problem in a two-period setting. The decision-maker receives income $Y$ in period~1 and has uncertain income $\theta \in [\underline{\theta}, \overline{\theta}]$ in period~2. The decision-maker chooses the amount $x \in [0, Y]$ saved in period~1. We assume a deterministic rate of interest, $r$, so that saving $x$ in period~1 yields $(1+r)x$ in period~2. Choosing an amount of saving $x$ and receiving income $\theta$ in period~2 provides an (ex-post) intertemporal utility:
+\[
+u(x, \theta) = U(Y - x) + \beta \, U(\theta + (1+r)x)
+\]
+where $U$ is the (increasing and strictly concave) instantaneous utility function and $\beta > 0$ the time discount factor. One has:
+\[
+\frac{\partial u(x,\theta)}{\partial x} > 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x^{2}} < 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} < 0.
+\]
+Thus a direct application of Proposition~5 shows that if the solution is interior, an increase in cautiousness leads to a strict increase of precautionary savings. While the marginal benefit of precautionary savings is similar across states of nature in terms of ex-post wealth, it is higher in bad states of nature than in good states of nature in terms of ex-post utility. Thus precautionary savings reduce the distance between ex-post utilities, which implies that an increase of cautiousness leads to higher precautionary savings.
+\end{original}
+
+\begin{translation}
+我们现在考虑一个两期设定中的标准预防性储蓄问题。决策者在第1期收到收入$Y$，在第2期有不确定的收入$\theta \in [\underline{\theta}, \overline{\theta}]$。决策者选择第1期储蓄的金额$x \in [0, Y]$。我们假设一个确定性的利率$r$，使得第1期储蓄$x$在第2期产生$(1+r)x$。选择储蓄金额$x$并在第2期收到收入$\theta$产生（事后）跨期效用：
+\[
+u(x, \theta) = U(Y - x) + \beta \, U(\theta + (1+r)x)
+\]
+其中$U$是（递增且严格凹的）瞬时效用函数，$\beta > 0$是时间折现因子。有：
+\[
+\frac{\partial u(x,\theta)}{\partial x} > 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x^{2}} < 0; \quad \frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} < 0.
+\]
+因此，命题5的直接应用表明，如果解是内部的，谨慎性的增加导致预防性储蓄的严格增加。虽然从事后财富的角度看，预防性储蓄的边际收益在不同自然状态下是相似的，但从事后效用的角度看，它在自然状态差时高于自然状态好时。因此，预防性储蓄缩小了事后效用之间的差距，这意味着谨慎性的增加导致更高的预防性储蓄。
+\end{translation}
+
+\subsection{3.2 Expected-utility-averaging versus distribution-averaging}
+{\color{transblue}\subsubsection*{3.2 期望效用平均与分布平均的比较}}
+
+\begin{original}
+This section highlights how our model differs from common models of ambiguity aversion in applications. As explained in Section~2.6, distribution-averaging decision-rules and common models of ambiguity aversion differ as the former suggests aggregating probabilities first, and then computing expected utilities, while the latter suggests computing expected utilities first, and then aggregating utilities. We will show in this section that both procedures may yield qualitatively similar results in some cases, but very different, possibly contrary results, in others.
+\end{original}
+
+\begin{translation}
+本节强调我们的模型在应用中如何区别于常见的模糊厌恶模型。如第2.6节所述，分布平均决策规则和常见的模糊厌恶模型不同，前者建议先聚合概率然后计算期望效用，而后者建议先计算期望效用然后聚合效用。我们将在本节中说明，两种过程在某些情况下可能产生定性相似的结果，但在其他情况下可能产生非常不同，甚至相反的结果。
+\end{translation}
+
+\subsubsection{3.2.1 The impact of ambiguity aversion under expected-utility-averaging}
+{\color{transblue}\textbf{3.2.1 期望效用平均下模糊厌恶的影响}}
+
+\begin{original}
+We consider here two decision-makers, $A$ and $B$ who use expected-utility-averaging decision-rules but only differ by the aggregators $I^{A}$ and $I^{B}$ they are using. With the setting described at the beginning of Section~3, the decision-maker $d = A, B$ has the following program:
+\[
+\max_{x \in [\underline{x}, \overline{x}]} \; I^{d}\!\left( \sum_{n=1}^{N} \sigma_{n}(x) \, \psi(p^{1}_{n}(x)), \;\dots, \sum_{n=1}^{N} \sigma_{n}(x) \, \psi(p^{K}_{n}(x)) \right), \tag{10}
+\]
+where the $\sigma_{n}$ and the $p^{k}_{n}$ are defined as in Section~3.1. We assume that the decision-maker's program always admits an interior solution $x^{d}(I^{d})$.
+\end{original}
+
+\begin{translation}
+我们在此考虑两个决策者$A$和$B$，他们使用期望效用平均决策规则，但仅在他们使用的聚合器$I^{A}$和$I^{B}$上有所不同。使用第3节开头描述的设定，决策者$d = A, B$有如下规划：
+\[
+\max_{x \in [\underline{x}, \overline{x}]} \; I^{d}\!\left( \sum_{n=1}^{N} \sigma_{n}(x) \, \psi(p^{1}_{n}(x)), \;\dots, \sum_{n=1}^{N} \sigma_{n}(x) \, \psi(p^{K}_{n}(x)) \right), \tag{10}
+\]
+其中$\sigma_{n}$和$p^{k}_{n}$如第3.1节所定义。我们假设决策者的规划始终允许一个内部解$x^{d}(I^{d})$。
+\end{translation}
+
+\begin{original}
+We know from Proposition~10 that decision-maker $A$ exhibits greater ambiguity aversion than decision-maker $B$ if $I^{A}(p_{1}, \dots, p_{K}) < I^{B}(p_{1}, \dots, p_{K})$ for non-constant vectors of utility levels $(p_{1}, \dots, p_{K})$. This is however generally insufficient to derive general conclusions about the impact on the optimal action. As noticed by Gollier (2011), Millner et al.\ (2013), Berger et al.\ (2016), Berger (2014) or Peter (2019), some results can nevertheless be provided under specific assumptions regarding the aggregators $I^{A}$ and $I^{B}$ and how experts' beliefs compare. In particular:
+\end{original}
+
+\begin{translation}
+我们从命题10知道，如果对于非恒定的效用水平向量$(p_{1}, \dots, p_{K})$有$I^{A}(p_{1}, \dots, p_{K}) < I^{B}(p_{1}, \dots, p_{K})$，则决策者$A$比决策者$B$表现出更大的模糊厌恶。然而，这通常不足以得出关于对最优行动影响的一般性结论。正如Gollier（2011）、Millner等人（2013）、Berger等人（2016）、Berger（2014）或Peter（2019）所指出的，在某些关于聚合器$I^{A}$和$I^{B}$以及专家信念如何比较的特定假设下，仍然可以提供一些结果。特别是：
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 6.} Assume that:
+
+$\bullet$ $I^{A}$ and $I^{B}$ have the smooth ``KMM'' form (1) with twice continuously differentiable, increasing and concave functions $\phi^{A}$ and $\phi^{B}$.
+
+$\bullet$ $\phi^{A}$ is more concave than $\phi^{B}$ (so that expected-utility-averaging decision-maker $A$ is more ambiguity-averse than $B$).\footnote{By ``more concave'', we mean that there exists an increasing and strictly concave function $\xi$ such that $\phi^{A} = \xi \circ \phi^{B}$.}
+
+$\bullet$ $\sum_{m=n}^{N} \pi^{1}_{m} \geq \sum_{m=n}^{N} \pi^{2}_{m} \geq \dots \geq \sum_{m=n}^{N} \pi^{K}_{m}$ for all $n$ (meaning that the experts' beliefs can be ordered in terms of first-order stochastic dominance).
+
+$\bullet$ The function $(x, \theta) \mapsto u(x, \theta)$ is twice continuously differentiable, strictly concave in $x$ and such that $\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0$ (resp.\ $< 0$) for all $x \in [\underline{x}, \overline{x}]$ and $\theta \in [\underline{\theta}, \overline{\theta}]$.
+
+Then $x^{A} < x^{B}$ (resp.\ $x^{A} > x^{B}$).
+\end{original}
+
+\begin{translation}
+\textbf{命题6。} 假设：
+
+$\bullet$ $I^{A}$和$I^{B}$具有光滑的"KMM"形式（1），其中$\phi^{A}$和$\phi^{B}$是二次连续可微、递增且凹的函数。
+
+$\bullet$ $\phi^{A}$比$\phi^{B}$更凹（因此期望效用平均决策者$A$比$B$更模糊厌恶）。\footnote{所谓"更凹"，我们是指存在一个递增且严格凹的函数$\xi$使得$\phi^{A} = \xi \circ \phi^{B}$。}
+
+$\bullet$ 对所有$n$有$\sum_{m=n}^{N} \pi^{1}_{m} \geq \sum_{m=n}^{N} \pi^{2}_{m} \geq \dots \geq \sum_{m=n}^{N} \pi^{K}_{m}$（这意味着专家信念可以按照一阶随机占优排序）。
+
+$\bullet$ 函数$(x, \theta) \mapsto u(x, \theta)$是二次连续可微的，关于$x$严格凹，且对所有$x \in [\underline{x}, \overline{x}]$和$\theta \in [\underline{\theta}, \overline{\theta}]$有$\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0$（或相应地$< 0$）。
+
+则$x^{A} < x^{B}$（或相应地$x^{A} > x^{B}$）。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.5.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.5。
+\end{translation}
+
+\begin{original}
+The result stated in Proposition~6 looks qualitatively similar to the one stated in Proposition~5 regarding cautious decision-rules. The interpretation is also qualitatively similar, with the difference that we now consider the dispersion of ex-ante (expected) utilities and not the dispersion of ex-post utilities. If the cross-derivative of the function $u$ is positive and experts are ordered in the sense of first-order stochastic dominance, an increase in $x$ widens the distance between the expected utility levels provided by any two experts. Thus, the higher the action $x$ the more significant the lack of unanimity between experts, which implies that an increase of ambiguity aversion leads to a decrease of the optimal $x$. This result requires however an important additional assumption relative to Proposition~5. Indeed Proposition~6 assumes that experts' beliefs are comparable in terms of first-order stochastic dominance. This means that experts can unambiguously be ranked in terms of optimism (or pessimism), ruling out cases where some experts look more optimistic than others on some aspects but less optimistic on other aspects. For example, it rules out the case discussed in our introductory example where expert~2 looks more optimistic than expert~1 as she predicts that the introduction of fuel additive may generate positive benefits but also looks more pessimistic than expert~1 as she foresees cases where this would generate adverse consequences. In such a case, Proposition~6 has no bite.
+\end{original}
+
+\begin{translation}
+命题6中陈述的结果在定性上看起来类似于命题5中关于谨慎决策规则的结果。解释在定性上也类似，不同之处在于，我们现在考虑的是事前（期望）效用的分散，而不是事后效用的分散。如果函数$u$的交叉导数为正，且专家按一阶随机占优排序，增加$x$会扩大任意两位专家提供的期望效用水平之间的距离。因此，行动$x$越高，专家之间缺乏一致性的程度越显著，这意味着模糊厌恶的增加导致最优$x$的减少。然而，相对于命题5，这个结果需要一个重要的额外假设。实际上，命题6假设专家信念在一阶随机占优意义上是可以比较的。这意味着专家可以在乐观（或悲观）程度上明确排序，排除了某些专家在某些方面看起来比其他人更乐观，但在其他方面却看起来更不乐观的情况。例如，它排除了我们引言例子中讨论的情况，其中专家2比专家1更乐观，因为她预测引入燃料添加剂可能产生正面效益，但她也比专家1更悲观，因为她预见了可能产生不利后果的情况。在这种情况下，命题6不起作用。
+\end{translation}
+
+\begin{original}
+The following section provides an example where expected-utility-averaging and distribution-averaging decision-rules lead to opposite conclusions.
+\end{original}
+
+\begin{translation}
+以下部分提供了一个例子，其中期望效用平均和分布平均决策规则导致相反的结论。
+\end{translation}
+
+\subsubsection{3.2.2 When utility-averaging and distribution-averaging models differ}
+{\color{transblue}\textbf{3.2.2 当效用平均和分布平均模型不同时}}
+
+\begin{original}
+Let us consider again the two examples described in Sections~3.1.1, 3.1.2, while specifying further the utility functions and expert beliefs. In the climate mitigation example, let $u$ and $U$ be the identity, $\beta = 1$, $Y_{1} = 2$, $c(x) = 1.5x^{2}$, $Y_{2} = 3.5$, $D(x, \theta) = 0.5(1 + \theta - x)^{2}$, $\theta \in [0, 0.9]$, and $\theta \in \{1.5, 1, 0\}$. In the precautionary savings example, let $U(c) = c - \frac{1}{8}c^{2}$, $\beta = 1$, $r$ be the identity, $Y = 2$, $\theta = 0$, $x \in [0, 0.9]$, and $\theta \in \{0, 1, 3\}$. With these assumptions, the conditions of Sections~3.1.1 and 3.1.2 are satisfied. In both examples, assume that there are two experts with beliefs $(0, 1, 0)$ for expert~1 and $(0.6, 0, 0.4)$ for expert~2. Finally, consider the aggregator:
+\[
+I(p_{1}, p_{2}) = I_{\lambda}(p_{1}, p_{2}) = -\frac{1}{\lambda} \log\!\left( \frac{1}{2} e^{-\lambda p_{1}} + \frac{1}{2} e^{-\lambda p_{2}} \right) \tag{11}
+\]
+with $\lambda \geq 0$.\footnote{The limit case when $\lambda \to 0$ provides $I_{0}(p_{1}, p_{2}) = \frac{1}{2}p_{1} + \frac{1}{2}p_{2}$, corresponding to a linear opinion pooling with symmetric weights.} This aggregator is defined over $\R^{2}$ and will be used either to aggregate probabilities (for distribution-averaging decision-rules) or to aggregate utility values (for expected-utility-averaging decision-rules). In all cases, increasing $\lambda$ involves increasing ambiguity aversion. This also generates an increase in cautiousness when using distribution-averaging decision-rules.
+\end{original}
+
+\begin{translation}
+让我们再次考虑第3.1.1节和第3.1.2节中描述的两个例子，同时进一步指定效用函数和专家信念。在气候减缓例子中，令$u$和$U$为恒等函数，$\beta = 1$，$Y_{1} = 2$，$c(x) = 1.5x^{2}$，$Y_{2} = 3.5$，$D(x, \theta) = 0.5(1 + \theta - x)^{2}$，$\theta \in [0, 0.9]$，且$\theta \in \{1.5, 1, 0\}$。在预防性储蓄例子中，令$U(c) = c - \frac{1}{8}c^{2}$，$\beta = 1$，$r$为恒等函数，$Y = 2$，$\theta = 0$，$x \in [0, 0.9]$，且$\theta \in \{0, 1, 3\}$。在这些假设下，第3.1.1节和第3.1.2节的条件得到满足。在两个例子中，假设有两位专家，专家1的信念为$(0, 1, 0)$，专家2的信念为$(0.6, 0, 0.4)$。最后，考虑如下聚合器：
+\[
+I(p_{1}, p_{2}) = I_{\lambda}(p_{1}, p_{2}) = -\frac{1}{\lambda} \log\!\left( \frac{1}{2} e^{-\lambda p_{1}} + \frac{1}{2} e^{-\lambda p_{2}} \right) \tag{11}
+\]
+其中$\lambda \geq 0$。\footnote{当$\lambda \to 0$时的极限情况给出$I_{0}(p_{1}, p_{2}) = \frac{1}{2}p_{1} + \frac{1}{2}p_{2}$，对应于具有对称权重的线性意见汇集。}这个聚合器在$\R^{2}$上定义，既可以用于聚合概率（对于分布平均决策规则），也可以用于聚合效用值（对于期望效用平均决策规则）。在所有情况下，增加$\lambda$意味着增加模糊厌恶。当使用分布平均决策规则时，这也产生谨慎性的增加。
+\end{translation}
+
+\begin{original}
+Denote by $x_{D,\lambda}$ the optimal action (i.e., optimal abatement in the climate example, and optimal saving in the second example) when using the distribution-averaging decision-rule with aggregator (11) and by $x_{E,\lambda}$ the optimal action when using an expected-utility-averaging decision-rule with that same aggregator. It can easily be verified that the solutions $x_{D,\lambda}$ and $x_{E,\lambda}$ are interior for any $\lambda$.
+\end{original}
+
+\begin{translation}
+记$x_{D,\lambda}$为使用具有聚合器（11）的分布平均决策规则时的最优行动（即，气候例子中的最优减排，以及第二个例子中的最优储蓄），记$x_{E,\lambda}$为使用具有相同聚合器的期望效用平均决策规则时的最优行动。可以容易验证，对任何$\lambda$，解$x_{D,\lambda}$和$x_{E,\lambda}$都是内部的。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 7.} In both examples, the optimal action $x_{D,\lambda}$ is increasing with $\lambda$ (i.e.\ with cautiousness) and the optimal action $x_{E,\lambda}$ is decreasing with $\lambda$ (i.e.\ with ambiguity aversion).
+\end{original}
+
+\begin{translation}
+\textbf{命题7。} 在两个例子中，最优行动$x_{D,\lambda}$随$\lambda$增加而增加（即随谨慎性增加而增加），而最优行动$x_{E,\lambda}$随$\lambda$增加而减少（即随模糊厌恶增加而减少）。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.6.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.6。
+\end{translation}
+
+\begin{original}
+The above result, which would actually extend to all KMM-aggregators, indicates that we have here examples where cautiousness leads to greater abatement or larger precautionary savings while ambiguity aversion in the expected-utility-averaging models is found to have the opposite result.
+\end{original}
+
+\begin{translation}
+上述结果实际上将扩展到所有KMM聚合器，表明我们在此有例子说明，谨慎性导致更大的减排或更多的预防性储蓄，而期望效用平均模型中的模糊厌恶则产生相反的结果。
+\end{translation}
+
+\begin{original}
+Fig.\ 3 shows how $x_{D,\lambda}$ and $x_{E,\lambda}$ vary with $\lambda$ in each example. We also report the optimal actions $x_{1}$ and $x_{2}$ that would be chosen if relying exclusively on the beliefs of expert~1 or on those of expert~2.
+\end{original}
+
+\begin{translation}
+图3显示了每个例子中$x_{D,\lambda}$和$x_{E,\lambda}$如何随$\lambda$变化。我们还报告了如果仅依赖专家1或专家2的信念将选择的最优行动$x_{1}$和$x_{2}$。
+\end{translation}
+
+\begin{original}
+To gain intuition, let us focus on the climate mitigation example, the precautionary savings case being fully similar. Expert~2 predicts a lower marginal impact of abatement than expert~1 in terms of expected utility. This explains why $x_{2}$ is lower than $x_{1}$. Besides, expert~2 predicts a lower expected utility than expert~1. Indeed, expert~2 predicts more risky damages, which generates a lower expected utility. Thus an increase in abatement widens the distance between the expected utility levels computed with the two expert beliefs. This finally implies that, with the expected-utility-averaging decision-rules, an increase of ambiguity aversion leads to a decrease of the optimal abatement level.
+\end{original}
+
+\begin{translation}
+为了获得直观理解，让我们关注气候减缓的例子，预防性储蓄的情况完全类似。专家2在期望效用方面预测的减排边际影响低于专家1。这解释了为什么$x_{2}$低于$x_{1}$。此外，专家2预测的期望效用低于专家1。实际上，专家2预测了更具风险的损害，这产生了更低的期望效用。因此，减排的增加扩大了使用两种专家信念计算的期望效用水平之间的距离。这最终意味着，在期望效用平均决策规则下，模糊厌恶的增加导致最优减排水平的降低。
+\end{translation}
+
+\begin{original}
+Remark that as a consequence of the Pareto condition, the expected-utility-averaging decision-rules provide an optimal action $x_{E,\lambda}$ that always remains in between $x_{2}$ and $x_{1}$. By contrast, distribution-averaging decision-rules can entail abatement or saving levels $x_{D,\lambda}$ that are larger than both $x_{1}$ and $x_{2}$. This actually occurs when cautiousness is strong enough. Naturally, one may wonder whether it can be rational to abate or save more than what both experts suggest. If the decision-maker could be sure that one expert is right, without knowing necessarily which one, such a decision would hardly be tenable, as choosing action $x_{1}$ would yield a higher utility for sure. However, is there any reason to think that at least one expert is right? A decision-maker who observes that experts disagree may conclude that there is some uncertainty in scientific knowledge and that most likely neither of the experts is completely right. The underlying principle of the distribution-averaging decision-rule is that the decision-maker uses the diversity of expert opinions to infer ``the range of possibilities'', and then decides to form her own belief using an aggregation procedure which is deliberately cautious.
+\end{original}
+
+\begin{translation}
+注意，作为帕累托条件的一个结果，期望效用平均决策规则提供的最优行动$x_{E,\lambda}$始终保持在$x_{2}$和$x_{1}$之间。相比之下，分布平均决策规则可能导致减排或储蓄水平$x_{D,\lambda}$大于$x_{1}$和$x_{2}$两者。当谨慎性足够强时，这种情况实际上会发生。自然地，人们可能会疑惑，比两位专家建议的减排或储蓄更多是否可能是理性的。如果决策者能够确定某一位专家是正确的，但不知道是哪一位，这样的决策很难站得住脚，因为选择行动$x_{1}$将确定地产生更高的效用。然而，是否有任何理由认为至少有一位专家是正确的？观察到专家之间存在分歧的决策者可能得出结论，认为科学知识中存在某种不确定性，很可能没有哪位专家是完全正确的。分布平均决策规则的基本原理是，决策者利用专家意见的多样性来推断"可能性的范围"，然后决定使用一种故意谨慎的聚合程序来形成自己的信念。
+\end{translation}
+
+\newpage
+% ============ SECTION 4: CONCLUSION ============
+\section{4. Conclusion}
+{\color{transblue}\subsection*{4. 结论}}
+
+\begin{original}
+Decision-makers rely on scientific expertise. It is only natural, and even a sign of healthy science, that experts disagree. But how should decision-makers deal with expert disagreement? Most prominent is the ambiguity neutral approach: The decision-maker forms a (weighted) average of expert views. While consistent and well-understood, the neutral approach has been criticized for treating identically two very different situations: scientific consensus and wide expert disagreement that happens to yield the same average belief.
+\end{original}
+
+\begin{translation}
+决策者依赖科学专业知识。专家之间存在分歧是很自然的，甚至是健康科学的标志。但决策者应如何处理专家分歧？最突出的是模糊中性方法：决策者形成专家观点的（加权）平均。虽然这种方法一致且被广泛理解，但中性方法因同等对待两种非常不同的情况而受到批评：科学共识和恰好产生相同平均信念的广泛专家分歧。
+\end{translation}
+
+\begin{original}
+In this paper, we have developed a model of cautious aggregation of beliefs, exhibiting a novel notion of cautiousness. Like other departures from the neutral approach, we draw on the ambiguity aversion literature. But instead of suggesting a pessimistic aggregation of utility values, as is standard in the literature, our model rests on the pessimistic aggregation of expert beliefs. We demonstrate that our model is more sensitive to disagreement than existing models by allowing aversion to ``spurious unanimity''---situations where experts agree on the recommended action but for fundamentally different reasons.
+\end{original}
+
+\begin{translation}
+在本文中，我们建立了一个信念的谨慎聚合模型，展现了一种新颖的谨慎性概念。与其他偏离中性方法的尝试一样，我们借鉴了模糊厌恶文献。但是，我们没有如文献中通常那样提出效用值的悲观聚合，而是将我们的模型建立在专家信念的悲观聚合之上。我们证明，通过允许对"虚假一致性"——专家在建议的行动上一致但出于根本不同的原因——的厌恶，我们的模型比现有模型对分歧更敏感。
+\end{translation}
+
+\begin{original}
+Our framework, which can be viewed as reflecting a form of the precautionary principle, can readily be applied to concrete policy issues. We have shown that the framework produces intuitive results in the sense that stronger cautiousness induces more cautious decisions. This contrasts with standard Paretian models, where increased ambiguity aversion may actually lead to less cautious choices. Our work also contributes to the long-standing discussion about how scientific expertise should inform policy-making, in particular the interplay of risk assessment and risk management (National Research Council, 2009). Our contribution strengthens the view that the realms of expertise and decision should be kept separate. According to our approach, the fact that experts reach a consensus about which action to take does not imply that this action should necessarily be chosen. In practice, this means that decisions should not be fully delegated to expert committees. Instead, each expert should provide their scientific assessment independently. Understanding why experts' assessments differ remains valuable for a cautious decision-maker, even if the experts agree on the decision.
+\end{original}
+
+\begin{translation}
+我们的框架，可以被视为反映了预防原则的一种形式，可以很容易地应用于具体的政策问题。我们已经证明，该框架产生了直观的结果，即更强的谨慎性诱导出更谨慎的决策。这与标准的帕累托模型形成对比，在后者中，增加的模糊厌恶实际上可能导致更不谨慎的选择。我们的工作也贡献于关于科学专业知识应如何为政策制定提供信息的长期讨论，特别是风险评估和风险管理的相互作用（National Research Council, 2009）。我们的贡献加强了专业知识和决策领域应当保持分离的观点。根据我们的方法，专家就采取何种行动达成共识的事实并不意味着必须选择该行动。在实践中，这意味着决策不应完全委托给专家委员会。相反，每位专家应独立提供其科学评估。理解专家评估为何不同对谨慎的决策者而言仍然是有价值的，即使专家们就决策达成了一致。
+\end{translation}
+
+\newpage
+% ============ CREDIT, DATA, ACKNOWLEDGMENTS ============
+\section*{CRediT Authorship Contribution Statement}
+{\color{transblue}\subsection*{CRediT作者贡献声明}}
+
+\begin{original}
+Antoine Bommier: Writing -- review \& editing, Writing -- original draft, Visualization, Formal analysis, Conceptualization; Adrien Fabre: Writing -- review \& editing, Writing -- original draft, Visualization, Formal analysis, Conceptualization; Arnaud Gousseba\"{i}le: Writing -- review \& editing, Writing -- original draft, Visualization, Formal analysis, Conceptualization; Daniel Heyen: Writing -- review \& editing, Writing -- original draft, Visualization, Formal analysis, Conceptualization.
+\end{original}
+
+\begin{translation}
+Antoine Bommier：撰写——审阅与编辑，撰写——初稿，可视化，形式分析，概念构思；Adrien Fabre：撰写——审阅与编辑，撰写——初稿，可视化，形式分析，概念构思；Arnaud Gousseba\"{i}le：撰写——审阅与编辑，撰写——初稿，可视化，形式分析，概念构思；Daniel Heyen：撰写——审阅与编辑，撰写——初稿，可视化，形式分析，概念构思。
+\end{translation}
+
+\section*{Data Availability}
+{\color{transblue}\subsection*{数据可得性}}
+
+\begin{original}
+No data was used for the research described in the article.
+\end{original}
+
+\begin{translation}
+本文所述研究未使用任何数据。
+\end{translation}
+
+\section*{Declaration of Competing Interest}
+{\color{transblue}\subsection*{利益冲突声明}}
+
+\begin{original}
+The authors, Antoine Bommier, Adrien Fabre, Arnaud Gousseba\"{i}le and Daniel Heyen, have no specific interests to declare. The work was carried out as part of their duties at the academic institutions where they were employed.
+\end{original}
+
+\begin{translation}
+作者Antoine Bommier、Adrien Fabre、Arnaud Gousseba\"{i}le和Daniel Heyen没有需要声明的特定利益。本工作是在他们受雇的学术机构中作为其职责的一部分进行的。
+\end{translation}
+
+\section*{Acknowledgments}
+{\color{transblue}\subsection*{致谢}}
+
+\begin{original}
+We are grateful to Lo\"{i}c Berger, Adam Dominiak, Hans Gersbach, Christoph Rheinberger, Lorenzo Stanca, Jean-Marc Tallon, Massimo Tavoni and Peter Wakker for their helpful and generous comments. We also thank the seminar participants at ETH Z\"{u}rich, Global Priorities Institute at Oxford, HEC Lausanne, KU Leuven, Paris School of Economics, Toulouse School of Economics and the University of Oslo, and the participants at the RTS, D-TEA, FUR and EGRIE conferences. We are grateful to R\'{e}mi Peyre for sharing mathematical insights. We thank Carmel Connell for the proofreading.
+\end{original}
+
+\begin{translation}
+我们感谢Lo\"{i}c Berger、Adam Dominiak、Hans Gersbach、Christoph Rheinberger、Lorenzo Stanca、Jean-Marc Tallon、Massimo Tavoni和Peter Wakker提供的有益且慷慨的评论。我们也感谢苏黎世联邦理工学院、牛津大学全球优先研究所、洛桑高等商学院、鲁汶大学、巴黎经济学院、图卢兹经济学院和奥斯陆大学的研讨会参与者，以及RTS、D-TEA、FUR和EGRIE会议的参与者。我们感谢R\'{e}mi Peyre分享数学见解。我们感谢Carmel Connell的校对。
+\end{translation}
+
+\newpage
+% ============ APPENDIX A ============
+\section*{Appendix A. Properties of Cautious Decision-rules}
+{\color{transblue}\subsection*{附录A. 谨慎决策规则的性质}}
+
+\subsection*{A.1 Violation of the Pareto condition}
+{\color{transblue}\subsubsection*{A.1 帕累托条件的违背}}
+
+\begin{original}
+\textbf{Proposition 8.} There is no decision-rule which is Paretian, RDU on distribution-consensual prospects, and cautious.
+\end{original}
+
+\begin{translation}
+\textbf{命题8。} 不存在同时是帕累托的、在分布共识性前景上是RDU的且谨慎的决策规则。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} Suppose that the decision-rule is RDU on distribution-consensual prospects. One can construct an expertise $\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$, a non distribution-consensual prospect $f$ and a sure prospect $c$ such that $f \sim_{\mu_{k}} c$, e.g.\ using the beginnings of the proofs of Proposition~9 (in Appendix~C.7) and Proposition~4 (in Appendix~C.3). If the decision-rule is Paretian we then have $f \succsim_{\mathcal{E}} c$, contradicting $c \succ_{\mathcal{E}} f$, and thus cautiousness.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 假设决策规则在分布共识性前景上是RDU。可以构造一个专家知识$\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$、一个非分布共识性前景$f$和一个确定前景$c$使得$f \sim_{\mu_{k}} c$，例如，使用命题9（在附录C.7中）和命题4（在附录C.3中）证明的开头部分。如果决策规则是帕累托的，则我们有$f \succsim_{\mathcal{E}} c$，与$c \succ_{\mathcal{E}} f$及谨慎性矛盾。
+\end{translation}
+
+\subsection*{A.2 Characterization of cautiousness}
+{\color{transblue}\subsubsection*{A.2 谨慎性的刻画}}
+
+\begin{original}
+We first state what is required to have a decision-rule that exhibits cautiousness.
+\end{original}
+
+\begin{translation}
+我们首先陈述了使决策规则表现出谨慎性所需的条件。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 9.} A distribution-averaging decision-rule with representation $(u, \psi, I)$ is cautious if and only if the aggregator $I$ is such that for any $N \times K$ matrix $(\delta_{n,k})_{1 \leq n \leq N, 1 \leq k \leq K} \in [0,1]^{N \times K}$ such that $\sum_{n=1}^{N} \delta_{n,k} \leq 1$, and any vector $(\sigma_{1}, \dots, \sigma_{N}) \in [0,1]^{N}$ such that $\sum_{n=1}^{N} \sigma_{n} = 1$, one has:
+\[
+\sum_{n=1}^{N} \sigma_{n} \; I(\delta_{n,1}, \dots, \delta_{n,K}) \; < \; \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}
+\]
+whenever one has $\delta_{n,k} \neq \delta_{n,\ell}$ and $\sigma_{n} > 0$ for some $n, k, \ell$.
+\end{original}
+
+\begin{translation}
+\textbf{命题9。} 具有表示$(u, \psi, I)$的分布平均决策规则是谨慎的当且仅当聚合器$I$满足：对任何满足$\sum_{n=1}^{N} \delta_{n,k} \leq 1$的$N \times K$矩阵$(\delta_{n,k})_{1 \leq n \leq N, 1 \leq k \leq K} \in [0,1]^{N \times K}$和任何满足$\sum_{n=1}^{N} \sigma_{n} = 1$的向量$(\sigma_{1}, \dots, \sigma_{N}) \in [0,1]^{N}$，当对某些$n, k, \ell$有$\delta_{n,k} \neq \delta_{n,\ell}$且$\sigma_{n} > 0$时，有：
+\[
+\sum_{n=1}^{N} \sigma_{n} \; I(\delta_{n,1}, \dots, \delta_{n,K}) \; < \; \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.7.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.7。
+\end{translation}
+
+\newpage
+% ============ APPENDIX B ============
+\section*{Appendix B. Comparative Ambiguity Aversion and Cautiousness}
+{\color{transblue}\subsection*{附录B. 比较模糊厌恶与谨慎性}}
+
+\subsection*{B.1 Comparative ambiguity aversion}
+{\color{transblue}\subsubsection*{B.1 比较模糊厌恶}}
+
+\begin{original}
+Interestingly, expected-utility-averaging decision-rules and distribution-averaging decision-rules can be compared in terms of ambiguity aversion, a fundamental concept in the ambiguity literature. In our setting, comparative ambiguity aversion can be defined as follows:
+\end{original}
+
+\begin{translation}
+有趣的是，期望效用平均决策规则和分布平均决策规则可以在模糊厌恶——模糊文献中的一个基本概念——方面进行比较。在我们的设定中，比较模糊厌恶可以定义如下：
+\end{translation}
+
+\begin{original}
+\textbf{Definition 9 (Comparative ambiguity aversion).} A decision-rule $\mathcal{R}$ exhibits greater ambiguity aversion than a decision-rule $\mathcal{R}'$ if for every expertise $\mathcal{E}$, every prospect $f$ and every distribution-consensual prospect $g$, $f \succsim_{\mathcal{E}} g \implies f \succsim'_{\mathcal{E}} g$; $f \succ'_{\mathcal{E}} g \implies f \succ_{\mathcal{E}} g$; and $f \succ_{\mathcal{E}} g$ if $f$ is not utility-consensual.
+\end{original}
+
+\begin{translation}
+\textbf{定义9（比较模糊厌恶）。} 如果对于每个专家知识$\mathcal{E}$、每个前景$f$和每个分布共识性前景$g$，有$f \succsim_{\mathcal{E}} g \implies f \succsim'_{\mathcal{E}} g$；$f \succ'_{\mathcal{E}} g \implies f \succ_{\mathcal{E}} g$；且若$f$不是效用共识性的则$f \succ_{\mathcal{E}} g$，则决策规则$\mathcal{R}$比决策规则$\mathcal{R}'$表现出更大的模糊厌恶。
+\end{translation}
+
+\begin{original}
+This definition is very similar to Definition~3 about cautiousness but relies on a different notion of consensus. While Definition~3 refers to the aversion for the lack of distribution consensus, Definition~9 refers to the aversion for a lack of utility consensus.\footnote{The first part of Definition~9 still refers to the notion of distribution-consensus, so that the decisions rules $\mathcal{R}$ and $\mathcal{R}'$ necessarily agree on the ranking of distribution-consensual prospects. The notion of utility-consensus used in the second part of the definition which, in principle, could depend on the decision-rule that is considered, is then the same for $\mathcal{R}$ and $\mathcal{R}'$.}
+\end{original}
+
+\begin{translation}
+这一定义与关于谨慎性的定义3非常相似，但依赖于不同的共识概念。定义3指的是对缺乏分布共识的厌恶，而定义9指的是对缺乏效用共识的厌恶。\footnote{定义9的第一部分仍然涉及分布共识的概念，因此决策规则$\mathcal{R}$和$\mathcal{R}'$必然在分布共识性前景的排序上达成一致。定义第二部分中使用的效用共识概念，原则上可能取决于所考虑的决策规则，但对$\mathcal{R}$和$\mathcal{R}'$来说是相同的。}
+\end{translation}
+
+\begin{original}
+\textbf{Remark 4.} Ghirardato and Marinacci (2002) define comparative ambiguity aversion in a weak sense (such that any rule is more ambiguity averse than itself). By adding a third condition (about utility-consensual prospects), our definition of comparative ambiguity aversion is strong, and characterized by strict (rather than non-strict) inequalities. We add the third condition to make the parallel with comparative cautiousness (Definition~3).
+\end{original}
+
+\begin{translation}
+\textbf{注4。} Ghirardato和Marinacci（2002）在弱意义上定义了比较模糊厌恶（使得任何规则都比自身更模糊厌恶）。通过添加第三个条件（关于效用共识性前景），我们关于比较模糊厌恶的定义是强的，并由严格（而非非严格）不等式刻画。我们添加第三个条件是为了与比较谨慎性（定义3）形成平行。
+\end{translation}
+
+\begin{original}
+We state a result (already well-known for expected-utility-averaging models---see Ghirardato et al.\ 2004) showing that for both distribution-averaging decision-rules and expected-utility-averaging decision-rules, the level of ambiguity aversion is dictated by the aggregator $I$. Formally:
+\end{original}
+
+\begin{translation}
+我们陈述一个结果（对于期望效用平均模型已广为人知——见Ghirardato等人2004），表明对于分布平均决策规则和期望效用平均决策规则两者，模糊厌恶的水平由聚合器$I$决定。形式化地：
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 10.} Consider two decision-rules $\mathcal{R}$ and $\mathcal{R}'$, which are either both distribution-averaging or both expected-utility-averaging with representations $(u, \psi, I)$ and $(u', \psi', I')$. Then $\mathcal{R}$ exhibits greater ambiguity aversion than $\mathcal{R}'$ if and only if $u = u'$, $\psi = \psi'$ and $I(\mathbf{p}) < I'(\mathbf{p})$ for every non-constant vector $\mathbf{p} = (p_{1}, \dots, p_{K})$.
+\end{original}
+
+\begin{translation}
+\textbf{命题10。} 考虑两个决策规则$\mathcal{R}$和$\mathcal{R}'$，它们要么都是分布平均的，要么都是期望效用平均的，分别具有表示$(u, \psi, I)$和$(u', \psi', I')$。则$\mathcal{R}$比$\mathcal{R}'$表现出更大的模糊厌恶当且仅当$u = u'$,$\psi = \psi'$且对所有非常向量$\mathbf{p} = (p_{1}, \dots, p_{K})$有$I(\mathbf{p}) < I'(\mathbf{p})$。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.2.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.2。
+\end{translation}
+
+\begin{original}
+Proposition~10 shows how two decision-rules of the same kind can be compared in terms of ambiguity aversion.
+\end{original}
+
+\begin{translation}
+命题10表明，两个相同类型的决策规则如何在模糊厌恶方面进行比较。
+\end{translation}
+
+\subsection*{B.2 Comparing cautiousness of distribution aggregation versus expected-utility aggregation}
+{\color{transblue}\subsubsection*{B.2 分布聚合与期望效用聚合的谨慎性比较}}
+
+\begin{original}
+The following result highlights that it is also possible to compare distribution-averaging decision-rules with expected-utility-averaging decision-rules. Namely, under a concavity condition on the aggregator $I$, which is usually assumed in applications, we show that a distribution-averaging decision-rule exhibits greater ambiguity aversion and greater cautiousness than the expected-utility-averaging decision-rule, which uses the same utility index, the same probability transformation function and the same aggregator. More precisely, the result is valid only when we exclude the special case of prospects whose outcomes are all extremal (i.e.\ $x \in \{x^{-}, x^{+}\}$), because both rules coincide on these prospects. For the purpose of the proposition, we thus say that a decision-rule exhibits greater cautiousness (resp.\ greater ambiguity aversion) except on prospects with only extremal outcomes if it fulfills a slightly weaker version of Definition~3 (resp.\ Definition~9) where $g$ is replaced by any prospect with at least one non-extremal outcome (i.e.\ $0 < u(x) < 1$ for some $x$).
+\end{original}
+
+\begin{translation}
+以下结果突显了，分布平均决策规则也可以与期望效用平均决策规则进行比较。即，在聚合器$I$的凹性条件下（这通常在应用中被假设），我们证明分布平均决策规则比使用相同效用指数、相同概率变换函数和相同聚合器的期望效用平均决策规则表现出更大的模糊厌恶和更大的谨慎性。更准确地说，该结果仅在排除其结果全部为极值（即$x \in \{x^{-}, x^{+}\}$）的前景的特殊情况时成立，因为两种规则在这些前景上重合。为了该命题的目的，我们因此说一个决策规则在仅有极值结果的前景之外表现出更大的谨慎性（相应地，更大的模糊厌恶），如果它满足定义3（相应地，定义9）的一个稍弱的版本，其中$g$被替换为任何至少有一个非极值结果（即对某些$x$有$0 < u(x) < 1$）的前景。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 11.} Consider a distribution-averaging decision-rule $\mathcal{R}_{D}$ with representation $(u, \psi, I)$ and the expected-utility-averaging decision-rule $\mathcal{R}_{E}$ with representation $(u, \psi, I)$ for the same functions $u$, $\psi$, and $I$. If $I$ is strictly concave except on the diagonal then $\mathcal{R}_{D}$ exhibits greater ambiguity aversion and greater cautiousness than $\mathcal{R}_{E}$ except on prospects with only extremal outcomes.
+\end{original}
+
+\begin{translation}
+\textbf{命题11。} 考虑具有表示$(u, \psi, I)$的分布平均决策规则$\mathcal{R}_{D}$和具有相同函数$u$, $\psi$, $I$的表示$(u, \psi, I)$的期望效用平均决策规则$\mathcal{R}_{E}$。如果$I$除对角线外是严格凹的，则$\mathcal{R}_{D}$在仅有极值结果的前景之外表现出比$\mathcal{R}_{E}$更大的模糊厌恶和更大的谨慎性。
+\end{translation}
+
+\begin{original}
+\textbf{Proof.} See Appendix~C.8.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 见附录C.8。
+\end{translation}
+
+\begin{original}
+This result clarifies how distribution-averaging and expected-utility-averaging decision-rules compare to each other in terms of ambiguity aversion and cautiousness as discussed in Section~2.6 and illustrated in Fig.\ 2.
+\end{original}
+
+\begin{translation}
+该结果澄清了分布平均和期望效用平均决策规则在模糊厌恶和谨慎性方面如何相互比较，正如第2.6节所讨论和图2所展示的。
+\end{translation}
+
+\newpage
+% ============ APPENDIX C: MAIN PROOFS ============
+\section*{Appendix C. Main Proofs}
+{\color{transblue}\subsection*{附录C. 主要证明}}
+
+\subsection*{C.1 Proof of Proposition 2}
+{\color{transblue}\subsubsection*{C.1 命题2的证明}}
+
+\begin{original}
+For the first condition:
+\[
+\sum_{n=1}^{N} \sigma_{n} \, I(\delta_{n,1}, \dots, \delta_{n,K})
+\leq \sum_{n=1}^{N} \sigma_{n} \sum_{k=1}^{K} w_{k} \delta_{n,k}
+= \sum_{k=1}^{K} w_{k} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}
+\leq \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}.
+\]
+
+For the second condition: Set $\delta_{n,K+1} = 1 - \sum_{k=1}^{K} \delta_{n,k}$ and $\sigma_{n,K+1} = 0$ for all $1 \leq n \leq N$. Then, using successively that $I$ is concave and increasing:
+\[
+\sum_{n=1}^{N} \sigma_{n} \, I(\delta_{n,1}, \dots, \delta_{n,K})
+= \sum_{n=1}^{N} \sigma_{n} \, I\!\left( \sum_{k=1}^{K+1} \delta_{n,k} \mathbf{1}_{k}, \dots, \sum_{k=1}^{K+1} \delta_{n,k} \mathbf{1}_{k} \right)
+< \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}.
+\]
+
+In both cases the first inequality is strict when one has $\delta_{n,k} \neq \delta_{n,\ell}$ and $\sigma_{n} > 0$ for some indices $n, k, \ell$.
+\end{original}
+
+\begin{translation}
+对于第一个条件：
+\[
+\sum_{n=1}^{N} \sigma_{n} \, I(\delta_{n,1}, \dots, \delta_{n,K})
+\leq \sum_{n=1}^{N} \sigma_{n} \sum_{k=1}^{K} w_{k} \delta_{n,k}
+= \sum_{k=1}^{K} w_{k} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}
+\leq \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}.
+\]
+
+对于第二个条件：设$\delta_{n,K+1} = 1 - \sum_{k=1}^{K} \delta_{n,k}$且对所有$1 \leq n \leq N$有$\sigma_{n,K+1} = 0$。然后，连续使用$I$的凹性和递增性：
+\[
+\sum_{n=1}^{N} \sigma_{n} \, I(\delta_{n,1}, \dots, \delta_{n,K})
+= \sum_{n=1}^{N} \sigma_{n} \, I\!\left( \sum_{k=1}^{K+1} \delta_{n,k} \mathbf{1}_{k}, \dots, \sum_{k=1}^{K+1} \delta_{n,k} \mathbf{1}_{k} \right)
+< \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}.
+\]
+
+在两种情况下，当对某些指标$n, k, \ell$有$\delta_{n,k} \neq \delta_{n,\ell}$和$\sigma_{n} > 0$时，第一个不等式是严格的。
+\end{translation}
+
+\subsection*{C.2 Proof of Propositions 3 and 10}
+{\color{transblue}\subsubsection*{C.2 命题3和10的证明}}
+
+\begin{original}
+We first prove Proposition~3 and then explain how the proof can be adapted to prove Proposition~10.
+
+\textbf{Proof of Proposition 3.}
+
+Assume that $\mathcal{R}$ is more cautious than $\mathcal{R}'$. Then, using the reciprocal of the first implication and the second implication in Definition~3, for any expertise $\mathcal{E}$, and any pair $(f, g)$ of distribution-consensual prospects, one has $f \succsim_{\mathcal{E}} g \iff f \succsim'_{\mathcal{E}} g$. Thus, $\mathcal{R}$ and $\mathcal{R}'$ share the same RDU representation on distribution-consensual prospects, and we shall denote $u$ and $\psi$ their common utility index and probability transformation.
+
+Now, take any expertise $\mathcal{E}$ and any non-constant vector $\mathbf{p} = (p_{1}, \dots, p_{K})$. Let $\mathbf{q} = (\psi(p_{1}), \dots, \psi(p_{K}))$. Define $u = u^{-1}(I(\mathbf{q}))$. Denote by $f(\mathbf{p}, \mathcal{E})$ the prospect with only extremal outcomes (i.e.\ $x \in \{x^{-}, x^{+}\}$) and such that $\mu_{k}^{f}(x^{+}) = p_{k}$. By comparative cautiousness, $f(\mathbf{p}, \mathcal{E}) \succ'_{\mathcal{E}} u$. By definition, $\mathcal{R} \ni f(\mathbf{p}, \mathcal{E}) \sim_{\mathcal{E}} u$ if and only if $V_{\mathcal{E}}(f) = u(x^{+}) = I(\mathbf{q})$, which holds by assumption. Thus, $f(\mathbf{p}, \mathcal{E}) \succ'_{\mathcal{E}} u$, i.e.\ $I'(\mathbf{q}) < I(\mathbf{q})$.
+
+Take any non distribution-consensual prospect $f$, distribution-consensual prospect $g$, and expertise $\mathcal{E}$ such that $f \succsim_{\mathcal{E}} g$. Defining $(\mathbf{q}_{n})$ the probabilities associated to $f$, notice that $\mathbf{p}_{n} = (p_{n,1}, \dots, p_{n,K})$ is non-constant for some $n$ so that $I(\mathbf{q}_{n}) < I'(\mathbf{q}_{n})$ for those $n$. For the remaining $n$ where $\mathbf{p}_{n} = (p, \dots, p)$ is constant, $I(\mathbf{q}_{n}) = I'(\mathbf{q}_{n}) = \psi(p)$. As $\mathcal{R}$ and $\mathcal{R}'$ share the representation functions $u$ and $\psi$ and by Definition~5 or 8, this implies $V'_{\mathcal{E}}(f) = V_{\mathcal{E}}(f) = V_{\mathcal{E}}(g) < V'_{\mathcal{E}}(g)$, i.e.\ $f \succ'_{\mathcal{E}} g$.
+
+\textbf{Proof of Proposition 10.} The $\Leftarrow$ direction can be proven just as above. For $\Rightarrow$, i.e.\ to prove the comparative ambiguity aversion, one needs to cover the three cases of Definition~9. To prove the last case, where $f \succ_{\mathcal{E}} g$ is non-utility-consensual, one just needs to adjust the $\Leftarrow$ part of the above proof, by taking a non-utility-consensual (instead of non-distribution-consensual) $f$. To prove the other cases, it suffices to use that $I < I'$ in the representations $\mathcal{R}$ and $\mathcal{R}'$.
+\end{original}
+
+\begin{translation}
+我们首先证明命题3，然后解释如何调整证明来证明命题10。
+
+\textbf{命题3的证明。}
+
+假设$\mathcal{R}$比$\mathcal{R}'$更谨慎。那么，使用定义3中第一个蕴含关系的逆否命题和第二个蕴含关系，对于任何专家知识$\mathcal{E}$和任何一对分布共识性前景$(f, g)$，有$f \succsim_{\mathcal{E}} g \iff f \succsim'_{\mathcal{E}} g$。因此，$\mathcal{R}$和$\mathcal{R}'$在分布共识性前景上共享相同的RDU表示，我们将$u$和$\psi$记作它们共同的效用指数和概率变换。
+
+现在，取任何专家知识$\mathcal{E}$和任何非常量向量$\mathbf{p} = (p_{1}, \dots, p_{K})$。令$\mathbf{q} = (\psi(p_{1}), \dots, \psi(p_{K}))$。定义$u = u^{-1}(I(\mathbf{q}))$。用$f(\mathbf{p}, \mathcal{E})$表示仅有极值结果（即$x \in \{x^{-}, x^{+}\}$）且满足$\mu_{k}^{f}(x^{+}) = p_{k}$的前景。由比较谨慎性，$f(\mathbf{p}, \mathcal{E}) \succ'_{\mathcal{E}} u$。根据定义，$\mathcal{R} \ni f(\mathbf{p}, \mathcal{E}) \sim_{\mathcal{E}} u$当且仅当$V_{\mathcal{E}}(f) = u(x^{+}) = I(\mathbf{q})$，这由假设成立。因此，$f(\mathbf{p}, \mathcal{E}) \succ'_{\mathcal{E}} u$，即$I'(\mathbf{q}) < I(\mathbf{q})$。
+
+取任何非分布共识性前景$f$、分布共识性前景$g$和专家知识$\mathcal{E}$使得$f \succsim_{\mathcal{E}} g$。定义与$f$相关联的概率$(\mathbf{q}_{n})$，注意到对某些$n$有$\mathbf{p}_{n} = (p_{n,1}, \dots, p_{n,K})$是非常量的，因此对这些$n$有$I(\mathbf{q}_{n}) < I'(\mathbf{q}_{n})$。对于其余的其中的$\mathbf{p}_{n} = (p, \dots, p)$是常量的$n$，有$I(\mathbf{q}_{n}) = I'(\mathbf{q}_{n}) = \psi(p)$。由于$\mathcal{R}$和$\mathcal{R}'$共享表示函数$u$和$\psi$，并且根据定义5或8，这意味着$V'_{\mathcal{E}}(f) = V_{\mathcal{E}}(f) = V_{\mathcal{E}}(g) < V'_{\mathcal{E}}(g)$，即$f \succ'_{\mathcal{E}} g$。
+
+\textbf{命题10的证明。} $\Leftarrow$方向可以如上证明。对于$\Rightarrow$方向，即证明比较模糊厌恶，需要涵盖定义9的三种情况。为了证明最后一种情况，其中$f \succ_{\mathcal{E}} g$是非效用共识性的，只需通过取非效用共识性（而非非分布共识性）的$f$来调整上述证明的$\Leftarrow$部分。为了证明其他情况，在表示$\mathcal{R}$和$\mathcal{R}'$中使用$I < I'$就足够了。
+\end{translation}
+
+\subsection*{C.3 Proof of Proposition 4}
+{\color{transblue}\subsubsection*{C.3 命题4的证明}}
+
+\begin{original}
+\textbf{Proof.} Denote by $(u, \psi, I)$ the representation of $\mathcal{R}$.
+
+($\Leftarrow$) Suppose that there exist weights as in the Proposition's statement, so that $I(p_{1}, \dots, p_{K}) = \sum_{k=1}^{K} w_{k} p_{k}$. Take any prospects $f, g$ and expertise $\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$ such that $f \succsim_{\mu_{k}} g$ for all $k$. By Definition~5, $V_{\mu_{k}}(f) \geq V_{\mu_{k}}(g)$, and by assumption, $V_{\mathcal{E}}(f) = \sum_{k=1}^{K} w_{k} V_{\mu_{k}}(f) \geq \sum_{k=1}^{K} w_{k} V_{\mu_{k}}(g) = V_{\mathcal{E}}(g)$, so that $f \succsim_{\mathcal{E}} g$.
+\end{original}
+
+\begin{translation}
+\textbf{证明。} 用$(u, \psi, I)$表示$\mathcal{R}$的表示。
+
+($\Leftarrow$) 假设存在如命题陈述中的权重，使得$I(p_{1}, \dots, p_{K}) = \sum_{k=1}^{K} w_{k} p_{k}$。取任何前景$f, g$和专家知识$\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$使得对所有$k$有$f \succsim_{\mu_{k}} g$。根据定义5，$V_{\mu_{k}}(f) \geq V_{\mu_{k}}(g)$，且由假设，$V_{\mathcal{E}}(f) = \sum_{k=1}^{K} w_{k} V_{\mu_{k}}(f) \geq \sum_{k=1}^{K} w_{k} V_{\mu_{k}}(g) = V_{\mathcal{E}}(g)$，因此$f \succsim_{\mathcal{E}} g$。
+\end{translation}
+
+\begin{original}
+($\Rightarrow$) This direction is more involved. The full proof with the construction of specific prospects and the Lemma are detailed in the paper, showing that the Pareto condition forces linearity of $I$. We refer the reader to the main text for the complete sketch and to the published paper for the full formal argument.\footnote{We are grateful to R\'{e}mi Peyre who gave us the idea of the proof.}
+\end{original}
+
+\begin{translation}
+($\Rightarrow$) 这个方向更复杂。具有特定前景构造和引理的完整证明在论文中详细给出，表明帕累托条件迫使$I$具有线性性。我们引导读者参阅正文中的完整概要和已发表论文中完整的形式化论证。\footnote{我们感谢R\'{e}mi Peyre提供了证明的思路。}
+\end{translation}
+
+\begin{original}
+\textbf{Lemma 1.} Let $M > 0$ and let $\psi: [0, M] \to [0, 1]$ a continuous and strictly increasing function such that for all $\varepsilon > 0$, there exists $\delta > 0$ such that for all $x \in [0, M]$, $\psi(x - \delta) + \psi(x + \delta) = \psi(x) + \psi(x)$. Then there exists $\alpha > 0$ such that for all $x \in [0, M]$, $\psi(x) = \psi(0) + \alpha x = \psi(M) - \alpha(M - x)$.
+\end{original}
+
+\begin{translation}
+\textbf{引理1。} 设$M > 0$，$\psi: [0, M] \to [0, 1]$是一个连续且严格递增的函数，使得对所有$\varepsilon > 0$，存在$\delta > 0$使得对所有$x \in [0, M]$，$\psi(x - \delta) + \psi(x + \delta) = \psi(x) + \psi(x)$。则存在$\alpha > 0$使得对所有$x \in [0, M]$，$\psi(x) = \psi(0) + \alpha x = \psi(M) - \alpha(M - x)$。
+\end{translation}
+
+\begin{original}
+\textbf{Proof (of Lemma 1).} Define $\alpha = \frac{1}{M}(\psi(M) - \psi(0))$. By definition, $\psi(0) + \alpha M = \psi(M) - \alpha(M - M)$. Suppose by the absurd that there exists $x \in [0, M]$ such that $\psi(x) \neq \psi(0) + \alpha x$. It is clear that $x \in (0, M)$. Without loss of generality, assume $\psi(x) < \psi(0) + \alpha x$. Define $\underline{x} = \inf\{y > x \mid \psi(y) = \psi(0) + \alpha y\}$ and $\overline{x} = \sup\{y < x \mid \psi(y) = \psi(0) + \alpha y\}$. By continuity of $\psi$, $\psi(\underline{x}) = \psi(0) + \alpha \underline{x}$, $\psi(\overline{x}) = \psi(0) + \alpha \overline{x}$, and there exists $\varepsilon, \eta > 0$ such that $\forall y \in [\underline{x} - \varepsilon, \underline{x})$, $\psi(y) < \psi(0) + \alpha y$ and $\forall y \in (\overline{x}, \overline{x} + \eta]$, $\psi(y) < \psi(0) + \alpha y$. By hypothesis, there exists $\delta > 0$ such that for all $y \in [0, M]$, $\psi(y - \delta) + \psi(y + \delta) = \psi(y) + \psi(y)$. Define $\delta' = \min\{\delta, \varepsilon, \eta\}$. By construction, we have $\psi(\underline{x} - \delta') < \psi(0) + \alpha(\underline{x} - \delta')$ and $\psi(\overline{x} + \delta') < \psi(0) + \alpha(\overline{x} + \delta')$. Summing the last two inequalities, we obtain $\psi(\underline{x} - \delta') + \psi(\overline{x} + \delta') < 2\psi(0) + \alpha(\underline{x} + \overline{x})$. We also have $\psi(\underline{x} - \delta') + \psi(\overline{x} + \delta') = \psi(\underline{x}) + \psi(\overline{x})$. From the above, this implies $\psi(\underline{x} - \delta') + \psi(\overline{x} + \delta') = 2\psi(0) + \alpha(\underline{x} + \overline{x})$, which contradicts the previous inequality.
+\end{original}
+
+\begin{translation}
+\textbf{证明（引理1）。} 定义$\alpha = \frac{1}{M}(\psi(M) - \psi(0))$。根据定义，$\psi(0) + \alpha M = \psi(M) - \alpha(M - M)$。反设存在$x \in [0, M]$使得$\psi(x) \neq \psi(0) + \alpha x$。显然$x \in (0, M)$。不失一般性，假设$\psi(x) < \psi(0) + \alpha x$。定义$\underline{x} = \inf\{y > x \mid \psi(y) = \psi(0) + \alpha y\}$和$\overline{x} = \sup\{y < x \mid \psi(y) = \psi(0) + \alpha y\}$。由$\psi$的连续性，$\psi(\underline{x}) = \psi(0) + \alpha \underline{x}$，$\psi(\overline{x}) = \psi(0) + \alpha \overline{x}$，且存在$\varepsilon, \eta > 0$使得$\forall y \in [\underline{x} - \varepsilon, \underline{x})$，$\psi(y) < \psi(0) + \alpha y$以及$\forall y \in (\overline{x}, \overline{x} + \eta]$，$\psi(y) < \psi(0) + \alpha y$。根据假设，存在$\delta > 0$使得对所有$y \in [0, M]$，$\psi(y - \delta) + \psi(y + \delta) = \psi(y) + \psi(y)$。定义$\delta' = \min\{\delta, \varepsilon, \eta\}$。由构造，我们有$\psi(\underline{x} - \delta') < \psi(0) + \alpha(\underline{x} - \delta')$和$\psi(\overline{x} + \delta') < \psi(0) + \alpha(\overline{x} + \delta')$。将最后两个不等式相加，我们得到$\psi(\underline{x} - \delta') + \psi(\overline{x} + \delta') < 2\psi(0) + \alpha(\underline{x} + \overline{x})$。我们也有$\psi(\underline{x} - \delta') + \psi(\overline{x} + \delta') = \psi(\underline{x}) + \psi(\overline{x})$。由上述，这意味着$\psi(\underline{x} - \delta') + \psi(\overline{x} + \delta') = 2\psi(0) + \alpha(\underline{x} + \overline{x})$，与前一个不等式矛盾。
+\end{translation}
+
+\subsection*{C.4 Proof of Proposition 5}
+{\color{transblue}\subsubsection*{C.4 命题5的证明}}
+
+\begin{original}
+Set $V^{d}(x) = \sum_{n=1}^{N} \sigma_{n}(x) \; I^{d}\!\big(\psi(p^{1}_{n}(x)), \dots, \psi(p^{K}_{n}(x))\big)$. The first-order condition of (9) is:
+\[
+\frac{\partial V^{d}}{\partial x}(x) = \sum_{n=2}^{N} \Big(u_{1}(x, \theta_{n}) - u_{1}(x, \theta_{n-1})\Big) I^{d}\!\big(\psi(p^{1}_{n}(x)), \dots, \psi(p^{K}_{n}(x))\big) + u_{1}(x, \theta_{1}) = 0, \tag{C.3}
+\]
+given that we have $I^{d}(\psi(p^{1}_{1}), \dots, \psi(p^{K}_{1})) = I^{d}(1, \dots, 1) = 1$. Since decision-maker $A$ is more cautious than $B$, we have $I^{A}(\psi(p^{1}_{n}), \dots, \psi(p^{K}_{n})) \leq I^{B}(\psi(p^{1}_{n}), \dots, \psi(p^{K}_{n}))$ for all $n$ with strict inequality for some $n$ since the group of experts disagrees. If $u_{1}(x, \theta)$ strictly increases with $\theta$, we have $\frac{\partial V^{A}}{\partial x}(x) < \frac{\partial V^{B}}{\partial x}(x)$. The function $V(x)$ being strictly concave in $x$ one has $\frac{\partial^{2} V^{A}}{\partial x^{2}} < 0$ and $\frac{\partial^{2} V^{B}}{\partial x^{2}} < 0$. Thus, it must be the case that $x^{A} < x^{B}$. If $u_{1}(x, \theta)$ strictly decreases with $\theta$, we have $\frac{\partial V^{A}}{\partial x}(x) > \frac{\partial V^{B}}{\partial x}(x)$ and $x^{A} > x^{B}$.
+\end{original}
+
+\begin{translation}
+设$V^{d}(x) = \sum_{n=1}^{N} \sigma_{n}(x) \; I^{d}\!\big(\psi(p^{1}_{n}(x)), \dots, \psi(p^{K}_{n}(x))\big)$。（9）式的一阶条件为：
+\[
+\frac{\partial V^{d}}{\partial x}(x) = \sum_{n=2}^{N} \Big(u_{1}(x, \theta_{n}) - u_{1}(x, \theta_{n-1})\Big) I^{d}\!\big(\psi(p^{1}_{n}(x)), \dots, \psi(p^{K}_{n}(x))\big) + u_{1}(x, \theta_{1}) = 0, \tag{C.3}
+\]
+因为$I^{d}(\psi(p^{1}_{1}), \dots, \psi(p^{K}_{1})) = I^{d}(1, \dots, 1) = 1$。由于决策者$A$比$B$更谨慎，对所有$n$有$I^{A}(\psi(p^{1}_{n}), \dots, \psi(p^{K}_{n})) \leq I^{B}(\psi(p^{1}_{n}), \dots, \psi(p^{K}_{n}))$，且由于专家组存在分歧，对某些$n$严格不等式成立。如果$u_{1}(x, \theta)$关于$\theta$严格递增，则$\frac{\partial V^{A}}{\partial x}(x) < \frac{\partial V^{B}}{\partial x}(x)$。函数$V(x)$关于$x$严格凹，因此$\frac{\partial^{2} V^{A}}{\partial x^{2}} < 0$和$\frac{\partial^{2} V^{B}}{\partial x^{2}} < 0$。因此，必然有$x^{A} < x^{B}$。如果$u_{1}(x, \theta)$关于$\theta$严格递减，则$\frac{\partial V^{A}}{\partial x}(x) > \frac{\partial V^{B}}{\partial x}(x)$且$x^{A} > x^{B}$。
+\end{translation}
+
+\subsection*{C.5 Proof of Proposition 6}
+{\color{transblue}\subsubsection*{C.5 命题6的证明}}
+
+\begin{original}
+Consider the smooth ``KMM'' form (1) with functions $\phi^{d}$. Set $V^{d}(x) = \phi^{d}\!\left(\sum_{k=1}^{K} w^{d}_{k} \phi^{d}\!\big(\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{k}_{n}(x))\big)\right)$. Solving (10) is equivalent to maximizing $V^{d}(x)$ which gives the first-order condition:
+\[
+\frac{\partial V^{d}}{\partial x}(x) = \sum_{k=1}^{K} \phi^{d\prime}\!\left( \sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{k}_{n}(x)) \right) \cdot \sum_{n=2}^{N} \Big(u_{1}(x, \theta_{n}) - u_{1}(x, \theta_{n-1})\Big) \psi(p^{k}_{n}(x)) + u_{1}(x, \theta_{1}) = 0. \tag{C.4}
+\]
+
+Since the experts are ordered in the sense of first-order stochastic dominance and $\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0$, we have $\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{1}_{n}(x)) \geq \sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{2}_{n}(x)) \geq \dots \geq \sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{K}_{n}(x))$ with at least one strict inequality given that the group of experts disagrees. By the likelihood ratio argument detailed in the paper, the distribution $(\phi^{A\prime}, \dots)$ strictly dominates the distribution $(\phi^{B\prime}, \dots)$ in the sense of monotone likelihood ratio, which implies that the former strictly first-order stochastically dominates the latter. This yields $\frac{\partial V^{A}}{\partial x}(x) < 0$ and therefore $x^{A} < x^{B}$ (resp.\ $x^{A} > x^{B}$ when the cross-derivative is negative).
+\end{original}
+
+\begin{translation}
+考虑具有函数$\phi^{d}$的光滑"KMM"形式（1）。设$V^{d}(x) = \phi^{d}\!\left(\sum_{k=1}^{K} w^{d}_{k} \phi^{d}\!\big(\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{k}_{n}(x))\big)\right)$。求解（10）等价于最大化$V^{d}(x)$，这给出了一阶条件：
+\[
+\frac{\partial V^{d}}{\partial x}(x) = \sum_{k=1}^{K} \phi^{d\prime}\!\left( \sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{k}_{n}(x)) \right) \cdot \sum_{n=2}^{N} \Big(u_{1}(x, \theta_{n}) - u_{1}(x, \theta_{n-1})\Big) \psi(p^{k}_{n}(x)) + u_{1}(x, \theta_{1}) = 0. \tag{C.4}
+\]
+
+由于专家按一阶随机占优排序且$\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} > 0$，有$\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{1}_{n}(x)) \geq \sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{2}_{n}(x)) \geq \dots \geq \sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{K}_{n}(x))$，且由于专家组存在分歧至少有一个严格不等式。通过论文中详述的似然比论证，分布$(\phi^{A\prime}, \dots)$在单调似然比意义上严格占优于分布$(\phi^{B\prime}, \dots)$，这意味着前者严格一阶随机占优于后者。这得出$\frac{\partial V^{A}}{\partial x}(x) < 0$，因此$x^{A} < x^{B}$（当交叉导数为负时相应地$x^{A} > x^{B}$）。
+\end{translation}
+
+\subsection*{C.6 Proof of Proposition 7}
+{\color{transblue}\subsubsection*{C.6 命题7的证明}}
+
+\begin{original}
+A direct application of Proposition~5 shows that the optimal action $x_{D,\lambda}$ is increasing with $\lambda$. On the other hand, we cannot apply Proposition~6 since experts are not ordered in terms of first-order stochastic dominance. Following a reasoning similar to the proof of Proposition~6, we show that the optimal action $x_{E,\lambda}$ is decreasing with $\lambda$. We show this result for the precautionary savings example. The reasoning is the same for the climate mitigation example.
+
+With an expected-utility-averaging decision-rule and a smooth ``KMM'' form, the optimal saving level satisfies (C.5) with $N = 3$ states of nature, $\theta_{1} = 0$, $\theta_{2} = 1$, $\theta_{3} = 3$, $K = 2$ experts, $\pi^{1}_{1} = 1$, $\pi^{1}_{2} = 1$, $\pi^{1}_{3} = 0$, $\pi^{2}_{1} = 0.6$, $\pi^{2}_{2} = 0$, $\pi^{2}_{3} = 0.4$, $x \in [0, 0.9]$ and $u(x, \theta) = 2 - x - \frac{1}{8}(2 - x)^{2} + \theta + (1 + r)x - \frac{1}{8}(\theta + (1 + r)x)^{2}$. In contrast with the proof of Proposition~6, we have $\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{1}_{n}(x))$ strictly larger than $\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{2}_{n}(x))$. Considering $\phi^{A}$ more concave than $\phi^{B}$, this implies that the likelihood ratio of $(\phi^{A\prime}, \dots)$ and $(\phi^{B\prime}, \dots)$ is strictly increasing with $\theta$, and the distribution $(\phi^{A\prime}, \dots)$ is strictly first-order stochastically dominated by $(\phi^{B\prime}, \dots)$. Moreover, we have $\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} < 0$ and $\sum \dots_{1} > \sum \dots_{2}$. Thus, for a given $x$, $\sum_{n=1}^{N} \frac{\partial V^{A}}{\partial x}(x) < \sum_{n=1}^{N} \frac{\partial V^{B}}{\partial x}(x)$. This implies $\frac{\partial V^{A}}{\partial x}(x) < 0$ and $x^{A} < x^{B}$. Finally, this shows that with a KMM kind of aggregator of the form (11), the optimal saving level $x_{E,\lambda}$ is decreasing with the ambiguity aversion parameter $\lambda$.
+\end{original}
+
+\begin{translation}
+直接应用命题5表明，最优行动$x_{D,\lambda}$随$\lambda$增加而增加。另一方面，由于专家不是按一阶随机占优排序的，我们不能应用命题6。遵循与命题6证明类似的推理，我们证明最优行动$x_{E,\lambda}$随$\lambda$增加而减少。我们就预防性储蓄的例子证明这一结果。气候减缓例子的推理是相同的。
+
+使用期望效用平均决策规则和光滑的"KMM"形式，最优储蓄水平满足（C.5），其中$N = 3$个自然状态，$\theta_{1} = 0$，$\theta_{2} = 1$，$\theta_{3} = 3$，$K = 2$位专家，$\pi^{1}_{1} = 1$，$\pi^{1}_{2} = 1$，$\pi^{1}_{3} = 0$，$\pi^{2}_{1} = 0.6$，$\pi^{2}_{2} = 0$，$\pi^{2}_{3} = 0.4$，$x \in [0, 0.9]$且$u(x, \theta) = 2 - x - \frac{1}{8}(2 - x)^{2} + \theta + (1 + r)x - \frac{1}{8}(\theta + (1 + r)x)^{2}$。与命题6的证明不同，我们有$\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{1}_{n}(x))$严格大于$\sum_{n=1}^{N} \sigma_{n}(x) \psi(p^{2}_{n}(x))$。考虑到$\phi^{A}$比$\phi^{B}$更凹，这意味着$(\phi^{A\prime}, \dots)$和$(\phi^{B\prime}, \dots)$的似然比随$\theta$严格递增，且分布$(\phi^{A\prime}, \dots)$被$(\phi^{B\prime}, \dots)$严格一阶随机占优。此外，我们有$\frac{\partial^{2} u(x,\theta)}{\partial x \partial \theta} < 0$且$\sum \dots_{1} > \sum \dots_{2}$。因此，对于给定的$x$，$\sum_{n=1}^{N} \frac{\partial V^{A}}{\partial x}(x) < \sum_{n=1}^{N} \frac{\partial V^{B}}{\partial x}(x)$。这意味着$\frac{\partial V^{A}}{\partial x}(x) < 0$且$x^{A} < x^{B}$。最后，这表明对于形式为（11）的KMM类型聚合器，最优储蓄水平$x_{E,\lambda}$随模糊厌恶参数$\lambda$增加而减少。
+\end{translation}
+
+\subsection*{C.7 Proof of Proposition 9}
+{\color{transblue}\subsubsection*{C.7 命题9的证明}}
+
+\begin{original}
+For any expertise $\mathcal{E}$, notice that to any prospect $f$, we can associate a unique vector $(\sigma_{1}, \dots, \sigma_{N})$ (defined as in Definition~5) and a unique matrix $(\delta_{n,k})$ of transformed probabilities ($\delta_{n,k} = \psi(p^{k}_{n})$) as in the Proposition's statement. Reciprocally, to any such pair $((\sigma_{n}), (\delta_{n,k}))$, we can construct a corresponding prospect $f$, even if it means choosing a suitable expertise $\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$. Consider either a prospect $f$ or its corresponding pair $((\sigma_{n}), (\delta_{n,k}))$.
+
+As the decision-rule is RDU on distribution-consensual prospects, if $f$ is distribution-consensual we have $\delta_{n,k} = \delta_{n,\ell}$ for all $k,\ell$. Thus $\sum_{n=1}^{N} \sigma_{n} I(\delta_{n,1}, \dots, \delta_{n,K}) = V_{\mathcal{E}}(f) = \max_{k} V_{\mu_{k}}(f) = \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}$.
+
+Now, notice that $f$ is non distribution-consensual if and only if there are indices $n, k, \ell$ such that $\delta_{n,k} \neq \delta_{n,\ell}$ and $\sigma_{n} > 0$. Take any such $((\sigma_{n}), (\delta_{n,k}))$ and consider the outcome $\hat{n}$ such that $V_{\mathcal{E}}(f) = \max_{k} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}$, so that $f \sim_{\mathcal{E}} c$. Then, if the decision-rule is cautious, we have $c \succ_{\mathcal{E}} f$, i.e.\ $\max_{k} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k} > \sum_{n=1}^{N} \sigma_{n} I(\delta_{n,1}, \dots, \delta_{n,K})$. Reciprocally, take any non-distribution-consensual prospect $f$ and consider any outcome $c$ such that $f \sim_{\mu_{k}} c$ for all $k$. If the Proposition's condition holds, we have $V_{\mathcal{E}}(f) < \max_{k} V_{\mu_{k}}(f) = u(c)$, i.e.\ $c \succ_{\mathcal{E}} f$. The decision-rule is therefore cautious.
+\end{original}
+
+\begin{translation}
+对于任何专家知识$\mathcal{E}$，注意对于任何前景$f$，我们可以关联一个唯一的向量$(\sigma_{1}, \dots, \sigma_{N})$（如定义5所定义）和一个唯一的变换概率矩阵$(\delta_{n,k})$（$\delta_{n,k} = \psi(p^{k}_{n})$），如命题陈述中所示。反过来，对于任何这样的一对$((\sigma_{n}), (\delta_{n,k}))$，我们可以构造一个相应的前景$f$，即使这意味着选择一个合适的专家知识$\mathcal{E} = (\mu_{1}, \dots, \mu_{K})$。考虑一个前景$f$或其对应的一对$((\sigma_{n}), (\delta_{n,k}))$。
+
+由于决策规则在分布共识性前景上是RDU，如果$f$是分布共识性的，则对所有$k,\ell$有$\delta_{n,k} = \delta_{n,\ell}$。因此$\sum_{n=1}^{N} \sigma_{n} I(\delta_{n,1}, \dots, \delta_{n,K}) = V_{\mathcal{E}}(f) = \max_{k} V_{\mu_{k}}(f) = \max_{1 \leq k \leq K} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}$。
+
+现在，注意$f$是非分布共识性的当且仅当存在指标$n, k, \ell$使得$\delta_{n,k} \neq \delta_{n,\ell}$且$\sigma_{n} > 0$。取任何这样的$((\sigma_{n}), (\delta_{n,k}))$并考虑结果$\hat{n}$使得$V_{\mathcal{E}}(f) = \max_{k} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k}$，从而$f \sim_{\mathcal{E}} c$。则如果决策规则是谨慎的，我们有$c \succ_{\mathcal{E}} f$，即$\max_{k} \sum_{n=1}^{N} \sigma_{n} \delta_{n,k} > \sum_{n=1}^{N} \sigma_{n} I(\delta_{n,1}, \dots, \delta_{n,K})$。反过来，取任何非分布共识性前景$f$，并考虑任何结果$c$使得对所有$k$有$f \sim_{\mu_{k}} c$。如果命题的条件成立，我们有$V_{\mathcal{E}}(f) < \max_{k} V_{\mu_{k}}(f) = u(c)$，即$c \succ_{\mathcal{E}} f$。因此决策规则是谨慎的。
+\end{translation}
+
+\subsection*{C.8 Proof of Proposition 11}
+{\color{transblue}\subsubsection*{C.8 命题11的证明}}
+
+\begin{original}
+Take any expertise $\mathcal{E}$, prospect $f$ with at least one non-extremal outcome, and distribution-consensual prospect $g$. As $\mathcal{R}_{D}$ and $\mathcal{R}_{E}$ share the functions $u$ and $\psi$, they coincide on distribution-consensual prospects, and we can denote $V_{\mathcal{E}}(g) = V_{\mathcal{R}_{D}}(g) = V_{\mathcal{R}_{E}}(g)$. Also, if $f$ is distribution-consensual, $f \sim_{\mathcal{R}_{D}} f \sim_{\mathcal{R}_{E}} f$.
+
+For the remainder of the proof, we consider the case where $f$ is non distribution-consensual, so that $(\delta_{n,1}, \dots, \delta_{n,K})$ is non-constant for some $n$ such that $\sigma_{n} > 0$. Set $\delta_{n,K+1} = 1 - \sum_{k=1}^{K} \delta_{n,k}$ and $\sigma_{n,K+1} = 0$ for all $1 \leq n \leq N$. The strict concavity inequality yields: $\sum_{n=1}^{N} \sigma_{n} I(\delta_{n,1}, \dots, \delta_{n,K}) < I\!\left(\sum_{n=1}^{N} \sigma_{n} \delta_{n,1}, \dots, \sum_{n=1}^{N} \sigma_{n} \delta_{n,K}\right)$. That is $V_{\mathcal{R}_{D}}(f) < V_{\mathcal{R}_{E}}(f)$. Thus, $V_{\mathcal{R}_{D}}(f) < V_{\mathcal{R}_{E}}(f) \leq V_{\mathcal{R}_{E}}(g)$. To conclude, notice that we have covered all cases needed to prove that $\mathcal{R}_{D}$ exhibits greater ambiguity aversion and greater cautiousness than $\mathcal{R}_{E}$.
+\end{original}
+
+\begin{translation}
+取任何专家知识$\mathcal{E}$、至少有一个非极值结果的前景$f$和分布共识性前景$g$。由于$\mathcal{R}_{D}$和$\mathcal{R}_{E}$共享函数$u$和$\psi$，它们在分布共识性前景上重合，我们可以记$V_{\mathcal{E}}(g) = V_{\mathcal{R}_{D}}(g) = V_{\mathcal{R}_{E}}(g)$。此外，如果$f$是分布共识性的，$f \sim_{\mathcal{R}_{D}} f \sim_{\mathcal{R}_{E}} f$。
+
+对于证明的其余部分，我们考虑$f$是非分布共识性的情况，因此对某些$\sigma_{n} > 0$的$n$，$(\delta_{n,1}, \dots, \delta_{n,K})$是非常量的。设$\delta_{n,K+1} = 1 - \sum_{k=1}^{K} \delta_{n,k}$且对所有$1 \leq n \leq N$有$\sigma_{n,K+1} = 0$。严格凹性不等式给出：$\sum_{n=1}^{N} \sigma_{n} I(\delta_{n,1}, \dots, \delta_{n,K}) < I\!\left(\sum_{n=1}^{N} \sigma_{n} \delta_{n,1}, \dots, \sum_{n=1}^{N} \sigma_{n} \delta_{n,K}\right)$。也就是说$V_{\mathcal{R}_{D}}(f) < V_{\mathcal{R}_{E}}(f)$。因此，$V_{\mathcal{R}_{D}}(f) < V_{\mathcal{R}_{E}}(f) \leq V_{\mathcal{R}_{E}}(g)$。最后，注意我们已经涵盖了证明$\mathcal{R}_{D}$比$\mathcal{R}_{E}$表现出更大模糊厌恶和更大谨慎性所需的所有情况。
+\end{translation}
+
+\newpage
+% ============ APPENDIX D: REPRESENTATION RESULT ============
+\section*{Appendix D. Representation Result}
+{\color{transblue}\subsection*{附录D. 表示结果}}
+
+\begin{original}
+\textbf{Remark 5.} From Axioms~1 and 2, we can derive a natural weak order on $\mathcal{D}^{K}$, denoted by $\succsim$, by comparing each pair of assessments through a pair of sure prospects they are equivalent to. Formally, let $\mathbf{D}, \mathbf{D}' \in \mathcal{D}^{K}$. Let $f, g \in \mathcal{X}^{\Omega}$ and $\mathcal{E}, \mathcal{E}'$ such that $\mathbf{D}_{\mathcal{E}}^{f} = \mathbf{D}$ and $\mathbf{D}_{\mathcal{E}'}^{g} = \mathbf{D}'$ (it is easy to verify that such $f, g, \mathcal{E}, \mathcal{E}'$ always exist). From Axiom~1, we know that there exists $c \in \mathcal{X}$ such that $f \sim_{\mathcal{E}} c$ and from Axiom~2, this $c$ must be unique. We can thus identify $\mathbf{D}$ with $c$. Similarly, we identify $\mathbf{D}'$ with a certain $c' \in \mathcal{X}$ such that $g \sim_{\mathcal{E}'} c'$. We can then set $\mathbf{D} \succsim \mathbf{D}' \iff c \geq c'$.
+\end{original}
+
+\begin{translation}
+\textbf{注5。} 从公理1和2中，我们可以通过对每对评估通过它们等价的一对确定前景进行比较，推导出$\mathcal{D}^{K}$上的一个自然弱序$\succsim$。形式上，令$\mathbf{D}, \mathbf{D}' \in \mathcal{D}^{K}$。令$f, g \in \mathcal{X}^{\Omega}$和$\mathcal{E}, \mathcal{E}'$使得$\mathbf{D}_{\mathcal{E}}^{f} = \mathbf{D}$和$\mathbf{D}_{\mathcal{E}'}^{g} = \mathbf{D}'$（容易验证这样的$f, g, \mathcal{E}, \mathcal{E}'$总是存在的）。从公理1，我们知道存在$c \in \mathcal{X}$使得$f \sim_{\mathcal{E}} c$，且从公理2，这个$c$必须是唯一的。因此我们可以将$\mathbf{D}$与$c$等同。类似地，我们将$\mathbf{D}'$与某个满足$g \sim_{\mathcal{E}'} c'$的$c' \in \mathcal{X}$等同。然后我们可以设定$\mathbf{D} \succsim \mathbf{D}' \iff c \geq c'$。
+\end{translation}
+
+\begin{original}
+Let us show that $\succsim$ is continuous, in the sense that for all sequences $(\mathbf{D}_{n})$ converging to $\mathbf{D}$, for all outcomes $c, c'$, $c \geq c'$ and $c' \geq c$ imply $\mathbf{D}_{n} \succsim \mathbf{D} \succsim \mathbf{D}_{n}$ eventually. The formal argument using Axiom~2 is detailed in the paper.
+
+By a similar argument, defining $\mathbf{D}_{\mathcal{E}}^{f} = \mathbf{D}$, Definition~5 can be restated in terms of assessments instead of prospects, and formula (7) becomes:
+\[
+V(\mathbf{D}) = \sum_{i=1}^{n} \sigma_{i} \; \tilde{I}(p^{1}_{i}, \dots, p^{K}_{i}). \tag{D.1}
+\]
+\end{original}
+
+\begin{translation}
+让我们证明$\succsim$是连续的，其意义是对于所有收敛到$\mathbf{D}$的序列$(\mathbf{D}_{n})$，对所有结果$c, c'$，$c \geq c'$且$c' \geq c$最终蕴含着$\mathbf{D}_{n} \succsim \mathbf{D} \succsim \mathbf{D}_{n}$。论文中详述了使用公理2的形式化论证。
+
+通过类似的论证，定义$\mathbf{D}_{\mathcal{E}}^{f} = \mathbf{D}$，定义5可以用评估而非前景重述，且公式（7）变为：
+\[
+V(\mathbf{D}) = \sum_{i=1}^{n} \sigma_{i} \; \tilde{I}(p^{1}_{i}, \dots, p^{K}_{i}). \tag{D.1}
+\]
+\end{translation}
+
+\begin{original}
+\textbf{Definition 10.} We denote $\mathcal{O}_{n} = \{(x_{1}, \dots, x_{n}) \in \mathcal{X}^{n} \mid x_{1} \leq \dots \leq x_{n}\}$ the set of non-decreasing sequences of outcomes with $n$ elements. The set of outcomes of $\mathbf{D}$ is defined by $\mathcal{X}_{\mathbf{D}} = \{x \in \mathcal{X} \mid \exists \omega, \mathbf{D}(\omega) = x\}$. Let us also denote $\mathcal{A}_{n} = \{\mathbf{D} \in \mathcal{D}^{K} \mid |\mathcal{X}_{\mathbf{D}}| \leq n\}$ the subset of assessments with no more than $n$ outcomes.
+\end{original}
+
+\begin{translation}
+\textbf{定义10。} 我们记$\mathcal{O}_{n} = \{(x_{1}, \dots, x_{n}) \in \mathcal{X}^{n} \mid x_{1} \leq \dots \leq x_{n}\}$为具有$n$个元素的非递减结果序列集。$\mathbf{D}$的结果集定义为$\mathcal{X}_{\mathbf{D}} = \{x \in \mathcal{X} \mid \exists \omega, \mathbf{D}(\omega) = x\}$。我们也记$\mathcal{A}_{n} = \{\mathbf{D} \in \mathcal{D}^{K} \mid |\mathcal{X}_{\mathbf{D}}| \leq n\}$为具有不超过$n$个结果的评估子集。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 6.} $\mathcal{A}_{n}$ is equivalent to $\mathcal{A}_{n}$ in Wakker (1993), $\mathcal{A}_{n}$ in Chateauneuf (1999) and $\mathcal{A}_{n}$ in Bommier (2017).
+\end{original}
+
+\begin{translation}
+\textbf{注6。} $\mathcal{A}_{n}$等价于Wakker（1993）中的$\mathcal{A}_{n}$、Chateauneuf（1999）中的$\mathcal{A}_{n}$和Bommier（2017）中的$\mathcal{A}_{n}$。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 7.} Take any expertise $\mathcal{E}$. Consider a prospect $f$ (or an assessment $\mathbf{D}$), we denote $\mathbf{x} = (x_{1}, \dots, x_{n}) \in \mathcal{O}_{n}$ its outcomes organized in strictly increasing order. There exists $\boldsymbol{\delta} = (\delta_{i,k}) \in [0,1]^{n \times K}$ such that $\mu_{k}^{f}(x_{i}) = \delta_{i,k}$ for $i \in \{1, \dots, n\}$. Besides, such pair $(\mathbf{x}, \boldsymbol{\delta})$ is unique. Conversely, each pair $(\mathbf{x}, \boldsymbol{\delta})$ defines a unique assessment $\mathbf{D}$ defined by $\mathbf{D}_{k}(x) = \delta_{i,k}$ if $x_{i-1} < x \leq x_{i}$ for $i \in \{2, \dots, n\}$, $\mathbf{D}_{k}(x) = 0$ if $x < x_{1}$, and $\mathbf{D}_{k}(x) = 1$ if $x \geq x_{1}$. Consequently, we identify any pair $(\mathbf{x}, \boldsymbol{\delta})$ with its assessment $\mathbf{D}$, and we identify an assessment $\mathbf{D}$ with any of its corresponding pair $(\mathbf{x}, \boldsymbol{\delta})$. As a notation convention, when $n=2$, we often denote $(\mathbf{B}^{x^{+},x^{-}}_{\omega}, \boldsymbol{\delta})$ by $(\mathbf{B}, \delta)$.
+\end{original}
+
+\begin{translation}
+\textbf{注7。} 取任何专家知识$\mathcal{E}$。考虑一个前景$f$（或一个评估$\mathbf{D}$），我们记$\mathbf{x} = (x_{1}, \dots, x_{n}) \in \mathcal{O}_{n}$为其按严格递增顺序组织的结果。存在$\boldsymbol{\delta} = (\delta_{i,k}) \in [0,1]^{n \times K}$使得对$i \in \{1, \dots, n\}$有$\mu_{k}^{f}(x_{i}) = \delta_{i,k}$。此外，这样的一对$(\mathbf{x}, \boldsymbol{\delta})$是唯一的。反过来，每一对$(\mathbf{x}, \boldsymbol{\delta})$定义了一个唯一的评估$\mathbf{D}$，由$\mathbf{D}_{k}(x) = \delta_{i,k}$定义，如果对$i \in \{2, \dots, n\}$有$x_{i-1} < x \leq x_{i}$，$\mathbf{D}_{k}(x) = 0$如果$x < x_{1}$，且$\mathbf{D}_{k}(x) = 1$如果$x \geq x_{1}$。因此，我们将任何一对$(\mathbf{x}, \boldsymbol{\delta})$与其评估$\mathbf{D}$等同，并且我们将一个评估$\mathbf{D}$与其任何相应的对$(\mathbf{x}, \boldsymbol{\delta})$等同。作为记法约定，当$n=2$时，我们经常用$(\mathbf{B}, \delta)$表示$(\mathbf{B}^{x^{+},x^{-}}_{\omega}, \boldsymbol{\delta})$。
+\end{translation}
+
+\begin{original}
+\textbf{Proof (Proof of Proposition 1).} To derive the representation for assessments, let us start by fixing the number of outcomes $n$ and treat separately the cases $n=2$ and $n \geq 3$.
+
+\textbf{1. Definition of $I$; $n=1$.} Let us denote by $\mathbf{B} = (x^{-}, x^{+})$ the pair of extremal outcomes. Take $u$, $\psi$ and $I$ as in the RDU (Axiom~6). Without loss of generality, let us assume $u(x^{-}) = 0$ and $u(x^{+}) = 1$. We denote by $\mathbf{1}_{k}$ the vector $(0, \dots, 1, \dots, 0)$. We have $\mathbf{B}^{x^{+},x^{-}}_{\omega}, \delta \sim_{\mathcal{E}} c(\delta)$ for any $\delta \in [0,1]$. Take any $\mathbf{D} \in \mathcal{D}^{K}$ and define $u = u^{-1}(V(\mathbf{D})) \in [0,1]$. By RDU on distribution-consensual prospects (Axiom~6), $V(\mathbf{D}) = u(x^{+})$ implies that $c$ is the unique number such that $\mathbf{D} \sim c$. Similarly, take any $\mathbf{D} \in \mathcal{D}^{K}$. By Axiom~1, there is $c \in \mathcal{X}$ such that $\mathbf{D} \sim_{\mathcal{E}} c$. Hence, there is a unique $v \in [0,1]$ such that $\mathbf{D} \sim \mathbf{B}^{x^{+},x^{-}}_{\omega, v}$. Let us define $I(\psi^{-1}(p_{1}), \dots, \psi^{-1}(p_{K})) = v$, and $V(\mathbf{D}) = u(x^{+}) \cdot I(\dots)$. The continuity and monotonicity of $I$ (and hence of $V$) derive from the continuity of $\mathcal{R}$ and from Axiom~3, respectively.
+
+\textbf{2. The case $n=2$.} Now, take any $(\mathbf{B}, \delta) \in \mathcal{A}_{2}$ with $\mathbf{x} = (0, 1)$, $0 < \delta < 1$ and let $(\mathbf{B}, \delta) \in [0,1] \times \mathcal{D}^{K}$ be the unique pair such that $(\mathbf{B}, \delta) \sim c$. From RDU on distribution-consensual prospects (Axiom~6), $\mathbf{B} \sim c$ implies $V(\mathbf{B}) = V(c)$. Now, level-independent disagreement preference (Axiom~5) implies that the representation holds for $n=2$. The formal steps complete the proof for $n=2$.
+
+\textbf{3. The general case.} Let us show by induction on $n \geq 2$ that $V(\mathbf{D})$ represents $\succsim$ on $\mathcal{A}_{n}$, where $V$ is as in Definition~5 and $u, \psi, I$ are the functions previously defined. The initial case $n=2$ has just been proven. Now, suppose that $V$ represents $\succsim$ on $\mathcal{A}_{n}$ and, noting that $\mathcal{A}_{n} \subseteq \mathcal{A}_{n+1}$, let us show that this holds also true on $\mathcal{A}_{n+1}$. Through the comonotonic sure-thing principle and induction, the result extends to $n+1$ outcomes.
+
+The reciprocal (that any distribution-averaging decision-rule satisfies Axiom~1 to~6) is straightforward to verify.
+\end{original}
+
+\begin{translation}
+\textbf{证明（命题1的证明）。} 为了推导评估的表示，让我们首先固定结果的数量$n$，并分别处理$n=2$和$n \geq 3$的情况。
+
+\textbf{1. $I$的定义；$n=1$。} 我们用$\mathbf{B} = (x^{-}, x^{+})$表示一对极值结果。取$u$、$\psi$和$I$与RDU（公理6）中一样。不失一般性，我们假设$u(x^{-}) = 0$和$u(x^{+}) = 1$。我们用$\mathbf{1}_{k}$表示向量$(0, \dots, 1, \dots, 0)$。对于任何$\delta \in [0,1]$有$\mathbf{B}^{x^{+},x^{-}}_{\omega}, \delta \sim_{\mathcal{E}} c(\delta)$。取任何$\mathbf{D} \in \mathcal{D}^{K}$并定义$u = u^{-1}(V(\mathbf{D})) \in [0,1]$。由分布共识性前景上的RDU（公理6），$V(\mathbf{D}) = u(x^{+})$意味着$c$是满足$\mathbf{D} \sim c$的唯一数字。类似地，取任何$\mathbf{D} \in \mathcal{D}^{K}$。由公理1，存在$c \in \mathcal{X}$使得$\mathbf{D} \sim_{\mathcal{E}} c$。因此，存在唯一的$v \in [0,1]$使得$\mathbf{D} \sim \mathbf{B}^{x^{+},x^{-}}_{\omega, v}$。我们定义$I(\psi^{-1}(p_{1}), \dots, \psi^{-1}(p_{K})) = v$，和$V(\mathbf{D}) = u(x^{+}) \cdot I(\dots)$。$I$（因此$V$）的连续性和单调性分别来自$\mathcal{R}$的连续性和公理3。
+
+\textbf{2. $n=2$的情况。} 现在，取任何$(\mathbf{B}, \delta) \in \mathcal{A}_{2}$其中$\mathbf{x} = (0, 1)$，$0 < \delta < 1$，且令$(\mathbf{B}, \delta) \in [0,1] \times \mathcal{D}^{K}$是满足$(\mathbf{B}, \delta) \sim c$的唯一对。由分布共识性前景上的RDU（公理6），$\mathbf{B} \sim c$意味着$V(\mathbf{B}) = V(c)$。现在，水平独立的分歧偏好（公理5）意味着表示对$n=2$成立。形式化的步骤完成了$n=2$的证明。
+
+\textbf{3. 一般情况。} 让我们通过对$n \geq 2$的归纳证明，$V(\mathbf{D})$在$\mathcal{A}_{n}$上表示$\succsim$，其中$V$如定义5所示，$u, \psi, I$是先前定义的函数。初始情况$n=2$刚刚被证明。现在，假设$V$在$\mathcal{A}_{n}$上表示$\succsim$，并注意到$\mathcal{A}_{n} \subseteq \mathcal{A}_{n+1}$，让我们证明这在$\mathcal{A}_{n+1}$上也成立。通过共单调确定性事件原则和归纳，结果扩展到$n+1$个结果。
+
+逆命题（任何分布平均决策规则满足公理1至公理6）易于验证。
+\end{translation}
+
+\newpage
+% ============ REFERENCES ============
+\section*{References}
+{\color{transblue}\subsection*{参考文献}}
+
+\begin{original}
+\small
+
+Alon, S., Gayer, G., 2016. Utilitarian preferences with multiple priors. Econometrica 84 (3), 1181--1201. https://doi.org/10.3982/ECTA12676
+
+Alon, S., Gayer, G., 2024. Maxmin expected utility as resulting from disagreement among experts. Available at SSRN 4974750 https://papers.ssrn.com/sol3/papers.cfm?abstract\_id=4974750.
+
+Anscombe, F.J., Aumann, R.J., 1963. A definition of subjective probability. Ann. Math. Stat. 34 (1), 199--205. http://www.jstor.org/stable/2991295.
+
+Baillon, A., Cabantous, L., Wakker, P.P., et al., 2012. Aggregating imprecise or conflicting beliefs: an experimental investigation using modern ambiguity theories. J. Risk Uncertain. 44 (2), 115--147. https://doi.org/10.1007/s11166-012-9140-x
+
+Barrieu, P., Sinclair-Desgagn\'{e}, B., 2006. On precautionary policies. Manage. Sci. 52 (8), 1145--1154.
+
+Basili, M., Chateauneuf, A., 2020. Aggregation of experts' opinions and conditional consensus opinion by the Steiner point. Int. J. Approximate Reasoning 123, 17--25. https://doi.org/10.1016/j.ijar.2020.04.005
+
+Berger, L., 2014. Precautionary saving and the notion of ambiguity prudence. Econ. Lett. 123 (2), 248--251. https://doi.org/10.1016/j.econlet.2014.02.019
+
+Berger, L., Berger, N., Bosetti, V., Gilboa, I., Hansen, L.P., Jarvis, C., Marinacci, M., Smith, R.D., et al., 2021. Rational policymaking during a pandemic. Proc. Natl. Acad. Sci. 118 (4). https://doi.org/10.1073/pnas.2012704118
+
+Berger, L., Emmerling, J., Tavoni, M., et al., 2016. Managing catastrophic climate risks under model uncertainty aversion. Manage. Sci. 63 (3), 749--765. https://doi.org/10.1287/mnsc.2015.2365
+
+Bommier, A., 2017. A dual approach to ambiguity aversion. J. Math. Econ. 71, 104--118. https://doi.org/10.1016/j.jmateco.2017.05.003
+
+Brandl, F., 2021. Belief-averaged relative utilitarianism. J. Econ. Theory 198. https://doi.org/10.1016/j.jet.2021.105368
+
+Brunnermeier, M.K., Simsek, A., Xiong, W., et al., 2014. A welfare criterion for models with distorted beliefs*. Quart. J. Econ. 129 (4), 1753--1797. https://doi.org/10.1093/qje/qju025
+
+Castagnoli, E., LiCalzi, M., 1996. Expected utility without utility. Theory Decis. 41 (3), 281--301. https://doi.org/10.1007/BF00136129
+
+Cerreia-Vioglio, S., Ghirardato, P., Maccheroni, F., Marinacci, M., Siniscalchi, M., et al., 2011. Rational preferences under ambiguity. Econ. Theory 48 (2), 341--375. https://doi.org/10.1007/s00199-011-0643-5
+
+Cerreia-Vioglio, S., Hansen, L.P., Maccheroni, F., Marinacci, M., 2026. Making decisions under model misspecification. Rev. Econ. Stud. 93 (2), 892--925. https://doi.org/10.1093/restud/rdaf046
+
+Chateauneuf, A., 1999. Comonotonicity axioms and rank-dependent expected utility theory for arbitrary consequences. J. Math. Econ. 32 (1), 21--45. https://doi.org/10.1016/S0304-4068(98)00032-9
+
+Cr\`{e}s, H., Gilboa, I., Vieille, N., et al., 2011. Aggregation of multiple prior opinions. J. Econ. Theory 146 (6), 2563--2582. https://doi.org/10.1016/j.jet.2011.06.018
+
+Danan, E., Gajdos, T., Hill, B., Tallon, J.-M., et al., 2016. Robust social decisions. American Economic Review 106 (9), 2407--2425. https://doi.org/10.1257/aer.20150678
+
+DeGroot, M.H., Mortera, J., 1991. Optimal linear opinion pools. Manage Sci 37 (5), 546--558. https://doi.org/10.1287/mnsc.37.5.546
+
+Gajdos, T., Hayashi, T., Tallon, J.-M., Vergnaud, J.-C., et al., 2008. Attitude toward imprecise information. J. Econ. Theory 140 (1), 27--65. https://doi.org/10.1016/j.jet.2007.09.002
+
+Gajdos, T., Vergnaud, J.-C., 2013. Decisions with conflicting and imprecise information. Soc. Choice Welfare 41 (2), 427--452. https://doi.org/10.1007/s00355-012-0691-1
+
+Gayer, G., Gilboa, I., Samuelson, L., Schmeidler, D., 2014. Pareto efficiency with different beliefs. J. Legal Stud. 43 (S2), 151--171. https://www.journals.uchicago.edu/doi/10.1086/676636.
+
+Genest, C., Zidek, J.V., 1986. Combining probability distributions: a critique and an annotated bibliography. Stat. Sci. 1 (1), 114--135.
+
+Ghirardato, P., Maccheroni, F., Marinacci, M., et al., 2004. Differentiating ambiguity and ambiguity attitude. J. Econ. Theory 118 (2), 133--173. https://doi.org/10.1016/j.jet.2003.12.004
+
+Ghirardato, P., Marinacci, M., 2001. Risk, ambiguity, and the separation of utility and beliefs. Math. Oper. Res. 26 (4), 864--890. 3690687. https://www.jstor.org/stable/3690687.
+
+Ghirardato, P., Marinacci, M., 2002. Ambiguity made precise: a comparative foundation. J. Econ. Theory 102 (2), 251--289. https://doi.org/10.1006/jeth.2001.2815
+
+Gilboa, I., Maccheroni, F., Marinacci, M., Schmeidler, D., et al., 2010. Objective and subjective rationality in a multiple prior model. Econometrica 78 (2), 755--770. https://doi.org/10.3982/ECTA8223
+
+Gilboa, I., Samet, D., Schmeidler, D., et al., 2004. Utilitarian aggregation of beliefs and tastes. J. Polit. Econ. 112 (4), 932--938. https://doi.org/10.1086/421173
+
+Gilboa, I., Samuelson, L., Schmeidler, D., et al., 2014. No-betting-Pareto dominance. Econometrica 82 (4), 1405--1442. https://doi.org/10.3982/ECTA11281
+
+Gilboa, I., Schmeidler, D., 1989. Maxmin expected utility with non-unique prior. J. Math. Econ. 18 (2), 141--153. https://doi.org/10.1016/0304-4068(89)90018-9
+
+Gollier, C., 2011. Portfolio choices and asset prices: the comparative statics of ambiguity aversion. Rev. Econ. Stud. 78 (4), 1329--1344. https://doi.org/10.1093/restud/rdr013
+
+Gollier, C., Jullien, B., Treich, N., et al., 2000. Scientific progress and irreversibility: an economic interpretation of the `precautionary principle'. J. Public Econ. 75 (2), 229--253. https://doi.org/10.1016/S0047-2727(99)00052-3
+
+Gollier, C., Treich, N., 2003. Decision-making under scientific uncertainty: the economics of the precautionary principle. J. Risk Uncertain. 27 (1), 77--103. http://www.springerlink.com/index/V07X18852W555686.pdf.
+
+Guillouet, L., Martimort, D., 2024. Acting in the darkness: Towards some foundations for the precautionary principle, TSE Working Paper 1411. TSE Working Paper
+
+Hansen, L.P., Sargent, T.J., 2001. Robust control and model uncertainty. Am. Econ. Rev. 91 (2), 60--66. http://www.jstor.org/stable/2677734.
+
+Harsanyi, J.C., 1955. Cardinal welfare, individualistic ethics, and interpersonal comparisons of utility. J. Polit. Econ. 63 (4), 309--21.
+
+Heal, G., Millner, A., 2018. Uncertainty and ambiguity in environmental economics: conceptual issues. In: Dasgupta, P., Pattanayak, S.K., Smith, V.K. (Eds.), Handbook of Environmental Economics. Vol. 4. chapter 10, pp. 439--468. https://doi.org/10.1016/bs.hesenv.2018.03.001
+
+Hill, B., 2012. Unanimity and the aggregation of multiple prior opinions. Working paper.
+
+Hill, B., 2023. Confidence, consensus and aggregation. SSRN Electr. J. https://doi.org/10.2139/ssrn.4387641
+
+Hylland, A., Zeckhauser, R., 1979. The impossibility of Bayesian group decision making with separate aggregation of beliefs and values. Econometrica 47 (6), 1321--1336. https://doi.org/10.2307/1914003
+
+Jose, V.R.R., Grushka-Cockayne, Y., Lichtendahl, K.C., et al., 2013. Trimmed opinion pools and the crowd's calibration problem. Manage. Sci. 60 (2), 463--475. https://doi.org/10.1287/mnsc.2013.1781
+
+Kihlstrom, R.E., Mirman, L.J., 1974. Risk aversion with many commodities. J. Econ. Theory 8 (3), 361--388. https://doi.org/10.1016/0022-0531(74)90091-X
+
+Klibanoff, P., Marinacci, M., Mukerji, S., et al., 2005. A smooth model of decision making under ambiguity. Econometrica 73 (6), 1849--1892. https://www.jstor.org/stable/3598753.
+
+Larrick, R.P., Soll, J.B., 2006. Intuitions about combining opinions: misappreciation of the averaging principle. Manage. Sci. 52 (1), 111--127. https://doi.org/10.1287/mnsc.1050.0459
+
+Maccheroni, F., Marinacci, M., Rustichini, A., et al., 2006. Ambiguity aversion, robustness, and the variational representation of preferences. Econometrica 74 (6), 1447--1498. https://doi.org/10.1111/j.1468-0262.2006.00716.x
+
+Machina, M.J., Siniscalchi, M., 2014. Ambiguity and ambiguity aversion. In: Machina, M.J., Viscusi, W.K. (Eds.), Handbook of the Economics of Risk and Uncertainty. North-Holland. Vol. 1. chapter 13, pp. 729--807. https://doi.org/10.1016/B978-0-444-53685-3.00013-1
+
+McConway, K.J., 1981. Marginalization and linear opinion pools. J. Am. Stat. Assoc. 76 (374), 410--414. https://doi.org/10.2307/2287843
+
+Meinshausen, M., Meinshausen, N., Hare, W., Raper, S.C.B., Frieler, K., Knutti, R., Frame, D.J., Allen, M.R., et al., 2009. Greenhouse-gas emission targets for limiting global warming to 2${}^{\circ}$C. Nature 458 (7242), 1158--1162. https://doi.org/10.1038/nature08017
+
+Millner, A., Dietz, S., Heal, G., et al., 2013. Scientific ambiguity and climate policy. Environ. Resour. Econ. 55 (1), 21--46. https://doi.org/10.1007/s10640-012-9612-0
+
+Mongin, P., 1995. Consistent Bayesian aggregation. J. Econ. Theory 66 (2), 313--351. https://doi.org/10.1006/jeth.1995.1044
+
+Mongin, P., 1998. The paradox of the Bayesian experts and state-dependent utility theory. J. Math. Econ. 29 (3), 331--361. https://doi.org/10.1016/S0304-4068(97)00011-6
+
+Mongin, P., 2016. Spurious unanimity and the Pareto principle. Econ. Philos. 32 (3), 511--532. https://doi.org/10.1017/S0266267115000371
+
+Morris, P.A., 1977. Combining expert judgments: a Bayesian approach. Manage. Sci. 23 (7), 679--693.
+
+Nascimento, L., 2012. The ex ante aggregation of opinions under uncertainty: aggregation of opinions under uncertainty. Theoret. Econ. 7 (3), 535--570. https://doi.org/10.3982/TE896
+
+National Research Council, 2009. Science and Decisions: Advancing Risk Assessment. The National Academies Press, Washington, DC. https://doi.org/10.17226/12209
+
+Nau, R.F., 2006. Uncertainty aversion with second-order utilities and probabilities. Manage. Sci. 52 (1), 136--145. https://doi.org/10.1287/mnsc.1050.0469
+
+Peter, R., 2019. Revisiting precautionary saving under ambiguity. Econ. Lett. 174, 123--127. https://doi.org/10.1016/j.econlet.2018.11.009
+
+Quiggin, J., 1982. A theory of anticipated utility. J. Econ. Behav. Organiz. 3 (4), 323--343. https://doi.org/10.1016/0167-2681(82)90008-7
+
+Savage, L.J., 1954. The foundations of Statistics. Courier Corporation.
+
+Siniscalchi, M., 2009. Vector expected utility and attitudes toward variation. Econometrica 77 (3), 801--855. https://doi.org/10.3982/ECTA7564
+
+Skiadas, C., 2013. Scale-invariant uncertainty-averse preferences and source-dependent constant relative risk aversion. Theor. Econ. 8 (1), 59--93. https://doi.org/10.3982/TE1004
+
+Stanca, L., et al., 2021. Smooth aggregation of Bayesian experts. J. Econ. Theory 196. https://doi.org/10.1016/j.jet.2021.105308
+
+Stone, M., 1961. The opinion pool. Ann. Math. Stat. 32 (4), 1339--1342. https://www.jstor.org/stable/2237933.
+
+Strzalecki, T., 2013. Temporal resolution of uncertainty and recursive models of ambiguity aversion. Econometrica 81 (3), 1039--1074. https://doi.org/10.3982/ECTA9619
+
+Wakker, P., 1993. Additive representations on rank-ordered sets: II. The topological approach. J. Math. Econ. 22 (1), 1--26. https://doi.org/10.1016/0304-4068(93)90027-I
+
+Yaari, M.E., 1969. Some remarks on measures of risk aversion and on their uses. J. Econ. Theory 1 (3), 315--329. https://doi.org/10.1016/0022-0531(69)90036-2
+
+\end{original}
+
+% The references are kept in English as per the requirements.
+
+\end{document}

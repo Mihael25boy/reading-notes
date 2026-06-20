@@ -1,0 +1,1106 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% Chinese support
+\usepackage{ctex}
+
+% Page geometry
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+% Math packages
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+
+% Graphics and color
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+
+% Bilingual environments
+\newenvironment{original}{%
+    \par\medskip\noindent%
+    \begin{tcolorbox}[%
+        colback=white,%
+        colframe=black!50,%
+        title=\textbf{Original English},%
+        fonttitle=\small\bfseries,%
+        left=0pt, right=0pt, top=2pt, bottom=2pt,%
+        boxrule=0.5pt,%
+        arc=0pt,%
+        outer arc=0pt%
+    ]%
+    \small%
+}{%
+    \end{tcolorbox}%
+}
+
+\newenvironment{translation}{%
+    \par\smallskip\noindent%
+    \begin{tcolorbox}[%
+        colback=blue!3!white,%
+        colframe=blue!40!black,%
+        title=\textbf{中文翻译},%
+        fonttitle=\small\bfseries,%
+        left=0pt, right=0pt, top=2pt, bottom=2pt,%
+        boxrule=0.5pt,%
+        arc=0pt,%
+        outer arc=0pt%
+    ]%
+    \small\color{blue!60!black}%
+}{%
+    \end{tcolorbox}\medskip%
+}
+
+% Math operators
+\DeclareMathOperator{\argmax}{arg\,max}
+\DeclareMathOperator{\argmin}{arg\,min}
+
+\title{\textbf{Ambiguous Persuasion: An Ex-Ante Formulation}\\[5pt]
+       \textbf{模糊说服：一种事前形式化}}
+\author{Xiaoyu Cheng\\[3pt]
+        Department of Economics, Florida State University, Tallahassee, FL, USA\\[3pt]
+        \href{mailto:xcheng@fsu.edu}{xcheng@fsu.edu}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ===================================================================
+% JOURNAL INFO
+% ===================================================================
+\begin{original}
+Games and Economic Behavior 154 (2025) 149--158
+
+Available online 10 September 2025
+
+\url{https://doi.org/10.1016/j.geb.2025.08.017}
+
+Received 18 October 2024
+
+0899-8256/\textcopyright\ 2025 Elsevier Inc. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+\end{original}
+\begin{translation}
+《博弈与经济行为》第154卷（2025年）第149--158页
+
+在线发布日期：2025年9月10日
+
+\url{https://doi.org/10.1016/j.geb.2025.08.017}
+
+收稿日期：2024年10月18日
+
+0899-8256/\textcopyright\ 2025 Elsevier Inc. 保留所有权利，包括文本与数据挖掘、AI训练及类似技术的权利。
+\end{translation}
+
+% ===================================================================
+% ABSTRACT
+% ===================================================================
+\section*{Abstract / 摘要}
+
+\begin{original}
+Consider a persuasion game where both the sender and receiver are ambiguity averse with maxmin expected utility (MEU) preferences and the sender can choose an ambiguous information structure. This paper analyzes the game in an ex-ante formulation: the sender first commits to an information structure, and then the receiver best responds by choosing an ex-ante message-contingent action plan. Under this formulation, I show it is never strictly beneficial for the sender to use an ambiguous information structure as opposed to a standard unambiguous one. This result is robust to (i) the players having heterogeneous beliefs over the states, and/or (ii) the receiver having non-MEU, uncertainty-averse preferences. However, it is not robust to the sender having non-MEU preferences.
+\end{original}
+\begin{translation}
+考虑一个说服博弈，其中发送者和接收者都具有最大最小期望效用（MEU）偏好的模糊厌恶特征，且发送者可以选择一个模糊的信息结构。本文以一种事前形式化来分析该博弈：发送者首先承诺一个信息结构，然后接收者通过选择一个事前信息依存行动方案来做出最优反应。在这一形式化下，我证明了发送者使用模糊信息结构相比标准的不模糊信息结构绝无严格收益。该结果对以下情形具有稳健性：(i) 博弈双方对状态持有异质信念，和/或 (ii) 接收者具有非MEU的不确定性厌恶偏好。然而，该结果对于发送者具有非MEU偏好并不稳健。
+\end{translation}
+
+\bigskip
+\noindent\textbf{JEL classification:} C72, D81, D83
+
+\noindent\textbf{Keywords:} Bayesian persuasion; Ambiguity aversion; Maxmin expected utility; Uncertainty averse preferences; Dynamic consistency
+
+\noindent\textbf{关键词：} 贝叶斯说服；模糊厌恶；最大最小期望效用；不确定性厌恶偏好；动态一致性
+
+\newpage
+
+% ===================================================================
+% SECTION 1: INTRODUCTION
+% ===================================================================
+\section{Introduction / 引言}
+
+% --- Paragraph 1 ---
+\begin{original}
+Strategic information provision, or more specifically persuasion, is valuable for an informed sender in influencing the action taken by a receiver (Bergemann and Morris, 2019; Kamenica, 2019). The sender can influence the receiver's decision by providing information that shapes the uncertainty the receiver is facing. The literature has focused primarily on Bayesian persuasion in which the sender is only allowed to expose the receiver to uncertainty that can be fully described by a probability measure. For decisions under uncertainty, however, ambiguity aversion is recognized as an important phenomenon when facing uncertainty that is not describable by a probability measure, and it can influence behaviors (see a survey by Gilboa and Marinacci (2013)). This raises the question in the context of persuasion, first addressed by Beauch\^{e}ne, Li and Li (2019) (BLL henceforth): If the receiver is known to be ambiguity averse, can the sender benefit from strategically introducing ambiguity into their communication to better influence the receiver's decisions?
+\end{original}
+\begin{translation}
+策略性信息提供，或更具体地说，说服，对于掌握信息的发送者来说，在影响接收者采取的行动方面具有重要价值（Bergemann and Morris, 2019; Kamenica, 2019）。发送者可以通过提供信息来塑造接收者所面临的不确定性，从而影响接收者的决策。现有文献主要集中于贝叶斯说服，其中发送者仅被允许使接收者面对可由概率测度完全描述的不确定性。然而，对于不确定性下的决策，模糊厌恶被认为是面对无法由概率测度描述的不确定性时的一个重要现象，且它能够影响行为（参见 Gilboa and Marinacci (2013) 的综述）。这引出了说服语境中由 Beauch\^{e}ne, Li and Li (2019)（以下简称 BLL）首次探讨的问题：如果接收者已知为模糊厌恶者，发送者能否通过策略性地将模糊性引入其沟通来更好地影响接收者的决策？
+\end{translation}
+
+% --- Paragraph 2 ---
+\begin{original}
+Indeed, BLL answer this question by studying a persuasion game under the assumption that both the sender and receiver are ambiguity averse with preferences represented by the Maxmin Expected Utility (MEU) model (Gilboa and Schmeidler, 1989).\footnote{In their paper, they also discuss possible extensions to more general ambiguity averse preferences.} In addition, the sender can choose to commit to an ambiguous information structure, an ambiguous experiment, which specifies a closed and convex set of probability measures over states and messages shared by both players. The receiver observes the sender's choice of experiment and a realized message, then chooses an action according to their updated preferences. Among other results, they demonstrate that the sender can strictly benefit from choosing an ambiguous experiment and provide methods to characterize its extent.\footnote{See Cheng (2021) for an alternative characterization using concavification.}
+\end{original}
+\begin{translation}
+实际上，BLL 通过研究一个说服博弈来回答这一问题，该博弈假设发送者和接收者均为模糊厌恶者，其偏好由最大最小期望效用（MEU）模型表示（Gilboa and Schmeidler, 1989）。\footnote{在他们的论文中，他们还讨论了向更一般的模糊厌恶偏好的可能扩展。}此外，发送者可以选择承诺一个模糊信息结构，即一个模糊实验，该实验指定了状态和消息上一个封闭且凸的概率测度集合，且为双方所共享。接收者观察到发送者的实验选择和一个已实现的消息，然后根据其更新后的偏好选择行动。在其诸多结果中，他们证明了发送者可以从选择模糊实验中获得严格收益，并提供了刻画其收益程度的方法。\footnote{参见 Cheng (2021) 关于使用凹化方法的替代性刻画。}
+\end{translation}
+
+% --- Paragraph 3 ---
+\begin{original}
+This paper analyzes the persuasion game under the same assumptions as in BLL but adopts an ex-ante formulation: after observing the sender's choice of experiment, but before any message is realized, the receiver chooses a message-contingent action plan (this is referred to as the ex-ante stage for the receiver). The main result, Theorem 1, shows that under this ex-ante formulation, the sender can never strictly benefit from introducing ambiguity into their communication. In other words, a seemingly small difference in formulations of the game leads to a dramatic change in perspective on the value of ambiguous communication to the sender.
+\end{original}
+\begin{translation}
+本文在与 BLL 相同的假设下分析该说服博弈，但采用了一种事前形式化：在观察到发送者的实验选择之后、但在任何消息实现之前，接收者选择一个信息依存行动方案（这被称为接收者的事前阶段）。主要结果——定理1——表明，在此事前形式化下，发送者绝无可能从将模糊性引入其沟通中获得严格收益。换言之，博弈形式化中看似微小的差异，导致了对模糊沟通对发送者的价值的观点发生了戏剧性的转变。
+\end{translation}
+
+% --- Paragraph 4 ---
+\begin{original}
+These contrasting conclusions arise from the well-known non-equivalence between ex-ante and interim decisions made by an MEU decision maker when preferences are updated using any consequentialist updating rule, including the one assumed in BLL (Hanany and Klibanoff, 2007, 2009; Siniscalchi, 2009). Formally, such a receiver is dynamically inconsistent: their interim optimal actions may differ from those prescribed by their ex-ante optimal plan. While BLL's persuasion game models the receiver as choosing their interim optimal action, the ex-ante formulation models the receiver as following their ex-ante optimal plan. To build some intuition for why this difference in modeling can lead to such divergent conclusions, consider the following example:
+\end{original}
+\begin{translation}
+这些对比鲜明的结论源于一个众所周知的事实：当偏好使用任何结果主义更新规则（包括 BLL 所假设的那种）进行更新时，MEU 决策者的事前决策与期中决策之间不存在等价性（Hanany and Klibanoff, 2007, 2009; Siniscalchi, 2009）。形式上，这样的接收者是动态不一致的：他们的期中最优行动可能与其事前最优方案所规定的行动不同。BLL 的说服博弈将接收者建模为选择其期中最优行动，而事前形式化则将接收者建模为遵循其事前最优方案。为了建立对建模中这一差异为何会导致如此分歧的结论的直观理解，请考虑以下例子：
+\end{translation}
+
+% --- Example 1 ---
+\begin{example}\label{ex:1}
+\begin{original}
+Suppose there are two equally likely states of the world: $\{\omega_1, \omega_2\}$. A representative voter (the receiver) is choosing between two policies: $\{\text{Status Quo}, \text{New}\}$. The Status Quo is considered the safer action as its outcomes are known, while the New policy may be better or worse depending on the state. Formally, the voter's payoffs are given by the following payoff matrix:
+\[
+\begin{array}{c|cc}
+ & \omega_1 & \omega_2 \\
+\hline
+\text{Status Quo} & 0 & 0 \\
+\text{New} & 1 & -0.5
+\end{array}
+\]
+A politician (the sender), who benefits from the Status Quo, strictly prefers the voter to choose it in all states. They can design and commit to an experiment (e.g., a policy experiment) to influence the voter's choice.
+
+Without any additional information, the receiver strictly prefers New to Status Quo as the states are equally likely. Under Bayesian persuasion, the best the sender can achieve is to induce the receiver to choose Status Quo three quarters of the time.\footnote{This is obtained by committing to a probabilistic information structure, a statistical experiment with two messages such that the receiver's posteriors given these two messages are $0$ and $\frac{2}{3}$ in terms of the probability of $\omega_2$. The probabilities of sending these two messages are $\frac{1}{4}$ and $\frac{3}{4}$ respectively.}
+
+When both players have MEU preferences and the receiver chooses their interim optimal action, BLL show that the sender can induce the receiver to always choose Status Quo using an ambiguous experiment. Specifically, the sender can commit to fully revealing the state but be ambiguous about which message corresponds to which state. Upon observing any message, if the receiver takes both possibilities into account, their updated belief is then fully ambiguous about the state.\footnote{This holds when the receiver applies full Bayesian updating as assumed in BLL.} As a result, under the MEU criterion, the receiver's interim optimal action given such an updated belief is to take the Status Quo.
+
+The receiver's interim optimal actions correspond to the message-contingent plan that prescribes choosing Status Quo after every message. This yields the receiver an ex-ante payoff of zero. In contrast, the plan of choosing New after every message delivers a strictly positive ex-ante payoff under the same ambiguous experiment.\footnote{This follows from the fact that the receiver's ex-ante payoff from this plan is the same and strictly positive under any state-revealing statistical experiment.} Therefore, if the receiver seeks to maximize their ex-ante payoff, the plan of choosing Status Quo cannot be induced by the ambiguous experiment. Importantly, in this case, using the ambiguous experiment makes the sender strictly worse off than under Bayesian persuasion. To summarize, the sender's optimal payoff in BLL's persuasion game relies on inducing message-contingent plans that are not implementable under the ex-ante formulation.
+\end{original}
+\begin{translation}
+假设世界有两个等可能的状态：$\{\omega_1, \omega_2\}$。一位代表性选民（接收者）在两种政策之间进行选择：$\{\text{现状}, \text{新政}\}$。现状被视为更安全的行动，因为其结果已知，而新政则可能因状态不同而更好或更差。形式上，选民的收益由以下收益矩阵给出：
+\[
+\begin{array}{c|cc}
+ & \omega_1 & \omega_2 \\
+\hline
+\text{现状} & 0 & 0 \\
+\text{新政} & 1 & -0.5
+\end{array}
+\]
+一位政治家（发送者）从现状中获益，严格偏好选民在所有状态下都选择现状。他们可以设计并承诺一个实验（例如，一项政策实验）来影响选民的选择。
+
+在没有任何额外信息的情况下，由于状态等可能，接收者严格偏好新政而非现状。在贝叶斯说服下，发送者所能实现的最好结果是诱导接收者在四分之三的时间里选择现状。\footnote{这通过承诺一个概率性信息结构来实现，即一个有两条消息的统计实验，使得接收者在这两条消息下的后验信念（以 $\omega_2$ 的概率表示）分别为 $0$ 和 $\frac{2}{3}$。发送这两条消息的概率分别为 $\frac{1}{4}$ 和 $\frac{3}{4}$。}
+
+当双方都具有 MEU 偏好且接收者选择其期中最优行动时，BLL 表明，发送者可以使用一个模糊实验诱导接收者总是选择现状。具体而言，发送者可以承诺完全揭示状态，但对哪条消息对应哪个状态保持模糊。在观察到任何消息时，如果接收者将两种可能性都纳入考虑，其更新后的信念则对状态完全模糊。\footnote{当接收者如 BLL 所假设的那样应用完全贝叶斯更新时，这一点成立。}结果，在 MEU 准则下，接收者面对这样的更新后信念时的期中最优行动就是选择现状。
+
+接收者的期中最优行动对应于规定在每条消息之后都选择现状的信息依存方案。这给接收者带来零的事前收益。相比之下，在每条消息之后都选择新政的方案在相同的模糊实验下会产生严格为正的事前收益。\footnote{这源于这样一个事实：在任何揭示状态的统计实验下，接收者从此方案中获得的事前收益是相同的且严格为正。}因此，如果接收者寻求最大化其事前收益，那么选择现状的方案无法由该模糊实验诱导。重要的是，在这种情况下，使用模糊实验使发送者比在贝叶斯说服下严格更差。总而言之，发送者在 BLL 说服博弈中的最优收益依赖于诱导那些在事前形式化下无法实施的信息依存方案。
+\end{translation}
+\end{example}
+
+% --- Paragraph 5 (Theorem 2 intro) ---
+\begin{original}
+Theorem 2 shows the conclusion of Theorem 1 continues to hold when (i) the players having heterogeneous beliefs over the states, and/or (ii) the receiver is an Uncertainty Averse decision maker as defined in Cerreia-Vioglio et al. (2011). However, one direction in which Theorem 1 is not robust, is regarding the assumption the sender's preferences are MEU. In a follow-up paper, Cheng et al. (2025) demonstrate that a non-MEU ambiguity averse sender may obtain strict benefits from ambiguous communication, even when all other assumptions of Theorem 1 are preserved. While a full characterization of when and how the sender can benefit from ambiguous communication is provided in Cheng et al. (2025), the present paper includes a simple example (Example 2) to illustrate the possibility of such benefits for a non-MEU sender.
+\end{original}
+\begin{translation}
+定理2表明，当 (i) 博弈双方对状态持有异质信念，和/或 (ii) 接收者是 Cerreia-Vioglio et al. (2011) 所定义的不确定性厌恶决策者时，定理1的结论仍然成立。然而，定理1不稳健的一个方向是关于发送者偏好为 MEU 的假设。在后续论文中，Cheng et al. (2025) 证明了一个非 MEU 的模糊厌恶发送者可能从模糊沟通中获得严格收益，即使在保持定理1所有其他假设的情况下亦是如此。虽然 Cheng et al. (2025) 提供了发送者何时以及如何从模糊沟通中获益的完整刻画，但本文包含一个简单的例子（例2）来说明非 MEU 发送者获得此类收益的可能性。
+\end{translation}
+
+% --- Paragraph 6 (closing introduction) ---
+\begin{original}
+I close the introduction with a brief discussion on the importance of studying ambiguous persuasion also under the ex-ante formulation. Unlike in Bayesian persuasion, where the ex-ante and interim formulations are equivalent, analyzing persuasion games under non-Bayesian preferences, such as ambiguity aversion, requires careful consideration of both perspectives. This paper highlights the dramatic differences in the sender's optimal payoffs across the two formulations under ambiguity aversion. Thus, a comprehensive understanding of ambiguous persuasion requires examining both perspectives.
+
+While both perspectives are equally important, the ex-ante formulation may be more appropriate in certain contexts. A more detailed discussion appears in Section 4, but here I briefly outline two scenarios. First, consider the case where the sender communicates through a contingent contract and the receiver is legally required to sign at the ex-ante stage. The receiver will agree to sign only if the prescribed contingent plan maximizes their ex-ante payoff, making the ex-ante formulation more suitable. Second, the receiver may deliberately adopt a dynamically consistent updating rule, as in Hanany and Klibanoff (2007, 2009), which ensures that their interim choices remain aligned with their ex-ante plan.
+
+As a concrete illustration, Shishkin and Ortoleva (2023) conduct a lab experiment examining subject's response to a decision problem and an ambiguous experiment identical to those described in Example 1. They find that a majority of the subjects choose the ex-ante optimal action. This behavior suggests that, when such subjects serve as receivers, a sender may fail to realize the gains from ambiguous persuasion identified by BLL, and could even do worse than using a standard statistical experiment---emphasizing the behavioral plausibility and practical relevance of the ex-ante formulation.
+
+The remainder of this paper is organized as follows. Section 1.1 reviews the related literature. Section 2 introduces the ambiguous persuasion game. Section 3 presents the main results. Section 4 provides additional discussions on the relevance of the ex-ante formulation.
+\end{original}
+\begin{translation}
+我在引言的结尾简要讨论在事前形式化下研究模糊说服的重要性。与贝叶斯说服不同——在贝叶斯说服中，事前和期中形式化是等价的——在非贝叶斯偏好（如模糊厌恶）下分析说服博弈，需要仔细考虑两种视角。本文强调了在模糊厌恶下，发送者最优收益在两种形式化之间的巨大差异。因此，对模糊说服的全面理解需要审视两种视角。
+
+虽然两种视角同等重要，但事前形式化在某些情境下可能更为合适。第4节有更详细的讨论，但在此我简要概述两种情景。首先，考虑发送者通过依存合同进行沟通且接收者在法律上被要求在事前阶段签署的情形。只有当所规定的依存方案最大化其事前收益时，接收者才会同意签署，这使得事前形式化更为合适。其次，接收者可能有意采用一种动态一致的更新规则，如 Hanany and Klibanoff (2007, 2009) 所述，这确保其期中选择与其事前方案保持一致。
+
+作为一个具体例证，Shishkin and Ortoleva (2023) 进行了一项实验室实验，考察被试对与例1所述相同的决策问题和模糊实验的反应。他们发现大多数被试选择了事前最优行动。这一行为表明，当此类被试充当接收者时，发送者可能无法实现 BLL 所识别的模糊说服收益，甚至可能比使用标准统计实验做得更差——这强调了事前形式化的行为合理性和实践相关性。
+
+本文的其余部分安排如下。第1.1节回顾相关文献。第2节介绍模糊说服博弈。第3节给出主要结果。第4节对事前形式化的相关性进行额外讨论。
+\end{translation}
+
+% --- Acknowledgments footnote ---
+\begin{original}
+\smallskip
+\noindent\textbf{Acknowledgments:} This paper is a revised version of a chapter in my Northwestern University doctoral dissertation. I am deeply indebted to Peter Klibanoff and Marciano Siniscalchi for their guidance and support. Suggestions from the editor and three anonymous referees have greatly improved the paper. I thank Modibo Camara, Andres Espitia, Sidartha Gordon, Yingni Guo, Jian Li, Ming Li, Alessandro Pavan, Harry Pei, Henrique Castro-Pires, Ludvig Sinander, and Udayan Vaidya for their comments.
+\end{original}
+\begin{translation}
+\textbf{致谢：} 本文是我在西北大学博士论文中一章的修订版。我深深感谢 Peter Klibanoff 和 Marciano Siniscalchi 的指导和支持。编辑和三位匿名审稿人的建议大大改进了本文。我感谢 Modibo Camara、Andres Espitia、Sidartha Gordon、郭颖妮、李健、李明、Alessandro Pavan、裴哈利、Henrique Castro-Pires、Ludvig Sinander 和 Udayan Vaidya 的意见。
+\end{translation}
+
+% ===================================================================
+% SECTION 1.1: RELATED LITERATURE
+% ===================================================================
+\subsection{Related Literature / 相关文献}
+
+% --- Paragraph 1 ---
+\begin{original}
+This paper contributes to the literature on Bayesian persuasion initiated by Kamenica and Gentzkow (2011), and more specifically, the line of research combining persuasion and ambiguity aversion (Beauch\^{e}ne et al., 2019; Hedlund et al., 2020; Nikzad, 2021; Cheng, 2022; Kosterina, 2022). While this paper shows that an MEU sender cannot benefit from ambiguous persuasion in the ex-ante formulation, in a follow-up paper, Cheng et al. (2025) characterize when and how a non-MEU sender may benefit.\footnote{Cheng et al. (2025) extend the analysis to the setting in which both players have smooth ambiguity preferences (Klibanoff et al., 2005), of which MEU is a special case.} The ex-ante formulation adopted by the present paper, where the receiver chooses a message-contingent plan has also been used in other contexts, for example, the study of belief polarization (Baliga et al., 2013), information order (Li and Zhou, 2016, 2020; Wang, 2024), and incomplete information games (Hanany et al., 2020).
+\end{original}
+\begin{translation}
+本文对由 Kamenica and Gentzkow (2011) 开创的贝叶斯说服文献做出贡献，更具体地说，是对结合说服与模糊厌恶的研究路线做出贡献（Beauch\^{e}ne et al., 2019; Hedlund et al., 2020; Nikzad, 2021; Cheng, 2022; Kosterina, 2022）。虽然本文表明 MEU 发送者无法在事前形式化下从模糊说服中获益，但在后续论文中，Cheng et al. (2025) 刻画了非 MEU 发送者何时以及如何可能获益。\footnote{Cheng et al. (2025) 将分析扩展到双方都具有平滑模糊偏好（Klibanoff et al., 2005）的设定，其中 MEU 是一个特例。}本文所采用的事前形式化——其中接收者选择一个信息依存方案——也已在其他语境中得到使用，例如信念极化的研究（Baliga et al., 2013）、信息序的研究（Li and Zhou, 2016, 2020; Wang, 2024），以及不完全信息博弈的研究（Hanany et al., 2020）。
+\end{translation}
+
+% --- Paragraph 2 (Dynamic consistency discussion) ---
+\begin{original}
+The issue of dynamic consistency in ambiguous persuasion is also discussed in BLL and Pahlke (2024). But they take different views than the present paper. They consider dynamic consistency through the lens of rectangularity (Epstein and Schneider, 2003), which is a restriction imposed on the ambiguous experiment (effectively the set of distributions over states and messages), that, if satisfied, ensures the MEU receiver is dynamically consistent under full Bayesian updating. However, not all ambiguous experiments satisfy such a constraint, for example, those used in Examples 1 and 2 are not rectangular. BLL show that if the sender is constrained to only rectangular ambiguous experiments, then there is no gain for the sender. The nature of their result is fundamentally different from the main result of this paper, as the sender here is not constrained when choosing experiments.
+
+Pahlke (2024) incorporates the idea of rectangularity by introducing correlations between the realization of states and which statistical experiment is used to generate the message. By doing so, the receiver's interim optimal actions will remain optimal according to the ex-ante belief with correlation, as it effectively enlarges the set of priors to its rectangular hull. As a result, in her paper, the sender's optimal payoff from ambiguous persuasion is the same as in BLL. In contrast, this paper studies the receiver's decision based on their original ex-ante belief without introducing such correlations.
+
+There is a connection of this paper with papers on Bayesian persuasion when the players' priors are heterogeneous (Alonso and C\^{a}mara, 2016; Laclau and Renou, 2017; Galperti, 2019). Given an ambiguous experiment, because the sender and receiver's utility functions are different, the minimizer of their ex-ante payoffs may turn out to be different thus as if they have different priors. However, notice that this heterogeneity arises endogenously, while all the listed papers consider exogenously heterogeneous priors. Therefore, the results and findings of this paper cannot be obtained as implications of those papers. In addition, the main result of the paper is also shown to be robust to the players having heterogeneous beliefs over the states.
+\end{original}
+\begin{translation}
+BLL 和 Pahlke (2024) 也讨论了模糊说服中的动态一致性问题。但他们持有与本文不同的观点。他们通过矩形性（Epstein and Schneider, 2003）的视角来考虑动态一致性，这是对模糊实验（实质上是状态和消息上的分布集合）施加的一种限制，如果满足该限制，则能确保 MEU 接收者在完全贝叶斯更新下是动态一致的。然而，并非所有模糊实验都满足这样的约束，例如，例1和例2中使用的实验就不是矩形的。BLL 表明，如果发送者被限制于仅使用矩形的模糊实验，则发送者没有收益。他们结果的本质与本文的主要结果根本不同，因为本文中的发送者在选择实验时不受限制。
+
+Pahlke (2024) 通过引入状态实现与用于生成消息的统计实验之间的相关性来融入矩形性思想。通过这样做，接收者的期中最优行动将根据带有相关性的事前信念保持最优，因为这有效地将先验集合扩大到了其矩形包。结果，在她的论文中，发送者从模糊说服中获得的最优收益与 BLL 相同。相比之下，本文基于接收者的原始事前信念来研究其决策，而不引入这样的相关性。
+
+本文与那些关于博弈双方先验异质时的贝叶斯说服的论文之间存在联系（Alonso and C\^{a}mara, 2016; Laclau and Renou, 2017; Galperti, 2019）。给定一个模糊实验，由于发送者和接收者的效用函数不同，他们事前期收益的最小化者可能不同，因此仿佛他们具有不同的先验。然而，请注意这种异质性是内生产生的，而所有列举的论文考虑的是外生异质的先验。因此，本文的结果和发现不能作为那些论文的推论而获得。此外，本文的主要结果也被证明对博弈双方对状态持有异质信念是稳健的。
+\end{translation}
+
+% ===================================================================
+% SECTION 2: THE EX-ANTE FORMULATION
+% ===================================================================
+\section{The Ex-Ante Formulation of the Persuasion Game / 说服博弈的事前形式化}
+
+% --- Paragraph 1 (Setup) ---
+\begin{original}
+Consider a persuasion game between a sender and a receiver as in BLL, but in an ex-ante formulation. Let $\Omega$ be a finite set of states of the world. For any finite set $X$, let $\Delta(X)$ denote the set of all probability distributions over $X$ endowed with the topology of weak convergence. The sender and receiver have a common prior $\pi \in \Delta(\Omega)$ with full support. There is a finite set $A$ of feasible actions the receiver can choose from. If the receiver chooses $a \in A$, the payoff to the sender and receiver is given by $u_s(a, \omega)$ and $u_r(a, \omega)$, respectively, when the state is $\omega$.
+\end{original}
+\begin{translation}
+考虑一个发送者和接收者之间的说服博弈，如 BLL 所述，但采用事前形式化。令 $\Omega$ 为世界状态的有限集合。对任何有限集合 $X$，令 $\Delta(X)$ 表示 $X$ 上所有概率分布的集合，并赋予弱收敛拓扑。发送者和接收者拥有一个共同先验 $\pi \in \Delta(\Omega)$，且具有完全支撑。存在一个接收者可选择的可行行动的有限集合 $A$。如果接收者选择 $a \in A$，则当状态为 $\omega$ 时，发送者和接收者的收益分别由 $u_s(a, \omega)$ 和 $u_r(a, \omega)$ 给出。
+\end{translation}
+
+% --- Paragraph 2 (Statistical experiment) ---
+\begin{original}
+Let $M$ denote a finite set of messages (with $|M| \geq \min\{|\Omega|, |A|\}$). In a Bayesian persuasion problem, the sender chooses and commits to a statistical experiment $\pi$, which is a mapping from $\Omega$ to $\Delta(M)$. Let $\pi(m|\omega)$ denote the probability of sending message $m$ in state $\omega$ under the experiment $\pi$. Notice a statistical experiment $\pi$ induces a joint prior $p \in \Delta(\Omega \times M)$ such that
+\[
+p(\omega, m) = \pi(m|\omega)\pi(\omega), \quad \forall \omega \in \Omega, m \in M.
+\]
+\end{original}
+\begin{translation}
+令 $M$ 表示一个有限的消息集合（满足 $|M| \geq \min\{|\Omega|, |A|\}$）。在贝叶斯说服问题中，发送者选择并承诺一个统计实验 $\pi$，它是从 $\Omega$ 到 $\Delta(M)$ 的一个映射。令 $\pi(m|\omega)$ 表示在实验 $\pi$ 下、状态为 $\omega$ 时发送消息 $m$ 的概率。注意，一个统计实验 $\pi$ 诱导了一个联合先验 $p \in \Delta(\Omega \times M)$，使得
+\[
+p(\omega, m) = \pi(m|\omega)\pi(\omega), \quad \forall \omega \in \Omega, m \in M.
+\]
+\end{translation}
+
+% --- Paragraph 3 (Contingent plan) ---
+\begin{original}
+Under the ex-ante formulation, the receiver observes the sender's commitment to a statistical experiment and chooses a message-contingent action plan. Let $\sigma \in \Delta(A)^M$ denote a generic contingent plan and let $\sigma(m)(a)$ denote the probability of taking action $a$ after message $m \in M$ realizes. Let $\Sigma$ denote the set of all contingent plans endowed with the product topology. Given a statistical experiment $\pi$, the receiver's ex-ante expected payoff from choosing the contingent plan $\sigma$ is given by
+\[
+U_r(\pi, \sigma) = \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m).
+\]
+Similarly, the sender's payoff is given by
+\[
+U_s(\pi, \sigma) = \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, p(\omega, m).
+\]
+\end{original}
+\begin{translation}
+在事前形式化下，接收者观察到发送者对统计实验的承诺，并选择一个信息依存行动方案。令 $\sigma \in \Delta(A)^M$ 表示一个通用的依存方案，令 $\sigma(m)(a)$ 表示在消息 $m \in M$ 实现后采取行动 $a$ 的概率。令 $\Sigma$ 表示所有依存方案的集合，并赋予乘积拓扑。给定一个统计实验 $\pi$，接收者从选择依存方案 $\sigma$ 中获得的事前期望收益为
+\[
+U_r(\pi, \sigma) = \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m).
+\]
+类似地，发送者的收益为
+\[
+U_s(\pi, \sigma) = \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, p(\omega, m).
+\]
+\end{translation}
+
+% --- Paragraph 4 (Timing + Bayesian program) ---
+\begin{original}
+Formally, the timing of the (Bayesian) persuasion game is given as follows:
+\begin{enumerate}
+    \item Sender chooses and commits to a statistical experiment.
+    \item Receiver observes the sender's commitment and chooses a contingent plan.
+    \item Nature draws the state, message, and action according to the prior and players' strategies and payoff realizes.
+\end{enumerate}
+
+The sender's Bayesian persuasion program is defined by\footnote{Following the standard assumption as Kamenica and Gentzkow (2011), this formalization assumes the sender's preferred equilibrium.}
+\[
+\max_{\pi, \sigma} \; U_s(\pi, \sigma),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(\pi, \sigma').
+\]
+\end{original}
+\begin{translation}
+形式上，（贝叶斯）说服博弈的时序如下：
+\begin{enumerate}
+    \item 发送者选择并承诺一个统计实验。
+    \item 接收者观察到发送者的承诺并选择一个依存方案。
+    \item 自然根据先验和博弈双方的策略抽取状态、消息和行动，收益实现。
+\end{enumerate}
+
+发送者的贝叶斯说服规划定义为\footnote{遵循 Kamenica and Gentzkow (2011) 的标准假设，此形式化假定发送者偏好的均衡。}
+\[
+\max_{\pi, \sigma} \; U_s(\pi, \sigma),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(\pi, \sigma').
+\]
+\end{translation}
+
+% --- Paragraph 5 (Ambiguous experiment) ---
+\begin{original}
+In an ambiguous persuasion game, in addition to statistical experiments, the sender can also choose and commit to an ambiguous experiment. As defined in BLL, an ambiguous experiment $P$ is a closed and convex set of statistical experiments. Moreover, neither the sender nor the receiver knows which statistical experiment is going to be used to generate the messages. As a result, after the sender commits to an ambiguous experiment and the receiver chooses a contingent plan, both players need to evaluate their expected payoffs in the presence of ambiguity.\footnote{It is important that the sender has no control over which statistical experiment is used. Otherwise, the receiver may be able to infer which experiment will be used from the sender's preference. To achieve this, the sender can either delegate the choice of the statistical experiment to an unknown and payoff-irrelevant third party or let it depend on an exogenously ambiguous event, say the draw from an Ellsberg urn.}
+\end{original}
+\begin{translation}
+在模糊说服博弈中，除了统计实验之外，发送者还可以选择并承诺一个模糊实验。如 BLL 所定义，一个模糊实验 $P$ 是统计实验的一个封闭且凸的集合。此外，发送者和接收者都不知道将使用哪个统计实验来生成消息。结果，在发送者承诺一个模糊实验且接收者选择一个依存方案之后，双方都需要在存在模糊性的情况下评估其期望收益。\footnote{重要的是，发送者对使用哪个统计实验没有控制权。否则，接收者可能能够从发送者的偏好中推断出将使用哪个实验。为实现这一点，发送者可以将统计实验的选择委托给一个未知且与收益无关的第三方，或者让其依赖于一个外生模糊事件，例如从一个 Ellsberg 瓮中抽取。}
+\end{translation}
+
+% --- Paragraph 6 (MEU payoffs with ambiguous experiment) ---
+\begin{original}
+For now, both players are assumed to be ambiguity averse and represented by the Maxmin Expected Utility (MEU) model: As each statistical experiment induces a joint prior $p$, an ambiguous experiment $P$ induces a set of joint priors,
+\[
+\Theta = \{ p \in \Delta(\Omega \times M) : \pi \in P \},
+\]
+which is a closed and convex subset of $\Delta(\Omega \times M)$. Both the sender and receiver are assumed to take the set $\Theta$ as the set of joint priors they deem relevant for evaluating their payoffs under MEU. Then given an ambiguous experiment $P$, the receiver's ex-ante payoff from choosing the contingent plan $\sigma$ is
+\[
+U_r(P, \sigma) = \min_{p \in \Theta} U_r(p, \sigma) = \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m).
+\]
+Similarly, the sender's ex-ante payoff from the ambiguous experiment $P$ when the receiver chooses the contingent plan $\sigma$ is
+\[
+U_s(P, \sigma) = \min_{p \in \Theta} U_s(p, \sigma) = \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, p(\omega, m).
+\]
+\end{original}
+\begin{translation}
+目前，假设双方都是模糊厌恶的，并由最大最小期望效用（MEU）模型表示：由于每个统计实验诱导一个联合先验 $p$，一个模糊实验 $P$ 诱导了一个联合先验集合，
+\[
+\Theta = \{ p \in \Delta(\Omega \times M) : \pi \in P \},
+\]
+它是 $\Delta(\Omega \times M)$ 的一个封闭且凸的子集。假设发送者和接收者都将集合 $\Theta$ 视为他们认为与在 MEU 下评估其收益相关的联合先验集合。那么，给定一个模糊实验 $P$，接收者从选择依存方案 $\sigma$ 中获得的事前收益为
+\[
+U_r(P, \sigma) = \min_{p \in \Theta} U_r(p, \sigma) = \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m).
+\]
+类似地，当接收者选择依存方案 $\sigma$ 时，发送者从模糊实验 $P$ 中获得的事前收益为
+\[
+U_s(P, \sigma) = \min_{p \in \Theta} U_s(p, \sigma) = \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, p(\omega, m).
+\]
+\end{translation}
+
+% --- Paragraph 7 (Ambiguous persuasion program) ---
+\begin{original}
+The timing of the ambiguous persuasion game is analogously the same as the Bayesian persuasion game except that the sender can choose and commit to an ambiguous experiment and if this is the case, Nature also needs to draw a statistical experiment ambiguously.
+
+The MEU sender's ambiguous persuasion program when facing an MEU receiver is defined by
+\[
+\max_{P, \sigma} \; U_s(P, \sigma),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(P, \sigma').
+\]
+
+Note that this program is in general different from program (3) in BLL as
+\[
+\sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(P, \sigma')
+\]
+does not imply $\sigma(m)$ remains optimal when the receiver applies full Bayesian updating to update the prior conditioning on the message $m$.
+\end{original}
+\begin{translation}
+模糊说服博弈的时序与贝叶斯说服博弈类似，不同之处在于发送者可以选择并承诺一个模糊实验，并且如果是这种情况，自然也需要模糊地抽取一个统计实验。
+
+面对 MEU 接收者的 MEU 发送者的模糊说服规划定义为
+\[
+\max_{P, \sigma} \; U_s(P, \sigma),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(P, \sigma').
+\]
+
+注意，该规划通常与 BLL 中的规划 (3) 不同，因为
+\[
+\sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(P, \sigma')
+\]
+并不意味着当接收者应用完全贝叶斯更新、基于消息 $m$ 更新先验时，$\sigma(m)$ 仍然是最优的。
+\end{translation}
+
+% ===================================================================
+% SECTION 3: NO GAINS FROM AMBIGUOUS PERSUASION
+% ===================================================================
+\section{No Gains from Ambiguous Persuasion / 模糊说服无收益}
+
+% --- Paragraph 1 ---
+\begin{original}
+The main result of this paper establishes that, under the ex-ante formulation of the persuasion game, there is no benefit to the sender from strategically introducing ambiguity into their communication.
+\end{original}
+\begin{translation}
+本文的主要结果确立了，在说服博弈的事前形式化下，发送者无法从策略性地将模糊性引入其沟通中获得收益。
+\end{translation}
+
+\begin{theorem}\label{thm:1}
+\begin{original}
+When both players are MEU decision-makers, the sender's maximum payoff in the ambiguous persuasion program coincides with their maximum payoff in the Bayesian persuasion program.
+\end{original}
+\begin{translation}
+当双方都是 MEU 决策者时，发送者在模糊说服规划中的最大收益与其在贝叶斯说服规划中的最大收益一致。
+\end{translation}
+\end{theorem}
+
+% --- Paragraph 2 (Interpretation) ---
+\begin{original}
+Theorem 1 delivers a very strong message: if both players are MEU decision-makers and ambiguity is introduced without inducing dynamically inconsistent choices, then the sender gains nothing beyond Bayesian persuasion. In other words, all the benefits from ambiguous persuasion identified in BLL under the interim formulation stem from exploiting the receiver's dynamic inconsistency under ambiguity aversion.
+\end{original}
+\begin{translation}
+定理1传达了一个非常强烈的信息：如果双方都是 MEU 决策者，且模糊性的引入不会诱发动态不一致的选择，那么发送者在贝叶斯说服之外毫无收益。换言之，BLL 在期中形式化下所识别的模糊说服的所有收益，都源于利用了接收者在模糊厌恶下的动态不一致性。
+\end{translation}
+
+% --- Paragraph 3 (Proof outline) ---
+\begin{original}
+Before presenting the full proof of Theorem 1, I first outline its key steps. Given an ambiguous experiment $P$, the receiver solves a maxmin program for which the minimax theorem applies and saddle points exist. As a result, any contingent plan $\sigma^*$ that is a best response to $P$ must also be a best response to some $p^* \in \Theta$. This implies that the sender is weakly better off committing to $p^*$ rather than to $P$, since doing so induces the same response from the receiver while weakly improving their own payoff as an MEU decision-maker.
+\end{original}
+\begin{translation}
+在给出定理1的完整证明之前，我首先概述其关键步骤。给定一个模糊实验 $P$，接收者求解一个最大最小规划，对于该规划，极小极大定理适用且鞍点存在。结果，任何作为对 $P$ 的最优反应的依存方案 $\sigma^*$，也必定是对某个 $p^* \in \Theta$ 的最优反应。这意味着，发送者承诺 $p^*$ 弱优于承诺 $P$，因为这样做会从接收者那里诱导出相同的反应，同时作为 MEU 决策者弱改进了自己的收益。
+\end{translation}
+
+% ===================================================================
+% SECTION 3.1: PROOF OF THEOREM 1
+% ===================================================================
+\subsection{Proof of Theorem 1 / 定理1的证明}
+
+\begin{proof}[Proof of Theorem 1]
+\begin{original}
+Suppose the sender commits to some ambiguous experiment $P$. Then $\sigma^*$ can be induced by $P$ if and only if
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m),
+\]
+i.e., $\sigma^*$ is the solution to the maxmin program. Notice the objective function for the maxmin program is linear and thus continuous in $\sigma$ and $p$. Moreover, $\Theta$ is a closed and convex subset of a compact set $\Delta(\Omega \times M)$, thus also compact. $\Sigma$ is a finite Cartesian product of the convex and compact set $\Delta(A)$, thus is also convex and compact under the product topology. Therefore, all the conditions for Sion's minimax theorem (Sion, 1958) hold and imply that
+\[
+\max_{\sigma \in \Sigma} \; \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m)
+= \min_{p \in \Theta} \; \max_{\sigma \in \Sigma} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m),
+\]
+i.e., a saddle value for the program exists. Compactness of $\Theta$ and $\Sigma$ further guarantees the existence of saddle points (see Theorem 8.2 in Aubin (2002), for example). Therefore, any solution $\sigma^*$ must be part of a saddle point, i.e., there exists some $p^* \in \Theta$ such that $\sigma^*$ is also a best response to $p^*$.
+
+When the sender commits to this ambiguous experiment $P$ which induces $\sigma^*$, one has
+\[
+U_s(P, \sigma^*) = \min_{p \in \Theta} \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, p(\omega, m)
+\leq \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, p^*(\omega, m)
+= U_s(p^*, \sigma^*),
+\]
+i.e., $P$ is weakly worse than committing to the statistical experiment $p^*$ that also induces $\sigma^*$. Therefore, the sender's payoff from any ambiguous experiment is always weakly dominated by a statistical experiment, which implies the optimum of the two programs must coincide.
+\end{original}
+\begin{translation}
+假设发送者承诺某个模糊实验 $P$。那么，$\sigma^*$ 能被 $P$ 诱导当且仅当
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m),
+\]
+即，$\sigma^*$ 是该最大最小规划的解。注意，该最大最小规划的目标函数在 $\sigma$ 和 $p$ 中是线性的，因而是连续的。此外，$\Theta$ 是紧集 $\Delta(\Omega \times M)$ 的一个封闭且凸的子集，因此也是紧的。$\Sigma$ 是凸且紧的集合 $\Delta(A)$ 的有限笛卡尔积，因此在乘积拓扑下也是凸且紧的。因此，Sion 极小极大定理（Sion, 1958）的所有条件均成立，并蕴含
+\[
+\max_{\sigma \in \Sigma} \; \min_{p \in \Theta} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m)
+= \min_{p \in \Theta} \; \max_{\sigma \in \Sigma} \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m),
+\]
+即，该规划存在鞍值。$\Theta$ 和 $\Sigma$ 的紧性进一步保证了鞍点的存在性（例如，参见 Aubin (2002) 中的定理 8.2）。因此，任何解 $\sigma^*$ 必定是鞍点的一部分，即存在某个 $p^* \in \Theta$ 使得 $\sigma^*$ 也是对 $p^*$ 的最优反应。
+
+当发送者承诺这个诱导 $\sigma^*$ 的模糊实验 $P$ 时，有
+\[
+U_s(P, \sigma^*) = \min_{p \in \Theta} \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, p(\omega, m)
+\leq \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, p^*(\omega, m)
+= U_s(p^*, \sigma^*),
+\]
+即，$P$ 弱劣于承诺那个同样诱导 $\sigma^*$ 的统计实验 $p^*$。因此，发送者从任何模糊实验中获得的收益总是被某个统计实验弱占优，这意味着两个规划的最优值必然一致。
+\end{translation}
+\end{proof}
+
+% ===================================================================
+% SECTION 3.2: ON THE ROBUSTNESS OF THEOREM 1
+% ===================================================================
+\subsection{On the Robustness of Theorem 1 / 关于定理1的稳健性}
+
+% --- Paragraph 1 ---
+\begin{original}
+Theorem 1 is established under the assumption that (i) both players share a common prior $\pi$ over the states, and (ii) both are MEU decision makers. This section examines the extent to which the conclusion of Theorem 1 continues to hold when these assumptions are relaxed.
+
+The proof reveals that the no-gain conclusion hinges crucially on two key forces. First, any contingent plan that the receiver deems optimal for some ambiguous experiment must also be optimal for a possible statistical experiment. Second, under MEU, the sender evaluates the receiver's contingent plan based on the worst possible statistical experiment, making the sender weakly worse off compared to simply using the statistical experiment (in the set) that induces the same plan. The next theorem shows how these two forces remain valid when relaxing the assumptions of Theorem 1.
+\end{original}
+\begin{translation}
+定理1是在以下假设下建立的：(i) 双方对状态拥有共同先验 $\pi$，且 (ii) 双方都是 MEU 决策者。本节考察当这些假设被放松时，定理1的结论在多大程度上仍然成立。
+
+该证明揭示了无收益结论关键取决于两个关键力量。第一，接收者认为对某个模糊实验最优的任何依存方案，也必须对某个可能的统计实验是最优的。第二，在 MEU 下，发送者基于最差的可能统计实验来评估接收者的依存方案，这使得与简单使用（集合中）诱导相同方案的那个统计实验相比，发送者弱更差。下一个定理表明，当放松定理1的假设时，这两个力量如何仍然有效。
+\end{translation}
+
+\begin{theorem}\label{thm:2}
+\begin{original}
+The conclusion of Theorem 1 continues to hold when
+\begin{itemize}
+    \item[(i)] the players have heterogeneous priors over the states,
+\end{itemize}
+and/or
+\begin{itemize}
+    \item[(ii)] the receiver is an Uncertainty Averse decision maker as defined in Cerreia-Vioglio et al. (2011).
+\end{itemize}
+However, the conclusion does not hold when the sender is not an MEU decision maker.
+\end{original}
+\begin{translation}
+定理1的结论在以下情形下仍然成立：
+\begin{itemize}
+    \item[(i)] 博弈双方对状态拥有异质先验，
+\end{itemize}
+和/或
+\begin{itemize}
+    \item[(ii)] 接收者是 Cerreia-Vioglio et al. (2011) 所定义的不确定性厌恶决策者。
+\end{itemize}
+然而，当发送者不是 MEU 决策者时，该结论不成立。
+\end{translation}
+\end{theorem}
+
+% --- Paragraph 2 (Intuition for Theorem 2) ---
+\begin{original}
+A formalization of the statements in Theorem 2 requires additional definitions and notations thus are relegated to Appendix A together with the proof.
+
+To build some intuition of Theorem 2, first observe that the two key forces underlying the proof of Theorem 1 are independent of the players' prior beliefs, as long as they consider the same ambiguous experiment, which is a standing assumption throughout the paper. Moreover, the first force continues to hold as long as the receiver's decision problem takes the form of a maxmin program. This is true when the receiver is an Uncertainty Averse decision maker as defined in Cerreia-Vioglio et al. (2011), which includes most models of ambiguity averse preferences in the literature, e.g., MEU, ambiguity-averse smooth ambiguity preferences (Klibanoff et al., 2005) and variational preferences (Maccheroni et al., 2006). Under these relaxed assumptions, the same no-gain conclusion can be established when the sender remains an MEU decision maker.
+\end{original}
+\begin{translation}
+定理2中陈述的形式化需要额外的定义和记号，因此连同证明一起归入附录A。
+
+为建立对定理2的一些直观理解，首先注意到，支撑定理1证明的两个关键力量与博弈双方的先验信念无关，只要他们考虑相同的模糊实验——这是贯穿全文的一个基本假设。此外，只要接收者的决策问题采取最大最小规划的形式，第一个力量就继续成立。当接收者是 Cerreia-Vioglio et al. (2011) 所定义的不确定性厌恶决策者时，这一点是成立的，这涵盖了文献中大多数模糊厌恶偏好模型，例如 MEU、模糊厌恶的平滑模糊偏好（Klibanoff et al., 2005）和变分偏好（Maccheroni et al., 2006）。在这些放松的假设下，当发送者仍然是 MEU 决策者时，相同的无收益结论可以被建立。
+\end{translation}
+
+% --- Paragraph 3 (Non-MEU sender) ---
+\begin{original}
+However, the MEU assumption on the part of the sender is essential for the second force to work. Once the sender departs from MEU, the same argument does not necessarily hold. In particular, when the aforementioned $p^*$ is the worst-case experiment for the sender, a non-MEU sender may evaluate $p^*$ more optimistically and obtain a strictly higher payoff than under the MEU evaluation. In that case, committing to the ambiguous experiment $P$ can strictly outperform committing to $p^*$. To see this more concretely, consider the following example:
+\end{original}
+\begin{translation}
+然而，发送者方面的 MEU 假设对于第二个力量的运作至关重要。一旦发送者偏离 MEU，相同的论证就不一定成立。特别是，当上述 $p^*$ 是发送者的最差情形实验时，一个非 MEU 发送者可能更乐观地评估 $p^*$，并获得比在 MEU 评估下严格更高的收益。在这种情况下，承诺模糊实验 $P$ 可以严格优于承诺 $p^*$。为更具体地看到这一点，请考虑以下例子：
+\end{translation}
+
+% --- Example 2 ---
+\begin{example}\label{ex:2}
+\begin{original}
+Suppose there are two equally likely states of the world: $\{\omega_1, \omega_2\}$. The receiver has three feasible actions: $\{a, b, c\}$. The sender's payoff depends only on the action: $v(a) = 2$, $v(b) = 1$, and $v(c) = 0$. The receiver's payoff is given by the following payoff matrix:
+\[
+\begin{array}{c|cc}
+ & \omega_1 & \omega_2 \\
+\hline
+a & 2 & -2 \\
+b & 3/2 & -1/2 \\
+c & 0 & 0
+\end{array}
+\]
+There are two messages $\{m_1, m_2\}$, and let a contingent plan $\sigma$ be denoted by $\sigma(m_1)\sigma(m_2)$.
+
+Let $\pi^*$ denote the optimal statistical experiment which generates posteriors (in terms of the probability of $\omega_2$) $\frac{1}{4}$ and $\frac{3}{4}$ with equal probabilities. Given this experiment, the receiver takes action $b$ and $a$ at the two posteriors respectively. The sender's ex-ante payoff is
+\[
+U_s(\pi^*, \sigma^*) = \frac{1}{2} v(b) + \frac{1}{2} v(a) = \frac{3}{2}.
+\]
+
+Consider a statistical experiment $\pi_\varepsilon$ which generates posteriors $(\frac{1}{4} - \varepsilon)$ and $\frac{3}{4}$ for some $\varepsilon > 0$. Bayes plausibility implies that the first posterior is generated with a probability of $\frac{1}{2+4\varepsilon}$, strictly less than $\frac{1}{2}$. Hence, if fixing the receiver's contingent plan, the sender's ex-ante payoff will be strictly higher under $\pi_\varepsilon$ compared with $\pi^*$:
+\[
+U_s(\pi_\varepsilon, \sigma^*) = \frac{2}{2+4\varepsilon} \, v(b) + \frac{1+4\varepsilon}{2+4\varepsilon} \, v(a) = \frac{3+8\varepsilon}{2+4\varepsilon} > \frac{3}{2} = U_s(\pi^*, \sigma^*).
+\]
+
+Let the ambiguous experiment $P$ be the closed and convex hull of $\{\pi^*, \pi_\varepsilon\}$ and notice that
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; U_r(P, \sigma),
+\]
+since $\pi^*$ minimizes $U_r(\pi, \sigma^*)$ over all experiments in $P$. Therefore, $\sigma^*$ can be induced when the sender commits to $P$.\footnote{For this $\sigma^*$, $\pi_\varepsilon$ is also a best response for the receiver. To address potential tie-breaking concerns, the sender can slightly perturb $\pi_\varepsilon$ to generate posteriors $\frac{1}{4} - \varepsilon$ and $\frac{3}{4}$ for an arbitrarily small $\varepsilon > 0$. This adjustment ensures that $\sigma^*$ becomes the receiver's unique best response, while the sender's payoff remains arbitrarily close to that under $\pi_\varepsilon$.}
+
+On the other hand, $\pi^*$ turns out to be also the minimizer of $U_s(\pi, \sigma^*)$ among all experiments in $P$, that is,
+\[
+U_s(P, \sigma^*) = U_s(\pi^*, \sigma^*).
+\]
+This confirms that the sender cannot benefit from ambiguous persuasion when they are an MEU decision-maker. However, if the sender is not MEU, it may be the case that $U_s(P, \sigma^*) > U_s(\pi^*, \sigma^*)$, yielding a strictly higher payoff than the optimal Bayesian persuasion. This occurs, for instance, when the sender has smooth ambiguity preferences or $\alpha$-MEU preferences. For senders with such preferences facing an MEU receiver, a characterization of the optimal payoff from ambiguous persuasion can be found in Cheng et al. (2025).
+\end{original}
+\begin{translation}
+假设世界有两个等可能的状态：$\{\omega_1, \omega_2\}$。接收者有三种可行行动：$\{a, b, c\}$。发送者的收益仅取决于行动：$v(a) = 2$，$v(b) = 1$，$v(c) = 0$。接收者的收益由以下收益矩阵给出：
+\[
+\begin{array}{c|cc}
+ & \omega_1 & \omega_2 \\
+\hline
+a & 2 & -2 \\
+b & 3/2 & -1/2 \\
+c & 0 & 0
+\end{array}
+\]
+存在两条消息 $\{m_1, m_2\}$，令依存方案 $\sigma$ 由 $\sigma(m_1)\sigma(m_2)$ 表示。
+
+令 $\pi^*$ 表示最优统计实验，它以等概率生成后验信念（以 $\omega_2$ 的概率表示）$\frac{1}{4}$ 和 $\frac{3}{4}$。给定此实验，接收者在两个后验信念下分别采取行动 $b$ 和 $a$。发送者的事前收益为
+\[
+U_s(\pi^*, \sigma^*) = \frac{1}{2} v(b) + \frac{1}{2} v(a) = \frac{3}{2}.
+\]
+
+考虑一个统计实验 $\pi_\varepsilon$，对于某个 $\varepsilon > 0$，它生成后验信念 $(\frac{1}{4} - \varepsilon)$ 和 $\frac{3}{4}$。贝叶斯合理性意味着第一个后验信念的生成概率为 $\frac{1}{2+4\varepsilon}$，严格小于 $\frac{1}{2}$。因此，如果固定接收者的依存方案，发送者在 $\pi_\varepsilon$ 下的事前收益将严格高于在 $\pi^*$ 下：
+\[
+U_s(\pi_\varepsilon, \sigma^*) = \frac{2}{2+4\varepsilon} \, v(b) + \frac{1+4\varepsilon}{2+4\varepsilon} \, v(a) = \frac{3+8\varepsilon}{2+4\varepsilon} > \frac{3}{2} = U_s(\pi^*, \sigma^*).
+\]
+
+令模糊实验 $P$ 为 $\{\pi^*, \pi_\varepsilon\}$ 的封闭凸包，并注意到
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; U_r(P, \sigma),
+\]
+因为 $\pi^*$ 在 $P$ 中的所有实验上最小化了 $U_r(\pi, \sigma^*)$。因此，当发送者承诺 $P$ 时，$\sigma^*$ 可以被诱导。\footnote{对于此 $\sigma^*$，$\pi_\varepsilon$ 也是接收者的一个最优反应。为解决潜在的均衡选择问题，发送者可以稍微扰动 $\pi_\varepsilon$，使其对一个任意小的 $\varepsilon > 0$ 生成后验信念 $\frac{1}{4} - \varepsilon$ 和 $\frac{3}{4}$。此调整确保 $\sigma^*$ 成为接收者唯一的最优反应，而发送者的收益则任意接近于在 $\pi_\varepsilon$ 下的收益。}
+
+另一方面，$\pi^*$ 恰好也是 $P$ 中所有实验上 $U_s(\pi, \sigma^*)$ 的最小化者，即
+\[
+U_s(P, \sigma^*) = U_s(\pi^*, \sigma^*).
+\]
+这证实了当发送者是 MEU 决策者时，发送者无法从模糊说服中获益。然而，如果发送者不是 MEU，可能出现 $U_s(P, \sigma^*) > U_s(\pi^*, \sigma^*)$ 的情形，从而产生比最优贝叶斯说服严格更高的收益。例如，当发送者具有平滑模糊偏好或 $\alpha$-MEU 偏好时，这种情况就会发生。对于具有此类偏好并面对 MEU 接收者的发送者，模糊说服最优收益的刻画可见于 Cheng et al. (2025)。
+\end{translation}
+\end{example}
+
+% --- Paragraph 4 (Prior ambiguity) ---
+\begin{original}
+Another direction for relaxing the assumptions of Theorem 1 is to allow the players to face prior ambiguity, i.e., pre-existing ambiguity over the payoff-relevant states. When both players are MEU decision-makers, their prior ambiguity can be represented by a set $\Pi \subseteq \Delta(\Omega)$ of priors. In this case, however, the argument used in the proof of Theorem 1 cannot be directly applied: even if $P$ and $\Pi$ are convex sets, the induced set of joint priors $\{p \in \Delta(\Omega \times M) : \pi \in P, \pi \in \Pi\}$ is not necessarily convex. Although a minimax theorem continues to hold for the receiver's maxmin program after taking the convex hull, the resulting saddle point need not be representable as the product of a prior and an experiment. Consequently, the key step in the proof of Theorem 1 no longer follows directly. Nevertheless, it remains possible that this step can be recovered through a more delicate argument, in which case the no-gain conclusion would continue to hold. In Cheng (2025), I show that this is indeed the case in the binary state and action environment, while leaving the analysis of more general settings for future work.
+\end{original}
+\begin{translation}
+放松定理1假设的另一个方向是允许博弈双方面对事先模糊性，即对收益相关状态的预先存在的模糊性。当双方都是 MEU 决策者时，他们的事前模糊性可由一个先验集合 $\Pi \subseteq \Delta(\Omega)$ 表示。然而，在这种情况下，定理1证明中使用的论证无法直接应用：即使 $P$ 和 $\Pi$ 是凸集，所诱导的联合先验集合 $\{p \in \Delta(\Omega \times M) : \pi \in P, \pi \in \Pi\}$ 也未必是凸的。虽然在取凸包之后，极小极大定理对接收者的最大最小规划仍然成立，但所得的鞍点未必可表示为一个先验和一个实验的乘积。因此，定理1证明中的关键步骤不再直接成立。尽管如此，通过更精细的论证，这一步仍有可能被恢复，在此情况下无收益的结论将继续成立。在 Cheng (2025) 中，我证明了在二元状态和行动的环境中，情况确实如此，同时将更一般设定的分析留待未来研究。
+\end{translation}
+
+% ===================================================================
+% SECTION 4: RELEVANCE OF THE EX-ANTE FORMULATION
+% ===================================================================
+\section{Relevance of the Ex-Ante Formulation / 事前形式化的相关性}
+
+% --- Paragraph 1 ---
+\begin{original}
+This paper studies ambiguous persuasion under an ex-ante formulation and shows that the results differ significantly from those in BLL's interim formulation. In Bayesian persuasion, the two formulations are equivalent because the receiver maximizes expected utility and updates beliefs using Bayes' rule, and is therefore always dynamically consistent. More fundamentally, this consistency arises from the fact that the receiver's preferences under Bayesian persuasion satisfy Savage's sure-thing principle (Savage, 1972; Ghirardato, 2002). In contrast, ambiguity-averse preferences necessarily violate the sure-thing principle, and as a result, the receiver's ex-ante and interim optimal actions under ambiguous persuasion may differ. Therefore, when it is a priori unclear which optimal action the receiver will take, it is essential to consider both perspectives. On top of that, there are also settings in which the ex-ante formulation may be arguably more relevant. The following presents three such settings.
+\end{original}
+\begin{translation}
+本文在事前形式化下研究模糊说服，并表明其结果与 BLL 的期中形式化下的结果显著不同。在贝叶斯说服中，两种形式化是等价的，因为接收者最大化期望效用并使用贝叶斯规则更新信念，因此始终是动态一致的。更根本的是，这种一致性源于以下事实：贝叶斯说服下接收者的偏好满足 Savage 的确定事件原则（Savage, 1972; Ghirardato, 2002）。相比之下，模糊厌恶偏好必然违反确定事件原则，结果，接收者在模糊说服下的事前和期中最优行动可能不同。因此，当先验上不清楚接收者将采取哪种最优行动时，考虑两种视角至关重要。除此之外，还存在一些情境，其中事前形式化可能更具相关性。下面给出三种这样的情境。
+\end{translation}
+
+% --- Paragraph 2 (Timing) ---
+\begin{original}
+\textbf{Timing of the game follows the ex-ante formulation.} In the ex-ante formulation, the receiver chooses a message-contingent action plan before observing the message and cannot change it thereafter. This setup naturally arises when, for example, the sender is constrained to communicate through a contingent contract that specifies states and actions, and the receiver is legally required to sign at the ex-ante stage. This structure is common in many real-world applications, including insurance policies, earn-out agreements in mergers and acquisitions, as well as contingency clauses in home purchase agreements. In such settings, the receiver would agree to the contract only if the prescribed action plan is ex-ante optimal, making the ex-ante formulation the more relevant approach.
+\end{original}
+\begin{translation}
+\textbf{博弈时序遵循事前形式化。} 在事前形式化中，接收者在观察到消息之前选择一个信息依存行动方案，且此后不能更改。这种设定自然出现在以下情形：例如，发送者被限制通过一个规定状态和行动的依存合同进行沟通，而接收者在法律上被要求在事前阶段签署。这种结构在许多现实应用中很常见，包括保险单、并购中的盈利支付协议，以及购房协议中的附带条款。在此类情境下，只有当所规定的行动方案是事前最优时，接收者才会同意该合同，这使得事前形式化成为更相关的方法。
+\end{translation}
+
+% --- Paragraph 3 (Updating rules) ---
+\begin{original}
+\textbf{The receiver chooses updating rules that ensure dynamic consistency.} Because ambiguity averse preferences violate the sure-thing principle, selecting an updating rule becomes an active and non-trivial decision for the receiver. Among the many possible updating rules, Hanany and Klibanoff (2007, 2009) characterize a family of updating rules that guarantee dynamic consistency, that is, they ensure the receiver's ex-ante optimal action remains interim optimal after updating. If the receiver adopts such an updating rule, then there is no distinction between the interim and ex-ante formulations, and both are consistent with the results presented in this paper. The experiment by Shishkin and Ortoleva (2023) mentioned in the introduction presents evidence that many subjects indeed choose such updating rules when facing an ambiguous experiment.
+\end{original}
+\begin{translation}
+\textbf{接收者选择确保动态一致性的更新规则。} 由于模糊厌恶偏好违反确定事件原则，选择更新规则成为接收者一个主动且非平凡的决策。在众多可能的更新规则中，Hanany and Klibanoff (2007, 2009) 刻画了一族保证动态一致性的更新规则，即它们确保接收者的事前最优行动在更新后仍然是期中最优的。如果接收者采用这样的更新规则，那么期中形式化和事前形式化之间就没有区别，两者都与本文给出的结果一致。引言中提到的 Shishkin and Ortoleva (2023) 的实验提供了证据，表明许多被试在面对模糊实验时确实选择了这样的更新规则。
+\end{translation}
+
+% --- Paragraph 4 (Sophisticated receiver) ---
+\begin{original}
+\textbf{The receiver is sophisticated and able to tie their own hand.} Even if the receiver does not adopt an updating rule that guarantees dynamic consistency, they may still be sophisticated enough to anticipate that they will behave inconsistently under ambiguity. As a result, such a receiver at the ex-ante stage of the game may strictly prefer to ``tie their own hand'' by committing to the ex-ante optimal action plan.\footnote{A behavioral characterization of preferences that value such commitments in decision-making is given by Siniscalchi (2011).} Recall the ex-ante stage here refers to the point after observing the sender's commitment to an experiment but before learning the realized message. In other words, this form of ``commitment'' by the receiver only regulates their own behavior and is not a strategic move that could affect the sender's choice of experiment. To tie their own hand and implement the ex-ante optimal action, the receiver may, for instance, pre-program an algorithm to determine their actions or delegate the decision to a third party. In these cases, the ex-ante formulation is again the more appropriate framework for analyzing the game.
+\end{original}
+\begin{translation}
+\textbf{接收者是老练的且能够束缚自己的双手。} 即使接收者不采用保证动态一致性的更新规则，他们也可能足够老练，能够预见到自己在模糊性下会表现出不一致的行为。结果，这样的接收者在博弈的事前阶段可能严格偏好通过承诺事前最优行动方案来``束缚自己的双手''。\footnote{Siniscalchi (2011) 给出了在决策中重视此类承诺的偏好的行为刻画。} 回忆一下，此处的事前阶段指的是在观察到发送者对实验的承诺之后、但在知晓已实现的消息之前的时点。换言之，接收者这种形式的``承诺''仅约束其自身行为，并非一种可影响发送者实验选择的策略性举动。为束缚自己的双手并实施事前最优行动，接收者可以，例如，预先编程一个算法来确定其行动，或将决策委托给第三方。在这些情形下，事前形式化再次成为分析博弈的更适当框架。
+\end{translation}
+
+% ===================================================================
+% DECLARATION OF COMPETING INTEREST
+% ===================================================================
+\section*{Declaration of Competing Interest / 利益冲突声明}
+
+\begin{original}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+\end{original}
+\begin{translation}
+作者声明，他们没有任何已知的可能影响本文所报告工作的竞争性财务利益或个人关系。
+\end{translation}
+
+% ===================================================================
+% APPENDIX A
+% ===================================================================
+\appendix
+\section{The Formalization and Proof of Theorem 2 / 定理2的形式化与证明}
+
+% --- Intro paragraph ---
+\begin{original}
+This section formalizes the statements in Theorem 2 by introducing two alternative setups of the persuasion game, each corresponds to the relaxation of one of the original assumptions. The first setup allows the players to hold heterogeneous priors over the states. The second setup permits the receiver to have more general Uncertainty Averse preferences. The case combining both relaxations is straightforward and thus is omitted.
+\end{original}
+\begin{translation}
+本节通过引入说服博弈的两种替代设定来形式化定理2中的陈述，每种设定对应于放松原始假设中的一个。第一种设定允许博弈双方对状态持有异质先验。第二种设定允许接收者具有更一般的不确定性厌恶偏好。结合两种放松的情形是直接的，因此予以省略。
+\end{translation}
+
+% ===================================================================
+% A.1: HETEROGENEOUS BELIEFS
+% ===================================================================
+\subsection{Heterogeneous Beliefs over States / 对状态的异质信念}
+
+% --- Paragraph 1 ---
+\begin{original}
+Let $\pi_s$ and $\pi_r$ denote the sender and receiver's priors over the states, respectively. The sender's Bayesian persuasion program is given by
+\[
+\max_{\pi, \sigma} \; \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi(m|\omega),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; \sum_{\omega, m, a} \sigma'(m)(a) \, u_r(a, \omega) \, \pi_r(\omega) \, \pi(m|\omega).
+\tag{A.1}
+\]
+
+Similarly, the sender's ambiguous persuasion program in this case becomes
+\[
+\max_{P, \sigma} \; \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi(m|\omega),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma'(m)(a) \, u_r(a, \omega) \, \pi_r(\omega) \, \pi(m|\omega).
+\tag{A.2}
+\]
+
+Then the first statement of Theorem 2 is formalized by the following lemma.
+\end{original}
+\begin{translation}
+令 $\pi_s$ 和 $\pi_r$ 分别表示发送者和接收者对状态的先验。发送者的贝叶斯说服规划为
+\[
+\max_{\pi, \sigma} \; \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi(m|\omega),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; \sum_{\omega, m, a} \sigma'(m)(a) \, u_r(a, \omega) \, \pi_r(\omega) \, \pi(m|\omega).
+\tag{A.1}
+\]
+
+类似地，发送者在此情形下的模糊说服规划变为
+\[
+\max_{P, \sigma} \; \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi(m|\omega),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma'(m)(a) \, u_r(a, \omega) \, \pi_r(\omega) \, \pi(m|\omega).
+\tag{A.2}
+\]
+
+那么，定理2的第一个陈述由以下引理形式化。
+\end{translation}
+
+\begin{lemma}[Lemma A.1]\label{lem:A1}
+\begin{original}
+The sender's maximum payoff in program (A.2) coincides with their maximum payoff in program (A.1).
+\end{original}
+\begin{translation}
+发送者在规划 (A.2) 中的最大收益与其在规划 (A.1) 中的最大收益一致。
+\end{translation}
+\end{lemma}
+
+\begin{proof}[Proof of Lemma A.1]
+\begin{original}
+Suppose the sender commits to some ambiguous experiment $P$. Then $\sigma^*$ can be induced by $P$ if and only if
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, \pi_r(\omega) \, \pi(m|\omega).
+\]
+
+By the same argument, the minimax theorem applies and saddle points exist. Therefore, an optimal $\sigma^*$ must be a saddle point such that it is optimal under some $\pi^* \in P$. Next, the sender's payoff from committing to $P$ satisfies
+\[
+U_s(P, \sigma^*) = \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi(m|\omega)
+\leq \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi^*(m|\omega)
+= U_s(\pi^*, \sigma^*).
+\]
+
+Therefore, the same conclusion follows.
+\end{original}
+\begin{translation}
+假设发送者承诺某个模糊实验 $P$。那么，$\sigma^*$ 能被 $P$ 诱导当且仅当
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, \pi_r(\omega) \, \pi(m|\omega).
+\]
+
+通过相同的论证，极小极大定理适用且鞍点存在。因此，一个最优的 $\sigma^*$ 必定是一个鞍点，使得它在某个 $\pi^* \in P$ 下是最优的。接下来，发送者从承诺 $P$ 中获得的收益满足
+\[
+U_s(P, \sigma^*) = \min_{\pi \in P} \; \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi(m|\omega)
+\leq \sum_{\omega, m, a} \sigma^*(m)(a) \, u_s(a, \omega) \, \pi_s(\omega) \, \pi^*(m|\omega)
+= U_s(\pi^*, \sigma^*).
+\]
+
+因此，相同的结论成立。
+\end{translation}
+\end{proof}
+
+% ===================================================================
+% A.2: UNCERTAINTY AVERSE RECEIVER
+% ===================================================================
+\subsection{Uncertainty Averse Receiver / 不确定性厌恶接收者}
+
+% --- Paragraph 1 ---
+\begin{original}
+The most general family of preferences that displays ambiguity aversion is the Uncertainty Averse preferences, defined and axiomatized by Cerreia-Vioglio et al. (2011). According to the Uncertainty Averse representation, the receiver's ex-ante payoff from choosing a plan $\sigma$ when the sender commits to an ambiguous experiment $P$ is given by
+\[
+U_r(P, \sigma) = \min_{p \in \Theta} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right),
+\]
+for some function $G : \Delta(\Omega \times M) \times \mathbb{R} \to (-\infty, +\infty]$ with $\mathcal{R} = [\min_{p, \sigma} U_r(p, \sigma), \max_{p, \sigma} U_r(p, \sigma)]$ and satisfies:
+\begin{enumerate}
+    \item[(i)] $G(p, t)$ is lower semi-continuous and quasi-convex.
+    \item[(ii)] $G(p, \cdot)$ is increasing for all $p \in \Delta(\Omega \times M)$.
+    \item[(iii)] $\min_{p \in \Theta} G(p, t) = t$ for all $t \in \mathcal{R}$.
+    \item[(iv)] $G(\cdot, t)$ is extended-valued continuous on $\Theta$ for all $t \in \mathcal{R}$.
+    \item[(v)] $\Theta = \{ p \in \Delta(\Omega \times M) : G(p, \min_{p, \sigma} U_r(p, \sigma)) < \infty \}$, which is closed and convex as $G(p, \cdot)$ is lower semi-continuous and quasi-convex.
+\end{enumerate}
+\end{original}
+\begin{translation}
+显示模糊厌恶的最一般的偏好族是不确定性厌恶偏好，由 Cerreia-Vioglio et al. (2011) 定义和公理化。根据不确定性厌恶表示，当发送者承诺一个模糊实验 $P$ 时，接收者从选择方案 $\sigma$ 中获得的事前收益为
+\[
+U_r(P, \sigma) = \min_{p \in \Theta} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right),
+\]
+对于某个函数 $G : \Delta(\Omega \times M) \times \mathbb{R} \to (-\infty, +\infty]$，其中 $\mathcal{R} = [\min_{p, \sigma} U_r(p, \sigma), \max_{p, \sigma} U_r(p, \sigma)]$，且满足：
+\begin{enumerate}
+    \item[(i)] $G(p, t)$ 是下半连续且拟凸的。
+    \item[(ii)] 对所有 $p \in \Delta(\Omega \times M)$，$G(p, \cdot)$ 是递增的。
+    \item[(iii)] 对所有 $t \in \mathcal{R}$，$\min_{p \in \Theta} G(p, t) = t$。
+    \item[(iv)] 对所有 $t \in \mathcal{R}$，$G(\cdot, t)$ 在 $\Theta$ 上是扩展值连续的。
+    \item[(v)] $\Theta = \{ p \in \Delta(\Omega \times M) : G(p, \min_{p, \sigma} U_r(p, \sigma)) < \infty \}$，由于 $G(p, \cdot)$ 是下半连续且拟凸的，该集合是封闭且凸的。
+\end{enumerate}
+\end{translation}
+
+% --- Paragraph 2 ---
+\begin{original}
+Notice (i)--(iv) are standard conditions for a representation of Uncertainty Averse preferences.\footnote{See Cerreia-Vioglio et al. (2011) for the required axioms and discussions.} (v) is the additional requirement that the receiver views $\Theta$ as the set of relevant joint priors according to their Uncertainty Averse preferences. In other words, $G(p, \cdot)$ is possibly finite only under those joint priors in $\Theta$. Notice that if the receiver has MEU preferences (as a special case of Uncertainty Averse preferences), this requirement simply reduces to the previous requirement on the receiver's set of joint priors.\footnote{Also see Section 5.2.2 in Cerreia-Vioglio et al. (2011) for the discussion in the case of smooth ambiguity preferences (Klibanoff et al., 2005).}
+
+On the other hand, the sender remains an MEU decision maker. The MEU sender's ambiguous persuasion program when facing an Uncertainty Averse receiver is defined by
+\[
+\max_{P, \sigma} \; U_s(P, \sigma),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(P, \sigma').
+\]
+
+Then the second statement of Theorem 2 is formalized by the following lemma.
+\end{original}
+\begin{translation}
+注意，(i)--(iv) 是不确定性厌恶偏好表示的标准条件。\footnote{参见 Cerreia-Vioglio et al. (2011) 了解所需的公理和讨论。} (v) 是额外的要求，即接收者根据其不确定性厌恶偏好将 $\Theta$ 视为相关的联合先验集合。换言之，$G(p, \cdot)$ 可能仅在 $\Theta$ 中的那些联合先验下才是有穷的。注意，如果接收者具有 MEU 偏好（作为不确定性厌恶偏好的一个特例），这一要求简单地归约为先前对接收者联合先验集合的要求。\footnote{另见 Cerreia-Vioglio et al. (2011) 第 5.2.2 节关于平滑模糊偏好（Klibanoff et al., 2005）情形的讨论。}
+
+另一方面，发送者仍然是 MEU 决策者。面对不确定性厌恶接收者的 MEU 发送者的模糊说服规划定义为
+\[
+\max_{P, \sigma} \; U_s(P, \sigma),
+\]
+\[
+\text{subject to} \quad \sigma \in \argmax_{\sigma' \in \Sigma} \; U_r(P, \sigma').
+\]
+
+那么，定理2的第二个陈述由以下引理形式化。
+\end{translation}
+
+\begin{lemma}[Lemma A.2]\label{lem:A2}
+\begin{original}
+When the sender is an MEU decision maker and the receiver is an Uncertainty Averse decision maker, the sender's maximum payoff in the ambiguous persuasion program coincides with their maximum payoff in the Bayesian persuasion program.
+\end{original}
+\begin{translation}
+当发送者是 MEU 决策者而接收者是不确定性厌恶决策者时，发送者在模糊说服规划中的最大收益与其在贝叶斯说服规划中的最大收益一致。
+\end{translation}
+\end{lemma}
+
+\begin{proof}[Proof of Lemma A.2]
+\begin{original}
+The proof here is similar to the proof of Lemma 2 in Li and Zhou (2020). Suppose the sender commits to some ambiguous experiment $P$. Then $\sigma^*$ can be induced by $P$ if and only if
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; \min_{p \in \Theta} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right).
+\]
+
+Both $\Theta$ and $\Sigma$, as argued in the proof of Theorem 1, are compact and convex subsets of linear topological spaces. Moreover, the function $G(p, \cdot)$ is quasi-concave, by the monotonicity of $G$ together with the same linearity. For each $p \in \Theta$, the function $G(\cdot, p)$ is lower semi-continuous and quasi-convex by condition (i). Hence all the requirements of Sion's minimax theorem are satisfied, which implies
+\[
+\max_{\sigma \in \Sigma} \; \min_{p \in \Theta} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right)
+= \min_{p \in \Theta} \; \max_{\sigma \in \Sigma} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right).
+\]
+
+Again, it further implies that any solution $\sigma^*$ must be part of a saddle point, i.e., there exists some $p^* \in \Theta$ such that
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p^*(\omega, m), \; p^* \right).
+\]
+
+Then monotonicity of $G(p, \cdot)$ implies that
+\[
+\sum_{\omega, m, a} \sigma^*(m)(a) \, u_r(a, \omega) \, p^*(\omega, m)
+\geq \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p^*(\omega, m),
+\]
+i.e., $\sigma^*$ is also optimal for the receiver against $p^*$ with $G(p, t) = t$. From this point on, exactly the same argument as in the proof of Theorem 1 applies.
+\end{original}
+\begin{translation}
+此处的证明类似于 Li and Zhou (2020) 中引理 2 的证明。假设发送者承诺某个模糊实验 $P$。那么，$\sigma^*$ 能被 $P$ 诱导当且仅当
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; \min_{p \in \Theta} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right).
+\]
+
+正如在定理1的证明中所论证的，$\Theta$ 和 $\Sigma$ 都是线性拓扑空间的紧且凸的子集。此外，由 $G$ 的单调性连同相同的线性性，函数 $G(p, \cdot)$ 是拟凹的。对每个 $p \in \Theta$，由条件 (i)，函数 $G(\cdot, p)$ 是下半连续且拟凸的。因此，Sion 极小极大定理的所有要求都得到满足，这蕴含
+\[
+\max_{\sigma \in \Sigma} \; \min_{p \in \Theta} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right)
+= \min_{p \in \Theta} \; \max_{\sigma \in \Sigma} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p(\omega, m), \; p \right).
+\]
+
+再次，这进一步意味着任何解 $\sigma^*$ 必定是鞍点的一部分，即存在某个 $p^* \in \Theta$ 使得
+\[
+\sigma^* \in \argmax_{\sigma \in \Sigma} \; G\!\left( \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p^*(\omega, m), \; p^* \right).
+\]
+
+那么，$G(p, \cdot)$ 的单调性蕴含
+\[
+\sum_{\omega, m, a} \sigma^*(m)(a) \, u_r(a, \omega) \, p^*(\omega, m)
+\geq \sum_{\omega, m, a} \sigma(m)(a) \, u_r(a, \omega) \, p^*(\omega, m),
+\]
+即，在 $G(p, t) = t$ 的情况下，$\sigma^*$ 对接收者来说也是对 $p^*$ 的最优反应。从此处开始，完全相同的论证如同定理1的证明一样适用。
+\end{translation}
+\end{proof}
+
+% ===================================================================
+% DATA AVAILABILITY
+% ===================================================================
+\section*{Data Availability / 数据可用性}
+
+\begin{original}
+No data was used for the research described in the article.
+\end{original}
+\begin{translation}
+本文所述研究未使用任何数据。
+\end{translation}
+
+% ===================================================================
+% REFERENCES
+% ===================================================================
+\section*{References / 参考文献}
+
+\small
+
+\begin{original}
+\noindent Alonso, Ricardo, C\^{a}mara, Odilon, 2016. Bayesian persuasion with heterogeneous priors. \textit{J. Econ. Theory} 165, 672--706.
+
+\noindent Aubin, Jean-Pierre, 2002. \textit{Optima and Equilibria: an Introduction to Nonlinear Analysis}, vol. 140. Springer Science \& Business Media.
+
+\noindent Baliga, Sandeep, Hanany, Eran, Klibanoff, Peter, 2013. Polarization and ambiguity. \textit{Am. Econ. Rev.} 103 (7), 3071--3083. \url{https://doi.org/10.1257/aer.103.7.3071}.
+
+\noindent Beauch\^{e}ne, Dorian, Li, Jian, Li, Ming, 2019. Ambiguous persuasion. \textit{J. Econ. Theory} 179, 312--365.
+
+\noindent Bergemann, Dirk, Morris, Stephen, 2019. Information design: a unified perspective. \textit{J. Econ. Lit.} 57 (1), 44--95.
+
+\noindent Cerreia-Vioglio, Simone, Maccheroni, Fabio, Marinacci, Massimo, Montrucchio, Luigi, 2011. Uncertainty averse preferences. \textit{J. Econ. Theory} 146 (4), 1275--1330.
+
+\noindent Cheng, Xiaoyu, 2021. A concavification approach to ambiguous persuasion. arXiv preprint arXiv:2106.11270.
+
+\noindent Cheng, Xiaoyu, 2022. Relative maximum likelihood updating of ambiguous beliefs. \textit{J. Math. Econ.} 99, 102587.
+
+\noindent Cheng, Xiaoyu, 2025. Ambiguous persuasion with prior ambiguity. arXiv preprint arXiv:2508.18603.
+
+\noindent Cheng, Xiaoyu, Klibanoff, Peter, Mukerji, Sujoy, Renou, Ludovic, 2025. Persuasion with ambiguous communication. arXiv preprint arXiv:2410.05504.
+
+\noindent Epstein, Larry G., Schneider, Martin, 2003. Recursive multiple-priors. \textit{J. Econ. Theory} 113 (1), 1--31.
+
+\noindent Galperti, Simone, 2019. Persuasion: the art of changing worldviews. \textit{Am. Econ. Rev.} 109 (3), 996--1031. \url{https://doi.org/10.1257/aer.20161441}.
+
+\noindent Ghirardato, Paolo, 2002. Revisiting Savage in a conditional world. \textit{Econ. Theory} 20 (1), 83--92.
+
+\noindent Gilboa, Itzhak, Marinacci, Massimo, 2013. Ambiguity and the Bayesian paradigm. In: Acemoglu, Daron, Arellano, Manuel, Dekel, Eddie (Eds.), \textit{Advances in Economics and Econometrics: Tenth World Congress}. Cambridge University Press, pp. 179--242.
+
+\noindent Gilboa, Itzhak, Schmeidler, David, 1989. Maxmin expected utility with non-unique prior. \textit{J. Math. Econ.} 18 (2), 141--153.
+
+\noindent Hanany, Eran, Klibanoff, Peter, 2007. Updating preferences with multiple priors. \textit{Theor. Econ.} 2 (3), 261--298.
+
+\noindent Hanany, Eran, Klibanoff, Peter, 2009. Updating ambiguity averse preferences. \textit{B.E. J. Theor. Econ.} 9 (1).
+
+\noindent Hanany, Eran, Klibanoff, Peter, Mukerji, Sujoy, 2020. Incomplete information games with ambiguity averse players. \textit{Am. Econ. J. Microecon.} 12 (2), 135--187. \url{https://doi.org/10.1257/mic.20180302}.
+
+\noindent Hedlund, Jonas, Kauffeldt, T. Florian, Lammert, Malte, 2020. Persuasion under ambiguity. \textit{Theory Decis.}, 1--28.
+
+\noindent Kamenica, Emir, 2019. Bayesian persuasion and information design. \textit{Annu. Rev. Econ.} 11, 249--272.
+
+\noindent Kamenica, Emir, Gentzkow, Matthew, 2011. Bayesian persuasion. \textit{Am. Econ. Rev.} 101 (6), 2590--2615.
+
+\noindent Klibanoff, Peter, Marinacci, Massimo, Mukerji, Sujoy, 2005. A smooth model of decision making under ambiguity. \textit{Econometrica} 73 (6), 1849--1892.
+
+\noindent Kosterina, Svetlana, 2022. Persuasion with unknown beliefs. \textit{Theor. Econ.} 17 (3), 1075--1107.
+
+\noindent Laclau, Marie, Renou, Ludovic, 2017. Public persuasion. Queen Mary University of London. Mimeo.
+
+\noindent Li, Jian, Zhou, Junjie, 2016. Blackwell's informativeness ranking with uncertainty-averse preferences. \textit{Games Econ. Behav.} 96, 18--29. \url{https://doi.org/10.1016/j.geb.2016.01.009}.
+
+\noindent Li, Jian, Zhou, Junjie, 2020. Information order in monotone decision problems under uncertainty. \textit{J. Econ. Theory} 187, 105012. \url{https://doi.org/10.1016/j.jet.2020.105012}.
+
+\noindent Maccheroni, Fabio, Marinacci, Massimo, Rustichini, Aldo, 2006. Ambiguity aversion, robustness, and the variational representation of preferences. \textit{Econometrica} 74 (6), 1447--1498. \url{http://www.jstor.org/stable/4123081}.
+
+\noindent Nikzad, Afshin, 2021. Persuading a pessimist: simplicity and robustness. \textit{Games Econ. Behav.} 129, 144--157. \url{https://doi.org/10.1016/j.geb.2021.05.007}.
+
+\noindent Pahlke, Marieke, 2024. Dynamic Consistency and Ambiguous Communication. Corvinus University of Budapest. Mimeo.
+
+\noindent Savage, Leonard J., 1972. \textit{The Foundations of Statistics}. Courier Corporation.
+
+\noindent Shishkin, Denis, Ortoleva, Pietro, 2023. Ambiguous information and dilation: an experiment. \textit{J. Econ. Theory} 208, 105610. \url{https://doi.org/10.1016/j.jet.2023.105610}.
+
+\noindent Siniscalchi, Marciano, 2009. Two out of three ain't bad: a comment on ``The ambiguity aversion literature: a critical assessment''. \textit{Econ. Philos.} 25 (3), 335--356.
+
+\noindent Siniscalchi, Marciano, 2011. Dynamic choice under ambiguity. \textit{Theor. Econ.} 6 (3), 379--421.
+
+\noindent Sion, Maurice, 1958. On general minimax theorems. \textit{Pac. J. Math.} 8 (1), 171--176.
+
+\noindent Wang, Zichang, 2024. Informativeness orders over ambiguous experiments. \textit{J. Econ. Theory} 222, 105937. \url{https://doi.org/10.1016/j.jet.2024.105937}.
+\end{original}
+
+\begin{translation}
+\noindent Alonso, Ricardo, C\^{a}mara, Odilon, 2016. 异质先验下的贝叶斯说服. \textit{J. Econ. Theory} 165, 672--706.
+
+\noindent Aubin, Jean-Pierre, 2002. \textit{最优与均衡：非线性分析导论}, 第140卷. Springer Science \& Business Media.
+
+\noindent Baliga, Sandeep, Hanany, Eran, Klibanoff, Peter, 2013. 极化与模糊性. \textit{Am. Econ. Rev.} 103 (7), 3071--3083. \url{https://doi.org/10.1257/aer.103.7.3071}.
+
+\noindent Beauch\^{e}ne, Dorian, Li, Jian, Li, Ming, 2019. 模糊说服. \textit{J. Econ. Theory} 179, 312--365.
+
+\noindent Bergemann, Dirk, Morris, Stephen, 2019. 信息设计：一个统一的视角. \textit{J. Econ. Lit.} 57 (1), 44--95.
+
+\noindent Cerreia-Vioglio, Simone, Maccheroni, Fabio, Marinacci, Massimo, Montrucchio, Luigi, 2011. 不确定性厌恶偏好. \textit{J. Econ. Theory} 146 (4), 1275--1330.
+
+\noindent Cheng, Xiaoyu, 2021. 模糊说服的凹化方法. arXiv preprint arXiv:2106.11270.
+
+\noindent Cheng, Xiaoyu, 2022. 模糊信念的相对最大似然更新. \textit{J. Math. Econ.} 99, 102587.
+
+\noindent Cheng, Xiaoyu, 2025. 带有事先模糊性的模糊说服. arXiv preprint arXiv:2508.18603.
+
+\noindent Cheng, Xiaoyu, Klibanoff, Peter, Mukerji, Sujoy, Renou, Ludovic, 2025. 模糊沟通下的说服. arXiv preprint arXiv:2410.05504.
+
+\noindent Epstein, Larry G., Schneider, Martin, 2003. 递归多重先验. \textit{J. Econ. Theory} 113 (1), 1--31.
+
+\noindent Galperti, Simone, 2019. 说服：改变世界观的艺术. \textit{Am. Econ. Rev.} 109 (3), 996--1031. \url{https://doi.org/10.1257/aer.20161441}.
+
+\noindent Ghirardato, Paolo, 2002. 在条件世界中重访 Savage. \textit{Econ. Theory} 20 (1), 83--92.
+
+\noindent Gilboa, Itzhak, Marinacci, Massimo, 2013. 模糊性与贝叶斯范式. 载于: Acemoglu, Daron, Arellano, Manuel, Dekel, Eddie (编), \textit{经济学与计量经济学进展：第十届世界大会}. Cambridge University Press, pp. 179--242.
+
+\noindent Gilboa, Itzhak, Schmeidler, David, 1989. 具有非唯一先验的最大最小期望效用. \textit{J. Math. Econ.} 18 (2), 141--153.
+
+\noindent Hanany, Eran, Klibanoff, Peter, 2007. 多重先验下的偏好更新. \textit{Theor. Econ.} 2 (3), 261--298.
+
+\noindent Hanany, Eran, Klibanoff, Peter, 2009. 更新模糊厌恶偏好. \textit{B.E. J. Theor. Econ.} 9 (1).
+
+\noindent Hanany, Eran, Klibanoff, Peter, Mukerji, Sujoy, 2020. 具有模糊厌恶参与者的不完全信息博弈. \textit{Am. Econ. J. Microecon.} 12 (2), 135--187. \url{https://doi.org/10.1257/mic.20180302}.
+
+\noindent Hedlund, Jonas, Kauffeldt, T. Florian, Lammert, Malte, 2020. 模糊性下的说服. \textit{Theory Decis.}, 1--28.
+
+\noindent Kamenica, Emir, 2019. 贝叶斯说服与信息设计. \textit{Annu. Rev. Econ.} 11, 249--272.
+
+\noindent Kamenica, Emir, Gentzkow, Matthew, 2011. 贝叶斯说服. \textit{Am. Econ. Rev.} 101 (6), 2590--2615.
+
+\noindent Klibanoff, Peter, Marinacci, Massimo, Mukerji, Sujoy, 2005. 模糊性下决策的平滑模型. \textit{Econometrica} 73 (6), 1849--1892.
+
+\noindent Kosterina, Svetlana, 2022. 未知信念下的说服. \textit{Theor. Econ.} 17 (3), 1075--1107.
+
+\noindent Laclau, Marie, Renou, Ludovic, 2017. 公共说服. Queen Mary University of London. 未发表手稿.
+
+\noindent Li, Jian, Zhou, Junjie, 2016. 不确定性厌恶偏好下的 Blackwell 信息性排序. \textit{Games Econ. Behav.} 96, 18--29. \url{https://doi.org/10.1016/j.geb.2016.01.009}.
+
+\noindent Li, Jian, Zhou, Junjie, 2020. 不确定性下单调决策问题中的信息序. \textit{J. Econ. Theory} 187, 105012. \url{https://doi.org/10.1016/j.jet.2020.105012}.
+
+\noindent Maccheroni, Fabio, Marinacci, Massimo, Rustichini, Aldo, 2006. 模糊厌恶、稳健性与偏好的变分表示. \textit{Econometrica} 74 (6), 1447--1498. \url{http://www.jstor.org/stable/4123081}.
+
+\noindent Nikzad, Afshin, 2021. 说服悲观者：简洁性与稳健性. \textit{Games Econ. Behav.} 129, 144--157. \url{https://doi.org/10.1016/j.geb.2021.05.007}.
+
+\noindent Pahlke, Marieke, 2024. 动态一致性与模糊沟通. Corvinus University of Budapest. 未发表手稿.
+
+\noindent Savage, Leonard J., 1972. \textit{统计学基础}. Courier Corporation.
+
+\noindent Shishkin, Denis, Ortoleva, Pietro, 2023. 模糊信息与膨胀：一项实验. \textit{J. Econ. Theory} 208, 105610. \url{https://doi.org/10.1016/j.jet.2023.105610}.
+
+\noindent Siniscalchi, Marciano, 2009. 三分之二也不差：评``模糊厌恶文献：一项批判性评估''. \textit{Econ. Philos.} 25 (3), 335--356.
+
+\noindent Siniscalchi, Marciano, 2011. 模糊性下的动态选择. \textit{Theor. Econ.} 6 (3), 379--421.
+
+\noindent Sion, Maurice, 1958. 关于一般极小极大定理. \textit{Pac. J. Math.} 8 (1), 171--176.
+
+\noindent Wang, Zichang, 2024. 模糊实验上的信息性排序. \textit{J. Econ. Theory} 222, 105937. \url{https://doi.org/10.1016/j.jet.2024.105937}.
+\end{translation}
+
+\end{document}

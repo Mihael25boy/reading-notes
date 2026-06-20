@@ -1,0 +1,1241 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% ========== Packages ==========
+\usepackage{ctex}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+
+% ========== Colors ==========
+\definecolor{transblue}{RGB}{0,51,153}
+
+% ========== Bilingual environments ==========
+\newenvironment{original}
+  {\par\medskip\noindent\color{black}\ignorespaces}
+  {\par\medskip}
+
+\newenvironment{translation}
+  {\par\noindent\color{transblue}\ignorespaces}
+  {\par\medskip\medskip}
+
+% ========== Table of contents ==========
+\setcounter{tocdepth}{2}
+
+% ========== Headers ==========
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Henkel (2024) --- Perceived Ambiguity and Likelihood Insensitivity}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ========== Title format ==========
+\titleformat{\section}[block]{\Large\bfseries}{}{0pt}{}
+\titleformat{\subsection}[block]{\large\bfseries}{}{0pt}{}
+
+% ========== Metadata ==========
+\title{\textbf{Experimental Evidence on the Relationship between Perceived Ambiguity and Likelihood Insensitivity}\\[6pt]
+       \large\textbf{感知模糊性与似然不敏感关系的实验证据}}
+
+\author{Luca Henkel\\[4pt]
+        \small University of Chicago, United States of America\\
+        \small University of CEMA, Argentina\\[4pt]
+        \small E-mail: \texttt{luca.henkel@uchicago.edu}}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ========== TOC ==========
+\tableofcontents
+\newpage
+
+% ========== Journal info ==========
+\begin{center}
+\small
+\textit{Games and Economic Behavior} 145 (2024) 312--338
+
+\url{https://doi.org/10.1016/j.geb.2024.03.015}
+
+Received 1 June 2022; Available online 29 March 2024
+
+\textcopyright\ 2024 Elsevier Inc. All rights reserved.
+\end{center}
+
+% ========== Abstract ==========
+\section*{Abstract / 摘要}
+\addcontentsline{toc}{section}{Abstract / 摘要}
+
+\begin{original}
+Observed individual behavior in the presence of ambiguity shows insufficient responsiveness to changes in subjective likelihoods. Despite being integral to theoretical models and relevant in many domains, evidence on the causes and determining factors of such likelihood insensitive behavior is scarce. This paper investigates the role of beliefs in the form of ambiguity perception --- the extent to which a decision-maker has difficulties assigning a single probability to each possible event --- as a potential determinant. Using an experiment, I elicit measures of ambiguity perception and likelihood insensitivity and exogenously vary the level of perceived ambiguity. The results provide strong support for a perception-based explanation of likelihood insensitivity. The two measures are highly correlated at the individual level, and exogenously increasing ambiguity perception increases insensitivity, suggesting a causal relationship. In contrast, ambiguity perception is unrelated to ambiguity aversion --- the extent to which a decision-maker dislikes the presence of ambiguity.
+\end{original}
+
+\begin{translation}
+在模糊环境下观察到的个体行为显示出对主观似然变化反应不足的特征。尽管理论模型将其视为核心组成部分，且在许多领域具有相关性，但关于这种似然不敏感行为的原因和决定因素的证据仍然稀缺。本文研究了以模糊感知形式存在的信念——即决策者在为每个可能事件分配单一概率时所面临的困难程度——作为潜在决定因素的作用。通过实验，我引出了模糊感知和似然不敏感的度量指标，并外生地改变了感知模糊的水平。结果为基于感知的似然不敏感解释提供了强有力的支持。这两个指标在个体层面高度相关，且外生增加模糊感知会增加不敏感性，表明存在因果关系。相比之下，模糊感知与模糊厌恶——即决策者厌恶模糊存在的程度——无关。
+\end{translation}
+
+\bigskip
+\noindent\textbf{JEL classification / JEL分类:} D81, D83, D91, C91
+
+\noindent\textbf{Keywords / 关键词:} Ambiguity / 模糊; Decision-making under uncertainty / 不确定性决策; Likelihood insensitivity / 似然不敏感; Multiple prior models / 多重先验模型
+
+\newpage
+
+% ========== Acknowledgments ==========
+\section*{Acknowledgments / 致谢}
+\addcontentsline{toc}{section}{Acknowledgments / 致谢}
+
+\begin{original}
+I thank the editor, advisory editor and two referees for their constructive comments which greatly improved the paper. I am grateful to Peter Andre, Sarah Auster, Aur\'{e}lien Baillon, Anujit Chakraborty, Armin Falk, Evan Friedman, Hans-Martin von Gaudecker, Yucheng Liang, Franz Ostrizek, Peter Wakker, Florian Zimmermann and Christian Zimpelmann for helpful comments and discussions.
+\end{original}
+
+\begin{translation}
+我感谢编辑、顾问编辑和两位审稿人的建设性意见，这些意见极大地改进了本文。我感谢Peter Andre、Sarah Auster、Aur\'{e}lien Baillon、Anujit Chakraborty、Armin Falk、Evan Friedman、Hans-Martin von Gaudecker、Yucheng Liang、Franz Ostrizek、Peter Wakker、Florian Zimmermann和Christian Zimpelmann的有益评论和讨论。
+\end{translation}
+
+\begin{original}
+\textbf{Funding:} Funded by the Forschungsgemeinschaft (DFG, German Research Foundation) under Germany's Excellence Strategy --- EXC 2126/1-390838866. Support by the German Research Foundation (DFG) through CRC TR 224 (Project A01) is gratefully acknowledged.
+\end{original}
+
+\begin{translation}
+\textbf{资助：} 由德国研究联合会（DFG）在德国卓越战略——EXC 2126/1-390838866下资助。感谢德国研究联合会（DFG）通过CRC TR 224（项目A01）提供的支持。
+\end{translation}
+
+\begin{original}
+\textbf{Preregistration:} The experiment in this paper was preregistered at \url{https://aspredicted.org/pa4ij.pdf}. See also Appendix F on research transparency.
+\end{original}
+
+\begin{translation}
+\textbf{预注册：} 本文实验已在\url{https://aspredicted.org/pa4ij.pdf}预注册。另见附录F关于研究透明度的说明。
+\end{translation}
+
+\newpage
+
+% ==================== SECTION 1: INTRODUCTION ====================
+\section{1. Introduction / 引言}
+
+\begin{original}
+This paper experimentally studies the relationship between ambiguity perception and choices under ambiguity, with a focus on the observed behavioral pattern of likelihood insensitivity. Likelihood insensitivity is a robust empirical finding, with numerous studies emphasizing its relevance, e.g., Abdellaoui et al.\ (2011); Wakker (2010); Baillon et al.\ (2018b). It is defined as individuals displaying insufficient discriminatory power in differentiating the degree of likelihood of ambiguous events, leading to insufficient responsiveness to changes in likelihoods. To distinguish this finding from probability insensitivity found in choices under risk, which concerns responsiveness to changes in objective probabilities, it is commonly referred to as ambiguity-generated likelihood insensitivity (a-insensitivity). A-insensitivity is one of the two main empirical patterns that characterize behavior under ambiguity, the other being ambiguity aversion/seeking behavior --- the degree to which an individual dislikes the presence of ambiguity.
+\end{original}
+
+\begin{translation}
+本文实验性地研究了模糊感知与模糊环境下的选择之间的关系，重点关注观察到的似然不敏感行为模式。似然不敏感是一个稳健的经验发现，许多研究强调了其相关性，例如Abdellaoui等（2011）；Wakker（2010）；Baillon等（2018b）。它被定义为个体在区分模糊事件的似然程度时表现出不足的辨别力，从而导致对似然变化的反应不足。为了将这一发现与风险选择中的概率不敏感（涉及对客观概率变化的反应性）相区分，它通常被称为模糊生成的似然不敏感（a-不敏感）。a-不敏感是表征模糊环境下行为的两个主要经验模式之一，另一个是模糊厌恶/寻求行为——即个体厌恶模糊存在的程度。
+\end{translation}
+
+\begin{original}
+For a-insensitivity, a growing number of studies find (i) substantial correlations with relevant (real-life) behavior and (ii) large degrees of systematic heterogeneity between different individuals. For example, Dimmock et al.\ (2016) find a significant negative relationship between a-insensitivity and stock market participation. Similarly, for stock market participants, Anantanasuwong et al.\ (2020) find a-insensitivity to be significantly related to the choice of financial assets. Li et al.\ (2019) show that within the context of trust games, people who display more a-insensitivity are less likely to act on their beliefs about the trustworthiness of others. Relatedly, Li et al.\ (2020) show that ambiguity about betrayal within social interactions influences subjects' choices through their insensitivity to the likelihoods of actions others will make. Furthermore, Li (2017) and von Gaudecker et al.\ (2022) find substantial differences in a-insensitivity among sociodemographic groups.
+\end{original}
+
+\begin{translation}
+对于a-不敏感，越来越多的研究发现：(i) 与相关（现实生活）行为存在显著相关性；(ii) 不同个体之间存在很大程度的系统性异质性。例如，Dimmock等（2016）发现a-不敏感与股票市场参与之间存在显著的负相关关系。类似地，对于股票市场参与者，Anantanasuwong等（2020）发现a-不敏感与金融资产选择显著相关。Li等（2019）表明，在信任博弈的背景下，表现出更多a-不敏感的人不太可能根据他们对他人可信度的信念行事。相关地，Li等（2020）表明，社会互动中关于背叛的模糊性通过主体对他人行动似然的不敏感性影响其选择。此外，Li（2017）和von Gaudecker等（2022）发现a-不敏感在不同社会人口群体之间存在显著差异。
+\end{translation}
+
+\begin{original}
+Despite empirical evidence highlighting the importance of a-insensitivity, evidence on its causes and determining factors is scarce. In particular, what is the underlying mechanism causing observed a-insensitivity? A popular class of ambiguity models, the so-called multiple prior models (Ghirardato et al., 2004; Chandrasekher et al., 2022), propose an answer, as has recently been documented by Dimmock et al.\ (2015) and Baillon et al.\ (2018a). In those models, a decision-maker has a set of beliefs (the priors) considered relevant to the decision problem, and the size of the set is interpreted as the perceived level of ambiguity. This perceived ambiguity relates directly to a-insensitivity: the larger the belief set, the greater is the decision-makers' insensitivity to changes in likelihood. The reason is that considering multiple possible probability measures leads the decision-maker to limited confidence in a particular one, resulting in insufficient responsiveness toward likelihood changes. Hence, this theoretical insight provides a potential explanation for a-insensitivity with testable predictions.
+\end{original}
+
+\begin{translation}
+尽管经验证据强调了a-不敏感的重要性，但关于其原因和决定因素的证据仍然稀缺。特别是，导致观察到的a-不敏感的潜在机制是什么？一类流行的模糊模型，即所谓的多重先验模型（Ghirardato等，2004；Chandrasekher等，2022），提出了一个答案，最近由Dimmock等（2015）和Baillon等（2018a）进行了记录。在这些模型中，决策者拥有一组被认为与决策问题相关的信念（先验），该集合的大小被解释为感知模糊的水平。这种感知模糊与a-不敏感直接相关：信念集越大，决策者对似然变化的不敏感性就越大。原因是考虑多种可能的概率测度导致决策者对某一特定测度的信心有限，从而导致对似然变化的反应不足。因此，这一理论洞见为a-不敏感提供了具有可检验预测的潜在解释。
+\end{translation}
+
+\begin{original}
+This paper empirically investigates the mechanism responsible for likelihood insensitivity proposed by the multiple prior models. I experimentally measure and relate decision-makers' perceived ambiguity to a-insensitivity displayed in incentivized choices under ambiguity. With such a test, I examine the extent to which a-insensitive behavior is explainable by a belief-based mechanism. In contrast, alternative explanations like the decision weight interpretation (Baillon et al., 2018a) brought forward by models such as prospect theory for ambiguity (Tversky and Kahneman, 1992) do not explicitly relate a-insensitivity to beliefs. Instead, in such models a-insensitivity is explained through psychological motives, source dependent preferences or ambiguity perception not captured by sets of beliefs.
+\end{original}
+
+\begin{translation}
+本文实证性地研究了多重先验模型提出的似然不敏感机制。我在实验中测量了决策者的感知模糊，并将其与在激励相容的模糊选择中显示的a-不敏感联系起来。通过这样的检验，我考察了a-不敏感行为在多大程度上可以通过基于信念的机制来解释。相比之下，替代解释——如决策权重解释（Baillon等，2018a）——由模糊前景理论等模型（Tversky和Kahneman，1992）提出，并未明确将a-不敏感与信念联系起来。相反，在此类模型中，a-不敏感通过心理动机、来源依赖偏好或不通过信念集捕捉的模糊感知来解释。
+\end{translation}
+
+\begin{original}
+I test for the mechanism explaining a-insensitive behavior using a preregistered experiment with 126 subjects. In the experiment, subjects face four decision parts. In each part, they are presented with weather events. The events concern future temperature changes from one day to another, a natural and easy to understand situation in which ambiguity is present. Using these events, in each decision part I elicit subjects' ambiguity perception, an index capturing a-insensitivity, and an index capturing ambiguity aversion, all at the individual level.
+\end{original}
+
+\begin{translation}
+我使用一个包含126名受试者的预注册实验来检验解释a-不敏感行为的机制。在实验中，受试者面临四个决策部分。在每个部分中，他们面对的是天气事件。这些事件涉及未来一天与另一天之间的温度变化，这是一个自然且易于理解的存在模糊性的情境。利用这些事件，在每个决策部分中，我在个体层面引出受试者的模糊感知、捕捉a-不敏感的指数以及捕捉模糊厌恶的指数。
+\end{translation}
+
+\begin{original}
+To elicit a-insensitivity and ambiguity aversion, I use matching probabilities following the method proposed by Baillon et al.\ (2018b). Subjects are presented sequentially with six events, three single events that partition the state space, as well as their pairwise unions. The three single events correspond to a noticeable increase, decrease, or no change in temperature from one day to the other. The pairwise unions are defined accordingly, e.g., the union of the first and third single event means that the day either gets warmer or stays the same, but not colder. For each of these six events, subjects face a multiple-price-list in which they choose between betting on the occurrence of the ambiguous event to receive a prize and a lottery that pays the same prize with a known probability. Between the list's decisions, the probability of the lottery is varied. The probability for which subjects are indifferent between betting on the event and the lottery is their matching probability of the respective event. Baillon et al.\ (2018b) then define the a-insensitivity index as the average discrepancy of matching probabilities between single events and their pairwise unions. Because a higher discrepancy between the two indicates a lower responsiveness to differences in likelihoods, the index captures a-insensitive behavior. In addition, the ambiguity aversion index is defined as the average matching probability across all events, capturing how much subjects, in general, prefer to bet on the ambiguous event.
+\end{original}
+
+\begin{translation}
+为了引出a-不敏感和模糊厌恶，我使用Baillon等（2018b）提出的匹配概率方法。受试者依次面对六个事件：三个划分状态空间的单一事件，以及它们的成对并集。三个单一事件对应于从一天到另一天温度的明显升高、降低或无变化。成对并集相应地定义，例如，第一和第三单一事件的并集意味着这一天要么变暖，要么保持不变，但不会变冷。对于这六个事件中的每一个，受试者面临一个多重价格列表，在其中他们在押注模糊事件发生以获得奖品与以已知概率支付相同奖品的彩票之间进行选择。在列表的各项决策之间，彩票的概率是变化的。受试者在押注事件和彩票之间无差异的概率就是他们对该事件的匹配概率。Baillon等（2018b）然后将a-不敏感指数定义为单一事件与其成对并集之间匹配概率的平均差异。由于两者之间的较大差异表明对似然差异的反应性较低，该指数捕捉了a-不敏感行为。此外，模糊厌恶指数被定义为所有事件的平均匹配概率，捕捉受试者在一般情况下偏好押注模糊事件的程度。
+\end{translation}
+
+\begin{original}
+To elicit ambiguity perception, I introduce a two-stage elicitation method that captures ambiguity perceptions as defined by commonly used multiple prior models. For the same single events constructed for the elicitation of a-insensitivity, subjects first report their best-guess probability for the event's occurrence. Afterward, they state their belief in the precision of the previously reported probability, revealing a subjective probability interval. I define the index measuring ambiguity perception as the average reported precision over the events of each part, i.e., the average length of the probability intervals. The larger the average length of the probability intervals, the more ambiguity a subject perceives.
+\end{original}
+
+\begin{translation}
+为了引出模糊感知，我引入了一种两阶段引出方法，捕捉常用多重先验模型所定义的模糊感知。对于为引出a-不敏感而构建的相同单一事件，受试者首先报告他们对事件发生的最佳猜测概率。之后，他们陈述对先前报告概率精度的信念，揭示出主观概率区间。我将测量模糊感知的指数定义为每个部分事件的平均报告精度，即概率区间的平均长度。概率区间的平均长度越大，受试者感知的模糊性就越多。
+\end{translation}
+
+\begin{original}
+Eliciting both ambiguity perception and a-insensitivity at the individual level allows me to assess the empirical relationship between the two. Importantly, the indices of a-insensitivity and ambiguity aversion I elicit in the experiment are valid under all popular ambiguity theories, as shown by Baillon et al.\ (2021). Thus, the elicitation of a-insensitivity does not require a commitment to a specific model. Moreover, due to the use of matching probabilities, the elicitation controls for risk-induced insensitivity. These features enable me to perform arguably the most general test of the relevance of ambiguity perception for a-insensitivity possible.
+\end{original}
+
+\begin{translation}
+在个体层面同时引出模糊感知和a-不敏感使我能够评估两者之间的经验关系。重要的是，我在实验中引出的a-不敏感和模糊厌恶指数在所有流行的模糊理论下都是有效的，正如Baillon等（2021）所示。因此，a-不敏感的引出不需要承诺特定的模型。此外，由于使用了匹配概率，该引出方法控制了风险引发的不敏感性。这些特征使我能够对模糊感知与a-不敏感的相关性进行可以说最一般的检验。
+\end{translation}
+
+\begin{original}
+In order to investigate whether a causal relationship between ambiguity perception and a-insensitivity exists, I create exogenous variation in ambiguity perceptions. Between decision parts, I vary the time distance of the weather events from four days (Low Ambiguity condition) to eight weeks (High Ambiguity condition) in the future. That is, in the former, subjects consider whether a day four days in the future is warmer, colder, or has the same temperature as the previous day, while in the latter, they consider a day eight weeks in the future. As weather events become more ambiguous further into the future, the degree of ambiguity increases, plausibly leading to an increase in subjects' ambiguity perception. At the same time, I make sure that all other aspects of the decision environment, such as the timing of payments or the resolution of uncertainty, are held constant to isolate the effect of a change in ambiguity perception. Furthermore, I randomize the order of the decision parts and randomize the order of elicitation of ambiguity perception and a-insensitivity within each decision part to control for order effects.
+\end{original}
+
+\begin{translation}
+为了研究模糊感知与a-不敏感之间是否存在因果关系，我创造了模糊感知的外生变化。在决策部分之间，我将天气事件的时间距离从未来的四天（低模糊条件）变化到八周（高模糊条件）。也就是说，在前者中，受试者考虑未来四天的某一天是否比前一天更暖、更冷或温度相同；而在后者中，他们考虑未来八周的某一天。随着天气事件在未来越远越模糊，模糊程度增加，这可能合理地导致受试者模糊感知的增加。同时，我确保决策环境的所有其他方面——如支付时间或不确定性的解决——保持不变，以隔离模糊感知变化的影响。此外，我随机化了决策部分的顺序，并在每个决策部分内随机化了模糊感知和a-不敏感的引出顺序，以控制顺序效应。
+\end{translation}
+
+\begin{original}
+With this experimental design, I present three main findings on the relationship between ambiguity perception and a-insensitivity. First, subjects perceive a considerable amount of ambiguity and substantial degrees of a-insensitivity are prevalent. More than 90\% of subjects simultaneously report a positive amount of perceived ambiguity and display a-insensitive behavior. Second, the two measures are highly positively related at the individual level. Raw correlations range between $\rho = 0.40$ and $\rho = 0.54$ (pooled $\rho = 0.50$). Once measurement error is taken into account, correlations increase to $\rho = 0.51$ and $\rho = 0.63$. Regression analyses similarly show a significant positive relationship between the two indices when controlling for observable characteristics. Hence, a strong positive association exists between the level of ambiguity perception and the degree of a-insensitive behavior. At the same time, and in line with theoretical considerations, I find no relationship between ambiguity perception and ambiguity aversion (pooled $\rho = -0.02$). Additionally, ambiguity aversion is orthogonal to a-insensitivity (pooled $\rho = 0.01$), replicating the results of previous studies. Third, exogenously increasing the degree of ambiguity increases ambiguity perception and, crucially, a-insensitive behavior. Reported ambiguity perception is significantly higher in the High Ambiguity parts compared to the Low Ambiguity parts ($p < 0.001$, Wilcoxon signed-rank test). This increase translates into behavior: the index capturing a-insensitivity increases by more than 30\% from the Low Ambiguity to the High Ambiguity parts ($p < 0.01$, Wilcoxon signed-rank test). Importantly, the change in a-insensitivity can be predicted by changes in perceived ambiguity. Subjects who report the largest increases in ambiguity perception also show the largest increase in a-insensitivity. In contrast, subjects who report little to no increase in ambiguity perception show no increase in a-insensitivity. These findings suggest that ambiguity perception causally influences a-insensitive behavior.
+\end{original}
+
+\begin{translation}
+通过这一实验设计，我提出了关于模糊感知与a-不敏感之间关系的三个主要发现。首先，受试者感知到相当数量的模糊性，并且普遍存在相当程度的a-不敏感。超过90\%的受试者同时报告了正数量的感知模糊并表现出a-不敏感行为。其次，这两个指标在个体层面高度正相关。原始相关系数在$\rho = 0.40$和$\rho = 0.54$之间（合并$\rho = 0.50$）。一旦考虑到测量误差，相关性增加到$\rho = 0.51$和$\rho = 0.63$。回归分析同样显示，在控制可观测特征时，两个指数之间存在显著的正相关关系。因此，模糊感知水平与a-不敏感行为程度之间存在强烈的正相关关系。与此同时，与理论考量一致，我发现模糊感知与模糊厌恶之间没有关系（合并$\rho = -0.02$）。此外，模糊厌恶与a-不敏感正交（合并$\rho = 0.01$），复制了先前研究的结果。第三，外生增加模糊程度会增加模糊感知，而且关键的是，会增加a-不敏感行为。报告的模糊感知在高模糊部分显著高于低模糊部分（$p < 0.001$，Wilcoxon符号秩检验）。这一增加转化为行为：捕捉a-不敏感的指数从低模糊部分到高模糊部分增加了30\%以上（$p < 0.01$，Wilcoxon符号秩检验）。重要的是，a-不敏感的变化可以通过感知模糊的变化来预测。报告模糊感知增加最大的受试者也表现出a-不敏感的最大增加。相比之下，报告模糊感知几乎没有增加的受试者则没有表现出a-不敏感的增加。这些发现表明，模糊感知因果性地影响a-不敏感行为。
+\end{translation}
+
+\begin{original}
+Overall, these findings provide strong support for an ambiguity-perception-based explanation of a-insensitivity, as proposed by multiple prior models. Understanding the drivers behind observed behavior helps understand and predict said behavior in distinct environments and between settings. The results of my experiment show that high degrees of a-insensitive behavior are expected in situations where individuals perceive a high degree of ambiguity. For instance, such behavior should be observed when individuals choose between different investment products in high ambiguity situations but not in low ambiguity situations. The results thus help to reconcile the observation that a-insensitivity varies greatly among different sources of uncertainty (Abdellaoui et al., 2011; Li et al., 2017; von Gaudecker et al., 2022; Anantanasuwong et al., 2020). Differences in ambiguity perception between the sources can explain these differences. For example, in Anantanasuwong et al.\ (2020), a-insensitivity was higher for investments into Bitcoin compared to the MSCI World index, which seems plausible since Bitcoin as new technology is subject to more ambiguity. Even within a setting and given source, knowledge of individual ambiguity perception can help to predict subsequent choice behavior, as demonstrated in my experiment. Since ambiguity models are increasingly applied more broadly in many domains, a better understanding of what behavior is expected under which conditions is advantageous.
+\end{original}
+
+\begin{translation}
+总体而言，这些发现为多重先验模型提出的基于模糊感知的a-不敏感解释提供了强有力的支持。理解观察到的行为背后的驱动因素有助于理解和预测在不同环境和场景中的行为。我的实验结果表明，在个体感知到高度模糊的情况下，预期会出现高度a-不敏感行为。例如，当个体在高模糊情况下（而非低模糊情况下）在不同投资产品之间进行选择时，应该观察到此类行为。因此，这些结果有助于协调a-不敏感在不同不确定性来源之间差异很大的观察（Abdellaoui等，2011；Li等，2017；von Gaudecker等，2022；Anantanasuwong等，2020）。不同来源之间模糊感知的差异可以解释这些差异。例如，在Anantanasuwong等（2020）中，对Bitcoin投资的a-不敏感高于对MSCI世界指数的投资，这似乎是合理的，因为Bitcoin作为新技术面临更多的模糊性。即使在给定的环境和来源中，对个体模糊感知的了解也有助于预测随后的选择行为，正如我的实验所证明的那样。由于模糊模型在越来越多的领域得到更广泛的应用，更好地理解在何种条件下预期何种行为是有利的。
+\end{translation}
+
+\begin{original}
+From a policy perspective, differentiating between mechanisms is indispensable for designing interventions aimed at behavioral change. For example, suppose the goal is to increase stock market participation, where a-insensitivity is a significant predictor, as mentioned earlier. My results suggest that reducing individuals' perceived ambiguity concerning the stock market leads to less insensitivity and thus could directly influence financial decision-making. In contrast, if insensitive choices would reflect underlying source preferences, behavioral responses to changes in perceived ambiguity would be far more limited. Generally, if the normative objective is to have individuals discriminate appropriately between likelihoods, my results suggest that reducing their perceived ambiguity is key.
+\end{original}
+
+\begin{translation}
+从政策角度看，区分不同的机制对于设计旨在行为改变的干预措施是必不可少的。例如，假设目标是增加股票市场参与，如前所述，a-不敏感是一个重要的预测因子。我的结果表明，减少个体对股票市场的感知模糊会降低不敏感性，从而可以直接影响金融决策。相比之下，如果不敏感的选择反映了潜在的来源偏好，那么行为对感知模糊变化的反应将远为有限。一般而言，如果规范性目标是让个体在似然之间进行适当的区分，我的结果表明，减少他们的感知模糊是关键。
+\end{translation}
+
+\begin{original}
+This paper makes three contributions to the literature. First, the paper contributes to the large empirical literature that studies behavior under ambiguity. It has long been suggested that of the two core behavioral patterns under ambiguity --- a-insensitivity and ambiguity aversion/seeking --- the former is the cognitive component and the latter the motivational component of ambiguity attitudes (e.g., Baillon et al., 2021). For instance, Baillon et al.\ (2018b) show experimentally that inducing time pressure in decision-making increases a-insensitivity, but not ambiguity aversion. Anantanasuwong et al.\ (2020) show, for a representative sample of financial investors, that a-insensitivity is correlated with financial literacy and education, but ambiguity aversion is not. Similarly, likelihood insensitivity decreases in the reported level of competence for a particular source of uncertainty (Kilka and Weber, 2001). I provide direct evidence that a-insensitivity is indeed a cognitive component because it can be explained through ambiguity perception. I show that beliefs are the cognitive mechanism, as conjectured by theoretical models. Furthermore, my results show that ambiguity aversion is orthogonal to ambiguity perception, further supporting the notion of ambiguity aversion being a motivational component. Related is a paper by Enke and Graeber (2021), who link the occurrence of (risk- and ambiguity-generated) likelihood insensitivity to cognitive uncertainty about the optimal action, building on Bayesian cognition models. Higher uncertainty then leads to compression toward a cognitive default that can result in insensitive behavior. In contrast, I focus on an explanation motivated by ambiguity theories, which are conceptually different from Bayesian cognition models. My approach differs methodologically as well. In their design, both a-insensitivity and ambiguity aversion contribute to the observed compression effect. My design allows me to distinguish a-insensitivity and ambiguity aversion while controlling for risk-induced insensitivity.
+\end{original}
+
+\begin{translation}
+本文对文献做出了三个贡献。首先，本文对研究模糊环境下行为的大量实证文献做出了贡献。长期以来，人们一直认为在模糊环境下的两个核心行为模式——a-不敏感和模糊厌恶/寻求——中，前者是模糊态度的认知成分，后者是动机成分（例如，Baillon等，2021）。例如，Baillon等（2018b）通过实验表明，在决策中施加时间压力会增加a-不敏感，但不会增加模糊厌恶。Anantanasuwong等（2020）对代表性的金融投资者样本表明，a-不敏感与金融素养和教育相关，但模糊厌恶则不然。类似地，似然不敏感随着对特定不确定性来源所报告的能力水平而降低（Kilka和Weber，2001）。我提供了直接证据，表明a-不敏感确实是一个认知成分，因为它可以通过模糊感知来解释。我表明，信念是认知机制，正如理论模型所推测的那样。此外，我的结果表明，模糊厌恶与模糊感知正交，进一步支持了模糊厌恶是动机成分的观点。相关的是Enke和Graeber（2021）的一篇论文，他们将（风险生成的和模糊生成的）似然不敏感的发生与关于最优行动的认知不确定性联系起来，建立在贝叶斯认知模型的基础上。更高的不确定性然后导致向认知默认的压缩，这可能导致不敏感行为。相比之下，我关注的是由模糊理论驱动的解释，这些理论在概念上与贝叶斯认知模型不同。我的方法在方法论上也有所不同。在他们的设计中，a-不敏感和模糊厌恶都对观察到的压缩效应做出贡献。我的设计使我能够区分a-不敏感和模糊厌恶，同时控制风险引发的不敏感性。
+\end{translation}
+
+\begin{original}
+Second, the paper's empirical findings help to inform theories of decision-making under ambiguity. Of the many ambiguity models that have been developed (see Machina and Siniscalchi, 2014; Gilboa and Marinacci, 2016, for overviews), most allow for a-insensitive behavior (Baillon et al., 2021). Because the a-insensitivity index I use in the experiment is valid for all popular models that allow for a-insensitive behavior, my results highlight the value of modeling a-insensitivity through belief-based ambiguity perception. In particular, my results support the notion that multiple prior models are not ``as-if'' revealed preference models with respect to a-insensitivity behavior, but accurately describe the underlying mechanism that is generating a-insensitivity.
+\end{original}
+
+\begin{translation}
+其次，本文的实证发现有助于为模糊环境下决策理论提供信息。在已经发展出的众多模糊模型中（参见Machina和Siniscalchi，2014；Gilboa和Marinacci，2016的综述），大多数允许a-不敏感行为（Baillon等，2021）。因为我在实验中使用的a-不敏感指数对所有允许a-不敏感行为的流行模型都是有效的，我的结果突出了通过基于信念的模糊感知来建模a-不敏感的价值。特别是，我的结果支持了这样一种观点：多重先验模型在a-不敏感行为方面不是``仿佛''显示偏好模型，而是准确地描述了产生a-不敏感的潜在机制。
+\end{translation}
+
+\begin{original}
+Third, the paper contributes to the literature on the elicitation of probabilistic statements. A growing number of studies asks survey respondents for imprecise probabilities, for example by providing respondents the opportunity to respond in probability intervals. Applications range from stock market expectations (Drerup et al., 2017), health consequences such as dementia risk (Manski and Molinari, 2022), Covid-19-related (Delavande et al., 2021) and other health outcomes (Delavande and Mengel, 2021) to future sales growth expectations of firm executives (Bachmann et al., 2020) and career track choices of students (Giustinelli and Pavoni, 2017). However, how imprecise probability questions relate to behavioral measures inferred from revealed preferences has so far been an open question (Ilut and Schneider, 2022). I show that there is a tight correspondence between imprecise probabilities and behavioral measures. Not only do expressions of confidence in probabilistic assessments have great predictive power for decision-making in an incentivized and tightly controlled setting, but they also directly relate to a key parameter of ambiguity models.
+\end{original}
+
+\begin{translation}
+第三，本文对概率陈述引出的文献做出了贡献。越来越多的研究要求调查受访者提供不精确的概率，例如通过为受访者提供以概率区间回答的机会。应用范围从股市预期（Drerup等，2017）、健康后果（如痴呆风险，Manski和Molinari，2022）、新冠病毒相关（Delavande等，2021）和其他健康结果（Delavande和Mengel，2021），到企业高管的未来销售增长预期（Bachmann等，2020）和学生的职业轨迹选择（Giustinelli和Pavoni，2017）。然而，不精确概率问题如何与从显示偏好中推断的行为度量相关联，迄今为止仍是一个开放问题（Ilut和Schneider，2022）。我表明，不精确概率与行为度量之间存在紧密的对应关系。概率评估中的信心表达不仅在激励相容和严格受控的环境中对决策具有强大的预测能力，而且它们还直接与模糊模型的关键参数相关。
+\end{translation}
+
+\begin{original}
+The paper is organized as follows. Section 2 describes the theoretical framework, providing the definition of likelihood insensitivity and ambiguity perception and how they relate within the class of multiple prior models. Subsequently, Section 3 explains the experimental design and how likelihood insensitivity and ambiguity perception are elicited. Section 4 presents the results of the experiment and Section 5 concludes.
+\end{original}
+
+\begin{translation}
+本文的结构如下。第2节描述了理论框架，提供了似然不敏感和模糊感知的定义以及它们在多重先验模型类中的关系。随后，第3节解释了实验设计以及如何引出似然不敏感和模糊感知。第4节展示了实验结果，第5节总结。
+\end{translation}
+
+% ==================== SECTION 2: THEORETICAL BACKGROUND ====================
+\newpage
+\section{2. Theoretical Background / 理论背景}
+
+\begin{original}
+This section establishes the paper's theoretical background. As a starting point, I provide definitions of the two behavioral regularities found in decision-making under ambiguity, likelihood insensitivity and ambiguity aversion/seeking behavior, following Baillon et al.\ (2021). Thereafter, I discuss modeling beliefs under ambiguity and provide a commonly used definition and measure of ambiguity perception. In a third step, I describe how the class of multiple prior models relates these beliefs to behavior, thereby explaining insensitivity through ambiguity perception.
+\end{original}
+
+\begin{translation}
+本节建立了本文的理论背景。首先，我按照Baillon等（2021）的方法，提供了在模糊决策中发现的两个行为规律的定义：似然不敏感和模糊厌恶/寻求行为。之后，我讨论了模糊环境下信念的建模，并提供了模糊感知的常用定义和度量。在第三步中，我描述了多重先验模型类如何将这些信念与行为联系起来，从而通过模糊感知来解释不敏感性。
+\end{translation}
+
+\subsection{2.1 Behavior under ambiguity: a-insensitivity and ambiguity aversion / 模糊环境下的行为：a-不敏感与模糊厌恶}
+
+\begin{original}
+To describe behavior under ambiguity, I start with some notation. Denote by $S$ the state space, whose subsets are events. Events are connected to a set of monetary outcomes $X$ by acts that map $S$ to $X$. In the following, only binary acts are considered. These are denoted by $E_x y$, meaning they pay the amount $x$ if event $E$ realizes and outcome $y$ otherwise. Similarly, a lottery that pays $x$ with probability $p$ and $y$ with probability $1-p$ is denoted by $p_x y$. A preference relation $\succcurlyeq$ is defined over prospects, which are acts or lotteries. A matching probability $m$ is defined as $E_x y \sim m_x y$ for an event $E$ given amount $x$.
+\end{original}
+
+\begin{translation}
+为了描述模糊环境下的行为，我先从一些记号开始。用$S$表示状态空间，其子集为事件。事件通过将$S$映射到$X$的行动与一组货币结果$X$相连。在下文中，只考虑二元行动。这些行动用$E_x y$表示，意思是如果事件$E$实现则支付金额$x$，否则支付结果$y$。类似地，以概率$p$支付$x$、以概率$1-p$支付$y$的彩票用$p_x y$表示。偏好关系$\succcurlyeq$定义在前景（行动或彩票）之上。对于事件$E$，给定金额$x$，匹配概率$m$定义为$E_x y \sim m_x y$。
+\end{translation}
+
+\begin{original}
+In this decision environment, Fig.\ 1 illustrates the main patterns of behavior under ambiguity. The 45-degree line displays the behavior of subjective expected utility maximizers. Their matching probabilities $m$ coincide with the respective subjective (or ambiguity-neutral) probabilities $Q(E)$, assuming for illustrative purposes that the latter can be specified. It is empirically well established that individuals deviate from this benchmark in two ways. First, they display insufficient responsiveness to changes in subjective likelihoods in the middle region, as displayed in Panel A. The lower the responsiveness, the larger the deviation from the 45-degree line towards the horizontal for intermediate likelihoods, as indicated by the shift from the dashed to the solid line. This behavior is commonly referred to as likelihood insensitivity. Second, individuals show a tendency to either avoid or seek the presence of ambiguity, as displayed in Panel B. The stronger the avoidance (seeking), the larger the deviation from the 45-degree line downwards (upwards), again indicated by the shift from the dashed to the solid line.
+\end{original}
+
+\begin{translation}
+在这一决策环境中，图1说明了模糊环境下行为的主要模式。45度线显示了主观期望效用最大化者的行为。他们的匹配概率$m$与各自的主观（或模糊中性）概率$Q(E)$一致，为说明目的假设后者可以被指定。经验上已经充分确定，个体以两种方式偏离这一基准。首先，他们对中间区域主观似然的变化表现出不足的反应性，如面板A所示。反应性越低，对中间似然偏离45度线朝向水平的程度就越大，如从虚线到实线的移动所示。这种行为通常被称为似然不敏感。其次，个体表现出要么回避要么寻求模糊存在的倾向，如面板B所示。回避（寻求）越强，偏离45度线向下（向上）的程度就越大，同样由从虚线到实线的移动表示。
+\end{translation}
+
+\begin{original}
+More formally, building on a large literature that uses two parameters to capture the two previously described behavioral patterns, Baillon et al.\ (2021) define ambiguity-generated likelihood insensitivity (a-insensitivity for short, parameter $b$) and ambiguity aversion (parameter $d$) as follows:
+\begin{align}
+b &= 1 - \left(\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)}\right) \label{eq:1}\\[4pt]
+d &= \mathbb{E}[m - Q(\cdot)]. \label{eq:2}
+\end{align}
+For the $b$ parameter, the term $\left(\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)}\right)$ captures the average change in $m$ if $Q$ changes by one unit. Accordingly, if the decision-maker fully responds to changes in likelihoods, that is, if $\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)} = 1$, a-insensitivity is minimal with $b = 0$. Conversely, in the extreme of maximal a-insensitivity $\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)} = 0$, the decision-maker does not respond to changes in likelihood at all, treating all events alike, hence $b = 1$. The parameter $b$ thus captures insensitivity. The parameter $d$ is defined as the average difference between $m$ and $Q$, indicating a preference for ($d < 0$) or against ($d > 0$) betting on ambiguous events, capturing ambiguity seeking/averse behavior.
+\end{original}
+
+\begin{translation}
+对于$b$参数，项$\left(\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)}\right)$捕捉了当$Q$变化一个单位时$m$的平均变化。因此，如果决策者完全响应似然的变化，即如果$\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)} = 1$，则a-不敏感最小，$b = 0$。相反，在最大a-不敏感的极端情况下$\frac{\partial \bar{m}(Q(\cdot))}{\partial Q(\cdot)} = 0$，决策者根本不响应似然的变化，将所有事件视为相同，因此$b = 1$。因此，参数$b$捕捉了不敏感性。参数$d$被定义为$m$与$Q$之间的平均差异，表明对押注模糊事件的偏好（$d < 0$）或厌恶（$d > 0$），捕捉了模糊寻求/厌恶行为。
+\end{translation}
+
+\begin{original}
+Baillon et al.\ (2021) show that these two parameters are compatible with almost all existing indexes and ambiguity orderings proposed in the literature. In particular, the two parameters coincide exactly with the two parameters of the neo-additive framework of Chateauneuf et al.\ (2007). This framework is often used in empirical applications, and the two parameters have been shown to explain choices under ambiguity well (Abdellaoui et al., 2011; Li et al., 2017).
+\end{original}
+
+\begin{translation}
+Baillon等（2021）表明，这两个参数与文献中提出的几乎所有现有指数和模糊序兼容。特别是，这两个参数与Chateauneuf等（2007）的新可加框架的两个参数完全一致。该框架经常在实证应用中使用，并且这两个参数已被证明能很好地解释模糊环境下的选择（Abdellaoui等，2011；Li等，2017）。
+\end{translation}
+
+\subsection{2.2 Subjective beliefs and ambiguity perception / 主观信念与模糊感知}
+
+\begin{original}
+A widely used approach to model beliefs in the presence of ambiguity --- when no obvious and commonly agreed upon probability measure exists --- is to assume that beliefs are represented by a set of priors $\mathcal{P}$, which is a convex set of probability distributions over $S$. This representation of priors is central to the large statistics literature on robust Bayesian analysis (Berger, 1990, 1994) and numerous decision theory models have been developed to derive them from revealed preferences (Gilboa and Schmeidler, 1989; Ghirardato et al., 2004; Chandrasekher et al., 2022; Klibanoff et al., 2005).
+\end{original}
+
+\begin{translation}
+在模糊存在的情况下（当不存在明显且普遍认可的概率测度时）建模信念的一种广泛使用的方法是假设信念由一个先验集合$\mathcal{P}$表示，该集合是$S$上概率分布的凸集。这种先验表示是大量关于稳健贝叶斯分析的统计文献的核心（Berger，1990, 1994），并且已经发展出许多决策理论模型从显示偏好中推导它们（Gilboa和Schmeidler，1989；Ghirardato等，2004；Chandrasekher等，2022；Klibanoff等，2005）。
+\end{translation}
+
+\begin{original}
+A decision-maker is said to perceive ambiguity if $\mathcal{P}$ contains more than one probability distribution and perceive no ambiguity if $\mathcal{P}$ contains a unique probability measure. To elicit such ambiguity perception, probability intervals are a useful concept because their elicitation is straightforward and easy to communicate. Given a set of prior beliefs, a probability interval takes the form $\mathcal{I} = \{Q(E) \mid Q \in \mathcal{P}\}$ for event $E$.
+\end{original}
+
+\begin{translation}
+如果$\mathcal{P}$包含不止一个概率分布，则决策者被称为感知到模糊；如果$\mathcal{P}$包含唯一的概率测度，则感知不到模糊。为了引出这种模糊感知，概率区间是一个有用的概念，因为它们的引出直接且易于沟通。给定一组先验信念，对于事件$E$，概率区间采取$\mathcal{I} = \{Q(E) \mid Q \in \mathcal{P}\}$的形式。
+\end{translation}
+
+\begin{original}
+The goal is then to construct a measure of perceived ambiguity, the perceived level (or degree) of ambiguity, from probability intervals. Seeing the existence of ambiguity as deviations from unique events probabilities, it is natural to define this measure as the degree to which beliefs deviate from single probabilities for events. For this purpose, denote upper probabilities by $\overline{Q}(E) = \sup_{Q \in \mathcal{P}} Q(E)$ and lower probabilities by $\underline{Q}(E) = \inf_{Q \in \mathcal{P}} Q(E)$. The literature then quantifies deviations from single probabilities as the average discrepancy between the upper and lower probabilities of all events, $\bar{p} = \mathbb{E}(\overline{Q} - \underline{Q})$. Accordingly, I will use $\bar{p}$ as a measure of ambiguity perception and elicit this measure from probability intervals.
+\end{original}
+
+\begin{translation}
+目标是从概率区间构建一个感知模糊的度量，即感知的模糊水平（或程度）。将模糊的存在视为偏离唯一事件概率，很自然地可以将这一度量定义为信念偏离事件单一概率的程度。为此，用$\overline{Q}(E) = \sup_{Q \in \mathcal{P}} Q(E)$表示上概率，用$\underline{Q}(E) = \inf_{Q \in \mathcal{P}} Q(E)$表示下概率。文献然后将偏离单一概率的程度量化为所有事件上下概率之间的平均差异，$\bar{p} = \mathbb{E}(\overline{Q} - \underline{Q})$。因此，我将使用$\bar{p}$作为模糊感知的度量，并从概率区间中引出这一度量。
+\end{translation}
+
+\subsection{2.3 The multiple prior explanation for a-insensitivity / 多重先验对a-不敏感的解释}
+
+\begin{original}
+The class of multiple prior models relate a decision-maker's choices to a set of prior beliefs $\mathcal{P}$. One of the most popular models within this class is the $\alpha$-maxmin model (Ghirardato et al., 2004; Hurwicz, 1951). This model offers a tractable way of differentiating the influence of preferences towards the presence of ambiguity, represented by an ambiguity aversion parameter $\alpha$, from ambiguity perception through the size of $\mathcal{P}$. Preferences follow the $\alpha$-maxmin representation if a utility function $u$ exists such that for a prospect $f$:
+\begin{equation}
+\alpha \min_{Q \in \mathcal{P}} \mathbb{E}_Q[u(f)] + (1 - \alpha) \max_{Q \in \mathcal{P}} \mathbb{E}_Q[u(f)],
+\end{equation}
+with $\mathbb{E}_Q[u(f)] = Q(E) u(x) + (1 - Q(E)) u(y)$ for $E \in [0,1]$. The responsiveness of $\mathbb{E}_Q[u(f)]$ thus depends directly on the beliefs about the upper and lower probabilities. Hence, the model can accommodate for both a-insensitive and ambiguity averse/seeking behavior, with the former being driven by belief-based ambiguity perception.
+\end{original}
+
+\begin{translation}
+多重先验模型类将决策者的选择与一组先验信念$\mathcal{P}$联系起来。该类中最流行的模型之一是$\alpha$-maxmin模型（Ghirardato等，2004；Hurwicz，1951）。该模型提供了一种可操作的方式来区分由模糊厌恶参数$\alpha$表示的、对模糊存在的偏好影响与通过$\mathcal{P}$大小体现的模糊感知。如果存在一个效用函数$u$，使得对于前$f$：
+\begin{equation}
+\alpha \min_{Q \in \mathcal{P}} \mathbb{E}_Q[u(f)] + (1 - \alpha) \max_{Q \in \mathcal{P}} \mathbb{E}_Q[u(f)],
+\end{equation}
+其中对于$E \in [0,1]$，$\mathbb{E}_Q[u(f)] = Q(E) u(x) + (1 - Q(E)) u(y)$，则偏好遵循$\alpha$-maxmin表示。因此，$\mathbb{E}_Q[u(f)]$的反应性直接取决于关于上下概率的信念。因此，该模型可以同时容纳a-不敏感和模糊厌恶/寻求行为，前者由基于信念的模糊感知驱动。
+\end{translation}
+
+\begin{original}
+Relating the $\alpha$-maxmin model to the two-parameter characterization of ambiguity attitudes described in Section 2.1 requires additional structure on the set of priors. The so-called $\varepsilon$-contamination model offers a tractable parameterization, and for this reason, it has been extensively used in applications. In the model, the decision-maker has a subjective probability distribution $\pi$ as a reference distribution in mind. However, since the decision-maker does not know the true probabilities, distributions from the general set $\Delta$ of all probability distributions are considered. Hence, the set of priors takes the form $\mathcal{P} = \{(1 - \varepsilon)\pi + \varepsilon Q \mid Q \in \Delta\}$, with $\varepsilon \in [0, 1]$ governing the weight given to $\Delta$. A convenient feature of the model is that ambiguity perception is exactly pinned down by $\varepsilon$, since the resulting probability intervals take the form
+\begin{equation}
+\mathcal{I} = \{Q(E) \mid (1 - \varepsilon)\pi(E) \leq Q(E) \leq (1 - \varepsilon)\pi(E) + \varepsilon\}, \label{eq:3}
+\end{equation}
+and thus $\bar{p} = \varepsilon$. The special feature of those intervals is that the length of an interval is always equal to $\varepsilon$, independent of the events.
+\end{original}
+
+\begin{translation}
+将$\alpha$-maxmin模型与第2.1节中描述的模糊态度双参数表征联系起来需要对先验集合施加额外的结构。所谓的$\varepsilon$-污染模型提供了一种可操作的参数化，因此，它在应用中被广泛使用。在该模型中，决策者心中有一个主观概率分布$\pi$作为参考分布。然而，由于决策者不知道真实概率，因此考虑所有概率分布的一般集合$\Delta$中的分布。因此，先验集合采取$\mathcal{P} = \{(1 - \varepsilon)\pi + \varepsilon Q \mid Q \in \Delta\}$的形式，其中$\varepsilon \in [0, 1]$控制赋予$\Delta$的权重。该模型的一个便利特征是模糊感知恰好由$\varepsilon$确定，因为得到的概率区间采取
+\begin{equation}
+\mathcal{I} = \{Q(E) \mid (1 - \varepsilon)\pi(E) \leq Q(E) \leq (1 - \varepsilon)\pi(E) + \varepsilon\},
+\end{equation}
+的形式，因此$\bar{p} = \varepsilon$。这些区间的特殊特征在于区间的长度始终等于$\varepsilon$，与事件无关。
+\end{translation}
+
+\begin{original}
+Combining these restrictions on the set of priors and assuming preferences follow an $\alpha$-maxmin representation gives the two parameter $\varepsilon$-$\alpha$-maxmin model. As Dimmock et al.\ (2015) showed, there is a direct mapping between the model parameters to the previously established indices $b$ and $d$,
+\begin{align}
+b &= \varepsilon, \label{eq:4}\\[4pt]
+d &= \alpha(2\varepsilon - 1). \label{eq:5}
+\end{align}
+Therefore, the higher the degree of ambiguity, measured by $\varepsilon$, the greater the decision-maker will display insensitivity by having insufficient responsiveness toward likelihood changes.
+\end{original}
+
+\begin{translation}
+将这些对先验集合的限制相结合，并假设偏好遵循$\alpha$-maxmin表示，就得到了双参数$\varepsilon$-$\alpha$-maxmin模型。正如Dimmock等（2015）所示，模型参数与先前建立的指数$b$和$d$之间存在直接映射关系：
+\begin{align}
+b &= \varepsilon, \\[4pt]
+d &= \alpha(2\varepsilon - 1).
+\end{align}
+因此，以$\varepsilon$衡量的模糊程度越高，决策者因对似然变化反应不足而表现出的不敏感性就越大。
+\end{translation}
+
+\begin{original}
+To summarize, the indices of Baillon et al.\ (2021) offer a way to parametrize and elicit ambiguity behavior without committing to a specific model, which makes it possible to test for different mechanisms that cause observed behavior. In the experiment, I directly test the multiple prior mechanism by eliciting ambiguity perception from reported beliefs and relating them to a-insensitivity elicited from choice behavior.
+\end{original}
+
+\begin{translation}
+总而言之，Baillon等（2021）的指数提供了一种在不承诺特定模型的情况下参数化和引出模糊行为的方法，这使得检验导致观察行为的不同机制成为可能。在实验中，我通过从报告的信念中引出模糊感知并将其与从选择行为中引出的a-不敏感联系起来，直接检验多重先验机制。
+\end{translation}
+
+% ==================== SECTION 3: EXPERIMENTAL DESIGN ====================
+\newpage
+\section{3. Experimental Design / 实验设计}
+
+\begin{original}
+This section presents the experimental design. The aim of the design is to investigate empirically the relationship between ambiguity perception and a-insensitivity, defined in the previous section.
+\end{original}
+
+\begin{translation}
+本节展示实验设计。设计的目的是实证性地研究上一节中定义的模糊感知与a-不敏感之间的关系。
+\end{translation}
+
+\subsection{3.1 Source of ambiguity and ambiguity variation / 模糊来源与模糊变化}
+
+\begin{original}
+In the experiment, each subject faced four decision parts. Each part contained decisions regarding three weather events $E_1$, $E_2$ and $E_3$. Weather events were defined as changes in the average daily temperature between two consecutive future days. These changes have a natural interpretation: a positive change indicates that a day is warmer than the previous day, while a negative change indicates that a day is colder. The three events were chosen to partition the event space, with $E_1$ corresponding to a noticeably negative change in temperature, $E_2$ to no noticeable change and $E_3$ to a noticeably positive change.
+\end{original}
+
+\begin{translation}
+在实验中，每个受试者面临四个决策部分。每个部分包含关于三个天气事件$E_1$、$E_2$和$E_3$的决策。天气事件被定义为两个连续未来日之间平均日温度的变化。这些变化具有自然的解释：正变化表示某一天比前一天更暖，而负变化表示某一天更冷。三个事件被选择来划分事件空间，$E_1$对应于温度的明显负变化，$E_2$对应于无明显变化，$E_3$对应于明显的正变化。
+\end{translation}
+
+\begin{original}
+Between decision parts, events varied in the time difference between the decision and occurrence of the event and in the way the events partitioned the event space. Table 1 displays the events used and highlights the differences between the four parts.
+\end{original}
+
+\begin{translation}
+在决策部分之间，事件在决策与事件发生之间的时间差以及事件划分事件空间的方式上有所不同。表1展示了所使用的事件，并突出了四个部分之间的差异。
+\end{translation}
+
+\begin{original}
+\begin{table}[H]
+\centering
+\caption{Weather-change events in each part / 每个部分中的天气变化事件}
+\begin{tabular}{lcccc}
+\toprule
+Part / 部分 & Time difference / 时间差 & $E_1$ & $E_2$ & $E_3$ \\
+\midrule
+Low Ambiguity Partition 1 / 低模糊划分1  & Four days / 四天    & $(-\infty, -1.8)$ & $[-1.8, 1.8]$ & $(1.8, \infty)$ \\
+Low Ambiguity Partition 2 / 低模糊划分2  & Four days / 四天    & $(-\infty, -1)$   & $[-1, 1.5]$   & $(1.5, \infty)$ \\
+High Ambiguity Partition 1 / 高模糊划分1 & Eight weeks / 八周  & $(-\infty, -1.8)$ & $[-1.8, 1.8]$ & $(1.8, \infty)$ \\
+High Ambiguity Partition 2 / 高模糊划分2 & Eight weeks / 八周  & $(-\infty, -1)$   & $[-1, 1.5]$   & $(1.5, \infty)$ \\
+\bottomrule
+\end{tabular}
+\medskip\\
+\footnotesize{Notes / 注：Unit is degree Celsius. / 单位：摄氏度。}
+\end{table}
+\end{original}
+
+\begin{translation}
+在低模糊划分1中，决策与事件之间的时间差为四天，事件为$E_1 = (-\infty, -1.8)$、$E_2 = [-1.8, 1.8]$和$E_3 = (1.8, \infty)$，其中数字表示摄氏度变化。在低模糊划分2中，中间事件$E_2$缩小为$[-1, 1.5]$，其他两个相应调整。两个高模糊部分涉及相同的事件，但决策与事件实现之间的时间差为八周，而不是两个低模糊部分中的四天。
+\end{translation}
+
+\begin{original}
+I chose weather as source of ambiguity because it is a source familiar to subjects and changes in temperature create easy-to-interpret events. Importantly, it is well known and embedded in most weather reports that the further weather events are in the future, the more difficult their prediction becomes. For example, reported confidence bounds for rain probability are higher for days further into the future. Similarly, weather forecasts of different providers are usually much more dispersed the larger the time distance. Hence, varying the time distance to temperature events creates a natural and intuitive increase in ambiguity. Comparing the behavior in High Ambiguity with Low Ambiguity thus allows me to assess the impact of an exogenous change in the degree of ambiguity. Varying the event space partition from Partition 1 to Partition 2 allows me to assess the extent of measurement error, which is explained in more detail in Section 4.6.
+\end{original}
+
+\begin{translation}
+我选择天气作为模糊来源，因为它是受试者熟悉的来源，且温度变化创造了易于解释的事件。重要的是，众所周知并在大多数天气预报中都有体现的是，天气事件在未来的时间越远，其预测就越困难。例如，报告的降雨概率的置信区间在未来更远的日子里更大。类似地，不同提供商的天气预报通常在时间距离越大时越分散。因此，改变温度事件的时间距离创造了一种自然且直观的模糊增加。比较高模糊与低模糊中的行为，使我能够评估模糊程度外生变化的影响。将事件空间划分从划分1变为划分2使我能够评估测量误差的程度，这在第4.6节中有更详细的解释。
+\end{translation}
+
+\begin{original}
+The order of the parts was randomized. Subjects faced either the two Low Ambiguity or the two High Ambiguity parts first, followed by the remaining two. Within each part, the indices capturing a-insensitivity and ambiguity perception were elicited using the respective events, which is explained next. The order in which the two indices were elicited within each part was also randomized.
+\end{original}
+
+\begin{translation}
+各部分的顺序是随机化的。受试者首先面对两个低模糊部分或两个高模糊部分，然后是剩余的两个部分。在每个部分内，使用相应的事件引出捕捉a-不敏感和模糊感知的指数，接下来将对此进行解释。在每个部分内两个指数的引出顺序也是随机化的。
+\end{translation}
+
+\subsection{3.2 Elicitation of a-insensitivity / a-不敏感的引出}
+
+\begin{original}
+To elicit likelihood insensitivity, I use the method proposed by Baillon et al.\ (2018b). The method uses the previously described events $E_1$, $E_2$, and $E_3$ as well as their pairwise unions, i.e., $E_{12} = E_1 \cup E_2$, $E_{13} = E_1 \cup E_3$, and $E_{23} = E_2 \cup E_3$. For each of the six events, subjects choose between two options, A and B. Option A pays 10 euros if the respective event $E$ realized and 0 euros otherwise. Option B pays 10 euros with probability $p$. Subjects thus choose whether to bet on the ambiguous event or on a lottery with a known probability. By varying $p$ for each event $E$, it is possible to elicit the matching probability $m$ for which a subject is indifferent between receiving 10 euros under event E and receiving 10 euros with probability $p$. Denote this matching probability for $E$ by $m_E$.
+\end{original}
+
+\begin{translation}
+为了引出似然不敏感，我使用了Baillon等（2018b）提出的方法。该方法使用前述事件$E_1$、$E_2$和$E_3$以及它们的成对并集，即$E_{12} = E_1 \cup E_2$、$E_{13} = E_1 \cup E_3$和$E_{23} = E_2 \cup E_3$。对于这六个事件中的每一个，受试者在两个选项A和B之间进行选择。选项A在事件$E$发生时支付10欧元，否则支付0欧元。选项B以概率$p$支付10欧元。因此，受试者选择是押注模糊事件还是押注已知概率的彩票。通过为每个事件$E$改变$p$，可以引出匹配概率$m$，在该概率下受试者在事件E下获得10欧元与以概率$p$获得10欧元之间无差异。用$m_E$表示事件$E$的这一匹配概率。
+\end{translation}
+
+\begin{original}
+The index capturing a-insensitivity is derived from the extent to which the matching probabilities of single events deviate from composite events. The higher the insensitivity toward likelihood changes, the less additive are the matching probabilities of two single events compared to the matching probability of the respective composite event. Accordingly, define the average single event matching probability as $\bar{m}_s = (m_1 + m_2 + m_3)/3$ and the average composite event matching probability as $\bar{m}_c = (m_{12} + m_{23} + m_{13})/3$. Then, the index capturing a-insensitivity is:
+\begin{equation}
+b = 3 \times \left(\frac{1}{3} - (\bar{m}_c - \bar{m}_s)\right) \label{eq:6}
+\end{equation}
+Under perfect discrimination of likelihoods and ambiguity neutrality, $\bar{m}_s = \frac{1}{3}$ and $\bar{m}_c = \frac{2}{3}$ and thus $b = 0$. The higher the difference between the two averages, the higher is $b$, indicating insensitivity toward likelihood changes whenever $b > 0$. At maximal insensitivity ($b = 1$), no distinction is made between levels of likelihood $(\bar{m}_c - \bar{m}_s)$, e.g., all events are taken as fifty-fifty. The index can also take negative values $b < 0$, which implies oversensitivity to changes in likelihoods.
+\end{original}
+
+\begin{translation}
+捕捉a-不敏感的指数来源于单一事件的匹配概率与复合事件的匹配概率偏离的程度。对似然变化的不敏感性越高，两个单一事件的匹配概率与相应复合事件的匹配概率相比就越不具可加性。因此，定义平均单一事件匹配概率为$\bar{m}_s = (m_1 + m_2 + m_3)/3$，平均复合事件匹配概率为$\bar{m}_c = (m_{12} + m_{23} + m_{13})/3$。那么，捕捉a-不敏感的指数为：
+\begin{equation}
+b = 3 \times \left(\frac{1}{3} - (\bar{m}_c - \bar{m}_s)\right)
+\end{equation}
+在完美区分似然和模糊中性的情况下，$\bar{m}_s = \frac{1}{3}$且$\bar{m}_c = \frac{2}{3}$，因此$b = 0$。两个平均值之间的差异越大，$b$越大，表明只要$b > 0$就对似然变化不敏感。在最大不敏感（$b = 1$）时，对似然水平不进行区分$(\bar{m}_c - \bar{m}_s)$，例如，所有事件被视为五五开。该指数也可以取负值$b < 0$，这意味着对似然变化过度敏感。
+\end{translation}
+
+\begin{original}
+The elicitation method also allows the elicitation of ambiguity aversion as motivational component of ambiguity attitudes. The index $d$ capturing ambiguity aversion can be defined as:
+\begin{equation}
+d = 1 - \bar{m}_s - \bar{m}_c \label{eq:7}
+\end{equation}
+Intuitively, the index captures how much, on average, a subject prefers to bet on the ambiguous event compared to the lottery. $d = 0$ means the individual is ambiguity neutral, while $d > 0$ corresponds to ambiguity aversion and $d < 0$ to ambiguity seeking, with $d = 1$ corresponding to maximal ambiguity aversion and $d = -1$ to maximal ambiguity seeking.
+\end{original}
+
+\begin{translation}
+该引出方法还允许引出模糊厌恶作为模糊态度的动机成分。捕捉模糊厌恶的指数$d$可以定义为：
+\begin{equation}
+d = 1 - \bar{m}_s - \bar{m}_c
+\end{equation}
+直观地说，该指数捕捉了受试者在平均意义上偏好押注模糊事件而不是彩票的程度。$d = 0$意味着个体是模糊中性的，而$d > 0$对应于模糊厌恶，$d < 0$对应于模糊寻求，$d = 1$对应于最大模糊厌恶，$d = -1$对应于最大模糊寻求。
+\end{translation}
+
+\begin{original}
+In order to elicit the indices, the method requires six matching probabilities, one for each of the six events. In the experiment, these are elicited using choice lists. An example can be seen in Fig.\ B.1 in the appendix. In each row of the list, subjects could choose between the two options described previously, with $p$ varying in each row from 0\% to 100\% in 5\% increments. To make answering less strenuous and to enforce monotonicity in probabilities, subjects could fill out a choice list with a single click: they only had to indicate their switching point by choosing either Option A or B in the respective row, and the computer automatically filled out the rest. Subjects could always revise their switching point and had to confirm their final choices before moving on. As is common in the elicitation of matching probabilities, the average of the probabilities in the two rows defining a respondent's switching point from Option A to B was taken as the indifference point and thus as the matching probability for the respective event.
+\end{original}
+
+\begin{translation}
+为了引出这些指数，该方法需要六个匹配概率，每个事件一个。在实验中，这些是使用选择列表引出的。附录图B.1中可以看到一个例子。在列表的每一行中，受试者可以在前述两个选项之间进行选择，$p$在每一行中以5\%的增量从0\%变化到100\%。为了使回答不那么费力并强制概率的单调性，受试者可以通过一次点击填写选择列表：他们只需通过在相应行中选择选项A或B来指示他们的转换点，计算机就会自动填写其余部分。受试者始终可以修改他们的转换点，并且在继续之前必须确认他们的最终选择。正如在匹配概率引出中常见的那样，定义受访者从选项A到B的转换点的两行概率的平均值被取为无差异点，因此也是相应事件的匹配概率。
+\end{translation}
+
+\begin{original}
+As Baillon et al.\ (2021) show, the two indices directly correspond to the indices defined in equations (1) and (2) independent of different state space partitions under minimal assumptions about preferences and measurement design. The method identifies the two indices independent of risk attitudes or subjective beliefs over the likelihood of events, and can be applied to natural events such as the weather movements used in this experiment. Furthermore, the elicited indices are compatible with almost all ambiguity models developed so far, making the elicitation method ideal for the purpose of this study.
+\end{original}
+
+\begin{translation}
+正如Baillon等（2021）所示，这两个指数直接对应于方程（1）和（2）中定义的指数，与不同的状态空间划分无关，只需关于偏好和测量设计的最小假设。该方法能够在独立于风险态度或对事件似然的主观信念的情况下识别这两个指数，并且可以应用于自然事件，如本实验中使用的天气变化。此外，引出的指数与迄今为止开发的几乎所有模糊模型兼容，使得该引出方法非常适合本研究的目的。
+\end{translation}
+
+\subsection{3.3 Elicitation of ambiguity perception / 模糊感知的引出}
+
+\begin{original}
+The subject's degree of ambiguity perception was elicited using a two-step procedure. The goal was to make the elicitation as easy as possible to understand and answer while still capturing ambiguity perception as defined in Section 2.2. As such, everything was explained to the subjects in both intuitive and in quantitative terms.
+\end{original}
+
+\begin{translation}
+受试者的模糊感知程度是使用两步程序引出的。目标是使引出尽可能易于理解和回答，同时仍然捕捉第2.2节中定义的模糊感知。因此，一切内容都以直观和量化的方式向受试者解释。
+\end{translation}
+
+\begin{original}
+In the first step, subjects are asked to provide for the same events $E_1$, $E_2$, and $E_3$, as in eliciting a-insensitivity, their best-guess probability that the respective event will occur. See Fig.\ B.2 in the appendix for an example. It was explained in a way such that subjects unfamiliar with probabilities and probability theory could equally give their assessments. In this first step, it was enforced that the probabilities sum up to one.
+\end{original}
+
+\begin{translation}
+在第一步中，受试者被要求为引出a-不敏感时使用的相同事件$E_1$、$E_2$和$E_3$提供其最佳猜测概率，即相应事件发生的概率。参见附录图B.2的例子。以不熟悉概率和概率论的受试者也能同样给出评估的方式进行了解释。在第一步中，强制要求概率之和为一。
+\end{translation}
+
+\begin{original}
+In a second step, subjects could state their belief in the precision of the previously reported probabilities and thus the probability interval that they consider by using a slider. The slider scale ranges from absolutely imprecise to absolutely precise. Displayed below the slider was the implication of the slider movement for the considered probability set. If a subject indicated that the guess was absolutely precise, the interval collapsed to the probability guess stated in the first step. For each slider increment, the interval increased by one percentage point in each direction. Therefore, by moving the slider, subjects could specify the set $[\underline{p}_i, \overline{p}_i]$ of probabilities they considered likely for event $E_i$. The distance $\overline{p}_i - \underline{p}_i$ is then a measure of perceived ambiguity for each event individually. Following the theoretical considerations of Section 2.2, the average length across all three events then corresponds to the perceived level of ambiguity:
+\begin{equation}
+\bar{p} = \frac{1}{3} (p_1 + p_2 + p_3) \label{eq:8}
+\end{equation}
+The maximum level of ambiguity perception at $\bar{p} = 1$ is attained when all probability ranges are from 0 to 1. The minimum level of $\bar{p} = 0$ is attained when all probability sets collapse to a single value, in which case subjects are certain of a single probability distribution.
+\end{original}
+
+\begin{translation}
+在第二步中，受试者可以通过使用滑块来陈述他们对先前报告的概率精度的信念，因此也是他们认为的概率区间。滑块尺度从绝对不精确到绝对精确。滑块下方显示的是滑块移动对所考虑概率集的含义。如果受试者表示猜测是绝对精确的，则区间收缩为第一步中陈述的概率猜测。对于滑块的每次递增，区间在每个方向上增加一个百分点。因此，通过移动滑块，受试者可以指定他们认为对事件$E_i$可能的概率集$[\underline{p}_i, \overline{p}_i]$。距离$\overline{p}_i - \underline{p}_i$然后是对每个事件个体感知模糊的度量。按照第2.2节的理论考量，所有三个事件的平均长度对应于感知的模糊水平：
+\begin{equation}
+\bar{p} = \frac{1}{3} (p_1 + p_2 + p_3)
+\end{equation}
+当所有概率范围从0到1时，达到模糊感知的最大水平$\bar{p} = 1$。当所有概率集收缩为单一值时，达到最小水平$\bar{p} = 0$，此时受试者对单一概率分布是确定的。
+\end{translation}
+
+\begin{original}
+In the experiment, subjects stated their degree of ambiguity perception without monetary consequences. Incentives would make the elicitation more complex, which is not desirable here because the concept of ambiguity perception might already be difficult conceptually for subjects. Furthermore, incentivization combines the elicitation of beliefs with preferences over potential rewards, requiring assumptions about the form of preferences and thus commitment to a specific model. Moreover, since ambiguity perception is subjective, no true values are attainable for the experimenter that could be used to incentive answers. For those reasons, the elicitation of ambiguity perception was not financially incentivized.
+\end{original}
+
+\begin{translation}
+在实验中，受试者陈述他们的模糊感知程度而不涉及货币后果。激励会使引出更加复杂，这在这里是不可取的，因为模糊感知的概念对受试者来说在概念上可能已经很难了。此外，激励将信念的引出与对潜在奖励的偏好结合起来，需要对偏好形式进行假设，从而承诺特定的模型。而且，由于模糊感知是主观的，实验者无法获得可用于激励回答的真实值。由于这些原因，模糊感知的引出没有进行经济激励。
+\end{translation}
+
+\begin{original}
+It should be noted that by the design of the experiment, subjects have no reason or incentive to misreport their beliefs. For such a case, numerous studies have found that nonincentivized belief elicitations perform well in accuracy and the extent of truth-telling compared with incentivized elicitations (Manski, 2004; Armantier and Treich, 2013; Trautmann and van de Kuilen, 2015b; Danz et al., 2022). Another concern would be that because of the nonincentivization, subjects lack motivation to take the questions seriously and thus answer randomly or inattentively. The exogenous increase in the degree of ambiguity from Low to High Ambiguity can be used to assess this concern. If subjects were answering randomly or inattentively, the exogenous increase should have no effect on reported ambiguity perception. The results presented in Section 4.1 show that the opposite is the case. I find that subjects' answers are highly responsive to the exogenous increase and respond in the predicted direction, implying that subjects are engaged and answer deliberately. To further alleviate concerns about measurement errors that could result from a lack of deliberation, I purposefully designed the experiment such that a measurement error correction technique could be employed. See Section 4.6 for the details and results.
+\end{original}
+
+\begin{translation}
+应当指出，根据实验设计，受试者没有理由或动机误报他们的信念。在这种情况下，大量研究发现，与激励性引出相比，非激励性信念引出在准确性和讲真话的程度方面表现良好（Manski，2004；Armantier和Treich，2013；Trautmann和van de Kuilen，2015b；Danz等，2022）。另一个担忧是，由于缺乏激励，受试者缺乏认真对待问题的动机，从而随机或不专注地回答。从低模糊到高模糊的模糊程度的外生增加可用于评估这一担忧。如果受试者随机或不专注地回答，外生增加应该对报告的模糊感知没有影响。第4.1节中呈现的结果表明情况恰恰相反。我发现受试者的回答对外生增加高度敏感，并以预测的方向做出回应，这意味着受试者是投入的并经过深思熟虑地回答。为了进一步缓解对可能因缺乏深思熟虑而导致的测量误差的担忧，我有意设计了实验，以便可以采用测量误差校正技术。详见第4.6节。
+\end{translation}
+
+\subsection{3.4 Hypotheses / 假设}
+
+\begin{original}
+The previous section has shown how the two central indices a-insensitivity $b$ and perceived ambiguity $\bar{p}$ are elicited using matching probabilities and hypothetical queries, respectively. The relationship between the two will be analyzed by investigating their correlation at the individual level and the impact of an exogenous increase in the degree of ambiguity. For this purpose, the first step is to validate the ambiguity perception index. If the index captures relevant ambiguity perception, it should respond to exogenous variation in ambiguity. The Low Ambiguity and High Ambiguity parts were purposefully designed to offer such an exogenous variation. Increasing the time difference for the weather event from four days (Low Ambiguity) to eight weeks (High Ambiguity) induces higher ambiguity in the latter. Therefore, the exogenous increase should be reflected within-subject in a higher reported ambiguity perception in the High Ambiguity part compared to the Low Ambiguity part.
+\end{original}
+
+\begin{translation}
+前一节展示了如何使用匹配概率和假设性询问分别引出两个核心指数：a-不敏感$b$和感知模糊$\bar{p}$。两者之间的关系将通过研究它们在个体层面的相关性以及模糊程度外生增加的影响来分析。为此，第一步是验证模糊感知指数。如果该指数捕捉了相关的模糊感知，它应该对模糊的外生变化做出反应。低模糊和高模糊部分是有意设计的，以提供这样的外生变化。将天气事件的时间差从四天（低模糊）增加到八周（高模糊），会在后者中引发更高的模糊性。因此，外生增加应当在受试者内部反映为在高模糊部分报告的模糊感知高于低模糊部分。
+\end{translation}
+
+\begin{original}
+\textbf{Hypothesis 1.} The index $\bar{p}$ captures relevant ambiguity perception: exogenous increases in ambiguity increase ambiguity perception ($\bar{p}_{\text{High}} > \bar{p}_{\text{Low}}$).
+\end{original}
+
+\begin{translation}
+\textbf{假设1.} 指数$\bar{p}$捕捉了相关的模糊感知：模糊的外生增加会增加模糊感知（$\bar{p}_{\text{高}} > \bar{p}_{\text{低}}$）。
+\end{translation}
+
+\begin{original}
+\textbf{Hypothesis 2.} Ambiguity perception is positively related to a-insensitivity: $b$ and $\bar{p}$ are positively correlated.
+\end{original}
+
+\begin{translation}
+\textbf{假设2.} 模糊感知与a-不敏感正相关：$b$和$\bar{p}$正相关。
+\end{translation}
+
+\begin{original}
+\textbf{Hypothesis 3.} Ambiguity perception causally influences a-insensitivity: the exogenous increase in ambiguity increases a-insensitivity ($b_{\text{High}} > b_{\text{Low}}$), and the increase in a-insensitivity is larger the larger the increase in ambiguity perception ($\Delta \bar{p}$ predicts $\Delta b$).
+\end{original}
+
+\begin{translation}
+\textbf{假设3.} 模糊感知因果性地影响a-不敏感：模糊的外生增加会增加a-不敏感（$b_{\text{高}} > b_{\text{低}}$），并且模糊感知的增加越大，a-不敏感的增加也越大（$\Delta \bar{p}$预测$\Delta b$）。
+\end{translation}
+
+\begin{original}
+As mentioned previously, the indices should not depend on a particular partition of the event space. Therefore, there should be no significant differences between the two partitions, and thus all hypotheses can be applied to both partitions.
+\end{original}
+
+\begin{translation}
+如前所述，这些指数不应依赖于事件空间的特定划分。因此，两个划分之间不应存在显著差异，因此所有假设都可以应用于两个划分。
+\end{translation}
+
+\subsection{3.5 Procedure / 实验程序}
+
+\begin{original}
+Overall, 126 subjects (median age = 24, SD = 7.62, 75 female) participated in the experiment, almost all being students from various study areas. They were recruited from the subject pool of the BonnEconLab using the software hroot (Bock et al., 2014), and the experiment was conducted as a virtual lab experiment. That is, the experiment took place online but at a prespecified time and date. For the entire time, an experimenter was available to answer questions, as it is usual for laboratory experiments. Subjects were sent individual links, ensuring that everyone participated in the experiment only once. The experiment was conducted using oTree (Chen et al., 2016). Subjects received 5 euros as a show-up fee, and one of their choices was randomly selected for real implementation, where they could earn as much as 10 additional euros. On average, subjects earned 11.27 euros, and the experiment took about 40 minutes. The translated instructions can be found in Appendix G.
+\end{original}
+
+\begin{translation}
+总体而言，126名受试者（中位年龄=24，标准差=7.62，75名女性）参与了实验，几乎都是来自各个学习领域的学生。他们使用软件hroot（Bock等，2014）从BonnEconLab的受试者库中招募，实验以虚拟实验室实验的形式进行。也就是说，实验在线进行，但在预先指定的时间和日期。在整个时间内，都有一名实验员可以回答问题，正如实验室实验的惯例。向受试者发送了个体链接，确保每个人只参与实验一次。实验使用oTree进行（Chen等，2016）。受试者获得5欧元作为出席费，他们的一个选择被随机选中用于真实实施，其中他们可以额外赚取多达10欧元。平均而言，受试者赚取了11.27欧元，实验耗时约40分钟。翻译后的说明可在附录G中找到。
+\end{translation}
+
+\begin{original}
+Of the 126 participating subjects, 9 violated weak monotonicity more than once, i.e., for more than one of the four parts, set-monotonicity was violated such that $m_i > m_{ij}$. Repeated violations of set-monotonicity are very difficult to rationalize under any decision rule and hence, are likely driven by erratic answers. Following the preregistration, these subjects are excluded from the analysis. Two subjects chose Option A for every decision, regardless of the event or the lottery option's probability. In accord with the preregistration, those subjects were similarly excluded from the primary analysis. This leaves 113 subjects for the analysis discussed in the next section. None of the results change when the full sample is analyzed instead (see Appendix E for the results).
+\end{original}
+
+\begin{translation}
+在126名参与受试者中，9人不止一次违反了弱单调性，即对于四个部分中的不止一个部分，集合单调性被违反，使得$m_i > m_{ij}$。重复违反集合单调性在任何决策规则下都非常难以合理化，因此很可能是由不稳定的答案驱动的。按照预注册，这些受试者被排除在分析之外。两名受试者在每个决策中都选择了选项A，无论事件或彩票选项的概率如何。根据预注册，这些受试者同样被排除在主要分析之外。这使得下一节讨论的分析剩下113名受试者。当改用完整样本进行分析时，任何结果都不会改变（结果见附录E）。
+\end{translation}
+
+% ==================== SECTION 4: RESULTS ====================
+\newpage
+\section{4. Results / 结果}
+
+\begin{original}
+Table 2 shows summary statistics for the main variables in each part. Across all parts, subjects report a considerable amount of perceived ambiguity $\bar{p}$, with, for example, an average probability interval of 0.27 in the two Low Ambiguity parts. Subjects display substantial a-insensitivity (index $b$) with values ranging between 0.46 and 0.67. Subjects are slightly ambiguity seeking (index $d$) on average, with values between $-0.11$ and $-0.14$. As expected, averages between the two event space partitions are nearly identical for all indices. The finding of substantial a-insensitivity is consistent with earlier studies that use the same elicitation method (e.g., von Gaudecker et al., 2022; Anantanasuwong et al., 2020; Baillon et al., 2018b). Baillon et al.\ (2018b) also find ambiguity seeking behavior on average, with values of $d$ ranging from $-0.06$ to $-0.11$.
+\end{original}
+
+\begin{translation}
+表2显示了每个部分中主要变量的汇总统计。在所有部分中，受试者报告了相当数量的感知模糊$\bar{p}$，例如，在两个低模糊部分中平均概率区间为0.27。受试者表现出显著的a-不敏感（指数$b$），值在0.46到0.67之间。受试者平均而言略微模糊寻求（指数$d$），值在$-0.11$到$-0.14$之间。正如预期，两个事件空间划分的平均值在所有指数上几乎相同。发现显著的a-不敏感与使用相同引出方法的早期研究一致（例如，von Gaudecker等，2022；Anantanasuwong等，2020；Baillon等，2018b）。Baillon等（2018b）也发现平均的模糊寻求行为，$d$值范围从$-0.06$到$-0.11$。
+\end{translation}
+
+\begin{original}
+At the individual level, 97\% to 99\% of subjects report a positive amount of perceived ambiguity. Similarly, 94\% to 96\% display positive values for the a-insensitivity index across the parts. Negative values are possible with the econometric definition proposed by Baillon et al.\ (2021), indicating oversensitive behavior. However, for ambiguity perception as a mechanism, $b$ must be nonnegative. Given that values are nonnegative for almost all subjects, this constraint imposed by the multiple prior models does not seem restrictive here. The index $d$ is negative for 66\% to 75\% of subjects and positive for 18\% to 29\%. Thus, a majority of subjects is ambiguity seeking, although most display only modest ambiguity seeking behavior.
+\end{original}
+
+\begin{translation}
+在个体层面，97\%到99\%的受试者报告了正数量的感知模糊。类似地，94\%到96\%的受试者在各个部分中显示了a-不敏感指数的正值。根据Baillon等（2021）提出的计量经济学定义，负值是可能的，表示过度敏感行为。然而，对于模糊感知作为机制，$b$必须是非负的。鉴于几乎所有受试者的值都是非负的，多重先验模型施加的这一约束在这里似乎并不具有限制性。指数$d$对66\%到75\%的受试者为负，对18\%到29\%的受试者为正。因此，大多数受试者是模糊寻求的，尽管大多数人仅表现出适度的模糊寻求行为。
+\end{translation}
+
+\subsection{4.1 Validating the ambiguity perception measure / 验证模糊感知指标}
+
+\begin{original}
+Hypothesis 1 states that ambiguity perception $\bar{p}$ should be higher in the High Ambiguity than the Low Ambiguity part. Table 2 provides aggregate evidence that this is indeed the case. For both event space partitions, reported ambiguity perception $\bar{p}$ is significantly higher in the High Ambiguity part (for both partitions $p < 0.001$, Wilcoxon signed-rank test). On average, ambiguity perception increased by 67\%. Panel A of Fig.\ 2 confirms this pattern at the individual level. The Figure displays the change in perceived ambiguity between the High Ambiguity and Low Ambiguity parts in a histogram. A positive change implies that a subject reported higher perceived ambiguity in the High compared to the Low Ambiguity part. As evident from the Figure, the overwhelming majority of subjects reported a higher perceived ambiguity in the High Ambiguity condition. The change in perceived ambiguity is strictly positive for 79\% of subjects for the first event space partition and 77\% for the second. In contrast, perceived ambiguity decreased for only 17\% and 18\% of subjects. The ambiguity perception index is thus responsive to changes in the degree of ambiguity. Hence, these results support the notion that my index captures the extent to which subjects perceive the events as ambiguous. This validity allows me to relate my index to the index capturing a-insensitivity.
+\end{original}
+
+\begin{translation}
+假设1指出，模糊感知$\bar{p}$应该在高模糊部分高于低模糊部分。表2提供了总体证据，表明情况确实如此。对于两个事件空间划分，报告的模糊感知$\bar{p}$在高模糊部分显著更高（两个划分均为$p < 0.001$，Wilcoxon符号秩检验）。平均而言，模糊感知增加了67\%。图2的面板A在个体层面确认了这一模式。该图以直方图显示了高模糊部分与低模糊部分之间感知模糊的变化。正变化意味着受试者报告在高模糊部分比低模糊部分更高的感知模糊。从图中可以看出，绝大多数受试者报告在高模糊条件下感知到更高的模糊性。对于第一个事件空间划分，79\%的受试者的感知模糊变化严格为正，第二个划分为77\%。相比之下，只有17\%和18\%的受试者的感知模糊下降。因此，模糊感知指数对模糊程度的变化是敏感的。因此，这些结果支持了我的指数捕捉了受试者认为事件模糊的程度的观点。这一有效性使我能够将我的指数与捕捉a-不敏感的指数联系起来。
+\end{translation}
+
+\subsection{4.2 Relationship between ambiguity perception and a-insensitivity / 模糊感知与a-不敏感的关系}
+
+\begin{original}
+As starting point of the analysis of the relationship between ambiguity perception and a-insensitivity, I investigate the correlation between the two measures at the individual level. I find strong support for Hypothesis 2: all correlations between ambiguity perception and a-insensitivity, whether calculated for each part individually or pooled together, are positive and significantly ($p < 0.001$) different from zero. When the parts are pooled together, the correlation coefficient is $\rho = 0.50$, and similar correlations are found for each part individually. In the two Low Ambiguity parts, correlations are $\rho = 0.43$ for the first event space partition, and $\rho = 0.54$ for the second. Correlations in the High Ambiguity parts are $\rho = 0.40$ for the first partition, and $\rho = 0.43$ for the second. The results are visualized in Fig.\ 3, which shows a scatter plot for each subject and part the combination of perceived level and a-insensitivity. For the figure, the Low Ambiguity and High Ambiguity parts are displayed with separate colors, and the corresponding regression lines are provided alongside.
+\end{original}
+
+\begin{translation}
+作为分析模糊感知与a-不敏感之间关系的起点，我研究了这两个指标在个体层面的相关性。我发现了对假设2的强有力支持：模糊感知与a-不敏感之间的所有相关性，无论是针对每个部分单独计算还是合并在一起，都为正且显著（$p < 0.001$）不为零。当各部分合并在一起时，相关系数为$\rho = 0.50$，每个部分单独计算也发现了类似的相关性。在两个低模糊部分中，第一个事件空间划分的相关性为$\rho = 0.43$，第二个为$\rho = 0.54$。高模糊部分的相关性为第一个划分$\rho = 0.40$，第二个划分$\rho = 0.43$。结果在图3中可视化，该图显示了每个受试者在每个部分中感知水平与a-不敏感组合的散点图。图中，低模糊和高模糊部分以不同的颜色显示，并提供了相应的回归线。
+\end{translation}
+
+\begin{original}
+Table 3 confirms the previously found pattern using an OLS-regression. In column (1), the index capturing perceived ambiguity is regressed on the index capturing a-insensitivity, pooling over all parts. The effect is sizable, suggesting that an increase from no perceived ambiguity ($\bar{p} = 0$) to maximum perceived ambiguity ($\bar{p} = 1$) leads to an increase of 0.70 in the a-insensitivity index. Since the a-insensitivity index similarly attains its maximum at $b = 1$, this corresponds to a sizable increase in a-insensitivity. The estimate is unaffected by the inclusion of controls, as can be seen in column (2). The controls added are subjects' age, gender, final high school grade, and current subject of studies. In columns (3) and (4), interaction effects for the individual parts are added. Reassuringly, there are no significant differences in the relationship between the two different event partitions. When looking at differences between Low Ambiguity and High Ambiguity, the relationship between perceived ambiguity and a-insensitivity is lower in the High Ambiguity condition compared to Low Ambiguity, mainly because more variance in perceived ambiguity exists in the former.
+\end{original}
+
+\begin{translation}
+表3使用OLS回归确认了先前发现的模式。在第(1)列中，捕捉感知模糊的指数对捕捉a-不敏感的指数进行回归，将所有部分合并。效应是相当大的，表明从无感知模糊（$\bar{p} = 0$）增加到最大感知模糊（$\bar{p} = 1$）导致a-不敏感指数增加0.70。由于a-不敏感指数同样在$b = 1$时达到最大值，这对应于a-不敏感的相当大的增加。估计值不受控制变量包含的影响，如第(2)列所示。添加的控制变量包括受试者的年龄、性别、高中毕业成绩和当前学习科目。在第(3)和(4)列中，添加了各个部分的交互效应。令人放心的是，两个不同事件划分之间的关系没有显著差异。在考察低模糊和高模糊之间的差异时，感知模糊与a-不敏感之间的关系在高模糊条件下低于低模糊，主要是因为前者存在更多的感知模糊方差。
+\end{translation}
+
+\begin{original}
+Having established a positive correlation between the two measures, I now turn to the assessment of whether there exists a causal relationship between the two. As formulated in Hypothesis 3, I test the impact of the exogenous increase in the degree of ambiguity on a-insensitivity. Table 2 again provides aggregate evidence. Increasing the degree of ambiguity and thus the ambiguity subjects perceive significantly increases a-insensitivity, from 0.46 to 0.66 in Partition 1 and from 0.51 to 0.67 in Partition 2 (for both partitions $p < 0.01$, Wilcoxon signed-rank test). At the individual level, the increase in ambiguity induced by the High Ambiguity part leads to increased a-insensitivity for most subjects, as displayed in Panel B of Fig.\ 2. Overall, 60\% of the subjects for the first event space partition, and 55\% for the second, have a positive change in a-insensitivity. Only 27\% of subjects for the first partition and 35\% for the second display a reduction in a-insensitivity.
+\end{original}
+
+\begin{translation}
+在确立了两个指标之间的正相关关系之后，我现在转向评估两者之间是否存在因果关系。正如假设3所阐述的，我检验了模糊程度外生增加对a-不敏感的影响。表2再次提供了总体证据。增加模糊程度从而增加受试者感知的模糊性显著增加了a-不敏感，从划分1的0.46增加到0.66，从划分2的0.51增加到0.67（两个划分均为$p < 0.01$，Wilcoxon符号秩检验）。在个体层面，由高模糊部分引发的模糊增加导致大多数受试者a-不敏感增加，如图2的面板B所示。总体而言，第一个事件空间划分60\%的受试者和第二个划分55\%的受试者的a-不敏感发生了正变化。只有第一个划分27\%的受试者和第二个划分35\%的受试者表现出a-不敏感的减少。
+\end{translation}
+
+\begin{original}
+The second part of Hypothesis 3 predicts which subjects should show a higher increase in a-insensitivity: those that report a higher increase in perceived ambiguity. To assess this part of the hypothesis, I categorize subjects into quartiles by their change in perceived ambiguity. Using this categorization, Fig.\ 4 shows the average changes in a-insensitivity within each quartile, pooled across both partitions. For example, the first quartile consists of subjects with a change in perceived ambiguity $\Delta \bar{p}$ between $-0.32$ and 0.02. The average change in a-insensitivity $\Delta b$ for this quartile is $-0.10$. The fourth quartile, on the other hand, consists of subjects with the highest increase in perceived ambiguity. For those, the a-insensitivity index increases substantially by 0.43, on average. Overall, for both partitions, the quartiles show a monotone pattern, with higher quartiles having a higher average increase in a-insensitivity. Investigating the correlation between the two changes reveals a positive and statistically significant relationship. For the first partition, Spearman's rank correlation coefficient between $\Delta \bar{p}$ and $\Delta b$ is $\rho = 0.49$, and for the second partition, the coefficient is $\rho = 0.43$. Both are significant at any conventional level ($p < 0.001$).
+\end{original}
+
+\begin{translation}
+假设3的第二部分预测哪些受试者应该表现出更高的a-不敏感增加：那些报告更高感知模糊增加的受试者。为了评估假设的这一部分，我根据受试者感知模糊的变化将他们分为四分位数。使用这一分类，图4显示了每个四分位数内a-不敏感的平均变化，合并了两个划分。例如，第一个四分位数由感知模糊变化$\Delta \bar{p}$在$-0.32$到0.02之间的受试者组成。该四分位数的a-不敏感平均变化$\Delta b$为$-0.10$。另一方面，第四个四分位数由感知模糊增加最高的受试者组成。对于这些人，a-不敏感指数平均大幅增加了0.43。总体而言，对于两个划分，四分位数显示出单调模式，更高的四分位数具有更高的a-不敏感平均增加。研究两个变化之间的相关性揭示了正且统计显著的关系。对于第一个划分，$\Delta \bar{p}$与$\Delta b$之间的Spearman秩相关系数为$\rho = 0.49$，对于第二个划分，系数为$\rho = 0.43$。两者在任何常规水平上都是显著的（$p < 0.001$）。
+\end{translation}
+
+\begin{original}
+To summarize, I find evidence for all three hypotheses. My measure of ambiguity perception captures relevant ambiguity and is strongly related to a-insensitivity. The relationship appears to be causal, because exogenously increasing perceived ambiguity increases a-insensitivity. Hence, these results provide support for the perceived ambiguity mechanism as driving force of a-insensitivity.
+\end{original}
+
+\begin{translation}
+总而言之，我发现了对所有三个假设的证据。我的模糊感知度量捕捉了相关的模糊性，并与a-不敏感密切相关。这种关系似乎是因果性的，因为外生增加感知模糊会增加a-不敏感。因此，这些结果为感知模糊机制作为a-不敏感的驱动力提供了支持。
+\end{translation}
+
+\subsection{4.3 Relationship between perceived ambiguity and ambiguity aversion / 感知模糊与模糊厌恶的关系}
+
+\begin{original}
+Theoretically, a-insensitivity and ambiguity aversion are orthogonal, as can be seen from Equations (1) and (2). Similarly, ambiguity perception and preferences are interpreted as distinct components. While this does not necessarily rule out an empirical relation, my findings support the separation by also finding orthogonality empirically. First, the exogenous increase in ambiguity from the Low Ambiguity to the High Ambiguity part had no effect on average ambiguity aversion. As Table 2 shows, the average ambiguity aversion index in the Low Ambiguity parts for both partitions is $-0.13$, nearly identical to the averages in the High Ambiguity parts, with $-0.15$ for the first partition, and $-0.11$ for the second. Further, there are no significant differences in distributions ($p = 0.60$ for the first partition, and $p = 0.19$ for the second, Wilcoxon signed-rank test).
+\end{original}
+
+\begin{translation}
+理论上，a-不敏感和模糊厌恶是正交的，从方程（1）和（2）中可以看出。类似地，模糊感知和偏好被解释为不同的组成部分。虽然这并不一定排除经验关系，但我的发现通过也在经验上发现正交性来支持这种分离。首先，从低模糊部分到高模糊部分的模糊外生增加对平均模糊厌恶没有影响。如表2所示，两个划分的低模糊部分中平均模糊厌恶指数为$-0.13$，与高模糊部分中的平均值几乎相同，第一个划分为$-0.15$，第二个划分为$-0.11$。此外，分布中没有显著差异（第一个划分$p = 0.60$，第二个划分$p = 0.19$，Wilcoxon符号秩检验）。
+\end{translation}
+
+\begin{original}
+Second, the overall correlation between ambiguity aversion and perceived ambiguity is almost exactly zero when pooling over all parts at $\rho = -0.02$. Within each part, correlations are small and do not point systematically in one direction. Correlations are $\rho = -0.07$ ($p = 0.42$) and $\rho = -0.24$ ($p = 0.01$) for the two Low Ambiguity parts and $\rho = 0.14$ ($p = 0.13$) and $\rho = 0.10$ ($p = 0.31$) for the High Ambiguity parts. The correlations between a-insensitivity and ambiguity aversion are similar (pooled $\rho = 0.01$, $p = 0.79$), and are not significant at any conventional level, in line with the findings of Baillon et al.\ (2018b) and other studies. In the appendix, Figs.\ D.1 and D.2 replicate Figs.\ 3 and 4 from the main text for ambiguity aversion instead of a-insensitivity. Similarly, Table D.1 in the appendix repeats the analysis of Table 3 with ambiguity aversion as dependent variable. As expected, perceived ambiguity and ambiguity aversion are not related.
+\end{original}
+
+\begin{translation}
+其次，当将所有部分合并时，模糊厌恶与感知模糊之间的总体相关性几乎精确为零，$\rho = -0.02$。在每个部分内部，相关性很小，并且不系统地指向一个方向。两个低模糊部分的相关性为$\rho = -0.07$（$p = 0.42$）和$\rho = -0.24$（$p = 0.01$），高模糊部分的相关性为$\rho = 0.14$（$p = 0.13$）和$\rho = 0.10$（$p = 0.31$）。a-不敏感与模糊厌恶之间的相关性类似（合并$\rho = 0.01$，$p = 0.79$），在任何常规水平上都不显著，与Baillon等（2018b）和其他研究的发现一致。在附录中，图D.1和图D.2用模糊厌恶而非a-不敏感复制了正文中的图3和图4。类似地，附录中的表D.1以模糊厌恶作为因变量重复了表3的分析。正如预期，感知模糊与模糊厌恶不相关。
+\end{translation}
+
+\subsection{4.4 Explaining variation in a-insensitivity and ambiguity aversion / 解释a-不敏感和模糊厌恶的变异}
+
+\begin{original}
+The previous results have demonstrated that ambiguity perception influences a-insensitivity. In this section, I investigate how much of the variation in a-insensitivity can be explained by ambiguity perception and how much by individual-specific preferences. To distinguish between the two, I exploit the fact that I have four observations of a-insensitivity and perceived ambiguity for each subject. I stack all observations and investigate the incremental $R^2$ for a series of regressions in which I add, first, perceived ambiguity, then individual fixed effects and lastly an interaction of individual fixed effects and perceived ambiguity. How much each step contributes to the $R^2$ is informative for the relative importance of perceived ambiguity as belief-based explanation compared to a preference-based explanation, the latter being captured by the fixed effects.
+\end{original}
+
+\begin{translation}
+前面的结果已经证明，模糊感知影响a-不敏感。在本节中，我研究a-不敏感的变异有多少可以由模糊感知解释，有多少可以由个体特定的偏好解释。为了区分两者，我利用每个受试者都有四个a-不敏感和感知模糊观察值这一事实。我将所有观察值堆叠起来，研究一系列回归的增量$R^2$，在这些回归中，我首先添加感知模糊，然后添加个体固定效应，最后添加个体固定效应与感知模糊的交互项。每一步对$R^2$的贡献大小为感知模糊作为基于信念的解释相对于基于偏好的解释（后者由固定效应捕捉）的相对重要性提供了信息。
+\end{translation}
+
+\begin{original}
+Fig.\ 5 shows the results. Overall, perceived ambiguity explains 24\% of the variation in a-insensitivity directly and a further 16\% through the interaction with fixed effects. Fixed effects in itself explain 39\%, while 21\% of the variation remains unexplained. These suggest that both belief and preferences are at play driving a-insensitive behavior. To assess the magnitude of these results, I repeat the analysis with ambiguity aversion as dependent variable. Here, fixed effects explain 66\% of the variation, and perceived ambiguity alone essentially explains 0\% of the variation. These results further supports the notion of a-insensitivity as a measure that is strongly influenced by beliefs while ambiguity aversion is not.
+\end{original}
+
+\begin{translation}
+图5显示了结果。总体而言，感知模糊直接解释了a-不敏感变异的24\%，并通过与固定效应的交互进一步解释了16\%。固定效应本身解释了39\%，而21\%的变异仍未得到解释。这些表明，信念和偏好都在驱动a-不敏感行为。为了评估这些结果的量级，我以模糊厌恶作为因变量重复了分析。在这里，固定效应解释了66\%的变异，而感知模糊单独本质上解释了0\%的变异。这些结果进一步支持了a-不敏感作为一种受信念强烈影响的度量，而模糊厌恶则不是。
+\end{translation}
+
+\subsection{4.5 Order effects / 顺序效应}
+
+\begin{original}
+One potential concern is that the method for eliciting the perceived level of ambiguity affects the measurement of a-insensitivity. Recall that in the former, subjects are asked to state their best guess probability for each event. The guesses have to add to one, constituting a proper probability measure. This might induce a tendency to act (or think) in accordance with this measure, for example, through priming or anchoring effects, that would not happen in the absence of the elicitation method. This could distort subjects behavior displayed during the measurement of a-insensitivity. To test for this possibility, the order of elicitation was randomized in the experiment. Half of the subjects first faced the elicitation of ambiguity perception, while for the other half, a-insensitivity was elicited first. Therefore, it is possible to test between-subject whether eliciting ambiguity perception has an effect on the measurement of a-insensitivity.
+\end{original}
+
+\begin{translation}
+一个潜在的担忧是，引出感知模糊水平的方法会影响a-不敏感的测量。回想一下，在前者中，受试者被要求为每个事件陈述他们的最佳猜测概率。这些猜测必须加起来为一，构成一个适当的概率测度。这可能会诱导按照这一测度行动（或思考）的倾向，例如，通过启动或锚定效应，这些在引出方法不存在的情况下不会发生。这可能会扭曲在a-不敏感测量期间显示的受试者行为。为了检验这种可能性，实验中对引出顺序进行了随机化。一半的受试者首先面对模糊感知的引出，而对于另一半，a-不敏感首先被引出。因此，可以通过受试者间比较来检验引出模糊感知是否对a-不敏感的测量产生影响。
+\end{translation}
+
+\begin{original}
+Looking at the parts individually, a-insensitivity is slightly lower on average in the two Low Ambiguity parts when elicited before, compared with after the perceived level of ambiguity, with the average decreasing from 0.49 to 0.44 for the first partition, and 0.51 to 0.50 for the second. For the two High Ambiguity parts, the opposite holds, with averages increasing when a-insensitivity is elicited first, from 0.62 to 0.70 for the first partition, and 0.60 to 0.74 for the second. Contrarily, the perceived level in the two Low Ambiguity parts is lower when elicited first (differences are $-0.02$ and $-0.002$ for the two partitions) and higher in the two High Ambiguity parts (differences are 0.06 and 0.07 for the two partitions). The use of Mann-Whitney U tests for each part reveals that these differences are not significant for neither of the two relevant measures. As a result, all results are robust to the order of elicitation.
+\end{original}
+
+\begin{translation}
+单独看各个部分，在两个低模糊部分中，当引出顺序在前时，a-不敏感的平均值略低于在感知模糊水平之后引出的情况，第一个划分的平均值从0.49下降到0.44，第二个划分从0.51下降到0.50。对于两个高模糊部分，情况相反，当a-不敏感首先引出时平均值增加，第一个划分从0.62增加到0.70，第二个划分从0.60增加到0.74。相反，两个低模糊部分中的感知水平在首先引出时较低（两个划分的差异分别为$-0.02$和$-0.002$），而在两个高模糊部分中较高（两个划分的差异分别为0.06和0.07）。对每个部分使用Mann-Whitney U检验表明，对于两个相关度量中的任何一个，这些差异都不显著。因此，所有结果对引出顺序都是稳健的。
+\end{translation}
+
+\begin{original}
+Another kind of order effect might be of potential concern. It is possible that through learning or experience effects on the elicitation methods, the timing of the parts itself affects decision-making. If a-insensitivity and the perceived level are partly driven by confusion or unfamiliarity with the elicitation method, both indices could be initially higher. Contrary to this hypothesis, both indices are slightly increasing in the order they appear. For example, a-insensitivity increases by about 0.06 when elicited the second time, while the perceived level index increases by 0.004. Table A.1 in the appendix shows that this pattern also holds for the other parts. In fact, the relationship between ambiguity perception and a-insensitivity becomes stronger the more parts subjects complete. Ordering the parts in sequence as they appear to subjects reveals an increasing pattern. The correlation between the two indices when elicited for the first time is $\rho = 0.42$. The correlation increases to $\rho = 0.49$ when looking at the second time the two indices are elicited, and then further to $\rho = 0.54$ and $\rho = 0.56$ for the third and fourth time, respectively. These results suggest that the relationship I find is not an artifact that vanishes with experience in the elicitation methods.
+\end{original}
+
+\begin{translation}
+另一种顺序效应可能也值得关注。有可能通过学习或经验对引出方法的影响，部分的时间安排本身会影响决策。如果a-不敏感和感知水平部分由对引出方法的困惑或不熟悉驱动，那么两个指数最初可能更高。与这一假设相反，两个指数在它们出现的顺序上略有增加。例如，a-不敏感在第二次引出时增加了约0.06，而感知水平指数增加了0.004。附录中的表A.1显示，这一模式对其他部分也成立。事实上，模糊感知与a-不敏感之间的关系在受试者完成更多部分时变得更强。将各部分按它们出现在受试者面前的顺序排列，揭示了一个递增的模式。两个指数首次引出时的相关性为$\rho = 0.42$。当考察两个指数第二次引出时，相关性增加到$\rho = 0.49$，然后第三次和第四次分别进一步增加到$\rho = 0.54$和$\rho = 0.56$。这些结果表明，我发现的关系不是随着对引出方法的经验而消失的人为产物。
+\end{translation}
+
+\subsection{4.6 Correcting for measurement error / 校正测量误差}
+
+\begin{original}
+Measurement error in elicitation methods can decrease observed correlations between two measures. If the error is sufficiently strong, one might conclude from a low correlation that the two are distinct variables when they in fact measure the same underlying concept. Such measurement error is inevitably present, be it by variations in subjects' attention and focus or induced by the experimental design. For example, the matching probabilities in the experiment are discrete approximations since they are elicited using 5\% probability increments.
+\end{original}
+
+\begin{translation}
+引出方法中的测量误差会降低两个度量之间观察到的相关性。如果误差足够强，人们可能会从低相关性中得出结论，认为两者是不同的变量，而它们实际上测量的是同一个潜在概念。这种测量误差不可避免地存在，无论是由于受试者注意力和专注力的变化，还是由实验设计引起的。例如，实验中的匹配概率是离散近似值，因为它们是使用5\%概率增量引出的。
+\end{translation}
+
+\begin{original}
+To correct for such measurement error, I use the Obviously Related Instrumental Variables (ORIV) technique of Gillen et al.\ (2019). The technique relies on duplicated elicitations of the same variable. Under the assumption that the measurement error of duplicated elicitations is orthogonal, the technique provides a more efficient estimator of correlations between two variables. For that purpose, in the experiment, I used two different event space partitions. As noted in Section 2, under minimal assumptions on the event space, the elicitation of ambiguity attitudes is not affected by changes in the event space partition. Therefore, theoretically, the elicitation of the indices for different partitions is a duplicated measurement of the same indices. As such, ORIV can be used.
+\end{original}
+
+\begin{translation}
+为了校正这种测量误差，我使用了Gillen等（2019）的显然相关工具变量（ORIV）技术。该技术依赖于对同一变量的重复引出。在重复引出的测量误差正交的假设下，该技术提供了两个变量之间相关性的更有效估计量。为此，在实验中，我使用了两个不同的事件空间划分。如第2节所述，在对事件空间的最小假设下，模糊态度的引出不受事件空间划分变化的影响。因此，理论上，对不同划分的指数引出是对相同指数的重复测量。因此，可以使用ORIV。
+\end{translation}
+
+\begin{original}
+Applying ORIV, I find, as expected, that the correlation between the perceived level of ambiguity and a-insensitivity becomes even stronger once measurement error is taken into account. Correlations are $\rho = 0.63$ for the Low Ambiguity part and $\rho = 0.51$ for the High Ambiguity part. Reassuringly, the correlation between ambiguity aversion and perceived ambiguity is unaffected by the measurement error correction and remains close to zero. The correlations are $\rho = -0.07$ for the Low Ambiguity part and $\rho = 0.06$ for the High Ambiguity part. Therefore, it is not the case that measurement error is falsely responsible for the low correlations between the two measures, providing further evidence for the theoretically predicted orthogonality.
+\end{original}
+
+\begin{translation}
+应用ORIV，我发现正如预期的那样，一旦考虑到测量误差，感知模糊水平与a-不敏感之间的相关性变得更强。低模糊部分的相关性为$\rho = 0.63$，高模糊部分为$\rho = 0.51$。令人放心的是，模糊厌恶与感知模糊之间的相关性不受测量误差校正的影响，仍然接近零。低模糊部分的相关性为$\rho = -0.07$，高模糊部分为$\rho = 0.06$。因此，并非测量误差虚假地导致了两个度量之间的低相关性，这为理论上预测的正交性提供了进一步的证据。
+\end{translation}
+
+\subsection{4.7 Testing the predictions of the \texorpdfstring{$\varepsilon$-$\alpha$}{epsilon-alpha}-maxmin model / 检验\texorpdfstring{$\varepsilon$-$\alpha$}{epsilon-alpha}-maxmin模型的预测}
+
+\begin{original}
+Having established the existence of a tight empirical relationship between perceived ambiguity and a-insensitivity, I now turn to investigate two specific predictions that the $\varepsilon$-$\alpha$-maxmin model makes. As highlighted in Section 2, the model predicts that: (i) the perceived level of ambiguity is uniform across different events within each part (see Equation (3)), and (ii) the two indices coincide exactly, i.e., $b = \bar{p}$ (see equation (5)). My experimental design makes it possible to test both predictions, the first by testing for deviations from uniformity using the proposed elicitation of perceived ambiguity, the second by comparing both indices directly.
+\end{original}
+
+\begin{translation}
+在确立了感知模糊与a-不敏感之间存在紧密的经验关系之后，我现在转而研究$\varepsilon$-$\alpha$-maxmin模型的两个具体预测。如第2节所强调的，该模型预测：(i) 感知模糊水平在每个部分的不同事件之间是均匀的（见方程（3）），以及(ii) 两个指数完全一致，即$b = \bar{p}$（见方程（5））。我的实验设计使得检验这两个预测成为可能，第一个通过使用所提出的感知模糊引出方法检验对均匀性的偏离，第二个通过直接比较两个指数。
+\end{translation}
+
+\begin{original}
+To quantify deviations from uniformity, I define the following simple distance measure, with $\bar{p}_i$ as the perceived ambiguity measures for each event:
+\begin{equation}
+\text{Distance to uniformity} = \frac{1}{3}\left((\bar{p}_1 - \bar{p}_2)^2 + (\bar{p}_1 - \bar{p}_3)^2 + (\bar{p}_2 - \bar{p}_3)^2\right)
+\end{equation}
+The measure evaluates differences between the three individual levels of perceived ambiguity for each event using a least-squares criterion. Higher values mean larger deviations from uniformity, with the maximum at 1 and 0 indicating full uniformity.
+\end{original}
+
+\begin{translation}
+为了量化对均匀性的偏离，我定义了以下简单的距离度量，$\bar{p}_i$为每个事件的感知模糊度量：
+\begin{equation}
+\text{到均匀性的距离} = \frac{1}{3}\left((\bar{p}_1 - \bar{p}_2)^2 + (\bar{p}_1 - \bar{p}_3)^2 + (\bar{p}_2 - \bar{p}_3)^2\right)
+\end{equation}
+该度量使用最小二乘准则评估每个事件的三个个体感知模糊水平之间的差异。更高的值意味着对均匀性的更大偏离，最大值为1，0表示完全均匀。
+\end{translation}
+
+\begin{original}
+In all parts, perceived ambiguity appears to be close to uniformity, with the median being below 0.1 for all parts and averages ranging from 0.12 to 0.15. For only 15\% of subjects, the measure is larger than 0.4 at least once, with only 8\% showing this sizable deviation within each part. See Fig.\ C.1 in the appendix for the full distribution of the measure for each part. One-way ANOVA tests using the four conditions as factors and ambiguity perception as dependent variable further reveal that the null-hypothesis of uniformity can neither be rejected for the two Low Ambiguity conditions ($p = 0.62$ and $p = 0.35$) nor for the High Ambiguity conditions ($p = 0.25$ and $p = 0.85$). Similarly, a Kruskal-Wallis test yields the same conclusion. Consequently, assuming a uniform level of perceived ambiguity across events appears well supported by the experimental evidence.
+\end{original}
+
+\begin{translation}
+在所有部分中，感知模糊似乎接近均匀性，所有部分的中位数低于0.1，平均值范围从0.12到0.15。只有15\%的受试者至少在某一时刻度量值大于0.4，仅8\%的受试者在每个部分内表现出这种可观的偏离。参见附录中的图C.1了解每个部分度量的完整分布。使用四个条件作为因子、模糊感知作为因变量的单因素方差分析检验进一步揭示，均匀性的零假设既不能对两个低模糊条件拒绝（$p = 0.62$和$p = 0.35$），也不能对高模糊条件拒绝（$p = 0.25$和$p = 0.85$）。类似地，Kruskal-Wallis检验得出相同的结论。因此，假设不同事件之间的感知模糊水平是均匀的，似乎得到了实验证据的充分支持。
+\end{translation}
+
+\begin{original}
+Regarding the second testable prediction of the $\varepsilon$-$\alpha$-maxmin model, Fig.\ 3 provides a first graphical impression. If the two indices coincide ($b = \bar{p}$), one should observe that the dots in the graph are close to the 45-degree line. Instead, most dots appear to be quite far from the line, with few bordering or being on the line. Fig.\ C.2 in the appendix quantifies these deviations with histograms of the absolute differences at the individual level between the two indices for each part. For most subjects, the absolute differences are substantial, being around 0.3 on average. Only for a minority of subjects, about 16\% to 27\%, is the absolute difference between the two indices smaller than 0.1. Similarly, a Kolmogorov-Smirnov test rejects, for each part, that the two distributions of indices come from the same distribution (all $p$-values $< 0.001$). Therefore, it appears that the two indices do, in general, not coincide exactly. However, the assumption of a monotone relationship between the two indices seems well justified given the results.
+\end{original}
+
+\begin{translation}
+关于$\varepsilon$-$\alpha$-maxmin模型的第二个可检验预测，图3提供了第一个图形印象。如果两个指数一致（$b = \bar{p}$），人们应该观察到图中的点接近45度线。相反，大多数点似乎离该线相当远，很少有点在线上或接近线。附录中的图C.2用每个部分两个指数之间个体水平绝对差异的直方图量化了这些偏差。对于大多数受试者来说，绝对差异是相当大的，平均约为0.3。只有少数受试者，约16\%到27\%，两个指数之间的绝对差异小于0.1。类似地，对每个部分，Kolmogorov-Smirnov检验拒绝两个指数分布来自同一分布（所有$p$值$< 0.001$）。因此，看来这两个指数一般并不完全一致。然而，给定这些结果，两个指数之间存在单调关系的假设似乎是有充分理由的。
+\end{translation}
+
+% ==================== SECTION 5: CONCLUSION ====================
+\newpage
+\section{5. Conclusion / 结论}
+
+\begin{original}
+Using an experiment, I assessed the interpretation of a-insensitivity behavior as ambiguity perception, a hypothesis brought forward by multiple prior models. I indeed find strong empirical support for the hypothesis. Eliciting measures of a-insensitive behavior and ambiguity perception, I find that the two are highly correlated at the individual level. Experimentally varying ambiguity perception increases a-insensitivity, suggesting ambiguity perception causally influences a-insensitivity. The results emphasize the role of ambiguity perception in shaping decision behavior under ambiguity. Having identified ambiguity perception as the mechanism driving a-insensitivity may help to predict in which situations a high or low degree of a-insensitive behavior is prevalent. The results can also be used to inform and refine models of decision-making under ambiguity that have a descriptive goal.
+\end{original}
+
+\begin{translation}
+通过实验，我评估了将a-不敏感行为解释为模糊感知的假说——这一假说由多重先验模型提出。我确实发现了对该假说的强有力实证支持。通过引出a-不敏感行为和模糊感知的度量，我发现两者在个体层面高度相关。实验性地改变模糊感知会增加a-不敏感，表明模糊感知因果性地影响a-不敏感。结果强调了模糊感知在塑造模糊环境下决策行为中的作用。将模糊感知确定为驱动a-不敏感的机制，可能有助于预测在哪些情况下高或低程度的a-不敏感行为是普遍的。这些结果也可以用于指导和改进具有描述性目标的模糊决策模型。
+\end{translation}
+
+\begin{original}
+The findings open the door for a couple of potentially interesting directions. For one, there seems to be a lot of heterogeneity in ambiguity perception between subjects for a given situation. Some subjects report high confidence in a proper probability measure, while others perceive a high degree of ambiguity. A natural question to ask is whether these perceptions are purely determined by the source of ambiguity to which different subjects respond differently or whether there are more fundamental determinants of ambiguity perception. Combining the evidence discussed in the introduction that a-insensitivity is related to cognitive function (Baillon et al., 2018a; Anantanasuwong et al., 2020) with the findings obtained in this paper, it does seem that ambiguity perception is a cognitive component of ambiguity attitudes. What exact cognitive processes are responsible for ambiguity perception remains to be explored. This question is related to the question of how subjects form beliefs in situations where ambiguity is present, which remains imperfectly understood.
+\end{original}
+
+\begin{translation}
+这些发现为几个可能有趣的方向打开了大门。首先，在给定情况下，受试者之间的模糊感知似乎存在很大的异质性。一些受试者报告对适当的概率测度有很高的信心，而其他人则感知到高度的模糊性。一个自然要问的问题是，这些感知是否纯粹由不同受试者对其反应不同的模糊来源决定，还是存在更根本的模糊感知决定因素。将引言中讨论的a-不敏感与认知功能相关的证据（Baillon等，2018a；Anantanasuwong等，2020）与本文获得的发现相结合，模糊感知确实似乎是模糊态度的认知成分。究竟是什么认知过程负责模糊感知仍有待探索。这个问题与受试者如何在存在模糊的情况下形成信念的问题相关，而这一点仍然被不完全理解。
+\end{translation}
+
+% ==================== DECLARATION ====================
+\newpage
+\section*{Declaration of Competing Interest / 利益冲突声明}
+\addcontentsline{toc}{section}{Declaration of Competing Interest / 利益冲突声明}
+
+\begin{original}
+The author declares that he has no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+\end{original}
+
+\begin{translation}
+作者声明，他没有已知的可能影响本文报告工作的竞争性财务利益或个人关系。
+\end{translation}
+
+\section*{Data Availability / 数据可得性}
+\addcontentsline{toc}{section}{Data Availability / 数据可得性}
+
+\begin{original}
+Data will be made available on request.
+\end{original}
+
+\begin{translation}
+数据将应要求提供。
+\end{translation}
+
+% ==================== APPENDIX A ====================
+\newpage
+\section*{Appendix A. Additional Tables / 附录A. 补充表格}
+\addcontentsline{toc}{section}{Appendix A. Additional Tables / 附录A. 补充表格}
+
+\begin{original}
+\textbf{Table A.1: OLS-regression of order effects.} The table displays OLS-estimates of the effect of part order on the perceived ambiguity index and the a-insensitivity index. Robust standard errors are clustered at the subject level. Controls include age, gender, final high school grade, and current subject of studies. The constant (first part) for the perceived ambiguity index is 0.338, and coefficients for the second, third, and fourth parts are 0.004, 0.044, and 0.043 respectively, with $R^2 = 0.007$. For the a-insensitivity index, the constant is 0.515, with second part 0.063, third part 0.095, and fourth part 0.083, with $R^2 = 0.011$. Both indices slightly increase with part order, but the effects are small.
+\end{original}
+
+\begin{translation}
+\textbf{表A.1：顺序效应的OLS回归。} 该表显示了部分顺序对感知模糊指数和a-不敏感指数影响的OLS估计。稳健标准误在受试者层面聚类。控制变量包括年龄、性别、高中毕业成绩和当前学习科目。感知模糊指数的常数项（第一部分）为0.338，第二、第三和第四部分的系数分别为0.004、0.044和0.043，$R^2 = 0.007$。对于a-不敏感指数，常数项为0.515，第二部分为0.063，第三部分为0.095，第四部分为0.083，$R^2 = 0.011$。两个指数都随部分顺序略有增加，但效应很小。
+\end{translation}
+
+% ==================== APPENDIX B ====================
+\newpage
+\section*{Appendix B. Screenshots of Main Decision Screens / 附录B. 主要决策界面截图}
+\addcontentsline{toc}{section}{Appendix B. Screenshots / 附录B. 截图}
+
+\begin{original}
+\textbf{Fig.\ B.1:} Screenshot of a choice list used to elicit a-insensitivity. Subjects choose between Option A (bet on weather event) and Option B (lottery with probability $p$). The switching point method automatically fills in choices above and below the indicated indifference point.
+
+\textbf{Fig.\ B.2:} Screenshot of the questions used to elicit ambiguity perception (step 1). Subjects provide their best-guess probability for each of the three weather events. The probabilities must sum to 100\%.
+
+\textbf{Fig.\ B.3:} Screenshot of the questions used to elicit ambiguity perception (step 2). A slider allows subjects to indicate the precision of their probability estimates from ``absolutely imprecise'' to ``absolutely precise.'' The resulting probability interval is displayed below the slider.
+\end{original}
+
+\begin{translation}
+\textbf{图B.1：} 用于引出a-不敏感的选择列表示例截图。受试者在选项A（押注天气事件）和选项B（概率为$p$的彩票）之间选择。转换点方法自动填充指示的无差异点之上和之下的选择。
+
+\textbf{图B.2：} 用于引出模糊感知（第1步）的问题截图。受试者为每个天气事件提供最佳猜测概率。概率必须总和为100\%。
+
+\textbf{图B.3：} 用于引出模糊感知（第2步）的问题截图。滑块允许受试者指示其概率估计的精度，范围从``绝对不精确''到``绝对精确''。得到的概率区间显示在滑块下方。
+\end{translation}
+
+% ==================== APPENDIX C ====================
+\newpage
+\section*{Appendix C. Additional Results on Testing the \texorpdfstring{$\varepsilon$-$\alpha$}{epsilon-alpha}-maxmin Model / 附录C. 检验\texorpdfstring{$\varepsilon$-$\alpha$}{epsilon-alpha}-maxmin模型的补充结果}
+\addcontentsline{toc}{section}{Appendix C. Testing the maxmin model / 附录C. 检验maxmin模型}
+
+\begin{original}
+\textbf{Fig.\ C.1: Testing for uniformity of perceived ambiguity across events.} Histogram of the distance to uniformity measure defined in Section 4.7 with a bin size of 0.1. The dotted lines represent the mean of the measure. The distributions show that most subjects have distance measures close to zero, supporting the uniformity assumption of the $\varepsilon$-$\alpha$-maxmin model.
+
+\textbf{Fig.\ C.2: Testing for equality of indices.} Histogram of the absolute difference between the index capturing ambiguity perception and the index capturing a-insensitivity at the individual level with a bin size of 0.1. The dotted lines represent the mean absolute difference. The figure shows that for most subjects, the absolute difference between the two indices is substantial (around 0.3 on average), indicating that the two indices do not coincide exactly in general.
+\end{original}
+
+\begin{translation}
+\textbf{图C.1：检验事件间感知模糊的均匀性。} 第4.7节中定义的到均匀性距离度量的直方图，箱宽为0.1。虚线代表度量的均值。分布显示大多数受试者的距离度量接近零，支持$\varepsilon$-$\alpha$-maxmin模型的均匀性假设。
+
+\textbf{图C.2：检验指数相等性。} 在个体层面捕捉模糊感知的指数与捕捉a-不敏感的指数之间绝对差异的直方图，箱宽为0.1。虚线代表平均绝对差异。该图显示，对于大多数受试者，两个指数之间的绝对差异是显著的（平均约0.3），表明两个指数一般不完全一致。
+\end{translation}
+
+% ==================== APPENDIX D ====================
+\newpage
+\section*{Appendix D. Additional Results on the Relationship between Perceived Ambiguity and Ambiguity Aversion / 附录D. 感知模糊与模糊厌恶关系的补充结果}
+\addcontentsline{toc}{section}{Appendix D. Perceived Ambiguity and Ambiguity Aversion / 附录D. 感知模糊与模糊厌恶}
+
+\begin{original}
+\textbf{Table D.1: OLS-regression of ambiguity aversion on perceived ambiguity.} The table displays OLS-estimates with ambiguity aversion index $d$ as the dependent variable. Columns (1) through (4) correspond to the specifications in Table 3. The perceived ambiguity index coefficient is small and not significant across all specifications (ranging from $-0.066$ to 0.057). The constant terms range from $-0.140$ to 0.189. $R^2$ values range from 0.001 to 0.047, confirming that perceived ambiguity explains essentially none of the variation in ambiguity aversion.
+
+\textbf{Fig.\ D.1: Relationship between ambiguity perception and ambiguity aversion on the individual level.} Scatter plot analogous to Fig.\ 3 but with ambiguity aversion $d$ on the vertical axis. No systematic relationship is visible, and the regression lines are essentially flat.
+
+\textbf{Fig.\ D.2: The relationship between changes in ambiguity perception and changes in ambiguity aversion.} Analogous to Fig.\ 4 but with changes in ambiguity aversion $\Delta d$ on the vertical axis. Unlike the pattern for a-insensitivity, the quartile bins show no monotone relationship, with changes in ambiguity aversion hovering around zero across all bins.
+\end{original}
+
+\begin{translation}
+\textbf{表D.1：模糊厌恶对感知模糊的OLS回归。} 该表显示以模糊厌恶指数$d$为因变量的OLS估计。第(1)至(4)列对应表3中的设定。在所有设定中，感知模糊指数的系数都很小且不显著（范围从$-0.066$到0.057）。常数项范围从$-0.140$到0.189。$R^2$值范围从0.001到0.047，确认了感知模糊本质上不能解释模糊厌恶的任何变异。
+
+\textbf{图D.1：个体层面模糊感知与模糊厌恶的关系。} 类似于图3的散点图，但纵轴为模糊厌恶$d$。没有可见的系统性关系，回归线基本上是平坦的。
+
+\textbf{图D.2：模糊感知变化与模糊厌恶变化的关系。} 类似于图4，但纵轴为模糊厌恶变化$\Delta d$。与a-不敏感的模式不同，四分位数箱显示没有单调关系，所有箱的模糊厌恶变化都在零附近徘徊。
+\end{translation}
+
+% ==================== APPENDIX E ====================
+\newpage
+\section*{Appendix E. Full Sample Results / 附录E. 完整样本结果}
+\addcontentsline{toc}{section}{Appendix E. Full Sample Results / 附录E. 完整样本}
+
+\begin{original}
+This section replicates the main results of the paper using the full sample of 126 subjects. As with the sample used in the main text, reported ambiguity perception $\bar{p}$ is significantly higher in the High Ambiguity part compared to the Low Ambiguity part, confirming Hypothesis 1: average ambiguity perception increases from 0.28 to 0.44 for the first event partition, and from 0.28 to 0.45 for the second (both $p < 0.001$, Wilcoxon signed-rank test). Assessing Hypothesis 2, the direct correlations between ambiguity perception and a-insensitivity are $\rho = 0.44$ for Low Ambiguity Partition 1, $\rho = 0.52$ for Low Ambiguity Partition 2, $\rho = 0.29$ for High Ambiguity Partition 1 and $\rho = 0.38$ for High Ambiguity Partition 2, all significant ($p < 0.001$). Pooled together, the correlation coefficient amounts to $\rho = 0.45$, which is fairly close to the one reported in the main text. When applying the same measurement error correction used in Section 4.6, correlations increase to $\rho = 0.62$ for the Low Ambiguity and $\rho = 0.44$ for the High Ambiguity part. Again, the correlations are substantial and closely resemble those reported in the main text. Table E.1 replicates Table 3 of the main text using the full sample.
+
+Regarding Hypothesis 3, increasing the degree of ambiguity significantly increases a-insensitivity, from 0.52 to 0.70 in Partition 1 and from 0.57 to 0.70 in Partition 2 (for both partitions $p < 0.01$, Wilcoxon signed-rank test). Similarly, the correlation between $\Delta \bar{p}$ and $\Delta b$ is $\rho = 0.44$, and for the second the coefficient is $\rho = 0.44$, both being significant at any conventional level ($p < 0.001$), just like with the main sample.
+
+Lastly, I report the results from comparing ambiguity perception with ambiguity aversion as done in Section 4.3 using the full sample. Pooling all parts together, the correlation is again almost exactly zero with $\rho = -0.01$. For the individual parts, correlations are $\rho = -0.08$ ($p = 0.41$) and $\rho = -0.18$ ($p = 0.04$) for the two Low Ambiguity parts and $\rho = 0.13$ ($p = 0.16$) and $\rho = 0.09$ ($p = 0.32$) for the High Ambiguity parts.
+\end{original}
+
+\begin{translation}
+本节使用126名受试者的完整样本复制了本文的主要结果。与正文中使用的样本一样，报告的模糊感知$\bar{p}$在高模糊部分显著高于低模糊部分，确认了假设1：对于第一个事件划分，平均模糊感知从0.28增加到0.44，对于第二个划分，从0.28增加到0.45（均为$p < 0.001$，Wilcoxon符号秩检验）。评估假设2，模糊感知与a-不敏感之间的直接相关性为低模糊划分1的$\rho = 0.44$，低模糊划分2的$\rho = 0.52$，高模糊划分1的$\rho = 0.29$和高模糊划分2的$\rho = 0.38$，全部显著（$p < 0.001$）。合并在一起，相关系数为$\rho = 0.45$，与正文中报告的相当接近。当应用第4.6节中使用的相同测量误差校正时，相关性增加到低模糊部分的$\rho = 0.62$和高模糊部分的$\rho = 0.44$。同样，这些相关性是相当大的，并且与正文中报告的相关性非常相似。表E.1使用完整样本复制了正文中的表3。
+
+关于假设3，增加模糊程度显著增加了a-不敏感，从划分1的0.52增加到0.70，从划分2的0.57增加到0.70（两个划分均为$p < 0.01$，Wilcoxon符号秩检验）。类似地，$\Delta \bar{p}$与$\Delta b$之间的相关性为$\rho = 0.44$，第二个划分的系数为$\rho = 0.44$，两者在任何常规水平上都是显著的（$p < 0.001$），与主样本一样。
+
+最后，我报告了使用完整样本比较模糊感知与模糊厌恶的结果，如第4.3节所做。将所有部分合并在一起，相关性再次几乎精确为零，$\rho = -0.01$。对于各个部分，两个低模糊部分的相关性为$\rho = -0.08$（$p = 0.41$）和$\rho = -0.18$（$p = 0.04$），高模糊部分为$\rho = 0.13$（$p = 0.16$）和$\rho = 0.09$（$p = 0.32$）。
+\end{translation}
+
+% ==================== APPENDIX F ====================
+\newpage
+\section*{Appendix F. Research Transparency / 附录F. 研究透明度}
+\addcontentsline{toc}{section}{Appendix F. Research Transparency / 附录F. 研究透明度}
+
+\begin{original}
+The experiment was preregistered at \url{https://aspredicted.org/pa4ij.pdf}. The preregistration includes details on the experimental design, the sampling process and planned sample size, exclusion criteria, hypotheses, and the main analyses.
+
+The experimental design and sampling process (Sections 3.1 to 3.3) were implemented and the exclusion criteria (Section 3.5) were applied as preregistered. The preregistration specified two sets of analyses. The first set consists of three tests. The first test concerns the change in perceived ambiguity between Low Ambiguity and High Ambiguity. This test is reported in Section 4.1. The second test concerns the change in a-insensitivity between Low Ambiguity and High Ambiguity. This test is reported in Section 4.2. The third test concerns the change in ambiguity aversion between Low Ambiguity and High Ambiguity. This test is reported in Section 4.3. The second set of analyses concerns the empirical relationship between the perceived level of ambiguity and a-insensitivity. This analysis is reported in Section 4.2, and the accompanying measurement error correction in Section 4.6, all implemented as specified in the preregistration. The additional preregistered exploratory analyses of order and learning effects are reported in Section 4.5. The analyses conducted in Sections 4.4 and 4.7 were not preregistered.
+\end{original}
+
+\begin{translation}
+实验已在\url{https://aspredicted.org/pa4ij.pdf}预注册。预注册包括实验设计、抽样过程和计划样本量、排除标准、假设以及主要分析的详细信息。
+
+实验设计和抽样过程（第3.1至3.3节）已实施，排除标准（第3.5节）已按预注册应用。预注册指定了两组分析。第一组包含三个检验。第一个检验涉及低模糊与高模糊之间感知模糊的变化。该检验在第4.1节报告。第二个检验涉及低模糊与高模糊之间a-不敏感的变化。该检验在第4.2节报告。第三个检验涉及低模糊与高模糊之间模糊厌恶的变化。该检验在第4.3节报告。第二组分析涉及感知模糊水平与a-不敏感之间的经验关系。该分析在第4.2节报告，配套的测量误差校正在第4.6节报告，均按预注册规定实施。关于顺序和学习效应的额外预注册探索性分析在第4.5节报告。第4.4节和第4.7节进行的分析未预注册。
+\end{translation}
+
+% ==================== APPENDIX G ====================
+\newpage
+\section*{Appendix G. Experimental Instructions / 附录G. 实验说明}
+\addcontentsline{toc}{section}{Appendix G. Experimental Instructions / 附录G. 实验说明}
+
+\subsection*{G.1 Introduction / G.1 引言}
+
+\begin{original}
+\textbf{Welcome to the study.} Welcome and thank you for your interest in today's online study! For completing the study in full, you will receive 5 Euros. In this study, you will make decisions on the computer. You can make additional money through your choices. You will receive all payments, i.e.\ both the payment for your participation and any additional payments based on your decisions, by bank transfer.
+
+In order to participate in today's study, you must consent to the processing of your personal data. To do this, check the box next to ``Declaration of consent.'' If you do not consent to the processing of your data, you will unfortunately not be able to participate in this study.
+
+Because the payment is made by bank transfer and therefore your bank details are required, the data collection in this study is not carried out completely anonymously --- unlike usual. Your personal data will, of course, be treated confidentially and will not be passed on to third parties under any circumstances. They will only be used to conduct the payment in this study. Both the data analysis and the possible publication of the results of this study are carried out anonymously.
+\end{original}
+
+\begin{translation}
+\textbf{欢迎参加本研究。} 欢迎并感谢您对今天的在线研究感兴趣！完成整个研究，您将获得5欧元。在本研究中，您将在电脑上做出决策。您可以通过您的选择赚取额外的钱。您将通过银行转账收到所有付款，即参与报酬和基于您决策的任何额外付款。
+
+为了参与今天的研究，您必须同意处理您的个人数据。为此，请勾选``同意声明''旁边的方框。如果您不同意处理您的数据，您将遗憾地无法参与本研究。
+
+由于付款通过银行转账进行，因此需要您的银行详细信息，本研究中的数据收集并非完全匿名——与通常情况不同。您的个人数据当然会被保密处理，在任何情况下都不会传递给第三方。它们仅用于进行本研究中的付款。数据分析和本研究结果的可能发表均以匿名方式进行。
+\end{translation}
+
+\begin{original}
+\textbf{Structure of the study and your payout.} Today's study consists of several sections. In each, you will make different decisions. The decisions in each section may sound similar but are independent of each other. Your decisions in one section will not affect the consequences or payouts in other sections, nor does a similar-sounding decision-making situation necessarily imply that your decision should be similar.
+
+From all decisions with monetary consequences that you will make today, one decision will be randomly selected by a computer. The consequence of the decision will be implemented exactly as described in the corresponding decision. Each of your decisions has the same chance of being selected. So since one of your decisions will actually be implemented, you should think carefully about each decision and treat each decision as if it were actually implemented.
+
+Please note: All decisions concern your personal assessment and preference. Therefore, there is no ``right'' or ``wrong'' in any decision to be made. Furthermore, all statements made in the instructions are true. In particular, all consequences of actions are carried out exactly as they are described. This applies to all studies of the Bonn Laboratory for Experimental Economic Research (BonnEconLab) and therefore also to this study.
+\end{original}
+
+\begin{translation}
+\textbf{研究结构和您的报酬。} 今天的研究由几个部分组成。在每个部分中，您将做出不同的决策。每个部分的决策听起来可能相似，但彼此独立。您在一个部分中的决策不会影响其他部分中的后果或报酬，类似表述的决策情境也不一定意味着您的决策应该相似。
+
+从您今天将做出的所有具有货币后果的决策中，计算机会随机选择一个决策。该决策的后果将完全按照相应决策中的描述实施。您的每个决策被选中的机会相同。因此，由于您的其中一个决策将实际实施，您应该仔细考虑每个决策，并像对待实际实施的决策一样对待每个决策。
+
+请注意：所有决策都涉及您的个人评估和偏好。因此，在任何要做的决策中没有``对''或``错''。此外，说明中的所有陈述都是真实的。特别是，行动的所有后果都完全按照描述执行。这适用于波恩实验经济研究实验室（BonnEconLab）的所有研究，因此也适用于本研究。
+\end{translation}
+
+\begin{original}
+\textbf{Events.} Your decisions in this study will revolve around specific weather events. These weather events deal with changes in the average daytime temperature. The average daily temperature is the average of all hourly measured air temperatures of a day and thus describes how warm a day is on average. For the change in the average daytime temperature, the average daytime temperature for a certain day is compared with the average daytime temperature of the previous day. If the change is positive, the day has become warmer than the previous day. If the change is negative, the day has become colder compared to the previous day.
+\end{original}
+
+\begin{translation}
+\textbf{事件。} 您在本研究中的决策将围绕特定的天气事件展开。这些天气事件涉及平均日间温度的变化。平均日温度是一天中所有每小时测量的气温的平均值，因此描述了某一天的平均温暖程度。对于平均日间温度的变化，将某一天的平均日间温度与前一天的进行比较。如果变化为正，则该天比前一天变暖了。如果变化为负，则该天比前一天变冷了。
+\end{translation}
+
+\subsection*{G.2 Elicitation of a-insensitivity / G.2 a-不敏感的引出}
+
+\begin{original}
+\textbf{Your next decisions.} In the next decisions in this section, you will have the choice to bet on either a weather event or a computer-generated lottery with given probabilities. The weather event concerns changes in the average daytime temperature in Bonn (weather station Cologne/Bonn Airport) on a certain day compared to the previous day.
+
+Each of the choices on the next few screens consist of the following two options:
+
+\textbf{Option A:} If you choose option A, you win 10 Euros if the weather event specified in the decision occurs on the day described.
+
+\textbf{Option B:} If you choose option B, you win 10 Euros with a probability of $p\%$ and receive 0 Euros with the opposite probability $(1-p)\%$. The probability $p$ varies in every decision and takes values between 0 and 100. So the higher the probability $p$, the higher the chance that you will win 10 Euros. The resulting lottery is computer-generated and played out with the respective probability.
+
+\textbf{Payment:} If you choose option A, the average daily temperature measured by the German Weather Service for the day described in the event is compared with the temperature of the previous day. It is then checked whether the respective event has occurred and whether you have won 10 Euros as a result. If you choose option B, a computer-generated decision is made at the same time to determine whether you have won 10 Euros with the respective probability $p\%$. If you have won the prize of 10 Euros by choosing one of the two options, you will receive the 10 Euros by bank transfer (in addition to your payment for participation). Note that the timing of when you receive the payment does not depend on your decision.
+
+\textbf{Automatic completion help:} In order for you to have to click less, a fill-in help has been activated for all decisions of a single decision screen. With this completion help, you can fill in the lists of decisions on a screen with just one click of your mouse. All you have to do is decide for what amount of money you want to switch from option A to option B and choose option B in the corresponding decision. It is then assumed that you also choose option B for all decisions on the respective screen page for which the monetary amount of option B is higher, and choose option A for all options for which the monetary amount of option B is lower. Of course, you can change your decisions at any time.
+\end{original}
+
+\begin{translation}
+\textbf{您的下一个决策。} 在本部分的后续决策中，您将可以选择押注天气事件或具有给定概率的计算机生成的彩票。天气事件涉及波恩（科隆/波恩机场气象站）某一天与前一天的比较中的平均日间温度变化。
+
+接下来几个屏幕上的每个选择由以下两个选项组成：
+
+\textbf{选项A：} 如果您选择选项A，并且决策中指定的天气事件在所述日期发生，您将赢得10欧元。
+
+\textbf{选项B：} 如果您选择选项B，您有$p\%$的概率赢得10欧元，并以相反的概率$(1-p)\%$获得0欧元。概率$p$在每个决策中变化，取值范围为0到100。因此概率$p$越高，您赢得10欧元的机会就越大。生成的彩票是计算机生成的，并以相应概率进行抽奖。
+
+\textbf{支付：} 如果您选择选项A，德国气象局测量的所述日期的平均日温度将与前一天的进行比较。然后检查相应事件是否发生，以及您是否因此赢得了10欧元。如果您选择选项B，计算机会同时做出决定，以确定您是否以相应概率$p\%$赢得了10欧元。如果您通过选择两个选项之一赢得了10欧元的奖品，您将通过银行转账收到10欧元（在您的参与报酬之外）。请注意，您收到付款的时间不取决于您的决策。
+
+\textbf{自动填写帮助：} 为了让您少点击，单个决策屏幕的所有决策都已激活填写帮助。使用此填写帮助，您只需单击鼠标即可填写屏幕上的决策列表。您只需决定想从选项A切换到选项B的金额，并在相应决策中选择选项B。然后系统假定您对相应屏幕页面上选项B金额更高的所有决策也选择选项B，并对选项B金额更低的所有选项选择选项A。当然，您可以随时更改您的决策。
+\end{translation}
+
+\subsection*{G.3 Elicitation of ambiguity perception / G.3 模糊感知的引出}
+
+\begin{original}
+\textbf{Your next decisions.} The next decisions in this section are about your assessment of various weather events. These events again relate to changes in the average daily temperature in Bonn (weather station Cologne/Bonn Airport) on a specific day compared to the previous day.
+
+You give your assessment of the weather events in two steps:
+\begin{itemize}
+  \item \textbf{Step 1:} You give your assessment of the probability of occurrence of various weather events.
+  \item \textbf{Step 2:} You give your assessment of how accurate you consider the probability of occurrence given in the first step to be.
+\end{itemize}
+
+\textbf{Step 1:} In the first step, you will be asked for three different events how likely you think it is that a certain temperature change will occur. To do this, you can specify a probability as a percentage (0\%--100\%) for each event. The higher your stated probability, the more likely you think the event will occur. A probability of 0\% implies that you believe that the event will not occur under any circumstances. A 100\% probability implies that you believe the event is certain to happen.
+
+\textbf{Step 2:} The second step relates to the probabilities you specified in the first step. You may be unsure whether the probabilities you have specified correspond exactly to the probability with which the event will occur. Step 2 is, therefore, about the accuracy of your stated probabilities in step 1. In this step, you can use a slider to specify how accurate you consider the probability of occurrence given in step 1 to be.
+
+For example, you may find your probability statement for some events very accurate, while you are rather uncertain about other events. Suppose you think it is rather unlikely that on a certain day the average daytime temperature will increase by more than 1.8 C compared to the previous day. Because of this, you have stated a probability of 15\% in the first step. In your opinion, the probability could just as easily be 14\%, 15\% or 17\%. However, you are sure that the probability is not too high, for example, not higher than 30\%. You can specify this degree of accuracy in the second step.
+\end{original}
+
+\begin{translation}
+\textbf{您的下一个决策。} 本部分的后续决策涉及您对各种天气事件的评估。这些事件再次涉及波恩（科隆/波恩机场气象站）特定日期与前一天的比较中的平均日间温度变化。
+
+您可以通过两个步骤给出对天气事件的评估：
+\begin{itemize}
+  \item \textbf{第1步：} 您给出对各种天气事件发生概率的评估。
+  \item \textbf{第2步：} 您给出对第一步中给出的发生概率的准确程度的评估。
+\end{itemize}
+
+\textbf{第1步：} 在第一步中，您将被问及对于三个不同事件，您认为某种温度变化发生的可能性有多大。为此，您可以为每个事件指定一个百分比概率（0\%--100\%）。您声明的概率越高，您认为事件发生的可能性越大。0\%的概率意味着您认为该事件在任何情况下都不会发生。100\%的概率意味着您认为该事件一定会发生。
+
+\textbf{第2步：} 第二步与您在第一步中指定的概率相关。您可能不确定您指定的概率是否精确对应于事件发生的概率。因此，第2步是关于您在第一步中陈述的概率的准确性。在这一步中，您可以使用一个滑块来指定您认为第一步中给出的发生概率有多准确。
+
+例如，您可能认为您对某些事件的概率陈述非常准确，而对其他事件则相当不确定。假设您认为在特定日期平均日间温度比前一天上升超过1.8摄氏度是相当不可能的。因此，您在第一步中陈述了15\%的概率。在您看来，概率很可能是14\%、15\%或17\%。然而，您确定概率不会太高，例如不会高于30\%。您可以在第二步中指定这一准确程度。
+\end{translation}
+
+% ==================== REFERENCES ====================
+\newpage
+\section*{References / 参考文献}
+\addcontentsline{toc}{section}{References / 参考文献}
+
+\begin{original}
+\small
+\noindent Abdellaoui, Mohammed, Baillon, Aur\'{e}lien, Placido, Laetitia, Wakker, Peter P., 2011. The rich domain of uncertainty: source functions and their experimental implementation. \textit{Am. Econ. Rev.} 101 (2), 695--723.
+
+\noindent Alon, Shiri, Gayer, Gabi, 2016. Utilitarian preferences with multiple priors. \textit{Econometrica} 84 (3), 1181--1201.
+
+\noindent Anantanasuwong, Kanin, Kouwenberg, Roy, Mitchell, Olivia S., Peijnenburg, Kim, 2020. Ambiguity Attitudes for Real-World Sources: Field Evidence from a Large Sample of Investors. Working Paper.
+
+\noindent Armantier, Olivier, Treich, Nicolas, 2013. Eliciting beliefs: proper scoring rules, incentives, stakes and hedging. \textit{Eur. Econ. Rev.} 62, 17--40.
+
+\noindent Bachmann, R\"{u}diger, Carstensen, Kai, Lautenbacher, Stefan, Schneider, Martin, 2020. Uncertainty Is More than Risk---Survey Evidence on Knightian and Bayesian Firms. Working paper. pp.\ 1--36.
+
+\noindent Baillon, Aur\'{e}lien, Bleichrodt, Han, Keskin, Umut, L'Haridon, Olivier, Li, Chen, 2018a. The effect of learning on ambiguity attitudes. \textit{Manag. Sci.} 64 (5), 2181--2198.
+
+\noindent Baillon, Aur\'{e}lien, Huang, Zhenxing, Selim, Asli, Wakker, Peter P., 2018b. Measuring ambiguity attitudes for all (natural) events. \textit{Econometrica} 86 (5), 1--15.
+
+\noindent Baillon, Aur\'{e}lien, Bleichrodt, Han, Li, Chen, Wakker, Peter P., 2021. Belief hedges: measuring ambiguity for all events and all models. \textit{J. Econ. Theory} 198, 105353.
+
+\noindent Berger, James, 1994. An overview of robust Bayesian analysis. \textit{Test} 3 (1), 5--124.
+
+\noindent Berger, James O., 1990. Robust Bayesian analysis: sensitivity to the prior. \textit{J. Stat. Plan. Inference} 25 (3), 303--328.
+
+\noindent Bock, Olaf, Baetge, Ingmar, Nicklisch, Andreas, 2014. Hroot: Hamburg registration and organization online tool. \textit{Eur. Econ. Rev.} 71, 117--120.
+
+\noindent Chandrasekher, Madhav, Frick, Mira, Iijima, Ryota, Le Yaouanq, Yves, 2022. Dual-self representations of ambiguity preferences. \textit{Econometrica} 90 (3), 1029--1061.
+
+\noindent Chateauneuf, Alain, Eichberger, J\"{u}rgen, Grant, Simon, 2007. Choice under uncertainty with the best and worst in mind: neo-additive capacities. \textit{J. Econ. Theory} 137 (1), 538--567.
+
+\noindent Chen, Daniel L., Schonger, Martin, Wickens, Chris, 2016. oTree---an open-source platform for laboratory, online, and field experiments. \textit{J. Behav. Exp. Finance} 9, 88--97.
+
+\noindent Danz, David, Vesterlund, Lise, Wilson, Alistair J., 2022. Belief elicitation and behavioral incentive compatibility. \textit{Am. Econ. Rev.} 112 (9), 2851--2883.
+
+\noindent Delavande, Adeline, Mengel, Friederike, 2021. Uncertainty Attitudes, Subjective Expectations and Decisions under Uncertainty. Working Paper.
+
+\noindent Delavande, Adeline, Del Bono, Emilia, Holford, Angus, 2021. Perceived Ambiguity about COVID-related Health Outcomes and Protective Health Behaviors among Young Adults. Working Paper.
+
+\noindent Dempster, Arthur P., 1967. Upper and lower probabilities induced by a multivalued mapping. \textit{Ann. Math. Stat.} 38, 325--339.
+
+\noindent Dimmock, Stephen G., Kouwenberg, Roy, Mitchell, Olivia S., Peijnenburg, Kim, 2015. Estimating ambiguity preferences and perceptions in multiple prior models: evidence from the field. \textit{J. Risk Uncertain.} 51 (3), 219--244.
+
+\noindent Dimmock, Stephen G., Kouwenberg, Roy, Wakker, Peter P., 2016. Ambiguity attitudes in a large representative sample. \textit{Manag. Sci.} 62 (5), 1363--1380.
+
+\noindent Drerup, Tilman, Enke, Benjamin, von Gaudecker, Hans-Martin, 2017. The precision of subjective data and the explanatory power of economic models. \textit{J. Econom.} 200 (2), 378--389.
+
+\noindent Enke, Benjamin, Graeber, Thomas, 2021. Cognitive Uncertainty. Working Paper.
+
+\noindent Fox, Craig R., Tversky, Amos, 1998. A belief-based account of decision under uncertainty. \textit{Manag. Sci.} 44 (7), 879--895.
+
+\noindent Fox, Craig R., Rogers, Brett A., Tversky, Amos, 1996. Options traders exhibit subadditive decision weights. \textit{J. Risk Uncertain.} 13 (1), 5--17.
+
+\noindent Gajdos, Thibault, Hayashi, Takashi, Tallon, Jean-Marc, Vergnaud, Jean-Christophe, 2008. Attitude toward imprecise information. \textit{J. Econ. Theory} 140 (1), 27--65.
+
+\noindent Ghirardato, Paolo, Maccheroni, Fabio, Marinacci, Massimo, 2004. Differentiating ambiguity and ambiguity attitude. \textit{J. Econ. Theory} 118 (2), 133--173.
+
+\noindent Gilboa, Itzhak, Marinacci, Massimo, 2016. Ambiguity and the Bayesian paradigm. In: Arl\'{o}-Costa, Horacio, Hendricks, Vincent F., van Benthem, Johan F.A.K. (Eds.), \textit{Readings in Formal Epistemology}. Springer, pp.\ 385--439.
+
+\noindent Gilboa, Itzhak, Schmeidler, David, 1989. Maxmin expected utility with non-unique prior. \textit{J. Math. Econ.} 18 (2), 141--153.
+
+\noindent Gillen, Ben, Snowberg, Erik, Yariv, Leeat, 2019. Experimenting with measurement error: techniques with applications to the Caltech cohort study. \textit{J. Polit. Econ.} 127 (4), 1826--1863.
+
+\noindent Giraud, Rapha\"{e}l, 2014. Second order beliefs models of choice under imprecise risk: nonadditive second order beliefs versus nonlinear second order utility. \textit{Theor. Econ.} 9 (3), 779--816.
+
+\noindent Giustinelli, Pamela, Pavoni, Nicola, 2017. The evolution of awareness and belief ambiguity in the process of high school track choice. \textit{Rev. Econ. Dyn.} 25, 93--120.
+
+\noindent Gul, Faruk, Pesendorfer, Wolfgang, 2014. Expected uncertain utility theory. \textit{Econometrica} 82 (1), 1--39.
+
+\noindent Hansen, Lars Peter, 1982. Large sample properties of generalized method of moments estimators. \textit{Econometrica} 50 (4), 1029--1054.
+
+\noindent Harr\'{e}, Rom, 1970. \textit{The Principles of Scientific Thinking}. Macmillan, London.
+
+\noindent Hill, Brian, 2013. Confidence and decision. \textit{Games Econ. Behav.} 82, 675--692.
+
+\noindent Hill, Brian, Abdellaoui, Mohammed, Colo, Philippe, 2021. Eliciting Multiple Prior Beliefs. Working Paper.
+
+\noindent Hurwicz, Leonid, 1951. Some specification problems and applications to econometric models. \textit{Econometrica} 19 (3), 343--344.
+
+\noindent Ilut, Cosmin L., Schneider, Martin, 2022. Ambiguity. In: Bachmann, R\"{u}diger, Topa, Giorgio, van der Klaauw, Wilbert (Eds.), \textit{Handbook of Economic Expectations}, 1st. Elsevier, pp.\ 749--777.
+
+\noindent Karni, Edi, 2020. A mechanism for the elicitation of second-order belief and subjective information structure. \textit{Econ. Theory} 69 (1), 217--232.
+
+\noindent Kilka, Michael, Weber, Martin, 2001. What determines the shape of the probability weighting function under uncertainty? \textit{Manag. Sci.} 47 (12), 1712--1726.
+
+\noindent Klibanoff, Peter, Marinacci, Massimo, Mukerji, Sujoy, 2005. A smooth model of decision making under ambiguity. \textit{Econometrica} 73 (6), 1849--1892.
+
+\noindent Klibanoff, Peter, Mukerji, Sujoy, Seo, Kyoungwon, 2014. Perceived ambiguity and relevant measures. \textit{Econometrica} 82 (5), 1945--1978.
+
+\noindent Li, Chen, 2017. Are the poor worse at dealing with ambiguity? \textit{J. Risk Uncertain.} 54 (3), 239--268.
+
+\noindent Li, Chen, Turmunkh, Uyanga, Wakker, Peter P., 2019. Trust as a decision under ambiguity. \textit{Exp. Econ.} 22, 51--75.
+
+\noindent Li, Chen, Turmunkh, Uyanga, Wakker, Peter P., 2020. Social and strategic ambiguity versus betrayal aversion. \textit{Games Econ. Behav.} 123, 272--287.
+
+\noindent Li, Zhihua, M\"{u}ller, Julia, Wakker, Peter P., Wang, Tong V., 2017. The rich domain of ambiguity explored. \textit{Manag. Sci.} 64 (7), 3227--3240.
+
+\noindent Machina, Mark J., Siniscalchi, Marciano, 2014. Ambiguity and ambiguity aversion. In: Machina, Mark J., Kip Viscusi, W. (Eds.), \textit{Handbook of the Economics of Risk and Uncertainty}, vol.\ 1. North-Holland, Amsterdam.
+
+\noindent Manski, Charles F., 2004. Measuring expectations. \textit{Econometrica} 72 (5), 1329--1376.
+
+\noindent Manski, Charles F., Molinari, Francesca, 2022. Precise or imprecise probabilities? Evidence from survey response related to late-onset dementia. \textit{J. Eur. Econ. Assoc.} 20 (1), 187--221.
+
+\noindent Prelec, Drazen, 2004. A Bayesian truth serum for subjective data. \textit{Science} 306 (5695), 462--466.
+
+\noindent Rottenstreich, Yuval, Hsee, Christopher K., 2001. Money, kisses, and electric shocks: on the affective psychology of risk. \textit{Psychol. Sci.} 12 (3), 185--190.
+
+\noindent Sargan, John D., 1958. The estimation of economic relationships using instrumental variables. \textit{Econometrica} 26 (3), 393.
+
+\noindent Schmidt, Patrick, 2021. Elicitation of Ambiguous Beliefs with Mixing Bets. Working Paper.
+
+\noindent Shafer, Glenn, 1976. \textit{A Mathematical Theory of Evidence}. Princeton University Press, Princeton.
+
+\noindent Shattuck, Mark, Wagner, Carl, 2016. Peter Fishburn's analysis of ambiguity. \textit{Theory Decis.} 81 (2), 153--165.
+
+\noindent Shishkin, Denis, Ortoleva, Pietro, 2023. Ambiguous information and dilation: an experiment. \textit{J. Econ. Theory} 208 (3), 1056--1110.
+
+\noindent Skulj, Damjan, 2006. Jeffrey's conditioning rule in neighbourhood models. \textit{Int. J. Approx. Reason.} 42 (3), 192--211.
+
+\noindent Trautmann, Stefan T., van de Kuilen, Gijs, 2015a. Ambiguity attitudes. In: \textit{Wiley Blackwell Handbook of Judgment and Decision Making}, pp.\ 89--116.
+
+\noindent Trautmann, Stefan T., van de Kuilen, Gijs, 2015b. Belief elicitation: a horse race among truth serums. \textit{Econ. J.} 125 (589), 2116--2135.
+
+\noindent Tversky, Amos, Fox, Craig R., 1995. Weighing risk and uncertainty. \textit{Psychol. Rev.} 102 (2), 269--283.
+
+\noindent Tversky, Amos, Kahneman, Daniel, 1992. Advances in prospect theory: cumulative representation of uncertainty. \textit{J. Risk Uncertain.} 5 (4), 297--323.
+
+\noindent von Gaudecker, Hans-Martin, Wogrolly, Axel, Zimpelmann, Christian, 2022. The Distribution of Ambiguity Attitudes. Working Paper.
+
+\noindent Wakker, Peter P., 2010. \textit{Prospect Theory: For Risk and Ambiguity}. Cambridge University Press, Cambridge.
+
+\noindent Walley, Peter, 1991. \textit{Statistical Reasoning with Imprecise Probabilities}. Chapman and Hall, London.
+
+\noindent Walley, Peter, 2000. Towards a unified theory of imprecise probability. \textit{Int. J. Approx. Reason.} 24 (2--3), 125--148.
+
+\noindent Wu, George, Gonzalez, Richard, 1999. Nonlinear decision weights in choice under uncertainty. \textit{Manag. Sci.} 45 (1), 74--85.
+\end{original}
+
+\begin{translation}
+\small
+（参考文献列表保持英文原文，以上为Henkel（2024）引用的完整参考文献，涵盖模糊决策理论、实验经济学、贝叶斯分析等相关领域的经典和前沿文献。）
+\end{translation}
+
+\end{document}

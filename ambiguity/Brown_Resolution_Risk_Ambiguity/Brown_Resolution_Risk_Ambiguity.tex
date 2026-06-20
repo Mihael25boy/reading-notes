@@ -1,0 +1,698 @@
+% !TeX program = XeLaTeX
+\documentclass[12pt,a4paper]{ctexart}
+
+% === Packages ===
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+\geometry{margin=1in, headheight=15pt}
+
+% === Define environments for bilingual content ===
+\newenvironment{original}{%
+  \par\medskip\noindent\textbf{[English Original]}\par\smallskip
+  \color{black}\small
+}{%
+  \par\medskip
+}
+
+\newenvironment{translation}{%
+  \par\noindent\textbf{[中文翻译]}\par\smallskip
+  \color{blue}\small
+}{%
+  \par\bigskip
+}
+
+% === Theorem environments ===
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{claim}{Claim}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+% === Header and footer ===
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Brown, Guo \& Je (2026)}
+\fancyhead[R]{Preferences for the Resolution of Risk and Ambiguity}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% === Title and Author ===
+\title{%
+  \textbf{Preferences for the Resolution of Risk and Ambiguity}\\[4pt]
+  {\Large\color{blue}风险与模糊性的消解时序偏好}
+}
+
+\author{%
+  Alexander L. Brown$^{\dagger}$, \quad Huiyi Guo$^{\ddagger}$, \quad Hyundam Je$^{\mathsection}$\\[4pt]
+  {\small\color{blue}亚历山大·L·布朗，郭慧仪，池贤潭}\\[8pt]
+  $^{\dagger}$Department of Economics, Texas A\&M University\\
+  {\small\color{blue}德克萨斯A\&M大学经济系}\\
+  $^{\ddagger}$School of Economics, University of Seoul\\
+  {\small\color{blue}首尔大学经济学院}
+}
+
+\date{January 8, 2026 \quad {\color{blue}2026年1月8日}}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\section*{Abstract}
+\begin{original}
+Generalized recursive utility models often imply that agents have a preference over the timing of uncertainty resolution. Laboratory elicitations of subjects' preferences generally provide direct evidence in support of this implication, but only in the domain of risk. We provide the first experimental examination of uncertainty resolution with respect to ambiguity, in addition to risk. The modal subject exhibits a preference for both early resolution of risk and ambiguity, but with only a minimal willingness to pay to realize either over late resolution. While preferences in both domains are positively correlated, the strength of that correlation varies based on ambiguity attitudes. Among ten commonly used representative recursive utility models, we identify the models that most efficiently explain observed subject preferences under two alternative assumptions: treating a subject's token willingness to pay as either a true preference or indifference.
+\end{original}
+\begin{translation}
+广义递归效用模型通常隐含着主体对不确定性消解时序存在偏好。实验室对主体偏好的激励实验一般能为这一推论提供直接证据，但仅局限于风险领域。本文首次在风险之外，对模糊性领域的不确定性消解进行了实验检验。典型被试表现出对风险和模糊性均偏早期消解的偏好，但其为实现早期消解相对于晚期消解的支付意愿极低。虽然两个领域的偏好呈正相关，但这一相关性的强度因模糊态度而异。在十种常用的代表性递归效用模型中，我们识别出在两种不同假设下能最有效解释观察到的被试偏好的模型：将被试微弱的支付意愿视为真实偏好，或视为无差异。
+\end{translation}
+
+\vspace{12pt}
+\noindent\rule{\textwidth}{0.4pt}
+
+\begin{original}
+\textbf{Keywords:} Resolution of risk, Resolution of ambiguity, Generalized recursive utility, Experimental economics
+
+\textbf{JEL Classification:} C91, D81, D84
+\end{original}
+\begin{translation}
+\textbf{关键词：} 风险消解，模糊性消解，广义递归效用，实验经济学
+
+\textbf{JEL分类：} C91, D81, D84
+\end{translation}
+
+\vspace{12pt}
+\noindent\rule{\textwidth}{0.4pt}
+
+\begin{original}
+\textbf{Acknowledgments:} We thank Han Bleichrodt, Ralph Boleslavsky, Yan Chen, Soo Hong Chew, Eugen Dimant, Russell Golman, Yoram Halevy, Takashi Hayashi, Shaowei Ke, Hwagyun Kim, Peter Klibanoff, Jian Li, Bin Miao, Jianjun Miao, Kirby Nielsen, Jacob Sagi, Adam Sanjurjo, Kyoungwon Seo, Ran Shorrer, Lorenzo Stanca, Dong Wei, Songfa Zhong, and Sarah Zubairy for comments. This paper benefitted from helpful audiences at Peking University, the 2021 ESA Global Online Around-the-Clock Meetings, University of Alicante, MiddExLab Seminar, University of Sydney, the European Winter Meetings of the Econometric Society 2021, 2023 D-TEA Workshop, and 2023 Tsinghua-BEAT. All errors are our own.
+
+Declarations of interest: none.
+\end{original}
+\begin{translation}
+\textbf{致谢：} 我们感谢 Han Bleichrodt, Ralph Boleslavsky, 陈妍, 周寿红, Eugen Dimant, Russell Golman, Yoram Halevy, 林隆, Shaowei Ke, 金辉均, Peter Klibanoff, 李健, 苗斌, 苗建军, Kirby Nielsen, Jacob Sagi, Adam Sanjurjo, Seo Kyoungwon, Ran Shorrer, Lorenzo Stanca, 韦东, 宋发忠, 以及 Sarah Zubairy 的宝贵意见。本文受益于以下学术场合的听众：北京大学、2021年ESA全球在线不间断会议、阿利坎特大学、MiddExLab研讨会、悉尼大学、2021年计量经济学会欧洲冬季会议、2023年D-TEA研讨会和2023年清华-BEAT。文责自负。
+
+利益声明：无。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 1: INTRODUCTION
+% ============================================================
+\section{Introduction}
+\begin{translation}
+\section*{引言}
+\end{translation}
+
+\begin{original}
+Unlike discounted expected utility theory, many models of generalized recursive utility relax the assumption of a direct linkage between preferences of objective uncertainty and intertemporal substitutability (e.g., Kreps and Porteus, 1978; Chew and Epstein, 1989; Epstein and Zin, 1989; Weil, 1990). These models have consequential implications in empirical macroeconomics and finance literature, explaining several empirical anomalies in applications. In many cases, these models also require that agents have a preference over when uncertainty is to be resolved, independent of instrumental concerns. Ongoing debates concern whether such preferences are plausible, and, if plausible, whether people prefer early or late resolution of uncertainty. Experimental evidence is generally divided, and elicitation of these preferences may be complicated by other factors (see Brown and Kim, 2013; Nielsen, 2020, for surveys).
+\end{original}
+\begin{translation}
+与贴现期望效用理论不同，许多广义递归效用模型放松了客观不确定性偏好与跨期替代弹性之间存在直接联系的假设（如 Kreps 和 Porteus，1978；Chew 和 Epstein，1989；Epstein 和 Zin，1989；Weil，1990）。这些模型在实证宏观经济学和金融学文献中具有重要意义，能够解释应用中的若干经验异常。在许多情况下，这些模型还要求主体对不确定性何时消解具有独立于工具性关切的偏好。关于这类偏好是否合理，以及如果合理，人们是偏好不确定性尽早消解还是推迟消解的争论仍在继续。实验证据总体上存在分歧，而这些偏好的激励可能受到其他因素的干扰（综述参见 Brown 和 Kim，2013；Nielsen，2020）。
+\end{translation}
+
+\begin{original}
+As conventionally defined, ``uncertainty'' includes both elements of ``risk'' and ``ambiguity'' (Knight, 1921). The objective domain of uncertainty, risk, describes a situation where the result is not known, but the underlying probability could be theoretically or empirically determined; the subjective domain of uncertainty, ambiguity, describes a situation where people do not know the basis for objective probability. Notably, all aforementioned experimental studies that elicit preferences for uncertainty resolution have focused only on risk. However, recent theoretical studies have begun to consider environments with subjective uncertainty exclusively (Strzalecki, 2013; Li, 2020; Marinacci et al., 2024); the models they examine build in strict preferences for ambiguity resolution, but not risk.
+\end{original}
+\begin{translation}
+根据传统定义，"不确定性"包含"风险"和"模糊性"两个要素（Knight，1921）。不确定性的客观领域——风险，描述结果未知但潜在概率可以在理论上或经验上确定的情形；不确定性的主观领域——模糊性（ambiguity），描述人们不知道客观概率依据的情形。值得注意的是，此前所有激励不确定性消解偏好的实验研究都仅关注风险领域。然而，最近的理论研究已开始考虑仅包含主观不确定性的环境（Strzalecki，2013；Li，2020；Marinacci 等，2024）；这些研究所考察的模型内含对模糊性消解而非风险消解的严格偏好。
+\end{translation}
+
+\begin{original}
+This paper provides the first experimental elicitation of preferences for uncertainty resolution in the subjective domain as well as in the objective domain. We elicit separate preferences over ambiguity and risk resolution and examine their interrelation with ambiguity attitude. In particular, we find that a plurality of the subjects (47.4\%) prefer early resolution of risk and a majority (63.7\%) prefer early resolution of ambiguity. However, most subjects do not display a willingness to pay 5 cents or more for their preferred form of resolution. Beyond the aggregate averages, individual subject profiles are correlated across preferences in non-random ways. While resolution preferences are positively correlated across domains, ambiguity attitude separately affects the likelihood of preferring early resolution of ambiguity.
+\end{original}
+\begin{translation}
+本文首次同时在主观领域和客观领域对不确定性消解偏好进行实验激励。我们分别激励了模糊性消解和风险消解的偏好，并考察它们与模糊态度之间的相互关系。具体而言，我们发现多数被试（47.4\%）偏好风险的早期消解，而大多数被试（63.7\%）偏好模糊性的早期消解。然而，大多数被试对其偏好形式的消解并不表现出5美分或以上的支付意愿。在总体均值之外，个体被试的偏好画像以非随机方式在不同偏好间相关联。虽然不同领域的消解偏好呈正相关，但模糊态度会独立影响偏好模糊性早期消解的概率。
+\end{translation}
+
+\begin{original}
+To best characterize the heterogeneities across these individual subject preference profiles, we investigate ten representative recursive utility models under uncertainty. We include the canonical discounted expected utility model (henceforth the DEU model), the dynamic maxmin expected utility model of Gilboa and Schmeidler (1989) and Epstein and Schneider (2003) (henceforth the MEU model), the dynamic smooth ambiguity model of Klibanoff et al.\ (2005, 2009) and Seo (2009) (henceforth the KMM model), the dynamic multiplier preference model of Hansen and Sargent (2001) and Strzalecki (2011) (henceforth the DMP model), the dynamic variational preference model of Maccheroni et al.\ (2006a) (henceforth the DVP model), the generalized recursive utility model of Kreps and Porteus (1978), Epstein and Zin (1989), and Weil (1990) (henceforth the EZ model), the generalized recursive maxmin expected utility model of Hayashi (2005) (henceforth the H model), the generalized recursive smooth ambiguity model of Hayashi and Miao (2011) (henceforth the HM model), the generalized recursive multiplier preference model (henceforth the RMP model), and the generalized recursive variational preference model (henceforth the RVP model).
+\end{original}
+\begin{translation}
+为最好地刻画个体被试偏好画像之间的异质性，我们考察了十种在不确定性条件下具有代表性的递归效用模型。包括规范的贴现期望效用模型（以下简称DEU模型）、Gilboa和Schmeidler（1989）以及Epstein和Schneider（2003）的动态最大最小期望效用模型（以下简称MEU模型）、Klibanoff等（2005, 2009）和Seo（2009）的动态平滑模糊性模型（以下简称KMM模型）、Hansen和Sargent（2001）以及Strzalecki（2011）的动态乘数偏好模型（以下简称DMP模型）、Maccheroni等（2006a）的动态变分偏好模型（以下简称DVP模型）、Kreps和Porteus（1978）、Epstein和Zin（1989）以及Weil（1990）的广义递归效用模型（以下简称EZ模型）、Hayashi（2005）的广义递归最大最小期望效用模型（以下简称H模型）、Hayashi和Miao（2011）的广义递归平滑模糊性模型（以下简称HM模型）、广义递归乘数偏好模型（以下简称RMP模型），以及广义递归变分偏好模型（以下简称RVP模型）。
+\end{translation}
+
+\begin{original}
+Consistent with past precedent and for mathematical tractability (see Section 4.2 for more detail), we analyze the ten models under constant relative risk aversion (CRRA) and constant elasticity of substitution (CES) restrictions. We use EZ as the baseline model; it can only accommodate ambiguity-neutral attitudes and predicts consistent preferences over risk and ambiguity resolution. Four models---the H, HM, RMP, and RVP---can simultaneously accommodate non-indifferent preferences for risk resolution, non-indifferent preferences for ambiguity resolution, and non-neutral ambiguity attitudes. Of the four, the HM model implies that ambiguity attitudes affect the connection between these two preferences, with specific comparative statics that align with our data.
+\end{original}
+\begin{translation}
+与以往惯例一致，并为数学可处理性考虑（详见第4.2节），我们在常相对风险厌恶（CRRA）和常替代弹性（CES）约束下分析上述十种模型。我们将EZ模型作为基准模型；它只能容纳模糊中性态度，并预测风险消解和模糊性消解偏好的一致性。四种模型——H、HM、RMP和RVP——可以同时容纳非无差异的风险消解偏好、非无差异的模糊性消解偏好以及非中性的模糊态度。其中，HM模型意味着模糊态度会影响这两种偏好之间的联系，并具有与我们的数据相一致的特定比较静态。
+\end{translation}
+
+\begin{original}
+In our penultimate section, we investigate which model under the CRRA-CES restriction fits our observed data best using an objective function that penalizes models for being able to rationalize a broader set of action profiles. A key interpretation is whether we should consider subjects that only display a token willingness to pay for their preferred form of resolution as having strict preferences or being indifferent. Under the former view, which we refer to as the ``strong'' interpretation, the baseline EZ model fares substantially worse than the H, HM, RMP, and RVP models. The HM model performs best, significantly outperforming all other models over 100,000 bootstrapped samples of our data. Under the latter, ``weak'' interpretation, the modal subject is indifferent over both forms of resolution but ambiguity averse. Hence, the MEU model and its generalizations (DVP, H, and RVP)---the only models that can rationalize this preference profile---are the four best-performing models, with RVP and H the best overall. Because the DEU model cannot accommodate ambiguity aversion, it performs the worst.
+\end{original}
+\begin{translation}
+在倒数第二节中，我们使用一个目标函数，对能够理性化更广泛行动画像集合的模型施加惩罚，以考察在CRRA-CES约束下哪种模型最能拟合我们观察到的数据。一个关键的诠释问题是：我们是否应将那些仅表现出微弱支付意愿以支持其偏好消解形式的被试视为具有严格偏好，还是视为无差异。在前一种观点下——我们称之为"强"解释——基准EZ模型的表现远逊于H、HM、RMP和RVP模型。其中HM模型表现最佳，在我们数据的100,000个自助抽样中显著优于所有其他模型。在后一种"弱"解释下，典型被试对两种消解形式均无差异但具有模糊厌恶。因此，MEU模型及其推广（DVP、H和RVP）——唯一能够理性化这一偏好画像的模型——是表现最好的四个模型，其中RVP和H最优。由于DEU模型无法容纳模糊厌恶，其表现最差。
+\end{translation}
+
+\begin{original}
+While the specific model we endorse is left open for the reader, a few key findings are robust to either the strong or weak interpretation. First, models that allow for both neutral and averse ambiguity attitudes tend to perform well, as those preferences are exhibited by most of our subjects. Second, models that account for strict preferences in both risk and ambiguity resolution also perform well. Third, permitting divergent preferences in risk and ambiguity resolution among ambiguity-averse agents improves explanatory power, as these profiles were observed in a few subjects. Fourth, no model under the CRRA-CES assumption could accommodate the specific preference profiles for gradual resolution of both risk and ambiguity exhibited by a sizable minority of our subjects.
+\end{original}
+\begin{translation}
+虽然我们留待读者选择具体支持哪个模型，但若干关键发现在强解释和弱解释下均是稳健的。第一，容纳模糊中性和模糊厌恶态度的模型往往表现良好，因为这些偏好为我们的大多数被试所表现出。第二，同时考虑风险消解和模糊性消解严格偏好的模型也表现良好。第三，允许模糊厌恶主体的风险消解和模糊性消解偏好存在分歧能够提高解释力，因为这些画像在少数被试中被观察到。第四，在CRRA-CES假设下，没有任何模型能够容纳相当数量的少数派被试所表现出的对风险和模糊性均偏好渐进消解的特定偏好画像。
+\end{translation}
+
+\begin{original}
+There have been several previous experimental studies on uncertainty resolution in the domain of risk. Nielsen (2020) provides a thorough review, categorizing and summarizing findings in studies with or without incentivized choices, as well as whether the risk is pre-determined or future-determined. Early studies surveyed participants on their preferences and did not incentivize choice (Chew and Ho, 1994; Ahlbrecht and Weber, 1996, 1997; Lovallo and Kahneman, 2000). Later studies incentivized choice but were potentially confounded by the fact that the information revealed is instrumental (Von Gaudecker et al., 2011; Brown and Kim, 2013; Kocher et al., 2014; Zimmermann, 2015; Meissner and Pfeiffer, 2022). That is, learning the information early may pose an additional benefit to an individual outside of these non-instrumental preferences. In both categories, the literature often, but not always, finds a preference for the early resolution of uncertainty in the risk domain.
+\end{original}
+\begin{translation}
+此前已有若干关于风险领域不确定性消解偏好的实验研究。Nielsen（2020）提供了详尽的综述，对有无激励选择的研究以及风险是预先确定还是未来确定的情形进行了分类和总结。早期研究仅调查参与者偏好，未对选择进行激励（Chew 和 Ho，1994；Ahlbrecht 和 Weber，1996，1997；Lovallo 和 Kahneman，2000）。后期研究对选择进行了激励，但可能因所揭示信息具有工具性价值而受到混杂影响（Von Gaudecker等，2011；Brown 和 Kim，2013；Kocher等，2014；Zimmermann，2015；Meissner 和 Pfeiffer，2022）。也就是说，尽早获取信息可能对个体产生这些非工具性偏好之外的利益。在这两类研究中，文献经常（但并非总是）发现风险领域的个体偏好不确定性早期消解。
+\end{translation}
+
+\begin{original}
+Among the studies that do not provide instrumental information, those where the risk has yet to be determined generally find preferences for late or gradual resolution (Budescu and Fischer, 2001). Those where the risk is determined but yet to be resolved for the subject generally find preferences for early resolution (Eliaz and Schotter, 2010; Ganguly and Tasoff, 2016; Falk and Zimmermann, 2024). Nielsen (2020) is the first to note this relationship and demonstrates this result in a unified, non-instrumental framework. That is, she finds a preference for early resolution with the pre-determined risk and late or gradual resolution with the isomorphic future-determined risk.
+\end{original}
+\begin{translation}
+在不提供工具性信息的研究中，风险尚未确定的研究通常发现对晚期或渐进消解的偏好（Budescu 和 Fischer，2001）。风险已确定但对被试尚未消解的研究通常发现对早期消解的偏好（Eliaz 和 Schotter，2010；Ganguly 和 Tasoff，2016；Falk 和 Zimmermann，2024）。Nielsen（2020）首次注意到了这一关系，并在一个统一的非工具性框架中证明了这一结果。也就是说，她发现预先确定的风险偏好早期消解，而同构的未来确定的风险偏好晚期或渐进消解。
+\end{translation}
+
+\begin{original}
+We borrow heavily from Nielsen (2020) in eliciting subjects' preference over risk resolution with non-instrumental information, though we are not explicit about whether the risk is pre-determined or future-determined. Our ambiguity resolution elicitation is a unique design. All choice sets include gradual resolution of information options (non-skewed, positively-skewed, and negatively-skewed) in addition to early and late options.
+\end{original}
+\begin{translation}
+我们在激励被试风险消解偏好时大量借鉴了Nielsen（2020）的非工具性信息方法，尽管我们没有明确说明风险是预先确定还是未来确定。我们的模糊性消解激励是一个独特的设计。所有选择集除了早期和晚期选项外，还包含信息的渐进消解选项（非偏态的、正偏态的和负偏态的）。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 2: EXPERIMENTAL DESIGN AND PROCEDURES
+% ============================================================
+\section{Experimental Design and Procedures}
+\begin{translation}
+\section*{实验设计与程序}
+\end{translation}
+
+\begin{original}
+The experiment consists of two parts: the risk-resolution preference elicitation and the ambiguity-resolution preference elicitation. Each part utilizes four questions to elicit subject preferences on the timing of risk/ambiguity resolution, yielding eight questions in total. The order of the two parts and the questions within are randomly ordered for subjects in four ways comprising four separate, within-subjects treatments. Full details of the random ordering are explained in Section 2.3.
+\end{original}
+\begin{translation}
+实验包括两个部分：风险消解偏好激励和模糊性消解偏好激励。每个部分使用四个问题来激励被试对风险/模糊性消解时序的偏好，总共八个问题。两部分及其内部问题的顺序对被试进行了四种方式的随机排列，构成四个独立的主体内处理。随机排列的完整细节在第2.3节中说明。
+\end{translation}
+
+\subsection{Risk-Resolution Preference Elicitation}
+\begin{translation}
+\subsection*{风险消解偏好激励}
+\end{translation}
+
+\begin{original}
+In the risk-resolution preference elicitation, we follow the general framework of Nielsen (2020) (see Figure 1 therein). Subjects participate in a two-period consumption process. At the beginning of $t=1$, subjects receive an advance payment. At $t=2$, a lottery is drawn and the additional payoff is realized. Ex-ante, the lottery has a 50/50 chance of a ``high'' (\$22) or ``low'' (\$4) prize. At the end of $t=1$, subjects receive either a piece of ``good'' or ``bad'' news (see Figure 1) on the underlying probability of the lottery.
+\end{original}
+\begin{translation}
+在风险消解偏好激励中，我们遵循Nielsen（2020）的一般框架（参见其中图1）。被试参与一个两期消费过程。在$t=1$期初，被试收到一笔预付款。在$t=2$期，抽签决定并实现额外收益。事前，抽签有50/50的概率获得"高"（\$22）或"低"（\$4）奖金。在$t=1$期末，被试收到一条关于抽签潜在概率的"好消息"或"坏消息"（参见图1）。
+\end{translation}
+
+\begin{original}
+We follow Nielsen (2020) in viewing a vector $(p, q, r)$ satisfying $pq + (1-p)r = 0.5$ as an information structure, where the value $p$ is the probability of receiving bad news, $q \leq 0.5$ is the probability of winning the high prize conditional on receiving bad news, and $r \geq 0.5$ is the probability of winning the high prize conditional on receiving good news.
+\end{original}
+\begin{translation}
+我们沿用Nielsen（2020）的方法，将满足$pq + (1-p)r = 0.5$的向量$(p, q, r)$视为信息结构，其中$p$是收到坏消息的概率，$q \leq 0.5$是在收到坏消息条件下赢得高奖金的概率，$r \geq 0.5$是在收到好消息条件下赢得高奖金的概率。
+\end{translation}
+
+\begin{original}
+Subjects complete three choice tasks, selecting their most preferred information structure from a set of multiple options listed in Table 1. The One-Shot Early (E) option resolves all risk in the first stage. In contrast, the One-Shot Late (L) option resolves all risk in the second stage. The three other options gradually resolve risk. In the Gradual (Non-Skewed) (G) option, good news and bad news are equally likely to arrive. In the Gradual (Positively-Skewed) (Gp) option, subjects are more likely to receive bad news ($p = 0.8$). However, the good news is highly informative; upon receiving it, the conditional probability of winning the high prize is 0.9 ($r = 0.9$). In the Gradual (Negatively-Skewed) (Gn) option, there is a higher likelihood of receiving good news ($p = 0.2$), but the informativeness of this good news is lower ($r = 0.6$) compared to the Gradual (Positively-Skewed) option. None of the gradual options is ex-ante more informative than the others according to the Blackwell criterion.
+\end{original}
+\begin{translation}
+被试完成三项选择任务，从表1所列的多个选项中选出他们最偏好的信息结构。"一次性早期"（E）选项在第一阶段消解所有风险。相比之下，"一次性晚期"（L）选项在第二阶段消解所有风险。其他三个选项渐进消解风险。在"渐进（非偏态）"（G）选项中，好消息和坏消息以相同概率到达。在"渐进（正偏态）"（Gp）选项中，被试更有可能收到坏消息（$p = 0.8$）。然而，好消息的信息量很高；收到它后，赢得高奖金的概率为0.9（$r = 0.9$）。在"渐进（负偏态）"（Gn）选项中，收到好消息的概率更高（$p = 0.2$），但与渐进（正偏态）选项相比，该好消息的信息量较低（$r = 0.6$）。根据Blackwell准则，这些渐进选项在事前并不比彼此更具信息量。
+\end{translation}
+
+\begin{original}
+There is a 30-minute delay after subjects receive a piece of news at the end of $t=1$ and before they observe the realization of the lottery in $t=2$. A 30-minute time delay is considered a minimum, but appropriate, time delay in existing studies for determining preferences over resolution of uncertainty (Nielsen, 2020; Masatlioglu et al., 2023). To minimize the chances of an instrumental information issue (where subjects adjust their future consumption due to any early information), subjects completed Raven's Progressive Matrices.
+\end{original}
+\begin{translation}
+在$t=1$期末被试收到消息后与在$t=2$期观察到抽签实现结果之间，设有30分钟的延迟。30分钟的时间延迟被认为是现有研究中确定不确定性消解偏好的最低但适当的时间延迟（Nielsen，2020；Masatlioglu等，2023）。为尽量减少工具性信息问题的可能性（即被试因提前获得信息而调整其未来消费），被试在此期间完成Raven递进矩阵测试。
+\end{translation}
+
+\subsection{Ambiguity-Resolution Preference Elicitation}
+\begin{translation}
+\subsection*{模糊性消解偏好激励}
+\end{translation}
+
+\begin{original}
+The ambiguity-resolution preference elicitation is similar to the risk-resolution preference elicitation. Subjects are involved in a two-period consumption process. At the beginning of $t=1$, subjects receive an advance payment. In $t=2$, a lottery is drawn and the payoff is realized. Subjects could earn a ``high'' (\$22) or ``low'' prize (\$4) from this lottery. However, subjects do not know the probability of winning the high prize, which is denoted by $\theta$, at the beginning of $t=1$. Instead, subjects are given the following description:
+
+You will draw a ping pong ball out of a bag. The bag contains 60 ping pong balls, and each ball is either red or yellow. If you draw a red ping pong ball, then you will receive a high prize (\$22). If you draw a yellow ball, then you will receive a low prize (\$4). However, the precise composition of red ping pong balls versus yellow ones in the bag is unknown, although already determined. The only information now is that the proportion of red ping pong balls in the bag, denoted by $\theta$, can only be one of the following numbers: 10\%, 40\%, 60\%, and 90\%. So the probability for you to win the high prize is one of the following four numbers: 0.1, 0.4, 0.6, or 0.9.
+\end{original}
+\begin{translation}
+模糊性消解偏好激励与风险消解偏好激励类似。被试参与一个两期消费过程。在$t=1$期初，被试收到一笔预付款。在$t=2$期，抽签决定并实现收益。被试可能从这一抽签中获得"高"（\$22）或"低"奖金（\$4）。然而，被试在$t=1$期初不知道赢得高奖金的概率，记为$\theta$。取而代之，被试被告知如下描述：
+
+你将从袋子中抽取一个乒乓球。袋子里有60个乒乓球，每个球要么是红色要么是黄色。如果你抽到红色乒乓球，你将获得高奖金（\$22）。如果你抽到黄色球，你将获得低奖金（\$4）。然而，袋子中红色乒乓球与黄色乒乓球的确切构成是未知的，尽管已是确定的。现在唯一的信息是，袋子中红色乒乓球的比例，记为$\theta$，只能是以下数字之一：10\%、40\%、60\%和90\%。因此，你赢得高奖金的概率是以下四个数字之一：0.1、0.4、0.6或0.9。
+\end{translation}
+
+\begin{original}
+As the proportion of each color is unknown, the probability of drawing each color is unknown at the beginning of $t=1$. It is not necessarily the case that 0.1, 0.4, 0.6, and 0.9 are drawn uniformly at random. At the end of $t=1$, subjects receive a piece of news about the value of $\theta$. We view a partition of $\{0.1, 0.4, 0.6, 0.9\}$ as an information structure. Depending on the information structure, this news provides no, partial, or complete information about the winning probability. In three choice tasks, subjects choose their most preferred option from a set of information structures listed in Table 2.
+\end{original}
+\begin{translation}
+由于每种颜色的比例未知，在$t=1$期初抽取每种颜色的概率是未知的。并不一定是0.1、0.4、0.6和0.9以均匀随机方式抽取。在$t=1$期末，被试收到关于$\theta$值的一条消息。我们将$\{0.1, 0.4, 0.6, 0.9\}$的一个划分视为信息结构。根据信息结构的不同，该消息提供关于获胜概率的无信息、部分信息或完全信息。在三项选择任务中，被试从表2所列的一组信息结构中选择他们最偏好的选项。
+\end{translation}
+
+\begin{original}
+The One-Shot Early (E) option resolves all ambiguity at $t=1$. If a subject chooses One-Shot Early, she will be informed of the exact winning chance $\theta$ at the end of $t=1$. One-Shot Late (L) resolves no ambiguity until $t=2$. Only a message that the value of $\theta$ is 0.1, 0.4, 0.6, or 0.9 is given at $t=1$, conveying no new information to the subject. The three gradual ambiguity-resolution information structures are partially revealing. Gradual (Non-Skewed) (G) either reveals $\{0.1, 0.4\}$ or $\{0.6, 0.9\}$ at $t=1$ with unknown probabilities. Ambiguity exists in both periods but is resolved gradually. Gradual (Positively-Skewed) (Gp) option either reveals $\{0.9\}$ or $\{0.1, 0.4, 0.6\}$: ambiguity is fully resolved when the message is good news, but still exists in the other case. Similarly, the Gradual (Negatively-Skewed) (Gn) option either reveals $\{0.1\}$ or $\{0.4, 0.6, 0.9\}$. Hence, ambiguity is fully resolved when the message is bad news, but still exists in the other case.
+\end{original}
+\begin{translation}
+"一次性早期"（E）选项在$t=1$期消解所有模糊性。如果被试选择一次性早期，她将在$t=1$期末被告知确切的获胜概率$\theta$。"一次性晚期"（L）直到$t=2$期才消解任何模糊性。在$t=1$期仅被告知$\theta$的值为0.1、0.4、0.6或0.9，这并未向被试传递任何新信息。三个渐进模糊性消解信息结构是部分揭示的。"渐进（非偏态）"（G）在$t=1$期以未知概率揭示$\{0.1, 0.4\}$或$\{0.6, 0.9\}$。模糊性在两期均存在但被渐进消解。"渐进（正偏态）"（Gp）选项揭示$\{0.9\}$或$\{0.1, 0.4, 0.6\}$：当消息为好消息时模糊性被完全消解，但在另一种情况下仍然存在。类似地，"渐进（负偏态）"（Gn）选项揭示$\{0.1\}$或$\{0.4, 0.6, 0.9\}$。因此，当消息为坏消息时模糊性被完全消解，但在另一种情况下仍然存在。
+\end{translation}
+
+\begin{original}
+As before, there is a 30-minute delay after subjects receive a piece of news at the end of $t=1$ and before they observe the realization of the lottery in $t=2$.
+\end{original}
+\begin{translation}
+与之前一样，在$t=1$期末被试收到消息后与在$t=2$期观察到抽签实现结果之间，设有30分钟的延迟。
+\end{translation}
+
+\subsection{Choice Sets}
+\begin{translation}
+\subsection*{选择集}
+\end{translation}
+
+\begin{original}
+Each elicitation utilizes three choice tasks and a set of multiple price list questions to determine subjects' preferences. The choice tasks involve subjects picking their most preferred option from subsets of the five options in Table 1 or 2. The first question (RR1/AR1) is an unrestricted choice from the set. The second question (RR2/AR2) removes the One-Shot Early option. The third question (RR3/AR3) removes the One-Shot Late option. The last set of questions (MPLRR/MPLAR) measures the strength of preference for early vs.\ late resolution by using a multiple price list. Each row presents a mini question that asks the subject to choose from two options ``One-Shot Early + \$$\!$\!x$'' and ``One-Shot Late + \$$\!$\!y$.'' The values of $x$ and $y$ vary among different rows where one term is 0 and the other is a 0.05 increment between 0.00 and 0.50 (see Figure A.5). Table 3 summarizes these procedures.
+\end{original}
+\begin{translation}
+每种激励使用三项选择任务和一组多重价格列表问题来确定被试的偏好。选择任务要求被试从表1或表2中五个选项的子集中选出他们最偏好的选项。第一个问题（RR1/AR1）是从全集中的无限制选择。第二个问题（RR2/AR2）移除一次性早期选项。第三个问题（RR3/AR3）移除一次性晚期选项。最后一组问题（MPLRR/MPLAR）通过多重价格列表来测量对早期vs.\!晚期消解的偏好强度。每一行呈现一个微型问题，要求被试在"一次性早期 + \$$\!$\!x$"和"一次性晚期 + \$$\!$\!y$"两个选项中选择。$x$和$y$的值在不同行之间变化，其中一项为0，另一项以0.05为增量在0.00至0.50之间变动（见图A.5）。表3总结了这些程序。
+\end{translation}
+
+\begin{original}
+For each elicitation task, subjects receive news or messages based on their choices of information structures after completing all four sections. They then experience the Raven's Progressive Matrices test for the next 30 minutes, after which the outcome is revealed. Figure 2 illustrates an example of the timeline of the entire session. The ordering of the questions in the two elicitation tasks was partially randomized in four different ways for robustness. Our data do not appear to exhibit any ordering effects from these randomizations (see Online Appendix F for more detail).
+\end{original}
+\begin{translation}
+对于每种激励任务，被试在完成所有四个部分后，根据其信息结构选择收到新闻或消息。然后他们进行30分钟的Raven递进矩阵测试，之后揭示结果。图2展示了整个实验时间线的一个示例。为稳健性起见，两个激励任务中问题的顺序以四种不同方式进行了部分随机化。我们的数据似乎未表现出这些随机化带来的任何排序效应（详见在线附录F）。
+\end{translation}
+
+\subsection{Ambiguity Attitude Elicitation}
+\begin{translation}
+\subsection*{模糊态度激励}
+\end{translation}
+
+\begin{original}
+To elicit their ambiguity attitudes, we also have subjects answer two Ellsberg (1961) questions. Each subject has a small chance to receive an additional \$10, depending on their answers to the questions. Subjects are given the following statement.
+
+Consider a bag containing 90 ping pong balls. 30 balls are blue, and the remaining 60 balls are either red or yellow in unknown proportions. The balls are well mixed so that each individual ball is as likely to be drawn as any other. You will bet on the color that will be drawn from the bag.
+
+Subjects are asked to choose between two lotteries that pay \$10 if a blue ball is drawn and if a red ball is drawn, respectively. They are then asked to choose between two lotteries that pay \$10 if a blue or yellow ball is drawn and if a red or yellow ball is drawn, respectively. Choosing blue and then red or yellow (red and then blue or yellow) is consistent with ambiguity aversion (seeking). Otherwise, a subject's choices are consistent with ambiguity neutrality.
+\end{original}
+\begin{translation}
+为激励其模糊态度，我们还让被试回答两个Ellsberg（1961）问题。每位被试有一小概率根据其问题答案获得额外的\$10。被试被告知如下陈述：
+
+考虑一个装有90个乒乓球的袋子。30个球是蓝色的，其余60个球要么是红色要么是黄色，比例未知。球被充分混合，因此每个球被抽到的概率相同。你将对从袋中抽出的球的颜色下注。
+
+被试被要求在两个彩票之间选择：如果抽出蓝色球则支付\$10，以及如果抽出红色球则支付\$10。然后他们被要求在选择蓝色或黄色球支付\$10和选择红色或黄色球支付\$10之间选择。选择蓝色然后选择红色或黄色（红色然后选择蓝色或黄色）符合模糊厌恶（模糊寻求）。否则，被试的选择符合模糊中性。
+\end{translation}
+
+\subsection{Experimental Procedures}
+\begin{translation}
+\subsection*{实验程序}
+\end{translation}
+
+\begin{original}
+Subjects were 135 undergraduate students at Texas A\&M University, recruited using the econdollars.tamu.edu website, a server based on ORSEE (Greiner, 2015). Subjects sat at computer terminals running zTree software (Fischbacher, 2007). Sessions took place at the Experimental Research Laboratory at Texas A\&M University from February to May 2021. Subjects were fully informed about the procedure and the total time of the session at the beginning of the experiment. After the experiment concluded, subjects were paid based on one randomly selected decision out of the 48 $((1+1+1+21)\times 2)$ (see Table 3). In addition, subjects have another chance to receive an additional \$10 from the bonus ambiguity attitude elicitation task. The average payment for each participant was \$23.33 including a \$10 participation payment.
+\end{original}
+\begin{translation}
+被试为德克萨斯A\&M大学的135名本科生，通过基于ORSEE（Greiner，2015）的服务器econdollars.tamu.edu网站招募。被试坐在运行zTree软件（Fischbacher，2007）的计算机终端前。实验于2021年2月至5月在德克萨斯A\&M大学的实验研究实验室进行。被试在实验开始前被充分告知了程序和实验总时长。实验结束后，被试基于48个决策中随机选择的一个获得报酬 $((1+1+1+21)\times 2)$（见表3）。此外，被试还有机会从附加的模糊态度激励任务中获得额外的\$10。每位参与者的平均报酬为\$23.33（含\$10参与费）。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 3: RESULTS
+% ============================================================
+\section{Results}
+\begin{translation}
+\section*{结果}
+\end{translation}
+
+\subsection{Revealed Preferences for Risk and Ambiguity Resolution}
+\begin{translation}
+\subsection*{风险与模糊性消解的显示偏好}
+\end{translation}
+
+\begin{original}
+Table 4 shows the summary of the choices of risk resolution on the three tasks RR1, RR2, and RR3. The modal response of subjects over the unrestricted choice set (RR1) is the preference for early resolution of risk (64 of 135, 47.4\%). A similar but smaller portion of subjects prefer gradual resolution (52 of 135, 38.5\%), while the smallest portion prefer late resolution (19 of 135, 14.1\%). Of the 64 subjects who select early in RR1 without restriction, the overwhelming majority persist in selecting early resolution options when early is removed (54 of 64, 84.4\%) and when late is removed (48 of 64, 75.0\%). This pattern is consistent with a revealed strict preference ordering placing early resolution as the most-preferred option, and indicates comprehension of the tasks. Similarly, of the 19 subjects who select late in RR1 without restriction, most select late when early is removed (14 of 19) and when other options are present (12 of 19). Of the 52 subjects choosing gradual resolution in the unrestricted choice, when early is removed the modal subject prefers the remaining late option (35 of 52), while when late is removed a plurality still prefer the remaining gradual options (19 of 52).
+\end{original}
+\begin{translation}
+表4展示了在三项任务RR1、RR2和RR3上风险消解选择的汇总结果。被试在无限制选择集（RR1）上的典型反应是偏好风险早期消解（135人中的64人，47.4\%）。比例相近但略少的被试偏好渐进消解（135人中的52人，38.5\%），而偏好晚期消解的比例最小（135人中的19人，14.1\%）。在RR1中无限制选择早期的64名被试中，绝大多数在移除早期选项时持续选择早期消解选项（64人中的54人，84.4\%），在移除晚期选项时亦然（64人中的48人，75.0\%）。这一模式符合将早期消解置于最偏好选项的显示严格偏好排序，并表明被试理解了任务。类似地，在RR1中无限制选择晚期的19名被试中，大多数在移除早期选项时选择晚期（14/19），在其他选项存在时也是如此（12/19）。在无限制选择中选择渐进消解的52名被试中，当移除早期选项时，典型被试偏好剩余的晚期选项（52人中的35人），而当移除晚期选项时，多数仍偏好剩余的渐进选项（52人中的19人）。
+\end{translation}
+
+\begin{original}
+Table 5 shows the summary of ambiguity resolution choices. The modal response over the unrestricted choice set (AR1) is again the preference for early resolution of ambiguity (86 of 135, 63.7\%). A much smaller portion of subjects prefer late (23 of 135, 17\%) or gradual (26 of 135, 19.3\%) resolution. Similar consistency patterns emerge: of the 86 subjects who select early in AR1, the majority again select early when late is removed (64 of 86) and when early is removed (61 of 86). The 23 subjects selecting late in AR1 persist in selecting late when early is removed (15 of 23) and when late is removed (15 of 23). The subjects selecting gradual resolution in AR1 generally select gradual resolution in the remaining two tasks.
+\end{original}
+\begin{translation}
+表5展示了模糊性消解选择的汇总结果。被试在无限制选择集（AR1）上的典型反应同样是偏好模糊性早期消解（135人中的86人，63.7\%）。偏好晚期消解（135人中的23人，17\%）或渐进消解（135人中的26人，19.3\%）的被试比例要小得多。类似的一致性模式出现：在AR1中选择早期的86名被试中，大多数在移除晚期选项时再次选择早期（86人中的64人），在移除早期选项时亦然（86人中的61人）。在AR1中选择晚期的23名被试在移除早期选项时持续选择晚期（23人中的15人），在移除晚期选项时也是如此（23人中的15人）。在AR1中选择渐进消解的被试通常在其余两项任务中也选择渐进消解。
+\end{translation}
+
+\begin{original}
+Table 6 reports the correlation between risk and ambiguity resolution preferences from the unrestricted choice sets (RR1 and AR1). Overall, these preferences are highly correlated (Chi-square $p < 0.001$). The majority (57.8\%) of subjects who prefer early ambiguity resolution also prefer early risk resolution. Among ambiguity-seeking subjects, the corresponding correlation is weaker. Table 7 provides the results of a logistic regression of ambiguity resolution choice on risk resolution choice and ambiguity attitude. An early risk-resolution preference increases the predicted probability of an early ambiguity-resolution preference by 43.5 percentage points ($p < 0.01$), while ambiguity-averse and ambiguity-neutral preferences increase this probability by 29.5 and 21.8 percentage points, respectively, relative to ambiguity-seeking preferences.
+\end{original}
+\begin{translation}
+表6报告了来自无限制选择集（RR1和AR1）的风险消解与模糊性消解偏好之间的相关性。总体而言，这些偏好高度相关（卡方检验$p < 0.001$）。偏好早期模糊性消解的被试中，大多数（57.8\%）也偏好早期风险消解。在模糊寻求的被试中，相应的相关性更弱。表7提供了将模糊性消解选择对风险消解选择和模糊态度进行逻辑回归的结果。早期风险消解偏好使早期模糊性消解偏好的预测概率增加43.5个百分点（$p < 0.01$），而相对于模糊寻求偏好，模糊厌恶和模糊中性偏好分别使这一概率增加29.5和21.8个百分点。
+\end{translation}
+
+\subsection{Willingness to Pay for Early over Late Resolution}
+\begin{translation}
+\subsection*{对早期相对于晚期消解的支付意愿}
+\end{translation}
+
+\begin{original}
+Table 8 summarizes subjects' willingness to pay (WTP) for early over late risk resolution, as elicited by the multiple price list (MPLRR). The modal behavior is to select the late option on the first and all subsequent rows (35 of 135, 25.9\%), indicating a zero or negative WTP for early risk resolution. Of the 64 subjects that selected early on RR1, 22 select early on 12 or more rows of the MPLRR, indicating a WTP of \$0.05 or more; 17 select early on all 21 rows. Similarly modest WTP values are found for ambiguity resolution. Generally, the WTP estimates from interval regressions (see Online Appendix G) are small relative to the \$10 stakes of the lottery.
+\end{original}
+\begin{translation}
+表8总结了由多重价格列表（MPLRR）激励的被试对早期相对于晚期风险消解的支付意愿（WTP）。典型行为是在第一行及所有后续行中选择晚期选项（135人中的35人，25.9\%），表明对早期风险消解的支付意愿为零或负值。在RR1中选择早期的64名被试中，22名在MPLRR的12行或以上选择早期，表明支付意愿为\$0.05或以上；17名在所有21行均选择早期。模糊性消解的支付意愿估计值同样较小。总体而言，相对于彩票的\$10赌注，来自区间回归的支付意愿估计值（见在线附录G）较小。
+\end{translation}
+
+\begin{original}
+The estimated WTP for early over late risk resolution is \$0.061 for subjects who selected early on RR1. The estimated WTP for early over late ambiguity resolution is \$0.107 for subjects who selected early on AR1. These WTP values are small---roughly 1--2\% of the expected value of the lottery---but statistically distinguishable from zero. The WTP values for subjects selecting gradual resolution are not significantly different from zero for either risk or ambiguity.
+\end{original}
+\begin{translation}
+对于在RR1中选择早期的被试，对早期相对于晚期风险消解的估计WTP为\$0.061。对于在AR1中选择早期的被试，对早期相对于晚期模糊性消解的估计WTP为\$0.107。这些WTP值很小——大约为彩票期望值的1--2\%——但在统计上可区别于零。对于选择渐进消解的被试，无论是风险还是模糊性领域，WTP值均不显著异于零。
+\end{translation}
+
+\subsection{Ambiguity Attitudes}
+\begin{translation}
+\subsection*{模糊态度}
+\end{translation}
+
+\begin{original}
+Table 9 reports the ambiguity attitudes of subjects as determined by the Ellsberg two-color problem. Consistent with past literature, a plurality of subjects are ambiguity averse (63 of 135, 46.7\%). Substantial minorities are ambiguity neutral (49 of 135, 36.3\%) and ambiguity seeking (23 of 135, 17.0\%). These proportions are comparable to those found in the existing literature.
+\end{original}
+\begin{translation}
+表9报告了由Ellsberg双色问题确定的被试模糊态度。与以往文献一致，多数被试为模糊厌恶（135人中的63人，46.7\%）。相当数量的少数派为模糊中性（135人中的49人，36.3\%）和模糊寻求（135人中的23人，17.0\%）。这些比例与现有文献中的发现相当。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 4: THEORETICAL FRAMEWORK AND MODEL COMPARISON
+% ============================================================
+\section{Theoretical Framework and Model Comparison}
+\begin{translation}
+\section*{理论框架与模型比较}
+\end{translation}
+
+\subsection{General Recursive Utility Framework}
+\begin{translation}
+\subsection*{一般递归效用框架}
+\end{translation}
+
+\begin{original}
+We consider ten representative recursive utility models under uncertainty: the DEU, MEU, KMM, DMP, DVP, EZ, H, HM, RMP, and RVP models. They differ from each other in two dimensions. First, they describe intertemporal substitution differently. In the two-period framework, the EZ, H, HM, RMP, and RVP models adopt a non-linear time aggregator to add up certainty equivalents in two periods for the certainty equivalent of lifetime consumption. The intertemporal substitution can be independent of risk attitudes. However, the DEU, MEU, KMM, DMP, and DVP models sum up discounted utility flows across different periods to derive the lifetime utility. Such an approach implies a stringent relationship between the intertemporal substitution and risk attitudes. Second, these models are based on different atemporal decision-making criteria under uncertainty. The DEU and EZ models follow subjective expected utility and only support ambiguity neutrality, but all other models can accommodate ambiguity aversion (or additionally, ambiguity seeking). Table 10 provides a summary.
+\end{original}
+\begin{translation}
+我们考察十种在不确定性条件下具有代表性的递归效用模型：DEU、MEU、KMM、DMP、DVP、EZ、H、HM、RMP和RVP模型。它们在两个维度上彼此不同。第一，它们对跨期替代的描述不同。在两期框架中，EZ、H、HM、RMP和RVP模型采用非线性时间加总函数，将两期的确定性等价加总以得到终身消费的确定性等价。跨期替代可以独立于风险态度。然而，DEU、MEU、KMM、DMP和DVP模型将不同期的贴现效用流求和以推导终身效用。这种方法意味着跨期替代与风险态度之间存在严格的联系。第二，这些模型基于不确定性条件下不同的非时态决策准则。DEU和EZ模型遵循主观期望效用，仅支持模糊中性，但所有其他模型均可以容纳模糊厌恶（或额外容纳模糊寻求）。表10提供了总结。
+\end{translation}
+
+\subsection{Models}
+\begin{translation}
+\subsection*{模型}
+\end{translation}
+
+\begin{original}
+We review ten representative recursive utility models under uncertainty: the DEU, MEU, KMM, DMP, DVP, EZ, H, HM, RMP, and RVP models. They differ from each other in two dimensions. First, they describe intertemporal substitution differently. In the two-period framework, the EZ, H, HM, RMP, and RVP models adopt a non-linear time aggregator to add up certainty equivalents in two periods for the certainty equivalent of lifetime consumption. The intertemporal substitution can be independent of risk attitudes. However, the DEU, MEU, KMM, DMP, and DVP models sum up discounted utility flows across different periods to derive the lifetime utility. Such an approach implies a stringent relationship between the intertemporal substitution and risk attitudes. Second, these models are based on different atemporal decision-making criteria under uncertainty. The DEU and EZ models follow subjective expected utility and only support ambiguity neutrality, but all other models can accommodate ambiguity aversion (or additionally, ambiguity seeking).
+\end{original}
+\begin{translation}
+我们考察十种在不确定性条件下具有代表性的递归效用模型：DEU、MEU、KMM、DMP、DVP、EZ、H、HM、RMP和RVP模型。它们在两个维度上彼此不同。第一，它们对跨期替代的描述不同。在两期框架中，EZ、H、HM、RMP和RVP模型采用非线性时间加总函数，将两期的确定性等价加总以得到终身消费的确定性等价。跨期替代可以独立于风险态度。然而，DEU、MEU、KMM、DMP和DVP模型将不同期的贴现效用流求和以推导终身效用。这种方法意味着跨期替代与风险态度之间存在严格的联系。第二，这些模型基于不确定性条件下不同的非时态决策准则。DEU和EZ模型遵循主观期望效用，仅支持模糊中性，但所有其他模型均可以容纳模糊厌恶（或额外容纳模糊寻求）。
+\end{translation}
+
+\subsection{Predictions on Risk and Ambiguity Resolution}
+\begin{translation}
+\subsection*{关于风险与模糊性消解的预测}
+\end{translation}
+
+\begin{original}
+\textbf{Risk Resolution.} In the DEU, MEU, KMM, DMP, and DVP models, a DM is indifferent to the timing of risk resolution. In the EZ, H, HM, RMP, and RVP models, if $\alpha < \rho$ (resp.\ $\alpha > \rho$), a DM prefers monotone and early (resp.\ late) resolution of risk; if $\alpha = \rho$, a DM is indifferent to the timing of risk resolution. Here $\alpha$ is the CRRA risk aversion parameter and $\rho$ is the inverse of the EIS (elasticity of intertemporal substitution).
+\end{original}
+\begin{translation}
+\textbf{风险消解。} 在DEU、MEU、KMM、DMP和DVP模型中，决策者对风险消解时序无差异。在EZ、H、HM、RMP和RVP模型中，若$\alpha < \rho$（或$\alpha > \rho$），决策者偏好单调且早期（或晚期）风险消解；若$\alpha = \rho$，决策者对风险消解时序无差异。其中$\alpha$是CRRA风险厌恶参数，$\rho$是跨期替代弹性（EIS）的倒数。
+\end{translation}
+
+\begin{original}
+\textbf{Ambiguity Resolution.} The predictions for ambiguity resolution vary across models:
+\begin{itemize}
+  \item In the MEU and H (``w''-version) models, a DM is indifferent to the timing of ambiguity resolution.
+  \item In the DEU model, a DM is indifferent to the timing of ambiguity resolution.
+  \item In the KMM model, an ambiguity-averse (resp.\ -seeking) DM prefers early (resp.\ late) resolution of ambiguity monotonically; an ambiguity-neutral DM is indifferent.
+  \item In the EZ model, a DM's ambiguity-resolution preference is inherited from her risk-resolution preference.
+  \item In the HM model, if $\alpha < \rho$ (resp.\ $\alpha > \rho$), a DM prefers monotone and early (resp.\ late) resolution of ambiguity. Specifically, if an ambiguity-averse DM weakly prefers early (resp.\ late) resolution of risk, then she prefers early (resp.\ late) resolution of ambiguity; the ambiguity-resolution preference of an ambiguity-neutral DM is inherited from her risk-resolution preference.
+  \item In the DMP model, an ambiguity-averse DM prefers early resolution of ambiguity monotonically.
+  \item In the RMP model, an ambiguity-averse DM can display various ambiguity-resolution preferences.
+  \item In the DVP and RVP models, an ambiguity-averse DM can display various ambiguity-resolution preferences.
+\end{itemize}
+\end{original}
+\begin{translation}
+\textbf{模糊性消解。} 关于模糊性消解时序的预测因模型而异：
+\begin{itemize}
+  \item 在MEU和H（"w"版本）模型中，决策者对模糊性消解时序无差异。
+  \item 在DEU模型中，决策者对模糊性消解时序无差异。
+  \item 在KMM模型中，模糊厌恶（或模糊寻求）的决策者单调地偏好早期（或晚期）模糊性消解；模糊中性的决策者无差异。
+  \item 在EZ模型中，决策者的模糊性消解偏好继承自其风险消解偏好。
+  \item 在HM模型中，若$\alpha < \rho$（或$\alpha > \rho$），决策者偏好单调且早期（或晚期）模糊性消解。具体而言，若模糊厌恶的决策者弱偏好早期（或晚期）风险消解，则她也偏好早期（或晚期）模糊性消解；模糊中性决策者的模糊性消解偏好继承自其风险消解偏好。
+  \item 在DMP模型中，模糊厌恶的决策者单调地偏好早期模糊性消解。
+  \item 在RMP模型中，模糊厌恶的决策者可以表现出多种模糊性消解偏好。
+  \item 在DVP和RVP模型中，模糊厌恶的决策者可以表现出多种模糊性消解偏好。
+\end{itemize}
+\end{translation}
+
+\subsection{Model Fit and Selten Scores}
+\begin{translation}
+\subsection*{模型拟合与Selten得分}
+\end{translation}
+
+\begin{original}
+Which model does the observed data best fit? To discipline the predictive power of the models, we employ a Selten score (Selten, 1991). That is, we calculate the difference between the percentage of subject observations explained by a model and the percentage of the action space covered by a model under the CRRA-CES restriction. Table 12 provides results for both our strong and weak interpretations.
+\end{original}
+\begin{translation}
+哪种模型最能拟合观察到的数据？为约束模型的预测力，我们采用Selten得分（Selten，1991）。即计算模型所解释的被试观察值百分比与模型在CRRA-CES约束下所覆盖的行动空间百分比之间的差值。表12提供了强解释和弱解释下的结果。
+\end{translation}
+
+\begin{original}
+\textbf{Strong Interpretation.} In Panel A of Table 12, only the EZ, H, HM, RMP, and RVP models are included; these models are the only ones that can accommodate strict preferences over both risk and ambiguity resolution. Roughly ten percent of subjects can be classified as falling in the two cells predicted by the EZ model, yielding a Selten score of 0.089. The H, HM, RMP, and RVP models do better with Selten scores of 0.262--0.308. The HM model achieves the highest score at 0.308 and significantly outperforms all other models over 100,000 bootstraps ($p < 0.100$, all 4 comparisons). Interestingly, the EZ model never outscores any of the other four models in any bootstrap ($p = 0.000$ in each comparison).
+\end{original}
+\begin{translation}
+\textbf{强解释。} 在表12的A组中，仅包含EZ、H、HM、RMP和RVP模型；这些是唯一能够同时容纳风险消解和模糊性消解严格偏好的模型。约百分之十的被试可以归类为落入EZ模型预测的两个单元，得到Selten得分0.089。H、HM、RMP和RVP模型表现更好，Selten得分为0.262--0.308。HM模型以0.308取得最高得分，并在100,000个自助抽样中显著优于所有其他模型（$p < 0.100$，全部4个比较）。有趣的是，EZ模型在任何自助抽样中从未超过其他四个模型中的任何一个（每次比较$p = 0.000$）。
+\end{translation}
+
+\begin{original}
+\textbf{Weak Interpretation.} Panel B provides results for the weak interpretation. It classifies subjects differently, placing many into profiles with indifference over risk and ambiguity resolution. Nonetheless, the modal profile includes ambiguity aversion which cannot be characterized by the DEU model. As a result, the DEU model achieves the lowest Selten score of the ten models ($p < 0.1$, in each of the 9 comparisons). The only four models that can classify the modal profile---the MEU model and its generalizations (DVP, H, and RVP)---are the better performers, all achieving Selten scores over 0.5. The H and RVP models are the top two performers overall, significantly outperforming every other model over the 100,000 bootstraps ($p < 0.05$ for each of the other 8 comparisons).
+\end{original}
+\begin{translation}
+\textbf{弱解释。} 表12的B组提供了弱解释下的结果。它将被试进行了不同的分类，将许多被试归入对风险消解和模糊性消解时序均无差异的画像中。尽管如此，典型画像包含模糊厌恶，这是DEU模型无法刻画的。结果，DEU模型在十个模型中取得最低的Selten得分（$p < 0.1$，全部9个比较中）。唯一能够分类典型画像的四个模型——MEU模型及其推广（DVP、H和RVP）——是表现更好的模型，均取得超过0.5的Selten得分。H和RVP模型是整体表现最佳的两个模型，在100,000个自助抽样中显著优于所有其他模型（对其他8个模型中每个均为$p < 0.05$）。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% SECTION 5: CONCLUSION
+% ============================================================
+\section{Conclusion}
+\begin{translation}
+\section*{结论}
+\end{translation}
+
+\begin{original}
+Models of generalized recursive utility provide alternatives to the standard DEU model. They are quite useful in explaining various financial and macroeconomic anomalies that cannot be explained by the DEU model without highly dubious parameter choices. An implication of these generalized recursive utility models is a preference for the timing of uncertainty resolution. Since these empirical estimations do not directly elicit preferences for the resolution of uncertainty, a natural question is whether it is reasonable to believe individuals have such preferences. A large number of experimental studies have found evidence of these preferences. However, all have looked at preferences over risk resolution, neglecting whether individuals have preferences over ambiguity resolution. Since different models make different assumptions about the two preferences, it is not clear to what extent models of generalized recursive utility are supported solely by findings based on risk-resolution preferences.
+\end{original}
+\begin{translation}
+广义递归效用模型为标准DEU模型提供了替代方案。它们在解释DEU模型在不采用高度可疑参数选择时无法解释的各种金融和宏观经济异常方面极为有用。这些广义递归效用模型的一个推论是对不确定性消解时序的偏好。由于这些实证估计并不直接激励不确定性消解的偏好，一个自然的问题是：认为个体具有这种偏好是否合理。大量实验研究已发现了这些偏好的证据。然而，所有研究都只关注了风险消解偏好，而忽视了个体是否对模糊性消解有偏好。由于不同模型对这两种偏好做出不同的假设，基于风险消解偏好的发现能在多大程度上支持广义递归效用模型尚不清楚。
+\end{translation}
+
+\begin{original}
+Our study provides the first experimental elicitation of preferences over ambiguity resolution. We elicit these preferences along with risk-resolution preferences. We find that these two preferences are positively, but not perfectly, correlated, and the attitude toward ambiguity affects this relationship. If an individual prefers early resolution of risk, she is 43.5 probability points more likely to prefer early resolution of ambiguity. If she is ambiguity seeking, she is 21.8--29.5 probability points less likely to prefer early resolution of ambiguity.
+\end{original}
+\begin{translation}
+本研究首次对模糊性消解偏好进行了实验激励。我们同时激励了这些偏好和风险消解偏好。我们发现这两种偏好呈正相关但非完全相关，且对模糊性的态度影响这一关系。如果个体偏好风险的早期消解，她偏好模糊性早期消解的概率高43.5个百分点。如果她是模糊寻求的，她偏好模糊性早期消解的概率低21.8--29.5个百分点。
+\end{translation}
+
+\begin{original}
+We review ten representative models of recursive utility widely used in the macroeconomics and finance literature. Among them, the H, HM, RMP, and RVP models can simultaneously accommodate strict risk-resolution preference, strict ambiguity-resolution preference, as well as non-neutral ambiguity attitude. Under the HM model, having non-neutral ambiguity attitudes leads to distinct implications on the connection between risk- and ambiguity-resolution preferences. Our observed correlation between risk- and ambiguity-resolution preferences is consistent with these implications.
+\end{original}
+\begin{translation}
+我们回顾了宏观经济学和金融学文献中广泛使用的十种代表性递归效用模型。其中，H、HM、RMP和RVP模型可以同时容纳严格的风险消解偏好、严格的模糊性消解偏好以及非中性的模糊态度。在HM模型下，具有非中性模糊态度会对风险消解和模糊性消解偏好之间的联系产生不同的推论。我们观察到的风险消解与模糊性消解偏好之间的相关性符合这些推论。
+\end{translation}
+
+\begin{original}
+To enhance the precision of our analysis, we classify all subjects across the preference profile space and penalize models for being able to rationalize a greater percentage of this space, taking into account that certain preference profiles are associated with a larger number of possible actions. Under this approach, the HM model outperforms all the other models in predictive power. It benefits from accommodating some, but not all, of divergent preference profiles for risk and ambiguity resolution among the ambiguity averse as well as early monotone preferences for both risk and ambiguity resolution among the ambiguity seeking. Crucially, the baseline EZ model performs worst in this exercise; it is significantly outperformed by all other models.
+\end{original}
+\begin{translation}
+为提高分析的精确度，我们将所有被试在偏好画像空间中进行分类，并对模型能够理性化更大比例此空间的能力施加惩罚，同时考虑到某些偏好画像与更多可能的行动相关联。在这一方法下，HM模型在预测力上优于所有其他模型。它受益于容纳了模糊厌恶者中部分（而非全部）有分歧的风险与模糊性消解偏好画像，以及模糊寻求者中对风险与模糊性消解均偏早期单调的偏好画像。至关重要的是，基准EZ模型在此分析中表现最差；它被所有其他模型显著超越。
+\end{translation}
+
+\begin{original}
+The preceding analysis requires a strong interpretation of our results. While we observe subjects consistently selecting a preferred option for risk and ambiguity resolution, they cannot indicate indifference. The same subjects often do not indicate a willingness to pay for their preferred form of resolution of more than 5 cents. A weaker interpretation of such behavior is that these subjects are indifferent to the timing of uncertainty resolution.
+\end{original}
+\begin{translation}
+上述分析要求对我们结果的强解释。虽然我们观察到被试持续选择风险消解和模糊性消解的偏好选项，但他们无法表达无差异。同样的被试通常不表现出超过5美分支付意愿以支持其偏好消解形式。对此类行为的一个更弱解释是，这些被试对不确定性消解时序无差异。
+\end{translation}
+
+\begin{original}
+We also examine this weak interpretation of results and a broader class of models that could potentially rationalize our data. Since half of our subjects exhibit ambiguity aversion, the standard DEU model does not characterize our data well. The MEU, DVP, H, and RVP models perform better as they are the only ones that rationalize our modal subject profile, which includes ambiguity aversion with indifference to the timing of both forms of resolution. Among these four, the H and RVP models perform best. Like the other two models, the H and RVP models can rationalize profiles with indifference to the timing of both forms of resolution for both ambiguity-neutral and ambiguity-averse agents. The H and RVP models can also rationalize profiles with an early preference for both forms of resolution for both ambiguity-neutral and ambiguity-averse agents. Finally, the two allow profiles where a subject can be indifferent to the timing of one form of uncertainty resolution and prefer early resolution for the other, among ambiguity-averse agents.
+\end{original}
+\begin{translation}
+我们也考察了这种对结果的弱解释以及可以潜在理性化我们数据的更广泛模型类别。由于我们一半被试表现出模糊厌恶，标准DEU模型无法很好地刻画我们的数据。MEU、DVP、H和RVP模型表现更好，因为它们是唯一能够理性化我们典型被试画像的模型，该画像包含模糊厌恶以及对两种消解时序均无差异。在这四个模型中，H和RVP模型表现最佳。与其他两个模型一样，H和RVP模型可以理性化模糊中性和模糊厌恶主体对两种消解时序均无差异的画像。H和RVP模型也可以理性化模糊中性和模糊厌恶主体对两种消解时序均偏早期偏好的画像。最后，这两个模型允许模糊厌恶主体对一种不确定性消解时序无差异而对另一种偏好早期消解的画像。
+\end{translation}
+
+\begin{original}
+In either interpretation, strong or weak, we note a few general trends. First, the best-performing models allow for ambiguity aversion; both the EZ and DEU models are consistently outperformed. Second, models that account for non-indifference to the timing of both types of uncertainty resolution, risk and ambiguity, also perform well. Third, while these resolution preferences are correlated, it is not always the case that they are the same. The best-performing model under both interpretations accommodates a decoupling of these preferences under ambiguity aversion.
+\end{original}
+\begin{translation}
+无论采用强解释还是弱解释，我们注意到若干一般趋势。第一，表现最佳的模型均允许模糊厌恶；EZ和DEU模型始终被超越。第二，同时考虑对两种不确定性消解（风险和模糊性）时序非无差异的模型也表现良好。第三，虽然这些消解偏好相关，但并非总是相同。两种解释下表现最佳的模型都容纳了模糊厌恶下这些偏好的分离。
+\end{translation}
+
+\begin{original}
+However, many of these empirically observed profiles could not be rationalized by any model, at least under the CRRA-CES restriction imposed in the paper. This finding is especially apparent under the strong interpretation of our results, where the top-performing models can only rationalize observed behavior for about a third of subjects. Of the remaining subjects, most exhibit a preference for gradual resolution of risk, ambiguity, or both. Thus, the data indicate that the greatest explanatory gains would come from models that could explain preferences for gradual resolution. Specifically, under our strong interpretation of results, the predictive power of the best-performing model more than doubles if it could accommodate a preference for gradual resolution for risk or ambiguity. We would emphasize that while there have been theoretical papers studying a preference for one-shot resolution, limited work focuses on preferences for gradual resolution. More theoretical work is needed to accommodate these exhibited preferences flexibly.
+\end{original}
+\begin{translation}
+然而，至少在本论文所施加的CRRA-CES限制下，许多实证观察到的画像无法被任何模型理性化。这一发现在强解释下尤为明显，在强解释下表现最好的模型仅能理性化约三分之一被试的观察行为。在其余被试中，大多数表现出对风险、模糊性或两者均偏好渐进消解。因此，数据表明最大的解释力增益将来自于能够解释渐进消解偏好的模型。具体而言，在我们的强解释下，如果表现最佳的模型能够容纳对风险或模糊性的渐进消解偏好，其预测力将翻倍以上。我们强调，虽然有理论论文研究一次性消解偏好，但关注渐进消解偏好的工作有限。需要更多的理论工作来灵活地容纳这些已表现出的偏好。
+\end{translation}
+
+\begin{original}
+Finally, we again note that our experiments only observed a single consumption process and a small set of information structures over a single state space. Several of the models we consider rationalize the preference profiles in Table 11 for the specific consumption process and information structures in the experiment, but require different preferences to be displayed elsewhere. That is, they could not accommodate a given preference profile over uncertainty resolution globally. Future studies are needed to empirically determine under what parameter values these preferences would reverse, if they do at all. We encourage work in this area.
+\end{original}
+\begin{translation}
+最后，我们再次指出，我们的实验仅观察了单一消费过程和单一状态空间上的一小组信息结构。我们考虑的若干模型为实验中的特定消费过程和信息结构理性化了表11中的偏好画像，但要求在别处显示不同的偏好。也就是说，它们无法全局性地容纳给定的不确定性消解偏好画像。未来研究需要从实证上确定在什么参数值下这些偏好会发生逆转（如果确实会的话）。我们鼓励这一领域的研究。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% REFERENCES
+% ============================================================
+\section*{References}
+\begin{translation}
+\section*{参考文献}
+\end{translation}
+
+\begin{original}
+\small
+Abdellaoui, M., Klibanoff, P., and Placido, L. (2015). Experiments on compound risk in relation to simple risk and to ambiguity. \textit{Management Science}, 61(6):1306--1322.
+
+Ahlbrecht, M. and Weber, M. (1996). The resolution of uncertainty: An experimental study. \textit{Journal of Institutional and Theoretical Economics (JITE)/Zeitschrift f\"{u}r die gesamte Staatswissenschaft}, pages 593--607.
+
+Ahlbrecht, M. and Weber, M. (1997). An empirical study on intertemporal decision making under risk. \textit{Management Science}, 43(6):813--826.
+
+Azrieli, Y., Chambers, C. P., and Healy, P. J. (2018). Incentives in experiments: A theoretical analysis. \textit{Journal of Political Economy}, 126(4):1472--1503.
+
+Baillon, A., Halevy, Y., and Li, C. (2022a). Experimental elicitation of ambiguity attitude using the random incentive system. \textit{Experimental Economics}, 25(3):1002--1023.
+
+Baillon, A., Halevy, Y., and Li, C. (2022b). Randomize at your own risk: on the observability of ambiguity aversion. \textit{Econometrica}, 90(3):1085--1107.
+
+Bansal, R. and Yaron, A. (2004). Risks for the long run: A potential resolution of asset pricing puzzles. \textit{The Journal of Finance}, 59(4):1481--1509.
+
+Beauchamp, J. P., Benjamin, D. J., Laibson, D. I., and Chabris, C. F. (2020). Measuring and controlling for the compromise effect when estimating risk preference parameters. \textit{Experimental Economics}, 23:1069--1099.
+
+Brown, A. and Kim, H. (2013). Do individuals have preferences used in macro-finance models? An experimental investigation. \textit{Management Science}, 60(4):939--958.
+
+Budescu, D. V. and Fischer, I. (2001). The same but different: an empirical investigation of the reducibility principle. \textit{Journal of Behavioral Decision Making}, 14(3):187--206.
+
+Cabrales, A., Gossner, O., and Serrano, R. (2013). Entropy and the value of information for investors. \textit{American Economic Review}, 103(1):360--377.
+
+Cerreia-Vioglio, S., Dillenberger, D., and Ortoleva, P. (2015). Cautious expected utility and the certainty effect. \textit{Econometrica}, 83(2):693--728.
+
+Chew, S. H. and Epstein, L. G. (1989). The structure of preferences and attitudes towards the timing of the resolution of uncertainty. \textit{International Economic Review}, pages 103--117.
+
+Chew, S. H. and Ho, J. L. (1994). Hope: An empirical study of attitude toward the timing of uncertainty resolution. \textit{Journal of Risk and Uncertainty}, 8(3):267--288.
+
+Chew, S. H., Miao, B., and Zhong, S. (2017). Partial ambiguity. \textit{Econometrica}, 85(4):1239--1260.
+
+Collard, F., Mukerji, S., Sheppard, K., and Tallon, J.-M. (2018). Ambiguity and the historical equity premium. \textit{Quantitative Economics}, 9(2):945--993.
+
+Dillenberger, D. (2010). Preferences for one-shot resolution of uncertainty and Allais-type behavior. \textit{Econometrica}, 78(6):1973--2004.
+
+Drechsler, I. (2013). Uncertainty, time-varying fear, and asset prices. \textit{The Journal of Finance}, 68(5):1843--1889.
+
+Eliaz, K. and Schotter, A. (2010). Paying for confidence: An experimental study of the demand for non-instrumental information. \textit{Games and Economic Behavior}, 70(2):304--324.
+
+Ellsberg, D. (1961). Risk, ambiguity, and the Savage axioms. \textit{The Quarterly Journal of Economics}, 75(4):643--669.
+
+Epstein, L. G., Farhi, E., and Strzalecki, T. (2014). How much would you pay to resolve long-run risk? \textit{American Economic Review}, 104(9):2680--97.
+
+Epstein, L. G. and Schneider, M. (2003). Recursive multiple-priors. \textit{Journal of Economic Theory}, 113(1):1--31.
+
+Epstein, L. G. and Zin, S. E. (1989). Risk aversion, and the temporal behavior of consumption and asset returns: a theoretical framework. \textit{Econometrica}, 57(4):937--969.
+
+Falk, A. and Zimmermann, F. (2024). Attention and dread: Experimental evidence on preferences for information. \textit{Management Science}, 70(10):7090--7100.
+
+Fischbacher, U. (2007). z-tree: Zurich toolbox for ready-made economic experiments. \textit{Experimental Economics}, 10:171--178.
+
+Freeman, D. J., Halevy, Y., and Kneeland, T. (2019). Eliciting risk preferences using choice lists. \textit{Quantitative Economics}, 10(1):217--237.
+
+Ganguly, A. and Tasoff, J. (2016). Fantasy and dread: the demand for information and the consumption utility of the future. \textit{Management Science}, 63(12):4037--4060.
+
+Gilboa, I. and Schmeidler, D. (1989). Maxmin expected utility with non-unique prior. \textit{Journal of Mathematical Economics}, 18(2):141--153.
+
+Greiner, B. (2015). Subject pool recruitment procedures: organizing experiments with orsee. \textit{Journal of the Economic Science Association}, 1(1):114--125.
+
+Halevy, Y. (2007). Ellsberg revisited: An experimental study. \textit{Econometrica}, 75(2):503--536.
+
+Hansen, L. and Sargent, T. J. (2001). Robust control and model uncertainty. \textit{American Economic Review}, 91(2):60--66.
+
+Hayashi, T. (2005). Intertemporal substitution, risk aversion and ambiguity aversion. \textit{Economic Theory}, 25(4):933--956.
+
+Hayashi, T. and Miao, J. (2011). Intertemporal substitution and recursive smooth ambiguity preferences. \textit{Theoretical Economics}, 6(3):423--472.
+
+Huber, J., Payne, J. W., and Puto, C. (1982). Adding asymmetrically dominated alternatives: Violations of regularity and the similarity hypothesis. \textit{Journal of Consumer Research}, 9(1):90--98.
+
+Jeong, D., Kim, H., and Park, J. Y. (2015). Does ambiguity matter? Estimating asset pricing models with a multiple-priors recursive utility. \textit{Journal of Financial Economics}, 115(2):361--382.
+
+Ju, N. and Miao, J. (2012). Ambiguity, learning, and asset returns. \textit{Econometrica}, 80(2):559--591.
+
+Klibanoff, P., Marinacci, M., and Mukerji, S. (2005). A smooth model of decision making under ambiguity. \textit{Econometrica}, 73(6):1849--1892.
+
+Klibanoff, P., Marinacci, M., and Mukerji, S. (2009). Recursive smooth ambiguity preferences. \textit{Journal of Economic Theory}, 144(3):930--976.
+
+Knight, F. H. (1921). \textit{Risk, Uncertainty and Profit}, volume 31. Houghton Mifflin.
+
+Kocher, M. G., Krawczyk, M., and van Winden, F. (2014). `Let me dream on!' Anticipatory emotions and preference for timing in lotteries. \textit{Journal of Economic Behavior \& Organization}, 98:29--40.
+
+Kreps, D. M. and Porteus, E. L. (1978). Temporal resolution of uncertainty and dynamic choice theory. \textit{Econometrica}, 46:185--200.
+
+Li, J. (2020). Preferences for partial information and ambiguity. \textit{Theoretical Economics}, 15(3):1059--1094.
+
+Li, J. (2023). Updating uncertainty-averse preferences. Working Paper.
+
+Lovallo, D. and Kahneman, D. (2000). Living with uncertainty: Attractiveness and resolution timing. \textit{Journal of Behavioral Decision Making}, 13(2):179--190.
+
+Maccheroni, F., Marinacci, M., and Rustichini, A. (2006a). Ambiguity aversion, robustness, and the variational representation of preferences. \textit{Econometrica}, 74(6):1447--1498.
+
+Maccheroni, F., Marinacci, M., and Rustichini, A. (2006b). Dynamic variational preferences. \textit{Journal of Economic Theory}, 128(1):4--44.
+
+Marinacci, M., Principi, G., and Stanca, L. (2024). Recursive preferences and ambiguity attitudes. Working Paper.
+
+Masatlioglu, Y., Orhun, Y., and Raymond, C. (2023). Intrinsic information preferences and skewness. \textit{American Economic Review}, 113(10):2615--44.
+
+Meissner, T. and Pfeiffer, P. (2022). Measuring preferences over the temporal resolution of consumption uncertainty. \textit{Journal of Economic Theory}, 200:105379.
+
+Nielsen, K. (2020). Preferences for the resolution of uncertainty and the timing of information. \textit{Journal of Economic Theory}, 189(105090).
+
+Selten, R. (1991). Properties of a measure of predictive success. \textit{Mathematical Social Sciences}, 21:153--167.
+
+Seo, K. (2009). Ambiguity and second-order belief. \textit{Econometrica}, 77(5):1575--1605.
+
+Strzalecki, T. (2011). Axiomatic foundations of multiplier preferences. \textit{Econometrica}, 79(1):47--73.
+
+Strzalecki, T. (2013). Temporal resolution of uncertainty and recursive models of ambiguity aversion. \textit{Econometrica}, 81(3):1039--1074.
+
+Von Gaudecker, H.-M., Van Soest, A., and Wengstrom, E. (2011). Heterogeneity in risky choice behavior in a broad population. \textit{American Economic Review}, 101(2):664--94.
+
+Weil, P. (1990). Nonexpected utility in macroeconomics. \textit{The Quarterly Journal of Economics}, 105(1):29--42.
+
+Zimmermann, F. (2015). Clumped or piecewise? -- Evidence on preferences for information. \textit{Management Science}, 61(4):740--753.
+\end{original}
+\begin{translation}
+{\small\color{blue}
+以上参考文献包含了关于不确定性消解偏好、模糊厌恶和递归效用模型的广泛学术文献。其中Ellsberg（1961）奠定了模糊性概念的基础，Klibanoff等（2005, 2009）发展了平滑模糊性模型，Epstein和Zin（1989）以及Kreps和Porteus（1978）建立了广义递归效用框架，Nielsen（2020）提供了关于不确定性消解偏好的近期的综合性实验研究。这些文献共同构成了本文的理论和实证基础。}
+\end{translation}
+
+\end{document}

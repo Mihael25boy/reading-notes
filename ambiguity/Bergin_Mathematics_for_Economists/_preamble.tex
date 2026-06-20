@@ -1,0 +1,125 @@
+% ===========================================================================
+%  _preamble.tex — Bilingual (EN/ZH) preamble for
+%  "Mathematics for Economists with Applications" by James Bergin
+%  To be used as: \input{_preamble} in the main .tex file.
+% ===========================================================================
+
+\documentclass[12pt,a4paper]{book}
+
+% -------------------- Chinese support ----------------------------------
+\usepackage[heading=true]{ctex}
+\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
+\setCJKsansfont{Microsoft YaHei}
+\setCJKmonofont{FangSong}
+
+% -------------------- Page geometry ------------------------------------
+\usepackage[inner=2.5cm, outer=2.0cm, top=2.5cm, bottom=2.5cm,
+  includehead, includefoot]{geometry}
+
+% -------------------- Mathematics --------------------------------------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+
+% -------------------- Graphics, colour, links --------------------------
+\usepackage{graphicx}
+\usepackage[table, svgnames]{xcolor}
+\usepackage[colorlinks=true,
+  linkcolor=blue,
+  citecolor=teal,
+  urlcolor=violet]{hyperref}
+
+% -------------------- Headers / footers --------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\slshape\leftmark}
+\fancyhead[RO]{\small\slshape\rightmark}
+\fancyhead[RE, LO]{}
+\fancyfoot[LE, RO]{\thepage}
+\fancyfoot[C]{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Plain-page style (chapter openings)
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[LE, RO]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% -------------------- Lists --------------------------------------------
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=4pt, partopsep=2pt}
+\setlist[enumerate]{noitemsep, topsep=4pt, partopsep=2pt}
+
+% -------------------- Tables -------------------------------------------
+\usepackage{booktabs}
+
+% -------------------- Bilingual environments ---------------------------
+\newenvironment{original}{%
+  \par\addvspace{\medskipamount}
+  \noindent\textbf{Original (English)}\\[2pt]
+  \small\color{black}\ignorespaces
+}{%
+  \par\addvspace{\medskipamount}
+}
+
+\newenvironment{translation}{%
+  \par\addvspace{\medskipamount}
+  \noindent\textbf{翻译 (Chinese)}\\[2pt]
+  \color{blue}\ignorespaces
+}{%
+  \par\addvspace{\medskipamount}
+}
+
+% -------------------- Theorem-like environments ------------------------
+\newtheoremstyle{mystyle}%
+  {10pt}       % space above
+  {10pt}       % space below
+  {\itshape}   % body font
+  {}           % indent
+  {\bfseries}  % head font
+  {.}          % punctuation after head
+  {5pt plus 1pt minus 1pt} % space after head
+  {}           % head spec
+
+\theoremstyle{mystyle}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+% -------------------- Title / author info ------------------------------
+\title{%
+  Mathematics for Economists with Applications\\
+  {\large 经济学家数学及其应用}
+}
+\author{%
+  James Bergin\\
+  {\normalsize 詹姆斯·伯金}
+}
+\date{}
+
+% -------------------- Miscellaneous ------------------------------------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt minus 1pt}
+
+% Shorthands
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+
+% ===========================================================================
+%  End of _preamble.tex
+% ===========================================================================

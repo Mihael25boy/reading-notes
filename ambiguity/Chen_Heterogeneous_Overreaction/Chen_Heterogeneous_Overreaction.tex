@@ -1,0 +1,1603 @@
+% !TeX program = xelatex
+% Bilingual TeX file: English original + Chinese translation
+% Paper: Heterogeneous Overreaction in Expectation Formation: Evidence and Theory
+% Authors: Heng Chen, Xu Li, Guangyu Pei, Qian Xin
+% Journal: Journal of Economic Theory 218 (2024) 105839
+
+\documentclass[12pt,a4paper]{article}
+
+% ---- Chinese support ----
+\usepackage{ctex}
+\setCJKmainfont{SimSun}[AutoFakeBold=2.5]
+\setCJKsansfont{SimHei}
+\setCJKmonofont{STFangsong}
+
+% ---- Layout ----
+\usepackage[margin=1.2in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\onehalfspacing
+
+% ---- Colors ----
+\definecolor{transblue}{RGB}{25,25,112}
+
+% ---- Custom environments ----
+\newenvironment{original}
+  {\par\medskip\noindent\ignorespaces}
+  {\par\medskip}
+
+\newenvironment{translation}
+  {\par\noindent{\color{transblue}\ignorespaces}}
+  {\par\bigskip}
+
+% ---- Header/footer ----
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small J. Econ. Theory 218 (2024) 105839}
+\fancyhead[R]{\small Chen, Li, Pei \& Xin}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---- Theorem environments ----
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% ---- Title ----
+\title{
+  {\LARGE\textbf{Heterogeneous Overreaction in Expectation Formation:\\[4pt] Evidence and Theory}}\\[10pt]
+  {\large\textbf{\color{transblue}预期形成中的异质性过度反应：证据与理论}}
+}
+
+\author{
+  Heng Chen\textsuperscript{a}, Xu Li\textsuperscript{a}, Guangyu Pei\textsuperscript{b,*}, Qian Xin\textsuperscript{c}\\[6pt]
+  \small
+  \textsuperscript{a} University of Hong Kong, Hong Kong Special Administrative Region\\
+  \textsuperscript{b} The Chinese University of Hong Kong, Hong Kong Special Administrative Region\\
+  \textsuperscript{c} Harbin Institute of Technology, Shenzhen, China
+}
+
+\date{Journal of Economic Theory 218 (2024) 105839\\
+\color{transblue}《经济理论杂志》第218卷（2024年）105839}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\section*{Abstract / 摘要}
+\begin{original}
+Using firm-level earnings forecasts and managerial guidance data, we construct guidance surprises for analysts, i.e., differences between managerial guidance and analysts' initial forecasts. We document new evidence on expectation formation: (i) analysts overreact to managerial guidance and the overreaction is state-dependent, i.e., it is stronger for negative guidance surprises but weaker for surprises that are larger in size; and (ii) forecast revisions are neither symmetric in guidance surprises nor monotonic. We organize these facts with a model where analysts are uncertain about the quality of managerial guidance. We show that a reasonable degree of ambiguity aversion is necessary to account for the documented heterogeneous overreaction pattern.
+\end{original}
+\begin{translation}
+本文利用公司层面的盈利预测和管理层指引数据，构建了分析师指引意外，即管理层指引与分析师初始预测之间的差异。我们记录了关于预期形成的新证据：（i）分析师对管理层指引反应过度，且过度反应具有状态依赖性，即对负面指引意外的过度反应更强，但对规模较大的意外反应更弱；（ii）预测修正既非对称于指引意外，也非单调。我们通过一个模型来组织这些事实，在该模型中，分析师对管理层指引的质量存在不确定性。我们表明，合理程度的模糊厌恶对于解释所记录的异质性过度反应模式是必要的。
+\end{translation}
+
+\bigskip
+\noindent\textbf{JEL classification:} C53, D83, D84\\
+\textbf{Keywords:} Overreaction; Expectation formation; Managerial guidance; Asymmetry; Non-monotone; Ambiguity aversion\\
+\noindent{\color{transblue}\textbf{关键词：}过度反应；预期形成；管理层指引；不对称性；非单调性；模糊厌恶}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+% 1. INTRODUCTION
+% ============================================================
+\section{1. Introduction / 引言}
+
+\begin{original}
+The mechanisms underlying expectation formation are crucial for understanding economic decisions. While it is documented that individuals in general overreact to information (Bordalo et al., 2020), there has been growing interest in the circumstances under which the overreaction is stronger or weaker. In this paper, we provide new evidence that the degree of overreaction can be heterogeneous across individual forecasters, even when they receive the same information. To organize the facts, we propose a forecasting model where agents make forecasts based on noisy information and are uncertain about information quality.
+\end{original}
+\begin{translation}
+预期形成的机制对于理解经济决策至关重要。虽然有文献表明个体通常会过度反应于信息（Bordalo et al., 2020），但人们对过度反应在何种情况下更强或更弱的兴趣日益增长。在本文中，我们提供了新的证据，表明即使接收到相同的信息，过度反应的程度在个体预测者之间也可能具有异质性。为了组织这些事实，我们提出了一个预测模型，其中代理人基于噪声信息进行预测，并对信息质量存在不确定性。
+\end{translation}
+
+\begin{original}
+To test how agents form expectations in general and how they react to new information in particular, it would be ideal to have a testing ground in which (i) the new information acquired by agents is observable and measurable, and (ii) agents' forecasts before and after receiving the new information are available. We consider an environment that is fairly close to this: financial analysts forecast the earnings of firms, firms release managerial guidance for earnings, and then analysts update their earnings forecasts.
+\end{original}
+\begin{translation}
+为了检验代理人通常如何形成预期、特别是如何对新信息做出反应，理想的检验环境应当满足以下条件：（i）代理人获取的新信息是可观测和可度量的，以及（ii）代理人在接收新信息之前和之后的预测是可得的。我们考虑一个相当接近这一理想的环境：金融分析师预测公司的盈利，公司发布盈利管理层指引，然后分析师更新其盈利预测。
+\end{translation}
+
+\begin{original}
+Heng Chen: The Faculty of Business and Economics, University of Hong Kong; Xu Li: The Faculty of Business and Economics, University of Hong Kong; Guangyu Pei: Department of Economics, The Chinese University of Hong Kong; and Qian Xin: School of Economics and Management, Harbin Institute of Technology, Shenzhen. Heng Chen acknowledges that this research project is partly funded by the Seed Fund for Basic Research of Hong Kong University (Project No. 202011159014). Qian Xin acknowledges financial support from the National Natural Science Foundation of China (Project No. 72302066) and the Guangdong Basic and Applied Basic Research Foundation (Project No. 2024A1515010491).
+\end{original}
+\begin{translation}
+Heng Chen：香港大学经济与工商管理学院；Xu Li：香港大学经济与工商管理学院；Guangyu Pei：香港中文大学经济学系；Qian Xin：哈尔滨工业大学（深圳）经济管理学院。Heng Chen感谢香港大学基础研究种子基金（项目号202011159014）对本研究项目的部分资助。Qian Xin感谢国家自然科学基金（项目号72302066）和广东省基础与应用基础研究基金（项目号2024A1515010491）的资助。
+\end{translation}
+
+\begin{original}
+Forecast revisions are then defined to be the differences between analysts' updated forecasts after receiving managerial guidance and their initial forecasts before receiving it. That is, forecast revisions are constructed to reflect the impact of the guidance on earnings.
+\end{original}
+\begin{translation}
+预测修正被定义为分析师在收到管理层指引后的更新预测与收到指引前的初始预测之间的差异。即，预测修正的构建旨在反映指引对盈利的影响。
+\end{translation}
+
+\begin{original}
+Using earnings forecasts data (individual analysts' EPS forecasts from the I/B/E/S Estimates) and managerial guidance data (the I/B/E/S Guidance data) from 1994 to 2017, we provide a number of findings. First, analysts' forecasts overreact to information that arrives during the time window that is constructed to encompass managerial guidance. We show that forecast revisions are negatively correlated with forecast errors, which are defined to be the differences between realized earnings and analysts' updated forecasts. This suggests that upward (downward) revisions can predict negative (positive) forecast errors, i.e., there is too much revision relative to the rational benchmark. This result is consistent with the existing findings of Bordalo et al. (2020) using macroeconomic survey data.
+\end{original}
+\begin{translation}
+利用1994年至2017年的盈利预测数据（来自I/B/E/S Estimates的个体分析师EPS预测）和管理层指引数据（来自I/B/E/S Guidance数据），我们得出了一系列发现。首先，分析师预测对在涵盖管理层指引的时间窗口内到达的信息存在过度反应。我们表明，预测修正与预测误差呈负相关，后者被定义为实际盈利与分析师更新预测之间的差异。这意味着向上（向下）修正可以预测负向（正向）预测误差，即相对于理性基准，修正过度。这一结果与Bordalo et al.（2020）使用宏观经济调查数据的现有发现一致。
+\end{translation}
+
+\begin{original}
+Second, our new finding in this paper is that the overreaction is heterogeneous across analysts. We define guidance surprises to be the differences between the managerial guidance and analysts' initial forecasts. We construct surprises at the firm-quarter-analyst level, rank those surprises from the most negative to the most positive and then group them into deciles. Estimating the degree of overreaction in each decile subsample, we find that overreaction is stronger when surprises are negative; overreaction tends to be weaker when surprises are larger in size.
+\end{original}
+\begin{translation}
+其次，本文的新发现是过度反应在分析师之间具有异质性。我们将指引意外定义为管理层指引与分析师初始预测之间的差异。我们在公司-季度-分析师层面构建意外，将这些意外从最负面到最正面排序，然后将其分组为十分位数。估计每个十分位子样本中的过度反应程度，我们发现当意外为负面时，过度反应更强；当意外规模较大时，过度反应趋于更弱。
+\end{translation}
+
+\begin{original}
+Third, we further directly explore how forecast revisions respond to guidance surprises with nonparametric estimations. We find that forecast revisions are asymmetric in surprises: forecast revisions are stronger when the surprises are negative than those when the surprises are of the same magnitude but positive. Furthermore, forecast revisions are not monotonically increasing in surprises either: when the surprises are large enough, forecast revisions decrease in surprises. Thus, the estimated relationship between forecast revisions and surprises displays a pattern of asymmetry and non-monotonicity. It is worth pointing out that the two new facts corroborate with each other.\textsuperscript{1}
+\end{original}
+\begin{translation}
+第三，我们进一步利用非参数估计直接探索预测修正如何响应指引意外。我们发现预测修正对意外是不对称的：当意外为负面时，预测修正比同样幅度但为正面的意外更强烈。此外，预测修正也不是随意外单调递增的：当意外足够大时，预测修正随意外递减。因此，预测修正与意外之间的估计关系呈现出不对称和非单调的模式。值得指出的是，这两个新事实相互印证。\textsuperscript{1}
+\end{translation}
+
+\begin{original}
+The new evidence on the documented heterogeneous overreaction pattern calls for a new theory, in which optimal response to new information has to be state-dependent. We consider a forecasting model where analysts would receive managerial guidance for earnings from the firm and update their forecasts in response. The key departures from standard forecasting models are (a) that analysts are ambiguous about the quality of the managerial guidance and (b) that they are ambiguity averse and the degree of ambiguity aversion is finite. The former requires that analysts should update their beliefs about the quality of guidance based on the guidance itself and then update their beliefs about earnings for any possible quality. The latter implies that analysts wish to act in a robust fashion.
+\end{original}
+\begin{translation}
+记录的异质性过度反应模式的新证据需要新的理论，在该理论中，对新信息的最优反应必须是状态依赖的。我们考虑一个预测模型，其中分析师从公司接收盈利管理层指引，并据此更新其预测。该模型与标准预测模型的关键区别在于：（a）分析师对管理层指引的质量存在模糊性，（b）分析师是模糊厌恶的，且模糊厌恶的程度是有限的。前者要求分析师应根据指引本身更新其对指引质量的信念，然后针对任何可能的质量更新其对盈利的信念。后者意味着分析师希望以稳健的方式行事。
+\end{translation}
+
+\begin{original}
+In this model, the extent to which analysts overreact (or even underreact) to information while revising their forecasts depends critically on how analysts perceive the quality of managerial guidance. Specifically, analysts behave as if, in their posterior beliefs, they optimally overweigh the state of the world where their expected utility is low. When surprises are negative, analysts would subjectively overcount the quality of guidance, which leads to a more pronounced overreaction. In addition, when surprises are sufficiently large in size, analysts would infer that the quality of guidance is less likely to be high (the standard Bayesian mechanism), which leads to a more moderated overreaction (or potentially an under-reaction). Both model mechanisms are consistent with the pattern of heterogeneous overreaction found in the data.
+\end{original}
+\begin{translation}
+在该模型中，分析师在修正预测时对信息过度反应（甚至反应不足）的程度关键取决于分析师如何感知管理层指引的质量。具体而言，分析师的行为仿佛是，在其后验信念中，最优地过度加权预期效用低的自然状态。当意外为负面时，分析师会主观地过度计数指引的质量，这导致更明显的过度反应。此外，当意外足够大时，分析师会推断指引质量不太可能很高（标准贝叶斯机制），这导致更温和的过度反应（甚至可能是反应不足）。这两种模型机制均与数据中发现的异质性过度反应模式一致。
+\end{translation}
+
+\begin{original}
+It is crucial to allow agents to possess a finite degree of ambiguity aversion to simultaneously capture both nonmonotonicity and asymmetry in the relationship between forecast revisions and surprises. Without ambiguity aversion, analysts' forecast revisions are symmetric, despite the sign of surprises. With extreme ambiguity aversion (i.e., the Wald (1949) Maxmin criterion), analysts' forecast revisions are monotonic in surprises, despite the uncertainty in information quality. We construct a theory counterpart for the coefficients that quantify the extent of heterogenous overreaction documented in the data and illustrate the role of ambiguity aversion.
+\end{original}
+\begin{translation}
+允许代理人具有有限程度的模糊厌恶对于同时捕捉预测修正与意外之间关系的非单调性和不对称性至关重要。没有模糊厌恶，分析师的预测修正是对称的，无论意外的符号如何。在极端模糊厌恶下（即Wald（1949）最大最小准则），分析师的预测修正关于意外是单调的，尽管信息质量存在不确定性。我们为量化数据中记录的异质性过度反应程度的系数构建了理论对应物，并阐明了模糊厌恶的作用。
+\end{translation}
+
+\begin{original}
+Furthermore, a quantitative rendition of our model demonstrates that our estimated model can produce a cross-sectional overreaction pattern consistent with the data. To corroborate our model mechanisms, two auxiliary predictions of our model (1) pessimistic bias in forecast errors and (2) implications of heterogeneity in guidance quality are examined and confirmed using the data. While our study is the first to discover and rationalize this set of facts, there might be other mechanisms contributing to the documented patterns. To underscore our theoretical contributions to the literature, we compare our model with several existing theories, including diagnostic beliefs, overconfidence, loss aversion, and agency theory.
+\end{original}
+\begin{translation}
+此外，我们模型的定量表述表明，估计的模型可以产生与数据一致的横截面过度反应模式。为了佐证我们的模型机制，我们检验并确认了模型的两个辅助预测：（1）预测误差中的悲观偏差，以及（2）指引质量异质性的含义。虽然我们的研究首次发现并合理解释了这组事实，但可能还有其他机制对记录的模式有所贡献。为了强调我们对文献的理论贡献，我们将我们的模型与几种现有理论进行比较，包括诊断性信念、过度自信、损失厌恶和代理理论。
+\end{translation}
+
+\begin{original}
+Both the facts documented and the mechanisms characterized in this paper are relevant for the expectation formation literature in general and studies concerning overreactions to information in particular. The empirical part of this paper builds on a new literature that empirically explores information frictions and expectation formation (Coibion and Gorodnichenko, 2015). Using macroeconomic survey data, Bordalo et al. (2020) and Broer and Kohlhas (2022) find that forecasters overreact to information in general.\textsuperscript{2} In an experimental setting, Afrouzi et al. (2022) establish that the overreaction is stronger for a less persistent data generation process and stronger for longer forecast horizons.
+\end{original}
+\begin{translation}
+本文记录的事实和刻画的机制总体上与预期形成文献相关，特别是与关于信息过度反应的研究相关。本文的实证部分基于一个新兴文献，该文献实证地探索信息摩擦和预期形成（Coibion and Gorodnichenko, 2015）。利用宏观经济调查数据，Bordalo et al.（2020）和Broer and Kohlhas（2022）发现预测者总体上会过度反应于信息。\textsuperscript{2}在实验环境中，Afrouzi et al.（2022）证实，对于持续性较低的数据生成过程和较长的预测期限，过度反应更强。
+\end{translation}
+
+\begin{original}
+In contrast, we document the heterogeneous overreaction among analysts, taking a step beyond the existing literature. Additionally, we develop a complementary empirical approach that directly investigates the relationship between forecast revisions and observable new information, which can prove to be a valuable tool for the literature. It is worth highlighting that we establish a novel empirical setting for studying expectation formation, which holds significance for other related research in this field.\textsuperscript{3}
+\end{original}
+\begin{translation}
+相比之下，我们记录了分析师之间的异质性过度反应，比现有文献更进一步。此外，我们发展了一种互补的实证方法，直接研究预测修正与可观测新信息之间的关系，这可以证明是文献的一个有价值的工具。值得强调的是，我们为研究预期形成建立了一个新颖的实证环境，这对该领域的其他相关研究具有重要意义。\textsuperscript{3}
+\end{translation}
+
+\begin{original}
+Our new theory adds to the literature of expectation formation by explicitly scrutinizing how forecasters react to noisy data of uncertain quality. Both Epstein and Schneider (2008) and Baqaee (2020) characterize the process of expectation formation when agents have an extreme ambiguity averse preference (i.e., multiple priors) and show that belief updating is asymmetric in the contexts of asset pricing and business cycles, respectively. In contrast, our work allows for a finite degree of aversion in the smooth model of ambiguity following Klibanoff et al. (2005) and Cerreia-Vioglio et al. (2022). Focusing on ambiguity about the second moments of the data generating process, our model offers theoretical predictions that are qualitatively different from the aforementioned works and that are also empirically relevant.\textsuperscript{4}
+\end{original}
+\begin{translation}
+我们的新理论通过明确审视预测者如何对质量不确定的噪声数据做出反应，为预期形成文献做出了贡献。Epstein and Schneider（2008）和Baqaee（2020）均刻画了当代理人具有极端模糊厌恶偏好（即多重先验）时的预期形成过程，并分别表明信念更新在资产定价和商业周期背景下是不对称的。相比之下，我们的工作遵循Klibanoff et al.（2005）和Cerreia-Vioglio et al.（2022），允许在平滑模糊模型中有有限程度的厌恶。聚焦于数据生成过程二阶矩的模糊性，我们的模型提供了与上述工作定性不同且具有实证相关性的理论预测。\textsuperscript{4}
+\end{translation}
+
+\begin{original}
+In general, there is a growing interest in understanding how agents' use of information deviates from the rational expectation benchmark. Prominent examples include diagnostic expectations (Bordalo et al., 2018; Bianchi et al., 2024), overconfidence (Broer and Kohlhas, 2022), cognitive discounting (Gabaix, 2020), level-K thinking (Garcia-Schmidt and Woodford, 2019; Farhi and Werning, 2019), narrow thinking (Lian, 2020), adaptive learning (Adam et al., 2012; Kuang and Mitra, 2016), autocorrelation averaging (Wang, 2020) and loss aversion (Elliott et al., 2008; Capistran and Timmermann, 2009). A common feature of those models in a Gaussian environment is that forecast revisions are increasing in surprises and the direction of surprises does not matter. Our model differs in both aspects.
+\end{original}
+\begin{translation}
+总体而言，人们对理解代理人的信息使用如何偏离理性预期基准的兴趣日益增长。突出的例子包括诊断性预期（Bordalo et al., 2018; Bianchi et al., 2024）、过度自信（Broer and Kohlhas, 2022）、认知贴现（Gabaix, 2020）、层级K思维（Garcia-Schmidt and Woodford, 2019; Farhi and Werning, 2019）、狭隘思维（Lian, 2020）、适应性学习（Adam et al., 2012; Kuang and Mitra, 2016）、自相关平均（Wang, 2020）和损失厌恶（Elliott et al., 2008; Capistran and Timmermann, 2009）。这些模型在高斯环境中的一个共同特征是预测修正关于意外是递增的，且意外的方向无关紧要。我们的模型在这两个方面都有所不同。
+\end{translation}
+
+\begin{original}
+The rest of the paper is organized as follows. Section 2 presents the empirical findings of our paper. Section 3 sets up our model. Section 4 analyzes the equilibrium. Section 5 discusses a range of relevant issues concerning our theory. The paper concludes with Section 6. All proofs and derivations are collected in Appendix B.
+\end{original}
+\begin{translation}
+本文的其余部分组织如下。第2节呈现了本文的实证发现。第3节建立了我们的模型。第4节分析了均衡。第5节讨论了与我们的理论相关的若干问题。第6节是结论。所有证明和推导收录在附录B中。
+\end{translation}
+
+\bigskip
+\noindent{\footnotesize
+\textsuperscript{1} If forecast revisions are linear in surprises, then the extent of overreaction to new information cannot be heterogeneous; and if overreaction is heterogeneous in size and direction of surprises, then forecast revisions cannot be linear in surprises. This connection will be characterized in Section 4.3.
+
+\textsuperscript{2} Other recent studies also provide evidence on the forecasts of financial market participants.
+
+\textsuperscript{3} We use managerial guidance to facilitate the exploration because this is among the very few kinds of information that are observable, measurable, and systematically accessible to econometricians.
+
+\textsuperscript{4} State-dependent forecasting behavior can be a consequence of strategic information provision. Nimark and Pitschner (2019) demonstrate that asymmetry in forecasting may arise when an information provider slants negative news.
+
+\textsuperscript{5} On average, analysts publish their initial forecasts 43 days before earnings guidance becomes available to the market.
+
+\medskip
+{\color{transblue}
+\textsuperscript{1} 如果预测修正关于意外是线性的，那么对新信息的过度反应程度不可能是异质性的；如果过度反应在意外的大小和方向上是异质性的，那么预测修正不可能是线性的。这一联系将在第4.3节中被刻画。
+
+\textsuperscript{2} 其他近期研究也提供了关于金融市场参与者预测的证据。
+
+\textsuperscript{3} 我们使用管理层指引来促进探索，因为这是计量经济学家能够观测、度量和系统获取的极少数信息类型之一。
+
+\textsuperscript{4} 状态依赖的预测行为可能是策略性信息提供的结果。Nimark and Pitschner (2019)证明，当信息提供者倾斜负面新闻时，预测中的不对称性可能会出现。
+
+\textsuperscript{5} 平均而言，分析师在盈利指引向市场发布前43天发布其初始预测。
+}\par}
+
+\newpage
+% ============================================================
+% 2. EVIDENCE
+% ============================================================
+\section{2. Evidence / 实证证据}
+
+\subsection{2.1 Data, Sample, and Timing / 数据、样本与时序}
+
+\begin{original}
+In this section, we explore how analysts revise their earnings forecasts upon newly received information. Our goal is to construct a scenario where the information flow is observable, measurable and accessible to the econometrician.
+\end{original}
+\begin{translation}
+在本节中，我们探索分析师在接收到新信息时如何修正其盈利预测。我们的目标是构建一个信息流可观测、可度量且计量经济学家可获取的场景。
+\end{translation}
+
+\begin{original}
+Towards this end, we focus on managerial guidance, which is among the very few information sources that satisfy such criteria. In financial markets, the management teams of publicly listed firms issue guidance for the earnings of the current quarter between the last quarter's and current quarter's earnings announcements. That is a crucial opportunity for firms to provide information about earnings to market participants, such as financial analysts. Because of its importance, earnings guidance often triggers analysts' forecast updates: analysts likely revise their forecasts a few days after receiving earnings guidance, i.e., on average 4 days in our sample (constructed in this section).\textsuperscript{5} Furthermore, it is common that firms continue to provide earnings guidance for an extensive period of time, and the discontinuation in earnings guidance is typically perceived unfavorably by the market (Chen et al., 2011). Earnings guidance includes various forms, such as point estimates and range estimates.
+\end{original}
+\begin{translation}
+为此，我们将重点放在管理层指引上，这是满足此类标准的极少数信息来源之一。在金融市场中，上市公司的管理团队在上个季度与本季度盈利公告之间发布对当季盈利的指引。这是公司向金融分析师等市场参与者提供盈利信息的关键机会。由于其重要性，盈利指引通常会触发分析师的预测更新：分析师很可能在收到盈利指引几天后修正其预测，即我们样本中平均为4天（在本节构建）。\textsuperscript{5}此外，公司通常会持续提供盈利指引很长一段时间，而停止盈利指引通常被市场视为不利信号（Chen et al., 2011）。盈利指引包括各种形式，如点估计和区间估计。
+\end{translation}
+
+\begin{original}
+The Thomson Reuters I/B/E/S Guidance data provides quantitative managerial expectations, such as earnings per share, from press releases and transcripts of corporate events. The data cover managerial guidance from more than 6,000 companies in North America that can date back to as early as 1994. Furthermore, the I/B/E/S Guidance data are available on the same accounting basis as the I/B/E/S Estimates that provide individual analysts' forecast data. This makes it feasible to rigorously identify the timing of events and to compare managerial guidance and analysts' forecasts for the same firm in a certain period. Our sample construction based on the I/B/E/S Guidance and Estimates data is elaborated and relegated to Appendix A.1.
+\end{original}
+\begin{translation}
+Thomson Reuters I/B/E/S Guidance数据提供了来自新闻稿和公司事件记录的量化管理层预期，如每股收益。该数据涵盖了北美超过6000家公司的管理层指引，最早可追溯至1994年。此外，I/B/E/S Guidance数据与提供个体分析师预测数据的I/B/E/S Estimates采用相同的会计基础。这使得严格识别事件时序并比较同一公司在特定时期的管理层指引和分析师预测成为可能。我们基于I/B/E/S Guidance和Estimates数据的样本构建方法详见附录A.1。
+\end{translation}
+
+\begin{original}
+We stress that we intentionally construct a time window where analysts' initial and updated forecasts encompass the earnings guidance of the current quarter. This construction allows us to analyze how forecasts are updated in response to information observable to the econometrician. The construction procedure can be better apprehended with the aid of Fig. 1, which delineates the sequence of major events. Analyst learns firm's EPS for quarter $q-1$ at the date of $t_{q-1}$, which is $EPS_{i,q-1}$. Then he or she issues a forecast $F_{i,j,q,0}$ for firm $i$'s EPS in quarter $q$. Firm $i$ offers guidance $G_{i,q}$ for firm $i$'s earnings in quarter $q$. Then, analyst $j$ updates his or her forecast for firm $i$'s EPS in quarter $q$ (i.e., $F_{i,j,q,1}$). Quarter $q$ ends at the date of $t_q$, and firm $i$ announces its EPS for quarter $q$ at the date of $T_q$. In sum, in this setting, both initial and updated forecasts are made within the same period, after $t_{q-1}$ and before $T_q$.
+\end{original}
+\begin{translation}
+我们强调，我们有意构建了一个时间窗口，使得分析师的初始预测和更新预测涵盖当季的盈利指引。这种构建方式使我们能够分析预测如何响应计量经济学家可观测的信息而更新。在Fig. 1的辅助下可以更好地理解构建程序，该图描述了主要事件的时序。分析师在$t_{q-1}$日期获知公司$i$在$q-1$季度的每股收益$EPS_{i,q-1}$。然后，他/她发布对公司$i$在$q$季度EPS的预测$F_{i,j,q,0}$。公司$i$发布对公司$i$在$q$季度盈利的指引$G_{i,q}$。然后，分析师$j$更新其对公司$i$在$q$季度EPS的预测（即$F_{i,j,q,1}$）。$q$季度在$t_q$日期结束，公司$i$在$T_q$日期公告其$q$季度的EPS。总之，在此设定中，初始预测和更新预测均在同一时期内做出，即在$t_{q-1}$之后、$T_q$之前。
+\end{translation}
+
+\begin{original}
+Our full sample consists of 110,895 pairs of individual analysts' forecasts (initial and updated forecasts) issued by 6,987 different analysts for 3,226 distinct firms over the period from 1994 to 2017. A summary of statistics is reported in Appendix A.2.
+\end{original}
+\begin{translation}
+我们的完整样本包含110,895对个体分析师预测（初始和更新预测），由6,987位不同的分析师在1994年至2017年期间对3,226家不同公司发布。统计摘要见附录A.2。
+\end{translation}
+
+\subsection{2.2 Overreaction / 过度反应}
+
+\begin{original}
+Our investigation of how analysts revise their forecasts starts by following the approach proposed by Bordalo et al. (2020), in which they examine professional analysts' forecasts of macro variables. That is, we regress ex post analyst forecast errors on ex ante analyst forecast revisions at the individual level. To this end, we construct both forecast error $FE$ and forecast revision $FR$. The former is the difference between the realized earnings per share for firm $i$ in quarter $q$ and the revised EPS forecast by individual analyst $j$ for firm $i$ in quarter $q$. The latter is the difference between the revised forecast after guidance and the initial forecast before guidance issued by the same analyst $j$ for firm $i$ in quarter $q$. To avoid the heterogeneity embedded in EPS across firms, both $FE$ and $FR$ are scaled by the stock price at the beginning of quarter $q$. To mitigate the impact of potential outliers, both of them are winsorized at the 1\% and 99\% level of their respective distributions. We estimate the following equation:
+\end{original}
+\begin{translation}
+我们对分析师如何修正预测的研究始于遵循Bordalo et al.（2020）提出的方法，他们研究了专业分析师对宏观变量的预测。即，我们在个体层面将事后分析师预测误差对事前分析师预测修正进行回归。为此，我们构建了预测误差$FE$和预测修正$FR$。前者是公司$i$在$q$季度的实际每股收益与个体分析师$j$对公司$i$在$q$季度的修正EPS预测之间的差异。后者是同一分析师$j$对公司$i$在$q$季度在指引后的修正预测与指引前初始预测之间的差异。为消除不同公司间EPS的异质性，$FE$和$FR$均除以$q$季度初的股票价格进行标准化。为减轻潜在异常值的影响，两者均在其分布的1\%和99\%分位处进行缩尾处理。我们估计以下方程：
+\end{translation}
+
+\begin{original}
+\[
+FE = \beta_0 + \beta_1 FR + \gamma_i + \varepsilon, \tag{1}
+\]
+where we control for firm fixed effect ($\gamma_i$) to absorb time-invariant firm characteristics. Following Petersen (2009), the standard errors are clustered at the firm and calendar year-quarter to adjust for both intertemporal and cross-sectional correlations.
+\end{original}
+\begin{translation}
+\[
+FE = \beta_0 + \beta_1 FR + \gamma_i + \varepsilon, \tag{1}
+\]
+其中我们控制了公司固定效应（$\gamma_i$）以吸收不随时间变化的公司特征。遵循Petersen（2009），标准误在公司与日历年-季度层面进行聚类，以调整跨期和横截面相关性。
+\end{translation}
+
+\begin{original}
+The results from estimating Equation (1) are presented in column (1) of Table 1. We find that forecast errors are negatively correlated with forecast revisions at the individual analyst level and statistically significant at less than the 1\% level. The negative coefficient indicates that analysts overreact to new information over the period that the managerial guidance is received by analysts. Despite the settings being entirely different, this result is consistent with those found in Bordalo et al. (2020) and Broer and Kohlhas (2022).
+\end{original}
+\begin{translation}
+估计方程（1）的结果呈现在表1的第（1）列。我们发现，在个体分析师层面，预测误差与预测修正呈负相关，且在低于1\%的水平上具有统计显著性。负系数表明，分析师在收到管理层指引的期间对新信息过度反应。尽管设定完全不同，这一结果与Bordalo et al.（2020）和Broer and Kohlhas（2022）的发现一致。
+\end{translation}
+
+\begin{original}
+We add the earnings in the last quarter ($q-1$) of firm $i$ to the right-hand side of Equation (1) and report the results in column (2) of Table 1. The change in the estimated coefficient on forecast revision is negligible, and the coefficient on the earnings in the last quarter is close to zero and not significant. This suggests that the information about earnings in past quarters is fully utilized by analysts to form either initial or updated forecasts. That is the key difference from studies using SPF data, where initial and updated forecasts are made in two separate periods.
+\end{original}
+\begin{translation}
+我们将公司$i$上一季度（$q-1$）的盈利添加到方程（1）的右侧，结果报告于表1的第（2）列。预测修正的估计系数变化可忽略不计，上一季度盈利的系数接近零且不显著。这表明分析师已充分利用过去季度的盈利信息来形成初始预测或更新预测。这是与使用SPF数据的研究的关键区别，在后者中初始预测和更新预测是在两个不同时期做出的。
+\end{translation}
+
+\begin{original}
+To ensure that our results are robust to data construction, we present results by not scaling earnings and forecasts by stock prices. The estimate for forecast revisions is robust, which is reported in column (3). To test whether our results are driven by outliers, we winsorize $FE$ and $FR$ at the 2.5\% and 97.5\% levels of their respective distributions and re-do the aforementioned exercises. Those results are reported in columns (4)-(6) of Table 1, which demonstrate the robustness of our findings.\textsuperscript{6}
+\end{original}
+\begin{translation}
+为确保我们的结果对数据构建方式稳健，我们呈现了不除以股票价格标准化盈利和预测的结果。预测修正的估计是稳健的，报告于第（3）列。为检验我们的结果是否由异常值驱动，我们在$FE$和$FR$各自分布的2.5\%和97.5\%分位处进行缩尾处理，并重新进行上述分析。这些结果报告于表1的第（4）-（6）列，证明了我们发现的稳健性。\textsuperscript{6}
+\end{translation}
+
+\begin{original}
+Two comments on the specification of Equation (1) are in order. First, incorporating the firm fixed effect into this regression is conceptually necessary for identifying the average overreaction. This necessity arises because we are pooling forecasting data over time from different firms. If there is a systematic bias in EPS forecasts that varies across firms, omitting firm fixed effects would bias the estimated coefficient ($\beta_1$) of Equation (1). Second, to address concerns about the potential Nickel bias arising from the inclusion of the firm fixed effect, we conduct separate estimations of Equation (1) for each firm, following the approach proposed by Bordalo et al. (2020). The median estimation of $\beta_1$ is then reported in Table C.3 of Online Appendix C. The median coefficient is similar to that reported in Table 1.
+\end{original}
+\begin{translation}
+对方程（1）设定有两点评论。首先，将公司固定效应纳入该回归在概念上是识别平均过度反应所必需的。这一必要性源于我们将不同公司在时间上的预测数据合并在一起。如果EPS预测存在跨公司变化的系统性偏差，遗漏公司固定效应会使方程（1）的估计系数（$\beta_1$）产生偏误。其次，为解决包含公司固定效应可能带来的Nickel偏差问题，我们遵循Bordalo et al.（2020）提出的方法，对每家公司分别估计方程（1）。$\beta_1$的中位数估计报告于在线附录C的表C.3中。中位数系数与表1中报告的系数相似。
+\end{translation}
+
+\noindent{\footnotesize
+\textsuperscript{6} Online Appendix C.1 reports additional robustness tests demonstrating that our results remain robust with different sample selection and trimming the outliers instead of winsorizing.
+
+\medskip
+{\color{transblue}\textsuperscript{6} 在线附录C.1报告了额外的稳健性检验，表明我们的结果在不同样本选择和剪除而非缩尾异常值时仍然稳健。}
+}
+
+\newpage
+\subsection{2.3 Heterogeneous Overreaction / 异质性过度反应}
+
+\begin{original}
+One unique feature of our setting is that the guidance is common for all analysts, but the surprises contained in the guidance are not common across analysts due to their heterogeneous initial forecasts. Analysts can be surprised to different extents and even in different directions. One natural question arises: Do analysts overreact differently to the same information? In this section we explore such heterogeneity of overreaction across analysts.
+\end{original}
+\begin{translation}
+我们设定中的一个独特特征是，指引对所有分析师是共同的，但指引中包含的意外因分析师初始预测的异质性而在分析师之间并不相同。分析师可能在不同程度上甚至在不同方向上感到意外。一个自然的问题随之产生：分析师对相同信息的过度反应是否不同？在本节中，我们探索分析师之间过度反应的这种异质性。
+\end{translation}
+
+\begin{original}
+First, we construct a variable guidance surprise (i.e., $Surprise$) to capture the observable surprise in managerial guidance for individual analysts. It is defined and measured by the difference between the value of guidance (i.e., $G$) issued by firm $i$ in quarter $q$ and analyst $j$'s corresponding initial forecast (i.e., $F_0$) for firm $i$ in quarter $q$ before guidance. That is, $Surprise = G - F_0$. For each individual analyst, the managerial guidance can be unfavorable or favorable if it falls below or exceeds the analyst's initial forecast before guidance, and the managerial guidance can be large or small if it is far from or close to the analyst's initial forecast before guidance.
+\end{original}
+\begin{translation}
+首先，我们构建一个变量指引意外（即$Surprise$），以捕捉个体分析师在管理层指引中可观测的意外。它由公司$i$在$q$季度发布的指引值（即$G$）与分析师$j$在指引前对公司$i$在$q$季度的相应初始预测（即$F_0$）之间的差异定义和度量。即，$Surprise = G - F_0$。对于每个个体分析师，如果管理层指引低于或超过分析师指引前的初始预测，则可能是不利的或有利的；如果管理层指引远离或接近分析师指引前的初始预测，则可能是大的或小的。
+\end{translation}
+
+\begin{original}
+Second, we remove outliers by trimming forecast errors, forecast revisions, and surprises at the 2.5\% and 97.5\% levels of their respective distributions (to be consistent with the nonparametric estimations in the next section). We then rank surprises from the most negative to the most positive, sort them into deciles, and label them from 1 to 10 according to the decile rank. To enlarge the subsample size and smooth estimates, we define a running decile window $w$ such that (1) window $w$ covers decile $w-1$, $w$, and $w+1$ if $w\neq 1$ or $10$; (2) running decile window 1 covers deciles 1 and 2; and (3) running decile window 10 covers deciles 9 and 10.
+\end{original}
+\begin{translation}
+其次，我们通过在各分布2.5\%和97.5\%分位处剪除预测误差、预测修正和意外来去除异常值（与下一节中的非参数估计保持一致）。然后，我们将意外从最负面到最正面排序，分为十分位数，并根据十分位排序将其标记为1到10。为扩大子样本量并平滑估计，我们定义了一个滚动十分位窗口$w$，使得（1）若$w\neq 1$或$10$，窗口$w$覆盖十分位$w-1$、$w$和$w+1$；（2）滚动十分位窗口1覆盖十分位1和2；（3）滚动十分位窗口10覆盖十分位9和10。
+\end{translation}
+
+\begin{original}
+Third, for each subsample of a running decile window, we re-estimate Equation (1) (i.e., regressing forecast errors on forecast revisions). We plot the estimated coefficients and confidence intervals in Fig. 2 against their window ranks. We find that analysts overreact to information in each subsample, i.e., the estimated coefficient $\beta_1$ is negative and significant. However, the degree of overreaction is not constant and is U-shaped in surprises and skewed to the left. This implies that the overreaction is stronger when the surprises are negative and the overreaction is weaker when the surprises are larger in size.\textsuperscript{7}
+\end{original}
+\begin{translation}
+第三，对于每个滚动十分位窗口的子样本，我们重新估计方程（1）（即将预测误差对预测修正进行回归）。我们在Fig. 2中将估计系数和置信区间按其窗口排序进行绘图。我们发现，在每个子样本中分析师都过度反应于信息，即估计系数$\beta_1$是负向且显著的。然而，过度反应的程度并非恒定，而是呈U形且左偏。这意味着当意外为负面时过度反应更强，当意外规模较大时过度反应更弱。\textsuperscript{7}
+\end{translation}
+
+\begin{original}
+In summary, on the one hand, we confirm that analysts overreact to information in this particular setting. Given that the forecast revisions are constructed around managerial guidance, analysts are likely to overreact to guidance surprises. On the other hand, we discover that the way that analysts react to information depends on the characteristics of the surprises that they receive, such as the size and direction of the surprises. It is worth noting that this set of empirical findings are not specific to EPS forecasts.\textsuperscript{8}
+\end{original}
+\begin{translation}
+总之，一方面，我们证实在该特定设定中分析师过度反应于信息。鉴于预测修正是围绕管理层指引构建的，分析师很可能对指引意外过度反应。另一方面，我们发现分析师对信息做出反应的方式取决于他们接收到的意外的特征，如意外的大小和方向。值得指出的是，这组实证发现并非EPS预测所特有。\textsuperscript{8}
+\end{translation}
+
+\subsection{2.4 Forecast Revisions and Surprises: Mechanisms / 预测修正与意外：机制}
+
+\begin{original}
+In this section, we set out to uncover the mechanisms that underlie the heterogeneous overreaction pattern. To this end, we directly investigate the relationship between forecast revisions and surprises. Note that if forecast revisions are linear in surprises, then the degree of overreaction to new information cannot be heterogeneous (characterized in Section 4.3); and if overreaction is heterogeneous in the size and direction of surprises, then forecast revisions cannot be linear in surprises.
+\end{original}
+\begin{translation}
+在本节中，我们着手揭示异质性过度反应模式背后的机制。为此，我们直接研究预测修正与意外之间的关系。注意，如果预测修正关于意外是线性的，那么对新信息的过度反应程度不可能是异质性的（在第4.3节中被刻画）；如果过度反应在意外的大小和方向上是异质性的，那么预测修正就不可能是线性的。
+\end{translation}
+
+\begin{original}
+To estimate the relationship in a more reliable fashion, we resort to the nonparametric estimation approach. Using the standard tool of local polynomial regression, we estimate the relationship between forecast revisions and surprises by using the Epanechnikov kernel and the third degree of the smoothing polynomial.
+\end{original}
+\begin{translation}
+为了更可靠地估计这一关系，我们采用非参数估计方法。使用局部多项式回归的标准工具，我们利用Epanechnikov核和三次平滑多项式估计预测修正与意外之间的关系。
+\end{translation}
+
+\begin{original}
+Because we are interested in large surprises and because we estimate the relationship with local polynomials, the results can be affected and biased by winsorization of the data. To alleviate this concern, we instead trim both forecast revisions and surprises at the 2.5\% and 97.5\% levels of their respective distributions and residualize them by controlling for time, analyst, and firm fixed effects. We estimate their relationship using the local polynomial specification, and the results are presented in Fig. 3(a). Forecast revisions are decreasing, increasing, and decreasing in surprises and are asymmetric around the origin. Fig. 3(b) illustrates its derivatives with respect to surprises. The derivatives are negative when the surprises are large enough and positive when they are small. Forecast revisions respond more strongly to negative surprises than to positive surprises of the same magnitude. In Online Appendix C.3, we present a range of robustness checks, and the empirical findings are robust.
+\end{original}
+\begin{translation}
+由于我们关注的是大的意外，且我们使用局部多项式估计这一关系，结果可能受到数据缩尾处理的影响和偏误。为缓解这一担忧，我们改为在各自分布的2.5\%和97.5\%分位处剪除预测修正和意外，并通过控制时间、分析师和公司固定效应对其进行残差化。我们使用局部多项式设定估计它们的关系，结果呈现在Fig. 3(a)中。预测修正在意外上递减、递增、再递减，并且在原点附近是不对称的。Fig. 3(b)说明了其对意外的导数。当意外足够大时，导数为负；当意外较小时，导数为正。预测修正对负面意外的反应比对同样幅度的正面意外的反应更强。在线附录C.3中，我们呈现了一系列稳健性检验，实证发现是稳健的。
+\end{translation}
+
+\begin{original}
+To quantify the degree of asymmetry in the estimated relationship, we compute the percentage deviations of forecast revisions to negative surprises (i.e., $Surp < 0$) from forecast revisions to positive ones of the same magnitude (i.e., $-Surp < 0$) and construct an average conditional on surprises being negative. That is,
+\[
+\delta = \int \frac{||FR(Surp)|| - ||FR(-Surp)||}{||FR(-Surp)||} \, dP(Surp \mid Surp < 0), \tag{2}
+\]
+where $P(Surp \mid Surp < 0)$ is the conditional distribution of surprise that can be directly inferred from the data. The asymmetry measure $\delta$ is positive if, on average, negative surprises (i.e., $Surp < 0$) result in larger forecast revisions compared to positive ones. If $\delta$ is zero, the response of forecast revisions to surprises are symmetric.
+\end{original}
+\begin{translation}
+为了量化估计关系中的不对称程度，我们计算了预测修正对负面意外（即$Surp < 0$）的反应与对同样幅度正面意外（即$-Surp < 0$）的反应之间的百分比偏差，并以意外为负为条件构建平均值。即，
+\[
+\delta = \int \frac{||FR(Surp)|| - ||FR(-Surp)||}{||FR(-Surp)||} \, dP(Surp \mid Surp < 0), \tag{2}
+\]
+其中$P(Surp \mid Surp < 0)$是意外的条件分布，可直接从数据中推断。如果平均而言负面意外（即$Surp < 0$）导致比正面意外更大的预测修正，则不对称度量$\delta$为正。如果$\delta$为零，则预测修正对意外的反应是对称的。
+\end{translation}
+
+\begin{original}
+In our baseline sample, we find that $\delta = 0.18$, indicating that, on average, negative surprises result in revisions that are approximately 18\% stronger than revisions triggered by positive surprises of similar magnitude.
+\end{original}
+\begin{translation}
+在我们的基准样本中，我们发现$\delta = 0.18$，表明平均而言，负面意外导致的修正比类似幅度正面意外触发的修正大约强18\%。
+\end{translation}
+
+\begin{original}
+The facts documented in Sections 2.3 and 2.4 would be puzzling if one assumed that analysts know the quality of managerial guidance with certainty. In such a case, forecast revisions would be linear in surprises within the Gaussian environment, and the degree of overreaction would also be constant. Once we relax this assumption and accommodate the conjecture that the quality of information can be uncertain to analysts, those documented facts can be reasonable and consistent with each other. To account for those facts in a unifying framework, we propose a model where analysts are uncertain about the quality of information that they receive.
+\end{original}
+\begin{translation}
+如果假设分析师确切知道管理层指引的质量，第2.3节和第2.4节记录的事实将是令人困惑的。在这种情况下，在高斯环境中预测修正关于意外将是线性的，过度反应的程度也将是恒定的。一旦我们放松这一假设并容纳信息质量可能对分析师不确定的推测，这些记录的事实就会变得合理且相互一致。为了在一个统一的框架中解释这些事实，我们提出了一个模型，其中分析师对他们接收到的信息质量存在不确定性。
+\end{translation}
+
+\noindent{\footnotesize
+\textsuperscript{7} To examine whether our results are robust, we rerun the exercises with a sample where forecast errors, forecast revisions and surprises are trimmed at the 1\% and 99\% levels of their respective distributions.
+
+\textsuperscript{8} For instance, I/B/E/S offers both analyst forecasts and manager guidance for firm sales. Analyzing firm sales data, we find a pattern of heterogeneous overreactions consistent with what we observed using EPS forecasts.
+
+\medskip
+{\color{transblue}
+\textsuperscript{7} 为检验结果的稳健性，我们使用预测误差、预测修正和意外在其分布1\%和99\%分位处被剪除的样本重新运行了分析。
+
+\textsuperscript{8} 例如，I/B/E/S同时提供分析师预测和公司销售额的管理层指引。分析公司销售数据，我们发现了与使用EPS预测时观察到的异质性过度反应一致的模式。
+}
+}
+
+\newpage
+% ============================================================
+% 3. THE MODEL
+% ============================================================
+\section{3. The Model / 模型}
+
+\subsection{3.1 Setup / 设定}
+
+\begin{original}
+Consider a one-period static model where there exists a continuum of analysts, indexed by $j \in [0,1]$ and a firm. The firm's earnings $x$ is stochastic. Analyst $j$ makes a forecast $F_0$ about the earnings at the beginning of the period and makes an updated forecast $F$ at the end of the period.
+\end{original}
+\begin{translation}
+考虑一个单期静态模型，其中存在连续的 analyst 个体（用 $j \in [0,1]$ 标记）和一家公司。公司的盈利 $x$ 是随机的。分析师 $j$ 在期初对盈利做出预测 $F_0$，并在期末做出更新预测 $F$。
+\end{translation}
+
+\begin{original}
+\textbf{Utility function.} In the context of forecasting problems, we impose one restriction that analysts' optimal forecast is precisely $F = x$, conditional on analysts' information being complete (i.e., the earnings $x$ are known to the analysts). Any utility functions that satisfy this restriction can be approximated by a utility function $U(F,x)$ that is quadratic in both forecasts and earnings. In the main text, we consider one particular case among this class of quadratic utility functions, which is given by
+\[
+U(F,x) = -(F-x)^2 + \lambda x, \tag{3}
+\]
+where $\lambda$ is a constant. To interpret parameter $\lambda$, consider the scenario where analysts have complete information. They can minimize the forecasting errors to zero, but the realized earnings may still matter for analysts in our model. The parameter $\lambda > 0$ ($\lambda < 0$) implies that analysts would be better (worse) off if the realized earnings $x$ were higher. The parameter $\lambda$ will be estimated and interpreted in Online Appendix D.\textsuperscript{9}
+\end{original}
+\begin{translation}
+\textbf{效用函数。}在预测问题的背景下，我们施加一个限制，即在分析师信息完备的条件下（即盈利 $x$ 为分析师所知），分析师的最优预测恰好是 $F = x$。任何满足此限制的效用函数都可以用预测和盈利的二次效用函数 $U(F,x)$ 来近似。在正文中，我们考虑这类二次效用函数中的一个特例，由下式给出：
+\[
+U(F,x) = -(F-x)^2 + \lambda x, \tag{3}
+\]
+其中 $\lambda$ 是常数。为解释参数 $\lambda$，考虑分析师具有完备信息的场景。他们可以将预测误差最小化至零，但在我们的模型中，实际盈利对分析师仍然可能重要。参数 $\lambda > 0$（$\lambda < 0$）意味着如果实际盈利 $x$ 更高，分析师会更好（更差）。参数 $\lambda$ 将在在线附录D中被估计和解释。\textsuperscript{9}
+\end{translation}
+
+\begin{original}
+This utility function is used for ease of exposition and highlighting our new mechanisms. In Online Appendix F, we present a full characterization of the model with the most general quadratic utility function of this class. We show that it is qualitatively similar and provide evidence that the additional parameters in the general case are empirically irrelevant in this setting.
+\end{original}
+\begin{translation}
+该效用函数用于简化阐述并突出我们的新机制。在在线附录F中，我们对具有此类最一般二次效用函数的模型进行了完整刻画。我们表明其在定性上是相似的，并提供证据表明一般情况下额外的参数在该设定中在实证上是无关紧要的。
+\end{translation}
+
+\begin{original}
+\textbf{Information structure.} We assume that the earnings follow a normal distribution with mean 0 and variance $\sigma_x^2$, $x \sim \mathcal{N}(0,\sigma_x^2)$, let $\tau_x = 1/\sigma_x^2$. The distribution of earnings is known to all analysts. To have a direct mapping with the data, we allow each analyst $j$ to be endowed with private information about the earnings before making the initial forecasts, as follows:
+\[
+s_0 = x + \epsilon_0, \quad \epsilon_0 \sim \mathcal{N}(0,\sigma_0^2),
+\]
+where $\epsilon_0$ is normally distributed with mean 0 and variance $\sigma_0^2$, i.e., let $\tau_0 = 1/\sigma_0^2$. Analyst $j$ makes forecast $F_0$ with heterogeneous information $s_0$. Analysts then receive managerial guidance released by the firm, which is a noisy signal about earnings:
+\[
+g = x + \epsilon_g, \quad \epsilon_g \sim \mathcal{N}(0,\sigma_g^2),
+\]
+where $\epsilon_g$ is normally distributed with mean 0 and variance $\sigma_g^2$, i.e., let $\tau_g = 1/\sigma_g^2$. After analysts have made their updated forecasts, the earnings announcement is made, and the payoffs to analysts are realized.
+\end{original}
+\begin{translation}
+\textbf{信息结构。}我们假设盈利服从均值为0、方差为$\sigma_x^2$的正态分布，$x \sim \mathcal{N}(0,\sigma_x^2)$，令 $\tau_x = 1/\sigma_x^2$。盈利的分布为所有分析师所知。为了与数据直接对应，我们允许每个分析师 $j$ 在做出初始预测之前拥有关于盈利的私有信息，如下所示：
+\[
+s_0 = x + \epsilon_0, \quad \epsilon_0 \sim \mathcal{N}(0,\sigma_0^2),
+\]
+其中$\epsilon_0$服从均值为0、方差为$\sigma_0^2$的正态分布，即令$\tau_0 = 1/\sigma_0^2$。分析师 $j$ 利用异质性的信息 $s_0$ 做出预测 $F_0$。分析师随后接收到公司发布的管理层指引，这是一个关于盈利的噪声信号：
+\[
+g = x + \epsilon_g, \quad \epsilon_g \sim \mathcal{N}(0,\sigma_g^2),
+\]
+其中$\epsilon_g$服从均值为0、方差为$\sigma_g^2$的正态分布，即令$\tau_g = 1/\sigma_g^2$。在分析师做出更新预测后，盈利公告发布，分析师的收益实现。
+\end{translation}
+
+\begin{original}
+The information structure in this model warrants discussion. First, in this paper, we focus on a static model without modeling the dynamics of earnings across periods. As discussed in Section 2.1, analysts have perfect information about earnings in the last quarter. Both the initial and updated forecasts in the data are made after the earnings in the last quarter are known to analysts. In this case, forecasts of the last period's earnings are not relevant in this period, conditional on the last quarter's earnings themselves.\textsuperscript{10} Note that the updated earnings forecasts of the last period are not the initial forecasts for earnings in this period. Second, for simplicity, we assume that unobservable private information (such as new information from analysts' research or acquired from other sources) is absent between the two rounds of forecasts. In Online Appendix F, we fully characterize a generalized model by allowing the presence of private information and show that all the qualitative properties remain.
+\end{original}
+\begin{translation}
+该模型的信息结构值得讨论。首先，在本文中，我们专注于一个静态模型，不建模跨期盈利的动态。如第2.1节所讨论的，分析师对上季度盈利具有完全信息。数据中的初始预测和更新预测都是在分析师已知上季度盈利之后做出的。在这种情况下，上期盈利的预测在本期中不相关，条件于上季度盈利本身。\textsuperscript{10}注意，上期的更新盈利预测并不是本期的初始盈利预测。其次，为简便起见，我们假设在两轮预测之间不存在不可观测的私有信息（例如分析师研究或从其他来源获取的新信息）。在在线附录F中，我们通过允许私有信息的存在，对广义模型进行了完整刻画，并表明所有定性性质保持不变。
+\end{translation}
+
+\begin{original}
+\textbf{Ambiguity averse preferences.} The key departure of this model from the existing forecasting literature is that we assume that analysts are uncertain or ambiguous about the quality of the managerial guidance or their objective precision (i.e., $\tau_g$). Therefore, they have to form their own subjective belief about its precision (i.e., $\varrho$). Such an assumption is reasonable. Analysts may not know the quality of the guidance with complete certainty because management has incentives not to release the best possible information at hand and because even the best possible estimates from the management can be plagued with noise but analysts are not certain about its structure.
+\end{original}
+\begin{translation}
+\textbf{模糊厌恶偏好。}该模型与现有预测文献的关键区别在于，我们假设分析师对管理层指引的质量或其客观精度（即 $\tau_g$）存在不确定性或模糊性。因此，他们必须对其精度（即 $\varrho$）形成自己的主观信念。这样的假设是合理的。分析师可能不完全确切地知道指引的质量，因为管理层有动机不发布手头最好的可能信息，并且即使是管理层最好的可能估计也可能受到噪声困扰，但分析师对其结构并不确定。
+\end{translation}
+
+\begin{original}
+Specifically, we let $\Theta$ be the range of support for the possible precision $\varrho$ (of managerial guidance). Analysts believe that $\varrho \in \Theta$ and possess some prior belief over $\Theta$, whose density distribution is given by $\nu(\varrho)$. We say that one particular $\varrho$ represents a model that generates the managerial guidance $g$.
+\end{original}
+\begin{translation}
+具体而言，我们令 $\Theta$ 为（管理层指引）可能精度 $\varrho$ 的支撑集。分析师认为 $\varrho \in \Theta$，并对 $\Theta$ 拥有某种先验信念，其密度分布由 $\nu(\varrho)$ 给出。我们说某一个特定的 $\varrho$ 代表一个生成管理层指引 $g$ 的模型。
+\end{translation}
+
+\begin{original}
+Furthermore, we assume that analysts dislike uncertainty in the quality of the managerial guidance or are ambiguity averse. In this model, we capture such a preference of analysts by using the smooth model of ambiguity as proposed in Klibanoff et al. (2005). That is, analyst $j$ maximizes the objective function:
+\[
+\int_{\Theta} \phi\left( \mathbb{E}_{\varrho,s_0,g}\left[ U(F,x) \mid s_0, g \right] \right) \mu(\varrho \mid s_0, g) \, d\varrho, \tag{4}
+\]
+where $\phi(\cdot)$ is some increasing, concave and twice continuously differentiable function. In addition, $\mathbb{E}_{\varrho,s_0,g}[\cdot]$ denotes the mathematical expectation conditional on $s_0, g$ for a particular model $\varrho$ (or a certain precision of managerial guidance). In what follows, we use $\mathbb{E}_{\varrho}[\cdot]$ to denote the expected utility of analyst $j$, unless it causes confusion.
+\end{original}
+\begin{translation}
+此外，我们假设分析师厌恶管理层指引质量的不确定性，即具有模糊厌恶偏好。在该模型中，我们利用Klibanoff et al.（2005）提出的平滑模糊模型来捕捉分析师的这种偏好。即，分析师 $j$ 最大化目标函数：
+\[
+\int_{\Theta} \phi\left( \mathbb{E}_{\varrho,s_0,g}\left[ U(F,x) \mid s_0, g \right] \right) \mu(\varrho \mid s_0, g) \, d\varrho, \tag{4}
+\]
+其中 $\phi(\cdot)$ 是某个递增、凹且二次连续可微的函数。此外，$\mathbb{E}_{\varrho,s_0,g}[\cdot]$ 表示在给定 $s_0, g$ 且特定模型 $\varrho$（即管理层指引的特定精度）下的数学期望。在下文中，除非引起混淆，我们使用 $\mathbb{E}_{\varrho}[\cdot]$ 表示分析师 $j$ 的期望效用。
+\end{translation}
+
+\begin{original}
+The density of the posterior belief over possible models is assumed to be Bayesian and denoted by $\mu(\varrho \mid s_0, g)$. The curvature of function $\phi(\cdot)$ captures an aversion to mean-preserving spreads in $\mathbb{E}_{\varrho}[\cdot]$ induced by ambiguity in $\varrho$.\textsuperscript{11} The more concave the function $\phi(\cdot)$ is, the stronger the ambiguity aversion. In other words, it characterizes analysts' taste for ambiguity. In this paper, we consider a function $\phi(\cdot)$ that features constant absolute ambiguity aversion (CAAA) following Cerreia-Vioglio et al. (2022) throughout:
+\[
+\phi(\cdot) = -\frac{1}{\alpha} e^{-\alpha(\cdot)}, \tag{5}
+\]
+where $\alpha \geq 0$ measures the degree of ambiguity aversion. Two special cases are nested. When $\alpha = 0$ and $\phi(\cdot)$ is linear, this corresponds to the case where analysts are ambiguity neutral or fully Bayesian. When $\alpha \to +\infty$, this corresponds to the case where analysts' aversion to ambiguity is infinite, which is the classic Wald (1949) Maxmin criterion.\textsuperscript{12}
+\end{original}
+\begin{translation}
+关于可能模型的后验信念密度假定为贝叶斯的，记为 $\mu(\varrho \mid s_0, g)$。函数 $\phi(\cdot)$ 的曲率刻画了对由 $\varrho$ 中的模糊性引起的 $\mathbb{E}_{\varrho}[\cdot]$ 中保均值展形的厌恶。\textsuperscript{11}函数 $\phi(\cdot)$ 越凹，模糊厌恶越强。换言之，它刻画了分析师对模糊性的品味。在本文中，我们通篇考虑一个遵循Cerreia-Vioglio et al.（2022）的具有常绝对模糊厌恶（CAAA）特征的函数 $\phi(\cdot)$：
+\[
+\phi(\cdot) = -\frac{1}{\alpha} e^{-\alpha(\cdot)}, \tag{5}
+\]
+其中 $\alpha \geq 0$ 度量模糊厌恶的程度。嵌套了两个特例。当 $\alpha = 0$ 且 $\phi(\cdot)$ 为线性时，这对应于分析师是模糊中性或完全贝叶斯的情况。当 $\alpha \to +\infty$ 时，这对应于分析师模糊厌恶为无限大的情况，即经典的Wald（1949）最大最小准则。\textsuperscript{12}
+\end{translation}
+
+\newpage
+\subsection{3.2 Noisy Information Expectations: RE Benchmark / 噪声信息预期：理性预期基准}
+
+\begin{original}
+Our framework is a generalized version of the standard forecasting problem in which analysts possess noisy information and minimize the mean-squared error of their forecasts of the random variable. In other words, the noisy information benchmark is a special case of our model when agents are ambiguity neutral (i.e., $\alpha = 0$) and there exists no uncertainty in information quality (i.e., $\Theta$ is singleton).\textsuperscript{13} In this section, we characterize such a special case and illustrate why it fails to account for the empirical patterns documented in Section 2.3 and 2.4 and why deviations from this benchmark are necessary.
+\end{original}
+\begin{translation}
+我们的框架是标准预测问题的广义版本，在该问题中分析师拥有噪声信息并最小化其对随机变量预测的均方误差。换言之，噪声信息基准是我们模型的特例，即当代理人是模糊中性的（即 $\alpha = 0$）且信息质量不存在不确定性（即 $\Theta$ 是单点集）时。\textsuperscript{13}在本节中，我们刻画这种特例，并说明它为何无法解释第2.3和2.4节记录的实证模式，以及为何偏离这一基准是必要的。
+\end{translation}
+
+\begin{original}
+With noisy information expectations, the optimal initial and updated forecasts are such that
+\[
+F_0^{NI} = \mathbb{E}[x \mid s_0]; \qquad F^{NI} = \mathbb{E}[x \mid s_0, g],
+\]
+where $\mathbb{E}[\cdot \mid \cdot]$ denotes the conditional expectations (i.e., Bayesian posterior). The relationship between $F_0^{NI}$ and $F^{NI}$ is therefore given by
+\[
+F^{NI} = (1 - \beta^{RE})F_0^{NI} + \beta^{RE},
+\]
+where $\beta^{RE}$ is the relevant weight assigned to the public information:
+\[
+\beta^{RE} = \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} > 0. \tag{6}
+\]
+Therefore, the relevant forecast revision is given by
+\[
+FR^{NI} \equiv F^{NI} - F_0^{NI} = \beta^{RE}(g - F_0^{NI}), \tag{7}
+\]
+and forecast error is given by
+\[
+FE^{NI} \equiv x - F^{NI} = \frac{\tau_x}{\tau_x + \tau_0 + \tau_g} x - \frac{\tau_0}{\tau_x + \tau_0 + \tau_g} \epsilon_0 - \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} \epsilon_g, \tag{8}
+\]
+where $\frac{\tau_x}{\tau_x+\tau_0+\tau_g} > 0$ and $\frac{\tau_0}{\tau_x+\tau_0+\tau_g} > 0$.
+\end{original}
+\begin{translation}
+在噪声信息预期下，最优初始预测和更新预测满足：
+\[
+F_0^{NI} = \mathbb{E}[x \mid s_0]; \qquad F^{NI} = \mathbb{E}[x \mid s_0, g],
+\]
+其中 $\mathbb{E}[\cdot \mid \cdot]$ 表示条件期望（即贝叶斯后验）。因此，$F_0^{NI}$ 和 $F^{NI}$ 之间的关系为：
+\[
+F^{NI} = (1 - \beta^{RE})F_0^{NI} + \beta^{RE},
+\]
+其中 $\beta^{RE}$ 是分配给公共信息的相关权重：
+\[
+\beta^{RE} = \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} > 0. \tag{6}
+\]
+因此，相关的预测修正为：
+\[
+FR^{NI} \equiv F^{NI} - F_0^{NI} = \beta^{RE}(g - F_0^{NI}), \tag{7}
+\]
+预测误差为：
+\[
+FE^{NI} \equiv x - F^{NI} = \frac{\tau_x}{\tau_x + \tau_0 + \tau_g} x - \frac{\tau_0}{\tau_x + \tau_0 + \tau_g} \epsilon_0 - \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} \epsilon_g, \tag{8}
+\]
+其中 $\frac{\tau_x}{\tau_x+\tau_0+\tau_g} > 0$ 且 $\frac{\tau_0}{\tau_x+\tau_0+\tau_g} > 0$。
+\end{translation}
+
+\begin{lemma}[FR-on-surprise and FE-on-FR]
+In the noisy expectation benchmark, forecast revisions are linear in guidance surprises and uncorrelated with forecast errors,
+\[
+\text{Cov}(FE^{NI}, FR^{NI}) = 0.
+\]
+\end{lemma}
+\begin{translation}
+\textbf{引理1（FR对意外与FE对FR）。}在噪声预期基准中，预测修正关于指引意外是线性的，且与预测误差不相关：
+\[
+\text{Cov}(FE^{NI}, FR^{NI}) = 0.
+\]
+\end{translation}
+
+\begin{original}
+Observe that the term $(g - F_0^{NI})$ in Equation (7) is the theory counterpart of managerial guidance surprises in our empirical exercise. Equation (7) predicts that forecast revisions should be linear in guidance surprises. However, this prediction contradicts the non-monotone and asymmetric relationship documented in Section 2.4.
+\end{original}
+\begin{translation}
+观察到方程（7）中的项 $(g - F_0^{NI})$ 是实证分析中管理层指引意外的理论对应物。方程（7）预测预测修正关于指引意外应该是线性的。然而，这一预测与第2.4节记录的非单调和不对称关系相矛盾。
+\end{translation}
+
+\begin{original}
+Further, using Equations (7) and (8), it is evident that forecast revisions and forecast errors are uncorrelated. It then predicts that the estimated coefficient in the FE-on-FR regression should be 0, i.e., no overreaction at the individual level. This prediction contradicts evidence that analysts overreact to new information (documented in Section 2.2) and that such overreaction varies in a non-monotonic and asymmetric fashion (documented in Section 2.3).
+\end{original}
+\begin{translation}
+此外，利用方程（7）和（8），可以明显看出预测修正与预测误差不相关。这进而预测FE对FR回归中的估计系数应为0，即在个体层面没有过度反应。这一预测与分析师过度反应于新信息（第2.2节记录）以及这种过度反应以非单调和不对称方式变化（第2.3节记录）的证据相矛盾。
+\end{translation}
+
+\begin{original}
+The reason why the noisy information benchmark cannot capture the empirical patterns is that the optimal forecasting rule is state-independent and determined by constant signal-to-noise ratios. That is, the weight $\beta^{RE}$ assigned to the public signal (i.e., managerial guidance in this context) is constant and independent of the realization of the public signal. However, evidence suggests that the weight should vary depending on the realization of public signal in a particular way: the weight should be larger when the surprise is negative than when it is positive but of the same magnitude; and the weight should be negative (instead of positive) when surprises are large enough. In the following section, we demonstrate that our framework, featuring the ambiguous information quality and ambiguity aversion towards uncertainty, can generate a state-dependent forecasting rule that is consistent with the data.
+\end{original}
+\begin{translation}
+噪声信息基准无法捕捉实证模式的原因在于，最优预测规则是状态无关的，且由恒定的信噪比决定。即，分配给公共信号（在此语境中即管理层指引）的权重 $\beta^{RE}$ 是恒定的，与公共信号的实现无关。然而，证据表明权重应根据公共信号的实现以特定方式变化：当意外为负面时权重应大于同样幅度但为正面的情况；当意外足够大时权重应为负（而非正）。在下一节中，我们将证明，我们的框架——以模糊的信息质量和对不确定性的模糊厌恶为特征——可以产生与数据一致的状态依赖预测规则。
+\end{translation}
+
+\subsection{3.3 Equilibrium Characterization / 均衡刻画}
+
+\begin{original}
+In this section, we turn to the characterization of analysts' optimal forecasts. The initial forecast of each analyst $F_0$ is derived by Bayes' rule:
+\[
+F_0 = \frac{\tau_0}{\tau_x + \tau_0} s_0. \tag{9}
+\]
+To choose the optimal updated forecast $F$ after obtaining a new set of information, analysts maximize the objective in Equation (4). That is, the optimal forecast $F$ is such that the first-order condition holds:
+\[
+F = \int_{\Theta} \left( \frac{\tau_x \cdot 0 + \tau_0 s_0 + \varrho g}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho, \tag{10}
+\]
+where the distorted posterior belief $\eta$ is such that
+\[
+\eta(\varrho \mid s_0, g; F) = \underbrace{\frac{\phi'\big( \mathbb{E}_{\varrho}[U(F,x)] \big)}{\int_{\Theta} \phi'\big( \mathbb{E}_{\tilde{\varrho}}[U(F,x)] \big) \mu(\tilde{\varrho} \mid s_0, g) \, d\tilde{\varrho}}}_{\text{Pessimistic Distortion}} \underbrace{\mu(\varrho \mid s_0, g)}_{\text{Bayesian Kernel}}. \tag{11}
+\]
+\end{original}
+\begin{translation}
+在本节中，我们转向分析师最优预测的刻画。每个分析师 $F_0$ 的初始预测由贝叶斯法则导出：
+\[
+F_0 = \frac{\tau_0}{\tau_x + \tau_0} s_0. \tag{9}
+\]
+为了在获得一组新信息后选择最优更新预测 $F$，分析师最大化方程（4）中的目标。即，最优预测 $F$ 满足一阶条件：
+\[
+F = \int_{\Theta} \left( \frac{\tau_x \cdot 0 + \tau_0 s_0 + \varrho g}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho, \tag{10}
+\]
+其中扭曲的后验信念 $\eta$ 满足：
+\[
+\eta(\varrho \mid s_0, g; F) = \underbrace{\frac{\phi'\big( \mathbb{E}_{\varrho}[U(F,x)] \big)}{\int_{\Theta} \phi'\big( \mathbb{E}_{\tilde{\varrho}}[U(F,x)] \big) \mu(\tilde{\varrho} \mid s_0, g) \, d\tilde{\varrho}}}_{\text{悲观扭曲}}\underbrace{\mu(\varrho \mid s_0, g)}_{\text{贝叶斯核}}. \tag{11}
+\]
+\end{translation}
+
+\begin{original}
+The term with the combined fraction in Equation (10) captures the posterior mean of the random variable $x$ for a particular model $\varrho$, where the weights assigned to observations $s_0, g$ are dictated by Bayes' rule. The distribution of $\varrho$ is updated by following Equation (11). When analysts are ambiguity neutral (i.e., $\alpha = 0$), $\phi'(\cdot)$ is constant and the posterior distribution of $\varrho$ simply follows Bayes' rule. When analysts are ambiguity averse (i.e., $\alpha > 0$), the posterior distribution of $\varrho$ is distorted by their pessimistic attitude: it is reweighted by the term $\phi'\big( \mathbb{E}_{\varrho}[U(F,x)] \big)$.
+\end{original}
+\begin{translation}
+方程（10）中组合分数项捕捉了特定模型 $\varrho$ 下随机变量 $x$ 的后验均值，其中分配给观测值 $s_0, g$ 的权重由贝叶斯法则决定。$\varrho$ 的分布按照方程（11）进行更新。当分析师是模糊中性时（即 $\alpha = 0$），$\phi'(\cdot)$ 为常数，$\varrho$ 的后验分布简单地遵循贝叶斯法则。当分析师是模糊厌恶时（即 $\alpha > 0$），$\varrho$ 的后验分布被其悲观态度所扭曲：它被项 $\phi'\big( \mathbb{E}_{\varrho}[U(F,x)] \big)$ 重新加权。
+\end{translation}
+
+\begin{original}
+To understand such pessimism, consider analyst $j$ who obtains observations $(s_0, g)$ and contemplates releasing a forecast $F$. She views model $\varrho$ as the more likely model if she is worse off under such a model. That is, a model with $\varrho$ that generates a lower expected utility for analyst $j$ is given a higher weight in her distorted posterior belief. Recall that $\phi'(\cdot) > 0$ and $\phi''(\cdot) < 0$. Consequently, the posterior belief $\eta(\varrho \mid s_0, g; F)$ depends on her forecast $F$. Such a dependence is the key difference from the standard forecasting problems.
+\end{original}
+\begin{translation}
+为了理解这种悲观主义，考虑分析师 $j$ 获得观测值 $(s_0, g)$ 并考虑发布一个预测 $F$。如果她在某个模型下情况更差，她会将该模型 $\varrho$ 视为更可能的模型。即，为分析师 $j$ 产生较低期望效用的模型 $\varrho$，在其扭曲的后验信念中被赋予更高权重。回忆 $\phi'(\cdot) > 0$ 且 $\phi''(\cdot) < 0$。因此，后验信念 $\eta(\varrho \mid s_0, g; F)$ 依赖于她的预测 $F$。这种依赖是与标准预测问题的关键区别。
+\end{translation}
+
+\begin{original}
+To facilitate the subsequent analysis and characterize the pessimism, define the surprise of managerial guidance $g$ for analyst $j$ by $\Delta \equiv g - F_0$, i.e., the difference between the guidance $g$ and the analyst's initial forecast $F_0$. The optimality condition of Equation (10) is represented by
+\[
+F = F_0 + \beta(s_0, g, \Delta) \Delta, \tag{12}
+\]
+where
+\[
+\beta(s_0, g, \Delta) = \int_{\Theta} \left( \frac{\varrho}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho, \tag{13}
+\]
+and the distorted posterior belief is such that
+\[
+\eta(\varrho \mid s_0, g; F) \propto \exp\!\left( -\frac{\varrho}{2}\left[ (\Delta + \Delta F)^2 + \frac{2\lambda}{\varrho}(\Delta + \Delta F) \right] \right) \mu(\varrho \mid s_0, g). \tag{14}
+\]
+For any particular model $\varrho$, the optimal response to the surprise $\Delta$ is $\frac{\varrho}{\tau_x + \tau_0 + \varrho}$, which is dictated by Bayes' rule and increasing in the quality of managerial guidance. The response to the surprise $\Delta$ (represented by $\beta$) is a weighted average over the model space $\Theta$ using the distorted distribution $\eta(\varrho \mid s_0, g; F)$, and therefore is bounded between 0 and 1. In this representation, the pessimistic preference of analysts is specifically captured by the following lemma.
+\end{original}
+\begin{translation}
+为便于后续分析并刻画悲观主义，定义分析师 $j$ 的管理层指引意外为 $\Delta \equiv g - F_0$，即指引 $g$ 与分析师初始预测 $F_0$ 之间的差异。方程（10）的最优条件表示为：
+\[
+F = F_0 + \beta(s_0, g, \Delta) \Delta, \tag{12}
+\]
+其中
+\[
+\beta(s_0, g, \Delta) = \int_{\Theta} \left( \frac{\varrho}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho, \tag{13}
+\]
+扭曲的后验信念为：
+\[
+\eta(\varrho \mid s_0, g; F) \propto \exp\!\left( -\frac{\varrho}{2}\left[ (\Delta + \Delta F)^2 + \frac{2\lambda}{\varrho}(\Delta + \Delta F) \right] \right) \mu(\varrho \mid s_0, g). \tag{14}
+\]
+对于任何特定模型 $\varrho$，对意外 $\Delta$ 的最优反应是 $\frac{\varrho}{\tau_x + \tau_0 + \varrho}$，这由贝叶斯法则决定，且随管理层指引质量提高而递增。对意外 $\Delta$ 的反应（由 $\beta$ 表示）是使用扭曲分布 $\eta(\varrho \mid s_0, g; F)$ 在模型空间 $\Theta$ 上的加权平均，因此被界定在0和1之间。在这种表示中，分析师的悲观偏好由以下引理具体刻画。
+\end{translation}
+
+\begin{lemma}[Pessimism]
+Consider any $\Delta > 0$ and the likelihood ratio
+\[
+\ell(\varrho) = \frac{\eta(\varrho \mid s_0, g; F)}{\eta(\varrho \mid s_0, g; F')}.
+\]
+If the surprise $\Delta$ is positive, $\ell(\varrho)$ decreases in $\varrho$; if it is negative, $\ell(\varrho)$ increases in $\varrho$.
+\end{lemma}
+\begin{translation}
+\textbf{引理2（悲观主义）。}考虑任何 $\Delta > 0$ 和似然比
+\[
+\ell(\varrho) = \frac{\eta(\varrho \mid s_0, g; F)}{\eta(\varrho \mid s_0, g; F')}.
+\]
+如果意外 $\Delta$ 为正，则 $\ell(\varrho)$ 随 $\varrho$ 递减；如果为负，则 $\ell(\varrho)$ 随 $\varrho$ 递增。
+\end{translation}
+
+\begin{original}
+Suppose that the surprise $\Delta$ is positive. An analyst $j$ who contemplates a higher forecast $F$ would consider the positive surprise more likely to be informative and assign a lower probability density for models with a high $\varrho$ in her distorted belief $\eta$. Therefore, $\beta$ is decreasing in $F$. In contrast, suppose that the surprise $\Delta$ is negative. An analyst $j$ who contemplates a higher forecast would consider the negative surprise more likely to be informative and therefore assign a higher probability density to models with high $\varrho$ in her distorted belief. Therefore, $\beta$ is increasing in $F$.
+\end{original}
+\begin{translation}
+假设意外 $\Delta$ 为正。一个考虑更高预测 $F$ 的分析师 $j$ 会认为正面意外更可能具有信息含量，并在其扭曲信念 $\eta$ 中对高 $\varrho$ 的模型赋予更低的概率密度。因此，$\beta$ 关于 $F$ 是递减的。相反，假设意外 $\Delta$ 为负。一个考虑更高预测的分析师会认为负面意外更可能具有信息含量，因此在其扭曲信念中对高 $\varrho$ 的模型赋予更高的概率密度。因此，$\beta$ 关于 $F$ 是递增的。
+\end{translation}
+
+\begin{original}
+As implied by Lemma 2, the right-hand side of Equation (12) always decreases in $F$. The optimal forecast $F$ is the fixed point of Equation (12). The following proposition summarizes the equilibrium existence and uniqueness of the forecasting problem.
+\end{original}
+\begin{translation}
+如引理2所暗示的，方程（12）的右边关于 $F$ 总是递减的。最优预测 $F$ 是方程（12）的不动点。以下命题总结了预测问题均衡的存在性和唯一性。
+\end{translation}
+
+\begin{proposition}[Existence and uniqueness]
+If analysts are ambiguity neutral ($\alpha = 0$), there always exists a unique optimal forecast $F$ that satisfies (12) and a unique $\beta$ associated with it. If analysts are ambiguity averse ($\alpha > 0$), there always exists a unique optimal forecast $F$ that satisfies (12) and a unique $\beta$ associated with it.
+\end{proposition}
+\begin{translation}
+\textbf{命题1（存在性与唯一性）。}如果分析师是模糊中性的（$\alpha = 0$），总存在满足（12）的唯一最优预测 $F$ 以及与它相关的唯一 $\beta$。如果分析师是模糊厌恶的（$\alpha > 0$），总存在满足（12）的唯一最优预测 $F$ 以及与它相关的唯一 $\beta$。
+\end{translation}
+
+\begin{original}
+An interesting special case is nested in this framework: if analysts are ambiguity neutral, there is no dependence of analyst $j$'s posterior belief $\eta$ on $F$. Bayes' rule dictates that the posterior distribution of $\varrho$ only depends on the magnitude of the surprise, but not its sign. Therefore, the response to surprises in managerial guidance should always be symmetric.
+\end{original}
+\begin{translation}
+该框架嵌套了一个有趣的特例：如果分析师是模糊中性的，分析师 $j$ 的后验信念 $\eta$ 不依赖于 $F$。贝叶斯法则决定了 $\varrho$ 的后验分布仅取决于意外的大小，而不是其符号。因此，对管理层指引意外的反应应该是始终对称的。
+\end{translation}
+
+\noindent{\footnotesize
+\textsuperscript{9} Section 5.1 provides discussions on empirical evidence that analysts' utility can be dependent on earnings.
+\textsuperscript{10} In fact, we show in Section 2.2 that earnings in the last quarter cannot predict forecast errors in the current quarter conditional on forecast revisions and are orthogonal to forecast revisions in the data.
+\textsuperscript{11} Ambiguity aversion differs from risk aversion, which is implicitly captured by $U(F,x)$. In this model, it is the aversion to ambiguity rather than the aversion to risk that drives our results.
+\textsuperscript{12} The model with extreme ambiguity aversion is a special case of the multiple priors preference proposed by Gilboa and Schmeidler (1989).
+\textsuperscript{13} In the noisy information benchmark, the parameter $\lambda$ in Equation (3) plays no role at all.
+
+\medskip
+{\color{transblue}
+\textsuperscript{9} 第5.1节讨论了分析师效用可以依赖于盈利的实证证据。
+\textsuperscript{10} 事实上，我们在第2.2节中表明，在条件于预测修正的情况下，上季度盈利无法预测当季预测误差，且在数据中与预测修正正交。
+\textsuperscript{11} 模糊厌恶区别于风险厌恶，后者隐含地由$U(F,x)$刻画。在本模型中，是模糊厌恶而非风险厌恶驱动了我们的结果。
+\textsuperscript{12} 具有极端模糊厌恶的模型是Gilboa and Schmeidler (1989)提出的多重先验偏好的特例。
+\textsuperscript{13} 在噪声信息基准中，方程（3）中的参数$\lambda$完全不发挥作用。
+}
+}
+
+\newpage
+% ============================================================
+% 4. EQUILIBRIUM ANALYSIS
+% ============================================================
+\section{4. Equilibrium Analysis / 均衡分析}
+
+\begin{original}
+This section presents a set of equilibrium analyses corresponding to the empirical facts documented in Section 2. We demonstrate that the two basic model mechanisms (uncertainty in quality and aversion to uncertainty) and their interaction can help account for those empirical patterns.
+\end{original}
+\begin{translation}
+本节呈现了与第2节记录的实证事实相对应的一组均衡分析。我们证明，两个基本的模型机制（质量不确定性和对不确定性的厌恶）及其相互作用可以帮助解释这些实证模式。
+\end{translation}
+
+\subsection{4.1 Asymmetry / 不对称性}
+
+\begin{original}
+We first characterize the asymmetric responses to negative and positive surprises in managerial guidance. To state this formally, let a pair of surprises be $(\Delta^-, \Delta^+)$, such that $\Delta^- < 0 < \Delta^+$ and $\Delta^- + \Delta^+ = 0$.
+\end{original}
+\begin{translation}
+我们首先刻画对管理层指引中负面和正面意外的不对称反应。为正式表述，令一对意外为 $(\Delta^-, \Delta^+)$，使得 $\Delta^- < 0 < \Delta^+$ 且 $\Delta^- + \Delta^+ = 0$。
+\end{translation}
+
+\begin{proposition}
+If analysts are ambiguity averse, forecast revisions in response to surprises are asymmetric. Specifically,
+\[
+\Delta(\beta(\Delta^-) - \beta(\Delta^+)) \geq 0,
+\]
+where the equality holds if and only if $\alpha = 0$.
+\end{proposition}
+\begin{translation}
+\textbf{命题2。}如果分析师是模糊厌恶的，对意外的预测修正反应是不对称的。具体而言，
+\[
+\Delta(\beta(\Delta^-) - \beta(\Delta^+)) \geq 0,
+\]
+等式成立当且仅当 $\alpha = 0$。
+\end{translation}
+
+\begin{original}
+To illustrate this, consider the case where analysts are better off when the earnings realization is high (i.e., $\lambda > 0$). That is, analysts consider the news that suggests higher realizations of earnings to be favorable.
+\end{original}
+\begin{translation}
+为说明这一点，考虑分析师在盈利实现较高时状况更好的情形（即 $\lambda > 0$）。也就是说，分析师认为暗示较高盈利实现的新闻是有利的。
+\end{translation}
+
+\begin{original}
+Proposition 2 states that analysts would always be less responsive to positive surprises (i.e., $\Delta^+$, favorable news) than to negative surprises (i.e., $\Delta^-$, unfavorable news). The mechanism is as follows. In this model, analysts are uncertain about the quality of the information source and, therefore, need to assess its quality based on the news itself. Given that favorable news improves analyst $j$'s expected utility, she would behave with more caution (due to her ambiguity averse preferences) and discount the quality of favorable news. Conversely, given that negative surprises or unfavorable news reduce her expected utility, she would overcount its quality, i.e., assign a high probability density to models with high quality. Therefore, analyst $j$ responds to negative surprises to a larger extent than to positive surprises of the same magnitude, that is, $\beta(\Delta^-) > \beta(\Delta^+)$.
+\end{original}
+\begin{translation}
+命题2表明，分析师对正面意外（即 $\Delta^+$，有利新闻）的反应总是比对负面意外（即 $\Delta^-$，不利新闻）的反应更弱。其机制如下。在该模型中，分析师对信息来源的质量不确定，因此需要根据新闻本身评估其质量。鉴于有利新闻改善了分析师 $j$ 的期望效用，她会更加谨慎（由于其模糊厌恶偏好），并贴现有利新闻的质量。反之，鉴于负面意外或不利新闻降低了她的期望效用，她会过度计数其质量，即对高质量模型赋予高概率密度。因此，分析师 $j$ 对负面意外的反应程度大于对同样幅度的正面意外的反应程度，即 $\beta(\Delta^-) > \beta(\Delta^+)$。
+\end{translation}
+
+\subsection{4.2 Nonmonotonicity / 非单调性}
+
+\begin{original}
+Next, we show that the model also features a nonmonotonic relationship between forecast revisions and surprises. Two key take-away messages are as follows. First, the nonmonotonicity does not rely on ambiguity aversion but instead on ambiguity (uncertainty) in quality. Second, in fact, the nonmonotonicity disappears when the degree of ambiguity aversion becomes extreme. Proposition 3 formalizes the former, and Proposition 4 characterizes the latter. To simultaneously capture both nonmonotonicity and asymmetry, neither ambiguity neutral preferences nor extreme ambiguity aversion is feasible.
+\end{original}
+\begin{translation}
+接下来，我们证明模型还具有预测修正与意外之间的非单调关系特征。两个关键要点如下。首先，非单调性不依赖于模糊厌恶，而是依赖于质量的模糊性（不确定性）。其次，事实上，当模糊厌恶程度变得极端时，非单调性会消失。命题3正式化了前者，命题4刻画了后者。为了同时捕捉非单调性和不对称性，模糊中性偏好和极端模糊厌恶都不可行。
+\end{translation}
+
+\begin{proposition}
+If analysts are ambiguity neutral ($\alpha = 0$), the optimal forecast revision $F - F_0$ increases in $\Delta$ conditional on surprise $\Delta$ being small in magnitude and decreases in $\Delta$ conditional on surprise $\Delta$ being sufficiently large in magnitude. The forecast revision at the individual level $F - F_0$ is always symmetric around the origin.
+\end{proposition}
+\begin{translation}
+\textbf{命题3。}如果分析师是模糊中性的（$\alpha = 0$），最优预测修正 $F - F_0$ 在意外 $\Delta$ 幅度较小时关于 $\Delta$ 递增，在意外 $\Delta$ 幅度足够大时关于 $\Delta$ 递减。个体层面的预测修正 $F - F_0$ 始终关于原点对称。
+\end{translation}
+
+\begin{original}
+Given that the quality of guidance is uncertain, analyst $j$ updates her belief through two mechanisms. First, for any given quality $\varrho$, analyst $j$ updates her belief about the earnings upon receiving the guidance. This mechanism dictates that positive (negative) surprises raise (suppress) forecasts. Second, she also updates her belief about the distribution of quality. When the surprise is large, Bayesian analysts will assign a higher probability density to low qualities. That is, they tend to believe that large surprises are of low quality. Crudely, this is because low-quality information sources would have fatter tails and be more likely to generate large surprises. In other words, the posterior distribution of information quality given a small surprise first-order stochastically dominates the posterior distribution given a large surprise. Therefore, this mechanism implies that forecast revisions can be less responsive to surprises when they are larger.
+\end{original}
+\begin{translation}
+鉴于指引质量是不确定的，分析师 $j$ 通过两种机制更新其信念。首先，对于任何给定的质量 $\varrho$，分析师 $j$ 在收到指引后更新其对盈利的信念。该机制决定了正面（负面）意外提升（抑制）预测。其次，她还更新对质量分布的信念。当意外很大时，贝叶斯分析师会对低质量赋予更高的概率密度。即，他们倾向于认为大意外是低质量的。粗糙地说，这是因为低质量信息来源具有更厚的尾部，更可能产生大意外。换言之，给定小意外的信息质量后验分布一阶随机占优于给定大意外的后验分布。因此，该机制意味着预测修正对意外较大时的反应可能较弱。
+\end{translation}
+
+\begin{original}
+For small enough surprises, the second mechanism (i.e., updating the distribution of quality) is less consequential, and therefore forecast revisions increase in surprises. For large enough surprises, the second mechanism dominates the first, and, as a result, forecast revisions decrease in surprises. Fig. 4(a) illustrates this pattern that forecast revisions decrease and increase and then decrease in surprises. The symmetry is trivial given that analysts are Bayesian.
+\end{original}
+\begin{translation}
+对于足够小的意外，第二种机制（即更新质量分布）的影响较小，因此预测修正关于意外递增。对于足够大的意外，第二种机制主导第一种机制，结果预测修正关于意外递减。Fig. 4(a)说明了预测修正在意外上递减、递增、再递减的这一模式。鉴于分析师是贝叶斯的，对称性是平凡的。
+\end{translation}
+
+\begin{proposition}
+If analysts have extreme degree of ambiguity aversion ($\alpha \to +\infty$), the optimal forecast revision $F - F_0$ is increasing in surprise $\Delta$.
+\end{proposition}
+\begin{translation}
+\textbf{命题4。}如果分析师具有极端程度的模糊厌恶（$\alpha \to +\infty$），最优预测修正 $F - F_0$ 关于意外 $\Delta$ 递增。
+\end{translation}
+
+\begin{original}
+When surprises are relatively small in magnitude, the Bayesian mechanism dictates that forecast revisions increase in surprises (Proposition 3). Furthermore, the ambiguity aversion mechanism also dictates an increasing relationship. Analyst $j$ tends to believe that negative surprises are of higher (lower) quality than positive surprises of the same magnitude if $\lambda > 0$ ($\lambda < 0$). Given that the ambiguity aversion is extreme, analysts believe that the quality of negative news is of the highest possible value and that of positive news is of the lowest possible value if $\lambda > 0$ and vice versa. Fig. 4(b) illustrates the case where $\lambda > 0$ and $\alpha \to +\infty$. In this case, analyst $j$ believes that negative surprises are of the highest quality and positive surprises are of the lowest quality. Therefore, forecast revisions increase in surprises with a flatter slope when surprises are positive and with a steeper slope when surprises are negative.
+\end{original}
+\begin{translation}
+当意外在幅度上相对较小时，贝叶斯机制决定了预测修正关于意外递增（命题3）。此外，模糊厌恶机制也决定了递增关系。如果 $\lambda > 0$（$\lambda < 0$），分析师 $j$ 倾向于认为负面意外比同样幅度的正面意外具有更高（更低）的质量。鉴于模糊厌恶是极端的，如果 $\lambda > 0$，分析师认为负面新闻的质量是最高的可能值，正面新闻的质量是最低的可能值，反之亦然。Fig. 4(b)说明了 $\lambda > 0$ 和 $\alpha \to +\infty$ 的情形。在该情形中，分析师 $j$ 认为负面意外具有最高质量，正面意外具有最低质量。因此，预测修正关于意外递增，当意外为正时斜率更平缓，当意外为负时斜率更陡峭。
+\end{translation}
+
+\begin{original}
+When surprises are very large in magnitude, the Bayesian mechanism dictates that forecast revisions decrease in surprises (Proposition 3). However, this is dominated by the impact of extreme ambiguity aversion. Therefore, forecast revisions always increase in surprises, despite the sign of $\Delta$.
+\end{original}
+\begin{translation}
+当意外在幅度上非常大时，贝叶斯机制决定了预测修正关于意外递减（命题3）。然而，这被极端模糊厌恶的影响所主导。因此，预测修正关于意外始终递增，无论 $\Delta$ 的符号如何。
+\end{translation}
+
+\begin{original}
+In summary, the contrast of the two polar cases reveals (i) that ambiguity in guidance quality gives rise to non-monotonicity in surprises and (ii) that aversion to such ambiguity leads to asymmetric responses to negative and positive surprises. Our model of finite ambiguity aversion lies in between. Fig. 4(c) illustrates the relationship between forecast revisions and surprises when the degree of ambiguity aversion is moderate. The optimal forecast revision is not monotonically increasing, which resembles the case of ambiguity neutrality. Nevertheless, it is also asymmetric, which resembles the case of extreme ambiguity aversion.
+\end{original}
+\begin{translation}
+总之，两种极端情况的对比揭示了（i）指引质量的模糊性产生了关于意外的非单调性，以及（ii）对这种模糊性的厌恶导致了对负面和正面意外的不对称反应。我们的有限模糊厌恶模型介于两者之间。Fig. 4(c)说明了模糊厌恶程度适中时预测修正与意外之间的关系。最优预测修正在意外上并非单调递增，这类似于模糊中性的情况。然而，它也是不对称的，这类似于极端模糊厌恶的情况。
+\end{translation}
+
+\subsection{4.3 Heterogeneous Overreaction: Theoretical Counterpart / 异质性过度反应：理论对应物}
+
+\begin{original}
+The preceding two subsections characterize how forecast revisions respond to surprises in our model and demonstrate its consistency with the data. In this section, we offer a direct theoretical counterpart for the cross-sectional heterogeneous overreaction pattern documented in Section 2.3.
+\end{original}
+\begin{translation}
+前两节刻画了在我们的模型中预测修正如何响应意外，并证明了其与数据的一致性。在本节中，我们为第2.3节记录的横截面异质性过度反应模式提供直接的理论对应物。
+\end{translation}
+
+\begin{original}
+We begin our investigation by constructing the FE-on-FR coefficients in Equation (1) in the neighborhood of a particular surprise level. This construction is the theoretical counterpart of empirical coefficients in each running decile window shown in Fig. 2. It allows us to study how overreaction varies over surprise in the model and directly map those model predictions to the data.
+\end{original}
+\begin{translation}
+我们通过在特定意外水平的邻域内构建方程（1）中的FE对FR系数来开始我们的研究。这一构建是Fig. 2中每个滚动十分位窗口中实证系数的理论对应物。它允许我们研究模型中过度反应如何随意外变化，并将这些模型预测直接映射到数据。
+\end{translation}
+
+\begin{original}
+Specifically, let the counterpart of the concerning coefficient be
+\[
+\gamma_1(\underline{\Delta}, \bar{\Delta}) \equiv \frac{\text{Cov}\big(FE, FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)}{\text{Var}\big(FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)}.
+\]
+The term $\gamma_1(\underline{\Delta}, \bar{\Delta})$ captures the FE-on-FR coefficient on $(\underline{\Delta}, \bar{\Delta})$ where $\tilde{\Delta}$ is its middle point and the width is $\delta$; that is, $\underline{\Delta} = \tilde{\Delta} - \delta$, $\bar{\Delta} = \tilde{\Delta} + \delta$. Observe that when $\delta \to 0$ and $\underline{\Delta} \to -\infty$, $\bar{\Delta} \to +\infty$, $\gamma_1(\underline{\Delta}, \bar{\Delta})$ converges to the estimated coefficient of the canonical FE-on-FR regression that characterizes average degree of overreaction.
+\end{original}
+\begin{translation}
+具体而言，令相关系数的对应物为
+\[
+\gamma_1(\underline{\Delta}, \bar{\Delta}) \equiv \frac{\text{Cov}\big(FE, FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)}{\text{Var}\big(FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)}.
+\]
+项 $\gamma_1(\underline{\Delta}, \bar{\Delta})$ 刻画了在 $(\underline{\Delta}, \bar{\Delta})$ 上的FE对FR系数，其中 $\tilde{\Delta}$ 是其中点，宽度为 $\delta$；即 $\underline{\Delta} = \tilde{\Delta} - \delta$，$\bar{\Delta} = \tilde{\Delta} + \delta$。观察到当 $\delta \to 0$ 且 $\underline{\Delta} \to -\infty$、$\bar{\Delta} \to +\infty$ 时，$\gamma_1(\underline{\Delta}, \bar{\Delta})$ 收敛到刻画平均过度反应程度的标准FE对FR回归的估计系数。
+\end{translation}
+
+\begin{original}
+We can further show that for sufficiently small $\delta$,
+\[
+\gamma_1(\underline{\Delta}, \bar{\Delta}) \approx \lim_{\delta \to 0} \gamma_1(\tilde{\Delta}, \delta) = -1 + \frac{\beta(\tilde{\Delta}) + \tilde{\Delta} \beta'(\tilde{\Delta})}{\beta^{RE}(\tilde{\Delta})}, \tag{15}
+\]
+where $\beta^{RE}$ denotes the responsiveness to guidance surprise in the benchmark model with rational expectation, which is characterized by Bayes' rule (see Equation (6)). The derivation is relegated to Appendix B.
+\end{original}
+\begin{translation}
+我们可以进一步证明，对于足够小的 $\delta$，
+\[
+\gamma_1(\underline{\Delta}, \bar{\Delta}) \approx \lim_{\delta \to 0} \gamma_1(\tilde{\Delta}, \delta) = -1 + \frac{\beta(\tilde{\Delta}) + \tilde{\Delta} \beta'(\tilde{\Delta})}{\beta^{RE}(\tilde{\Delta})}, \tag{15}
+\]
+其中 $\beta^{RE}$ 表示理性预期基准模型中对指引意外的反应度，由贝叶斯法则刻画（见方程（6））。推导过程请参见附录B。
+\end{translation}
+
+\begin{original}
+Note that the denominator on the right-hand side of Equation (15) represents the first-order approximation of the marginal effect of guidance surprise $\Delta$ on forecast revisions $FR$, evaluated at the midpoint of the interval $(\underline{\Delta}, \bar{\Delta})$, specifically $\Delta = \tilde{\Delta}$, when $\delta$ is sufficiently small. It is important to highlight that it captures the relation between forecast revisions and surprises around the point $\Delta = \tilde{\Delta}$. In other words, Equation (15) provides a theoretical mapping between the cross-sectional distribution of FE-on-FR coefficients and the FR-on-Surprise relation.
+\end{original}
+\begin{translation}
+注意方程（15）右边的分母代表了指引意外 $\Delta$ 对预测修正 $FR$ 的边际效应的一阶近似，在区间 $(\underline{\Delta}, \bar{\Delta})$ 的中点，即 $\Delta = \tilde{\Delta}$ 处求值，当 $\delta$ 足够小时。重要的是要强调，它刻画了在 $\Delta = \tilde{\Delta}$ 点附近预测修正与意外之间的关系。换言之，方程（15）提供了FE对FR系数的横截面分布与FR对意外关系之间的理论映射。
+\end{translation}
+
+\begin{original}
+To illustrate, consider a special case, in which forecast revisions are linear in surprises: $FR = \beta \Delta$ with $\beta$ representing the responsiveness to guidance surprise. It is worth noting that a wide range of expectation formation theories exhibit this feature, including noisy information expectation, diagnostic expectation, overconfidence, and parsimonious forms of loss aversion. Linearity in expectation formation implies that
+\[
+\gamma_1(\tilde{\Delta}, \delta) = -1 + \frac{\beta}{\beta^{RE}},
+\]
+with equality holds exactly. Analysts would overreact (or underreact) to guidance surprises if and only if the responsiveness, represented by $\beta$, is larger (or smaller) than $\beta^{RE}$. In other words, when forecast revisions to surprises are state-independent, the degree of overreaction (or underreaction) is shown to be homogeneous.
+\end{original}
+\begin{translation}
+为说明这一点，考虑一个特例，其中预测修正关于意外是线性的：$FR = \beta \Delta$，其中 $\beta$ 代表对指引意外的反应度。值得指出的是，广泛的预期形成理论都表现出这一特征，包括噪声信息预期、诊断性预期、过度自信以及简约形式的损失厌恶。预期形成的线性意味着
+\[
+\gamma_1(\tilde{\Delta}, \delta) = -1 + \frac{\beta}{\beta^{RE}},
+\]
+等式严格成立。当且仅当反应度 $\beta$ 大于（或小于）$\beta^{RE}$ 时，分析师才会对指引意外过度反应（或反应不足）。换言之，当对意外的预测修正是状态无关的时，过度反应（或反应不足）的程度被证明是同质的。
+\end{translation}
+
+\begin{original}
+In our model, the optimal response $\beta$ is state dependent. The cross-sectional pattern of heterogeneous overreaction in fact inherits the properties of non-monotonicity and asymmetry displayed in the FR-on-Surprise relation. The following proposition summarizes the results.
+\end{original}
+\begin{translation}
+在我们的模型中，最优反应 $\beta$ 是状态依赖的。异质性过度反应的横截面模式实际上继承了FR对意外关系中展示的非单调性和不对称性。以下命题总结了这些结果。
+\end{translation}
+
+\begin{proposition}
+Suppose analysts are ambiguity averse (i.e., $\alpha > 0$) and prefer better earnings outcomes (i.e., $\lambda > 0$).
+\begin{enumerate}[label=(\roman*)]
+\item Analysts' overreaction (or underreaction) to guidance surprise is asymmetric with stronger overreaction (or weaker underreaction) for negative surprises, when surprises are sufficiently small in size:
+\[
+\lim_{\tilde{\Delta} \to 0} \frac{d \gamma_1(\tilde{\Delta})}{d \tilde{\Delta}} > 0,
+\]
+where $\gamma_1(\tilde{\Delta})$ refers to the FE-on-FR coefficient around the neighborhood of $\tilde{\Delta}$.
+\item Analysts' overreaction (or underreaction) is weaker (or stronger) when guidance surprise is extreme than when it is moderate:
+\[
+\gamma_1(0) < \lim_{|\tilde{\Delta}| \to +\infty} \gamma_1(\tilde{\Delta}).
+\]
+\end{enumerate}
+Note that the term $\lim_{\tilde{\Delta} \to 0} \frac{d \gamma_1(\tilde{\Delta})}{d \tilde{\Delta}}$ reduces to zero if analysts' overreaction (or underreaction) to guidance surprise is symmetric. Furthermore, item (ii) in this proposition is a sufficient condition for the non-monotonicity pattern.
+\end{proposition}
+\begin{translation}
+\textbf{命题5。}假设分析师是模糊厌恶的（即 $\alpha > 0$）且偏好更好的盈利结果（即 $\lambda > 0$）。
+\begin{enumerate}[label=(\roman*)]
+\item 分析师对指引意外的过度反应（或反应不足）是不对称的，当意外足够小时，对负面意外的过度反应更强（或反应不足更弱）：
+\[
+\lim_{\tilde{\Delta} \to 0} \frac{d \gamma_1(\tilde{\Delta})}{d \tilde{\Delta}} > 0,
+\]
+其中 $\gamma_1(\tilde{\Delta})$ 指在 $\tilde{\Delta}$ 邻域附近的FE对FR系数。
+\item 当指引意外极端时，分析师的过度反应（或反应不足）比意外适中时更弱（或更强）：
+\[
+\gamma_1(0) < \lim_{|\tilde{\Delta}| \to +\infty} \gamma_1(\tilde{\Delta}).
+\]
+\end{enumerate}
+注意，如果分析师对指引意外的过度反应（或反应不足）是对称的，则 $\lim_{\tilde{\Delta} \to 0} \frac{d \gamma_1(\tilde{\Delta})}{d \tilde{\Delta}}$ 退化为零。此外，本命题中的第（ii）项是非单调性模式的充分条件。
+\end{translation}
+
+\newpage
+% ============================================================
+% 5. DISCUSSIONS
+% ============================================================
+\section{5. Discussions / 讨论}
+
+\begin{original}
+In this section, we address a range of relevant issues concerning our theory. In Section 5.1, we address the issue of whether our mechanism is quantitatively relevant by structurally estimating this model and comparing it with the estimated pattern found in the data. In Section 5.2, we test auxiliary predictions derived from our model, which further corroborates the mechanism proposed. In Section 5.3, we also consider various alternative hypotheses and show that the new empirical patterns documented in this paper cannot be accounted for by existing theories.
+\end{original}
+\begin{translation}
+在本节中，我们处理与我们的理论相关的一系列问题。在第5.1节中，我们通过结构性估计该模型并将其与数据中发现的估计模式进行比较，来解决我们的机制是否在定量上具有相关性的问题。在第5.2节中，我们检验了从模型中导出的辅助预测，这进一步佐证了所提出的机制。在第5.3节中，我们还考虑了各种替代假设，并表明本文记录的新的实证模式无法由现有理论来解释。
+\end{translation}
+
+\subsection{5.1 Quantitative Analysis / 定量分析}
+
+\begin{original}
+While we have demonstrated that the qualitative patterns of asymmetry and non-monotonicity in our model align with those observed in the data, a question arises about the model's quantitative informativeness regarding the empirical findings. Additionally, a set of parameters characterizing the utility function and ambiguity aversion play a crucial role in determining the model's qualitative properties. However, these parameters remain unobservable.
+\end{original}
+\begin{translation}
+虽然我们已经证明了模型中不对称性和非单调性的定性模式与数据中观察到的相一致，但关于该模型对实证发现在定量上的信息含量的问题随之而来。此外，刻画效用函数和模糊厌恶的一组参数在决定模型的定性性质中起着至关重要的作用。然而，这些参数仍然不可观测。
+\end{translation}
+
+\begin{original}
+To address these two issues, we proceed to structurally estimate this model, using the simulated method of moments to match the relationship between forecast revisions and surprises that is empirically estimated in Section 2.4.\textsuperscript{14} Then the estimated model is interpreted and used to revisit the pattern of heterogeneous overreaction (documented in Sections 2.2 and 2.3) and inform the key parameters. While Online Appendix D provides details of the estimation, this section summarizes the key findings.
+\end{original}
+\begin{translation}
+为了解决这两个问题，我们利用模拟矩方法对模型进行结构性估计，以匹配第2.4节中实证估计的预测修正与意外之间的关系。\textsuperscript{14}然后，利用估计的模型来重新审视异质性过度反应模式（第2.2和2.3节记录），并推测关键参数。在线附录D提供了估计的细节，本节总结了关键发现。
+\end{translation}
+
+\begin{original}
+\textbf{Unobservable parameters.} The degree of ambiguity aversion is the key to our model, and its value is estimated to be $\alpha = 449.9$. On the one hand, it is consistent with our model prediction that neither extreme ambiguity aversion ($\alpha \to +\infty$) nor ambiguity neutral preferences ($\alpha = 0$) would be realistic for analysts in this setting. It is an important finding that justifies the use of smooth model of ambiguity. On the other hand, it is worth noting that, with the reduced form utility specification, the estimated $\alpha$ is only in proportion to the actual degree of ambiguity aversion and it can be inflated by a constant shifter in utility function.\textsuperscript{15}
+\end{original}
+\begin{translation}
+\textbf{不可观测参数。}模糊厌恶程度是我们模型的关键，其估计值为 $\alpha = 449.9$。一方面，这符合我们的模型预测，即在该设定中，极端模糊厌恶（$\alpha \to +\infty$）和模糊中性偏好（$\alpha = 0$）对分析师而言都不是现实的。这是一个重要的发现，证明了使用平滑模糊模型的合理性。另一方面，值得注意的是，在简化形式效用设定下，估计的 $\alpha$ 仅与实际模糊厌恶程度成比例，且可能被效用函数中的常数移位因子所膨胀。\textsuperscript{15}
+\end{translation}
+
+\begin{original}
+Furthermore, the parameter $\lambda$ that characterizes the utility function is estimated to be positive, i.e., $\lambda = 1.37$, indicating that analysts are likely to care about the earnings performance of firms that they cover. Prior empirical studies suggest that it is plausible that $\lambda$ is positive. There are multiple channels through which financial analysts would benefit from better earnings performance of the firms that they cover and therefore view positive surprises in managerial guidance as favorable. For example, stronger earnings performance can be rewarding to financial analysts who make earnings forecasts and recommendations for the underlying stocks through the trading commissions channel.\textsuperscript{16}
+\end{original}
+\begin{translation}
+此外，刻画效用函数的参数 $\lambda$ 被估计为正值，即 $\lambda = 1.37$，表明分析师可能关心他们所覆盖公司的盈利表现。先前的实证研究表明，$\lambda$ 为正的估计值是合理的。金融分析师可以通过多种渠道从其所覆盖公司更好的盈利表现中获益，因此将管理层指引中的正面意外视为有利的。例如，更强的盈利表现可以通过交易佣金渠道对做出盈利预测和基础股票推荐的金融分析师产生回报。\textsuperscript{16}
+\end{translation}
+
+\begin{original}
+\textbf{Quantitative relevancy.} To examine whether our estimated model can produce the pattern of heterogeneous overreaction found in the data (in Section 2.3), we utilize the simulated data and construct the surprises observable to the econometrician in the same way as we do with the empirical data. We rank surprises from the most negative to the most positive and sort them into deciles, labelling them from 1 to 10 according to the decile rank. We further define a running decile window $w$, such that (1) the window $w$ covers decile $w-1$, $w$, and $w+1$ if $w \neq 1$ or $10$; (2) running decile window 1 covers deciles 1 and 2; and (3) running decile window 10 covers deciles 9 and 10. For each subsample, we re-estimate Equation (1). We plot the estimated coefficients and confidence intervals in Fig. 5 against their window ranks. In the simulated data, we find that the pattern of heterogeneous overreaction is U-shaped and skewed to the left, which is consistent with our model predictions in Section 4.3 and also close to the pattern in the empirical data (Fig. 2).
+\end{original}
+\begin{translation}
+\textbf{定量相关性。}为了检验我们的估计模型能否产生数据中发现的异质性过度反应模式（第2.3节），我们利用模拟数据，以与实证数据相同的方式构建计量经济学家可观测的意外。我们将意外从最负面到最正面排序，分为十分位数，根据十分位排序标记为1到10。我们进一步定义了一个滚动十分位窗口 $w$，使得（1）若 $w \neq 1$ 或 $10$，窗口 $w$ 覆盖十分位 $w-1$、$w$ 和 $w+1$；（2）滚动十分位窗口1覆盖十分位1和2；（3）滚动十分位窗口10覆盖十分位9和10。对于每个子样本，我们重新估计方程（1）。我们在Fig. 5中将估计系数和置信区间按其窗口排序进行绘图。在模拟数据中，我们发现异质性过度反应模式是U形且左偏的，这与我们在第4.3节中的模型预测一致，也接近实证数据中的模式（Fig. 2）。
+\end{translation}
+
+\subsection{5.2 Auxiliary Predictions / 辅助预测}
+
+\begin{original}
+In this paper, we provide a theory about how the expectation is formed when forecasters are not certain of the quality of the information that they receive. Our theory organizes a number of facts that we document with the earnings forecast data. In this section, we further show that our theory provides two auxiliary predictions that are consistent with the earnings forecast data.
+\end{original}
+\begin{translation}
+在本文中，我们提供了一个关于当预测者对所接收信息质量不确定时预期如何形成的理论。我们的理论整理了我们利用盈利预测数据记录的若干事实。在本节中，我们进一步表明，我们的理论提供了两个与盈利预测数据一致的辅助预测。
+\end{translation}
+
+\begin{original}
+\textbf{Pessimistic bias.} If the analysts in our sample are indeed ambiguity averse, then there should be a pessimistic bias in their beliefs. That is because ambiguity averse analysts react to negative guidance surprises more strongly than positive ones, since they are ambiguous about the precision of manager guidance. The revised forecasts, on average, over-represent negative guidance surprises, leading to a systematic pessimistic bias. The following proposition summarizes the result:
+\end{original}
+\begin{translation}
+\textbf{悲观偏差。}如果我们样本中的分析师确实是模糊厌恶的，那么他们的信念中应该存在悲观偏差。这是因为模糊厌恶的分析师对负面指引意外的反应强于正面意外，因为他们对管理层指引的精度存在模糊性。平均而言，修正后的预测过度代表了负面指引意外，导致系统性的悲观偏差。以下命题总结了这一结果：
+\end{translation}
+
+\begin{proposition}
+In this model, the optimal initial forecasts $F_0$ are unbiased, but the revised forecasts $F$ are pessimistically biased, which leads to systematically positive forecast errors:
+\[
+\mathbb{E}[FE_0] \equiv \mathbb{E}[x - F_0] = 0; \qquad \mathbb{E}[FE] \equiv \mathbb{E}[x - F] > 0,
+\]
+where $\mathbb{E}[\cdot]$ refers to the unconditional expectation with respect to the objective data generating process.
+\end{proposition}
+\begin{translation}
+\textbf{命题6。}在该模型中，最优初始预测 $F_0$ 是无偏的，但修正预测 $F$ 具有悲观偏差，这导致系统性的正向预测误差：
+\[
+\mathbb{E}[FE_0] \equiv \mathbb{E}[x - F_0] = 0; \qquad \mathbb{E}[FE] \equiv \mathbb{E}[x - F] > 0,
+\]
+其中 $\mathbb{E}[\cdot]$ 指关于客观数据生成过程的无条件期望。
+\end{translation}
+
+\begin{original}
+Bias in forecast errors can be obtained by regressing forecast errors on a constant and examining the estimated coefficient. To address the heterogeneity in the data generating process across firms, we run the aforementioned regression on a firm-by-firm basis and report the distribution of estimated coefficients. To ensure an adequate number of observations for each firm, we focus on a subset of firms that have provided earnings guidance for at least 12 consecutive quarters during our sample period. Table 2 presents the median estimates of forecast errors obtained from these firm-specific regressions, along with confidence intervals generated through block bootstrapping the panel data.
+\end{original}
+\begin{translation}
+预测误差中的偏差可以通过将预测误差对常数项回归并检查估计系数来获得。为处理跨公司数据生成过程的异质性，我们逐公司运行上述回归并报告估计系数的分布。为确保每家公司有足够数量的观测值，我们聚焦于样本期间至少连续12个季度提供盈利指引的公司子集。表2呈现了从这些公司特定回归中获得的预测误差中位数估计，以及通过对面板数据进行分块自举法生成的置信区间。
+\end{translation}
+
+\begin{original}
+Interestingly, in column (1), the median estimate for initial forecasts is negative but insignificant, as indicated by the bootstrapped confidence interval. Column (2) presents the median estimate for revised forecasts, which is positive and significant. These results suggest that initial forecasts are unbiased, while revised forecasts exhibit a systematic pessimistic bias. This pattern aligns with the predictions of our theory.
+\end{original}
+\begin{translation}
+有趣的是，在第（1）列中，初始预测的中位数估计为负但不显著，如自举置信区间所表明的。第（2）列呈现了修正预测的中位数估计，为正且显著。这些结果表明初始预测是无偏的，而修正预测表现出系统性的悲观偏差。这一模式与我们的理论预测一致。
+\end{translation}
+
+\begin{original}
+\textbf{Heterogeneity in quality.} In this paper, our underlying assumption is that the quality of firms' earnings guidance is uncertain. However, this uncertainty likely varies across firms for analysts. Established firms with good reputations may offer high-quality managerial guidance, leading analysts to have minimal doubts about its quality. For these firms with low or no uncertainty in earnings guidance quality, our theory suggests that analysts' forecast revisions should exhibit a close-to-linear relationship with guidance surprises. In other words, the connection is expected to be both monotonic and symmetric. This is because, once the uncertainty in quality is eliminated, analysts update their beliefs solely based on the guidance and do not need to reassess the quality.
+\end{original}
+\begin{translation}
+\textbf{质量的异质性。}在本文中，我们的基本假设是，公司盈利指引的质量是不确定的。然而，对分析师而言，这种不确定性可能因公司而异。具有良好声誉的成熟公司可能提供高质量的管理层指引，使得分析师对其质量几乎没有怀疑。对于这些盈利指引质量具有低或零不确定性的公司，我们的理论表明，分析师的预测修正应表现出与指引意外接近线性的关系。换言之，该联系预期既是单调的又是对称的。这是因为，一旦质量的不确定性被消除，分析师仅基于指引本身更新其信念，而不需要重新评估质量。
+\end{translation}
+
+\begin{original}
+To test this prediction using our data, a conceptual challenge arises: the perceived uncertainty in guidance quality is not observable and, therefore, not measurable. To overcome this challenge, we proxy for it using the observed average quality in the data, specifically, the ex post variance of the differences between guidance and actual earnings. Our assumption is that the perceived uncertainty in quality is low if the observed average quality is high.
+\end{original}
+\begin{translation}
+为使用我们的数据检验这一预测，一个概念性挑战出现了：感知的指引质量不确定性不可观测，因此不可度量。为克服这一挑战，我们使用数据中观测的平均质量作为代理，具体而言，指引与实际盈利之间差异的事后方差。我们的假设是，如果观测的平均质量高，则感知的质量不确定性低。
+\end{translation}
+
+\begin{original}
+We construct a subset comprising firms providing highly precise earnings guidance, indicating low uncertainty about their quality. Initially, we rank firms based on their average guidance quality within our full sample of 110,895 individual analyst forecasts, encompassing 16,241 firm-quarter observations. To be consistent with previous empirical exercises, we then trim realized earnings and management guidance at the 2.5\% and 97.5\% percentiles, yielding 15,427 firm-quarter observations. By regressing management guidance on the same-quarter realized earnings, controlling for year-quarter fixed effects, we obtain residuals. Firms present for fewer than 5 quarters are excluded, resulting in a reduced sample of 1,035 firms. Next, we compute standard deviations of the residuals for each firm and sort them accordingly. We concentrate on the top 5\% of firms exhibiting the highest average guidance quality, forming a subsample of 2,521 individual analyst forecast revisions and guidance surprises.
+\end{original}
+\begin{translation}
+我们构建了一个包含提供高精度盈利指引的公司的子集，表明其质量不确定性较低。首先，我们在包含110,895个个体分析师预测、涵盖16,241个公司-季度观测值的完整样本中，根据平均指引质量对公司进行排序。为与之前的实证分析保持一致，我们将实际盈利和管理层指引在2.5\%和97.5\%分位处剪除，得到15,427个公司-季度观测值。通过将管理层指引对同季度实际盈利进行回归，控制年-季度固定效应，我们得到残差。出现少于5个季度的公司被排除，得到一个包含1,035家公司的缩减样本。接下来，我们计算每家公司残差的标准差，并据此进行排序。我们聚焦于平均指引质量最高的前5\%公司，形成一个包含2,521个个体分析师预测修正和指引意外的子样本。
+\end{translation}
+
+\begin{original}
+Using this subsample, we re-estimate the relationship between forecast revisions and guidance surprises by following the same procedure as detailed in section 2.4. The results are shown in Fig. 6(a). The relationship between forecast revisions and surprises is almost linear, unless the surprises are relatively very large and positive. The derivative estimated and shown in Fig. 6(b) is close to a constant when the surprises are not too large, thus contrasting with the derivative estimated using the full sample (shown in Fig. 3(b)). Additionally, the asymmetry measure $\delta$, computed using Equation (2), is found to be $-0.01$. This value, close to zero, indicates a nearly symmetrical pattern in expectation formation when guidance quality has low or no uncertainty.
+\end{original}
+\begin{translation}
+使用该子样本，我们按照第2.4节详述的相同程序重新估计预测修正与指引意外之间的关系。结果显示在Fig. 6(a)中。预测修正与意外之间的关系几乎呈线性，除非意外相对非常大且为正。Fig. 6(b)中显示和估计的导数在意外不太大时接近常数，因此与使用完整样本估计的导数形成对比（显示在Fig. 3(b)中）。此外，利用方程（2）计算的不对称度量 $\delta$ 被发现为 $-0.01$。这一接近零的值表明，当指引质量具有低或零不确定性时，预期形成呈现近乎对称的模式。
+\end{translation}
+
+\subsection{5.3 Alternative Hypotheses / 替代假设}
+
+\begin{original}
+In this paper, we provide a simple unified framework to account for new facts regarding how analysts update their forecasts or form expectations. It is important that our estimated model can generate the skewed U-shaped pattern of overreaction that is consistent with the data. This paper is the first that discovers and rationalizes this set of facts in the literature of expectation formation. Nevertheless, we acknowledge that there could be other mechanisms that simultaneously contribute to the observed patterns. We examine several likely candidates in sequence, which helps differentiate our theory from those in the existing literature. This section provides a summary of our investigations and the details are relegated to Online Appendix E.
+\end{original}
+\begin{translation}
+在本文中，我们提供了一个简单的统一框架来解释关于分析师如何更新其预测或形成预期的新事实。重要的是，我们的估计模型能够生成与数据一致的偏斜U形过度反应模式。本文是预期形成文献中首次发现并合理解释这组事实的研究。然而，我们承认可能还有其他机制同时贡献了观察到的模式。我们依次审查了几个可能的候选机制，这有助于将我们的理论与现有文献中的理论区分开来。本节提供了我们研究的总结，详细内容请参见在线附录E。
+\end{translation}
+
+\begin{original}
+\textbf{Diagnostic expectations and overconfidence.} Two related theories are commonly utilized to explain the observed overreaction patterns present in SPF data. Bordalo et al. (2018) present the theory of diagnostic expectations, a non-Bayesian model of belief formation that formalizes the concept of the representativeness heuristic (Kahneman and Tversky, 1972): forecasters overweigh states that are more likely in light of the arrival of new signals and consequently overreact to new information when forming their expectations. Broer and Kohlhas (2022) show that overconfidence can provide a rationalization for overreaction, i.e., forecasters subjectively believe new signals to be more accurate than they actually are. Once we allow for this set of behavioral features in the noisy information benchmark specified in Section 3.2, overreaction to new information emerges. However, forecast revisions are still linear in surprises and the degree of overreaction is constant and does not depend on realizations of surprises. This set of model predictions are inconsistent with the data.
+\end{original}
+\begin{translation}
+\textbf{诊断性预期与过度自信。}两个相关的理论通常被用来解释SPF数据中观察到的过度反应模式。Bordalo et al.（2018）提出了诊断性预期理论，这是一种非贝叶斯信念形成模型，正式化了代表性启发式（Kahneman and Tversky, 1972）的概念：预测者过度加权在新信号到达时更可能的状态，因此在形成预期时对信息过度反应。Broer and Kohlhas（2022）表明，过度自信可以为过度反应提供合理化解，即预测者主观地认为新信号比实际更准确。一旦我们在第3.2节设定的噪声信息基准中允许这组行为特征，对新信息的过度反应就会出现。然而，预测修正关于意外仍然是线性的，过度反应的程度是恒定的，不依赖于意外的实现。这组模型预测与数据不一致。
+\end{translation}
+
+\begin{original}
+\textbf{Loss aversion.} Another plausible conjecture is that analysts exhibit loss aversion instead of ambiguity aversion. To explore this possibility, we consider two widely used variants of loss aversion in the literature. Capistran and Timmermann (2009) propose a parsimonious setup with analytical solutions, while Elliott et al. (2008) and Elliott and Timmermann (2008) construct a flexible setup with greater quantitative potential. In Online Appendix E.2, we demonstrate that regardless of the specifications for loss aversion, the FR-on-Surprise relation remains globally monotonic, whether it is linear or nonlinear. This is inconsistent with the observed non-monotonic FR-on-Surprise relation detailed in Section 2.4.
+\end{original}
+\begin{translation}
+\textbf{损失厌恶。}另一个合理的推测是分析师表现出损失厌恶而非模糊厌恶。为探索这种可能性，我们考虑了文献中两种广泛使用的损失厌恶变体。Capistran and Timmermann（2009）提出了一个具有解析解的简约设定，而Elliott et al.（2008）和Elliott and Timmermann（2008）构建了一个具有更大定量潜力的灵活设定。在在线附录E.2中，我们证明，无论损失厌恶的具体设定如何，FR对意外的关系仍然是全局单调的，无论是线性的还是非线性的。这与第2.4节详述的观察到的非单调FR对意外关系不一致。
+\end{translation}
+
+\begin{original}
+\textbf{Dynamic models.} Using the Survey of Professional Forecasters (SPF), Kohlhas and Walther (2021) show that forecasters' expectations overreact to recent realizations of the output growth and therefore display a pattern of extrapolation. To explain this, they propose a model of asymmetric attention, where Bayesian agents pay more attention to the procyclical component and less attention to the countercyclical component. Afrouzi et al. (2022) design an experiment where participants who observe a large number of past realizations of a given AR(1) process make forecasts about future realizations. They show a pattern of overreaction, i.e., the perceived persistence of the AR(1) process is larger than the actual persistence. They propose a top-of-mind model, where agents rely excessively on or overreact to the recent realizations, relative to the rational benchmark.
+\end{original}
+\begin{translation}
+\textbf{动态模型。}利用专业预测者调查（SPF），Kohlhas and Walther（2021）表明，预测者的预期对产出增长的近期实现过度反应，因此表现出外推模式。为解释这一点，他们提出了一个非对称注意模型，其中贝叶斯代理人更关注顺周期成分，较少关注逆周期成分。Afrouzi et al.（2022）设计了一个实验，参与者观察给定AR(1)过程中大量过去实现后对未来实现做出预测。他们展示了过度反应模式，即AR(1)过程的感知持续性大于实际持续性。他们提出了一个首要关注模型，其中代理人相对于理性基准过度依赖或过度反应于近期实现。
+\end{translation}
+
+\begin{original}
+In our empirical setting, both initial and updated forecasts are made within the same period, which encompass the earnings guidance for the current period. We use the variations of surprises contained in the earnings guidance across analysts to explore impacts of surprises' characteristics on forecast revisions. Therefore, dynamic models are not informative about the cross-sectional heterogeneity of overreaction. Online Appendix E.3 provides evidence for illustrating this particular finding.
+\end{original}
+\begin{translation}
+在我们的实证设定中，初始预测和更新预测均在同一时期内做出，该时期涵盖当期的盈利指引。我们利用盈利指引中包含的跨分析师意外变化来探索意外特征对预测修正的影响。因此，动态模型对于过度反应的横截面异质性并不具有信息性。在线附录E.3提供了说明这一特定发现的证据。
+\end{translation}
+
+\begin{original}
+\textbf{Agency issues.} This empirical setting is new to the literature and informative about expectation formation. However, one may worry about the role of agency issues between analysts and the managerial teams who might have incentives to misrepresent information. In the literature, it is often shown that managers spin information in self-serving ways to cater to investors and analysts (e.g., Solomon, 2012). Given managerial guidance is an important information protocol provided by managers, it is reasonable to conjecture that managers have an incentive to bias their guidance positively, which makes positive managerial guidance less reliable than negative managerial guidance. This skewed information reliability, if it exists, may lead to the asymmetry we documented. This conjecture is empirically testable. In Online Appendix E.4, we present evidence that is against the conjecture that positive guidance is less reliable. The managerial motives can be complex, often unobservable and unpredictable, which constitutes a source for guidance quality to be unreliable. In fact, that is the key motivation for our assumption that guidance quality is uncertain.
+\end{original}
+\begin{translation}
+\textbf{代理问题。}这一实证环境对文献是新的，对于预期形成具有信息意义。然而，人们可能担心分析师与可能具有误报信息动机的管理层团队之间的代理问题的作用。文献中常表明，管理者以自利的方式歪曲信息以迎合投资者和分析师（例如Solomon, 2012）。鉴于管理层指引是管理者提供的重要信息协议，合理的推测是管理者有动机正向偏误其指引，这使得正面管理层指引不如负面管理层指引可靠。这种倾斜的信息可靠性，如果存在，可能导致我们记录的不对称性。这一猜想在实证上是可检验的。在在线附录E.4中，我们呈现了反驳正面指引更不可靠猜想的证据。管理层的动机可能是复杂的，通常不可观测和不可预测，这构成了指引质量不可靠的来源。事实上，这正是我们假设指引质量不确定的关键动机。
+\end{translation}
+
+\begin{original}
+The literature also documents that managers could have incentives to manage earnings expectations downwards before the earnings release to make it beatable (e.g., Matsumoto, 2002; Cotter et al., 2006; Johnson et al., 2019). Given that one may imagine that more negatively surprised analysts could adjust their forecasts by more to ensure that the firms beat their earnings forecasts. To investigate this possibility, we rely on Johnson et al. (2019) who constructed the expectation management index (EMI) that captures the extent to which firms manage investors' earnings expectations. We add EMI as an additional control in our main regressions (reported by Table 1) and in specifications presented by Fig. 2. If such a walk-down-to-beatable mechanism is crucial for our investigations, the estimated coefficients from our regressions should be greatly affected in terms of magnitude and significance. However, we find that all our estimations only change marginally at the best (available upon request), which suggests that our findings are unlikely driven only by managerial strategic guidance.
+\end{original}
+\begin{translation}
+文献还记录了管理者可能具有在盈利发布前将盈利预期向下管理、使其可被超越的动机（例如Matsumoto, 2002; Cotter et al., 2006; Johnson et al., 2019）。据此，人们可能设想，经历更多负面意外的分析师可能会更大程度地调整其预测，以确保公司超越其盈利预测。为探索这种可能性，我们依赖Johnson et al.（2019）构建的预期管理指数（EMI），该指数刻画了公司管理投资者盈利预期的程度。我们在主要回归（表1报告）和Fig. 2呈现的设定中添加EMI作为额外控制变量。如果这种步行下调至可超越机制对我们的研究至关重要，我们回归中的估计系数在幅度和显著性上应该受到很大影响。然而，我们发现我们所有的估计最多仅边际地变化（可应要求提供），这表明我们的发现不太可能仅由管理层策略性指引所驱动。
+\end{translation}
+
+\newpage
+% ============================================================
+% 6. CONCLUSION
+% ============================================================
+\section{6. Conclusion / 结论}
+
+\begin{original}
+This paper documents a set of cross-sectional facts concerning expectation formation using firm-level earnings forecast and managerial guidance data: the overreaction to information is stronger for unfavorable surprises and weaker for larger surprises, and forecast revisions are asymmetric in surprises and nonmonotonic. We present a model of information uncertainty and smoothed ambiguity aversion to account for these facts. This model qualitatively differs from models with extreme ambiguity aversion or those with ambiguity neutral agents. Our work adds to the literature that studies expectation formation by documenting new facts and providing new theories.
+\end{original}
+\begin{translation}
+本文利用公司层面的盈利预测和管理层指引数据，记录了关于预期形成的一组横截面事实：对信息的过度反应在不利意外时更强，在大意外时更弱，且预测修正在意外上是不对称和非单调的。我们提出了一个信息不确定性和平滑模糊厌恶模型来解释这些事实。该模型在定性上不同于具有极端模糊厌恶或模糊中性代理人的模型。我们的工作通过记录新事实和提供新理论，丰富了研究预期形成的文献。
+\end{translation}
+
+\begin{original}
+The empirical setting has unique advantages and will be useful for exploiting other aspects of expectation formation. First, analysts have dispersed information before receiving the guidance, summarized by their initial forecasts. The two features combined imply that the same managerial guidance delivers different surprises to analysts with different initial forecasts. The variations in surprises at the analyst level enable us to explore the cross-sectional features of overreaction. Second, in contrast to studies using the Survey of Professional Forecasters, this setting is static: we utilize within-quarter variations in surprises among analysts to uncover how analysts update their forecasts. Therefore, it is cleaner for exploring cross-sectional variations in expectation formation.
+\end{original}
+\begin{translation}
+这一实证环境具有独特的优势，将有助于探索预期形成的其他方面。首先，分析师在收到指引前拥有分散的信息，由其初始预测概括。这两个特征的结合意味着同样的管理层指引对具有不同初始预测的分析师传递了不同的意外。分析师层面的意外变化使我们能够探索过度反应的横截面特征。其次，与使用专业预测者调查的研究相比，这一设定是静态的：我们利用分析师之间季度内意外的变化来揭示分析师如何更新其预测。因此，它在探索预期形成的横截面变化时更为清晰。
+\end{translation}
+
+% ============================================================
+% CREDIT AUTHORSHIP
+% ============================================================
+\section*{CRediT Authorship Contribution Statement / 作者贡献声明}
+\begin{original}
+Heng Chen: Writing -- review \& editing, Writing -- original draft, Methodology, Investigation, Formal analysis, Data curation, Conceptualization. Xu Li: Writing -- review \& editing, Writing -- original draft, Methodology, Conceptualization. Guangyu Pei: Writing -- review \& editing, Writing -- original draft, Methodology, Investigation, Formal analysis, Data curation, Conceptualization. Qian Xin: Writing -- review \& editing, Writing -- original draft, Methodology, Investigation, Formal analysis, Data curation, Conceptualization.
+\end{original}
+\begin{translation}
+Heng Chen：撰写——审阅与编辑，撰写——初稿，方法论，调查，形式分析，数据管理，概念化。Xu Li：撰写——审阅与编辑，撰写——初稿，方法论，概念化。Guangyu Pei：撰写——审阅与编辑，撰写——初稿，方法论，调查，形式分析，数据管理，概念化。Qian Xin：撰写——审阅与编辑，撰写——初稿，方法论，调查，形式分析，数据管理，概念化。
+\end{translation}
+
+\section*{Declaration of Competing Interest / 利益冲突声明}
+\begin{original}
+The authors have nothing to disclose.
+\end{original}
+\begin{translation}
+作者无任何需要披露的信息。
+\end{translation}
+
+\section*{Data Availability / 数据可获得性}
+\begin{original}
+Data will be made available on request.
+\end{original}
+\begin{translation}
+数据可应要求提供。
+\end{translation}
+
+% ============================================================
+% APPENDIX A
+% ============================================================
+\appendix
+\section{Appendix A. Data / 附录A：数据}
+
+\subsection{A.1 Sample Construction / 样本构建}
+
+\begin{original}
+First, we retrieve all quarterly earnings guidance from the I/B/E/S Guidance Detail file issued for the current quarter by firm management from 1994 to 2017. The sample starts in 1994 as this is the first year when the I/B/E/S systematically collected information on managerial guidance.\textsuperscript{17} We only keep closed-ended managerial guidance, including point and range forecasts, to quantify and compare them with analysts' forecasts. Consistent with the literature, the value of the guidance is set to equal the midpoint if it is a range forecast.
+\end{original}
+\begin{translation}
+首先，我们从I/B/E/S Guidance Detail文件中提取了1994年至2017年间公司管理层发布的所有当季盈利指引。样本始于1994年，因为这是I/B/E/S系统性收集管理层指引信息的第一年。\textsuperscript{17}我们仅保留封闭式管理层指引，包括点估计和区间预测，以量化并与分析师的预测进行比较。与文献一致，如果指引是区间预测，其值设定为区间中点。
+\end{translation}
+
+\begin{original}
+Second, given that our focus is on analysts' belief-updating process upon receiving new information from firm management, we exclude all managerial guidance bundled with earnings announcements.\textsuperscript{18} We only consider unbundled guidance, partly because it is nearly impossible to distinguish whether a forecast revision reflects information gained from forward-looking managerial guidance or from the realized prior earnings when both of them occur simultaneously.
+\end{original}
+\begin{translation}
+其次，鉴于我们的焦点是分析师在收到公司管理层新信息时的信念更新过程，我们排除了所有与盈利公告捆绑发布的管理层指引。\textsuperscript{18}我们仅考虑非捆绑指引，部分原因是当两者同时发生时，几乎不可能区分预测修正是反映了从前瞻性管理层指引中获得的信息还是从已实现的先前盈利中获得的信息。
+\end{translation}
+
+\begin{original}
+Third, for firm-quarters in which managers provide multiple rounds of earnings guidance (at different dates during the period from two days after the prior quarter earnings announcement date and the current quarter earnings announcement date), we only retain the latest guidance before the current quarter earnings announcement.\textsuperscript{19}
+\end{original}
+\begin{translation}
+第三，对于管理层提供多轮盈利指引的公司-季度（在上一季度盈利公告日期后两天至当季盈利公告日期期间的不同日期），我们仅保留当季盈利公告前的最新指引。\textsuperscript{19}
+\end{translation}
+
+\begin{original}
+Fourth, we then obtain individual analysts' EPS forecasts for a firm-quarter from the I/B/E/S Estimates (the Unadjusted Detail History file) and match them with the I/B/E/S Guidance data using the same firm identifier (I/B/E/S ticker). Because earnings projections in the I/B/E/S Guidance Detail file are provided on a split-adjusted basis, we manually split-adjust both individual analysts' forecasts and managerial projections so that they are comparable with the ultimate realized earnings announced for the forecasted quarter. The realized earnings data are also obtained from the I/B/E/S Estimates. Following a standard practice in the literature, we deflate the EPS estimates by the stock price at the beginning of the quarter using data retrieved from the CRSP. To avoid the small price deflator problem that may distort the distribution, we exclude observations with a stock price of less than one dollar.
+\end{original}
+\begin{translation}
+第四，我们从I/B/E/S Estimates（Unadjusted Detail History文件）获取个体分析师对公司-季度的EPS预测，并使用相同的公司标识符（I/B/E/S ticker）将其与I/B/E/S Guidance数据进行匹配。由于I/B/E/S Guidance Detail文件中的盈利预测是基于股份分拆调整后的基础提供的，我们手动对个体分析师的预测和管理层的预测进行分拆调整，使其与预测季度最终公告的实际盈利具有可比性。实际盈利数据同样从I/B/E/S Estimates中获取。按照文献的标准做法，我们使用从CRSP获取的数据，以季度初的股票价格对EPS估计值进行平减。为避免小价格平减因子可能扭曲分布的问题，我们排除了股票价格低于一美元的观测值。
+\end{translation}
+
+\begin{original}
+Finally, in these data, the initial analyst forecasts are defined and constructed by individual analyst forecasts that are issued after the prior quarter earnings announcement date and are the most updated forecasts before the earnings guidance. The revised analyst forecasts are defined as those issued by the same set of analysts on or immediately after the earnings guidance date. For analysts who initially offer forecasts but provide no forecast revisions until the earnings announcement, we assume that their revised forecasts remain the same as their initial forecasts, a practice consistent with prior literature (Feng and McVay, 2010; Maslar et al., 2021).
+\end{original}
+\begin{translation}
+最后，在这些数据中，初始分析师预测被定义和构建为在上一季度盈利公告日期之后发布且在盈利指引之前最新更新的个体分析师预测。修正分析师预测被定义为由同一组分析师在盈利指引日期当日或紧随其后发布的预测。对于最初提供预测但在盈利公告前未提供预测修正的分析师，我们假设其修正预测与其初始预测保持不变，这与先前文献的做法一致（Feng and McVay, 2010; Maslar et al., 2021）。
+\end{translation}
+
+\begin{original}
+Suppose that a typical fiscal quarter ends at $t_q$, and its realized earnings are usually announced at $T_q$ after the end of the quarter $t_q$ (The Securities and Exchange Commission requires public firms to file their financial statements within 45 days after the end of the fiscal quarter). Similarly, the earnings announcement date $T_{q-1}$ for quarter $q-1$ would also happen after $t_{q-1}$. In this paper, we retrieve earnings guidance that is issued by firm management on any date between $t_{q-1}$ and $T_q$. Because an increasing number of firms bundle their earnings projections for quarter $q$ with the announcement of the realized earnings for quarter $q-1$, we further require the guidance to be unbundled (as justified earlier). That is, we only consider guidances issued between two dates, i.e., $t_{q-1}$ and $T_q$. Given earnings guidance $G_{i,q}$, we can accordingly identify the sequence of analysts' earnings forecasts for the same quarter. We define analysts' forecasts that are issued after $T_{q-1}$ but at the latest before $G_{i,q}$ as their initial forecast and the forecast that is issued on or after $G_{i,q}$ but before $T_q$ as their revised forecast. As noted above, for analysts who provide an initial forecast but do not revise, we assume that the revised forecast remains the same as the initial forecast. There are two exceptions to this general timing. First, it might be the case that $G_{i,q}$ lies between $t_q$ and $T_q$, in which case we term the guidance a preannouncement following the convention in the literature. Second, firm management can offer more than one earnings guidance, and therefore, $G_{i,q}$ may appear multiple times during the period. In this case, we only retain the latest guidance before $T_q$.
+\end{original}
+\begin{translation}
+假设一个典型的财政季度于 $t_q$ 结束，其实际盈利通常在季度结束后 $T_q$ 时公告，其中 $T_q > t_q$（美国证券交易委员会要求上市公司在财政季度结束后45天内提交财务报表）。类似地，$q-1$ 季度的盈利公告日期 $T_{q-1}$ 也会发生在 $t_{q-1}$ 之后。在本文中，我们提取了公司管理层在 $t_{q-1}$ 和 $T_q$ 之间任何日期发布的盈利指引。由于越来越多的公司将其对 $q$ 季度的盈利预测与 $q-1$ 季度实际盈利公告捆绑发布，我们进一步要求指引为非捆绑的（如前所述）。即，我们仅考虑在两个日期之间发布的指引，即 $t_{q-1}$ 和 $T_q$。给定盈利指引 $G_{i,q}$，我们可以相应地识别同一季度分析师盈利预测的序列。我们将分析师在 $T_{q-1}$ 之后、但最迟在 $G_{i,q}$ 之前发布的预测定义为初始预测，将在 $G_{i,q}$ 当日或之后、$T_q$ 之前发布的预测定义为修正预测。如上所述，对于提供初始预测但未修正的分析师，我们假设修正预测与初始预测保持一致。对这一一般时序有两个例外。第一，$G_{i,q}$ 可能落在 $t_q$ 和 $T_q$ 之间，在此情况下我们遵循文献惯例称该指引为预公告。第二，公司管理层可能提供多于一个盈利指引，因此 $G_{i,q}$ 在此期间可能出现多次。在此情况下，我们仅保留 $T_q$ 前的最新指引。
+\end{translation}
+
+\subsection{A.2 Summary of Statistics / 统计摘要}
+
+\begin{original}
+Table A.1 (Summary of statistics). N = 110,895. Variables: Initial forecasts (mean 0.0120, sd 0.0129), Revised forecasts (mean 0.0104, sd 0.0149), Forecast revision (mean -0.0016, sd 0.0055), Forecast errors (mean -0.0000, sd 0.0047), Surprise (mean -0.0040, sd 0.0171), Managerial guidance N = 16,241 (mean 0.0067, sd 0.0293), Earnings N = 16,241 (mean 0.0089, sd 0.0197).
+\end{original}
+\begin{translation}
+表A.1（统计摘要）。N = 110,895。变量：初始预测（均值0.0120，标准差0.0129），修正预测（均值0.0104，标准差0.0149），预测修正（均值-0.0016，标准差0.0055），预测误差（均值-0.0000，标准差0.0047），意外（均值-0.0040，标准差0.0171），管理层指引 N = 16,241（均值0.0067，标准差0.0293），盈利 N = 16,241（均值0.0089，标准差0.0197）。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% APPENDIX B
+% ============================================================
+\section{Appendix B. Proofs and Derivations / 附录B：证明与推导}
+
+\begin{original}
+\textbf{Proof of Lemma 1.} The fact that forecast revisions are linear in guidance surprises directly follows from Equation (7). Further, forecast errors and forecast revisions are not correlated, because of rationality in noisy information expectation, that is, forecast errors are uncorrelated with any observables in the information set including forecast revisions. To demonstrate it mathematically, notice that
+\[
+FE^{NI} = \frac{\tau_x}{\tau_x + \tau_0 + \tau_g} x - \frac{\tau_0}{\tau_x + \tau_0 + \tau_g} \epsilon_0 - \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} \epsilon_g;
+\]
+\[
+FR^{NI} = \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} (x - \epsilon_0) + \frac{\tau_g}{\tau_x + \tau_0 + \tau_g} \epsilon_g.
+\]
+The covariance between $FE$ and $FR$ is then given by
+\[
+\text{Cov}(FE^{NI}, FR^{NI}) = \frac{\tau_x \tau_g}{(\tau_x + \tau_0 + \tau_g)^2} \cdot \frac{1}{\tau_x} - \frac{\tau_0 \tau_g}{(\tau_x + \tau_0 + \tau_g)^2} \cdot \frac{1}{\tau_0} + \frac{-\tau_g^2}{(\tau_x + \tau_0 + \tau_g)^2} \cdot \frac{1}{\tau_g} = 0,
+\]
+which completes the proof.
+
+\textbf{Derivation of Equations (12)-(14).} Denote $\beta_\varrho = \frac{\varrho}{\tau_x + \tau_0 + \varrho}$. Then, it can be shown that
+\[
+\eta(\varrho \mid s_0, g; F) \propto \exp\!\left(-\frac{\varrho}{2}\left[(\Delta + \Delta F)^2 + \frac{2\lambda}{\varrho}(\Delta + \Delta F)\right]\right) \mu(\varrho \mid s_0, g).
+\]
+Then, the optimality condition (10) can be compactly written as
+\[
+F = F_0 + \beta(s_0, g, \Delta) \Delta,
+\]
+where
+\[
+\beta(s_0, g, \Delta) = \int_{\Theta} \left( \frac{\varrho}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho.
+\]
+
+\textbf{Proof of Lemma 2.} The log-likelihood ratio can be specifically written by:
+\[
+\log \ell(\varrho) = \frac{\varrho}{2}[(\Delta + \Delta F')^2 - (\Delta + \Delta F)^2] + \frac{2\lambda}{2}[\Delta F' - \Delta F] + \text{constant}.
+\]
+Given the fact that $(\Delta + \Delta F)^2$ increases in $\Delta F$ and that $\Delta F' - \Delta F > 0$, $\ell(\varrho)$ decreases in $\varrho$, if and only if $\Delta > 0$; and $\ell(\varrho)$ increases in $\varrho$, if and only if $\Delta < 0$. The lemma is shown.
+
+\textbf{Proof of Proposition 1.} The optimality condition (10) is equivalent to (12):
+\[
+F = F_0 + \int_{\Theta} \left( \frac{\varrho}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho \cdot \Delta. \tag{B.1}
+\]
+To obtain the second equality, we use the definition of $F_0$ and $\Delta$ and the definition of $\eta(\varrho \mid s_0, g; F)$ specified in the main text.
+
+We first demonstrate that the right-hand side of (B.1) is decreasing in $F$. Towards this end, we show
+\[
+\frac{1}{\partial F} \int_{\Theta} \left( \frac{\varrho}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid s_0, g; F) \, d\varrho < 0.
+\]
+We then notice that $\beta$ is bounded between 0 and 1. Therefore, the right-hand side of Equation (12) goes to $+\infty$ when $F$ approaches $-\infty$; and it goes to $-\infty$ when $F$ approaches $+\infty$. Both existence and uniqueness are implied.
+
+Next we show that the optimal response $\beta$ only depends on $\Delta$. Observe that
+\[
+\eta(\varrho \mid s_0, g; F) \propto \exp\!\left( -\frac{\varrho}{2}\left[ \Delta^2 + \frac{2\lambda}{\varrho} \Delta \right] \right) \mu(\varrho \mid \Delta).
+\]
+To derive the first equality, we use Equation (12) to replace $F$, and therefore $s_0$ drops out. Therefore, $\beta$ is the fixed point of the following condition:
+\[
+\beta = \int_{\Theta} \left( \frac{\varrho}{\tau_x + \tau_0 + \varrho} \right) \eta(\varrho \mid \Delta) \, d\varrho.
+\]
+Therefore, it is the case that $\beta$ is only a function of $\Delta$.
+
+\textbf{Proof of Proposition 2.} Claims 1, 2, and 3 are established: Claim 1: If $\alpha = 0$, then $\Psi(\Delta) = 0$. Claim 2: If $\alpha \neq 0$, $\Psi(\Delta) \neq 0$. Claim 3: When $\alpha$ goes to $+\infty$, $\Psi(\Delta) > 0$. Claims 1 and 2 imply that $\Psi(\Delta)$ crosses zero once and only at $\alpha = 0$. Combined with Claim 3, it further implies that $\Psi(\Delta) \geq 0$, where the equality holds only when $\alpha = 0$. The proposition is shown.
+
+\textbf{Proof of Proposition 3.} If forecasters are ambiguity neutral, the optimal forecasts are such that
+\[
+F = F_0 + \left( \int_{\Theta} \frac{\varrho}{\tau_x + \tau_0 + \varrho} \, \mu(\varrho \mid \Delta) \, d\varrho \right) \Delta,
+\]
+where $\beta(\Delta) \equiv \int_{\Theta} \frac{\varrho}{\tau_x + \tau_0 + \varrho} \, \mu(\varrho \mid \Delta) \, d\varrho$ and the posterior belief $\mu(\varrho \mid \Delta)$ is given by
+\[
+\mu(\varrho \mid \Delta) \propto \exp\!\left( -\frac{1}{2} \left( \frac{\tau_x + \tau_0}{\tau_x + \tau_0 + \varrho} \right) \Delta^2 \right) \nu(\varrho).
+\]
+Taking the derivative of $\beta$ w.r.t. $\Delta$ leads to
+\[
+\frac{d\beta}{d\Delta} = \int_{\Theta} \frac{\varrho}{\tau_x + \tau_0 + \varrho} \, d\mu(\varrho \mid \Delta) - \left( \frac{\tau_x + \tau_0}{\tau_x + \tau_0 + \varrho} \right) \Delta \cdot \text{Var}_{\mu}(\varrho) \cdot \Delta,
+\]
+where $\text{Var}_{\mu}(\varrho)$ denotes the conditional volatility of $\varrho$ under probability density $\mu(\varrho \mid \Delta)$.
+
+It is then straightforward to show that:
+\[
+\lim_{|\Delta| \to 0} \frac{d\beta}{d\Delta} = \lim_{|\Delta| \to 0} \int_{\Theta} \frac{\varrho}{\tau_x + \tau_0 + \varrho} \, d\mu(\varrho \mid \Delta) > 0.
+\]
+Furthermore, when $|\Delta| \to +\infty$, $\mu(\varrho \mid \Delta)$ converges to $\nu(\varrho)$ and is given by:
+\[
+\lim_{|\Delta| \to +\infty} \mu(\varrho \mid \Delta) = \nu(\varrho).
+\]
+Then it must be the case that $\lim_{|\Delta| \to +\infty} \text{Var}_{\mu}(\varrho) \cdot \Delta^2 \to +\infty$. Further using the fact that $\int \frac{\varrho}{\tau_x + \tau_0 + \varrho} \, d\mu(\varrho \mid \Delta)$ is bounded above by $\varrho_{\max}$, it is straightforward to demonstrate that
+\[
+\lim_{|\Delta| \to +\infty} \frac{d\beta}{d\Delta} \to -\infty.
+\]
+Finally, the symmetry of $F - F_0$ around the origin directly follows from the fact that $\int \frac{\varrho}{\tau_x + \tau_0 + \varrho} \, d\mu(\varrho \mid \Delta)$ is symmetric, since $\mu(\varrho \mid \Delta) = \mu(\varrho \mid -\Delta)$.
+
+\textbf{Proof of Proposition 4.} The objective function (4) under the Maxmin criterion becomes:
+\[
+\max_F \min_{\varrho \in \Theta} \mathbb{E}_{\varrho}[-(F-x)^2 + \lambda x \mid s_0, g; \varrho],
+\]
+where $\Theta$ is the full support for $\varrho$. Let $\varrho_{\max}$ and $\varrho_{\min}$ be the upper and lower bounds. The optimal forecasting rule under the Maxmin criterion is:
+\[
+\beta = \begin{cases}
+\beta_{\min} & \text{if } \beta_{\min} > \bar{\beta}(\Delta); \\
+\beta_{\max} & \text{if } \beta_{\max} < \bar{\beta}(\Delta); \\
+\bar{\beta}(\Delta) & \text{otherwise}.
+\end{cases}
+\]
+Or equivalently,
+\[
+F - F_0 = \begin{cases}
+\beta_{\min} \Delta & \text{if } \beta_{\min} > \bar{\beta}(\Delta); \\
+\beta_{\max} \Delta & \text{if } \beta_{\max} < \bar{\beta}(\Delta); \\
+\bar{\beta}(\Delta) \Delta & \text{otherwise}.
+\end{cases}
+\]
+Note that $\bar{\beta}(\Delta)$ is always increasing in $\Delta$. Therefore, given the continuity of $F - F_0$ with respect to $\Delta$, it must be the case that $F - F_0$ is non-decreasing in $\Delta$.
+
+\textbf{Derivation of Equation (15).} Following the definition of $\gamma_1(\underline{\Delta}, \bar{\Delta})$, we have
+\[
+\gamma_1(\underline{\Delta}, \bar{\Delta}) = \frac{\text{Cov}\big(FE, FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)}{\text{Var}\big(FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)} = -1 + \frac{\text{Cov}\big(\Delta, FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)}{\text{Var}\big(FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})\big)},
+\]
+where in the last equality we use the fact that $\text{Cov}(F_0, FR \mid \Delta \in (\underline{\Delta}, \bar{\Delta})) = 0$.
+
+For any $(\underline{\Delta}, \bar{\Delta})$, a first-order approximation of $FR$ around $\Delta = \tilde{\Delta}$ implies
+\[
+FR \approx \beta(\tilde{\Delta}) \tilde{\Delta} + [\beta(\tilde{\Delta}) + \beta'(\tilde{\Delta}) \tilde{\Delta}] (\Delta - \tilde{\Delta}).
+\]
+Substituting it in the expression of $\gamma_1(\underline{\Delta}, \bar{\Delta})$, we obtain:
+\[
+\gamma_1(\tilde{\Delta}, \delta) \approx \lim_{\delta \to 0} \gamma_1(\tilde{\Delta}, \delta) = -1 + \frac{\beta(\tilde{\Delta}) + \tilde{\Delta} \beta'(\tilde{\Delta})}{\beta^{RE}(\tilde{\Delta})}.
+\]
+
+\textbf{Proof of Proposition 5.} To prove part (i), based on the approximation of Equation (15), it is sufficient to prove that
+\[
+\lim_{\tilde{\Delta} \to 0} \frac{d \gamma_1(\tilde{\Delta})}{d \tilde{\Delta}} = 2 \lim_{\tilde{\Delta} \to 0} \frac{\beta'(\tilde{\Delta})}{\beta^{RE}} < 0.
+\]
+Some algebra implies that
+\[
+\frac{d\beta}{d\Delta} = \int_{\Theta} \frac{d \eta(\varrho \mid \Delta)}{d\Delta} \, d\varrho = -\left( \frac{1}{\tau_x + \tau_0 + \varrho} + \frac{2\lambda}{\varrho} \Delta \right) \text{Var}_{\eta}(\varrho) + 2\text{Cov}_{\eta}\left( \frac{\varrho}{\tau_x + \tau_0 + \varrho}, \frac{\varrho}{2} \Delta^2 \right) - \frac{2\lambda}{\varrho} \text{Var}_{\eta}(\varrho) \, d\varrho,
+\]
+where $\text{Var}_{\eta}(\cdot)$ and $\text{Cov}_{\eta}(\cdot)$ denote the variance and covariance under the distorted posterior $\eta(\varrho \mid \Delta)$. It is then straightforward to see that
+\[
+\lim_{\tilde{\Delta} \to 0} \frac{d \beta}{d \Delta} = \lim_{\tilde{\Delta} \to 0} -\left( \frac{1}{\tau_x + \tau_0 + \varrho} \right) \text{Var}_{\eta}(\varrho) < 0,
+\]
+which completes the proof of part (i).
+
+To prove part (ii), notice that when $|\tilde{\Delta}|$ goes to infinity, the distorted belief $\eta(\varrho \mid \Delta)$ is degenerate that puts probability 1 on the lowest possible precision for manager guidance:
+\[
+\lim_{|\tilde{\Delta}| \to +\infty} \beta(\tilde{\Delta}) = \beta_{\min} = \frac{\varrho_{\min}}{\tau_x + \tau_0 + \varrho_{\min}}.
+\]
+Hence we have that $\lim_{|\tilde{\Delta}| \to +\infty} \beta'(\tilde{\Delta}) = 0$. It is then can be shown that
+\[
+\lim_{|\tilde{\Delta}| \to +\infty} \gamma_1(\tilde{\Delta}) = -1 + \frac{\beta_{\min}}{\beta^{RE}}.
+\]
+Further using the fact that $\beta(0) = \bar{\beta}(0) > \beta_{\min}$, it is straightforward to prove that
+\[
+\gamma_1(0) < \lim_{|\tilde{\Delta}| \to +\infty} \gamma_1(\tilde{\Delta}).
+\]
+
+\textbf{Proof of Proposition 6.} It is straightforward to show that the fundamental $x$ and the initial forecasts $F_0$ are both unconditionally mean zero:
+\[
+\mathbb{E}[x] = 0, \qquad \mathbb{E}[F_0] = 0.
+\]
+Furthermore, observe that
+\[
+\mathbb{E}[FR] = \int_{-\infty}^{+\infty} \beta(\Delta) \Delta \, \varphi(\Delta) \, d\Delta = \int_{-\infty}^{0} \beta(\Delta) \Delta \, \varphi(\Delta) \, d\Delta + \int_{0}^{+\infty} \beta(\Delta) \Delta \, \varphi(\Delta) \, d\Delta
+\]
+\[
+= \int_{0}^{+\infty} [\beta(-\Delta) - \beta(\Delta)] \Delta \, \varphi(\Delta) \, d\Delta < 0,
+\]
+where $\varphi(\Delta)$ denotes the probability density of guidance surprises in the objective environment. Finally, using the fact that $FE = x - F_0 - FR$, it is straightforward to prove that $\mathbb{E}[FE] > 0$.
+\end{original}
+
+\begin{translation}
+\textbf{引理1的证明。}预测修正关于指引意外是线性的这一事实直接源于方程（7）。此外，由于噪声信息预期的理性，预测误差与预测修正不相关，即预测误差与信息集中包括预测修正在内的任何可观测变量都不相关。$\text{Cov}(FE^{NI}, FR^{NI}) = 0$，证明完毕。
+
+\textbf{方程（12）-（14）的推导。}将最优性条件（10）紧凑地写为 $F = F_0 + \beta(s_0, g, \Delta) \Delta$，其中 $\beta$ 为扭曲后验下的加权平均。
+
+\textbf{引理2的证明。}通过对数似然比表达式，根据 $\Delta$ 符号可证 $\ell(\varrho)$ 关于 $\varrho$ 的单调性。
+
+\textbf{命题1的证明。}方程（12）右边关于 $F$ 递减，且 $\beta$ 有界于0和1之间，保证存在性和唯一性。进一步可证最优反应 $\beta$ 仅依赖于 $\Delta$。
+
+\textbf{命题2的证明。}通过三个主张建立：主张1（$\alpha = 0$ 时 $\Psi(\Delta) = 0$），主张2（$\alpha \neq 0$ 时 $\Psi(\Delta) \neq 0$），主张3（$\alpha \to +\infty$ 时 $\Psi(\Delta) > 0$）。由此可得 $\Psi(\Delta) \geq 0$，等号仅当 $\alpha = 0$ 时成立。
+
+\textbf{命题3的证明。}在模糊中性情形下，当 $|\Delta| \to 0$ 时 $d\beta/d\Delta > 0$；当 $|\Delta| \to +\infty$ 时 $d\beta/d\Delta \to -\infty$。对称性源于 $\mu(\varrho \mid \Delta) = \mu(\varrho \mid -\Delta)$。
+
+\textbf{命题4的证明。}在最大最小准则下，通过分析最坏情景下的价值函数，可证 $\beta$ 的最优选择及 $F - F_0$ 关于 $\Delta$ 的非递减性。
+
+\textbf{方程（15）的推导。}利用 $\gamma_1$ 的定义和 $FR$ 的一阶近似，得到 $\gamma_1(\tilde{\Delta}, \delta) \approx -1 + \frac{\beta(\tilde{\Delta}) + \tilde{\Delta} \beta'(\tilde{\Delta})}{\beta^{RE}(\tilde{\Delta})}$。
+
+\textbf{命题5的证明。}第（i）部分通过证明 $\lim_{\tilde{\Delta} \to 0} d\beta/d\Delta < 0$ 得到。第（ii）部分利用 $|\tilde{\Delta}| \to +\infty$ 时 $\beta(\tilde{\Delta}) \to \beta_{\min}$ 及 $\beta(0) > \beta_{\min}$ 得到。
+
+\textbf{命题6的证明。}$\mathbb{E}[x] = 0$，$\mathbb{E}[F_0] = 0$，且 $\mathbb{E}[FR] < 0$（基于命题2的不对称性），因此 $\mathbb{E}[FE] = \mathbb{E}[x - F_0 - FR] > 0$。
+\end{translation}
+
+\noindent{\footnotesize
+\textsuperscript{17} The coverage bias in the management forecast data documented by Chuk et al. (2013) is less of a concern in this particular setting.
+\textsuperscript{18} Bundled guidance is defined as the managerial forecasts issued within 2 days around the actual earnings announcement date (Rogers and Van Buskirk, 2013).
+\textsuperscript{19} However, our results are not sensitive to this specific choice and are qualitatively unchanged if we either keep the earliest guidance issued during a quarter or discard all firm-quarters with multiple guidance.
+
+\medskip
+{\color{transblue}
+\textsuperscript{17} Chuk et al.（2013）记录的管理层预测数据中的覆盖偏差在此特定设定中不太令人担忧。
+\textsuperscript{18} 捆绑指引被定义为在实际盈利公告日期前后2天内发布的管理层预测（Rogers and Van Buskirk, 2013）。
+\textsuperscript{19} 然而，我们的结果对这一具体选择并不敏感，无论我们保留季度内最早发布的指引还是舍弃所有具有多个指引的公司-季度，结果定性不变。
+}
+}
+
+\newpage
+% ============================================================
+% REFERENCES
+% ============================================================
+\section*{References / 参考文献}
+
+\begin{original}
+\noindent Adam, K., Kuang, P., Marcet, A., 2012. House price booms and the current account. NBER Macroecon. Annu. 26, 77--122.
+
+\noindent Afrouzi, H., Kwon, S., Landier, A., Ma, Y., Thesmar, D., 2022. Overreaction in expectations: Evidence and theory. Working Paper.
+
+\noindent Alford, A.W., Berger, P.G., 1999. A simultaneous equations analysis of forecast accuracy, analyst following, and trading volume. J. Account. Audit. Financ. 14 (3), 219--240.
+
+\noindent Amromin, G., Sharpe, S.A., 2014. From the horse's mouth: economic conditions and investor expectations of risk and return. Manag. Sci. 60 (4), 845--866.
+
+\noindent Baqaee, D.R., 2020. Asymmetric inflation expectations, downward rigidity of wages, and asymmetric business cycles. J. Monet. Econ. 114, 174--193.
+
+\noindent Barber, B.M., Odean, T., 2008. All that glitters: the effect of attention and news on the buying behavior of individual and institutional investors. Rev. Financ. Stud. 21 (2), 785--818.
+
+\noindent Barrero, J.M., 2022. The micro and macro of managerial beliefs. J. Financ. Econ. 143 (2), 640--667.
+
+\noindent Bianchi, F., Ilut, C., Saijo, H., 2024. Diagnostic business cycles. Rev. Econ. Stud. 91 (1), 129--162.
+
+\noindent Binder, C., Kuang, P., Tang, L., 2023. Central bank communication and house price expectations. Working Paper.
+
+\noindent Bordalo, P., Gennaioli, N., Shleifer, A., 2018. Diagnostic expectations and credit cycles. J. Finance 73 (1), 199--227.
+
+\noindent Bordalo, P., Gennaioli, N., Porta, R.L., Shleifer, A., 2019. Diagnostic expectations and stock returns. J. Finance 74 (6), 2839--2874.
+
+\noindent Bordalo, P., Gennaioli, N., Ma, Y., Shleifer, A., 2020. Overreaction in macroeconomic expectations. Am. Econ. Rev. 110 (9), 2748--2782.
+
+\noindent Bouchaud, J.-P., Krueger, P., Landier, A., Thesmar, D., 2019. Sticky expectations and the profitability anomaly. J. Finance 74 (2), 639--674.
+
+\noindent Broer, T., Kohlhas, A.N., 2022. Forecaster (mis-)behavior. Rev. Econ. Stat., 1--45.
+
+\noindent Brown, L.D., Call, A.C., Clement, M.B., Sharp, N.Y., 2015. Inside the ``black box'' of sell-side financial analysts. J. Account. Res. 53 (1), 1--47.
+
+\noindent Capistran, C., Timmermann, A., 2009. Disagreement and biases in inflation expectations. J. Money Credit Bank. 41 (2/3), 365--396.
+
+\noindent Cerreia-Vioglio, S., Maccheroni, F., Marinacci, M., 2022. Ambiguity aversion and wealth effects. In: Symposium Issue on Ambiguity, Robustness, and Model Uncertainty. J. Econ. Theory 199, 104898.
+
+\noindent Chen, S., Matsumoto, D., Rajgopal, S., 2011. Is silence golden? An empirical analysis of firms that stop giving quarterly earnings guidance. J. Account. Econ. 51 (1--2), 134--150.
+
+\noindent Chuk, E., Matsumoto, D., Miller, G.S., 2013. Assessing methods of identifying management forecasts: cig vs. researcher collected. J. Account. Econ. 55 (1), 23--42.
+
+\noindent Coibion, O., Gorodnichenko, Y., 2015. Information rigidity and the expectations formation process: a simple framework and new facts. Am. Econ. Rev. 105 (8), 2644--2678.
+
+\noindent Collard, F., Mukerji, S., Sheppard, K., Tallon, J.-M., 2018. Ambiguity and the historical equity premium. Quant. Econ. 9 (2), 945--993.
+
+\noindent Cotter, J., Tuna, I., Wysocki, P.D., 2006. Expectations management and beatable targets: how do analysts react to explicit earnings guidance? Contemp. Account. Res. 23 (3), 593--624.
+
+\noindent Das, S., Guo, R.-J., Zhang, H., 2006. Analysts' selective coverage and subsequent performance of newly public firms. J. Finance 61 (3), 1159--1185.
+
+\noindent Elliott, G., Timmermann, A., 2008. Economic forecasting. J. Econ. Lit. 46 (1), 3--56.
+
+\noindent Elliott, G., Komunjer, I., Timmermann, A., 2008. Biases in macroeconomic forecasts: irrationality or asymmetric loss? J. Eur. Econ. Assoc. 6 (1), 122--157.
+
+\noindent Epstein, L.G., Schneider, M., 2008. Ambiguity, information quality, and asset pricing. J. Finance 63 (1), 197--228.
+
+\noindent Farhi, E., Werning, I., 2019. Monetary policy, bounded rationality, and incomplete markets. Am. Econ. Rev. 109 (11), 3887--3928.
+
+\noindent Farmer, L., Nakamura, E., Steinsson, J., 2021. Learning about the long run. Working Paper.
+
+\noindent Feng, M., McVay, S., 2010. Analysts' incentives to overweight management guidance when revising their short-term earnings forecasts. Account. Rev. 85 (5), 1617--1646.
+
+\noindent Gabaix, X., 2020. A behavioral new Keynesian model. Am. Econ. Rev. 110 (8), 2271--2327.
+
+\noindent Gallant, A.R., Jahan-Parvar, M., Liu, H., 2015. Measuring ambiguity aversion. Working Paper.
+
+\noindent Garcia-Schmidt, M., Woodford, M., 2019. Are low interest rates deflationary? A paradox of perfect-foresight analysis. Am. Econ. Rev. 109 (1), 86--120.
+
+\noindent Gilboa, I., Schmeidler, D., 1989. Maxmin expected utility with non-unique prior. J. Math. Econ. 18 (2), 141--153.
+
+\noindent Greenwood, R., Shleifer, A., 2014. Expectations of returns and expected returns. Rev. Financ. Stud. 27 (3), 714--746.
+
+\noindent Groysberg, B., Healy, P.M., Maber, D.A., 2011. What drives sell-side analyst compensation at high-status investment banks? J. Account. Res. 49 (4), 969--1000.
+
+\noindent Johnson, T.L., Kim, J., So, E.C., 2019. Expectations management and stock returns. Rev. Financ. Stud. 11 (10), 4580--4626.
+
+\noindent Kahneman, D., Tversky, A., 1972. Subjective probability: a judgment of representativeness. Cogn. Psychol. 3 (3), 430--454.
+
+\noindent Klibanoff, P., Marinacci, M., Mukerji, S., 2005. A smooth model of decision making under ambiguity. Econometrica 73 (6), 1849--1892.
+
+\noindent Kohlhas, A., Walther, A., 2021. Asymmetric attention. Am. Econ. Rev. 111 (9), 2879--2925.
+
+\noindent Kuang, P., Mitra, K., 2016. Long-run growth uncertainty. J. Monet. Econ. 79, 67--80.
+
+\noindent Kuang, P., Mitra, K., Tang, L., Xie, S., 2023. Macroprudential policy and housing market expectations. Working Paper.
+
+\noindent Lian, C., 2020. A theory of narrow thinking. Rev. Econ. Stud.
+
+\noindent Ma, Y., Ropele, T., Sraer, D., Thesmar, D., 2020. A quantitative analysis of distortions in managerial forecasts. Working Paper.
+
+\noindent Maslar, D.A., Serfling, M., Shaikh, S., 2021. Economic downturns and the informativeness of management earnings forecasts. J. Account. Res. 59 (4), 1481--1520.
+
+\noindent Matsumoto, D.A., 2002. Management's incentives to avoid negative earnings surprises. Account. Rev. 77 (3), 483--514.
+
+\noindent McNichols, M., O'Brien, P.C., 1997. Self-selection and analyst coverage. J. Account. Res. 35, 167--199.
+
+\noindent Niehaus, G., Zhang, D., 2010. The impact of sell-side analyst research coverage on an affiliated broker's market share of trading volume. J. Bank. Finance 34 (4), 776--787.
+
+\noindent Nimark, K.P., Pitschner, S., 2019. News media and delegated information choice. J. Econ. Theory 181, 160--196.
+
+\noindent Petersen, M.A., 2009. Estimating standard errors in finance panel data sets: comparing approaches. Rev. Financ. Stud. 22 (1), 435--480.
+
+\noindent Rogers, J.L., Van Buskirk, A., 2013. Bundled forecasts in empirical accounting research. J. Account. Econ. 55 (1), 43--65.
+
+\noindent Solomon, D.H., 2012. Selective publicity and stock prices. J. Finance 67 (2), 599--638.
+
+\noindent Wald, A., 1949. Statistical decision functions. Ann. Math. Stat. 20 (2), 165--205.
+
+\noindent Wang, C., 2020. Under- and over-reaction in yield curve expectations. Working paper.
+\end{original}
+
+\bigskip
+\noindent{\color{transblue}\textbf{（以上为英文原始参考文献，中文翻译略。）}}
+
+\vfill
+\section*{Appendix. Supplementary Material / 附录：补充材料}
+\begin{original}
+Supplementary material related to this article can be found online at \url{https://doi.org/10.1016/j.jet.2024.105839}.
+\end{original}
+\begin{translation}
+与本文相关的补充材料可在线获取：\url{https://doi.org/10.1016/j.jet.2024.105839}。
+\end{translation}
+
+\end{document}

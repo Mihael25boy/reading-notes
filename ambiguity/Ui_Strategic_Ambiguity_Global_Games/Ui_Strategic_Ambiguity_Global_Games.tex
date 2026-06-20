@@ -1,0 +1,1749 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% === Chinese and font support ===
+\usepackage{ctex}
+\setCJKmainfont{SimSun}[AutoFakeBold=2]
+\setCJKsansfont{SimHei}
+\setCJKmonofont{KaiTi}
+
+% === Page layout ===
+\usepackage[margin=2.5cm]{geometry}
+
+% === Math packages ===
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% === Graphics and colors ===
+\usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{0,0,139}
+
+% === Hyperlinks ===
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}
+
+% === Custom environments for bilingual content ===
+\newenvironment{original}
+  {\par\medskip\noindent\color{black}\ignorespaces}
+  {\par\medskip}
+\newenvironment{translation}
+  {\par\noindent\color{darkblue}\ignorespaces}
+  {\par\medskip\noindent\hrule\par\medskip}
+
+% === Theorem environments ===
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\begin{document}
+
+% ~~~~~~~~~~~~~~~~~~~~ TITLE PAGE ~~~~~~~~~~~~~~~~~~~~
+{\LARGE\bfseries Strategic Ambiguity in Global Games\par}
+\vspace{4pt}
+{\Large\color{darkblue}\qquad\qquad 全局博弈中的策略模糊性\par}
+\vspace{4pt}
+{\normalsize Games and Economic Behavior 149 (2025) 65--81\par}
+\vspace{16pt}
+
+{\large Takashi Ui\par}
+{\small\color{darkblue}宇井 贵志\par}
+\vspace{4pt}
+{\small Hitotsubashi University, Tokyo 186-8601, Japan\par}
+{\small Kanagawa University, Kanagawa 221-8686, Japan\par}
+{\small\color{darkblue}一桥大学，东京 186-8601，日本\par}
+{\small\color{darkblue}神奈川大学，神奈川 221-8686，日本\par}
+\vspace{4pt}
+\texttt{oui@econ.hit-u.ac.jp}
+\vspace{8pt}
+
+{\small Received 26 September 2023; Available online 17 November 2024\par}
+{\small\color{darkblue}2023年9月26日收稿；2024年11月17日在线发表\par}
+\vspace{12pt}
+\hrule
+\vspace{12pt}
+
+% ==================== ABSTRACT ====================
+\begin{abstract}
+\begin{original}
+In games with incomplete and ambiguous information, rational behavior depends not only on fundamental ambiguity (ambiguity about states) but also on strategic ambiguity (ambiguity about others' actions), which further induces hierarchies of ambiguous beliefs. We study the impacts of strategic ambiguity in global games and demonstrate the distinct effects of ambiguous-quality and low-quality information. Ambiguous-quality information makes more players choose an action yielding a constant payoff, whereas (unambiguous) low-quality information makes more players choose an ex-ante best response to the uniform belief over the opponents' actions. If the ex-ante best-response action yields a constant payoff, sufficiently ambiguous-quality information induces a unique equilibrium, whereas sufficiently low-quality information generates multiple equilibria. In applications to financial crises, we show that news of more ambiguous quality triggers a debt rollover crisis, whereas news of less ambiguous quality triggers a currency crisis.
+\end{original}
+\begin{translation}
+在具有不完全和模糊信息的博弈中，理性行为不仅取决于基本模糊性（关于状态的模糊性），还取决于策略模糊性（关于他人行动的模糊性），而策略模糊性会进一步引发模糊信念的层级。我们研究了全局博弈中策略模糊性的影响，并展示了模糊质量信息和低质量信息的不同效应。模糊质量信息使更多参与者选择产生恒定收益的行动，而（非模糊的）低质量信息使更多参与者选择对对手行动均匀信念的事前最佳反应。如果事前最佳反应行动产生恒定收益，则充分模糊质量的信息会引致唯一均衡，而充分低质量的信息会产生多重均衡。在金融危机的应用中，我们表明，更加模糊质量的新闻会引发债务展期危机，而较不模糊质量的新闻会引发货币危机。
+\end{translation}
+\end{abstract}
+
+\noindent\textbf{JEL classification:} C72, D81, D82
+
+\medskip
+\noindent\textbf{Keywords:} Strategic ambiguity; Global game; Currency crisis; Debt rollover crisis; Incomplete information; Multiple priors
+
+\medskip
+\noindent\color{darkblue}\textbf{关键词：}策略模糊性；全局博弈；货币危机；债务展期危机；不完全信息；多重先验
+
+\medskip
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
+% ======================================================================
+\section{1. Introduction}
+\section*{\color{darkblue}1. 引言}
+
+\begin{original}
+Consider an incomplete information game with players who have ambiguous beliefs about a payoff-relevant state. Players receive signals about a state, but they do not exactly know the true joint distribution of signals and a state. In this game, players' beliefs about the opponents' actions are also ambiguous even if players know the opponents' strategies, which assign an action to each signal, because their beliefs about the opponents' signals are ambiguous. Thus, rational behavior depends not only on fundamental ambiguity (ambiguity about states) but also on strategic ambiguity (ambiguity about others' actions). Strategic ambiguity, arising from fundamental ambiguity, further induces infinite hierarchies of ambiguous beliefs (Ahn, 2007).
+\end{original}
+\begin{translation}
+考虑一个不完全信息博弈，参与者对支付相关状态持有模糊信念。参与者接收到关于状态的信号，但他们并不确切知道信号与状态的真正联合分布。在这个博弈中，即使参与者知道对手的策略——即对手为每个信号分配一个行动——参与者对对手行动的信念仍然是模糊的，因为他们对对手信号的信念是模糊的。因此，理性行为不仅取决于基本模糊性（关于状态的模糊性），还取决于策略模糊性（关于他人行动的模糊性）。由基本模糊性产生的策略模糊性进一步引发无限的模糊信念层级（Ahn, 2007）。
+\end{translation}
+
+\begin{original}
+Hierarchies of ambiguous beliefs can have a substantial impact on equilibrium outcomes. To illustrate it, consider a continuum of players who decide whether or not to invest in a project. The payoff to ``investing'' is 2 if the project succeeds and $-1$ if the project fails, while the payoff to ``not investing'' is 0. The project's success depends upon the proportion of players to invest and a state, which is either $\theta_g$ (good) or $\theta_b$ (bad) with an equal probability $1/2$. The project succeeds if and only if the state is $\theta_g$ and more than two thirds of the players invest. If players have no additional information about the state, this game has two symmetric pure-strategy equilibria, where all players invest, and no players invest, respectively.
+\end{original}
+\begin{translation}
+模糊信念的层级可以对均衡结果产生重大影响。为说明这一点，考虑一个参与者的连续统，他们决定是否投资一个项目。如果项目成功，``投资''的支付为2；如果项目失败，支付为$-1$；而``不投资''的支付为0。项目的成功取决于投资的参与者比例以及一个状态，该状态等可能地为$\theta_g$（好）或$\theta_b$（坏），概率各为$1/2$。当且仅当状态为$\theta_g$且超过三分之二的参与者投资时，项目才能成功。如果参与者没有关于状态的额外信息，该博弈有两个对称的纯策略均衡，分别是所有参与者都投资和所有参与者都不投资。
+\end{translation}
+
+\begin{original}
+We now assume that each player receives a private signal about the state: he receives $s_g$ (resp.\ $s_b$) with probability $p \ge 1/2$ when the state is $\theta_g$ (resp.\ $\theta_b$), and signals are conditionally independent across players. We also assume that players do not know the true value of $p$ and make a decision on the basis of the most pessimistic assessment of $p$ conforming to maxmin expected utility (MEU) preferences (Gilboa and Schmeidler, 1989) and prior-by-prior (full Bayesian) updating (Fagin and Halpern, 1990; Jaffray, 1992; Pires, 2002). Then this game has a unique equilibrium where no players invest. To see why, consider first a player who receives signal $s_b$. The conditional probability of state $\theta_b$ is $p/(1-p+p)$ by Bayes rule, so the worst-case scenario for investing is that the state is bad with probability 1. Facing such fundamental ambiguity, this player does not invest as if the signal were precise. Consider next a player who receives signal $s_g$. The expected proportion of the opponents with signal $s_b$ is $2(1-p)p \ge 1/2$ by Bayes rule and the law of large numbers, so the worst-case scenario for investing is that half of the opponents receive signal $s_b$ and do not invest. Facing such strategic ambiguity, this player does not invest as if the signal were imprecise. To summarize, ambiguous signals with unknown $p \in [1/2, 1]$ give rise to a unique rationalizable strategy, whereas uninformative signals with known $p = 1/2$ result in multiple equilibria.
+\end{original}
+\begin{translation}
+现在我们假设每个参与者收到一个关于状态的私人信号：当状态为$\theta_g$（或$\theta_b$）时，他以概率$p \ge 1/2$收到$s_g$（或$s_b$），且信号在参与者之间是条件独立的。我们还假设参与者不知道$p$的真实值，并基于对$p$的最悲观评估做出决策，遵循最大最小期望效用（MEU）偏好（Gilboa 和 Schmeidler，1989）和逐个先验（完全贝叶斯）更新（Fagin 和 Halpern，1990；Jaffray，1992；Pires，2002）。那么，该博弈有一个唯一的均衡，即无人投资。为理解原因，首先考虑一个收到信号$s_b$的参与者。根据贝叶斯规则，状态$\theta_b$的条件概率为$p/(1-p+p)$，因此投资的最坏情形是状态为坏的概率为1。面对这种基本模糊性，该参与者不投资，就好像信号是精确的一样。接下来考虑一个收到信号$s_g$的参与者。根据贝叶斯规则和大数定律，对手收到信号$s_b$的期望比例为$2(1-p)p \ge 1/2$，因此投资的最坏情形是一半对手收到信号$s_b$且不投资。面对这种策略模糊性，该参与者不投资，就好像信号是不精确的一样。总之，具有未知$p \in [1/2, 1]$的模糊信号产生唯一的可理性化策略，而具有已知$p = 1/2$的无效信号则产生多重均衡。
+\end{translation}
+
+\begin{original}
+This paper studies the impact of strategic ambiguity in binary-action supermodular games of incomplete information in which players receive noisy private signals about a state, i.e., global games (Carlsson and van Damme, 1993). Our model is a global game equipped with multiple priors, where players make a decision conforming to MEU preferences and prior-by-prior updating. In contrast to the above example, only a tiny portion of players have a dominant action facing fundamental ambiguity. However, strategic ambiguity amplifies the effect of fundamental ambiguity through belief hierarchies on the opponents' dominant actions. As a result, the role of ambiguous-quality information can be quite different from that of low-quality information.
+\end{original}
+\begin{translation}
+本文研究了在二元行动超模不完全信息博弈中策略模糊性的影响，其中参与者收到关于状态的含噪私人信号，即全局博弈（Carlsson 和 van Damme，1993）。我们的模型是一个配备多重先验的全局博弈，参与者的决策遵循MEU偏好和逐个先验更新。与上述例子不同，面对基本模糊性时，只有极小部分参与者拥有占优行动。然而，策略模糊性通过对对手占优行动的信念层级放大了基本模糊性的效应。因此，模糊质量信息的作用可能与低质量信息的作用截然不同。
+\end{translation}
+
+\begin{original}
+We first show that our model is also a supermodular game in terms of MEU preferences and develop a tractable procedure to analyze it. Because players evaluate each action by the most pessimistic beliefs, they behave as if they adopted different priors to evaluate different actions. Thus, we can analyze the model using a fictitious game with a pair of priors, each of which is in the set of priors and separately assigned to each action. We show that if every fictitious game admits a unique equilibrium, then our model also admits a unique equilibrium that survives iterated deletion of strictly interim-dominated strategies in terms of MEU preferences.
+\end{original}
+\begin{translation}
+我们首先表明，我们的模型在MEU偏好下也是一个超模博弈，并开发了一个易于处理的分析程序。由于参与者通过最悲观的信念来评估每个行动，他们的行为就好像采用不同的先验来评估不同的行动。因此，我们可以使用一个具有一对先验的虚构博弈来分析该模型，其中每个先验都在先验集合中并分别分配给每个行动。我们表明，如果每个虚构博弈都具有唯一均衡，那么我们的模型也具有唯一均衡，该均衡在MEU偏好下能够经受严格临时占优策略的迭代删除。
+\end{translation}
+
+\begin{original}
+A fictitious game with a pair of priors reduces to a single-prior game if one of the actions yields a constant payoff, which is referred to as a safe action (Morris and Shin, 2003). Our model with a safe action has a unique equilibrium not only when every single-prior game has a unique equilibrium but also when some have multiple equilibria. The latter is the case if the following holds: information quality is sufficiently ambiguous, and a safe action is an ex-ante best response (a best response before receiving a signal) to the uniform belief over the opponents' actions, which is referred to as an ex-ante Laplacian action. The unique equilibrium coincides with the equilibrium of the single-prior game that maximizes the range of signals to which the safe action is assigned, where the maximum is taken over the sets of all equilibria and all priors.
+\end{original}
+\begin{translation}
+如果其中一个行动产生恒定收益，则具有一对先验的虚构博弈退化为单一先验博弈，该行动被称为安全行动（Morris 和 Shin，2003）。具有安全行动的模型不仅在每个单一先验博弈都具有唯一均衡时具有唯一均衡，而且在某些单一先验博弈具有多重均衡时也具有唯一均衡。后一种情况在以下条件成立时发生：信息质量充分模糊，且安全行动是对对手行动均匀信念的事前最佳反应（即在收到信号之前的最佳反应），这被称为事前拉普拉斯行动。该唯一均衡与使分配安全行动的信号范围最大化的单一先验博弈的均衡相一致，其中最大值在所有均衡集合和所有先验集合上取得。
+\end{translation}
+
+\begin{original}
+In summary, we find two effects of ambiguous information on equilibrium outcomes when one action is a safe action. First, ambiguous information enlarges the range of signals assigned to a safe action, whereas it is known that low-quality information enlarges the range of signals assigned to an ex-ante Laplacian action. Thus, if a safe action is not ex-ante Laplacian, the effect of ambiguous information is opposite to that of low-quality information. Even if a safe action is ex-ante Laplacian, the former is also distinct from the latter in another sense. In this case, sufficiently ambiguous information induces a unique equilibrium, whereas it is known that sufficiently low-quality information induces multiple equilibria. These effects of ambiguous information are attributed to ambiguous belief hierarchies and MEU preferences, which make a safe action more survivable in iterated deletion of strictly interim-dominated strategies. In contrast, a safe action does not play such a special role in standard global games because two actions' payoff differential determines best responses.
+\end{original}
+\begin{translation}
+总之，当一个行动是安全行动时，我们发现模糊信息对均衡结果有两种效应。第一，模糊信息扩大了分配给安全行动的信号范围，而已知低质量信息扩大了分配给事前拉普拉斯行动的信号范围。因此，如果安全行动不是事前拉普拉斯的，模糊信息的效应与低质量信息的效应相反。即使安全行动是事前拉普拉斯的，前者也在另一种意义上与后者不同。在这种情况下，充分模糊的信息引致唯一均衡，而已知充分低质量的信息引致多重均衡。模糊信息的这些效应归因于模糊信念层级和MEU偏好，它们使安全行动在严格临时占优策略的迭代删除中更具生存力。相比之下，在标准全局博弈中，安全行动并不发挥如此特殊的作用，因为两个行动的支付差异决定了最佳反应。
+\end{translation}
+
+\begin{original}
+Our findings have the following implications for the question of whether ambiguous information contributes to financial crises originating from coordination failures, which can be modeled as global games of regime change. In the model of a currency crisis (Obstfeld, 1996; Morris and Shin, 1998), speculators must decide whether to attack a currency, where a crisis occurs if sufficiently many speculators attack the currency. We find that news of more ambiguous quality decreases the likelihood of the crisis because not to attack is a safe action. In the model of a debt rollover crisis (Calvo, 1988; Morris and Shin, 2004), creditors must decide whether to roll over a loan, where a crisis occurs if sufficiently many creditors do not roll over the loan. We find that news of more ambiguous quality increases the likelihood of the crisis because not to roll over is a safe action. These results complement and contrast with the findings of Iachan and Nenov (2015) on the effects of low-quality information in standard global games of regime change. They show that news of lower quality increases the likelihood of a currency crisis, but it does not influence that of a debt rollover crisis, which is in sharp contrast to the above effects of ambiguous information.
+\end{original}
+\begin{translation}
+我们的发现对模糊信息是否助长源自协调失败的金融危机这一问题具有以下含义，这些危机可以建模为制度变迁的全局博弈。在货币危机模型（Obstfeld，1996；Morris 和 Shin，1998）中，投机者必须决定是否攻击一种货币，如果足够多的投机者攻击该货币，危机就会发生。我们发现，更加模糊质量的新闻降低了危机的可能性，因为不攻击是一种安全行动。在债务展期危机模型（Calvo，1988；Morris 和 Shin，2004）中，债权人必须决定是否展期贷款，如果足够多的债权人不展期贷款，危机就会发生。我们发现，更加模糊质量的新闻增加了危机的可能性，因为不展期是一种安全行动。这些结果与 Iachan 和 Nenov（2015）关于低质量信息在标准制度变迁全局博弈中的效应形成补充和对比。他们表明，较低质量的新闻增加了货币危机的可能性，但不影响债务展期危机的可能性，这与模糊信息的上述效应形成鲜明对比。
+\end{translation}
+
+\begin{original}
+The rest of this paper is organized as follows. Section 2 illustrates our findings using an example. In Section 3, we set up our model and report the main results. In Section 4, we discuss applications to financial crises. Section 5 provides several extensions. The last section concludes the paper.
+\end{original}
+\begin{translation}
+本文的其余部分组织如下。第2节通过一个例子说明我们的发现。第3节建立我们的模型并报告主要结果。第4节讨论金融危机中的应用。第5节提供几个扩展。最后一节总结全文。
+\end{translation}
+% ======================================================================
+\section{1.1. Related Literature}
+\section*{\color{darkblue}1.1. 相关文献}
+
+\begin{original}
+This paper joins a growing literature on the theory and applications of incomplete information games with MEU players. There are many applications to auctions and mechanism design. Earlier papers examined equilibria of first price sealed bid auctions with MEU agents (Salo and Weber, 1995; Lo, 1998). More recent papers study optimal mechanism design (Bose et al., 2006; Bose and Daripa, 2009; Bodoh-Creed, 2012) and implementability of social choice functions (Wolitzky, 2016; Song, 2018; De Castro and Yannelis, 2018; Guo and Yannelis, 2021). Ambiguous beliefs are exogenously given in these papers, whereas Bose and Renou (2014) and Di Tillio et al.\ (2017) allow a mechanism designer to endogenously engineer ambiguity. Using ambiguous mechanisms, Bose and Renou (2014) characterize implementable social choice functions, and Di Tillio et al.\ (2017) solve revenue maximization problems. Other recent applications include strategic voting (Ellis, 2016; Pan, 2019; Ryan, 2021; Fabrizi et al., 2022).
+\end{original}
+\begin{translation}
+本文加入了一个关于具有MEU参与者的不完全信息博弈的理论和应用的新兴文献。在拍卖和机制设计方面有许多应用。早期论文研究了具有MEU代理人的第一价格密封投标拍卖的均衡（Salo 和 Weber，1995；Lo，1998）。更近期的论文研究了最优机制设计（Bose 等，2006；Bose 和 Daripa，2009；Bodoh-Creed，2012）和社会选择函数的可实施性（Wolitzky，2016；Song，2018；De Castro 和 Yannelis，2018；Guo 和 Yannelis，2021）。在这些论文中，模糊信念是外生给定的，而 Bose 和 Renou（2014）以及 Di Tillio 等（2017）允许机制设计者内生地设计模糊性。利用模糊机制，Bose 和 Renou（2014）刻画了可实施的社会选择函数，Di Tillio 等（2017）解决了收入最大化问题。其他近期应用包括策略投票（Ellis，2016；Pan，2019；Ryan，2021；Fabrizi 等，2022）。
+\end{translation}
+
+\begin{original}
+Because our focus is on global games with applications to financial crises, this paper is also related to a theoretical literature on financial crises associated with ambiguity. Caballero and Krishnamurthy (2008) explain flight to quality episodes using a variant of the Diamond-Dybvig model (Diamond and Dybvig, 1983) with agents in the face of ambiguity about liquidity shocks. Dicks and Fulghieri (2019) propose a theory of systemic risk using another variant of the Diamond-Dybvig model with two banks investing in ambiguous assets. Our work contributes to the literature by presenting the global game approach to financial crises under ambiguity, which can also be applied to other global game models of financial crises.
+\end{original}
+\begin{translation}
+由于我们的重点在于全局博弈及其在金融危机中的应用，本文也与关于与模糊性相关的金融危机的理论文献有关。Caballero 和 Krishnamurthy（2008）使用 Diamond-Dybvig 模型（Diamond 和 Dybvig，1983）的一个变体解释了``逃向质量''现象，其中代理人面临关于流动性冲击的模糊性。Dicks 和 Fulghieri（2019）使用 Diamond-Dybvig 模型的另一个变体提出了系统性风险理论，其中两家银行投资于模糊资产。我们的工作通过提出模糊条件下金融危机的全局博弈方法为该文献做出贡献，该方法也可以应用于金融危机的其他全局博弈模型。
+\end{translation}
+
+\begin{original}
+This paper builds on the following foundational studies. Epstein and Wang (1996) construct hierarchies of general preferences, thus providing a foundation for rationalizability and iterated deletion of strictly interim-dominated strategies in terms of MEU preferences (cf.\ Epstein, 1997). Ahn (2007) constructs a universal type space with multiple beliefs analogous to Mertens and Zamir (1985). Kajii and Ui (2005) introduce a general class of incomplete information games (Harsanyi, 1967--1968) with MEU players and two interim equilibrium concepts; Kajii and Ui (2009) and Martins-da-Rocha (2010) study the corresponding ``agreement theorem'' (Aumann, 1976) and its converse. Our solution concept corresponds to rationalizability in Epstein and Wang (1996) and one of the solution concepts in Kajii and Ui (2005).
+\end{original}
+\begin{translation}
+本文建立在以下基础性研究之上。Epstein 和 Wang（1996）构建了一般偏好的层级，从而为MEU偏好下的可理性化和严格临时占优策略的迭代删除提供了基础（参见 Epstein，1997）。Ahn（2007）构建了一个具有多重信念的普适类型空间，类似于 Mertens 和 Zamir（1985）。Kajii 和 Ui（2005）引入了具有MEU参与者的一类一般不完全信息博弈（Harsanyi，1967--1968）和两个临时均衡概念；Kajii 和 Ui（2009）以及 Martins-da-Rocha（2010）研究了相应的``同意定理''（Aumann，1976）及其逆定理。我们的解概念对应于 Epstein 和 Wang（1996）中的可理性化以及 Kajii 和 Ui（2005）中的解概念之一。
+\end{translation}
+
+% ======================================================================
+\section{2. A Linear Example}
+\section*{\color{darkblue}2. 一个线性例子}
+
+\begin{original}
+This section illustrates our main findings using a canonical linear-normal global game (Morris and Shin, 2001). A continuum of players have two actions, action 0 and action 1, which are interpreted as not investing and investing, respectively. The payoff to action 1 is $\theta + \ell - 1$, where $\theta \sim N(y, 1/\alpha)$ is normally distributed with mean $y \in (0, 1)$ and precision $\alpha > 0$ (i.e.\ variance $1/\alpha$), and $\ell \in [0, 1]$ is the proportion of the opponents choosing action 1. The payoff to action 0 is a constant 0, so we say that action 0 is a safe action. In summary, each player's payoff function is
+\[
+u(\ell, a, \theta) =
+\begin{cases}
+0 & \text{if } a = 0 \text{ (not investing)},\\
+\theta + \ell - 1 & \text{if } a = 1 \text{ (investing)}.
+\end{cases}
+\]
+\end{original}
+\begin{translation}
+本节使用一个典型的线性-正态全局博弈（Morris 和 Shin，2001）来说明我们的主要发现。一个参与者的连续统有两个行动，行动0和行动1，分别被解释为不投资和投资。行动1的支付为$\theta + \ell - 1$，其中$\theta \sim N(y, 1/\alpha)$服从均值为$y \in (0, 1)$、精度为$\alpha > 0$（即方差$1/\alpha$）的正态分布，$\ell \in [0, 1]$是选择行动1的对手比例。行动0的支付为常数0，因此我们说行动0是一个安全行动。总之，每个参与者的支付函数为
+\[
+u(\ell, a, \theta) =
+\begin{cases}
+0 & \text{若 } a = 0 \text{（不投资）},\\
+\theta + \ell - 1 & \text{若 } a = 1 \text{（投资）}.
+\end{cases}
+\]
+\end{translation}
+
+\begin{original}
+Player $i$ observes a private signal $x_i = \theta + \varepsilon_i$, where a noise term $\varepsilon_i$ is independently normally distributed with mean 0 and precision $\beta > 0$ (i.e.\ variance $1/\beta$), which can be regarded as a measure of information quality.
+
+If it is common knowledge that $0 < \beta < \alpha^2/(2\alpha + 1)$ or if players receive no signals about $\theta$, this game has two symmetric pure-strategy equilibria. If the interim expected value of $\theta$ is strictly greater than 1, action 1 is a dominant action; if that of $\theta$ is strictly less than 0, action 0 is a dominant action. When a player has the uniform belief over the opponents' actions (i.e.\ the expected value of $\ell$ is $1/2$), the ex-ante best response (the best response before receiving a signal) is action 1 if $y > 1/2$ and action 0 if $y < 1/2$. We call it an ex-ante Laplacian action.
+\end{original}
+\begin{translation}
+参与者$i$观测到一个私人信号$x_i = \theta + \varepsilon_i$，其中噪声项$\varepsilon_i$独立地服从均值为0、精度为$\beta > 0$（即方差$1/\beta$）的正态分布，这可被视为信息质量的度量。
+
+如果$0 < \beta < \alpha^2/(2\alpha + 1)$是共同知识，或者参与者没有收到关于$\theta$的信号，该博弈有两个对称的纯策略均衡。如果$\theta$的临时期望值严格大于1，行动1是占优行动；如果$\theta$的临时期望值严格小于0，行动0是占优行动。当参与者对对手行动持有均匀信念时（即$\ell$的期望值为$1/2$），事前最佳反应（即在收到信号之前的最佳反应）在$y > 1/2$时为行动1，在$y < 1/2$时为行动0。我们称之为事前拉普拉斯行动。
+\end{translation}
+
+\begin{original}
+We assume that information quality is ambiguous. Players have a set of priors indexed by a measure of information quality $\beta \in [\underline{\beta}, \overline{\beta}] \subset \mathbb{R}_{++}$, and make a decision based on the most pessimistic assessment conforming to maxmin expected utility (MEU) preferences (Gilboa and Schmeidler, 1989) and prior-by-prior updating (Fagin and Halpern, 1990; Jaffray, 1992; Pires, 2002). Thus, after receiving a private signal, each player has a set of interim beliefs indexed by $\beta$ and evaluates each action in terms of the minimum expected payoff, where the minimum is taken over $\beta$.
+\end{original}
+\begin{translation}
+我们假设信息质量是模糊的。参与者拥有一组由信息质量度量$\beta \in [\underline{\beta}, \overline{\beta}] \subset \mathbb{R}_{++}$索引的先验，并基于最悲观的评估做出决策，遵循最大最小期望效用（MEU）偏好（Gilboa 和 Schmeidler，1989）和逐个先验更新（Fagin 和 Halpern，1990；Jaffray，1992；Pires，2002）。因此，在收到私人信号后，每个参与者拥有一组由$\beta$索引的临时信念，并以最小期望支付来评估每个行动，其中最小值在$\beta$上取得。
+\end{translation}
+
+\begin{original}
+We denote this game by $(\alpha, \beta)$. Consider a monotone strategy, where a player chooses action 1 if and only if a private signal is above a cutoff point $\kappa \in \mathbb{R} \cup \{-\infty, \infty\}$. This strategy is referred to as a switching strategy (with cutoff $\kappa$) and denoted by $s_\kappa \colon \mathbb{R} \to \{0, 1\}$, i.e.,
+\[
+s_\kappa(x) =
+\begin{cases}
+1 & \text{if } x > \kappa,\\
+0 & \text{if } x \le \kappa.
+\end{cases}
+\tag{1}
+\]
+\end{original}
+\begin{translation}
+我们将此博弈记为$(\alpha, \beta)$。考虑一个单调策略，其中参与者当且仅当私人信号高于临界点$\kappa \in \mathbb{R} \cup \{-\infty, \infty\}$时选择行动1。该策略被称为切换策略（以$\kappa$为临界点），记为$s_\kappa \colon \mathbb{R} \to \{0, 1\}$，即
+\[
+s_\kappa(x) =
+\begin{cases}
+1 & \text{若 } x > \kappa,\\
+0 & \text{若 } x \le \kappa.
+\end{cases}
+\tag{1}
+\]
+\end{translation}
+
+\begin{original}
+To characterize the best response to $s_\kappa$, consider a player with a private signal $x$ who believes that the opponents follow $s_\kappa$. The expected payoff to action 1 with respect to $\beta$ is calculated as
+\begin{align}
+v_1^\beta(x, \kappa) &\equiv E^\beta[\theta \mid x] + \Pr\nolimits^\beta[x_j > \kappa \mid x] - 1 \notag\\
+&= \frac{\alpha y + \beta x}{\alpha + \beta} - \Phi\!\left(\sqrt{\frac{\alpha\beta}{\alpha+\beta}}(\kappa - \frac{\alpha y + \beta x}{\alpha + \beta} + \frac{\kappa}{\beta})\right) - \frac{\alpha}{\alpha+\beta},
+\tag{2}
+\end{align}
+where $\Pr^\beta[x_j > \kappa \mid x]$ is the probability that an opponent receives a private signal greater than $\kappa$, and $\Phi$ is the cumulative distribution function of the standard normal distribution. Then this player prefers action 1 to action 0 if and only if $\min_{\beta} v_1^\beta(x, \kappa) \ge 0$. Thus, $s_\kappa$ is a unique best response to $s_\kappa$ if $\min_{\beta} v_1^\beta(\kappa, \kappa) = 0$ because $\min_{\beta} v_1^\beta(x, \kappa)$ is strictly increasing in $x$ and decreasing in $\kappa$. In particular, a strategy profile where all players follow $s_\kappa$ is an equilibrium if $\kappa$ is a solution to
+\[
+\min_{\beta} v_1^\beta(\kappa, \kappa) = 0,
+\tag{3}
+\]
+which is referred to as a switching equilibrium (with cutoff $\kappa$). This implies that a unique switching equilibrium exists if (3) has a unique solution, and its strategy is shown to be a unique strategy surviving iterated deletion of strictly interim-dominated strategies with respect to MEU preferences by an argument similar to that in the standard global game analysis.
+\end{original}
+\begin{translation}
+为刻画对$s_\kappa$的最佳反应，考虑一个持有私人信号$x$的参与者，他相信对手遵循$s_\kappa$。行动1关于$\beta$的期望支付计算如下
+\begin{align}
+v_1^\beta(x, \kappa) &\equiv E^\beta[\theta \mid x] + \Pr\nolimits^\beta[x_j > \kappa \mid x] - 1 \notag\\
+&= \frac{\alpha y + \beta x}{\alpha + \beta} - \Phi\!\left(\sqrt{\frac{\alpha\beta}{\alpha+\beta}}(\kappa - \frac{\alpha y + \beta x}{\alpha + \beta} + \frac{\kappa}{\beta})\right) - \frac{\alpha}{\alpha+\beta},
+\tag{2}
+\end{align}
+其中$\Pr^\beta[x_j > \kappa \mid x]$是对手收到大于$\kappa$的私人信号的概率，$\Phi$是标准正态分布的累积分布函数。那么，该参与者偏好行动1胜过行动0当且仅当$\min_{\beta} v_1^\beta(x, \kappa) \ge 0$。因此，如果$\min_{\beta} v_1^\beta(\kappa, \kappa) = 0$，则$s_\kappa$是对$s_\kappa$的唯一最佳反应，因为$\min_{\beta} v_1^\beta(x, \kappa)$在$x$上严格递增，在$\kappa$上严格递减。特别地，如果$\kappa$是以下方程的解，则所有参与者都遵循$s_\kappa$的策略组合是一个均衡
+\[
+\min_{\beta} v_1^\beta(\kappa, \kappa) = 0,
+\tag{3}
+\]
+这被称为切换均衡（以$\kappa$为临界点）。这意味着如果（3）有唯一解，则存在唯一的切换均衡，并且通过与标准全局博弈分析中类似的论证，其策略在MEU偏好下被证明是经受严格临时占优策略迭代删除的唯一策略。
+\end{translation}
+
+\begin{original}
+An equilibrium of $(\alpha, \beta)$ is related in several ways to an equilibrium of a single-prior game $(\alpha, \{\beta\})$ with $\beta \in [\underline{\beta}, \overline{\beta}]$. Most importantly, the maximum equilibrium cutoff in $(\alpha, \beta)$
+\[
+\kappa(\underline{\beta}, \overline{\beta}) \equiv \max\{\kappa \in \mathbb{R} \mid \min_{\beta} v_1^\beta(\kappa, \kappa) = 0\}
+\]
+equals the maximum of the maximum equilibrium cutoffs in single-prior games over $\beta$, as stated in the following claim. This implies that ambiguous information increases the maximum equilibrium cutoff.
+\end{original}
+\begin{translation}
+$(\alpha, \beta)$的均衡在多个方面与单一先验博弈$(\alpha, \{\beta\})$（其中$\beta \in [\underline{\beta}, \overline{\beta}]$）的均衡相关。最重要的是，$(\alpha, \beta)$中的最大均衡临界点
+\[
+\kappa(\underline{\beta}, \overline{\beta}) \equiv \max\{\kappa \in \mathbb{R} \mid \min_{\beta} v_1^\beta(\kappa, \kappa) = 0\}
+\]
+等于单一先验博弈在$\beta$上的最大均衡临界点的最大值，如下述断言所述。这意味着模糊信息增加了最大均衡临界点。
+\end{translation}
+
+\begin{claim}
+It holds that
+\[
+\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta) = \max_{\beta} \left(\max\{\kappa \in \mathbb{R} \mid v_1^\beta(\kappa, \kappa) = 0\}\right)
+\tag{4}
+\]
+where we use $\kappa(\beta)$ to denote $\kappa(\{\beta\})$, the maximum equilibrium cutoff in $(\alpha, \{\beta\})$, with some abuse of notation.
+\end{claim}
+\begin{translation}
+\color{darkblue}\textbf{断言1.} 下式成立
+\[
+\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta) = \max_{\beta} \left(\max\{\kappa \in \mathbb{R} \mid v_1^\beta(\kappa, \kappa) = 0\}\right)
+\tag{4}
+\]
+其中我们稍微滥用符号，用$\kappa(\beta)$表示$\kappa(\{\beta\})$，即$(\alpha, \{\beta\})$中的最大均衡临界点。
+\end{translation}
+
+\begin{original}
+We can illustrate (4) using Fig.\ 1, where a horizontal intercept in the graph of $v_1^\beta(\kappa, \kappa)$ is a solution to $v_1^\beta(\kappa, \kappa) = 0$. Consider $(\alpha, \beta)$ with $[\underline{\beta}, \overline{\beta}] = [0.56, 1.1]$. The graph of $\min_{\beta} v_1^\beta(\kappa, \kappa)$ is the lower envelope of the dashed line and the dash-dot line. Thus, the maximum equilibrium cutoff in $(\alpha, \beta)$ is the horizontal intercept of the dashed line in Fig.\ 1a and that of the dash-dot line in Fig.\ 1b. To see why (4) holds more formally, note that if $\kappa > \max_{\beta} \kappa(\beta)$, then $v_1^\beta(\kappa, \kappa) > 0$ for all $\beta$ because $\lim_{\kappa \to \infty} v_1^\beta(\kappa, \kappa) = \infty$ by (2). Thus,
+\[
+\min_{\beta} v_1^\beta(\kappa, \kappa)
+\begin{cases}
+> 0 & \text{if } \kappa > \max_{\beta} \kappa(\beta),\\
+= 0 & \text{if } \kappa = \max_{\beta} \kappa(\beta) = \kappa(\underline{\beta}, \overline{\beta})
+\end{cases}
+\]
+because $[\underline{\beta}, \overline{\beta}]$ is compact and $v_1^\beta(\kappa, \kappa)$ is continuous in $\beta$, which means $\max_{\beta} \kappa(\beta) = \kappa(\underline{\beta}, \overline{\beta})$.
+\end{original}
+\begin{translation}
+我们可以使用图1来说明（4），其中$v_1^\beta(\kappa, \kappa)$图形中的水平截距是$v_1^\beta(\kappa, \kappa) = 0$的解。考虑$[\underline{\beta}, \overline{\beta}] = [0.56, 1.1]$的$(\alpha, \beta)$。$\min_{\beta} v_1^\beta(\kappa, \kappa)$的图形是虚线和点划线的下包络。因此，$(\alpha, \beta)$中的最大均衡临界点是图1a中虚线的水平截距和图1b中点划线的水平截距。更正式地看（4）为什么成立，注意到如果$\kappa > \max_{\beta} \kappa(\beta)$，则对所有$\beta$有$v_1^\beta(\kappa, \kappa) > 0$，因为由（2）知$\lim_{\kappa \to \infty} v_1^\beta(\kappa, \kappa) = \infty$。因此，
+\[
+\min_{\beta} v_1^\beta(\kappa, \kappa)
+\begin{cases}
+> 0 & \text{若 } \kappa > \max_{\beta} \kappa(\beta),\\
+= 0 & \text{若 } \kappa = \max_{\beta} \kappa(\beta) = \kappa(\underline{\beta}, \overline{\beta})
+\end{cases}
+\]
+因为$[\underline{\beta}, \overline{\beta}]$是紧集且$v_1^\beta(\kappa, \kappa)$在$\beta$上连续，这意味着$\max_{\beta} \kappa(\beta) = \kappa(\underline{\beta}, \overline{\beta})$。
+\end{translation}
+
+\begin{original}
+In particular, if $(\alpha, \beta)$ has a unique switching equilibrium, its cutoff is $\max_{\beta} \kappa(\beta)$. It is straightforward to show that $(\alpha, \beta)$ has a unique equilibrium if $(\alpha, \{\beta\})$ has a unique equilibrium for each $\beta$, which is true if $\beta > \alpha^2/(2\alpha + 1)$ as shown by Morris and Shin (2001). Thus, we obtain the following claim.
+\end{original}
+\begin{translation}
+特别地，如果$(\alpha, \beta)$有唯一的切换均衡，其临界点为$\max_{\beta} \kappa(\beta)$。容易证明，如果$(\alpha, \{\beta\})$对每个$\beta$都有唯一均衡，则$(\alpha, \beta)$有唯一均衡，而正如 Morris 和 Shin（2001）所证明的，当$\beta > \alpha^2/(2\alpha + 1)$时这是成立的。因此，我们得到以下断言。
+\end{translation}
+
+\begin{claim}
+If the minimum precision in $[\underline{\beta}, \overline{\beta}]$ is strictly greater than $\alpha^2/(2\alpha + 1)$, there exists a unique switching equilibrium with cutoff $\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta)$.
+\end{claim}
+\begin{translation}
+\color{darkblue}\textbf{断言2.} 如果$[\underline{\beta}, \overline{\beta}]$中的最小精度严格大于$\alpha^2/(2\alpha + 1)$，则存在唯一的切换均衡，其临界点为$\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta)$。
+\end{translation}
+
+\begin{original}
+If action 1 is ex-ante Laplacian (i.e., $y > 1/2$), ambiguous-quality information and low-quality information have different effects on the equilibrium cutoff by Claim 2. To illustrate this, consider the following three games: a benchmark game $(\alpha, \{\beta_0\})$ with $\beta_0 > \alpha^2/(2\alpha + 1)$, a game with low-quality information $(\alpha, \{\beta_1\})$ with $\beta_0 > \beta_1 > \alpha^2/(2\alpha + 1)$, and a game with ambiguous-quality information $(\alpha, [\underline{\beta}, \overline{\beta}])$ with $\overline{\beta} > \beta_0 > \beta_1 > \underline{\beta}$. In a single-prior game, low-quality information enlarges the range of signals assigned to an ex-ante Laplacian action (see Fig.\ 1), as implied by the discussion of Morris and Shin (2001). Thus, low-quality information decreases the equilibrium cutoff, i.e., $\kappa(\beta_1) < \kappa(\beta_0)$ (see Fig.\ 2b). Conversely, ambiguous-quality information increases the equilibrium cutoff, i.e., $\kappa(\beta_0) < \max_{[\underline{\beta}, \overline{\beta}]} \kappa(\beta) = \kappa(\underline{\beta}, \overline{\beta})$ (see Fig.\ 2a).
+\end{original}
+\begin{translation}
+如果行动1是事前拉普拉斯行动（即$y > 1/2$），根据断言2，模糊质量信息和低质量信息对均衡临界点有不同的效应。为说明这一点，考虑以下三种博弈：一个基准博弈$(\alpha, \{\beta_0\})$，其中$\beta_0 > \alpha^2/(2\alpha + 1)$；一个低质量信息博弈$(\alpha, \{\beta_1\})$，其中$\beta_0 > \beta_1 > \alpha^2/(2\alpha + 1)$；以及一个模糊质量信息博弈$(\alpha, [\underline{\beta}, \overline{\beta}])$，其中$\overline{\beta} > \beta_0 > \beta_1 > \underline{\beta}$。在单一先验博弈中，低质量信息扩大了分配给事前拉普拉斯行动的信号范围（见图1），正如 Morris 和 Shin（2001）的讨论所暗示的。因此，低质量信息降低了均衡临界点，即$\kappa(\beta_1) < \kappa(\beta_0)$（见图2b）。相反，模糊质量信息提高了均衡临界点，即$\kappa(\beta_0) < \max_{[\underline{\beta}, \overline{\beta}]} \kappa(\beta) = \kappa(\underline{\beta}, \overline{\beta})$（见图2a）。
+\end{translation}
+
+\begin{original}
+If action 0 is ex-ante Laplacian (i.e., $y < 1/2$), the two types of information have similar effects on the equilibrium cutoff, but they have different effects on the number of equilibria. That is, $(\alpha, \beta)$ admits a unique equilibrium if the information quality is ambiguous enough, although $(\alpha, \{\beta\})$ has multiple equilibria if the information quality is low enough.
+\end{original}
+\begin{translation}
+如果行动0是事前拉普拉斯行动（即$y < 1/2$），两种类型的信息对均衡临界点有相似的影响，但它们对均衡的数量有不同的影响。也就是说，如果信息质量足够模糊，$(\alpha, \beta)$具有唯一均衡，而如果信息质量足够低，$(\alpha, \{\beta\})$具有多重均衡。
+\end{translation}
+
+\begin{original}
+We demonstrate this informally using $(\alpha, \{0\})$ and $(\alpha, [0, \overline{\beta}])$ (in our formal analysis, the lowest precision is assumed to be strictly positive), which is analogous to the example in the introduction. In $(\alpha, \{0\})$, a player regards a private signal as uninformative, and both $s_{-\infty}$ (investing for every signal) and $s_{\infty}$ (not investing for any signal) are equilibrium strategies. In $(\alpha, [0, \overline{\beta}])$, by contrast, a player regards a private signal as either informative or uninformative depending upon the worst-case scenario for investment. As in the case of $(\alpha, \{0\})$, $s_{\infty}$ is an equilibrium strategy because it is mutually optimal for each player not to invest under the scenario that a private signal is uninformative. However, $s_{-\infty}$ is not an equilibrium strategy. This is because when all opponents invest and a player receives bad news about investment, the player prefers not to invest under the scenario that the bad news is reliable. Consequently, $s_{\infty}$ is a unique equilibrium strategy in $(\alpha, [0, \overline{\beta}])$.
+\end{original}
+\begin{translation}
+我们非正式地使用$(\alpha, \{0\})$和$(\alpha, [0, \overline{\beta}])$来说明这一点（在我们的形式分析中，最低精度被假设为严格为正），这类似于引言中的例子。在$(\alpha, \{0\})$中，参与者将私人信号视为无效信号，$s_{-\infty}$（对每个信号都投资）和$s_{\infty}$（对任何信号都不投资）都是均衡策略。相比之下，在$(\alpha, [0, \overline{\beta}])$中，参与者根据投资的最坏情形将私人信号视为有效或无效。与$(\alpha, \{0\})$的情形一样，$s_{\infty}$是一个均衡策略，因为在私人信号无效的情形下，每个参与者不投资是相互最优的。然而，$s_{-\infty}$不是一个均衡策略。这是因为当所有对手都投资而一个参与者收到关于投资的坏消息时，在坏消息是可靠的情形下，该参与者偏好不投资。因此，$s_{\infty}$是$(\alpha, [0, \overline{\beta}])$中唯一的均衡策略。
+\end{translation}
+
+\begin{original}
+Formally, we have the following claim.
+\end{original}
+\begin{translation}
+形式上，我们有以下断言。
+\end{translation}
+
+\begin{claim}
+Suppose that $y < 1/2$. There exists a unique switching equilibrium with cutoff $\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta)$ if either of the following conditions holds. (i) For any minimum precision $\underline{\beta} > 0$, the maximum precision $\overline{\beta} > 0$ is sufficiently high. (ii) For any maximum precision $\overline{\beta} > 0$, the minimum precision $\underline{\beta} > 0$ is sufficiently low.
+\end{claim}
+\begin{translation}
+\color{darkblue}\textbf{断言3.} 假设$y < 1/2$。如果以下任一条件成立，则存在唯一的切换均衡，其临界点为$\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta)$。（i）对于任意最小精度$\underline{\beta} > 0$，最大精度$\overline{\beta} > 0$充分高。（ii）对于任意最大精度$\overline{\beta} > 0$，最小精度$\underline{\beta} > 0$充分低。
+\end{translation}
+
+\begin{original}
+We can illustrate (i) using Fig.\ 1b. Fix $\underline{\beta} = 0.37$. When $\overline{\beta} = \underline{\beta}$, the graph of $\min_{\beta} v_1^\beta(\kappa, \kappa)$ is the dotted line, so $(\alpha, \beta)$ has three equilibria. In contrast, when $\overline{\beta} = 0.56$, the graph of $\min_{\beta} v_1^\beta(\kappa, \kappa)$ is the lower envelope of the dash-dot line and the dotted line, so $(\alpha, \beta)$ has a unique equilibrium. We can also illustrate (ii) using Fig.\ 3. Fix $\overline{\beta} = 1/10$. When $\underline{\beta} = \overline{\beta}$, the graph of $\min_{\beta} v_1^\beta(\kappa, \kappa)$ is the dashed line, so $(\alpha, \beta)$ has three equilibria. In contrast, when $\underline{\beta} = 1/10^4$, the graph of $\min_{\beta} v_1^\beta(\kappa, \kappa)$ is the solid line, so $(\alpha, \beta)$ has a unique equilibrium with a very large cutoff.
+\end{original}
+\begin{translation}
+我们可以使用图1b来说明（i）。固定$\underline{\beta} = 0.37$。当$\overline{\beta} = \underline{\beta}$时，$\min_{\beta} v_1^\beta(\kappa, \kappa)$的图形是虚线，因此$(\alpha, \beta)$有三个均衡。相比之下，当$\overline{\beta} = 0.56$时，$\min_{\beta} v_1^\beta(\kappa, \kappa)$的图形是点划线和虚线的下包络，因此$(\alpha, \beta)$有一个唯一均衡。我们也可以使用图3来说明（ii）。固定$\overline{\beta} = 1/10$。当$\underline{\beta} = \overline{\beta}$时，$\min_{\beta} v_1^\beta(\kappa, \kappa)$的图形是虚线，因此$(\alpha, \beta)$有三个均衡。相比之下，当$\underline{\beta} = 1/10^4$时，$\min_{\beta} v_1^\beta(\kappa, \kappa)$的图形是实线，因此$(\alpha, \beta)$有一个具有非常大临界点的唯一均衡。
+\end{translation}
+
+\begin{original}
+Claim 3 is based upon the following observation: (3) has no solution less than $-\kappa$ and exactly one solution greater than $\kappa$. This implies that an equilibrium is unique if (3) has no solution on the interval $[-\kappa, \kappa]$, or equivalently,
+\[
+\max_{\kappa \in [-\kappa, \kappa]} \min_{\beta} v_1^\beta(\kappa, \kappa) < 0.
+\tag{5}
+\]
+The condition (i) implies (5) because if $\overline{\beta}$ is sufficiently large (i.e., $\overline{\beta} > \alpha^2/(2\alpha+1)$) then $v_1^{\overline{\beta}}(\kappa, \kappa) = 0$ has a unique solution, which is greater than $\kappa$, and thus $\min_{\beta} v_1^\beta(\kappa, \kappa) \le v_1^{\overline{\beta}}(\kappa, \kappa) < 0$ for all $\kappa \in [-\kappa, \kappa]$. The condition (ii) also implies (5) because the left-hand side of (5) is less than $v_1^{\underline{\beta}}(\kappa, -\kappa)$, which converges to $y - 1/2 < 0$ as $\underline{\beta}$ approaches 0.
+\end{original}
+\begin{translation}
+断言3基于以下观察：（3）在小于$-\kappa$处无解，在大于$\kappa$处恰好有一解。这意味着如果（3）在区间$[-\kappa, \kappa]$上无解，或等价地，
+\[
+\max_{\kappa \in [-\kappa, \kappa]} \min_{\beta} v_1^\beta(\kappa, \kappa) < 0,
+\tag{5}
+\]
+则均衡是唯一的。条件（i）蕴含（5），因为如果$\overline{\beta}$充分大（即$\overline{\beta} > \alpha^2/(2\alpha+1)$），则$v_1^{\overline{\beta}}(\kappa, \kappa) = 0$有唯一解，该解大于$\kappa$，因此对所有$\kappa \in [-\kappa, \kappa]$有$\min_{\beta} v_1^\beta(\kappa, \kappa) \le v_1^{\overline{\beta}}(\kappa, \kappa) < 0$。条件（ii）也蕴含（5），因为（5）的左边小于$v_1^{\underline{\beta}}(\kappa, -\kappa)$，当$\underline{\beta}$趋近于0时，它收敛到$y - 1/2 < 0$。
+\end{translation}
+
+\begin{original}
+As Fig.\ 3 illustrates, $\kappa(\underline{\beta}, \overline{\beta})$ can be arbitrarily large for sufficiently small $\underline{\beta}$. This is because $\kappa(\underline{\beta}, \overline{\beta})$ equals the maximum equilibrium cutoff in the single-prior game with the lowest precision, and it goes to infinity as the lowest precision approaches zero:
+\[
+\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta) = \kappa(\underline{\beta}) \to \infty \quad \text{as } \underline{\beta} \to 0.
+\]
+This suggests that $\kappa(\underline{\beta}, \overline{\beta})$ is sensitive to $\underline{\beta}$ when $\underline{\beta}$ is very small because $\kappa(\underline{\beta})$ is very large. To verify it, we apply the implicit function theorem to (3) and obtain
+\[
+\frac{\partial \kappa(\underline{\beta}, \overline{\beta})}{\partial \underline{\beta}} = \frac{\partial \kappa(\underline{\beta})}{\partial \underline{\beta}} = -\frac{\alpha + \underline{\beta} + \alpha\Phi(\kappa(\underline{\beta}) - y)}{\underline{\beta}(\alpha + \underline{\beta})\phi(\kappa(\underline{\beta}) - y)} \to -\infty \quad \text{as } \underline{\beta} \to 0,
+\]
+where $\phi = \Phi'$ is the density function of the standard normal distribution. Thus, the unique equilibrium cutoff is decreasing in $\underline{\beta}$, and the marginal decrease can be arbitrarily large for sufficiently small $\underline{\beta}$. Since $\underline{\beta}$ is interpreted as a public signal, we can conclude that a small change in a public signal has a significant impact on the equilibrium cutoff when information quality is substantially ambiguous.
+\end{original}
+\begin{translation}
+如图3所示，对于充分小的$\underline{\beta}$，$\kappa(\underline{\beta}, \overline{\beta})$可以任意大。这是因为$\kappa(\underline{\beta}, \overline{\beta})$等于具有最低精度的单一先验博弈中的最大均衡临界点，并且当最低精度趋近于零时，它趋向无穷大：
+\[
+\kappa(\underline{\beta}, \overline{\beta}) = \max_{\beta} \kappa(\beta) = \kappa(\underline{\beta}) \to \infty \quad \text{当 } \underline{\beta} \to 0.
+\]
+这表明当$\underline{\beta}$非常小时，$\kappa(\underline{\beta}, \overline{\beta})$对$\underline{\beta}$敏感，因为$\kappa(\underline{\beta})$非常大。为验证这一点，我们对（3）应用隐函数定理，得到
+\[
+\frac{\partial \kappa(\underline{\beta}, \overline{\beta})}{\partial \underline{\beta}} = \frac{\partial \kappa(\underline{\beta})}{\partial \underline{\beta}} = -\frac{\alpha + \underline{\beta} + \alpha\Phi(\kappa(\underline{\beta}) - y)}{\underline{\beta}(\alpha + \underline{\beta})\phi(\kappa(\underline{\beta}) - y)} \to -\infty \quad \text{当 } \underline{\beta} \to 0,
+\]
+其中$\phi = \Phi'$是标准正态分布的密度函数。因此，唯一均衡临界点随$\underline{\beta}$递减，且对于充分小的$\underline{\beta}$，边际减少量可以任意大。由于$\underline{\beta}$被解释为公共信号，我们可以得出，当信息质量具有显著模糊性时，公共信号的微小变化会对均衡临界点产生重大影响。
+\end{translation}
+% ======================================================================
+\section{3. Main Results}
+\section*{\color{darkblue}3. 主要结果}
+
+\begin{original}
+In this section, we introduce a general model and present our main results. All proofs are relegated to the appendix.
+There is a continuum of players indexed by $i \in [0, 1]$. Each player has a binary action set $\{0, 1\}$ and a payoff function $u \colon \{0, 1\} \times [0, 1] \times \mathbb{R} \to \mathbb{R}$, where $u(a, \ell, \theta)$ is a payoff to action $a \in \{0, 1\}$ when a proportion $\ell \in [0, 1]$ of the opponents choose action 1 and a payoff state is $\theta \in \mathbb{R}$. An action $a \in \{0, 1\}$ is called a safe action if $u(a, \ell, \theta)$ is independent of $(\ell, \theta)$.
+\end{original}
+\begin{translation}
+在本节中，我们引入一个一般模型并展示我们的主要结果。所有证明均置于附录中。
+存在一个参与者的连续统，索引为$i \in [0, 1]$。每个参与者拥有一个二元行动集$\{0, 1\}$和一个支付函数$u \colon \{0, 1\} \times [0, 1] \times \mathbb{R} \to \mathbb{R}$，其中$u(a, \ell, \theta)$是当对手中选择行动1的比例为$\ell \in [0, 1]$且支付状态为$\theta \in \mathbb{R}$时，行动$a \in \{0, 1\}$的支付。如果$u(a, \ell, \theta)$与$(\ell, \theta)$无关，则行动$a \in \{0, 1\}$被称为安全行动。
+\end{translation}
+
+\begin{original}
+Player $i$ observes a noisy private signal $x_i = \theta + \sigma \varepsilon_i$, where $\theta$, $\sigma$, and all $\varepsilon_i$'s are random variables that are mutually independent and follow a probability distribution unknown to the players. Each player with each private signal has MEU preferences determined by a payoff function $u$ and a set of beliefs indexed by a set of parameters $\Xi$. For each $\xi \in \Xi$, let $f_\xi(\theta)$, $g_\xi(\varepsilon)$, and $h_\xi(\theta \mid x)$ denote the probability density function of $\theta$, that of $\varepsilon$, and the conditional probability density function of $\theta$ given $x$, respectively. Examples of $\xi$ include, but are not limited to, the variances and means of the relevant random variables. We assume that $\Xi$ is a compact and connected space.
+\end{original}
+\begin{translation}
+参与者$i$观测到一个含噪私人信号$x_i = \theta + \sigma \varepsilon_i$，其中$\theta$、$\sigma$和所有$\varepsilon_i$是相互独立的随机变量，服从参与者未知的概率分布。每个持有私人信号的参与者具有由支付函数$u$和一组由参数集$\Xi$索引的信念所决定的MEU偏好。对于每个$\xi \in \Xi$，令$f_\xi(\theta)$、$g_\xi(\varepsilon)$和$h_\xi(\theta \mid x)$分别表示$\theta$的概率密度函数、$\varepsilon$的概率密度函数，以及给定$x$下$\theta$的条件概率密度函数。$\xi$的例子包括但不限于相关随机变量的方差和均值。我们假设$\Xi$是一个紧连通空间。
+\end{translation}
+
+\begin{original}
+A game is denoted by a pair $(u, \Xi)$. A strategy in $(u, \Xi)$ is a measurable mapping $s \colon \mathbb{R} \to \{0, 1\}$, which assigns an action to each private signal. To formally define an equilibrium concept, consider a player who believes that the opponents follow a strategy $s$. Let $\sigma^\xi(s)$ be the player's evaluation of the proportion of opponents taking action 1 when the state is $\theta$ based on a single prior indexed by $\xi$. Then, the expected payoff to action $a \in \{0, 1\}$ conditional on a private signal $x$ under the same prior is
+\[
+E^\xi[u(a, \sigma^\xi(s), \theta) \mid x] \equiv \int_{\mathbb{R}} u(a, \sigma^\xi(s), \theta) h_\xi(\theta \mid x) d\theta.
+\]
+Thus, this player prefers action $a$ to action $a'$ if and only if
+\[
+\min_{\xi \in \Xi} E^\xi[u(a, \sigma^\xi(s), \theta) \mid x] \ge \min_{\xi \in \Xi} E^\xi[u(a', \sigma^\xi(s), \theta) \mid x].
+\tag{6}
+\]
+\end{original}
+\begin{translation}
+一个博弈由一对$(u, \Xi)$表示。$(u, \Xi)$中的一个策略是一个可测映射$s \colon \mathbb{R} \to \{0, 1\}$，它为每个私人信号分配一个行动。为形式地定义一个均衡概念，考虑一个相信对手遵循策略$s$的参与者。令$\sigma^\xi(s)$为该参与者基于由$\xi$索引的单一先验，对状态为$\theta$时对手选择行动1的比例的评估。那么，在同一先验下，给定私人信号$x$，行动$a \in \{0, 1\}$的条件期望支付为
+\[
+E^\xi[u(a, \sigma^\xi(s), \theta) \mid x] \equiv \int_{\mathbb{R}} u(a, \sigma^\xi(s), \theta) h_\xi(\theta \mid x) d\theta.
+\]
+因此，该参与者偏好行动$a$胜过行动$a'$当且仅当
+\[
+\min_{\xi \in \Xi} E^\xi[u(a, \sigma^\xi(s), \theta) \mid x] \ge \min_{\xi \in \Xi} E^\xi[u(a', \sigma^\xi(s), \theta) \mid x].
+\tag{6}
+\]
+\end{translation}
+
+\begin{original}
+We assume that
+\[
+\sigma^\xi(s) = E^\xi[s \mid \theta] \equiv \int_{\mathbb{R}} s(x + \theta) g_\xi(\varepsilon) d\varepsilon = \int_{\mathbb{R}} s(x) g_\xi(x - \theta) dx,
+\tag{7}
+\]
+that is, the player evaluates the proportion of opponents taking action 1 as the conditional expected value of $s$ given $\theta$, which follows the global game analysis by Morris and Shin (2003). Under this assumption, a strategy profile in which all players follow $s$ is an equilibrium if $s(x) = a$ is a best response for almost all $x$ in the sense of (6) with (7) for $a \in \{0, 1\}$. We focus on a pure-strategy equilibrium.
+\end{original}
+\begin{translation}
+我们假设
+\[
+\sigma^\xi(s) = E^\xi[s \mid \theta] \equiv \int_{\mathbb{R}} s(x + \theta) g_\xi(\varepsilon) d\varepsilon = \int_{\mathbb{R}} s(x) g_\xi(x - \theta) dx,
+\tag{7}
+\]
+也就是说，参与者将对对手选择行动1的比例的评估视为给定$\theta$下$s$的条件期望值，这遵循 Morris 和 Shin（2003）的全局博弈分析。在这一假设下，如果对于几乎所有的$x$，$s(x) = a$在（6）和（7）对$a \in \{0, 1\}$的意义上是最佳反应，则所有参与者都遵循$s$的策略组合是一个均衡。我们关注纯策略均衡。
+\end{translation}
+
+\begin{original}
+To characterize a switching equilibrium, where all players follow a switching strategy $s_\kappa$ given by (1), let
+\[
+v_a^\xi(x, \kappa) \equiv E^\xi[u(a, \sigma^\xi(s_\kappa), \theta) \mid x]
+\]
+denote the expected payoff to action $a \in \{0, 1\}$ with respect to $\xi$ when a player receives a private signal $x$ and the opponents follow $s_\kappa$. Then $s_\kappa$ is an equilibrium strategy if and only if
+\[
+\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa)
+\begin{cases}
+\ge 0 & \text{if } x > \kappa,\\
+\le 0 & \text{if } x \le \kappa.
+\end{cases}
+\tag{8}
+\]
+If the left-hand side of (8) is continuous and increasing in $x$, (8) reduces to
+\[
+\min_{\xi} v_1^\xi(\kappa, \kappa) - \min_{\xi} v_0^\xi(\kappa, \kappa) = 0.
+\tag{9}
+\]
+\end{original}
+\begin{translation}
+为刻画切换均衡，其中所有参与者都遵循由（1）给出的切换策略$s_\kappa$，令
+\[
+v_a^\xi(x, \kappa) \equiv E^\xi[u(a, \sigma^\xi(s_\kappa), \theta) \mid x]
+\]
+表示当一个参与者收到私人信号$x$且对手遵循$s_\kappa$时，行动$a \in \{0, 1\}$关于$\xi$的期望支付。那么，$s_\kappa$是一个均衡策略当且仅当
+\[
+\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa)
+\begin{cases}
+\ge 0 & \text{若 } x > \kappa,\\
+\le 0 & \text{若 } x \le \kappa.
+\end{cases}
+\tag{8}
+\]
+如果（8）的左边在$x$上连续且递增，则（8）简化为
+\[
+\min_{\xi} v_1^\xi(\kappa, \kappa) - \min_{\xi} v_0^\xi(\kappa, \kappa) = 0.
+\tag{9}
+\]
+\end{translation}
+
+\begin{original}
+We assume the following conditions on $(u, \Xi)$.
+
+\textbf{A1 (Action Monotonicity)} For each $\xi$, $u(1, \ell, \theta)$ is increasing in $\ell$; $u(0, \ell, \theta)$ is decreasing in $\ell$.
+
+\textbf{A2 (State Monotonicity)} For each $\xi$, $u(1, \ell, \theta)$ is increasing in $\theta$; $u(0, \ell, \theta)$ is decreasing in $\theta$.
+
+\textbf{A3 (Stochastic Dominance)} For each fixed $\xi$, if $x > x'$, then $h_\xi(\theta \mid x)$ first-order stochastically dominates $h_\xi(\theta \mid x')$.
+
+\textbf{A4 (Continuity)} $v_a^\xi(x, \kappa)$ exists for all $(x, \kappa, \xi) \in \mathbb{R} \times \mathbb{R} \cup \{-\infty, \infty\} \times \Xi$, and the function $(\xi, x, \kappa) \mapsto v_a^\xi(x, \kappa)$ is continuous for each $a \in \{0, 1\}$.
+
+\textbf{A5 (Limit Dominance)} There exist $\underline{\theta}, \overline{\theta} \in \mathbb{R}$ satisfying
+\begin{align*}
+&u(1, 1, \overline{\theta}) - u(0, 1, \overline{\theta}) < 0, \quad \lim_{x \to -\infty} h_\xi(\overline{\theta} \mid x)/h_\xi(\underline{\theta} \mid x) = 1 \text{ for each } \xi,\\
+&u(1, 0, \underline{\theta}) - u(0, 0, \underline{\theta}) > 0, \quad \lim_{x \to \infty} h_\xi(\underline{\theta} \mid x)/h_\xi(\overline{\theta} \mid x) = 1 \text{ for each } \xi.
+\end{align*}
+\end{original}
+\begin{translation}
+我们对$(u, \Xi)$假设以下条件。
+
+\textbf{A1（行动单调性）} 对于每个$\xi$，$u(1, \ell, \theta)$在$\ell$上递增；$u(0, \ell, \theta)$在$\ell$上递减。
+
+\textbf{A2（状态单调性）} 对于每个$\xi$，$u(1, \ell, \theta)$在$\theta$上递增；$u(0, \ell, \theta)$在$\theta$上递减。
+
+\textbf{A3（随机占优）} 对于每个固定的$\xi$，如果$x > x'$，则$h_\xi(\theta \mid x)$一阶随机占优于$h_\xi(\theta \mid x')$。
+
+\textbf{A4（连续性）} $v_a^\xi(x, \kappa)$对所有$(x, \kappa, \xi) \in \mathbb{R} \times \mathbb{R} \cup \{-\infty, \infty\} \times \Xi$存在，且函数$(\xi, x, \kappa) \mapsto v_a^\xi(x, \kappa)$对每个$a \in \{0, 1\}$连续。
+
+\textbf{A5（极限占优）} 存在$\underline{\theta}, \overline{\theta} \in \mathbb{R}$满足
+\begin{align*}
+&u(1, 1, \overline{\theta}) - u(0, 1, \overline{\theta}) < 0, \quad \lim_{x \to -\infty} h_\xi(\overline{\theta} \mid x)/h_\xi(\underline{\theta} \mid x) = 1 \text{ 对每个 } \xi,\\
+&u(1, 0, \underline{\theta}) - u(0, 0, \underline{\theta}) > 0, \quad \lim_{x \to \infty} h_\xi(\underline{\theta} \mid x)/h_\xi(\overline{\theta} \mid x) = 1 \text{ 对每个 } \xi.
+\end{align*}
+\end{translation}
+
+\begin{original}
+By A1 and A2, the payoff to action 1 (resp.\ action 0) is increasing (resp.\ decreasing) in the proportion of the opponents choosing action 1 and the state. In a single-prior game, it is enough to assume monotonicity of the payoff differential $u(1, \ell, \theta) - u(0, \ell, \theta)$ (cf.\ Morris and Shin, 2003). In a multiple-priors game, however, we need monotonicity of $u(1, \ell, \theta)$ and $u(0, \ell, \theta)$ separately because worst-case beliefs depend upon actions. A3 implies that, for each fixed $\xi$, high signals convey good news about $\theta$. A sufficient condition for A3 is the monotone likelihood ratio property of the density function of a private signal $x$ conditional on $\theta$, i.e.\ $g_\xi(x - \theta)$, for each $\xi$ (Milgrom, 1981). For example, if $g_\xi$ is a density function of the normal, exponential, or uniform distribution, among others, then A3 holds. A4 is a technical assumption, and it is satisfied if a payoff function is continuous and bounded. In some applications of global games, a payoff function is discontinuous or unbounded, yet A4 is satisfied in most cases. A5 requires that action 1 (resp.\ action 0) be a dominant strategy for sufficiently high (resp.\ low) signals.
+\end{original}
+\begin{translation}
+根据A1和A2，行动1（或行动0）的支付在对手选择行动1的比例和状态上递增（或递减）。在单一先验博弈中，假设支付差异$u(1, \ell, \theta) - u(0, \ell, \theta)$的单调性就足够了（参见 Morris 和 Shin，2003）。然而，在多重先验博弈中，我们需要分别假设$u(1, \ell, \theta)$和$u(0, \ell, \theta)$的单调性，因为最坏情形信念依赖于行动。A3意味着，对于每个固定的$\xi$，高信号传递关于$\theta$的好消息。A3的一个充分条件是，对于每个$\xi$，私人信号$x$在$\theta$条件下的密度函数$g_\xi(x - \theta)$具有单调似然比性质（Milgrom，1981）。例如，如果$g_\xi$是正态分布、指数分布或均匀分布等的密度函数，则A3成立。A4是一个技术性假设，如果支付函数连续且有界，则该假设得到满足。在全局博弈的某些应用中，支付函数可能不连续或无界，但在大多数情况下A4仍然成立。A5要求行动1（或行动0）对于充分高（或低）的信号是一个占优策略。
+\end{translation}
+
+\begin{original}
+Under these assumptions, $s_\kappa$ is an equilibrium strategy if and only if $\kappa$ is a solution to (9) because the following lemma implies the equivalence of (8) and (9).
+\end{original}
+\begin{translation}
+在这些假设下，$s_\kappa$是一个均衡策略当且仅当$\kappa$是（9）的解，因为以下引理蕴含了（8）和（9）的等价性。
+\end{translation}
+
+\begin{lemma}
+The function $(\xi, \kappa) \mapsto \min_{\xi} v_1^\xi(\kappa, \kappa) - \min_{\xi} v_0^\xi(\kappa, \kappa)$ is continuous, increasing in $\kappa$, and decreasing in $\xi$.
+\end{lemma}
+\begin{translation}
+\color{darkblue}\textbf{引理1.} 函数$(\xi, \kappa) \mapsto \min_{\xi} v_1^\xi(\kappa, \kappa) - \min_{\xi} v_0^\xi(\kappa, \kappa)$是连续的，在$\kappa$上递增，在$\xi$上递减。
+\end{translation}
+
+\begin{original}
+Moreover, $(u, \Xi)$ exhibits strategic complementarities in the following sense.
+\end{original}
+\begin{translation}
+此外，$(u, \Xi)$在以下意义上表现出策略互补性。
+\end{translation}
+
+\begin{lemma}
+If $s_\kappa(x) \le s_{\kappa'}(x)$ for all $x \in \mathbb{R}$, then
+\begin{align*}
+&\min_{\xi} E^\xi[u(1, \sigma^\xi(s_\kappa), \theta) \mid x] - \min_{\xi} E^\xi[u(0, \sigma^\xi(s_{\kappa'}), \theta) \mid x]\\
+&\qquad \le \min_{\xi} E^\xi[u(1, \sigma^\xi(s_{\kappa'}), \theta) \mid x] - \min_{\xi} E^\xi[u(0, \sigma^\xi(s_\kappa), \theta) \mid x] \quad \text{for all } x.
+\end{align*}
+\end{lemma}
+\begin{translation}
+\color{darkblue}\textbf{引理2.} 如果对所有$x \in \mathbb{R}$有$s_\kappa(x) \le s_{\kappa'}(x)$，则
+\begin{align*}
+&\min_{\xi} E^\xi[u(1, \sigma^\xi(s_\kappa), \theta) \mid x] - \min_{\xi} E^\xi[u(0, \sigma^\xi(s_{\kappa'}), \theta) \mid x]\\
+&\qquad \le \min_{\xi} E^\xi[u(1, \sigma^\xi(s_{\kappa'}), \theta) \mid x] - \min_{\xi} E^\xi[u(0, \sigma^\xi(s_\kappa), \theta) \mid x] \quad \text{对所有 } x.
+\end{align*}
+\end{translation}
+
+\begin{original}
+Therefore, the set of strategies surviving iterated deletion of strictly interim-dominated strategies includes the maximum and minimum elements, which are the maximum and minimum equilibrium strategies (Milgrom and Roberts, 1990; Vives, 1990; Van Zandt and Vives, 2007). In particular, this set is a singleton if and only if (9) has a unique solution.
+\end{original}
+\begin{translation}
+因此，经受严格临时占优策略迭代删除的策略集包含最大和最小元素，它们分别是最大和最小均衡策略（Milgrom 和 Roberts，1990；Vives，1990；Van Zandt 和 Vives，2007）。特别地，该集合是单点集当且仅当（9）有唯一解。
+\end{translation}
+
+\begin{proposition}
+Let $\underline{\kappa}, \overline{\kappa} \in \mathbb{R}$ be the minimum and maximum solutions to (9), respectively. Then $s_{\underline{\kappa}}$ and $s_{\overline{\kappa}}$ are equilibrium strategies in $(u, \Xi)$, and $s_{\underline{\kappa}}(x) \le s(x) \le s_{\overline{\kappa}}(x)$ for all $x \in \mathbb{R}$ if a strategy $s$ survives iterated deletion of strictly interim-dominated strategies. In particular, $s_{\overline{\kappa}}$ is the (essentially) unique strategy surviving the iterated deletion if and only if $\underline{\kappa} = \overline{\kappa} = \kappa$.
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题1.} 令$\underline{\kappa}, \overline{\kappa} \in \mathbb{R}$分别为（9）的最小和最大解。那么$s_{\underline{\kappa}}$和$s_{\overline{\kappa}}$是$(u, \Xi)$中的均衡策略，且如果策略$s$经受严格临时占优策略的迭代删除，则对所有$x \in \mathbb{R}$有$s_{\underline{\kappa}}(x) \le s(x) \le s_{\overline{\kappa}}(x)$。特别地，$s_{\overline{\kappa}}$是经受迭代删除的（本质上）唯一策略当且仅当$\underline{\kappa} = \overline{\kappa} = \kappa$。
+\end{translation}
+
+\begin{original}
+To study what condition guarantees the uniqueness of equilibrium, we consider a fictitious game with a pair of priors indexed by $(\xi_0, \xi_1) \in \Xi \times \Xi$, where players evaluate actions 0 and 1 using $\xi_0$ and $\xi_1$, respectively. If each fictitious game has a unique switching equilibrium, $(u, \Xi)$ also has a unique switching equilibrium, and the equilibrium cutoff equals the ``maxmin'' of the equilibrium cutoffs in the fictitious games, as shown by the next proposition, which generalizes Claim 2.
+\end{original}
+\begin{translation}
+为研究什么条件保证均衡的唯一性，我们考虑一个具有一对由$(\xi_0, \xi_1) \in \Xi \times \Xi$索引的先验的虚构博弈，其中参与者分别使用$\xi_0$和$\xi_1$来评估行动0和行动1。如果每个虚构博弈都有唯一的切换均衡，则$(u, \Xi)$也有唯一的切换均衡，且均衡临界点等于虚构博弈中均衡临界点的``最大最小''值，如下述命题所示，该命题推广了断言2。
+\end{translation}
+
+\begin{proposition}
+Suppose that there exists a unique value $\kappa = \kappa(\xi_0, \xi_1)$ solving
+\[
+v_1^{\xi_1}(\kappa, \kappa) - v_0^{\xi_0}(\kappa, \kappa) = 0
+\tag{10}
+\]
+for each $(\xi_0, \xi_1) \in \Xi \times \Xi$, and that $\kappa \colon \Xi \times \Xi \to \mathbb{R}$ is bounded. Then $s_{\overline{\kappa}}$ is the (essentially) unique strategy surviving iterated deletion of strictly interim-dominated strategies, where
+\[
+\overline{\kappa} = \min_{\xi_0} \max_{\xi_1} \kappa(\xi_0, \xi_1) = \max_{\xi_1} \min_{\xi_0} \kappa(\xi_0, \xi_1).
+\tag{11}
+\]
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题2.} 假设对每个$(\xi_0, \xi_1) \in \Xi \times \Xi$，存在唯一的$\kappa = \kappa(\xi_0, \xi_1)$满足
+\[
+v_1^{\xi_1}(\kappa, \kappa) - v_0^{\xi_0}(\kappa, \kappa) = 0,
+\tag{10}
+\]
+且$\kappa \colon \Xi \times \Xi \to \mathbb{R}$有界。那么$s_{\overline{\kappa}}$是经受严格临时占优策略迭代删除的（本质上）唯一策略，其中
+\[
+\overline{\kappa} = \min_{\xi_0} \max_{\xi_1} \kappa(\xi_0, \xi_1) = \max_{\xi_1} \min_{\xi_0} \kappa(\xi_0, \xi_1).
+\tag{11}
+\]
+\end{translation}
+
+\begin{original}
+For example, suppose that $v_0^\xi(x, \kappa)$ is independent of $\xi$, which is typically the case when action 0 is a safe action. Then we can use a single-prior game $(u, \{\xi\})$ as a fictitious game because (10) reduces to $v_1^\xi(\kappa, \kappa) - v_0^{\xi_0}(\kappa, \kappa) = 0$. Hence, if each single-prior game with $\xi \in \Xi$ has a unique equilibrium, $(u, \Xi)$ also has a unique equilibrium, whose cutoff coincides with the maximum of the equilibrium cutoffs of the single-prior games with $\xi \in \Xi$ by (11). As argued by Carlsson and van Damme (1993) and Morris and Shin (2003), each single-prior game has a unique equilibrium in the following two typical cases: the variance of $\varepsilon$ is sufficiently small, which is assumed in Claim 2, and the variance of $\varepsilon$ is sufficiently large, which will be assumed in Section 4.
+\end{original}
+\begin{translation}
+例如，假设$v_0^\xi(x, \kappa)$与$\xi$无关，这通常是行动0为安全行动时的情形。那么我们可以使用单一先验博弈$(u, \{\xi\})$作为虚构博弈，因为（10）简化为$v_1^\xi(\kappa, \kappa) - v_0^{\xi_0}(\kappa, \kappa) = 0$。因此，如果每个$\xi \in \Xi$的单一先验博弈都有唯一均衡，则$(u, \Xi)$也有唯一均衡，其临界点由（11）等于$\xi \in \Xi$的单一先验博弈均衡临界点的最大值。正如 Carlsson 和 van Damme（1993）以及 Morris 和 Shin（2003）所论证的，在以下两种典型情形中，每个单一先验博弈都有唯一均衡：$\varepsilon$的方差充分小（断言2所假设的情形），以及$\varepsilon$的方差充分大（第4节将假设的情形）。
+\end{translation}
+
+\begin{original}
+Assuming that $v_0^\xi(x, \kappa)$ is independent of $\xi$, we conduct comparative static analysis on the equilibrium cutoff. The following proposition shows that the maximum equilibrium cutoff in $(u, \Xi)$ (possibly with multiple equilibria) equals the maximum of the maximum equilibrium cutoffs in single-prior games over $\xi \in \Xi$. Thus, ambiguous information increases the maximum equilibrium cutoff, generalizing Claim 1 (a similar result holds when $v_1^\xi(x, \kappa)$ is independent of $\xi$).
+\end{original}
+\begin{translation}
+在假设$v_0^\xi(x, \kappa)$与$\xi$无关的情况下，我们对均衡临界点进行比较静态分析。下述命题表明，$(u, \Xi)$中的最大均衡临界点（可能存在多重均衡）等于$\xi \in \Xi$上单一先验博弈最大均衡临界点的最大值。因此，模糊信息增加了最大均衡临界点，推广了断言1（当$v_1^\xi(x, \kappa)$与$\xi$无关时，类似的结果也成立）。
+\end{translation}
+
+\begin{proposition}
+Suppose that $v_0(\kappa) \equiv v_0^\xi(\kappa, \kappa)$ is independent of $\xi$. Then $\max\{\kappa \in \mathbb{R} \mid v_1^\xi(\kappa, \kappa) = v_0(\kappa)\}$ is the maximum equilibrium cutoff in $(u, \{\xi\})$, and its maximum over $\xi$ denoted by $\kappa^0 \equiv \max_{\xi} \max\{\kappa \in \mathbb{R} \mid v_1^\xi(\kappa, \kappa) = v_0(\kappa)\}$ is the maximum equilibrium cutoff in $(u, \Xi)$.
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题3.} 假设$v_0(\kappa) \equiv v_0^\xi(\kappa, \kappa)$与$\xi$无关。那么$\max\{\kappa \in \mathbb{R} \mid v_1^\xi(\kappa, \kappa) = v_0(\kappa)\}$是$(u, \{\xi\})$中的最大均衡临界点，且其在$\xi$上的最大值记为$\kappa^0 \equiv \max_{\xi} \max\{\kappa \in \mathbb{R} \mid v_1^\xi(\kappa, \kappa) = v_0(\kappa)\}$，是$(u, \Xi)$中的最大均衡临界点。
+\end{translation}
+
+\begin{original}
+An immediate corollary of this proposition gives another sufficient condition for the uniqueness of equilibrium.
+\end{original}
+\begin{translation}
+该命题的一个直接推论给出了均衡唯一性的另一个充分条件。
+\end{translation}
+
+\begin{corollary}
+Let $\xi^0 \in \Xi$ be such that $v_1^{\xi^0}(\kappa^0, \kappa^0) = v_0(\kappa^0)$ in Proposition 3. If $(u, \{\xi^0\})$ has a unique switching equilibrium, then $s_{\kappa^0}$ is the (essentially) unique strategy surviving iterated deletion of strictly interim-dominated strategies in $(u, \Xi)$.
+\end{corollary}
+\begin{translation}
+\color{darkblue}\textbf{推论4.} 令$\xi^0 \in \Xi$满足命题3中的$v_1^{\xi^0}(\kappa^0, \kappa^0) = v_0(\kappa^0)$。如果$(u, \{\xi^0\})$有唯一的切换均衡，则$s_{\kappa^0}$是$(u, \Xi)$中经受严格临时占优策略迭代删除的（本质上）唯一策略。
+\end{translation}
+\begin{original}
+This corollary focuses on a single-prior game $(u, \{\xi^0\})$ that has the switching equilibrium whose cutoff is equal to the maximum equilibrium cutoff in $(u, \Xi)$. It shows that if this is a unique equilibrium in $(u, \{\xi^0\})$, then it is also a unique equilibrium in $(u, \Xi)$.
+\end{original}
+\begin{translation}
+该推论关注一个单一先验博弈$(u, \{\xi^0\})$，其切换均衡的临界点等于$(u, \Xi)$中的最大均衡临界点。它表明，如果这是$(u, \{\xi^0\})$中的唯一均衡，那么它也是$(u, \Xi)$中的唯一均衡。
+\end{translation}
+
+\begin{original}
+Finally, we demonstrate that sufficiently ambiguous information can induce a unique equilibrium. Let $\xi = (\beta, \rho) \in [\underline{\beta}, \overline{\beta}] \times \mathbb{R}_{++}$, where $\beta$ is the precision of a noise term in a private signal. Assume that the probability density function of a noise term $g(\varepsilon)$ has a support $\mathbb{R}$ and satisfies $\int_{\mathbb{R}} g(\varepsilon) d\varepsilon = 0$, $\int_{\mathbb{R}} \varepsilon^2 g(\varepsilon) d\varepsilon = 1$, $g(\varepsilon) = g(-\varepsilon)$, and $g(\varepsilon)$ is increasing in $\varepsilon$ if $\varepsilon < 0$. Let action 0 be a safe and ex-ante Laplacian action; that is, $u(0, \ell, \theta) = 0$ for each $\ell$ and $\theta$ and $0 > \int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) d\theta$, where $\int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) d\theta$ is the ex-ante expected payoff to action 1 when a player has the uniform belief over the opponents' actions. The next proposition shows that the minimum equilibrium cutoff can be arbitrarily large if the minimum precision $\underline{\beta}$ is sufficiently small, and there exists a unique equilibrium if a single-prior game with sufficiently small $\underline{\beta}$ has at most one switching equilibrium with a sufficiently large cutoff.
+\end{original}
+\begin{translation}
+最后，我们证明充分模糊的信息可以引致唯一均衡。令$\xi = (\beta, \rho) \in [\underline{\beta}, \overline{\beta}] \times \mathbb{R}_{++}$，其中$\beta$是私人信号中噪声项的精度。假设噪声项的概率密度函数$g(\varepsilon)$具有支撑集$\mathbb{R}$，并满足$\int_{\mathbb{R}} g(\varepsilon) d\varepsilon = 0$、$\int_{\mathbb{R}} \varepsilon^2 g(\varepsilon) d\varepsilon = 1$、$g(\varepsilon) = g(-\varepsilon)$，且当$\varepsilon < 0$时$g(\varepsilon)$在$\varepsilon$上递增。令行动0为安全且事前拉普拉斯行动；即对每个$\ell$和$\theta$有$u(0, \ell, \theta) = 0$，且$0 > \int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) d\theta$，其中$\int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) d\theta$是当参与者对对手行动持有均匀信念时，行动1的事前期望支付。下述命题表明，如果最小精度$\underline{\beta}$充分小，则最小均衡临界点可以任意大；并且如果具有充分小$\underline{\beta}$的单一先验博弈至多有一个具有充分大临界点的切换均衡，则存在唯一均衡。
+\end{translation}
+
+\begin{proposition}
+Consider $(u, [\underline{\beta}, \overline{\beta}])$ described above with arbitrarily fixed $\overline{\beta} > 0$. Suppose that action 0 is a safe and ex-ante Laplacian action. Then the following holds.
+
+\begin{itemize}
+\item For every $\kappa \in \mathbb{R}$, there exists $\hat{\beta}(\kappa) > 0$ such that, if $\underline{\beta} < \hat{\beta}(\kappa)$, then the minimum equilibrium cutoff in $(u, [\underline{\beta}, \overline{\beta}])$ is greater than $\kappa$.
+\item Suppose that there exists $\tilde{\beta} \in (0, \overline{\beta})$ such that a single-prior game $(u, \{\beta\})$ has at most one switching equilibrium with a cutoff greater than $\kappa$ for every $\beta \le \tilde{\beta}$. Then there exists $\beta^* \in (0, \tilde{\beta})$ such that, if $\underline{\beta} < \beta^*$, then $s_{\kappa^0}$ is the (essentially) unique strategy surviving iterated deletion of strictly interim-dominated strategies in $(u, [\underline{\beta}, \overline{\beta}])$, where $\kappa^0$ is given in Proposition 3.
+\end{itemize}
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题5.} 考虑上述具有任意固定$\overline{\beta} > 0$的$(u, [\underline{\beta}, \overline{\beta}])$。假设行动0是安全且事前拉普拉斯行动。则以下成立。
+
+\begin{itemize}
+\item 对每个$\kappa \in \mathbb{R}$，存在$\hat{\beta}(\kappa) > 0$使得，如果$\underline{\beta} < \hat{\beta}(\kappa)$，则$(u, [\underline{\beta}, \overline{\beta}])$中的最小均衡临界点大于$\kappa$。
+\item 假设存在$\tilde{\beta} \in (0, \overline{\beta})$使得，对每个$\beta \le \tilde{\beta}$，单一先验博弈$(u, \{\beta\})$至多有一个临界点大于$\kappa$的切换均衡。则存在$\beta^* \in (0, \tilde{\beta})$使得，如果$\underline{\beta} < \beta^*$，则$s_{\kappa^0}$是$(u, [\underline{\beta}, \overline{\beta}])$中经受严格临时占优策略迭代删除的（本质上）唯一策略，其中$\kappa^0$由命题3给出。
+\end{itemize}
+\end{translation}
+
+\begin{original}
+A special case is the second half of Claim 3: $(u, [\underline{\beta}, \overline{\beta}])$ has a unique equilibrium for any $\overline{\beta}$ if $\underline{\beta}$ is small enough. This is because action 0 is a safe and ex-ante Laplacian action, and for any $\underline{\beta} > 0$, $(u, \{\underline{\beta}\})$ has exactly one switching equilibrium with a cutoff greater than $\kappa$.
+\end{original}
+\begin{translation}
+一个特例是断言3的后半部分：如果$\underline{\beta}$足够小，则对于任意$\overline{\beta}$，$(u, [\underline{\beta}, \overline{\beta}])$有唯一均衡。这是因为行动0是安全且事前拉普拉斯行动，且对任意$\underline{\beta} > 0$，$(u, \{\underline{\beta}\})$恰好有一个临界点大于$\kappa$的切换均衡。
+\end{translation}
+
+% ======================================================================
+\section{4. Applications to Regime Change}
+\section*{\color{darkblue}4. 制度变迁的应用}
+
+\begin{original}
+We apply our main results to global games of regime change (Angeletos et al., 2007), which have applications to financial crises such as currency crises (Morris and Shin, 1998), debt rollover crises (Morris and Shin, 2004), and bank runs (Goldstein and Pauzner, 2005), among others. We study the effect of ambiguous-quality information on the likelihood of currency crises and debt rollover crises and compare it with that of low-quality information studied by Iachan and Nenov (2015).
+\end{original}
+\begin{translation}
+我们将主要结果应用于制度变迁的全局博弈（Angeletos 等，2007），这些博弈在金融危机中有诸多应用，例如货币危机（Morris 和 Shin，1998）、债务展期危机（Morris 和 Shin，2004）和银行挤兑（Goldstein 和 Pauzner，2005）等。我们研究模糊质量信息对货币危机和债务展期危机可能性的影响，并将其与 Iachan 和 Nenov（2015）研究的低质量信息的影响进行比较。
+\end{translation}
+
+\begin{original}
+In a game of regime change, either regime 0 or 1 is realized depending upon a state $\theta$ and the proportion of players choosing action 0. More specifically, regime 0 occurs if and only if the proportion of players choosing action 0 is greater than $\lambda$. The payoff differential $u(1, \ell, \theta) - u(0, \ell, \theta)$ equals $\delta_r(\theta)$ if regime $r \in \{0, 1\}$ occurs:
+\[
+u(1, \ell, \theta) - u(0, \ell, \theta) =
+\begin{cases}
+\delta_0(\theta) & \text{if } 1 - \ell \ge \lambda,\\[2pt]
+\delta_1(\theta) & \text{if } 1 - \ell < \lambda,
+\end{cases}
+\]
+where $\delta_0(\theta)$ and $\delta_1(\theta)$ are non-decreasing in $\theta$, bounded, and satisfy $\delta_0(\theta) < 0 < \delta_1(\theta)$. Later, we will assume that either action 0 or 1 is a safe action.
+\end{original}
+\begin{translation}
+在制度变迁博弈中，制度0或1的实现取决于状态$\theta$和选择行动0的参与者比例。更具体地说，当且仅当选择行动0的参与者比例大于$\lambda$时，制度0发生。如果制度$r \in \{0, 1\}$发生，则支付差异$u(1, \ell, \theta) - u(0, \ell, \theta)$等于$\delta_r(\theta)$：
+\[
+u(1, \ell, \theta) - u(0, \ell, \theta) =
+\begin{cases}
+\delta_0(\theta) & \text{若 } 1 - \ell \ge \lambda,\\[2pt]
+\delta_1(\theta) & \text{若 } 1 - \ell < \lambda,
+\end{cases}
+\]
+其中$\delta_0(\theta)$和$\delta_1(\theta)$在$\theta$上非递减、有界，且满足$\delta_0(\theta) < 0 < \delta_1(\theta)$。稍后，我们将假设行动0或行动1是安全行动。
+\end{translation}
+
+\begin{original}
+A state $\theta$ is drawn from the improper uniform distribution over the real line, and a noise term $\varepsilon_i$ is drawn from a normal distribution with mean zero and precision $\beta$. Then $h(\theta \mid x) = \sqrt{\beta}\,\phi(\sqrt{\beta}(x - \theta))$ and $f(\theta) = \phi(\sqrt{\beta}\,\theta)$, where $\phi$ is the probability density function of the standard normal distribution. When the state is $\theta$ and each player follows $s_\kappa$, the proportion of players choosing action 0 is $\Phi(\sqrt{\beta}(\theta - \kappa))$, where $\Phi$ is the cumulative distribution function of the standard normal distribution. Let $\theta^* = \theta^*(\kappa, \beta) \in (0, 1)$ be the unique solution to
+\[
+\Phi(\sqrt{\beta}(\theta^* - \kappa)) = \lambda.
+\tag{12}
+\]
+Then regime 0 occurs if and only if $\theta \le \theta^*(\kappa, \beta)$, so $\theta^*(\kappa, \beta)$ is referred to as a regime-change cutoff. We can readily show that $\theta^*(\kappa, \beta)$ is strictly increasing in $\kappa$ because regime 0 is more likely to occur when more players choose action 0.
+\end{original}
+\begin{translation}
+状态$\theta$从实数轴上的无信息均匀分布中抽取，噪声项$\varepsilon_i$从均值为零、精度为$\beta$的正态分布中抽取。则$h(\theta \mid x) = \sqrt{\beta}\,\phi(\sqrt{\beta}(x - \theta))$且$f(\theta) = \phi(\sqrt{\beta}\,\theta)$，其中$\phi$是标准正态分布的概率密度函数。当状态为$\theta$且每个参与者遵循$s_\kappa$时，选择行动0的参与者比例为$\Phi(\sqrt{\beta}(\theta - \kappa))$，其中$\Phi$是标准正态分布的累积分布函数。令$\theta^* = \theta^*(\kappa, \beta) \in (0, 1)$为下式的唯一解
+\[
+\Phi(\sqrt{\beta}(\theta^* - \kappa)) = \lambda.
+\tag{12}
+\]
+则当且仅当$\theta \le \theta^*(\kappa, \beta)$时制度0发生，因此$\theta^*(\kappa, \beta)$被称为制度变迁临界点。我们可以容易地证明$\theta^*(\kappa, \beta)$在$\kappa$上严格递增，因为当更多参与者选择行动0时，制度0更可能发生。
+\end{translation}
+
+\begin{original}
+A single-prior game $(u, \{\beta\})$ is the global game of regime change in Iachan and Nenov (2015), and it admits a unique switching equilibrium with cutoff $\kappa = \kappa(\beta)$, which is the unique solution to
+\[
+v_1^\beta(\kappa, \kappa) - v_0^\beta(\kappa, \kappa) = \int_{-\infty}^{\theta^*(\kappa, \beta)} \delta_0(\theta) \sqrt{\beta}\,\phi(\sqrt{\beta}(\kappa - \theta)) d\theta + \int_{\theta^*(\kappa, \beta)}^{\infty} \delta_1(\theta) \sqrt{\beta}\,\phi(\sqrt{\beta}(\kappa - \theta)) d\theta = 0.
+\]
+As a special case, assume that $\delta_0(\theta) = \delta_0$ and $\delta_1(\theta) = \delta_1$ are constant. Then this equation reduces to
+\[
+\delta_0 \Phi(\sqrt{\beta}(\theta^*(\kappa, \beta) - \kappa)) + \delta_1(1 - \Phi(\sqrt{\beta}(\theta^*(\kappa, \beta) - \kappa))) = \delta_0 + (\delta_1 - \delta_0)\Phi(\sqrt{\beta}(\kappa - \theta^*(\kappa, \beta))) = 0
+\tag{13}
+\]
+by (12). Therefore, $\Phi(\sqrt{\beta}(\kappa - \theta^*(\kappa, \beta))) = \delta_0/(\delta_0 - \delta_1)$ and $\kappa(\beta) = \theta^*(\kappa, \beta) + \Phi^{-1}(\delta_0/(\delta_0 - \delta_1))/\sqrt{\beta}$.
+\end{original}
+\begin{translation}
+单一先验博弈$(u, \{\beta\})$是 Iachan 和 Nenov（2015）中的制度变迁全局博弈，它允许唯一的切换均衡，其临界点$\kappa = \kappa(\beta)$是下式的唯一解
+\[
+v_1^\beta(\kappa, \kappa) - v_0^\beta(\kappa, \kappa) = \int_{-\infty}^{\theta^*(\kappa, \beta)} \delta_0(\theta) \sqrt{\beta}\,\phi(\sqrt{\beta}(\kappa - \theta)) d\theta + \int_{\theta^*(\kappa, \beta)}^{\infty} \delta_1(\theta) \sqrt{\beta}\,\phi(\sqrt{\beta}(\kappa - \theta)) d\theta = 0.
+\]
+作为一个特例，假设$\delta_0(\theta) = \delta_0$和$\delta_1(\theta) = \delta_1$是常数。则该方程由（12）简化为
+\[
+\delta_0 \Phi(\sqrt{\beta}(\theta^*(\kappa, \beta) - \kappa)) + \delta_1(1 - \Phi(\sqrt{\beta}(\theta^*(\kappa, \beta) - \kappa))) = \delta_0 + (\delta_1 - \delta_0)\Phi(\sqrt{\beta}(\kappa - \theta^*(\kappa, \beta))) = 0.
+\tag{13}
+\]
+因此，$\Phi(\sqrt{\beta}(\kappa - \theta^*(\kappa, \beta))) = \delta_0/(\delta_0 - \delta_1)$且$\kappa(\beta) = \theta^*(\kappa, \beta) + \Phi^{-1}(\delta_0/(\delta_0 - \delta_1))/\sqrt{\beta}$。
+\end{translation}
+
+\begin{original}
+We consider $(u, \Xi)$ with $\Xi = [\underline{\beta}, \overline{\beta}] \subset \mathbb{R}_{++}$ assuming that one of the actions is a safe action. It is readily shown that $(u, \Xi)$ satisfies the condition in Proposition 2. Thus, $(u, \Xi)$ has a unique switching equilibrium with the following cutoff.
+\[
+\overline{\kappa} =
+\begin{cases}
+\max_{\beta} \kappa(\beta) & \text{if action 0 is a safe action},\\[4pt]
+\min_{\beta} \kappa(\beta) & \text{if action 1 is a safe action}.
+\end{cases}
+\tag{14}
+\]
+Therefore, we obtain the following comparative static results.
+\end{original}
+\begin{translation}
+我们考虑$\Xi = [\underline{\beta}, \overline{\beta}] \subset \mathbb{R}_{++}$的$(u, \Xi)$，假设其中一个行动是安全行动。容易证明$(u, \Xi)$满足命题2中的条件。因此，$(u, \Xi)$具有以下临界点的唯一切换均衡。
+\[
+\overline{\kappa} =
+\begin{cases}
+\max_{\beta} \kappa(\beta) & \text{若行动0是安全行动},\\[4pt]
+\min_{\beta} \kappa(\beta) & \text{若行动1是安全行动}.
+\end{cases}
+\tag{14}
+\]
+因此，我们得到以下比较静态结果。
+\end{translation}
+
+\begin{proposition}
+If action 0 is a safe action, the regime-change cutoff in $(u, \Xi)$ is
+\[
+\theta^*(\overline{\kappa}, \beta) = \theta^*(\max_{\beta} \kappa(\beta), \beta) = \max_{\beta} \theta^*(\kappa(\beta), \beta) \ge \theta^*(\kappa(\beta), \beta) \quad \text{for each } \beta.
+\]
+Thus, ambiguous-quality information increases the regime-change cutoff and makes regime 0 more likely. If action 1 is a safe action, the regime-change cutoff in $(u, \Xi)$ is
+\[
+\theta^*(\overline{\kappa}, \beta) = \theta^*(\min_{\beta} \kappa(\beta), \beta) = \min_{\beta} \theta^*(\kappa(\beta), \beta) \le \theta^*(\kappa(\beta), \beta) \quad \text{for each } \beta.
+\]
+Thus, ambiguous-quality information decreases the regime-change cutoff and makes regime 1 more likely.
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题6.} 如果行动0是安全行动，则$(u, \Xi)$中的制度变迁临界点为
+\[
+\theta^*(\overline{\kappa}, \beta) = \theta^*(\max_{\beta} \kappa(\beta), \beta) = \max_{\beta} \theta^*(\kappa(\beta), \beta) \ge \theta^*(\kappa(\beta), \beta) \quad \text{对每个 } \beta.
+\]
+因此，模糊质量信息提高了制度变迁临界点，使制度0更可能发生。如果行动1是安全行动，则$(u, \Xi)$中的制度变迁临界点为
+\[
+\theta^*(\overline{\kappa}, \beta) = \theta^*(\min_{\beta} \kappa(\beta), \beta) = \min_{\beta} \theta^*(\kappa(\beta), \beta) \le \theta^*(\kappa(\beta), \beta) \quad \text{对每个 } \beta.
+\]
+因此，模糊质量信息降低了制度变迁临界点，使制度1更可能发生。
+\end{translation}
+
+\begin{original}
+To compare the effects of ambiguous-quality information and low-quality information, we use the result of Iachan and Nenov (2015) on the effect of low-quality information, which is determined by the sensitivity of $\delta_0(\theta)$ and $\delta_1(\theta)$ with respect to $\theta$.
+\end{original}
+\begin{translation}
+为比较模糊质量信息和低质量信息的影响，我们使用 Iachan 和 Nenov（2015）关于低质量信息效应的结果，该效应由$\delta_0(\theta)$和$\delta_1(\theta)$关于$\theta$的敏感性决定。
+\end{translation}
+
+\begin{proposition}
+If $\delta_0(\theta)$ is constant, $\theta^*(\kappa(\beta), \beta)$ is increasing in $\beta$. If $\delta_1(\theta)$ is constant, $\theta^*(\kappa(\beta), \beta)$ is decreasing in $\beta$. If $\delta_0(\theta)$ and $\delta_1(\theta)$ are constant, $\theta^*(\kappa(\beta), \beta)$ is independent of $\beta$.
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题7.} 如果$\delta_0(\theta)$是常数，则$\theta^*(\kappa(\beta), \beta)$在$\beta$上递增。如果$\delta_1(\theta)$是常数，则$\theta^*(\kappa(\beta), \beta)$在$\beta$上递减。如果$\delta_0(\theta)$和$\delta_1(\theta)$都是常数，则$\theta^*(\kappa(\beta), \beta)$与$\beta$无关。
+\end{translation}
+
+\begin{original}
+From the above two propositions, we obtain the following corollary, which explains when ambiguous-quality information and low-quality information have opposite effects on the regime-change cutoff.
+\end{original}
+\begin{translation}
+由上述两个命题，我们得到以下推论，该推论解释了模糊质量信息和低质量信息何时对制度变迁临界点具有相反的影响。
+\end{translation}
+
+\begin{corollary}
+If $\delta_0(\theta)$ (resp.\ $\delta_1(\theta)$) is constant and action 0 (resp.\ action 1) is a safe action, low-quality information decreases (resp.\ increases) the regime-change cutoff, whereas ambiguous-quality information increases (resp.\ decreases) it.
+\end{corollary}
+\begin{translation}
+\color{darkblue}\textbf{推论8.} 如果$\delta_0(\theta)$（或$\delta_1(\theta)$）是常数且行动0（或行动1）是安全行动，则低质量信息降低（或提高）制度变迁临界点，而模糊质量信息提高（或降低）之。
+\end{translation}
+
+% Currency crises
+\subsection*{Currency Crises}
+\subsection*{\color{darkblue}货币危机}
+
+\begin{original}
+We study the effect of ambiguous-quality information on the likelihood of currency crises using the currency attack model of Morris and Shin (1998). Speculators decide whether to attack the currency by selling it short. The current value of the currency is $f$. If an attack is successful, the currency collapses and floats to the shadow rate $\zeta(\theta) < f$, where $\theta$ is the state of fundamentals and $\zeta(\theta)$ is increasing in $\theta$. There is a fixed transaction cost $c \in (0, f - \zeta(\theta))$ of attacking. Thus, the net payoff to a successful attack is $f - \zeta(\theta) - c$, while that to an unsuccessful attack is $-c$. An attack is successful if and only if the proportion of speculators attacking the currency is greater than $\lambda$. Writing 1 for the action not to attack (and 0 for that to attack), we have the following payoff function:
+\[
+u(\ell, a, \theta) =
+\begin{cases}
+0 & \text{if } a = 1,\\
+f - \zeta(\theta) - c & \text{if } a = 0 \text{ and } 1 - \ell \ge \lambda,\\
+-c & \text{if } a = 0 \text{ and } 1 - \ell < \lambda,
+\end{cases}
+\]
+where $\ell$ is the proportion of the opponents not attacking the currency.
+\end{original}
+\begin{translation}
+我们使用 Morris 和 Shin（1998）的货币攻击模型研究模糊质量信息对货币危机可能性的影响。投机者决定是否通过做空来攻击货币。货币的当前价值为$f$。如果攻击成功，货币崩溃并浮动至影子汇率$\zeta(\theta) < f$，其中$\theta$是基本面状态且$\zeta(\theta)$在$\theta$上递增。攻击存在固定的交易成本$c \in (0, f - \zeta(\theta))$。因此，成功攻击的净收益为$f - \zeta(\theta) - c$，而不成功攻击的净收益为$-c$。当且仅当攻击货币的投机者比例大于$\lambda$时，攻击成功。将行动1记为不攻击（0记为攻击），我们有以下支付函数：
+\[
+u(\ell, a, \theta) =
+\begin{cases}
+0 & \text{若 } a = 1,\\
+f - \zeta(\theta) - c & \text{若 } a = 0 \text{ 且 } 1 - \ell \ge \lambda,\\
+-c & \text{若 } a = 0 \text{ 且 } 1 - \ell < \lambda,
+\end{cases}
+\]
+其中$\ell$是不攻击货币的对手比例。
+\end{translation}
+
+\begin{original}
+Consider a game of regime change with the above payoff function, where $\delta_0(\theta) = -(f - \zeta(\theta) - c)$, $\delta_1(\theta) = c$, and a currency crisis corresponds to regime 0. By Corollary 8, ambiguous-quality information and low-quality information have opposite effects on the likelihood of a currency crisis. That is, ambiguous-quality information decreases the regime-change cutoff and makes a currency crisis less likely. In contrast, low-quality information increases the regime-change cutoff and makes a currency crisis more likely.
+\end{original}
+\begin{translation}
+考虑具有上述支付函数的制度变迁博弈，其中$\delta_0(\theta) = -(f - \zeta(\theta) - c)$、$\delta_1(\theta) = c$，货币危机对应于制度0。根据推论8，模糊质量信息和低质量信息对货币危机的可能性具有相反的影响。也就是说，模糊质量信息降低了制度变迁临界点，使货币危机更不可能发生。相反，低质量信息提高了制度变迁临界点，使货币危机更可能发生。
+\end{translation}
+
+\begin{original}
+Note that if $\theta$ is within a certain range, a currency crisis does not occur under sufficiently ambiguous information, although it does occur under unambiguous information. This is because speculators may not attack the currency even when they receive bad news about the state of fundamentals, considering the worst-case scenario that the information is unreliable and the state of fundamentals is not so bad.
+\end{original}
+\begin{translation}
+注意，如果$\theta$在某个范围内，在充分模糊的信息下货币危机不会发生，尽管在非模糊信息下会发生。这是因为投机者即使收到关于基本面状态的坏消息，考虑到信息不可靠且基本面状态并非如此糟糕的最坏情形，也可能不会攻击货币。
+\end{translation}
+\begin{original}
+With this in mind, let us briefly review the events leading up to the 1997 Thai baht crisis (Lipsky, 1998; Siamwalla, 2005). The risk of devaluation was widely recognized at least a year before the crisis, and the first wave of attacks was made in November 1996, followed by two more. During this period, the Thai central bank used foreign exchange reserves to defend the baht, but hid the loss of reserves by selling dollars in the forward market. After the third wave of attacks in May 1997, the central bank ordered commercial banks to stop lending to non-residents, creating a squeeze on foreign speculators selling the baht short. Then there was a run in June by Thais, not foreign speculators, and the baht floated on July 2.
+\end{original}
+\begin{translation}
+有鉴于此，让我们简要回顾1997年泰铢危机前的事件（Lipsky，1998；Siamwalla，2005）。至少在危机前一年，贬值风险已被广泛认知，第一波攻击于1996年11月发起，随后又有两波。在此期间，泰国央行使用外汇储备捍卫泰铢，但通过在远期市场出售美元来隐藏储备的损失。在1997年5月第三波攻击之后，央行命令商业银行停止向非居民放贷，造成了对做空泰铢的外国投机者的挤压。随后在6月发生了由泰国人而非外国投机者引发的挤兑，泰铢于7月2日浮动。
+\end{translation}
+
+\begin{original}
+The level of foreign exchange reserves is an important factor in the state of fundamentals, but speculators did not know the hidden true level. Thus, speculators' information about the state was ambiguous, which results in fewer speculators attacking the currency in our model. This observation gives the counterfactual theoretical prediction that if the loss of reserves had not been hidden, more speculators would have attacked the currency, and the baht would have floated much earlier. This is also an intuitive prediction, which the Thai central bank would have been aware of.
+\end{original}
+\begin{translation}
+外汇储备水平是基本面状态的重要因素，但投机者不知道隐藏的真实水平。因此，投机者关于状态的信息是模糊的，这在我们模型中导致更少的投机者攻击货币。这一观察给出了反事实的理论预测：如果储备损失没有被隐藏，更多投机者会攻击货币，泰铢会更早浮动。这也是一个直观的预测，泰国央行应已意识到这一点。
+\end{translation}
+
+% Debt rollover crises
+\subsection*{Debt Rollover Crises}
+\subsection*{\color{darkblue}债务展期危机}
+
+\begin{original}
+We study the effect of ambiguous-quality information on the likelihood of debt rollover crises using the creditor coordination model of Morris and Shin (2004). Creditors hold a loan secured on collateral and decide whether to roll over the loan. A creditor who rolls over the loan receives 1 if an underlying investment project succeeds and receives 0 if the project fails. A creditor who does not roll over the loan receives the value of the collateral $r \in (0, 1)$. The project succeeds if and only if the proportion of creditors not rolling over the loan is less than $\lambda \in (0, 1)$. Writing 1 for the action to roll over (and 0 for that not to roll over), we have the following payoff function:
+\[
+u(\ell, a, \theta) =
+\begin{cases}
+r & \text{if } a = 0,\\
+1 & \text{if } a = 1 \text{ and } 1 - \ell < \lambda,\\
+0 & \text{if } a = 1 \text{ and } 1 - \ell \ge \lambda,
+\end{cases}
+\]
+where $\ell$ is the proportion of creditors rolling over the loan.
+\end{original}
+\begin{translation}
+我们使用 Morris 和 Shin（2004）的债权人协调模型研究模糊质量信息对债务展期危机可能性的影响。债权人持有以抵押品担保的贷款，并决定是否展期贷款。展期贷款的债权人，如果基础投资项目成功则获得1，如果项目失败则获得0。不展期贷款的债权人获得抵押品价值$r \in (0, 1)$。当且仅当不展期贷款的债权人比例小于$\lambda \in (0, 1)$时，项目成功。将行动1记为展期（0记为不展期），我们有以下支付函数：
+\[
+u(\ell, a, \theta) =
+\begin{cases}
+r & \text{若 } a = 0,\\
+1 & \text{若 } a = 1 \text{ 且 } 1 - \ell < \lambda,\\
+0 & \text{若 } a = 1 \text{ 且 } 1 - \ell \ge \lambda,
+\end{cases}
+\]
+其中$\ell$是展期贷款的债权人比例。
+\end{translation}
+
+\begin{original}
+Consider a game of regime change with the above payoff function, where $\delta_0(\theta) = -r$, $\delta_1(\theta) = 1 - r$, and a debt rollover crisis corresponds to regime 0. Ambiguous-quality information increases the regime-change cutoff and makes a debt rollover crisis more likely because action 0 is a safe action. In a single-prior game, however, information quality has no effect on the regime-change cutoff, which is a constant $\Phi^{-1}(r)$ by (13).
+\end{original}
+\begin{translation}
+考虑具有上述支付函数的制度变迁博弈，其中$\delta_0(\theta) = -r$、$\delta_1(\theta) = 1 - r$，债务展期危机对应于制度0。模糊质量信息提高了制度变迁临界点，使债务展期危机更可能发生，因为行动0是安全行动。然而，在单一先验博弈中，信息质量对制度变迁临界点没有影响，由（13）知其为常数$\Phi^{-1}(r)$。
+\end{translation}
+
+\begin{original}
+We examine which type of ambiguity leads to a debt rollover crisis. The regime-change cutoff in $(u, \Xi)$ is calculated from Proposition 6:
+\[
+\max_{\beta} \theta^*(\kappa(\beta), \beta) = \max_{\beta} \left(\kappa(\beta) + \Phi^{-1}(r)/\sqrt{\beta}\right) =
+\begin{cases}
+\kappa(\overline{\beta}) + \Phi^{-1}(r)/\sqrt{\overline{\beta}} & \text{if } r < 1/2,\\[4pt]
+\kappa(\underline{\beta}) + \Phi^{-1}(r)/\sqrt{\underline{\beta}} & \text{if } r > 1/2,
+\end{cases}
+\]
+where we use the fact that $\Phi^{-1}(r) \lesseqgtr 0$ if $r \lesseqgtr 1/2$. Thus, if $r < 1/2$, the regime-change cutoff is increasing in the maximum precision $\overline{\beta}$, and if $r > 1/2$, it is decreasing in the minimum precision $\underline{\beta}$, which leads us to the following proposition.
+\end{original}
+\begin{translation}
+我们考察哪种类型的模糊性会导致债务展期危机。$(u, \Xi)$中的制度变迁临界点由命题6计算得出：
+\[
+\max_{\beta} \theta^*(\kappa(\beta), \beta) = \max_{\beta} \left(\kappa(\beta) + \Phi^{-1}(r)/\sqrt{\beta}\right) =
+\begin{cases}
+\kappa(\overline{\beta}) + \Phi^{-1}(r)/\sqrt{\overline{\beta}} & \text{若 } r < 1/2,\\[4pt]
+\kappa(\underline{\beta}) + \Phi^{-1}(r)/\sqrt{\underline{\beta}} & \text{若 } r > 1/2,
+\end{cases}
+\]
+其中我们利用了当$r \lesseqgtr 1/2$时$\Phi^{-1}(r) \lesseqgtr 0$的事实。因此，如果$r < 1/2$，制度变迁临界点随最大精度$\overline{\beta}$递增；如果$r > 1/2$，则随最小精度$\underline{\beta}$递减，这导出以下命题。
+\end{translation}
+
+\begin{proposition}
+Suppose that $\theta < \theta^* < \theta^*(\kappa, \beta)$ and $r \ne 1/2$, where
+\[
+\theta^*(\kappa, \beta) \equiv \sup_{\beta \in \mathbb{R}_{++}} \max \theta^*(\kappa(\beta), \beta) =
+\begin{cases}
+\kappa(1/2) + \Phi^{-1}(r)\sqrt{2} & \text{if } r < 1/2,\\
+\infty & \text{if } r > 1/2,
+\end{cases}
+\]
+is the supremum of the regime-change cutoffs and $\beta$ is the true precision. Then a debt rollover crisis occurs in $(u, \Xi)$ if and only if either (i) $r < 1/2$ and $\overline{\beta}$ is sufficiently large, or (ii) $r > 1/2$ and $\underline{\beta}$ is sufficiently small.
+\end{proposition}
+\begin{translation}
+\color{darkblue}\textbf{命题9.} 假设$\theta < \theta^* < \theta^*(\kappa, \beta)$且$r \ne 1/2$，其中
+\[
+\theta^*(\kappa, \beta) \equiv \sup_{\beta \in \mathbb{R}_{++}} \max \theta^*(\kappa(\beta), \beta) =
+\begin{cases}
+\kappa(1/2) + \Phi^{-1}(r)\sqrt{2} & \text{若 } r < 1/2,\\
+\infty & \text{若 } r > 1/2,
+\end{cases}
+\]
+是制度变迁临界点的上确界，$\beta$是真精度。那么，当且仅当（i）$r < 1/2$且$\overline{\beta}$充分大，或（ii）$r > 1/2$且$\underline{\beta}$充分小时，$(u, \Xi)$中发生债务展期危机。
+\end{translation}
+
+\begin{original}
+The type of ambiguity that results in the crisis depends upon the value of the collateral $r$. To see why, consider the case of $r < 1/2$, for example. An ex-ante Laplacian action is action 1 (to roll over) in this case, which means that low-quality information enlarges the range of signals assigned to action 1. Thus, $\kappa(\beta)$ is increasing in $\beta$, and $\max_{\beta} \kappa(\beta) = \kappa(\overline{\beta})$ is increasing in $\overline{\beta}$. Therefore, the crisis occurs if $\overline{\beta}$ is large enough. Similarly, in the case of $r > 1/2$, action 0 (not to roll over) is ex-ante Laplacian, so the crisis occurs if $\underline{\beta}$ is small enough. Consequently, to prevent a debt rollover crisis when $\theta < \theta^* < \theta^*(\kappa, \beta)$, it is important to convince players that (i) information cannot be so precise if $r < 1/2$, (ii) information cannot be so imprecise if $r > 1/2$, or (iii) information quality is unambiguous.
+\end{original}
+\begin{translation}
+导致危机的模糊性类型取决于抵押品价值$r$。为理解原因，以$r < 1/2$的情形为例。此时事前拉普拉斯行动是行动1（展期），这意味着低质量信息扩大了分配给行动1的信号范围。因此，$\kappa(\beta)$在$\beta$上递增，且$\max_{\beta} \kappa(\beta) = \kappa(\overline{\beta})$在$\overline{\beta}$上递增。因此，如果$\overline{\beta}$足够大，危机就会发生。类似地，在$r > 1/2$的情形中，行动0（不展期）是事前拉普拉斯的，因此如果$\underline{\beta}$足够小，危机就会发生。因此，要在$\theta < \theta^* < \theta^*(\kappa, \beta)$时预防债务展期危机，重要的是让参与者相信：（i）如果$r < 1/2$，信息不可能那么精确；（ii）如果$r > 1/2$，信息不可能那么不精确；或（iii）信息质量是非模糊的。
+\end{translation}
+
+% ======================================================================
+\section{5. Discussion}
+\section*{\color{darkblue}5. 讨论}
+
+\subsection{5.1. An Action Yielding a State-Independent Payoff and a Bank Run}
+\subsection*{\color{darkblue}5.1. 产生状态无关支付的行为与银行挤兑}
+
+\begin{original}
+In Section 4, we assume that one of the actions is a safe action and $\theta$ is drawn from the improper uniform distribution. We can obtain the same results under a slightly weaker requirement. Suppose that action $a \in \{0, 1\}$ yields a state-independent payoff; that is, $u(a, \ell, \theta) = \bar{u}_a(\ell)$, where $\bar{u}_a \colon [0, 1] \to \mathbb{R}$. Then $v_a^\xi(x, \kappa)$ is independent of $\xi$ and $x$ because
+\[
+v_a^\xi(x, \kappa) = \int_{-\infty}^{\infty} \bar{u}_a(1 - \Phi(\sqrt{\beta}(\kappa - \theta))) \sqrt{\beta}\,\phi(\sqrt{\beta}(x - \theta)) d\theta = \int_0^1 \bar{u}_a(\ell) d\ell \equiv \bar{u}_a,
+\]
+where $\Phi(\sqrt{\beta}(\kappa - \theta)) = 1 - \ell$ and $\sqrt{\beta}\,\phi(\sqrt{\beta}(x - \theta)) d\theta = -d\ell$. Thus, the discussion in Section 4 remains valid even if a safe action is replaced with an action with a state-independent payoff.
+\end{original}
+\begin{translation}
+在第4节中，我们假设其中一个行动是安全行动，且$\theta$从无信息均匀分布中抽取。我们可以在稍弱的条件下获得相同的结果。假设行动$a \in \{0, 1\}$产生状态无关的支付；即$u(a, \ell, \theta) = \bar{u}_a(\ell)$，其中$\bar{u}_a \colon [0, 1] \to \mathbb{R}$。那么$v_a^\xi(x, \kappa)$与$\xi$和$x$无关，因为
+\[
+v_a^\xi(x, \kappa) = \int_{-\infty}^{\infty} \bar{u}_a(1 - \Phi(\sqrt{\beta}(\kappa - \theta))) \sqrt{\beta}\,\phi(\sqrt{\beta}(x - \theta)) d\theta = \int_0^1 \bar{u}_a(\ell) d\ell \equiv \bar{u}_a,
+\]
+其中$\Phi(\sqrt{\beta}(\kappa - \theta)) = 1 - \ell$且$\sqrt{\beta}\,\phi(\sqrt{\beta}(x - \theta)) d\theta = -d\ell$。因此，即使将安全行动替换为具有状态无关支付的行动，第4节的讨论仍然有效。
+\end{translation}
+
+\begin{original}
+An example with such an action is the global game model of bank runs studied by Goldstein and Pauzner (2005), which is a variant of the Diamond-Dybvig model with noisy private signals. Depositors must decide whether to withdraw money from a bank in period 1 or wait until period 2. If a depositor withdraws money in period 1, the bank pays a fixed amount of money to him until it runs out of money, following a sequential-service constraint. Thus, the payoff to early withdrawal is determined solely by depositors' decisions and independent of a state. An argument similar to that in Section 4 shows that ambiguous-quality information makes a bank run more likely. This result also complements that of Iachan and Nenov (2015), who show that low-quality information makes a bank run less likely. These results together imply that a bank run is less likely under unambiguous low-quality information.
+\end{original}
+\begin{translation}
+具有这种行动的一个例子是 Goldstein 和 Pauzner（2005）研究的银行挤兑全局博弈模型，该模型是 Diamond-Dybvig 模型的一个带有含噪私人信号的变体。存款人必须决定是在第1期从银行取款，还是等到第2期。如果存款人在第1期取款，银行按照序贯服务约束向其支付固定金额，直到资金耗尽。因此，提前取款的支付完全由存款人的决定决定，与状态无关。与第4节类似的论证表明，模糊质量信息使银行挤兑更可能发生。这一结果也补充了 Iachan 和 Nenov（2015）的发现，他们表明低质量信息使银行挤兑更不可能发生。这些结果共同意味着，在非模糊的低质量信息下，银行挤兑较不可能发生。
+\end{translation}
+
+\subsection{5.2. Mixed-Strategy Equilibria}
+\subsection*{\color{darkblue}5.2. 混合策略均衡}
+
+\begin{original}
+Players are assumed to use pure strategies, which is common in the ambiguity literature. However, we can also consider mixed strategies. Let $\sigma \colon \mathbb{R} \to [0, 1]$ denote a mixed strategy that assigns action 1 to a private signal $x$ with probability $\sigma(x)$. Kajii and Ui (2005) consider two equilibrium concepts, a mixed-strategy equilibrium and an equilibrium in belief. A strategy profile in which all players follow $\sigma$ is a mixed-strategy equilibrium if the following condition is satisfied: when a player receives a private signal $x$ and the opponents follow $\sigma$, the minimum expected payoff to the mixed action $\sigma(x)$ is greater than or equal to that to any other mixed action. The same strategy profile is an equilibrium in belief if the following condition is satisfied: when a player receives a private signal $x$ and the opponents follow $\sigma$, if $\sigma(x) > 0$, then the minimum expected payoff to action 1 is greater than or equal to that to action 0, and if $\sigma(x) < 1$, then the minimum expected payoff to action 0 is greater than or equal to that to action 1.
+\end{original}
+\begin{translation}
+参与者被假设使用纯策略，这在模糊性文献中很常见。然而，我们也可以考虑混合策略。令$\sigma \colon \mathbb{R} \to [0, 1]$表示一个混合策略，它以概率$\sigma(x)$将行动1分配给私人信号$x$。Kajii 和 Ui（2005）考虑了两种均衡概念：混合策略均衡和信念均衡。如果满足以下条件，所有参与者都遵循$\sigma$的策略组合就是一个混合策略均衡：当一个参与者收到私人信号$x$且对手遵循$\sigma$时，混合行动$\sigma(x)$的最小期望支付大于或等于任何其他混合行动的最小期望支付。如果满足以下条件，同一策略组合就是一个信念均衡：当一个参与者收到私人信号$x$且对手遵循$\sigma$时，如果$\sigma(x) > 0$，则行动1的最小期望支付大于或等于行动0的最小期望支付；如果$\sigma(x) < 1$，则行动0的最小期望支付大于或等于行动1的最小期望支付。
+\end{translation}
+
+\begin{original}
+A pure-strategy equilibrium in this paper satisfies the condition of an equilibrium in belief, but it may not satisfy that of a mixed-strategy equilibrium because ambiguity-averse players may prefer objective randomization. However, if one of the actions is a safe action, a pure-strategy equilibrium is also a mixed strategy-equilibrium. To see this, suppose that action 0 is a safe action with $u(0, \ell, \theta) = 0 \in \mathbb{R}$. If $s \in \{0, 1\}^{\mathbb{R}}$ is a pure-strategy equilibrium, then $\min_{\xi} E^\xi[u(\sigma(x), \sigma^\xi(s), \theta) \mid x] \le \min_{\xi} E^\xi[u(1, \sigma^\xi(s), \theta) \mid x] + (1 - \sigma(x)) \cdot 0$ for all $\xi$ and $\sigma(x) \in [0, 1]$, so $s$ is also a mixed-strategy equilibrium. This implies that the discussions in Sections 2 and 4 and the propositions except Proposition 1 remain valid even if we adopt a mixed-strategy equilibrium as the equilibrium concept.
+\end{original}
+\begin{translation}
+本文中的纯策略均衡满足信念均衡的条件，但可能不满足混合策略均衡的条件，因为模糊厌恶的参与者可能偏好客观随机化。然而，如果其中一个行动是安全行动，纯策略均衡也是混合策略均衡。为理解这一点，假设行动0是$u(0, \ell, \theta) = 0 \in \mathbb{R}$的安全行动。如果$s \in \{0, 1\}^{\mathbb{R}}$是一个纯策略均衡，则对所有$\xi$和$\sigma(x) \in [0, 1]$有$\min_{\xi} E^\xi[u(\sigma(x), \sigma^\xi(s), \theta) \mid x] \le \min_{\xi} E^\xi[u(1, \sigma^\xi(s), \theta) \mid x] + (1 - \sigma(x)) \cdot 0$，因此$s$也是一个混合策略均衡。这意味着即使我们采用混合策略均衡作为均衡概念，第2节和第4节的讨论以及除命题1之外的命题仍然有效。
+\end{translation}
+
+\subsection{5.3. Heterogeneous Information Quality}
+\subsection*{\color{darkblue}5.3. 异质信息质量}
+
+\begin{original}
+In Sections 2 and 4, each player is assumed to believe that the probability distribution of a private signal is the same for all the players. Laskar (2014) makes this observation based upon an earlier version of this paper (Ui, 2009) and studies a linear-normal global game with two MEU players whose private signals may follow different probability distributions, where the expected value of a private signal is ambiguous.
+\end{original}
+\begin{translation}
+在第2节和第4节中，假设每个参与者相信私人信号的概率分布对所有参与者都相同。Laskar（2014）基于本文的早期版本（Ui，2009）做出了这一观察，并研究了一个具有两个MEU参与者的线性-正态全局博弈，其中参与者的私人信号可能服从不同的概率分布，且私人信号的期望值是模糊的。
+\end{translation}
+
+\begin{original}
+The general model in Section 3 allows the probability distributions to be different across players, for which the main results remain valid. For example, we can consider a game of regime change $(u, \Xi)$ with $\Xi = \Xi_1 \times \Xi_2$, where $\beta_1 \in \Xi_1$ and $\beta_2 \in \Xi_2$ are the precision of a noise term in a player's private signal and that in his opponents' private signals, respectively. When the state is $\theta$ and each opponent follows $s_\kappa$ in $(u, \{\xi\})$ with $\xi = (\beta_1, \beta_2)$, the proportion of the opponents choosing action 0 is $\Phi(\sqrt{\beta_2}(\theta - \kappa))$, so the regime-change cutoff in $(u, \{\xi\})$ is $\theta^*(\kappa, \beta_2)$ by (12). Thus, the equilibrium cutoff in $(u, \{\xi\})$ solves
+\[
+v_1^\xi(\kappa, \kappa) - v_0^\xi(\kappa, \kappa) = \int_{-\infty}^{\theta^*(\kappa, \beta_2)} \delta_0(\theta) \sqrt{\beta_1}\,\phi(\sqrt{\beta_1}(\kappa - \theta)) d\theta + \int_{\theta^*(\kappa, \beta_2)}^{\infty} \delta_1(\theta) \sqrt{\beta_1}\,\phi(\sqrt{\beta_1}(\kappa - \theta)) d\theta = 0
+\]
+because $h(\theta \mid x) = \sqrt{\beta_1}\,\phi(\sqrt{\beta_1}(x - \theta))$. Then the equilibrium cutoff in $(u, \Xi)$ is given by (14), and the same discussion goes through even with heterogeneous information quality.
+\end{original}
+\begin{translation}
+第3节的一般模型允许概率分布在参与者之间不同，主要结果对此仍然有效。例如，我们可以考虑一个制度变迁博弈$(u, \Xi)$，其中$\Xi = \Xi_1 \times \Xi_2$，$\beta_1 \in \Xi_1$和$\beta_2 \in \Xi_2$分别是参与者私人信号中噪声项的精度和其对手私人信号中噪声项的精度。当状态为$\theta$且每个对手在$\xi = (\beta_1, \beta_2)$的$(u, \{\xi\})$中遵循$s_\kappa$时，选择行动0的对手比例为$\Phi(\sqrt{\beta_2}(\theta - \kappa))$，因此由（12）知$(u, \{\xi\})$中的制度变迁临界点为$\theta^*(\kappa, \beta_2)$。于是，$(u, \{\xi\})$中的均衡临界点由下式求解
+\[
+v_1^\xi(\kappa, \kappa) - v_0^\xi(\kappa, \kappa) = \int_{-\infty}^{\theta^*(\kappa, \beta_2)} \delta_0(\theta) \sqrt{\beta_1}\,\phi(\sqrt{\beta_1}(\kappa - \theta)) d\theta + \int_{\theta^*(\kappa, \beta_2)}^{\infty} \delta_1(\theta) \sqrt{\beta_1}\,\phi(\sqrt{\beta_1}(\kappa - \theta)) d\theta = 0
+\]
+因为$h(\theta \mid x) = \sqrt{\beta_1}\,\phi(\sqrt{\beta_1}(x - \theta))$。然后$(u, \Xi)$中的均衡临界点由（14）给出，即使在异质信息质量下，相同的讨论也成立。
+\end{translation}
+
+\subsection{5.4. Monotone Payoff Differentials}
+\subsection*{\color{darkblue}5.4. 单调支付差异}
+
+\begin{original}
+The assumptions A1 and A2 require that $u(1, \ell, \theta)$ and $u(0, \ell, \theta)$ be increasing and decreasing in $(\ell, \theta)$, respectively. They guarantee the monotone comparative statics in Lemmas 1 and 2, while monotonicity of $u(1, \ell, \theta) - u(0, \ell, \theta)$ suffices in single-prior games. This is a limitation of our analysis because we cannot apply the main results to the class of global games with monotone payoff differentials that do not satisfy A1 and A2. We will be able to overcome this limitation by using recent ideas of Dziewulski and Quah (2024). Dziewulski and Quah (2024) introduce the notion of first-order stochastic dominance for sets of priors. If the set of interim beliefs with a higher private signal first-order stochastically dominates that with a lower private signal in the sense of Dziewulski and Quah (2024), then monotonicity of payoff differentials guarantees the monotone comparative statics in Lemmas 1 and 2. Such an extension of our analysis is left as a promising direction for future research.
+\end{original}
+\begin{translation}
+假设A1和A2要求$u(1, \ell, \theta)$和$u(0, \ell, \theta)$分别在$(\ell, \theta)$上递增和递减。它们保证了引理1和2中的单调比较静态，而在单一先验博弈中，$u(1, \ell, \theta) - u(0, \ell, \theta)$的单调性就足够了。这是我们分析的一个局限性，因为我们不能将主要结果应用于那些支付差异单调但不满足A1和A2的全局博弈类。我们将能够通过使用 Dziewulski 和 Quah（2024）的最新思想来克服这一局限。Dziewulski 和 Quah（2024）引入了先验集合的一阶随机占优概念。如果具有较高私人信号的临时信念集合在 Dziewulski 和 Quah（2024）的意义上一阶随机占优于具有较低私人信号的临时信念集合，则支付差异的单调性就能保证引理1和2中的单调比较静态。我们分析的这种扩展留作未来研究的一个有前景的方向。
+\end{translation}
+
+\subsection{5.5. Smooth Ambiguity Preferences}
+\subsection*{\color{darkblue}5.5. 平滑模糊偏好}
+
+\begin{original}
+As a model with more general ambiguity-averse preferences, we can consider global games with smooth ambiguity preferences (Klibanoff et al., 2005). To briefly illustrate such a model, let $\beta \in [\underline{\beta}, \overline{\beta}]$ be a closed and bounded interval. Assume that when the opponents follow $s_\kappa$, a player with a private signal $x$ prefers action $a$ to action $a'$ if and only if
+\[
+\frac{1}{\gamma} \ln \left( \frac{1}{\overline{\beta} - \underline{\beta}} \int_{\underline{\beta}}^{\overline{\beta}} \exp(\gamma v_a^\beta(x, \kappa)) d\beta \right) \ge \frac{1}{\gamma} \ln \left( \frac{1}{\overline{\beta} - \underline{\beta}} \int_{\underline{\beta}}^{\overline{\beta}} \exp(\gamma v_{a'}^\beta(x, \kappa)) d\beta \right),
+\]
+where $\gamma \in \mathbb{R} \setminus \{0\}$ with $\gamma > 0$. The constant $\gamma$ is the coefficient of ambiguity aversion, and it is a measure of ambiguity attitude, while $[\underline{\beta}, \overline{\beta}]$ is a measure of ambiguity perception. This model converges to the MEU model as $\gamma$ approaches infinity. Thus, the effects of ambiguous information studied in this paper are understood as those of ambiguity perception when the coefficient of ambiguity aversion is extremely large. Even if $\gamma$ is finite, we can readily show this model exhibits strategic complementarities in terms of smooth ambiguity preferences, and we can conduct a similar analysis, where the effects of ambiguous information should be weaker than those in the MEU model. We leave a further study of this model as a future research topic, where this paper's results serve as a benchmark.
+\end{original}
+\begin{translation}
+作为具有更一般模糊厌恶偏好的模型，我们可以考虑具有平滑模糊偏好的全局博弈（Klibanoff 等，2005）。为简要说明这样一个模型，令$\beta \in [\underline{\beta}, \overline{\beta}]$为一个有界闭区间。假设当对手遵循$s_\kappa$时，持有私人信号$x$的参与者偏好行动$a$胜过行动$a'$当且仅当
+\[
+\frac{1}{\gamma} \ln \left( \frac{1}{\overline{\beta} - \underline{\beta}} \int_{\underline{\beta}}^{\overline{\beta}} \exp(\gamma v_a^\beta(x, \kappa)) d\beta \right) \ge \frac{1}{\gamma} \ln \left( \frac{1}{\overline{\beta} - \underline{\beta}} \int_{\underline{\beta}}^{\overline{\beta}} \exp(\gamma v_{a'}^\beta(x, \kappa)) d\beta \right),
+\]
+其中$\gamma \in \mathbb{R} \setminus \{0\}$且$\gamma > 0$。常数$\gamma$是模糊厌恶系数，它是模糊态度的一个度量，而$[\underline{\beta}, \overline{\beta}]$是模糊感知的一个度量。当$\gamma$趋向无穷大时，该模型收敛到MEU模型。因此，本文研究的模糊信息效应被理解为当模糊厌恶系数极大时模糊感知的效应。即使$\gamma$是有限的，我们也可以容易地证明该模型在平滑模糊偏好方面表现出策略互补性，并且我们可以进行类似的分析，其中模糊信息的效应应弱于MEU模型中的效应。我们将该模型的进一步研究留作未来的研究课题，本文的结果可作为基准。
+\end{translation}
+
+\subsection{5.6. The Assumption on the Proportions of Opponents' Actions}
+\subsection*{\color{darkblue}5.6. 关于对手行动比例的假设}
+
+\begin{original}
+One of the assumptions in players' preferences is $\sigma^\xi(s) = E^\xi[s \mid \theta]$, which follows the standard global game analysis (Morris and Shin, 2003). That is, when every opponent chooses a strategy $s$ and the state is $\theta$, each player's evaluation of the proportion of opponents' action 1 with respect to a prior indexed by $\xi$ is equal to the expected value of $s(\theta + \varepsilon) \in \{0, 1\}$ conditional on $\theta$. This assumption presumes the law of large numbers for a continuum of i.i.d.\ random variables, i.e., $\int_0^1 s(\theta + \varepsilon_i) di = E^\xi[s \mid \theta]$ almost surely, which is mathematically problematic (Judd, 1985). If we consider $\{\varepsilon_i\}_{i \in [0,1]}$ as a random variable over a usual product measurable space, independence and joint measurability are incompatible, except for some trivial cases.
+\end{original}
+\begin{translation}
+参与者偏好中的假设之一是$\sigma^\xi(s) = E^\xi[s \mid \theta]$，它遵循标准的全局博弈分析（Morris 和 Shin，2003）。也就是说，当每个对手选择策略$s$且状态为$\theta$时，每个参与者对由$\xi$索引的先验下对手选择行动1的比例的评估等于$s(\theta + \varepsilon) \in \{0, 1\}$在$\theta$条件下的期望值。这一假设预设了连续统独立同分布随机变量的大数定律，即$\int_0^1 s(\theta + \varepsilon_i) di = E^\xi[s \mid \theta]$几乎必然成立，这在数学上是有问题的（Judd，1985）。如果我们将$\{\varepsilon_i\}_{i \in [0,1]}$视为通常乘积可测空间上的随机变量，则独立性和联合可测性是不相容的，除了一些平凡情形。
+\end{translation}
+
+\begin{original}
+To elaborate on this issue, note that $\sigma^\xi(s)$ is a subjective belief that the player uses to evaluate her own preferences. Thus, the assumption $\sigma^\xi(s) = E^\xi[s \mid \theta]$ is about players' preferences, not about an objective probabilistic law governing economic outcomes (such as the LLN in insurance markets). Put differently, we assume that a player subjectively believes that the LLN holds with a continuum of i.i.d.\ random variables, either na\"ively or mathematically.
+
+In the latter case, players are further assumed to adopt an appropriate product probability space which guarantees the LLN. Sun (2006, Proposition 5.3) shows the existence of a probability space that extends the usual product probability space, called the rich Fubini extension, such that independence and joint measurability are compatible and the exact LLN holds for a continuum of i.i.d.\ random variables with an arbitrary distribution. In our setting, a different parameter $\xi$ corresponds to a different distribution with respect to the same rich Fubini extension.
+\end{original}
+\begin{translation}
+为详细说明这一问题，注意$\sigma^\xi(s)$是参与者用来评估自己偏好的主观信念。因此，假设$\sigma^\xi(s) = E^\xi[s \mid \theta]$是关于参与者偏好的，而不是关于支配经济结果的客观概率法则（如保险市场中的大数定律）。换言之，我们假设参与者主观地相信大数定律对连续统独立同分布随机变量成立，无论是天真地还是数学上地。
+
+在后一种情况下，进一步假设参与者采用一个保证大数定律的适当乘积概率空间。Sun（2006，命题5.3）证明了一个概率空间的存在性，该空间扩展了通常的乘积概率空间，称为丰富的Fubini扩张，使得独立性和联合可测性相容，且精确的大数定律对具有任意分布的连续统独立同分布随机变量成立。在我们的设定中，不同的参数$\xi$对应于同一丰富Fubini扩张下的不同分布。
+\end{translation}
+% ======================================================================
+\section{6. Conclusion}
+\section*{\color{darkblue}6. 结论}
+
+\begin{original}
+This paper shows that ambiguous-quality information and low-quality information have distinct effects on the equilibrium cutoffs when a safe action is not ex-ante Laplacian, on the number of equilibria when a safe action is ex-ante Laplacian, and on the likelihood of currency crises. In our analysis, we exploit both similarities and differences between a multiple-priors game and a single-prior game. A multiple-priors game inherits strategic complementarities from a single-prior game, but the payoff differential alone does not determine the best responses in a multiple-priors game. In particular, a safe action plays a special role, e.g., if action 0 is a safe action, the maximum equilibrium cutoff coincides with the maximum of the maximum equilibrium cutoffs of all the fictitious single-prior games, which leads us to our results.
+\end{original}
+\begin{translation}
+本文表明，模糊质量信息和低质量信息在安全行动不是事前拉普拉斯行动时对均衡临界点、在安全行动是事前拉普拉斯行动时对均衡数量，以及对货币危机的可能性具有不同的影响。在我们的分析中，我们利用了多重先验博弈和单一先验博弈之间的相似性和差异性。多重先验博弈继承了单一先验博弈的策略互补性，但仅支付差异不能决定多重先验博弈中的最佳反应。特别地，安全行动发挥着特殊作用，例如，如果行动0是安全行动，则最大均衡临界点与所有虚构单一先验博弈的最大均衡临界点的最大值一致，这导出了我们的结果。
+\end{translation}
+
+\begin{original}
+We have focused on exogenously fixed ambiguity. However, we can extend our framework to study a social planner's decision problem who is interested in implementing desirable outcomes by engineering ambiguity, analogous to Bose and Renou (2014) and Di Tillio et al.\ (2017). Such a problem can be referred to as ambiguous information design, a many-player generalization of ambiguous persuasion described by Beauch\^ene et al.\ (2019). Beauch\^ene et al.\ (2019) study a Bayesian persuasion problem (Kamenica and Gentzkow, 2011) with an MEU receiver, where a sender can choose an ambiguous communication device. One of the most successful results in information design is obtained in binary-action supermodular games (e.g., Inostroza and Pavan, 2022; Li et al., 2023; Morris et al., 2024), so its ambiguous version should be an important topic for future research.
+\end{original}
+\begin{translation}
+我们关注的是外生固定的模糊性。然而，我们可以扩展我们的框架来研究一个社会计划者的决策问题，该计划者有兴趣通过设计模糊性来实现理想的结果，类似于 Bose 和 Renou（2014）以及 Di Tillio 等（2017）。这样的问题可以被称为模糊信息设计，是 Beauch\^ene 等（2019）所描述的模糊说服的多参与者推广。Beauch\^ene 等（2019）研究了一个具有MEU接收者的贝叶斯说服问题（Kamenica 和 Gentzkow，2011），其中发送者可以选择一个模糊通信装置。信息设计中最成功的成果之一是在二元行动超模博弈中获得的（例如，Inostroza 和 Pavan，2022；Li 等，2023；Morris 等，2024），因此其模糊版本应是未来研究的一个重要课题。
+\end{translation}
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
+% ==================== DECLARATION ====================
+\section*{Declaration of Competing Interest}
+\section*{\color{darkblue}利益冲突声明}
+
+\begin{original}
+The author declares no known financial interests or personal relationships that could have influenced the work reported in this paper.
+\end{original}
+\begin{translation}
+作者声明，没有任何已知的财务利益或个人关系可能影响本文所报告的工作。
+\end{translation}
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
+% ==================== APPENDICES ====================
+\appendix
+\section{Proof of Proposition 1}
+\section*{\color{darkblue}附录A：命题1的证明}
+
+\begin{original}
+We first prove Lemmas 1 and 2.
+\end{original}
+\begin{translation}
+我们首先证明引理1和2。
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof of Lemma 1.}
+\begin{original}
+This function is continuous by Continuity, increasing in $x$ by Action Monotonicity, State Monotonicity, and Stochastic Dominance, and decreasing in $\kappa$ by Action Monotonicity. $\square$
+\end{original}
+\begin{translation}
+该函数由连续性假设是连续的，由行动单调性、状态单调性和随机占优性在$x$上递增，由行动单调性在$\kappa$上递减。$\square$
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof of Lemma 2.}
+\begin{original}
+Because $E^\xi[s_\kappa \mid \theta] \le E^\xi[s_{\kappa'} \mid \theta]$, it holds that $u(1, E^\xi[s_\kappa \mid \theta], \theta) \le u(1, E^\xi[s_{\kappa'} \mid \theta], \theta)$ and $u(0, E^\xi[s_\kappa \mid \theta], \theta) \ge u(0, E^\xi[s_{\kappa'} \mid \theta], \theta)$ by Action Monotonicity, which implies this lemma. $\square$
+\end{original}
+\begin{translation}
+因为$E^\xi[s_\kappa \mid \theta] \le E^\xi[s_{\kappa'} \mid \theta]$，由行动单调性有$u(1, E^\xi[s_\kappa \mid \theta], \theta) \le u(1, E^\xi[s_{\kappa'} \mid \theta], \theta)$和$u(0, E^\xi[s_\kappa \mid \theta], \theta) \ge u(0, E^\xi[s_{\kappa'} \mid \theta], \theta)$，这蕴含了本引理。$\square$
+\end{translation}
+
+\medskip
+\begin{original}
+We also use the following lemma, which ensures that action 0 is a dominant action when a private signal is sufficiently low, and action 1 is a dominant action when a private signal is sufficiently high.
+\end{original}
+\begin{translation}
+我们还使用以下引理，它确保当私人信号充分低时行动0是占优行动，当私人信号充分高时行动1是占优行动。
+\end{translation}
+
+\medskip
+\noindent\textbf{Lemma A.}
+\begin{original}
+There exist $\underline{x}, \overline{x} \in \mathbb{R}$ such that $\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa) < 0$ for all $\kappa \in \mathbb{R}$ and $x \le \underline{x}$ and $\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa) > 0$ for all $\kappa \in \mathbb{R}$ and $x \ge \overline{x}$.
+\end{original}
+\begin{translation}
+\color{darkblue}\textbf{引理A.} 存在$\underline{x}, \overline{x} \in \mathbb{R}$使得对所有$\kappa \in \mathbb{R}$和$x \le \underline{x}$有$\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa) < 0$，且对所有$\kappa \in \mathbb{R}$和$x \ge \overline{x}$有$\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa) > 0$。
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof.}
+\begin{original}
+We prove the existence of $\underline{x}$ (we can prove that of $\overline{x}$ similarly). For $\xi^0 \in \arg\min_{\xi} v_0^\xi(x, \kappa)$, which exists by Continuity and the compactness of $\Xi$,
+\[
+\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa) \le v_1^{\xi^0}(x, \kappa) - v_0^{\xi^0}(x, \kappa) \le \max_{\xi} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x]
+\]
+by Action Monotonicity. Thus, it is enough to show that $\lim_{x \to -\infty} \max_{\xi} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x] < 0$, which is true if
+\[
+\lim_{x \to -\infty} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x] < 0
+\tag{A.1}
+\]
+for each $\xi$ by Dini's theorem because $E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x]$ is increasing in $x$ by State Monotonicity and Stochastic Dominance, and $\max_{\xi} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x]$ is continuous on a compact set $\Xi$.
+
+Let $\varepsilon = -(u(1, 1, \overline{\theta}) - u(0, 1, \overline{\theta})) > 0$, where $\overline{\theta} \in \mathbb{R}$ is given in Limit Dominance. Note that $u(1, 1, \theta) - u(0, 1, \theta) \le -\varepsilon$ for all $\theta \ge \overline{\theta}$ by State Monotonicity, and thus
+\[
+E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x] \le -\varepsilon \int_{\overline{\theta}}^{\infty} h_\xi(\theta \mid x) d\theta + \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta.
+\tag{A.2}
+\]
+
+Then (A.1) holds for the following reason. First, by Limit Dominance,
+\[
+\lim_{x \to -\infty} \frac{\int_{-\infty}^{\overline{\theta}} h_\xi(\theta \mid x) d\theta}{\int_{\overline{\theta}}^{\infty} h_\xi(\theta \mid x) d\theta} = 0.
+\tag{A.3}
+\]
+
+Next, for arbitrary $\delta > 0$, there exists $\theta' > \overline{\theta}$ such that $\int_{\theta'}^{\infty} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta < \varepsilon\delta/2$, which implies that
+\[
+\lim_{x \to -\infty} \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta \le \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta < \varepsilon\delta/2
+\]
+by State Monotonicity and Stochastic Dominance. Because
+\[
+\lim_{x \to -\infty} \left| \int_{\theta'}^{\infty} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta \right| \le M \lim_{x \to -\infty} \int_{\theta'}^{\infty} h_\xi(\theta \mid x) d\theta = 0
+\]
+by Limit Dominance, where $M = \max_{\theta \in [\overline{\theta}, \theta']} |u(1, 1, \theta) - u(0, 1, \theta)|$, we have
+\[
+\lim_{x \to -\infty} \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta < \varepsilon\delta/2.
+\tag{A.4}
+\]
+
+Therefore, (A.1) holds by (A.2), (A.3), and (A.4). $\square$
+\end{original}
+\begin{translation}
+我们证明$\underline{x}$的存在性（可以类似证明$\overline{x}$的存在性）。对于由连续性和$\Xi$的紧性保证存在的$\xi^0 \in \arg\min_{\xi} v_0^\xi(x, \kappa)$，
+\[
+\min_{\xi} v_1^\xi(x, \kappa) - \min_{\xi} v_0^\xi(x, \kappa) \le v_1^{\xi^0}(x, \kappa) - v_0^{\xi^0}(x, \kappa) \le \max_{\xi} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x]
+\]
+由行动单调性。因此，只需证明$\lim_{x \to -\infty} \max_{\xi} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x] < 0$，由Dini定理，如果对每个$\xi$有
+\[
+\lim_{x \to -\infty} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x] < 0
+\tag{A.1}
+\]
+则该式成立，因为由状态单调性和随机占优性知$E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x]$在$x$上递增，且$\max_{\xi} E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x]$在紧集$\Xi$上连续。
+
+令$\varepsilon = -(u(1, 1, \overline{\theta}) - u(0, 1, \overline{\theta})) > 0$，其中$\overline{\theta} \in \mathbb{R}$由极限占优给出。注意，由状态单调性，对所有$\theta \ge \overline{\theta}$有$u(1, 1, \theta) - u(0, 1, \theta) \le -\varepsilon$，因此
+\[
+E^\xi[u(1, 1, \theta) - u(0, 1, \theta) \mid x] \le -\varepsilon \int_{\overline{\theta}}^{\infty} h_\xi(\theta \mid x) d\theta + \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta.
+\tag{A.2}
+\]
+
+则（A.1）因以下原因成立。首先，由极限占优，
+\[
+\lim_{x \to -\infty} \frac{\int_{-\infty}^{\overline{\theta}} h_\xi(\theta \mid x) d\theta}{\int_{\overline{\theta}}^{\infty} h_\xi(\theta \mid x) d\theta} = 0.
+\tag{A.3}
+\]
+
+其次，对任意$\delta > 0$，存在$\theta' > \overline{\theta}$使得$\int_{\theta'}^{\infty} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta < \varepsilon\delta/2$，由状态单调性和随机占优性，这蕴含
+\[
+\lim_{x \to -\infty} \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta \le \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta < \varepsilon\delta/2.
+\]
+
+因为由极限占优，
+\[
+\lim_{x \to -\infty} \left| \int_{\theta'}^{\infty} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta \right| \le M \lim_{x \to -\infty} \int_{\theta'}^{\infty} h_\xi(\theta \mid x) d\theta = 0
+\]
+其中$M = \max_{\theta \in [\overline{\theta}, \theta']} |u(1, 1, \theta) - u(0, 1, \theta)|$，我们有
+\[
+\lim_{x \to -\infty} \int_{-\infty}^{\overline{\theta}} (u(1, 1, \theta) - u(0, 1, \theta)) h_\xi(\theta \mid x) d\theta < \varepsilon\delta/2.
+\tag{A.4}
+\]
+
+因此，由（A.2）、（A.3）和（A.4）知（A.1）成立。$\square$
+\end{translation}
+
+\medskip
+\begin{original}
+Using the above three lemmas, we can prove Proposition 1 by a standard argument (e.g., Morris and Shin, 2003), so we provide only a sketch of the proof (the full proof is available upon request). Let $\mathcal{R}^n \equiv \{s \in \{0,1\}^{\mathbb{R}} \mid s_{\kappa_n}(x) \le s(x) \le s_{\overline{\kappa}_n}(x)\}$, where $\kappa_0 = -\infty$ and $\overline{\kappa}_0 = \infty$, and $\underline{\kappa}_{n+1}$ and $\overline{\kappa}_{n+1}$ are defined inductively by
+\begin{align*}
+\underline{\kappa}_{n+1} &= \min\{\kappa \in \mathbb{R} \mid \min_{\xi} v_1^\xi(\kappa, \overline{\kappa}_n) - \min_{\xi} v_0^\xi(\kappa, \overline{\kappa}_n) = 0\},\\
+\overline{\kappa}_{n+1} &= \max\{\kappa \in \mathbb{R} \mid \min_{\xi} v_1^\xi(\kappa, \underline{\kappa}_n) - \min_{\xi} v_0^\xi(\kappa, \underline{\kappa}_n) = 0\}.
+\end{align*}
+Then we can show by induction that $\mathcal{R}^n$ is the set of strategies surviving $n$ rounds of iterated deletion of strictly interim-dominated strategies. Furthermore, we can show that $\underline{\kappa} = \lim_{n} \underline{\kappa}_n$ and $\overline{\kappa} = \lim_{n} \overline{\kappa}_n$, which implies Proposition 1.
+\end{original}
+\begin{translation}
+利用上述三个引理，我们可以通过标准论证（例如，Morris 和 Shin，2003）证明命题1，因此我们仅提供证明的梗概（完整证明可应要求提供）。令$\mathcal{R}^n \equiv \{s \in \{0,1\}^{\mathbb{R}} \mid s_{\kappa_n}(x) \le s(x) \le s_{\overline{\kappa}_n}(x)\}$，其中$\kappa_0 = -\infty$，$\overline{\kappa}_0 = \infty$，且$\underline{\kappa}_{n+1}$和$\overline{\kappa}_{n+1}$由归纳定义如下
+\begin{align*}
+\underline{\kappa}_{n+1} &= \min\{\kappa \in \mathbb{R} \mid \min_{\xi} v_1^\xi(\kappa, \overline{\kappa}_n) - \min_{\xi} v_0^\xi(\kappa, \overline{\kappa}_n) = 0\},\\
+\overline{\kappa}_{n+1} &= \max\{\kappa \in \mathbb{R} \mid \min_{\xi} v_1^\xi(\kappa, \underline{\kappa}_n) - \min_{\xi} v_0^\xi(\kappa, \underline{\kappa}_n) = 0\}.
+\end{align*}
+然后我们可以通过归纳证明$\mathcal{R}^n$是经受$n$轮严格临时占优策略迭代删除的策略集。此外，我们可以证明$\underline{\kappa} = \lim_{n} \underline{\kappa}_n$和$\overline{\kappa} = \lim_{n} \overline{\kappa}_n$，这蕴含了命题1。
+\end{translation}
+
+% ==================== APPENDIX B ====================
+\section{Proof of Proposition 2}
+\section*{\color{darkblue}附录B：命题2的证明}
+
+\begin{original}
+We use the following lemma.
+\end{original}
+\begin{translation}
+我们使用以下引理。
+\end{translation}
+
+\medskip
+\noindent\textbf{Lemma B.}
+\begin{original}
+Let $\psi \colon \mathbb{R} \times \mathcal{T} \to \mathbb{R}$ be a continuous function, where $\mathcal{T}$ is a compact set. Assume that, for each $t \in \mathcal{T}$, $\psi(\kappa, t) = 0$ has a unique solution $\kappa(t)$ such that $\psi(\kappa, t) < 0$ if and only if $\kappa < \kappa(t)$, and $\kappa(t)$ is bounded over $\mathcal{T}$. Then $\max_t \kappa(t)$ and $\min_t \kappa(t)$ exist, and they are unique solutions of $\min_t \psi(\kappa, t) = 0$ and $\max_t \psi(\kappa, t) = 0$, respectively.
+\end{original}
+\begin{translation}
+\color{darkblue}\textbf{引理B.} 令$\psi \colon \mathbb{R} \times \mathcal{T} \to \mathbb{R}$为连续函数，其中$\mathcal{T}$是紧集。假设对每个$t \in \mathcal{T}$，$\psi(\kappa, t) = 0$有唯一解$\kappa(t)$，使得$\psi(\kappa, t) < 0$当且仅当$\kappa < \kappa(t)$，且$\kappa(t)$在$\mathcal{T}$上有界。则$\max_t \kappa(t)$和$\min_t \kappa(t)$存在，且它们分别是$\min_t \psi(\kappa, t) = 0$和$\max_t \psi(\kappa, t) = 0$的唯一解。
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof.}
+\begin{original}
+If $\kappa(t)$ is continuous, $\max_t \kappa(t)$ and $\min_t \kappa(t)$ exist because $\mathcal{T}$ is compact. So we first show that $\kappa(t)$ is continuous. Note that, for any convergent sequence $\{t_n\}_{n=1}^{\infty}$ with a limit $t$, there exists a subsequence $\{t_{n_k}\}_{k=1}^{\infty}$ such that $\lim_{k} \kappa(t_{n_k}) = \kappa^*$ for some $\kappa^*$ because $\{\kappa(t_n)\}_{n=1}^{\infty}$ is a bounded sequence, which implies that $\psi(\kappa^*, t) = \lim_k \psi(\kappa(t_{n_k}), t_{n_k}) = 0$, and thus $\kappa^* = \kappa(t)$. That is, the limit of any convergent subsequence of $\{\kappa(t_n)\}_{n=1}^{\infty}$ is $\kappa(t)$, which implies $\lim_n \kappa(t_n) = \kappa(t)$.
+
+We show that $\kappa^* \equiv \max_t \kappa(t)$ is a unique solution to $\min_t \psi(\kappa, t) = 0$. Note that $\psi(\kappa, t) > 0$ for all $\kappa > \kappa(t)$ and $t \in \mathcal{T}$, which implies that $\min_t \psi(\kappa, t) > 0$ for all $\kappa > \kappa^*$ because $\psi(\kappa, t)$ is continuous in $t$ and $\mathcal{T}$ is compact. Note also that $\psi(\kappa^*, t) < 0$ for all $t$ if $\kappa^* < \kappa(t)$, which implies that $\min_t \psi(\kappa, t) \le \psi(\kappa, t) < 0$ for all $\kappa < \kappa^*$. Hence, $\kappa^*$ is the unique solution to $\min_t \psi(\kappa, t) = 0$ because $\min_t \psi(\kappa, t)$ is continuous in $\kappa$ (by the maximum theorem). We can similarly show that $\min_t \kappa(t)$ is a unique solution to $\max_t \psi(\kappa, t) = 0$. $\square$
+\end{original}
+\begin{translation}
+如果$\kappa(t)$连续，由于$\mathcal{T}$是紧集，$\max_t \kappa(t)$和$\min_t \kappa(t)$存在。因此我们首先证明$\kappa(t)$连续。注意，对任何具有极限$t$的收敛序列$\{t_n\}_{n=1}^{\infty}$，存在子序列$\{t_{n_k}\}_{k=1}^{\infty}$使得$\lim_{k} \kappa(t_{n_k}) = \kappa^*$对某个$\kappa^*$成立，因为$\{\kappa(t_n)\}_{n=1}^{\infty}$是有界序列，这蕴含$\psi(\kappa^*, t) = \lim_k \psi(\kappa(t_{n_k}), t_{n_k}) = 0$，因此$\kappa^* = \kappa(t)$。也就是说，$\{\kappa(t_n)\}_{n=1}^{\infty}$的任何收敛子序列的极限都是$\kappa(t)$，这蕴含$\lim_n \kappa(t_n) = \kappa(t)$。
+
+我们证明$\kappa^* \equiv \max_t \kappa(t)$是$\min_t \psi(\kappa, t) = 0$的唯一解。注意，对所有$\kappa > \kappa(t)$和$t \in \mathcal{T}$有$\psi(\kappa, t) > 0$，由于$\psi(\kappa, t)$在$t$上连续且$\mathcal{T}$是紧集，这蕴含对所有$\kappa > \kappa^*$有$\min_t \psi(\kappa, t) > 0$。也注意到如果$\kappa^* < \kappa(t)$，则对所有$t$有$\psi(\kappa^*, t) < 0$，这蕴含对所有$\kappa < \kappa^*$有$\min_t \psi(\kappa, t) \le \psi(\kappa, t) < 0$。因此，由于$\min_t \psi(\kappa, t)$在$\kappa$上连续（由最大值定理），$\kappa^*$是$\min_t \psi(\kappa, t) = 0$的唯一解。我们可以类似证明$\min_t \kappa(t)$是$\max_t \psi(\kappa, t) = 0$的唯一解。$\square$
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof of Proposition 2.}
+\begin{original}
+By Proposition 1, it suffices to prove that (11) is a unique solution to (9). Let $\psi(\kappa, \xi_0, \xi_1) \equiv v_1^{\xi_1}(\kappa, \kappa) - v_0^{\xi_0}(\kappa, \kappa)$. Then (9) is written as $\min_{\xi_1} \max_{\xi_0} \psi(\kappa, \xi_0, \xi_1) = \max_{\xi_0} \min_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$.
+
+We first show that, if $\kappa < \kappa(\xi_0, \xi_1)$, then $\psi(\kappa, \xi_0, \xi_1) < 0$. Note that $\psi(\kappa, \xi_0, \xi_1) < 0$ if $\kappa < \kappa(\xi_0, \xi_1)$ by the uniqueness of $\kappa(\xi_0, \xi_1)$. Similarly, if $\kappa > \kappa(\xi_0, \xi_1)$, then $\psi(\kappa, \xi_0, \xi_1) > 0$. Otherwise, there would exist $\xi_0'$ and $\xi_1'$ such that $\psi(\kappa(\xi_0, \xi_1), \xi_0', \xi_1') \ne 0$ for some $\kappa(\xi_0, \xi_1)$, which is a contradiction because $\psi(\kappa(\xi_0, \xi_1), \xi_0', \xi_1') = 0$ would give another solution.
+
+Suppose $\kappa < \kappa(\xi_0, \xi_1)$. Then $\psi(\kappa, \xi_0, \xi_1) < 0$ for all $\xi_0, \xi_1$ by Lemma 1 (decreasing in $\kappa$). If $\kappa > \kappa(\xi_0, \xi_1)$, then $\psi(\kappa, \xi_0, \xi_1) > 0$ for all $\xi_0, \xi_1$.
+
+By the above argument, we can apply Lemma B to the function $\psi(\kappa, \xi_0, \cdot)$ for each $\xi_0$; that is, $\min_{\xi_1} \kappa(\xi_0, \xi_1)$ is the unique solution of $\max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$. Note that $\max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) < 0$ if and only if $\kappa < \min_{\xi_1} \kappa(\xi_0, \xi_1)$ (see the proof of Lemma B). Thus, we can again apply Lemma B to the function $\psi(\kappa, \cdot, \xi_1) \equiv \max_{\xi_0} \psi(\kappa, \xi_0, \xi_1)$; that is, $\max_{\xi_0} \min_{\xi_1} \kappa(\xi_0, \xi_1)$ is the unique solution of $\min_{\xi_0} \max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$. Similarly, $\min_{\xi_1} \max_{\xi_0} \kappa(\xi_0, \xi_1)$ is the unique solution of $\max_{\xi_1} \min_{\xi_0} \psi(\kappa, \xi_0, \xi_1) = \min_{\xi_0} \max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$. $\square$
+\end{original}
+\begin{translation}
+由命题1，只需证明（11）是（9）的唯一解。令$\psi(\kappa, \xi_0, \xi_1) \equiv v_1^{\xi_1}(\kappa, \kappa) - v_0^{\xi_0}(\kappa, \kappa)$。则（9）可写为$\min_{\xi_1} \max_{\xi_0} \psi(\kappa, \xi_0, \xi_1) = \max_{\xi_0} \min_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$。
+
+我们首先证明，如果$\kappa < \kappa(\xi_0, \xi_1)$，则$\psi(\kappa, \xi_0, \xi_1) < 0$。由$\kappa(\xi_0, \xi_1)$的唯一性，如果$\kappa < \kappa(\xi_0, \xi_1)$则$\psi(\kappa, \xi_0, \xi_1) < 0$。类似地，如果$\kappa > \kappa(\xi_0, \xi_1)$，则$\psi(\kappa, \xi_0, \xi_1) > 0$。否则，将存在$\xi_0'$和$\xi_1'$使得对某个$\kappa(\xi_0, \xi_1)$有$\psi(\kappa(\xi_0, \xi_1), \xi_0', \xi_1') \ne 0$，这是矛盾的，因为$\psi(\kappa(\xi_0, \xi_1), \xi_0', \xi_1') = 0$将给出另一个解。
+
+假设$\kappa < \kappa(\xi_0, \xi_1)$。由引理1（在$\kappa$上递减），对所有$\xi_0, \xi_1$有$\psi(\kappa, \xi_0, \xi_1) < 0$。如果$\kappa > \kappa(\xi_0, \xi_1)$，则对所有$\xi_0, \xi_1$有$\psi(\kappa, \xi_0, \xi_1) > 0$。
+
+通过上述论证，我们可以对每个$\xi_0$将引理B应用于函数$\psi(\kappa, \xi_0, \cdot)$；即$\min_{\xi_1} \kappa(\xi_0, \xi_1)$是$\max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$的唯一解。注意，$\max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) < 0$当且仅当$\kappa < \min_{\xi_1} \kappa(\xi_0, \xi_1)$（见引理B的证明）。因此，我们可以再次将引理B应用于函数$\psi(\kappa, \cdot, \xi_1) \equiv \max_{\xi_0} \psi(\kappa, \xi_0, \xi_1)$；即$\max_{\xi_0} \min_{\xi_1} \kappa(\xi_0, \xi_1)$是$\min_{\xi_0} \max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$的唯一解。类似地，$\min_{\xi_1} \max_{\xi_0} \kappa(\xi_0, \xi_1)$是$\max_{\xi_1} \min_{\xi_0} \psi(\kappa, \xi_0, \xi_1) = \min_{\xi_0} \max_{\xi_1} \psi(\kappa, \xi_0, \xi_1) = 0$的唯一解。$\square$
+\end{translation}
+
+% ==================== APPENDIX C ====================
+\section{Proof of Proposition 3 and Its Corollary}
+\section*{\color{darkblue}附录C：命题3及其推论的证明}
+
+\medskip
+\noindent\textbf{Proof of Proposition 3.}
+\begin{original}
+If $\kappa > \kappa^0$, then $v_1^\xi(\kappa, \kappa) - v_0(\kappa) > 0$ for all $\xi \in \Xi$ because $v_1^\xi(\kappa, \kappa) - v_0(\kappa) \ge 0$ and $v_1^\xi(\kappa, \kappa) - v_0(\kappa) > 0$ for all $\kappa > \underline{x}$, where $\underline{x}$ is given in Lemma A. Thus, if $\kappa > \kappa^0$, then $\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) > 0$ by Continuity and the compactness of $\Xi$. On the other hand, $\min_{\xi} v_1^\xi(\kappa^0, \kappa^0) - v_0(\kappa^0) \le v_1^{\xi^0}(\kappa^0, \kappa^0) - v_0(\kappa^0) = 0$ for $\xi^0 \in \arg\max_{\xi} \max\{\kappa \in \mathbb{R} \mid v_1^\xi(\kappa, \kappa) = v_0(\kappa)\}$. Because $\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa)$ is continuous in $\kappa$ (by Continuity and the maximum theorem), $\kappa^0$ is the maximum solution to $\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) = 0$, i.e., the maximum equilibrium cutoff in $(u, \Xi)$. $\square$
+\end{original}
+\begin{translation}
+如果$\kappa > \kappa^0$，则对所有$\xi \in \Xi$有$v_1^\xi(\kappa, \kappa) - v_0(\kappa) > 0$，因为对所有$\kappa > \underline{x}$有$v_1^\xi(\kappa, \kappa) - v_0(\kappa) \ge 0$和$v_1^\xi(\kappa, \kappa) - v_0(\kappa) > 0$，其中$\underline{x}$由引理A给出。因此，如果$\kappa > \kappa^0$，则由连续性和$\Xi$的紧性有$\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) > 0$。另一方面，对$\xi^0 \in \arg\max_{\xi} \max\{\kappa \in \mathbb{R} \mid v_1^\xi(\kappa, \kappa) = v_0(\kappa)\}$，有$\min_{\xi} v_1^\xi(\kappa^0, \kappa^0) - v_0(\kappa^0) \le v_1^{\xi^0}(\kappa^0, \kappa^0) - v_0(\kappa^0) = 0$。由于$\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa)$在$\kappa$上连续（由连续性和最大值定理），$\kappa^0$是$\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) = 0$的最大解，即$(u, \Xi)$中的最大均衡临界点。$\square$
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof of Corollary 4.}
+\begin{original}
+Because $\kappa^0$ is a unique solution to $v_1^{\xi^0}(\kappa, \kappa) - v_0^{\xi^0}(\kappa, \kappa) = 0$, we have $\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) \le v_1^{\xi^0}(\kappa, \kappa) - v_0^{\xi^0}(\kappa, \kappa) < 0$ for all $\kappa < \kappa^0$, which implies that $\kappa^0$ is a unique solution to $\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) = 0$. $\square$
+\end{original}
+\begin{translation}
+因为$\kappa^0$是$v_1^{\xi^0}(\kappa, \kappa) - v_0^{\xi^0}(\kappa, \kappa) = 0$的唯一解，对所有$\kappa < \kappa^0$有$\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) \le v_1^{\xi^0}(\kappa, \kappa) - v_0^{\xi^0}(\kappa, \kappa) < 0$，这蕴含$\kappa^0$是$\min_{\xi} v_1^\xi(\kappa, \kappa) - v_0(\kappa) = 0$的唯一解。$\square$
+\end{translation}
+% ==================== APPENDIX D ====================
+\section{Proof of Proposition 5}
+\section*{\color{darkblue}附录D：命题5的证明}
+
+\begin{original}
+We write $f(\theta) = \rho g(\rho \theta)$. To prove Proposition 5, we use the following lemma.
+\end{original}
+\begin{translation}
+我们记$f(\theta) = \rho g(\rho \theta)$。为证明命题5，我们使用以下引理。
+\end{translation}
+
+\medskip
+\noindent\textbf{Lemma C.}
+\begin{original}
+For any $\kappa, \xi \in \mathbb{R}$, if action 0 is a safe and ex-ante Laplacian action, then
+\[
+\lim_{\beta \to 0} v_1^\beta(\kappa, \kappa) = \lim_{\beta \to 0} \int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) d\theta = \int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) d\theta < 0.
+\tag{D.1}
+\]
+Thus, for any $\kappa_0, \kappa_1 \in \mathbb{R}$ with $\kappa_0 \le \kappa_1$, there exists $\overline{\beta} > 0$ such that if $\beta < \overline{\beta}$ then $v_1^\beta(\kappa, \kappa) \le v_1^\beta(\kappa_1, \kappa_0) < 0$ for all $\kappa \in [\kappa_0, \kappa_1]$.
+\end{original}
+\begin{translation}
+\color{darkblue}\textbf{引理C.} 对任意$\kappa, \xi \in \mathbb{R}$，如果行动0是安全且事前拉普拉斯行动，则
+\[
+\lim_{\beta \to 0} v_1^\beta(\kappa, \kappa) = \lim_{\beta \to 0} \int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) d\theta = \int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) d\theta < 0.
+\tag{D.1}
+\]
+因此，对任意满足$\kappa_0 \le \kappa_1$的$\kappa_0, \kappa_1 \in \mathbb{R}$，存在$\overline{\beta} > 0$使得如果$\beta < \overline{\beta}$则对所有$\kappa \in [\kappa_0, \kappa_1]$有$v_1^\beta(\kappa, \kappa) \le v_1^\beta(\kappa_1, \kappa_0) < 0$。
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof.}
+\begin{original}
+It is enough to show the second equality in (D.1). Note that
+\[
+v_1^\beta(\kappa, \kappa) = \int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) h(\theta \mid \kappa) d\theta = \frac{\int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta}{\int_{\mathbb{R}} f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta}.
+\]
+
+Consider the limit of the denominator. By the monotone convergence theorem, $\int_{\mathbb{R}} f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta \to \int_{\mathbb{R}} f(\theta) \Phi(0) d\theta = \Phi(0) = 1/2$ as $\beta \to 0$ because $\Phi(\sqrt{\beta}(\kappa - \theta))$ is decreasing in $\beta$ (recall the assumption that $g(\varepsilon) = g(-\varepsilon)$ and $g(\varepsilon)$ is increasing in $\varepsilon$ if $\varepsilon < 0$). Next, consider the limit of the numerator. By the dominated convergence theorem,
+\[
+\int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta \to \int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) \Phi(0) d\theta
+\]
+as $\beta \to 0$ because $E^\beta[s_\kappa \mid \theta] = \int_{\mathbb{R}} s_\kappa(\theta + \varepsilon) g_\beta(\varepsilon) d\varepsilon = 1 - \Phi(\sqrt{\beta}(\kappa - \theta)) \to 1/2$, where $\Phi$ is the cumulative distribution function, and
+\[
+|u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta))| \le (|u(1, 1, \theta)| + |u(1, 0, \theta)|) f(\theta) \Phi(0),
+\]
+where the right-hand side is integrable. $\square$
+\end{original}
+\begin{translation}
+只需证明（D.1）中的第二个等式。注意
+\[
+v_1^\beta(\kappa, \kappa) = \int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) h(\theta \mid \kappa) d\theta = \frac{\int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta}{\int_{\mathbb{R}} f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta}.
+\]
+
+考虑分母的极限。由单调收敛定理，当$\beta \to 0$时，$\int_{\mathbb{R}} f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta \to \int_{\mathbb{R}} f(\theta) \Phi(0) d\theta = \Phi(0) = 1/2$，因为$\Phi(\sqrt{\beta}(\kappa - \theta))$在$\beta$上递减（回顾假设$g(\varepsilon) = g(-\varepsilon)$且当$\varepsilon < 0$时$g(\varepsilon)$在$\varepsilon$上递增）。其次，考虑分子的极限。由控制收敛定理，
+\[
+\int_{\mathbb{R}} u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta)) d\theta \to \int_{\mathbb{R}} u(1, 1/2, \theta) f(\theta) \Phi(0) d\theta
+\]
+当$\beta \to 0$时，因为$E^\beta[s_\kappa \mid \theta] = \int_{\mathbb{R}} s_\kappa(\theta + \varepsilon) g_\beta(\varepsilon) d\varepsilon = 1 - \Phi(\sqrt{\beta}(\kappa - \theta)) \to 1/2$，其中$\Phi$是累积分布函数，且
+\[
+|u(1, E^\beta[s_\kappa \mid \theta], \theta) f(\theta) \Phi(\sqrt{\beta}(\kappa - \theta))| \le (|u(1, 1, \theta)| + |u(1, 0, \theta)|) f(\theta) \Phi(0),
+\]
+其中右边是可积的。$\square$
+\end{translation}
+
+\medskip
+\noindent\textbf{Proof of Proposition 5.}
+\begin{original}
+Fix $\kappa$. Let $\underline{x} < \kappa$ be such that $v_1^\beta(\kappa, x) < 0 = v_0(\kappa, x)$ for all $x < \underline{x}$, which exists by Lemma A. Lemma C implies that there exists $\beta' \in (0, \overline{\beta})$ such that if $\underline{\beta} < \beta'$ then $v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0$ for all $\kappa \in [\underline{x}, \kappa]$. Let $\underline{\beta} < \beta'$. Then
+\[
+\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa)
+\begin{cases}
+\le v_1^{\underline{\beta}}(\kappa, \kappa) < 0 & \text{if } \kappa < \underline{x},\\
+\le v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0 & \text{if } \kappa \in [\underline{x}, \kappa].
+\end{cases}
+\]
+This implies that every equilibrium cutoff in $(u, [\underline{\beta}, \overline{\beta}])$ is greater than $\kappa$.
+
+Let $\overline{x} > \kappa$ be given above. Suppose that, for each $\beta < \tilde{\beta}$, $v_1^\beta(\kappa, \kappa) = 0$ has at most one solution greater than $\kappa$. Let $\overline{x} > \kappa$ be such that $\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \overline{x}) > 0$ for all $\kappa \ge \overline{x}$, which exists by Lemma A. By Lemma C, there exists $\beta^* \in (0, \tilde{\beta})$ such that if $\underline{\beta} < \beta^*$ then $v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0$ for all $\kappa \in [\underline{x}, \overline{x}]$. Let $\underline{\beta} < \beta^*$. Then
+\[
+\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa)
+\begin{cases}
+\le v_1^{\underline{\beta}}(\kappa, \kappa) < 0 & \text{if } \kappa < \underline{x},\\
+\le v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0 & \text{if } \kappa \in [\underline{x}, \overline{x}],
+\end{cases}
+\tag{D.2}
+\]
+so $\kappa^0 = \max_{\beta \in [\underline{\beta}, \overline{\beta}]} \max\{\kappa \in \mathbb{R} \mid v_1^\beta(\kappa, \kappa) = 0\} > \overline{x}$ because, by Proposition 3, $\kappa^0$ is the maximum solution to $\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa) = 0$.
+
+Let $\beta^0 \in \arg\max_{\beta \in [\underline{\beta}, \overline{\beta}]} \max\{\kappa \in \mathbb{R} \mid v_1^\beta(\kappa, \kappa) = 0\}$; that is, $v_1^{\beta^0}(\kappa^0, \kappa^0) = 0$. Then we must have $\beta^0 < \tilde{\beta}$ because $\beta^0 > \tilde{\beta}$ implies $\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa^0, \overline{x}) > 0$. Thus, $v_1^{\beta^0}(\kappa, \kappa) < 0$ for all $\kappa \in [\underline{x}, \overline{x}]$ by the definition of $\tilde{\beta}$. Note that $v_1^{\beta^0}(\kappa, \kappa) \ge 0$ for all $\kappa \in (\kappa, \kappa^0)$ by the assumption. Accordingly, $\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa) \le v_1^{\beta^0}(\kappa, \kappa) < 0$ for all $\kappa \in (\kappa, \kappa^0)$ by Continuity. This implies that $\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa) < 0$ for all $\kappa < \kappa^0$ by (D.2). Therefore, by Proposition 3, $s_{\kappa^0}$ is the unique strategy surviving iterated deletion of strictly interim-dominated strategies in $(u, [\underline{\beta}, \overline{\beta}])$. $\square$
+\end{original}
+\begin{translation}
+固定$\kappa$。令$\underline{x} < \kappa$使得对所有$x < \underline{x}$有$v_1^\beta(\kappa, x) < 0 = v_0(\kappa, x)$，由引理A知其存在。引理C蕴含存在$\beta' \in (0, \overline{\beta})$使得如果$\underline{\beta} < \beta'$则对所有$\kappa \in [\underline{x}, \kappa]$有$v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0$。令$\underline{\beta} < \beta'$。则
+\[
+\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa)
+\begin{cases}
+\le v_1^{\underline{\beta}}(\kappa, \kappa) < 0 & \text{若 } \kappa < \underline{x},\\
+\le v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0 & \text{若 } \kappa \in [\underline{x}, \kappa].
+\end{cases}
+\]
+这意味着$(u, [\underline{\beta}, \overline{\beta}])$中的每个均衡临界点都大于$\kappa$。
+
+令$\overline{x} > \kappa$如上。假设对每个$\beta < \tilde{\beta}$，$v_1^\beta(\kappa, \kappa) = 0$至多有一个大于$\kappa$的解。令$\overline{x} > \kappa$使得对所有$\kappa \ge \overline{x}$有$\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \overline{x}) > 0$，由引理A知其存在。由引理C，存在$\beta^* \in (0, \tilde{\beta})$使得如果$\underline{\beta} < \beta^*$则对所有$\kappa \in [\underline{x}, \overline{x}]$有$v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0$。令$\underline{\beta} < \beta^*$。则
+\[
+\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa)
+\begin{cases}
+\le v_1^{\underline{\beta}}(\kappa, \kappa) < 0 & \text{若 } \kappa < \underline{x},\\
+\le v_1^{\underline{\beta}}(\kappa, \underline{x}) < 0 & \text{若 } \kappa \in [\underline{x}, \overline{x}],
+\end{cases}
+\tag{D.2}
+\]
+因此由命题3知$\kappa^0 = \max_{\beta \in [\underline{\beta}, \overline{\beta}]} \max\{\kappa \in \mathbb{R} \mid v_1^\beta(\kappa, \kappa) = 0\} > \overline{x}$，因为$\kappa^0$是$\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa) = 0$的最大解。
+
+令$\beta^0 \in \arg\max_{\beta \in [\underline{\beta}, \overline{\beta}]} \max\{\kappa \in \mathbb{R} \mid v_1^\beta(\kappa, \kappa) = 0\}$；即$v_1^{\beta^0}(\kappa^0, \kappa^0) = 0$。则必有$\beta^0 < \tilde{\beta}$，因为$\beta^0 > \tilde{\beta}$蕴含$\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa^0, \overline{x}) > 0$。因此，由$\tilde{\beta}$的定义，对所有$\kappa \in [\underline{x}, \overline{x}]$有$v_1^{\beta^0}(\kappa, \kappa) < 0$。注意，由假设，对所有$\kappa \in (\kappa, \kappa^0)$有$v_1^{\beta^0}(\kappa, \kappa) \ge 0$。因此，由连续性，对所有$\kappa \in (\kappa, \kappa^0)$有$\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa) \le v_1^{\beta^0}(\kappa, \kappa) < 0$。由（D.2），这蕴含对所有$\kappa < \kappa^0$有$\min_{\beta \in [\underline{\beta}, \overline{\beta}]} v_1^\beta(\kappa, \kappa) < 0$。因此，由命题3，$s_{\kappa^0}$是$(u, [\underline{\beta}, \overline{\beta}])$中经受严格临时占优策略迭代删除的唯一策略。$\square$
+\end{translation}
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
+% ==================== DATA AVAILABILITY ====================
+\section*{Data Availability}
+\section*{\color{darkblue}数据可用性}
+
+\begin{original}
+No data was used for the research described in the article.
+\end{original}
+\begin{translation}
+本文所述研究未使用任何数据。
+\end{translation}
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
+% ==================== REFERENCES ====================
+\begin{thebibliography}{99}
+
+\bibitem{Angeletos2007}
+Angeletos, G.M., Hellwig, C., Pavan, A., 2007. Dynamic global games of regime change: learning, multiplicity, and the timing of attacks. Econometrica 75, 711--756.
+
+\bibitem{Angeletos2016}
+Angeletos, G.M., Lian, C., 2016. Incomplete information in macroeconomics: accommodating frictions in coordination. In: Taylor, J.B., Uhlig, H. (Eds.), Handbook of Macroeconomics, vol.\ 2B. Elsevier, pp.\ 1345--1425.
+
+\bibitem{Ahn2007}
+Ahn, D., 2007. Hierarchies of ambiguous beliefs. J.\ Econ.\ Theory 136, 286--301.
+
+\bibitem{Azrieli2011}
+Azrieli, Y., Teper, R., 2011. Uncertainty aversion and equilibrium existence in games with incomplete information. Games Econ.\ Behav.\ 73, 310--317.
+
+\bibitem{Aumann1976}
+Aumann, R.J., 1976. Agreeing to disagree. Ann.\ Stat.\ 4, 1236--1239.
+
+\bibitem{Beauchene2019}
+Beauch\^ene, D., Li, J., Li, M., 2019. Ambiguous persuasion. J.\ Econ.\ Theory 179, 312--365.
+
+\bibitem{Bergemann2019}
+Bergemann, D., Morris, S., 2019. Information design: a unified perspective. J.\ Econ.\ Lit.\ 57, 44--95.
+
+\bibitem{BodohCreed2012}
+Bodoh-Creed, A.L., 2012. Ambiguous beliefs and mechanism design. Games Econ.\ Behav.\ 75, 518--537.
+
+\bibitem{Bose2009}
+Bose, S., Daripa, A., 2009. A dynamic mechanism and surplus extraction under ambiguity. J.\ Econ.\ Theory 144, 2084--2114.
+
+\bibitem{Bose2006}
+Bose, S., Ozdenoren, E., Pape, A., 2006. Optimal auctions with ambiguity. Theor.\ Econ.\ 1, 411--438.
+
+\bibitem{Bose2014}
+Bose, S., Renou, L., 2014. Mechanism design with ambiguous communication devices. Econometrica 82, 1853--1872.
+
+\bibitem{Caballero2008}
+Caballero, R.J., Krishnamurthy, A., 2008. Collective risk management in a flight to quality episode. J.\ Finance 63, 2195--2230.
+
+\bibitem{Calvo1988}
+Calvo, G.A., 1988. Servicing the public debt: the role of expectations. Am.\ Econ.\ Rev.\ 78, 647--661.
+
+\bibitem{Carlsson1993}
+Carlsson, H., van Damme, E., 1993. Global games and equilibrium selection. Econometrica 61, 989--1018.
+
+\bibitem{DeCastro2018}
+De Castro, L., Yannelis, N.C., 2018. Uncertainty, efficiency and incentive compatibility: ambiguity solves the conflict between efficiency and incentive compatibility. J.\ Econ.\ Theory 177, 678--707.
+
+\bibitem{Diamond1983}
+Diamond, D., Dybvig, P., 1983. Bank runs, deposit insurance, and liquidity. J.\ Polit.\ Econ.\ 91, 401--419.
+
+\bibitem{DiTillio2017}
+Di Tillio, A., Kos, N., Messner, M., 2017. The design of ambiguous mechanisms. Rev.\ Econ.\ Stud.\ 84, 237--276.
+
+\bibitem{Dicks2019}
+Dicks, D., Fulghieri, P., 2019. Uncertainty aversion and systemic risk. J.\ Polit.\ Econ.\ 127, 1118--1155.
+
+\bibitem{Dziewulski2024}
+Dziewulski, P., Quah, J.K.-H., 2024. Comparative statics with linear objectives: normality, complementarity, and ranking multi-prior beliefs. Econometrica 92, 167--200.
+
+\bibitem{Ellis2016}
+Ellis, A., 2016. Condorcet meets Ellsberg. Theor.\ Econ.\ 11, 865--895.
+
+\bibitem{Epstein1997}
+Epstein, L.G., 1997. Preference, rationalizability and equilibrium. J.\ Econ.\ Theory 73, 1--29.
+
+\bibitem{Epstein1996}
+Epstein, L.G., Wang, T., 1996. ``Beliefs about beliefs'' without probabilities. Econometrica 64, 1343--1373.
+
+\bibitem{Fabrizi2022}
+Fabrizi, S., Lippert, S., Pan, A., Ryan, M., 2022. A theory of unanimous jury voting with an ambiguous likelihood. Theory Decis.\ 93, 399--425.
+
+\bibitem{Fagin1990}
+Fagin, R., Halpern, J., 1990. A new approach to updating beliefs. In: Bonissone, P.P., Henrion, M., Kanal, L.N., Lemmer, J.F. (Eds.), Uncertainty in Artificial Intelligence, vol.\ 6. Elsevier, pp.\ 317--325.
+
+\bibitem{Gilboa2013}
+Gilboa, I., Marinacci, M., 2013. Ambiguity and the Bayesian paradigm. In: Acemoglu, D., Arellano, M., Dekel, E. (Eds.), Advances in Economics and Econometrics: Tenth World Congress, vol.\ 1. Cambridge Univ.\ Press, pp.\ 179--242.
+
+\bibitem{Gilboa1989}
+Gilboa, I., Schmeidler, D., 1989. Maxmin expected utility with a non-unique prior. J.\ Math.\ Econ.\ 18, 141--153.
+
+\bibitem{Goldstein2005}
+Goldstein, I., Pauzner, A., 2005. Demand-deposit contracts and the probability of bank runs. J.\ Finance 60, 1293--1327.
+
+\bibitem{Grant2016}
+Grant, S., Meneghel, I., Tourky, R., 2016. Savage games. Theor.\ Econ.\ 11, 641--682.
+
+\bibitem{Guo2021}
+Guo, H., Yannelis, N.C., 2021. Full implementation under ambiguity. Am.\ Econ.\ J.\ Microecon.\ 13, 148--178.
+
+\bibitem{Hanany2020}
+Hanany, E., Klibanoff, P., Mukerji, S., 2020. Incomplete information games with ambiguity averse players. Am.\ Econ.\ J.\ Microecon.\ 12, 135--187.
+
+\bibitem{Harsanyi1967}
+Harsanyi, J.C., 1967--1968. Games with incomplete information played by Bayesian players. Manag.\ Sci.\ 14, 159--182, 320--334, 486--502.
+
+\bibitem{Iachan2015}
+Iachan, F., Nenov, P., 2015. Information quality and crises in regime-change games. J.\ Econ.\ Theory 158, 739--768.
+
+\bibitem{Inostroza2022}
+Inostroza, N., Pavan, A., 2022. Adversarial coordination and public information design. Working paper.
+
+\bibitem{Jaffray1992}
+Jaffray, J.-Y., 1992. Bayesian updating and belief functions. IEEE Trans.\ Syst.\ Man Cybern.\ 22, 1144--1152.
+
+\bibitem{Judd1985}
+Judd, K.L., 1985. The law of large numbers with a continuum of IID random variables. J.\ Econ.\ Theory 35, 19--25.
+
+\bibitem{Kajii2005}
+Kajii, A., Ui, T., 2005. Incomplete information games with multiple priors. Jpn.\ Econ.\ Rev.\ 56, 332--351.
+
+\bibitem{Kajii2009}
+Kajii, A., Ui, T., 2009. Interim efficient allocations under uncertainty. J.\ Econ.\ Theory 144, 337--353.
+
+\bibitem{Kamenica2011}
+Kamenica, E., Gentzkow, M., 2011. Bayesian persuasion. Am.\ Econ.\ Rev.\ 101, 2590--2615.
+
+\bibitem{Kawagoe2013}
+Kawagoe, T., Ui, T., 2013. Global games and ambiguous information: an experimental study. Working paper.
+
+\bibitem{Klibanoff2005}
+Klibanoff, P., Marinacci, M., Mukerji, S., 2005. A smooth model of decision making under ambiguity. Econometrica 73, 1849--1892.
+
+\bibitem{Laskar2014}
+Laskar, D., 2014. Ambiguity and perceived coordination in a global game. Econ.\ Lett.\ 122, 317--320.
+
+\bibitem{Li2023}
+Li, F., Song, Y., Zhao, M., 2023. Global manipulation by local obfuscation. J.\ Econ.\ Theory 207, 105575.
+
+\bibitem{Lipsky1998}
+Lipsky, J., 1998. Asia's crisis: a market perspective. Finance Dev.\ 35, 10--13.
+
+\bibitem{Lo1998}
+Lo, K.C., 1998. Sealed bid auctions with uncertainty averse bidders. Econ.\ Theory 12, 1--20.
+
+\bibitem{Machina2014}
+Machina, M., Siniscalchi, M., 2014. Ambiguity and ambiguity aversion. In: Machina, M., Viscusi, K. (Eds.), Handbook of the Economics of Risk and Uncertainty, vol.\ 1. Elsevier, pp.\ 729--807.
+
+\bibitem{MartinsdaRocha2010}
+Martins-da-Rocha, V.F., 2010. Interim efficiency with MEU-preferences. J.\ Econ.\ Theory 145, 1987--2017.
+
+\bibitem{Mertens1985}
+Mertens, J.-F., Zamir, S., 1985. Formulation of Bayesian analysis for games with incomplete information. Int.\ J.\ Game Theory 14, 1--29.
+
+\bibitem{Milgrom1981}
+Milgrom, P., 1981. Good news and bad news: representation theorems and applications. Bell J.\ Econ.\ 12, 380--391.
+
+\bibitem{Milgrom1990}
+Milgrom, P., Roberts, J., 1990. Rationalizability, learning, and equilibrium in games with strategic complementarities. Econometrica 58, 1255--1277.
+
+\bibitem{Morris1998}
+Morris, S., Shin, H.S., 1998. Unique equilibrium in a model of self-fulfilling currency attacks. Am.\ Econ.\ Rev.\ 88, 587--597.
+
+\bibitem{Morris2001}
+Morris, S., Shin, H.S., 2001. Rethinking multiple equilibria in macroeconomic modeling. NBER Macroecon.\ Annu.\ 2000, 139--161.
+
+\bibitem{Morris2003}
+Morris, S., Shin, H.S., 2003. Global games: theory and applications. In: Dewatripont, M., Hansen, L., Turnovsky, S. (Eds.), Advances in Economics and Econometrics: Theory and Applications. Proceedings of the Eighth World Congress of the Econometric Society. Cambridge Univ.\ Press, pp.\ 56--114.
+
+\bibitem{Morris2004}
+Morris, S., Shin, H.S., 2004. Coordination risk and the price of debt. Eur.\ Econ.\ Rev.\ 48, 133--153.
+
+\bibitem{Morris2024}
+Morris, S., Oyama, D., Takahashi, S., 2024. Implementation via information design in binary-action supermodular games. Econometrica 92, 775--813.
+
+\bibitem{Obstfeld1996}
+Obstfeld, M., 1996. Models of currency crises with self-fulfilling features. Eur.\ Econ.\ Rev.\ 40, 1037--1047.
+
+\bibitem{Pan2019}
+Pan, A., 2019. A note on pivotality. Games 10, 24.
+
+\bibitem{Pires2002}
+Pires, C.P., 2002. A rule for updating ambiguous beliefs. Theory Decis.\ 53, 137--187.
+
+\bibitem{Routledge2009}
+Routledge, B., Zin, S., 2009. Model uncertainty and liquidity. Rev.\ Econ.\ Dyn.\ 12, 543.
+
+\bibitem{Ryan2021}
+Ryan, M., 2021. Feddersen and Pesendorfer meet Ellsberg. Theory Decis.\ 90, 543--577.
+
+\bibitem{Salo1995}
+Salo, A., Weber, M., 1995. Ambiguity aversion in first-price sealed-bid auctions. J.\ Risk Uncertain.\ 11, 123--137.
+
+\bibitem{Siamwalla2005}
+Siamwalla, A., 2005. Anatomy of the crisis. In: Warr, P. (Ed.), Thailand Beyond the Crisis. Routledge Curzon, pp.\ 66--104.
+
+\bibitem{Song2018}
+Song, Y., 2018. Efficient implementation with interdependent valuations and maxmin agents. J.\ Econ.\ Theory 176, 693--726.
+
+\bibitem{Sun2006}
+Sun, Y., 2006. The exact law of large numbers via Fubini extension and characterization of insurable risks. J.\ Econ.\ Theory 126, 31--69.
+
+\bibitem{Uhlig2010}
+Uhlig, H., 2010. A model of a systemic bank run. J.\ Monet.\ Econ.\ 57, 78--96.
+
+\bibitem{Ui2009}
+Ui, T., 2009. Ambiguity and risk in global games. Working paper.
+
+\bibitem{VanZandt2007}
+Van Zandt, T., Vives, X., 2007. Monotone equilibria in Bayesian games of strategic complementarities. J.\ Econ.\ Theory 134, 339--360.
+
+\bibitem{Vives1990}
+Vives, X., 1990. Nash equilibrium with strategic complementarities. J.\ Math.\ Econ.\ 19, 305--321.
+
+\bibitem{Wolitzky2016}
+Wolitzky, A., 2016. Mechanism design with maxmin agents: theory and an application to bilateral trade. Theor.\ Econ.\ 11, 971--1004.
+
+\end{thebibliography}
+
+\end{document}

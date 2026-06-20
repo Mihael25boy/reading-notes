@@ -1,0 +1,1519 @@
+% !TeX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% === Chinese support ===
+\usepackage{ctex}
+\setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi]
+\setCJKsansfont{SimHei}
+\setCJKmonofont{FangSong}
+
+% === Math packages ===
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+
+% === Page layout ===
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+% === Colors ===
+\usepackage{xcolor}
+\definecolor{myblue}{RGB}{0,51,102}
+
+% === Environments for bilingual content ===
+\newenvironment{original}
+  {\par\vspace{4pt}\noindent\color{black}\ignorespaces}
+  {\par\vspace{2pt}}
+
+\newenvironment{translation}
+  {\par\vspace{2pt}\noindent\color{myblue}\ignorespaces}
+  {\par\vspace{6pt}}
+
+% === Bilingual section commands ===
+\newcommand{\bisection}[2]{%
+  \section{#1}%
+  \vspace{-2pt}%
+  \noindent{\color{myblue}\large\bfseries #2}%
+  \vspace{6pt}%
+}
+
+\newcommand{\bisubsection}[2]{%
+  \subsection{#1}%
+  \vspace{-2pt}%
+  \noindent{\color{myblue}\bfseries #2}%
+  \vspace{4pt}%
+}
+
+% === Theorem environments ===
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+% === Math convenience ===
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Delt}{\Delta}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\bbone}{\mathbf{1}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% === Title formatting ===
+\usepackage{titling}
+\setlength{\droptitle}{-4em}
+
+% === Hyperlinks ===
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=myblue,citecolor=myblue,urlcolor=myblue}
+
+\begin{document}
+
+% ============================================================
+% TITLE
+% ============================================================
+
+\title{\textbf{Informativeness Orders over Ambiguous Experiments}\\[4pt]
+       {\color{myblue}\large 模糊实验的信息性排序}}
+\author{Zichang Wang\\[4pt]
+        {\color{myblue}王梓畅}\\[4pt]
+        {\small MOE Key Laboratory of Econometrics, Wang Yanan Institute for Studies in Economics,}\\
+        {\small and Department of Economics at the School of Economics, Xiamen University, China}\\[4pt]
+        {\color{myblue}\small 厦门大学王亚南经济研究院，经济学院经济学系，教育部计量经济学重点实验室}}
+\date{}
+
+\maketitle
+
+% ============================================================
+% JOURNAL INFO / ABSTRACT
+% ============================================================
+
+\vspace{-10pt}
+\begin{original}
+\textit{Journal of Economic Theory} 222 (2024) 105937.\
+JEL classification: D81, D83.\
+Keywords: Statistical experiments; Ambiguity; Informativeness order.
+\end{original}
+
+\begin{translation}
+\textit{经济理论杂志} 第222卷 (2024) 105937。\
+JEL分类：D81, D83。\
+关键词：统计实验；模糊性；信息性排序。
+\end{translation}
+
+\bigskip
+
+\begin{center}
+\textbf{ABSTRACT}
+\end{center}
+
+\begin{original}
+We generalize Blackwell's informativeness order to ambiguous experiments. A decision maker might view a statistical experiment as ambiguous if she faces uncertainty about the data generating process for its signals. Formally, an ambiguous experiment is modeled as a mapping from an auxiliary state space to the set of unambiguous experiments. Each auxiliary state corresponds to a possible data generating process. We show that one ambiguous experiment is preferred to another by every decision maker in every decision problem if and only if they are related by a condition called prior-by-prior dominance, which states that for any first-order belief the decision maker entertains on the auxiliary state space, the expected experiment resulting from this belief for the first experiment is Blackwell more informative than that of the second. This equivalence is robust for any class of monotone ambiguity preferences that nests expected utility. We obtain another informativeness order when we restrict attention to decision makers who apply the maxmin criterion to evaluate ambiguous experiments and connect this informativeness order to comparisons of sets of Blackwell experiments.
+\end{original}
+
+\begin{translation}
+本文将Blackwell的信息性排序推广至模糊实验。当决策者面临信号生成过程的不确定性时，她可能将统计实验视为模糊的。形式上，一个模糊实验被建模为从辅助状态空间到无模糊实验集合的映射。每个辅助状态对应一种可能的信号生成过程。我们证明：一个模糊实验在每一个决策问题中被每一个决策者偏好于另一个模糊实验，当且仅当它们满足一个称为“逐先验占优”的条件——即对于决策者在辅助状态空间上所持有的任何一阶信念，由该信念生成的第一实验的期望实验在Blackwell意义上比第二实验更具信息性。这一等价性对于任何包含期望效用的单调模糊偏好类都是稳健的。当我们将注意力限制在使用最大最小准则评估模糊实验的决策者时，我们获得了另一个信息性排序，并将该排序与Blackwell实验集合的比较联系起来。
+\end{translation}
+
+\bigskip
+\vspace{8pt}
+\hrule
+\vspace{4pt}
+
+% ============================================================
+% 1. INTRODUCTION
+% ============================================================
+
+\bisection{1. Introduction}{1. 引言}
+
+\begin{original}
+Blackwell (1951, 1953) models information as statistical experiments and establishes an elegant order for their informativeness. This order allows comparisons of information independent of decision problems or preference parameters. However, information is often ambiguous, since the exact data generating process for signals is rarely known. For example, a medical test for a certain disease can be thought of as a statistical experiment, and such tests have the possibility of both false positives and false negatives. Seldom do patients know the exact probabilities of false positives and false negatives, and they may therefore view the distribution of test results (and the test itself) as ambiguous. In this sense, Blackwell's formulation of information as unambiguous experiments is idealized.
+\end{original}
+
+\begin{translation}
+Blackwell (1951, 1953) 将信息建模为统计实验，并为实验的信息性建立了精巧的排序。这一排序允许在独立于决策问题或偏好参数的情况下对信息进行比较。然而，信息通常是模糊的，因为信号的精确生成过程很少为人所知。例如，针对某种疾病的医学检测可以被视为一个统计实验，这类检测同时存在假阳性和假阴性的可能。患者很少知道假阳性和假阴性的精确概率，因此他们可能将检测结果的分布（以及检测本身）视为模糊的。在这个意义上，Blackwell将信息表述为无模糊实验的做法是理想化的。
+\end{translation}
+
+\begin{original}
+One can make intuitive comparisons of ambiguous information. For example, patients may always prefer a medical test that has a smaller maximum probability of false positives or false negatives. Such intuitive comparisons cannot be formalized in Blackwell's framework due to the lack of a structure for informational ambiguity.
+\end{original}
+
+\begin{translation}
+人们可以对模糊信息进行直观比较。例如，患者可能总是偏好那种假阳性或假阴性最大概率较小的医学检测。由于Blackwell框架缺乏对信息模糊性的结构化建模，这类直观比较无法在其框架内形式化。
+\end{translation}
+
+\begin{original}
+In this paper, we propose a model for informational ambiguity and generalize Blackwell's theorem to comparisons of ambiguous experiments. More specifically, we characterize a generalization of Blackwell's garbling condition that is equivalent to every decision maker preferring one ambiguous experiment to another in every decision problem. This generalization establishes an informativeness order over ambiguous experiments.
+\end{original}
+
+\begin{translation}
+本文提出了一个信息模糊性模型，并将Blackwell定理推广到模糊实验的比较。具体而言，我们刻画了Blackwell混淆条件的一个推广，该条件等价于每一个决策者在每一个决策问题中都偏好一个模糊实验甚于另一个。这一推广建立了模糊实验的信息性排序。
+\end{translation}
+
+\begin{original}
+\medskip
+\noindent\textit{Acknowledgments.} This paper is adapted from the second chapter of my dissertation at Duke University. I am deeply indebted to Todd Sarver for his continued guidance and detailed comments throughout the development of this paper. I thank the editor, Faruk Gul, and two anonymous referees for comments and suggestions that lead to a significant improvement of the paper. I also thank Arjada Bardhi, Yonggyun Kim, Xiaosheng Mu, and Philipp Sadowski for many helpful discussions.
+\end{original}
+
+\begin{translation}
+\textit{致谢。}本文改编自笔者在杜克大学博士学位论文的第二章。笔者深深感谢Todd Sarver在本文写作全过程中持续的指导和详细的评论。感谢编辑Faruk Gul以及两位匿名审稿人的评论和建议，使本文得到显著改进。同时感谢Arjada Bardhi、Yonggyun Kim、Xiaosheng Mu和Philipp Sadowski的诸多有益讨论。
+\end{translation}
+
+\begin{original}
+E-mail address: zichang.wang@xmu.edu.cn.
+\end{original}
+
+\begin{translation}
+电子邮箱：zichang.wang@xmu.edu.cn。
+\end{translation}
+
+% ============================================================
+% INFORMAL MODEL DESCRIPTION (within Introduction)
+% ============================================================
+
+\begin{original}
+Let $\Theta$ be a finite set of payoff-relevant states. A Blackwell experiment is a mapping $\mu:\Theta\to\Delt(S)$ where $S$ is a finite set of signals, and $\Delt(S)$ is the set of probability distributions over $S$. A Blackwell experiment $\mu$ is unambiguous since the probability that signal $s$ is generated conditional on state $\theta$ is unambiguously specified for all $\theta$ and $s$.
+\end{original}
+
+\begin{translation}
+设$\Theta$为有限的收益相关状态集合。一个Blackwell实验是一个映射$\mu:\Theta\to\Delt(S)$，其中$S$是有限的信号集合，$\Delt(S)$是$S$上概率分布的集合。Blackwell实验$\mu$是无模糊的，因为对于所有$\theta$和$s$，在状态$\theta$下生成信号$s$的条件概率被无歧义地确定。
+\end{translation}
+
+\begin{original}
+We introduce an auxiliary state space $\Omega$ to capture informational ambiguity. Specifically, we model an ambiguous experiment as a mapping $p:\Omega\to\Delt(S)^{\Theta}$. That is, each ambiguous experiment is identified as an indexed set of Blackwell experiments. To ease notation, we write $p_{\omega}$ to denote the Blackwell experiment associated with state $\omega$. That is, given ambiguous experiment $p$, $p_{\omega}$ is a mapping from $\Theta$ to $\Delt(S)$ for each $\omega\in\Omega$.
+\end{original}
+
+\begin{translation}
+我们引入一个辅助状态空间$\Omega$来刻画信息模糊性。具体而言，我们将模糊实验建模为映射$p:\Omega\to\Delt(S)^{\Theta}$。也就是说，每个模糊实验被定义为一个带索引的Blackwell实验集合。为简化记号，我们记$p_{\omega}$为与状态$\omega$相关的Blackwell实验。即，给定模糊实验$p$，对每个$\omega\in\Omega$，$p_{\omega}$是从$\Theta$到$\Delt(S)$的映射。
+\end{translation}
+
+\begin{original}
+Our interpretation for the auxiliary state space $\Omega$ is similar to the interpretation for the ``model space'' from the literature on model uncertainty (e.g., Hansen and Sargent 2001, 2008 and Marinacci 2015). A decision maker (henceforth DM) understands that signals are generated according to some data generating process (i.e., some Blackwell experiment), which is determined by some ``generative mechanism representing some natural or social phenomenon'' (Marinacci, 2015). DMs may not know this mechanism or have enough information to form a belief about possible mechanisms. As a result, informational ambiguity arises. Each state $\omega\in\Omega$ represents a mechanism and each $p_{\omega}$ is the data generating process (Blackwell experiment) when the mechanism is $\omega$. Even though a DM fully understands the data generating process corresponding to each generative mechanism $\omega$, she faces ambiguity on $\Omega$. Lack of understanding of the distribution of $\Omega$ translates to lack of understanding of the probabilistic content of the experiment, making this a convenient (and in some sense canonical) way to model informational ambiguity.
+\end{original}
+
+\begin{translation}
+我们对辅助状态空间$\Omega$的解释与模型不确定性文献中对``模型空间''的解释类似（如 Hansen 和 Sargent 2001, 2008；Marinacci 2015）。决策者（以下简称DM）理解信号是根据某种由``代表自然或社会现象的生成机制''（Marinacci, 2015）决定的数据生成过程（即某个Blackwell实验）生成的。DM可能不知道这一机制，或者没有足够信息来形成对可能机制的信念。因此，信息模糊性产生。每个状态$\omega\in\Omega$代表一个机制，每个$p_{\omega}$是当机制为$\omega$时的数据生成过程（Blackwell实验）。即使DM完全理解与每个生成机制$\omega$对应的数据生成过程，她仍然面临关于$\Omega$的模糊性。对$\Omega$分布理解的缺乏转化为对实验概率内容理解的缺乏，这使其成为建模信息模糊性的一种便捷（且在某种意义上规范的）方式。
+\end{translation}
+
+\begin{original}
+Ambiguous experiments are compared according to their ex-ante value in a decision problem, which is obtained by optimizing over all action plans (which action to take after each signal). We assume that DMs adopt a two-stage criterion when evaluating action plans for an ambiguous experiment. In our model, action plans are first evaluated with respect to each possible data generating process $p_{\omega}$ through expected utility, and then these evaluations are combined together through some aggregator over the auxiliary state space $\Omega$. These aggregators capture the DM's attitude toward informational ambiguity. Importantly, conditional on each auxiliary state $\omega$, the DM treats the uncertainty described by $p_{\omega}$ as objective/physical and behaves as if she is an expected utility maximizer. We believe this is a natural first assumption to make within a two-stage evaluation framework. Interested readers are referred to Marinacci (2015) for a thorough discussion on this specific type of two-stage decision criterion.
+\end{original}
+
+\begin{translation}
+模糊实验根据其在决策问题中的事前价值进行比较，该价值通过对所有行动计划（在每个信号后采取何种行动）进行优化来获得。我们假设DM在评估模糊实验的行动计划时采用两阶段准则。在我们的模型中，行动计划首先通过期望效用对每个可能的信号生成过程$p_{\omega}$进行评估，然后这些评估通过辅助状态空间$\Omega$上的某个聚合器组合在一起。这些聚合器刻画了DM对信息模糊性的态度。重要的是，在给定每个辅助状态$\omega$的条件下，DM将由$p_{\omega}$描述的不确定性视为客观/物理的，并表现得如同期望效用最大化者。我们相信这是在两阶段评估框架内首先做出的自然假设。感兴趣的读者可参阅Marinacci (2015)对此特定类型两阶段决策准则的深入讨论。
+\end{translation}
+
+\begin{original}
+The space $\Omega$ is ``auxiliary'' since it does not affect the DM's ex-post payoff. When testing for a certain disease, the patient's ex-post payoff depends on the patient's true status, but not the precision of the test. The auxiliary state space influences the DM's decision and ex-ante payoff only through influencing the information content of the experiment.
+\end{original}
+
+\begin{translation}
+空间$\Omega$是``辅助的''，因为它不影响DM的事后收益。在检测某种疾病时，患者的事后收益取决于患者的真实状况，而非检测的精度。辅助状态空间仅通过影响实验的信息内容来影响DM的决策和事前收益。
+\end{translation}
+
+\begin{original}
+Since $\Omega$ is payoff irrelevant, Blackwell dominance over $\Theta\times\Omega$ is unnecessarily strong. Specifically, we obtain informativeness orders strictly weaker than Blackwell's order. The difference is, instead of interpreting each ambiguous experiment as a single Blackwell experiment on $\Theta\times\Omega$ and comparing them accordingly, we view each ambiguous experiment as a set of Blackwell experiments indexed by the elements of $\Omega$ and compare these indexed sets to assess informativeness.
+\end{original}
+
+\begin{translation}
+由于$\Omega$与收益无关，在$\Theta\times\Omega$上的Blackwell占优是不必要地强的。具体而言，我们得到了严格弱于Blackwell排序的信息性排序。区别在于，我们不将每个模糊实验解释为$\Theta\times\Omega$上的单一Blackwell实验并相应比较，而是将每个模糊实验视为由$\Omega$中元素索引的Blackwell实验集合，并通过比较这些带索引的集合来评估信息性。
+\end{translation}
+
+\begin{original}
+Two nice features stem from using the structure of an auxiliary state space to model informational ambiguity. First, it can accommodate very general preferences toward informational ambiguity. Second, it allows explicit correlation between ambiguous experiments. These features facilitate subtler comparisons of ambiguous experiments than simply requiring Blackwell domination over $\Theta\times\Omega$.
+\end{original}
+
+\begin{translation}
+使用辅助状态空间结构来建模信息模糊性有两个优点。第一，它可以容纳对信息模糊性非常一般的偏好。第二，它允许模糊实验之间存在显式的相关性。这些特征使得对模糊实验的比较比简单要求在$\Theta\times\Omega$上Blackwell占优更为精细。
+\end{translation}
+
+\begin{original}
+An alternative approach to model informational ambiguity is to consider unindexed sets of Blackwell experiments (evaluated by the maxmin criterion). We analyze this approach in Section 4 and show that comparisons of unindexed sets of Blackwell experiments evaluated by the maxmin criterion can be interpreted as comparisons of ambiguous experiments evaluated by the maxmin criterion.
+\end{original}
+
+\begin{translation}
+建模信息模糊性的另一种方法是考虑无索引的Blackwell实验集合（通过最大最小准则评估）。我们在第4节分析这一方法，并证明通过最大最小准则评估的无索引Blackwell实验集合的比较可以解释为通过最大最小准则评估的模糊实验的比较。
+\end{translation}
+
+% ============================================================
+% 1.1 Preview of main results
+% ============================================================
+
+\bisubsection{1.1. Preview of main results}{1.1. 主要结果预览}
+
+\begin{original}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ be an ambiguous experiment. For a probability measure $\nu$ over the auxiliary state space $\Omega$, the expected experiment $p_{\nu}\in\Delt(S)^{\Theta}$ is defined by taking the expectation of $p$ with respect to $\nu$, that is, $p_{\nu}=\sum_{\omega}\nu(\omega)p_{\omega}$. Expected experiments are unambiguous by construction. They play an important role in our results because of the two-stage decision criterion we have assumed.
+\end{original}
+
+\begin{translation}
+设$p:\Omega\to\Delt(S)^{\Theta}$为一个模糊实验。对于辅助状态空间$\Omega$上的概率测度$\nu$，期望实验$p_{\nu}\in\Delt(S)^{\Theta}$通过对$p$求关于$\nu$的期望来定义，即$p_{\nu}=\sum_{\omega}\nu(\omega)p_{\omega}$。期望实验在构造上是无模糊的。由于我们假定的两阶段决策准则，它们在我们的结果中扮演着重要角色。
+\end{translation}
+
+\begin{original}
+We say that $p$ prior-by-prior dominates $q$ if the expected experiment $p_{\nu}$ is Blackwell more informative than $q_{\nu}$ for every probability measure $\nu$ over $\Omega$. Our first result (Theorem 1 in Section 3) is that $p$ is preferred to $q$ (i.e., guarantees a higher ex-ante value) for every DM in every decision problem if and only if $p$ prior-by-prior dominates $q$. Prior-by-prior dominance is a direct generalization of Blackwell's informativeness notion: When $\Omega$ is a singleton, ambiguous experiments reduce to Blackwell experiments and prior-by-prior dominance reduces to being Blackwell more informative.
+\end{original}
+
+\begin{translation}
+我们称$p$逐先验占优于$q$，如果对于$\Omega$上的每一个概率测度$\nu$，期望实验$p_{\nu}$在Blackwell意义上比$q_{\nu}$更具信息性。我们的第一个结果（第3节定理1）是：$p$在每一个决策问题中被每一个DM偏好于$q$（即保证更高的事前价值），当且仅当$p$逐先验占优于$q$。逐先验占优是Blackwell信息性概念的直接推广：当$\Omega$为单点集时，模糊实验退化为Blackwell实验，逐先验占优退化为Blackwell意义上更具信息性。
+\end{translation}
+
+\begin{original}
+Our second result (Theorem 2 in Section 4) is another informativeness order over ambiguous experiments. This order is obtained by restricting attention to maxmin DMs (DMs who use Wald's maxmin criterion to evaluate ambiguous experiments). We say an ambiguous experiment $p$ is Wald more informative than $q$ if for any probability measure $\nu$ over $\Omega$, there exists some probability measure $\nu'$ over $\Omega'$ such that $p_{\nu}$ is Blackwell more informative than $q_{\nu'}$. We show that $p$ is Wald more informative than $q$ if and only if every maxmin DM prefers $p$ to $q$ in every decision problem. Since $p$ and $q$ can result from different $\nu$ and $\nu'$, being Wald more informative is a weaker condition than prior-by-prior dominance. That is, if $p$ prior-by-prior dominates $q$, then $p$ is Wald more informative than $q$, but the converse is not true.
+\end{original}
+
+\begin{translation}
+我们的第二个结果（第4节定理2）是模糊实验上的另一个信息性排序。该排序通过将注意力限制在最大最小决策者（使用Wald最大最小准则评估模糊实验的DM）上获得。我们称模糊实验$p$在Wald意义上比$q$更具信息性，如果对于$\Omega$上的任何概率测度$\nu$，存在$\Omega'$上的某个概率测度$\nu'$，使得$p_{\nu}$在Blackwell意义上比$q_{\nu'}$更具信息性。我们证明$p$在Wald意义上比$q$更具信息性，当且仅当每个最大最小DM在每一个决策问题中都偏好$p$甚于$q$。由于$p$和$q$可以来自不同的$\nu$和$\nu'$，Wald更具信息性是一个比逐先验占优更弱的条件。也就是说，如果$p$逐先验占优于$q$，则$p$在Wald意义上比$q$更具信息性，但反之不成立。
+\end{translation}
+
+\begin{original}
+There is a natural connection between ambiguous experiments and unindexed sets of Blackwell experiments when we focus on maxmin DMs. If we let $\mathcal{P}=\{p_{\omega}:\omega\in\Omega\}$ and $\mathcal{Q}=\{q_{\omega}:\omega\in\Omega'\}$, then $p$ is Wald more informative than $q$ if and only if ``for any $\mu\in\conv(\mathcal{P})$, there exists $\mu'\in\conv(\mathcal{Q})$ such that $\mu$ is more informative than $\mu'$.'' Due to this connection, we say that an unindexed set of experiments $\mathcal{P}_1$ is Wald more informative than $\mathcal{P}_2$ if they can be related by the previous condition in quotation. We show (in Theorem 5) that $\mathcal{P}_1$ is Wald more informative than $\mathcal{P}_2$ if and only if $\mathcal{P}_1$ is preferred to $\mathcal{P}_2$ in every decision problem by every DM who uses the maxmin criterion.
+\end{original}
+
+\begin{translation}
+当我们关注最大最小DM时，模糊实验与无索引Blackwell实验集合之间存在自然的联系。令$\mathcal{P}=\{p_{\omega}:\omega\in\Omega\}$和$\mathcal{Q}=\{q_{\omega}:\omega\in\Omega'\}$，则$p$在Wald意义上比$q$更具信息性，当且仅当``对于任何$\mu\in\conv(\mathcal{P})$，存在$\mu'\in\conv(\mathcal{Q})$使得$\mu$比$\mu'$更具信息性''。基于这一联系，我们称一个无索引实验集合$\mathcal{P}_1$在Wald意义上比$\mathcal{P}_2$更具信息性，如果它们满足上述引号中的条件。我们证明（定理5）：$\mathcal{P}_1$在Wald意义上比$\mathcal{P}_2$更具信息性，当且仅当$\mathcal{P}_1$在每一个决策问题中被每一个使用最大最小准则的DM偏好于$\mathcal{P}_2$。
+\end{translation}
+
+% ============================================================
+% 1.2 Related literature
+% ============================================================
+
+\bisubsection{1.2. Related literature}{1.2. 相关文献}
+
+\begin{original}
+We contribute to the literature on the Blackwell-style comparison of information under ambiguity. Previous studies mainly focus on comparisons of unambiguous experiments under ambiguous priors. The main finding is that the Blackwell order is still valid. That is, $q$ is a garbling of $p$ (viewing $\Theta\times\Omega$ as the payoff-relevant state space) if and only if $p$ guarantees a higher ex-ante payoff than $q$ in every decision problem (where the DM's ex-post payoff depends on $\Theta\times\Omega$) for every DM (including the ones whose preferences involve an ambiguous prior over $\Theta\times\Omega$). \c{C}elen (2012) shows that this is true for DMs with multiple-prior preferences. Li and Zhou (2016) show that this is true for DMs with uncertainty-averse preferences (as in Cerreia-Vioglio et al.\ 2011). In contrast to these papers, we study comparisons of ambiguous experiments. We use a product state space structure where $\Omega$ captures informational ambiguity and is not payoff relevant. Our informativeness orders are weaker than Blackwell's order over $\Theta\times\Omega$.
+\end{original}
+
+\begin{translation}
+我们为模糊条件下Blackwell式信息比较的文献做出贡献。以往研究主要关注模糊先验下无模糊实验的比较，主要发现是Blackwell排序仍然有效。也就是说，$q$是$p$的混淆（将$\Theta\times\Omega$视为收益相关状态空间），当且仅当$p$在每一个决策问题中（DM的事后收益依赖于$\Theta\times\Omega$）为每一个DM（包括那些偏好涉及$\Theta\times\Omega$上模糊先验的DM）保证比$q$更高的事前收益。\c{C}elen (2012)证明这对多先验偏好的DM成立。Li和Zhou (2016)证明这对不确定性厌恶偏好的DM成立（如Cerreia-Vioglio等 2011）。与这些论文不同，我们研究模糊实验的比较。我们使用乘积状态空间结构，其中$\Omega$刻画信息模糊性且与收益无关。我们的信息性排序弱于$\Theta\times\Omega$上的Blackwell排序。
+\end{translation}
+
+\begin{original}
+The study of ambiguous information has gained increased attention in both the applied literature (e.g., Epstein and Schneider 2007, 2008; Bose and Renou 2014; Beauch\^{e}ne et al.\ 2019; and Chen 2022) and the experimental literature (e.g., Liang 2021; Kellner et al.\ 2022; Epstein and Halevy 2023; Kops and Pasichnichenko 2023; and Shishkin and Ortoleva 2023). Our contribution to this rapidly growing literature is a theoretical one. We provide criteria that can robustly compare information sources that are potentially ambiguous. In particular, we impose little restriction on preferences or decision problems, in contrast to the aforementioned theoretical studies on ambiguous information.
+\end{original}
+
+\begin{translation}
+模糊信息的研究在应用文献（如Epstein和Schneider 2007, 2008；Bose和Renou 2014；Beauch\^{e}ne等 2019；Chen 2022）和实验文献（如Liang 2021；Kellner等 2022；Epstein和Halevy 2023；Kops和Pasichnichenko 2023；Shishkin和Ortoleva 2023）中都得到了越来越多的关注。我们对这一快速增长文献的贡献是理论性的。我们提供了能够稳健比较潜在模糊信息来源的准则。特别地，与上述关于模糊信息的理论研究不同，我们对偏好或决策问题施加了很少的限制。
+\end{translation}
+
+\begin{original}
+The closest work to ours is Gensbittel et al.\ (2015, henceforth GRT). GRT model ambiguous information as a collection of joint distributions over payoff-relevant states and signals. One set $\mathcal{J}\subset\Delt(\Theta\times S)$ is said to be $\epsilon$-more informative than another $\mathcal{J}'$ if for any $J'\in\mathcal{J}'$, there exists $J\in\mathcal{J}$ that is less informative. They show that $\mathcal{J}$ is preferred to $\mathcal{J}'$ by every DM using the maxmin criterion if and only if $\mathcal{J}$ is $\epsilon$-more informative than $\mathcal{J}'$. This order bears resemblance to the order induced by our Wald-more-informative condition. Despite the superficial similarity, the two orders are over different domains and not directly comparable. The key difference is that in GRT, the DM's prior over $\Theta$ is part of the information instead of a preference parameter. Due to this modeling approach, GRT's criterion does not always fully distinguish the informativeness of a set of experiments from the prior ambiguity over $\Theta$. In contrast, our order is prior-free, allowing us to isolate the informativeness of a set of experiments.
+\end{original}
+
+\begin{translation}
+与我们工作最接近的是Gensbittel等 (2015, 以下简称GRT)。GRT将模糊信息建模为收益相关状态和信号上联合分布的集合。一个集合$\mathcal{J}\subset\Delt(\Theta\times S)$被称为比另一个$\mathcal{J}'$更具$\epsilon$-信息性，如果对于任何$J'\in\mathcal{J}'$，存在$J\in\mathcal{J}$信息性更弱。他们证明$\mathcal{J}$被每一个使用最大最小准则的DM偏好于$\mathcal{J}'$，当且仅当$\mathcal{J}$比$\mathcal{J}'$更具$\epsilon$-信息性。该排序与我们的Wald更具信息性条件所诱导的排序相似。尽管表面相似，两个排序在不同的域上且不能直接比较。关键区别在于，在GRT中，DM对$\Theta$的先验是信息的一部分而非偏好参数。由于这种建模方式，GRT的准则并不总是能够完全区分实验集合的信息性与对$\Theta$的先验模糊性。相比之下，我们的排序是无先验的，使我们能够分离出实验集合的信息性。
+\end{translation}
+
+\begin{original}
+The rest of the paper is organized as follows. We present our model in Section 2. General comparisons of ambiguous experiments are studied in Section 3. Comparisons of ambiguous experiments by maxmin DMs are studied in Section 4. Section 5 concludes.
+\end{original}
+
+\begin{translation}
+本文其余部分的组织结构如下：第2节给出模型。第3节研究模糊实验的一般比较。第4节研究最大最小DM对模糊实验的比较。第5节总结。
+\end{translation}
+
+% ============================================================
+% 2. THE MODEL
+% ============================================================
+
+\bisection{2. The model}{2. 模型}
+
+\begin{original}
+Let $\Theta$ be a finite set of payoff-relevant states. Let $\Omega$ be a set of auxiliary states. We call $\Omega$ the auxiliary state space and use it to capture informational ambiguity. For ease of exposition, we focus on the case where $\Omega$ is a finite set in the main text. Our results remain valid for any nonempty $\Omega$. Results for general $\Omega$ are stated in Appendix A.
+\end{original}
+
+\begin{translation}
+设$\Theta$为有限的收益相关状态集合。设$\Omega$为辅助状态集合。我们称$\Omega$为辅助状态空间，并用它来刻画信息模糊性。为便于阐述，我们在正文中专注于$\Omega$为有限集的情况。我们的结果对任何非空$\Omega$仍然有效。一般$\Omega$的结果在附录A中给出。
+\end{translation}
+
+\begin{definition}
+An ambiguous experiment is a mapping $p:\Omega\to\Delt(S)^{\Theta}$ where $S$ is a finite set of signals.
+\end{definition}
+
+\begin{original}
+A Blackwell experiment corresponds to the special case where $\Omega=\{\omega\}$, so there is no uncertainty about the data generating process for $p$. In this case, we suppress the singleton auxiliary state space. That is, a Blackwell experiment is a mapping $\mu:\Theta\to\Delt(S)$.
+\end{original}
+
+\begin{translation}
+Blackwell实验对应于$\Omega=\{\omega\}$的特殊情况，因此对$p$的数据生成过程不存在不确定性。在这种情况下，我们省略单点辅助状态空间。即，一个Blackwell实验是一个映射$\mu:\Theta\to\Delt(S)$。
+\end{translation}
+
+\begin{original}
+Fix an ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$, we write $p_{\omega}$ to denote the Blackwell experiment associated with $\omega$. That is, $p_{\omega}$ is a mapping from $\Theta$ to $\Delt(S)$ for every $\omega\in\Omega$. We can treat $p$ as a mapping from the auxiliary state space $\Omega$ to the set of Blackwell experiments. Each $\omega\in\Omega$ corresponds to a possible data generating process behind $p$.
+\end{original}
+
+\begin{translation}
+给定一个模糊实验$p:\Omega\to\Delt(S)^{\Theta}$，我们记$p_{\omega}$为与$\omega$相关的Blackwell实验。即，对每个$\omega\in\Omega$，$p_{\omega}$是从$\Theta$到$\Delt(S)$的映射。我们可以将$p$视为从辅助状态空间$\Omega$到Blackwell实验集合的映射。每个$\omega\in\Omega$对应于$p$背后的一种可能的信号生成过程。
+\end{translation}
+
+\begin{original}
+A DM utilizes an ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$ to decide on her action plans. Formally, a decision problem is a finite set of actions $A$. An action plan is a mapping $f:S\to\Delt(A)$. We write $f(s)\in\Delt(A)$ to denote the DM's (mixed) strategy after observing signal $s$. We use $\calF$ to denote the collection of all action plans once the set of actions $A$ and the set of signals $S$ are fixed, that is, $\calF=\{f:S\to\Delt(A)\}$.
+\end{original}
+
+\begin{translation}
+DM利用模糊实验$p:\Omega\to\Delt(S)^{\Theta}$来决定她的行动计划。形式上，一个决策问题是一个有限行动集$A$。一个行动计划是一个映射$f:S\to\Delt(A)$。我们记$f(s)\in\Delt(A)$为DM在观测到信号$s$后的（混合）策略。一旦行动集$A$和信号集$S$固定，我们用$\calF$表示所有行动计划的集合，即$\calF=\{f:S\to\Delt(A)\}$。
+\end{translation}
+
+\begin{original}
+A DM is described by a triplet of preference parameters $(u,\pi,\Phi)$ where $u:\Theta\times A\to\R$ is her state-dependent utility function, $\pi\in\Delt(\Theta)$ is her prior belief over $\Theta$, and $\Phi:\R^{\Omega}\to\R$ is an aggregator for vectors over $\Omega$. The roles of $\pi$ and $u$ are similar to that in the standard expected utility framework. The aggregator $\Phi$ captures the DM's ambiguity attitude.
+\end{original}
+
+\begin{translation}
+一个DM由偏好参数三元组$(u,\pi,\Phi)$描述，其中$u:\Theta\times A\to\R$是她的状态依存效用函数，$\pi\in\Delt(\Theta)$是她对$\Theta$的先验信念，$\Phi:\R^{\Omega}\to\R$是$\Omega$上向量的聚合器。$\pi$和$u$的作用与标准期望效用框架中类似。聚合器$\Phi$刻画了DM的模糊态度。
+\end{translation}
+
+\begin{definition}
+We say $\Phi:\R^{\Omega}\to\R$ is a monotone aggregator if $\Phi$ is continuous and $\Phi(x)\geq\Phi(y)$ whenever two functions $x,y:\Omega\to\R$ satisfy $x(\omega)\geq y(\omega)$ for all $\omega\in\Omega$.
+\end{definition}
+
+\begin{original}
+All ambiguity preferences studied in the literature can be identified with some monotone aggregator (e.g., the multiple-prior preference from Gilboa and Schmeidler 1989, and the smooth preference from Klibanoff et al.\ 2005). Since we only require $\Phi$ to be monotone, flexible ambiguity attitudes (ambiguity averse, ambiguity loving, mixed attitude) are also allowed. Let $\calM$ denote the class of monotone aggregators, that is,
+\begin{equation}
+    \calM = \{\Phi:\R^{\Omega}\to\R \mid \Phi \text{ is monotone}\}. \label{eq:calM}
+\end{equation}
+\end{original}
+
+\begin{translation}
+文献中研究的所有模糊偏好都可以用某个单调聚合器来标识（例如，Gilboa和Schmeidler 1989的多先验偏好，以及Klibanoff等 2005的平滑偏好）。由于我们只要求$\Phi$是单调的，灵活的模糊态度（模糊厌恶、模糊喜好、混合态度）也是允许的。令$\calM$表示单调聚合器的类，即
+\begin{equation}
+    \calM = \{\Phi:\R^{\Omega}\to\R \mid \Phi \text{ 是单调的}\}. \label{eq:calM}
+\end{equation}
+\end{translation}
+
+\begin{original}
+$\calM$ will be the largest class of aggregators we study. An important class of monotone aggregators for our subsequent analysis is the expected utility aggregators.
+\end{original}
+
+\begin{translation}
+$\calM$将是我们研究的最大聚合器类。对于我们后续分析的一个重要单调聚合器类是期望效用聚合器。
+\end{translation}
+
+\begin{original}
+An expected utility aggregator is denoted by $\Phi_{\nu}$, where $\nu\in\Delt(\Omega)$ represents the DM's subjective belief over $\Omega$. These aggregators correspond to DMs who are probabilistically sophisticated over $\Omega$. For a fixed $\nu$, $\Phi_{\nu}$ is defined by $\Phi_{\nu}(x)=\sum_{\omega}\nu(\omega)x(\omega)$.
+\end{original}
+
+\begin{translation}
+期望效用聚合器记为$\Phi_{\nu}$，其中$\nu\in\Delt(\Omega)$表示DM对$\Omega$的主观信念。这些聚合器对应于在$\Omega$上概率精炼的DM。对于固定的$\nu$，$\Phi_{\nu}$定义为$\Phi_{\nu}(x)=\sum_{\omega}\nu(\omega)x(\omega)$。
+\end{translation}
+
+\begin{original}
+Let $\calE$ denote the class of expected utility aggregators, that is,
+\begin{equation}
+    \calE = \{\Phi_{\nu} \mid \nu\in\Delt(\Omega)\}. \label{eq:calE}
+\end{equation}
+\end{original}
+
+\begin{translation}
+令$\calE$表示期望效用聚合器的类，即
+\begin{equation}
+    \calE = \{\Phi_{\nu} \mid \nu\in\Delt(\Omega)\}. \label{eq:calE}
+\end{equation}
+\end{translation}
+
+\begin{original}
+Suppose a DM with preference parameters $(u,\pi,\Phi)$ faces a decision problem $A$ and an ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$. The timing of events is as follows: First, the DM commits to an action plan $f\in\calF$. Second, an auxiliary state $\omega$ is drawn from $\Omega$ but not observed by the DM and signals will be generated according to the Blackwell experiment $p_{\omega}$. Third, a payoff relevant state $\theta$ is drawn from $\Theta$ according to $\pi$ and a signal $s$ is drawn from $S$ according to the distribution $p_{\omega}(\cdot|\theta)$. Last, the DM observes the signal realization $s$ and acts according to her action plan $f(s)$.
+\end{original}
+
+\begin{translation}
+假设一个具有偏好参数$(u,\pi,\Phi)$的DM面对决策问题$A$和模糊实验$p:\Omega\to\Delt(S)^{\Theta}$。事件的时间顺序如下：首先，DM承诺一个行动计划$f\in\calF$。其次，辅助状态$\omega$从$\Omega$中抽取但DM未观测到，信号将根据Blackwell实验$p_{\omega}$生成。第三，收益相关状态$\theta$根据$\pi$从$\Theta$中抽取，信号$s$根据分布$p_{\omega}(\cdot|\theta)$从$S$中抽取。最后，DM观测到信号实现值$s$并根据她的行动计划$f(s)$行动。
+\end{translation}
+
+\begin{definition}
+For a DM with preference parameters $(u,\pi,\Phi)$ facing a decision problem $A$, the ex-ante value of an ambiguous experiment $p$ is given by
+\begin{equation}
+    V(p) = \max_{f\in\calF} \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \label{eq:Vp}
+\end{equation}
+where $U(f, p_{\omega})$ is the expected utility conditional on state $\omega$ when the action plan is $f$. Formally, for any $\omega\in\Omega$,
+\begin{equation}
+    U(f, p_{\omega}) = \sum_{\theta\in\Theta}\sum_{s\in S} \pi(\theta)\, p_{\omega}(s|\theta)\, f(s)(a)\, u(\theta, a). \label{eq:Ufp}
+\end{equation}
+\end{definition}
+
+\begin{translation}
+对于具有偏好参数$(u,\pi,\Phi)$且面对决策问题$A$的DM，模糊实验$p$的事前价值由以下给出：
+\begin{equation}
+    V(p) = \max_{f\in\calF} \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \label{eq:Vp}
+\end{equation}
+其中$U(f, p_{\omega})$是在行动计划为$f$时，以状态$\omega$为条件的期望效用。形式上，对任何$\omega\in\Omega$，
+\begin{equation}
+    U(f, p_{\omega}) = \sum_{\theta\in\Theta}\sum_{s\in S} \pi(\theta)\, p_{\omega}(s|\theta)\, f(s)(a)\, u(\theta, a). \label{eq:Ufp}
+\end{equation}
+\end{translation}
+
+\begin{original}
+As we have mentioned in Section 1, action plans are first evaluated through standard expected utility conditional on each possible data generating process $p_{\omega}$. These conditional expected utilities are then aggregated through $\Phi$ into the ex-ante payoff.
+\end{original}
+
+\begin{translation}
+如第1节所述，行动计划首先通过以每个可能的信号生成过程$p_{\omega}$为条件的标准期望效用进行评估。这些条件期望效用然后通过$\Phi$聚合为事前收益。
+\end{translation}
+
+
+% ============================================================
+% 3. COMPARING AMBIGUOUS EXPERIMENTS
+% ============================================================
+
+\bisection{3. Comparing ambiguous experiments}{3. 模糊实验的比较}
+
+\begin{original}
+An important notion for comparisons of ambiguous experiments is expected experiment.
+\end{original}
+
+\begin{translation}
+比较模糊实验的一个重要概念是期望实验。
+\end{translation}
+
+\begin{definition}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ be an ambiguous experiment and $\nu$ be a probability measure over $\Omega$. The expected experiment with respect to $\nu$, denoted by $p_{\nu}$, is a Blackwell experiment $p_{\nu}:\Theta\to\Delt(S)$ defined by $p_{\nu}=\sum_{\omega}\nu(\omega)p_{\omega}$. Explicitly,
+\begin{equation}
+    p_{\nu}(s|\theta) = \sum_{\omega\in\Omega} p_{\omega}(s|\theta)\,\nu(\omega), \quad (\theta,s)\in\Theta\times S. \label{eq:expected}
+\end{equation}
+\end{definition}
+
+\begin{translation}
+设$p:\Omega\to\Delt(S)^{\Theta}$为一个模糊实验，$\nu$为$\Omega$上的概率测度。关于$\nu$的期望实验，记为$p_{\nu}$，是一个Blackwell实验$p_{\nu}:\Theta\to\Delt(S)$，定义为$p_{\nu}=\sum_{\omega}\nu(\omega)p_{\omega}$。显式地，
+\begin{equation}
+    p_{\nu}(s|\theta) = \sum_{\omega\in\Omega} p_{\omega}(s|\theta)\,\nu(\omega), \quad (\theta,s)\in\Theta\times S. \label{eq:expected}
+\end{equation}
+\end{translation}
+
+\begin{original}
+For ease of exposition, we define the composition of two stochastic operators. Suppose $X$, $Y$, $Z$ are finite sets, and $\alpha:X\to\Delt(Y)$ and $\beta:Y\to\Delt(Z)$ are two stochastic operators. Their composition $\beta\circ\alpha:X\to\Delt(Z)$ is defined by
+\begin{equation}
+    (\beta\circ\alpha)(z|x) = \sum_{y\in Y} \beta(z|y)\,\alpha(y|x), \quad (x,z)\in X\times Z.
+\end{equation}
+That is, the composition of $\alpha$ and $\beta$ gives a probability of $z$ given $x$ when the stochastic operator $\alpha$ is applied followed by $\beta$.
+\end{original}
+
+\begin{translation}
+为便于阐述，我们定义两个随机算子的复合。假设$X$，$Y$，$Z$是有限集，$\alpha:X\to\Delt(Y)$和$\beta:Y\to\Delt(Z)$是两个随机算子。它们的复合$\beta\circ\alpha:X\to\Delt(Z)$定义为
+\begin{equation}
+    (\beta\circ\alpha)(z|x) = \sum_{y\in Y} \beta(z|y)\,\alpha(y|x), \quad (x,z)\in X\times Z.
+\end{equation}
+也就是说，$\alpha$和$\beta$的复合给出了在随机算子$\alpha$之后应用$\beta$时，给定$x$得到$z$的概率。
+\end{translation}
+
+\begin{original}
+Let $\mu:\Theta\to\Delt(S)$ and $\mu':\Theta\to\Delt(S')$ be two Blackwell experiments. We say $\mu'$ is a garbling of $\mu$ if there exists some $\gamma:S\to\Delt(S')$ such that $\mu'=\gamma\circ\mu$.
+\end{original}
+
+\begin{translation}
+设$\mu:\Theta\to\Delt(S)$和$\mu':\Theta\to\Delt(S')$为两个Blackwell实验。我们称$\mu'$是$\mu$的混淆，如果存在某个$\gamma:S\to\Delt(S')$使得$\mu'=\gamma\circ\mu$。
+\end{translation}
+
+\begin{original}
+Intuitively, $\mu'$ is a garbling of $\mu$ if one can replicate $\mu'$ (in terms of the conditional probability of $z$ given $x$) by adding ``noise'' (applying a stochastic operator) to $\mu$. Our use of stochastic operators and their composition to describe garblings is based on de Oliveira (2018), which provides a simple and elegant proof for Blackwell's theorem.
+\end{original}
+
+\begin{translation}
+直观上，$\mu'$是$\mu$的混淆，如果人们可以通过对$\mu$添加``噪声''（应用一个随机算子）来复制$\mu'$（就给定$x$得到$z$的条件概率而言）。我们使用随机算子及其复合来描述混淆的方法基于de Oliveira (2018)，该文为Blackwell定理提供了一个简洁而优雅的证明。
+\end{translation}
+
+\begin{original}
+We say $\mu$ is (Blackwell) more informative than $\mu'$ if $\mu'$ is a garbling of $\mu$.
+\end{original}
+
+\begin{translation}
+我们称$\mu$（在Blackwell意义上）比$\mu'$更具信息性，如果$\mu'$是$\mu$的混淆。
+\end{translation}
+
+\begin{definition}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments. We say $p$ prior-by-prior dominates $q$ if $q_{\nu}$ is a garbling of $p_{\nu}$ for all $\nu\in\Delt(\Omega)$, and write $p\succeq_{PBP} q$.
+\end{definition}
+
+\begin{original}
+In other words, $p\succeq_{PBP} q$ if there exists a family of garblings $\{\gamma_{\nu}\}$ such that
+\begin{equation}
+    q_{\nu} = \gamma_{\nu}\circ p_{\nu}, \quad \forall\nu\in\Delt(\Omega). \label{eq:pbp}
+\end{equation}
+The ``prior-by-prior'' quantifier in the name of the condition does not refer to anything related to preference parameters. Each $\nu$ is just a probability measure over $\Omega$ and is not meant to be interpreted as anything more. Specifically, it is not a preference parameter.
+\end{original}
+
+\begin{translation}
+换言之，$p\succeq_{PBP} q$当存在一族混淆$\{\gamma_{\nu}\}$使得
+\begin{equation}
+    q_{\nu} = \gamma_{\nu}\circ p_{\nu}, \quad \forall\nu\in\Delt(\Omega). \label{eq:pbp}
+\end{equation}
+条件名称中的``逐先验''限定词并不涉及任何与偏好参数相关的内容。每个$\nu$仅仅是$\Omega$上的概率测度，不应被解释为任何更多的东西。具体而言，它不是一个偏好参数。
+\end{translation}
+
+\begin{theorem}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments, and let $\mathcal{G}$ be a class of aggregators such that $\calE\subseteq\mathcal{G}\subseteq\calM$. The following conditions are equivalent:
+\begin{enumerate}
+    \item $p$ prior-by-prior dominates $q$.
+    \item For any $u$, $\pi$, $\Phi$, and any action plan $f'\in\calF'$, there exists $f\in\calF$ such that
+    \begin{equation}
+        U(f,p_{\omega})\geq U(f',q_{\omega}),\quad\forall\omega\in\Omega.
+    \end{equation}
+    \item $p$ is preferred to $q$ in every decision problem by every decision maker whose ambiguity preference can be represented by some $\Phi\in\mathcal{G}$. That is, $p$ has weakly higher ex-ante value than $q$ for every $u$, $\pi$, $\Phi$, and every $A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{original}
+Theorem 1 is a direct generalization of Blackwell's theorem. When $\Omega$ is a singleton, $p$ and $q$ reduce to Blackwell experiments, and the prior-by-prior dominance condition reduces to the garbling condition. The proof of Theorem 1 is omitted since it is a corollary of a more general theorem (Theorem 3), formally stated in Appendix A and proved in Appendix B, that covers the case in which the auxiliary state space $\Omega$ can be any non-empty set.
+\end{original}
+
+\begin{translation}
+定理1是Blackwell定理的直接推广。当$\Omega$为单点集时，$p$和$q$退化为Blackwell实验，逐先验占优条件退化为混淆条件。定理1的证明省略，因为它是更一般定理（定理3）的推论，该定理在附录A中正式陈述并在附录B中证明，涵盖了辅助状态空间$\Omega$可以是任何非空集的情况。
+\end{translation}
+
+\begin{original}
+Condition 1 is a statistical condition that is independent of any decision problem or preference parameters. Condition 3 is an economical condition about the instrumental value of ambiguous experiments. Establishing the equivalence of conditions 1 and 3 helps us to separate comparisons of information structures from specific preference parameters or decision problems, just like Blackwell's theorem.
+\end{original}
+
+\begin{translation}
+条件1是一个统计条件，独立于任何决策问题或偏好参数。条件3是关于模糊实验工具性价值的经济条件。建立条件1和条件3的等价性有助于我们将信息结构的比较与特定的偏好参数或决策问题分离开来，就如Blackwell定理所做的那样。
+\end{translation}
+
+\begin{original}
+The necessity of prior-by-prior dominance is intuitive: Conditional on each belief over $\Omega$, the DM is an expected utility maximizer. That is, the DM faces no informational ambiguity when she can form a belief over possible data generating processes (this includes the case where she is certain about exactly one data generating process). For such DMs, comparison of ambiguous experiments reduces to comparison of expected experiments.
+\end{original}
+
+\begin{translation}
+逐先验占优的必要性是直观的：在给定关于$\Omega$的每个信念的条件下，DM是期望效用最大化者。也就是说，当DM能够对可能的信号生成过程形成信念时（这包括她确定恰好一个信号生成过程的情况），她面临没有信息模糊性。对于这类DM，模糊实验的比较退化为期望实验的比较。
+\end{translation}
+
+\begin{original}
+The intuition for the sufficiency of the prior-by-prior dominance condition can be clarified through condition 2. Condition 2 states that for any action plan $f'$ available for $q$, there exists an action plan $f$ for $p$ that guarantees a weakly higher expected utility in every auxiliary state. It is straightforward to see that condition 2 implies condition 3. Since DMs are expected utility maximizers conditional on each $\omega$, prior-by-prior dominance (condition 1) guarantees the existence of a family of action plans $\{f_{\omega}\in\calF:\omega\in\Omega\}$ such that $U(f_{\omega},p_{\omega})=U(f',q_{\omega})$ for every $\omega$. To close the gap between this condition and condition 2, we need to invoke a general version of the minimax theorem to prove that the existence of such an indexed family of action plans is sufficient for the existence of one single action plan $f$ such that $U(f,p_{\omega})\geq U(f',q_{\omega})$ for every $\omega$.
+\end{original}
+
+\begin{translation}
+逐先验占优条件充分性的直觉可以通过条件2来阐明。条件2表明，对于$q$可用的任何行动计划$f'$，存在$p$的一个行动计划$f$，在每个辅助状态下保证弱更高的期望效用。显然，条件2蕴含条件3。由于DM在给定每个$\omega$的条件下是期望效用最大化者，逐先验占优（条件1）保证存在一族行动计划$\{f_{\omega}\in\calF:\omega\in\Omega\}$使得对每个$\omega$有$U(f_{\omega},p_{\omega})=U(f',q_{\omega})$。为弥合这一条件与条件2之间的差距，我们需要援引一个一般版本的极小极大定理，以证明这样一个带索引的行动计划族的存在性足以保证存在一个单一的计划$f$使得对每个$\omega$有$U(f,p_{\omega})\geq U(f',q_{\omega})$。
+\end{translation}
+
+\begin{original}
+Intuitively, if $p\succeq_{PBP} q$, then a probabilistically sophisticated DM can rank them according to Blackwell's order. A DM generally lacks understanding of the distribution of $\Omega$ due to the informational ambiguity. Our result states that $p$ and $q$ can still be ranked, independent of any decision problem or preference parameters, when more general ambiguity preferences are considered.
+\end{original}
+
+\begin{translation}
+直观上，如果$p\succeq_{PBP} q$，那么概率精炼的DM可以根据Blackwell排序对它们进行排序。一般而言，DM由于信息模糊性而缺乏对$\Omega$分布的理解。我们的结果表明，当考虑更一般的模糊偏好时，$p$和$q$仍然可以排序，且独立于任何决策问题或偏好参数。
+\end{translation}
+
+\begin{original}
+On the one hand, the prior-by-prior dominance condition is powerful since it is sufficient for guaranteeing higher ex-ante value for all monotone ambiguity preferences. On the other hand, it is not overly restrictive, in the sense that it is necessary for guaranteeing higher ex-ante value within the small class of expected utility preferences. Therefore, prior-by-prior dominance is a robust equivalence condition for guaranteeing higher ex-ante value for any class of monotone ambiguity preferences that nests expected utility (e.g., the multiple-prior preferences and the smooth ambiguity preferences).
+\end{original}
+
+\begin{translation}
+一方面，逐先验占优条件是强有力的，因为它对所有单调模糊偏好保证更高的事前价值是充分的。另一方面，它并不过于严格，因为它在期望效用偏好这一小类中对于保证更高事前价值是必要的。因此，逐先验占优是一个稳健的等价条件，对任何包含期望效用的单调模糊偏好类（如多先验偏好和平滑模糊偏好）都能保证更高的事前价值。
+\end{translation}
+
+% ============================================================
+% 4. RESTRICTING TO WALD'S MAXMIN CRITERION
+% ============================================================
+
+\bisection{4. Restricting to Wald's maxmin criterion}{4. 限制于Wald最大最小准则}
+
+\begin{original}
+In this section, we restrict our attention to a specific class of decision makers, the maxmin DMs. These are decision makers who apply Wald's maxmin criterion when evaluating ambiguous experiments. We obtain a different informativeness order after this restriction.
+\end{original}
+
+\begin{translation}
+在本节中，我们将注意力限制在一类特定的决策者，即最大最小DM。这些决策者在评估模糊实验时应用Wald最大最小准则。在这一限制之后，我们获得了一个不同的信息性排序。
+\end{translation}
+
+\begin{original}
+The aggregator corresponding to Wald's maxmin criterion is an aggregator $\Phi_W:\R^{\Omega}\to\R$ defined by $\Phi_W(x)=\min_{\omega} x(\omega)$. We will refer to $\Phi_W$ as the Wald aggregator.
+\end{original}
+
+\begin{translation}
+对应于Wald最大最小准则的聚合器是$\Phi_W:\R^{\Omega}\to\R$，定义为$\Phi_W(x)=\min_{\omega} x(\omega)$。我们将$\Phi_W$称为Wald聚合器。
+\end{translation}
+
+\begin{original}
+The ex-ante value of an ambiguous experiment under the Wald aggregator is
+\begin{equation}
+    V_W(p) = \max_{f\in\calF} \min_{\omega\in\Omega} U(f, p_{\omega}). \label{eq:VW}
+\end{equation}
+where $U(f, p_{\omega})$ is defined in the same way as in equation (\ref{eq:Ufp}). Note that the Wald aggregator does not nest any expected utility aggregators. That is, $\{\Phi_W\}$ has an empty intersection with $\calE$. Therefore, Theorem 1 does not apply directly to $\{\Phi_W\}$.
+\end{original}
+
+\begin{translation}
+在Wald聚合器下，模糊实验的事前价值为
+\begin{equation}
+    V_W(p) = \max_{f\in\calF} \min_{\omega\in\Omega} U(f, p_{\omega}). \label{eq:VW}
+\end{equation}
+其中$U(f, p_{\omega})$的定义与方程(\ref{eq:Ufp})相同。注意，Wald聚合器不包含任何期望效用聚合器。也就是说，$\{\Phi_W\}$与$\calE$的交集为空。因此，定理1不能直接应用于$\{\Phi_W\}$。
+\end{translation}
+
+\begin{original}
+In particular, we can construct a pair of ambiguous experiments $p$ and $q$ such that: (i) $p$ does not prior-by-prior dominate $q$, but (ii) $p$ has higher ex-ante value than $q$ for every maxmin DM in every decision problem. Therefore, for every maxmin DM to choose $p$ over $q$, prior-by-prior dominance is sufficient but not necessary.
+\end{original}
+
+\begin{translation}
+特别地，我们可以构造一对模糊实验$p$和$q$使得：(i) $p$不逐先验占优于$q$，但(ii) $p$在每个决策问题中为每个最大最小DM提供比$q$更高的事前价值。因此，对于每个最大最小DM选择$p$而非$q$，逐先验占优是充分的但不是必要的。
+\end{translation}
+
+\begin{definition}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments. We say $p$ is Wald more informative than $q$ if for any $\nu\in\Delt(\Omega)$, there exists $\nu'\in\Delt(\Omega')$ such that $q_{\nu'}$ is a garbling of $p_{\nu}$.
+\end{definition}
+
+\begin{original}
+The Wald-more-informative condition induces another informativeness order.
+\end{original}
+
+\begin{translation}
+Wald更具信息性条件诱导了另一个信息性排序。
+\end{translation}
+
+\begin{theorem}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments. The following conditions are equivalent:
+\begin{enumerate}
+    \item $p$ is Wald more informative than $q$.
+    \item $p$ is preferred to $q$ in every decision problem by every decision maker who uses the maxmin criterion. That is, $p$ has weakly higher ex-ante value than $q$ for every $u$, $\pi$, $A$ when the aggregator is $\Phi_W$.
+\end{enumerate}
+\end{theorem}
+
+\begin{original}
+The proof of Theorem 2 is omitted since it is a corollary of a more general theorem (Theorem 4), formally stated in Appendix A and proved in Appendix B, that covers the case in which the auxiliary state space $\Omega$ can be any non-empty set.
+\end{original}
+
+\begin{translation}
+定理2的证明省略，因为它是更一般定理（定理4）的推论，该定理在附录A中正式陈述并在附录B中证明，涵盖了辅助状态空间$\Omega$可以是任何非空集的情况。
+\end{translation}
+
+\begin{original}
+This new informativeness order is closely related to that induced by the prior-by-prior dominance relation. Both are obtained by comparing expected experiments associated with $p$ and $q$. However, they are quite different. Prior-by-prior dominance requires $q_{\nu}$ to be a garbling of $p_{\nu}$ for every first order belief $\nu$ over $\Omega$. But being Wald-more-informative only requires the existence of some $\nu'$ such that the resulting expected experiment $q_{\nu'}$ is a garbling of $p_{\nu}$, and $\nu'$ can be different from $\nu$. Thus, being Wald-more informative is weaker than prior-by-prior dominance. That is, if $p$ prior-by-prior dominates $q$, then $p$ is Wald more informative than $q$, but the converse is not true.
+\end{original}
+
+\begin{translation}
+这一新的信息性排序与逐先验占优关系所诱导的排序密切相关。两者都是通过比较与$p$和$q$相关联的期望实验得到的。然而，它们相当不同。逐先验占优要求对于$\Omega$上的每一个一阶信念$\nu$，$q_{\nu}$都是$p_{\nu}$的混淆。但Wald更具信息性只要求存在某个$\nu'$，使得结果期望实验$q_{\nu'}$是$p_{\nu}$的混淆，且$\nu'$可以与$\nu$不同。因此，Wald更具信息性弱于逐先验占优。也就是说，如果$p$逐先验占优于$q$，则$p$在Wald意义上比$q$更具信息性，但反之不成立。
+\end{translation}
+
+\begin{original}
+When a DM uses the maxmin criterion to evaluate ambiguous experiments, she only cares about the worst possible data generating process for each ambiguous experiment. This makes the correlation of $p$ and $q$ through $\Omega$ irrelevant to her. The prior-by-prior dominance condition, which builds on the correlation between ambiguous experiments through $\Omega$, thus becomes too strong and not necessary.
+\end{original}
+
+\begin{translation}
+当DM使用最大最小准则评估模糊实验时，她只关心每个模糊实验的最差可能信号生成过程。这使得$p$和$q$通过$\Omega$的相关性对她而言无关紧要。逐先验占优条件建立在模糊实验通过$\Omega$的相关性之上，因此变得过强且非必要。
+\end{translation}
+
+\begin{original}
+Each ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$ naturally corresponds to a set of Blackwell experiments $p(\Omega)$, where $p(\Omega)=\{p_{\omega}\in\Delt(S)^{\Theta}:\omega\in\Omega\}$ is the collection of all possible data generating processes for $p$. This set of Blackwell experiments is not a sufficient statistic for its corresponding ambiguous experiment because we lose the information on how the set is indexed. Under general monotone ambiguity preferences, merely observing the unindexed sets of Blackwell experiments is not enough to compare two ambiguous experiments because there is no assumption of symmetry over the auxiliary states. Such a symmetry assumption is automatically satisfied for maxmin DMs and therefore, comparing sets of Blackwell experiments becomes sufficient. In other words, we can state the Wald-more-informative condition using two unindexed sets. Let $\mathcal{P}=p(\Omega)$ and $\mathcal{Q}=q(\Omega')$, then $\{p_{\nu}:\nu\in\Delt(\Omega)\}=\conv(\mathcal{P})$ and $\{q_{\nu'}:\nu'\in\Delt(\Omega')\}=\conv(\mathcal{Q})$. Thus, $p$ is Wald more informative than $q$ if and only if the following condition holds:
+\begin{equation}
+    \text{For any } \mu\in\conv(\mathcal{P}), \text{ there exists } \mu'\in\conv(\mathcal{Q}) \text{ such that } \mu' \text{ is a garbling of } \mu. \tag{*}
+\end{equation}
+\end{original}
+
+\begin{translation}
+每个模糊实验$p:\Omega\to\Delt(S)^{\Theta}$自然地对应于一个Blackwell实验集合$p(\Omega)$，其中$p(\Omega)=\{p_{\omega}\in\Delt(S)^{\Theta}:\omega\in\Omega\}$是$p$所有可能的信号生成过程的集合。这个Blackwell实验集合不是其对应模糊实验的充分统计量，因为我们丢失了集合如何被索引的信息。在一般单调模糊偏好下，仅观察无索引的Blackwell实验集合不足以比较两个模糊实验，因为没有关于辅助状态对称性的假设。这种对称性假设对最大最小DM自动满足，因此比较Blackwell实验集合变得充分。换言之，我们可以用两个无索引集合来陈述Wald更具信息性条件。令$\mathcal{P}=p(\Omega)$和$\mathcal{Q}=q(\Omega')$，则$\{p_{\nu}:\nu\in\Delt(\Omega)\}=\conv(\mathcal{P})$且$\{q_{\nu'}:\nu'\in\Delt(\Omega')\}=\conv(\mathcal{Q})$。因此，$p$在Wald意义上比$q$更具信息性，当且仅当以下条件成立：
+\begin{equation}
+    \text{对于任何 } \mu\in\conv(\mathcal{P}), \text{ 存在 } \mu'\in\conv(\mathcal{Q}) \text{ 使得 } \mu' \text{ 是 } \mu \text{ 的混淆}. \tag{*}
+\end{equation}
+\end{translation}
+
+\begin{original}
+This condition specifies an order over sets of experiments even without direct reference to any auxiliary state space $\Omega$. We thus find it natural to say ``a set of experiments $\mathcal{P}$ is Wald more informative than $\mathcal{Q}$'' when condition (*) holds. We show that $\mathcal{P}$ is Wald more informative than $\mathcal{Q}$ if and only if $\mathcal{P}$ guarantees a higher ex-ante value than $\mathcal{Q}$ for every maxmin DM in every decision problem. We refer interested readers to Theorem 5 in Appendix B.2 for a formal treatment. Orders over unindexed sets of experiments might be of interest beyond the purpose of this paper. For example, see Definition 4 of de Oliveira et al.\ (2017) and Definition 12 of Cheng and B\"{o}rgers (2023).
+\end{original}
+
+\begin{translation}
+这一条件指定了实验集合上的一个排序，甚至无需直接引用任何辅助状态空间$\Omega$。因此，我们发现当条件(*)成立时，自然可以说``实验集合$\mathcal{P}$在Wald意义上比$\mathcal{Q}$更具信息性''。我们证明$\mathcal{P}$在Wald意义上比$\mathcal{Q}$更具信息性，当且仅当$\mathcal{P}$在每个决策问题中为每个最大最小DM保证比$\mathcal{Q}$更高的事前价值。我们建议感兴趣的读者参阅附录B.2中的定理5以获得正式处理。无索引实验集合上的排序可能具有超出本文目的的意义。例如，参见de Oliveira等 (2017)的定义4以及Cheng和B\"{o}rgers (2023)的定义12。
+\end{translation}
+
+% ============================================================
+% 5. CONCLUSION
+% ============================================================
+
+\bisection{5. Conclusion}{5. 结论}
+
+\begin{original}
+In this paper, we propose a model for informational ambiguity and use it to establish informativeness orders over ambiguous experiments. These orders generalize Blackwell's garbling condition. Ambiguous experiments are modeled as mappings from an auxiliary state space to the set of Blackwell experiments. One informativeness order is induced by the prior-by-prior dominance condition. An ambiguous experiment $p$ prior-by-prior dominates another $q$ if the expected experiment $p_{\nu}$ is more informative than $q_{\nu}$ for every belief $\nu$ over the auxiliary state space. This order is robust among any monotone ambiguity preference that nests expected utility. When restricting attention to maxmin DMs, the informativeness order is characterized by the Wald-more-informative condition. An ambiguous experiment $p$ is Wald more informative than $q$ if for any belief $\nu$, there exists a belief $\nu'$ such that $p_{\nu}$ is more informative than $q_{\nu'}$. An adapted version of the Wald-more-informative condition characterizes an informativeness order over sets of Blackwell experiments evaluated by the maxmin criterion.
+\end{original}
+
+\begin{translation}
+本文提出了一个信息模糊性模型，并用其建立了模糊实验的信息性排序。这些排序推广了Blackwell的混淆条件。模糊实验被建模为从辅助状态空间到Blackwell实验集合的映射。一个信息性排序由逐先验占优条件诱导。模糊实验$p$逐先验占优于另一个$q$，如果对于辅助状态空间上的每一个信念$\nu$，期望实验$p_{\nu}$比$q_{\nu}$更具信息性。该排序在任何包含期望效用的单调模糊偏好中是稳健的。当将注意力限制在最大最小DM时，信息性排序由Wald更具信息性条件刻画。模糊实验$p$在Wald意义上比$q$更具信息性，如果对于任何信念$\nu$，存在信念$\nu'$使得$p_{\nu}$比$q_{\nu'}$更具信息性。Wald更具信息性条件的适配版本刻画了由最大最小准则评估的Blackwell实验集合上的信息性排序。
+\end{translation}
+
+% ============================================================
+% CREDIT AUTHORSHIP CONTRIBUTION STATEMENT
+% ============================================================
+
+\subsection*{CRediT authorship contribution statement}
+\begin{original}
+Zichang Wang: Writing -- review \& editing, Writing -- original draft, Project administration, Methodology, Investigation, Formal analysis, Conceptualization.
+\end{original}
+
+\begin{translation}
+王梓畅：写作——审阅与编辑，写作——初稿，项目管理，方法论，调查，形式分析，概念化。
+\end{translation}
+
+% ============================================================
+% DECLARATION OF COMPETING INTEREST
+% ============================================================
+
+\subsection*{Declaration of competing interest}
+\begin{original}
+Declarations of interest: none.
+\end{original}
+
+\begin{translation}
+利益声明：无。
+\end{translation}
+
+% ============================================================
+% APPENDIX A. GENERAL AUXILIARY STATE SPACES
+% ============================================================
+
+\bisection{Appendix A. General auxiliary state spaces}{附录A. 一般辅助状态空间}
+
+\begin{original}
+In this section, we consider auxiliary state spaces beyond finite sets and we will show that our results in the main text remain valid in this more general environment.
+\end{original}
+
+\begin{translation}
+在本节中，我们考虑超越有限集的辅助状态空间，并将证明正文中的结果在这一更一般的环境下仍然有效。
+\end{translation}
+
+\begin{original}
+Let the auxiliary state space $\Omega$ be an arbitrary nonempty set.
+\end{original}
+
+\begin{translation}
+设辅助状态空间$\Omega$为任意非空集。
+\end{translation}
+
+\begin{original}
+Ambiguous experiments are defined in the same way as in Definition 1, that is, an ambiguous experiment is a mapping $p:\Omega\to\Delt(S)^{\Theta}$, where the payoff-relevant space $\Theta$ and the set of signals $S$ are still assumed to be finite.
+\end{original}
+
+\begin{translation}
+模糊实验的定义与定义1相同，即模糊实验是一个映射$p:\Omega\to\Delt(S)^{\Theta}$，其中收益相关空间$\Theta$和信号集$S$仍假定为有限的。
+\end{translation}
+
+\begin{original}
+Consider a DM facing a decision problem $A$ with a state-dependent utility function $u:\Theta\times A\to\R$ and a prior belief $\pi\in\Delt(\Theta)$. The expected utility conditional on auxiliary state $\omega$, $U(f, p_{\omega})$, is defined the same way as in equation (\ref{eq:Ufp}). Note that $U(f,p_{\omega})$ is bounded as a function of $\omega$ for any fixed tuple $(p,u,\pi,A,f)$.
+\end{original}
+
+\begin{translation}
+考虑一个DM面对决策问题$A$，具有状态依存效用函数$u:\Theta\times A\to\R$和先验信念$\pi\in\Delt(\Theta)$。以辅助状态$\omega$为条件的期望效用$U(f, p_{\omega})$的定义与方程(\ref{eq:Ufp})相同。注意，对于任何固定的元组$(p,u,\pi,A,f)$，$U(f,p_{\omega})$作为$\omega$的函数是有界的。
+\end{translation}
+
+\begin{original}
+We say $\Phi:\R^{\Omega}\to\R$ is a monotone aggregator if $\Phi(x)\geq\Phi(y)$ whenever two functions $x,y:\Omega\to\R$ satisfy $x(\omega)\geq y(\omega)$ for all $\omega\in\Omega$. Comparing to Definition 2, we drop the continuity requirement. Let $\calM$ denote the set of all monotone aggregators.
+\end{original}
+
+\begin{translation}
+我们称$\Phi:\R^{\Omega}\to\R$是单调聚合器，如果当两个函数$x,y:\Omega\to\R$满足对所有$\omega\in\Omega$有$x(\omega)\geq y(\omega)$时，$\Phi(x)\geq\Phi(y)$。与定义2相比，我们省略了连续性要求。令$\calM$表示所有单调聚合器的集合。
+\end{translation}
+
+\begin{original}
+For a DM with preference parameters $(u,\pi,\Phi)$ in a decision problem $A$, the ex-ante value of an ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$ is
+\begin{equation}
+    V(p) = \sup_{f\in\calF} \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right).
+\end{equation}
+Comparing to its counterpart in the main text (Definition 3), we have the supremum operator instead of the maximum operator. This change has no impact on the interpretation of our comparison result: If $p$ has higher ex-ante value than $q$ according to the more general definition, then for any action plan $f'$ that can be made when the DM faces $q$, she can find another action plan $f$ that guarantees
+\begin{equation}
+    \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \geq \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right).
+\end{equation}
+Moreover, without the continuity requirement, we can include more aggregators that correspond to more ambiguity preferences.
+\end{original}
+
+\begin{translation}
+对于在决策问题$A$中具有偏好参数$(u,\pi,\Phi)$的DM，模糊实验$p:\Omega\to\Delt(S)^{\Theta}$的事前价值为
+\begin{equation}
+    V(p) = \sup_{f\in\calF} \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right).
+\end{equation}
+与正文中的对应定义（定义3）相比，我们用上确界算子代替了最大值算子。这一变化对我们比较结果的解释没有影响：如果根据更一般的定义，$p$比$q$具有更高的事前价值，那么对于DM面对$q$时所能做出的任何行动计划$f'$，她可以找到另一个行动计划$f$保证
+\begin{equation}
+    \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \geq \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right).
+\end{equation}
+此外，在没有连续性要求的情况下，我们可以包含更多对应于更多模糊偏好的聚合器。
+\end{translation}
+
+\begin{original}
+Let $2^{\Omega}$ denote the set of all subsets of $\Omega$. Let $\Delt_0$ denote the set of all simple probability measures (i.e., probability measures with a finite support) over $2^{\Omega}$. For any $\nu\in\Delt_0$, let $\supp(\nu)$ denote the support of $\nu$. The expected experiment $p_{\nu}$ is given by
+\begin{equation}
+    p_{\nu}(s|\theta) = \sum_{\omega\in\supp(\nu)} p_{\omega}(s|\theta)\,\nu(\omega), \quad (\theta,s)\in\Theta\times S.
+\end{equation}
+We say that an ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$ prior-by-prior dominates another $q:\Omega'\to\Delt(S')^{\Theta}$ if $q_{\nu}$ is a garbling of $p_{\nu}$ for any $\nu\in\Delt_0$. Note that when $\Omega$ is finite, this coincides with our definition of prior-by-prior dominance in the main text (Definition 5). Finally, let $\calE_0=\{\Phi_{\nu}:\nu\in\Delt_0\}$ where $\Phi_{\nu}$ is the expected utility aggregator corresponding to $\nu$.
+\end{original}
+
+\begin{translation}
+令$2^{\Omega}$表示$\Omega$的所有子集的集合。令$\Delt_0$表示$2^{\Omega}$上所有简单概率测度（即具有有限支撑的概率测度）的集合。对于任何$\nu\in\Delt_0$，令$\supp(\nu)$表示$\nu$的支撑。期望实验$p_{\nu}$由以下给出：
+\begin{equation}
+    p_{\nu}(s|\theta) = \sum_{\omega\in\supp(\nu)} p_{\omega}(s|\theta)\,\nu(\omega), \quad (\theta,s)\in\Theta\times S.
+\end{equation}
+我们称模糊实验$p:\Omega\to\Delt(S)^{\Theta}$逐先验占优于另一个$q:\Omega'\to\Delt(S')^{\Theta}$，如果对于任何$\nu\in\Delt_0$，$q_{\nu}$是$p_{\nu}$的混淆。注意，当$\Omega$有限时，这与正文中逐先验占优的定义（定义5）一致。最后，令$\calE_0=\{\Phi_{\nu}:\nu\in\Delt_0\}$，其中$\Phi_{\nu}$是对应于$\nu$的期望效用聚合器。
+\end{translation}
+
+\begin{theorem}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments and let $\mathcal{G}$ be a class of aggregators such that $\calE_0\subseteq\mathcal{G}\subseteq\calM$. The following conditions are equivalent:
+\begin{enumerate}
+    \item $p$ prior-by-prior dominates $q$.
+    \item For any $u$, $\pi$, $\Phi$ and any $f'\in\calF'$, there exists $f\in\calF$ such that
+    \begin{equation}
+        U(f,p_{\omega})\geq U(f',q_{\omega}),\quad\forall\omega\in\Omega.
+    \end{equation}
+    \item $p$ is preferred to $q$ in every decision problem by every decision maker whose ambiguity preferences can be represented by some $\Phi\in\mathcal{G}$. That is, $p$ has weakly higher ex-ante value than $q$ for every $u$, $\pi$, $\Phi$ and every $A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{original}
+The proof of Theorem 3 is in Appendix B.1.
+\end{original}
+
+\begin{translation}
+定理3的证明在附录B.1中。
+\end{translation}
+
+\begin{original}
+When $\Omega$ is finite, $\calE_0$ reduces to $\calE$ as defined in equation (\ref{eq:calE}) in the main text and Theorem 3 coincides with Theorem 1.
+\end{original}
+
+\begin{translation}
+当$\Omega$有限时，$\calE_0$退化为正文中方程(\ref{eq:calE})所定义的$\calE$，定理3与定理1一致。
+\end{translation}
+
+% ============================================================
+% A.1. RESTRICTING TO WALD'S MAXMIN CRITERION
+% ============================================================
+
+\bisubsection{A.1. Restricting to Wald's maxmin criterion}{A.1. 限制于Wald最大最小准则}
+
+\begin{original}
+This section corresponds to Section 4 in the main text. We restrict attention to DMs who apply Wald's maxmin criterion when aggregating payoffs over the auxiliary states.
+\end{original}
+
+\begin{translation}
+本节对应于正文中的第4节。我们将注意力限制在那些在辅助状态上聚合收益时应用Wald最大最小准则的DM。
+\end{translation}
+
+\begin{original}
+Let $\Phi_W:\R^{\Omega}\to\R$ denote the Wald aggregator defined by $\Phi_W(x)=\inf_{\omega} x(\omega)$.
+\end{original}
+
+\begin{translation}
+令$\Phi_W:\R^{\Omega}\to\R$表示Wald聚合器，定义为$\Phi_W(x)=\inf_{\omega} x(\omega)$。
+\end{translation}
+
+\begin{original}
+For a maxmin DM with preference parameters $(u,\pi)$ in a decision problem $A$, the ex-ante value of an ambiguous experiment $p:\Omega\to\Delt(S)^{\Theta}$ is
+\begin{equation}
+    V_W(p) = \sup_{f\in\calF} \inf_{\omega\in\Omega} U(f, p_{\omega}).
+\end{equation}
+\end{original}
+
+\begin{translation}
+对于在决策问题$A$中具有偏好参数$(u,\pi)$的最大最小DM，模糊实验$p:\Omega\to\Delt(S)^{\Theta}$的事前价值为
+\begin{equation}
+    V_W(p) = \sup_{f\in\calF} \inf_{\omega\in\Omega} U(f, p_{\omega}).
+\end{equation}
+\end{translation}
+
+\begin{original}
+The set of Blackwell experiments associated with $p$ plays an important role in our analysis. Let $p(\Omega)=\{p_{\omega}:\omega\in\Omega\}$. That is, $p(\Omega)$ is the set of possible data generating processes behind $p$. This set $p(\Omega)$ can be identified as a bounded subset of $\R^{|\Theta|\times|S|}$.
+\end{original}
+
+\begin{translation}
+与$p$相关联的Blackwell实验集合在我们的分析中扮演着重要角色。令$p(\Omega)=\{p_{\omega}:\omega\in\Omega\}$。即，$p(\Omega)$是$p$背后可能的信号生成过程的集合。该集合$p(\Omega)$可以被识别为$\R^{|\Theta|\times|S|}$的一个有界子集。
+\end{translation}
+
+\begin{original}
+Since $\Omega$ is an arbitrary set and an ambiguous experiment $p$ need not be continuous in $\omega$, this set $p(\Omega)$ could be open. To overcome this issue, we consider the closure of this set. Formally, let $\overline{p(\Omega)}$ denote the closure of $p(\Omega)$. This closure is taken with respect to the standard Euclidean topology over $\R^{|\Theta|\times|S|}$. Since $p(\Omega)$ is bounded, $\overline{p(\Omega)}$ must be compact.
+\end{original}
+
+\begin{translation}
+由于$\Omega$是任意集且模糊实验$p$不需要在$\omega$上连续，集合$p(\Omega)$可能是开的。为克服这一问题，我们考虑该集合的闭包。形式上，令$\overline{p(\Omega)}$表示$p(\Omega)$的闭包。该闭包是在$\R^{|\Theta|\times|S|}$上的标准欧氏拓扑下取的。由于$p(\Omega)$是有界的，$\overline{p(\Omega)}$必然是紧的。
+\end{translation}
+
+\begin{definition}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments. We say $p$ is Wald more informative than $q$ if for every Blackwell experiment $\mu\in\conv(\overline{p(\Omega)})$, there exists $\mu'\in\conv(\overline{q(\Omega')})$ such that $\mu'$ is a garbling of $\mu$.
+\end{definition}
+
+\begin{theorem}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments. The following conditions are equivalent:
+\begin{enumerate}
+    \item $p$ is Wald more informative than $q$.
+    \item $p$ is preferred to $q$ in every decision problem by every decision maker who uses the maxmin criterion. That is, $p$ has weakly higher ex-ante value than $q$ for every $u$, $\pi$, $A$ when the aggregator is $\Phi_W$.
+\end{enumerate}
+\end{theorem}
+
+\begin{original}
+The proof of Theorem 4 is in Appendix B.2.
+\end{original}
+
+\begin{translation}
+定理4的证明在附录B.2中。
+\end{translation}
+
+\begin{original}
+When $\Omega$ is finite, both $p(\Omega)$ and $q(\Omega')$ are finite and equal to their respective closure. Thus, $\conv(\overline{p(\Omega)})=\{p_{\nu}:\nu\in\Delt(\Omega)\}$, and $\conv(\overline{q(\Omega')})=\{q_{\nu'}:\nu'\in\Delt(\Omega')\}$. Definition 7 coincides with Definition 6 and Theorem 4 coincides with Theorem 2.
+\end{original}
+
+\begin{translation}
+当$\Omega$有限时，$p(\Omega)$和$q(\Omega')$都是有限的且等于它们各自的闭包。因此，$\conv(\overline{p(\Omega)})=\{p_{\nu}:\nu\in\Delt(\Omega)\}$，且$\conv(\overline{q(\Omega')})=\{q_{\nu'}:\nu'\in\Delt(\Omega')\}$。定义7与定义6一致，定理4与定理2一致。
+\end{translation}
+
+% ============================================================
+% APPENDIX B. OMITTED PROOFS
+% ============================================================
+
+\bisection{Appendix B. Omitted proofs}{附录B. 省略的证明}
+
+% ============================================================
+% B.1. PROOF OF THEOREM 3
+% ============================================================
+
+\bisubsection{B.1. Proof of Theorem 3}{B.1. 定理3的证明}
+
+\begin{original}
+We prove Theorem 3 by showing that $1\Rightarrow 2\Rightarrow 3\Rightarrow 1$.
+\end{original}
+
+\begin{translation}
+我们通过证明$1\Rightarrow 2\Rightarrow 3\Rightarrow 1$来证明定理3。
+\end{translation}
+
+\begin{original}
+Recall that $\Delt_0$ is the set of all probability measures over $\Omega$ with finite support and $p$ prior-by-prior dominates $q$ if $q_{\nu}$ is a garbling of $p_{\nu}$ for all $\nu\in\Delt_0$. Part of our proof for ``$1\Rightarrow 2$'' is similar in spirit to the proof of Lemma 2 in Li and Zhou (2020) and the proof of Theorem 1 in \c{C}elen (2012).
+\end{original}
+
+\begin{translation}
+回顾$\Delt_0$是$\Omega$上所有具有有限支撑的概率测度的集合，且$p$逐先验占优于$q$如果对所有$\nu\in\Delt_0$，$q_{\nu}$是$p_{\nu}$的混淆。我们对``$1\Rightarrow 2$''的部分证明在精神上类似于Li和Zhou (2020)的引理2的证明以及\c{C}elen (2012)的定理1的证明。
+\end{translation}
+
+\begin{original}
+\textit{Proof that $1\Rightarrow 2$.} Let $\Gamma$ denote the set of all garblings, that is, $\Gamma=\{\gamma:S\to\Delt(S')\}$. $\Gamma$ is compact and convex since both $S$ and $S'$ are finite. Fix any $u$, $\pi$, $\Phi$, and fix any action plan $f'\in\calF'$, we define an auxiliary function $\psi:\Gamma\times\Delt_0\to\R$ by
+\begin{equation}
+    \psi(\gamma,\nu) = U(f',\gamma\circ p_{\nu}) - U(f',q_{\nu}).
+\end{equation}
+Note that $f'$ is a mapping from $S'$ to $\Delt(A)$ and $\gamma$ is a mapping from $S$ to $\Delt(S')$. Therefore, their composition $f'\circ\gamma$ is a mapping from $S$ to $\Delt(A)$. In other words, $f'\circ\gamma$ is an element in $\calF$. Thus, $\psi(\gamma,\nu)$ captures the difference between the expected payoff of action plan $f'\circ\gamma$ under $p_{\nu}$ and the expected payoff of action plan $f'$ under $q_{\nu}$.
+\end{original}
+
+\begin{translation}
+\textit{$1\Rightarrow 2$的证明。}令$\Gamma$表示所有混淆的集合，即$\Gamma=\{\gamma:S\to\Delt(S')\}$。$\Gamma$是紧且凸的，因为$S$和$S'$都是有限的。固定任何$u$，$\pi$，$\Phi$，并固定任何行动计划$f'\in\calF'$，我们定义一个辅助函数$\psi:\Gamma\times\Delt_0\to\R$：
+\begin{equation}
+    \psi(\gamma,\nu) = U(f',\gamma\circ p_{\nu}) - U(f',q_{\nu}).
+\end{equation}
+注意$f'$是从$S'$到$\Delt(A)$的映射，$\gamma$是从$S$到$\Delt(S')$的映射。因此，它们的复合$f'\circ\gamma$是从$S$到$\Delt(A)$的映射。换言之，$f'\circ\gamma$是$\calF$中的一个元素。因此，$\psi(\gamma,\nu)$刻画了行动计划$f'\circ\gamma$在$p_{\nu}$下的期望收益与行动计划$f'$在$q_{\nu}$下的期望收益之间的差异。
+\end{translation}
+
+\begin{original}
+To prove $1\Rightarrow 2$, it suffices to show that
+\begin{equation}
+    \max_{\gamma\in\Gamma}\inf_{\nu\in\Delt_0} \psi(\gamma,\nu) \geq 0.
+\end{equation}
+To show that the left hand side in the equation above is well defined and non-negative, we invoke the Kneser-Fan minimax theorem for concave-convex functions (Terkelsen, 1972).
+\end{original}
+
+\begin{translation}
+为证明$1\Rightarrow 2$，只需证明
+\begin{equation}
+    \max_{\gamma\in\Gamma}\inf_{\nu\in\Delt_0} \psi(\gamma,\nu) \geq 0.
+\end{equation}
+为证明上述方程左边的定义良好且非负，我们援引关于凹-凸函数的Kneser-Fan极小极大定理（Terkelsen, 1972）。
+\end{translation}
+
+\begin{original}
+$\Gamma$ is a compact and convex subset of $\R^{|S|\times|S'|}$ under the Euclidean topology. $\Delt_0$ is a convex subset of the vector space $\R^{\Omega}$. For each $\gamma\in\Gamma$, the function $\nu\mapsto -\psi(\gamma,\nu)$ is linear (hence concave) on $\Delt_0$. For each $\nu\in\Delt_0$, the function $\gamma\mapsto -\psi(\gamma,\nu)$ is linear (hence convex and continuous since $\Gamma$ is finite dimensional) on $\Gamma$. Therefore, by the Kneser-Fan minimax theorem for concave-convex functions (Terkelsen, 1972, page 411, Corollary 2),
+\begin{equation}
+    \min_{\nu\in\Delt_0}\sup_{\gamma\in\Gamma} -\psi(\gamma,\nu) = \sup_{\gamma\in\Gamma}\min_{\nu\in\Delt_0} -\psi(\gamma,\nu),
+\end{equation}
+which further indicates that
+\begin{equation}
+    \max_{\gamma\in\Gamma}\inf_{\nu\in\Delt_0} \psi(\gamma,\nu) = \inf_{\nu\in\Delt_0}\max_{\gamma\in\Gamma} \psi(\gamma,\nu).
+\end{equation}
+The right hand side of the equation above is non-negative, since for any $\nu\in\Delt_0$, the prior-by-prior dominance condition guarantees that there exists some $\gamma\in\Gamma$ such that $q_{\nu}=\gamma\circ p_{\nu}$ and this garbling $\gamma$ guarantees that $\psi(\gamma,\nu)=0$. $\square$
+\end{original}
+
+\begin{translation}
+$\Gamma$是欧氏拓扑下$\R^{|S|\times|S'|}$的一个紧凸子集。$\Delt_0$是向量空间$\R^{\Omega}$的一个凸子集。对每个$\gamma\in\Gamma$，函数$\nu\mapsto -\psi(\gamma,\nu)$在$\Delt_0$上是线性（因此凹）的。对每个$\nu\in\Delt_0$，函数$\gamma\mapsto -\psi(\gamma,\nu)$在$\Gamma$上是线性（因此凸且连续，因为$\Gamma$是有限维的）的。因此，由关于凹-凸函数的Kneser-Fan极小极大定理（Terkelsen, 1972, 第411页, 推论2），
+\begin{equation}
+    \min_{\nu\in\Delt_0}\sup_{\gamma\in\Gamma} -\psi(\gamma,\nu) = \sup_{\gamma\in\Gamma}\min_{\nu\in\Delt_0} -\psi(\gamma,\nu),
+\end{equation}
+这进一步表明
+\begin{equation}
+    \max_{\gamma\in\Gamma}\inf_{\nu\in\Delt_0} \psi(\gamma,\nu) = \inf_{\nu\in\Delt_0}\max_{\gamma\in\Gamma} \psi(\gamma,\nu).
+\end{equation}
+上述方程的右边是非负的，因为对任何$\nu\in\Delt_0$，逐先验占优条件保证存在某个$\gamma\in\Gamma$使得$q_{\nu}=\gamma\circ p_{\nu}$，且该混淆$\gamma$保证$\psi(\gamma,\nu)=0$。$\square$
+\end{translation}
+
+\begin{original}
+\textit{Proof that $2\Rightarrow 3$.} Fix any $(u,\pi,\Phi,A)$ with $\Phi\in\mathcal{G}$ and let $V(q)$ denote the ex-ante value of $q$, that is,
+\begin{equation}
+    V(q) = \sup_{f'\in\calF'} \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right).
+\end{equation}
+Then for any $\varepsilon>0$, there exists $f'\in\calF'$ such that
+\begin{equation}
+    \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right) > V(q) - \varepsilon.
+\end{equation}
+By condition 2 in Theorem 3, there exists an action plan $f\in\calF$ such that
+\begin{equation}
+    U(f,p_{\omega})\geq U(f',q_{\omega}),\quad\forall\omega\in\Omega.
+\end{equation}
+By the monotonicity of $\Phi$, this further indicates that
+\begin{equation}
+    \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \geq \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right) > V(q) - \varepsilon.
+\end{equation}
+Since this holds for any $\varepsilon>0$, we have $V(p)=\sup_{f\in\calF} \Phi(\{U(f, p_{\omega})\}_{\omega\in\Omega}) \geq V(q)$. $\square$
+\end{original}
+
+\begin{translation}
+\textit{$2\Rightarrow 3$的证明。}固定任何$(u,\pi,\Phi,A)$，其中$\Phi\in\mathcal{G}$，令$V(q)$表示$q$的事前价值，即
+\begin{equation}
+    V(q) = \sup_{f'\in\calF'} \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right).
+\end{equation}
+那么对于任何$\varepsilon>0$，存在$f'\in\calF'$使得
+\begin{equation}
+    \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right) > V(q) - \varepsilon.
+\end{equation}
+由定理3中的条件2，存在行动计划$f\in\calF$使得
+\begin{equation}
+    U(f,p_{\omega})\geq U(f',q_{\omega}),\quad\forall\omega\in\Omega.
+\end{equation}
+由$\Phi$的单调性，这进一步表明
+\begin{equation}
+    \Phi\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \geq \Phi\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right) > V(q) - \varepsilon.
+\end{equation}
+由于这对任何$\varepsilon>0$成立，我们有$V(p)=\sup_{f\in\calF} \Phi(\{U(f, p_{\omega})\}_{\omega\in\Omega}) \geq V(q)$。$\square$
+\end{translation}
+
+\begin{original}
+\textit{Proof that $3\Rightarrow 1$.} It suffices to prove the necessity of prior-by-prior dominance when $\mathcal{G}=\calE_0$. That is, if $p$ is preferred to $q$ by every DM with $\Phi\in\calE_0$, then $p\succeq_{PBP} q$.
+\end{original}
+
+\begin{translation}
+\textit{$3\Rightarrow 1$的证明。}只需证明当$\mathcal{G}=\calE_0$时，逐先验占优的必要性。也就是说，如果$p$被每个具有$\Phi\in\calE_0$的DM偏好于$q$，则$p\succeq_{PBP} q$。
+\end{translation}
+
+\begin{original}
+Suppose by contradiction that it is not the case $p\succeq_{PBP} q$, then there must exist some $\nu\in\Delt_0$ such that $q_{\nu}$ is not a garbling of $p_{\nu}$.
+\end{original}
+
+\begin{translation}
+假设矛盾，即$p\succeq_{PBP} q$不成立，则必定存在某个$\nu\in\Delt_0$使得$q_{\nu}$不是$p_{\nu}$的混淆。
+\end{translation}
+
+\begin{original}
+Fixing this belief $\nu$ and its corresponding aggregator $\Phi_{\nu}\in\calE_0$, that is, the DM believes that $\nu$ is the correct distribution over $\Omega$ and uses aggregator $\Phi_{\nu}$ to evaluate action plans. Thus,
+\begin{align}
+    V(p) &= \sup_{f\in\calF} \Phi_{\nu}\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \nonumber\\
+         &= \sup_{f\in\calF} \sum_{\omega\in\supp(\nu)} \nu(\omega) \, U(f, p_{\omega}) \nonumber\\
+         &= \sup_{f\in\calF} \; U\!\left(f, \sum_{\omega\in\supp(\nu)}\nu(\omega)p_{\omega}\right) \nonumber\\
+         &= \sup_{f\in\calF} \; U(f, p_{\nu}) = \max_{f\in\calF} U(f, p_{\nu})
+\end{align}
+where the last equality follows from $U$ being linear in its first argument and $\calF$ being compact.
+\end{original}
+
+\begin{translation}
+固定该信念$\nu$及其对应的聚合器$\Phi_{\nu}\in\calE_0$，即DM相信$\nu$是$\Omega$上的正确分布，并使用聚合器$\Phi_{\nu}$来评估行动计划。因此，
+\begin{align}
+    V(p) &= \sup_{f\in\calF} \Phi_{\nu}\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \nonumber\\
+         &= \sup_{f\in\calF} \sum_{\omega\in\supp(\nu)} \nu(\omega) \, U(f, p_{\omega}) \nonumber\\
+         &= \sup_{f\in\calF} \; U\!\left(f, \sum_{\omega\in\supp(\nu)}\nu(\omega)p_{\omega}\right) \nonumber\\
+         &= \sup_{f\in\calF} \; U(f, p_{\nu}) = \max_{f\in\calF} U(f, p_{\nu})
+\end{align}
+其中最后一个等式来自于$U$在其第一参数上是线性的以及$\calF$是紧的。
+\end{translation}
+
+\begin{original}
+Since $q_{\nu}$ is not a garbling of $p_{\nu}$, then by Blackwell's theorem (see, for example, Theorem 1 of de Oliveira 2018), there must exist a triplet $(u,\pi,A)$ such that
+\begin{equation}
+    \max_{f\in\calF} U(f, p_{\nu}) < \max_{f'\in\calF'} U(f', q_{\nu}).
+\end{equation}
+Combine this triplet $(u,\pi,A)$ with aggregator $\Phi_{\nu}$,
+\begin{align}
+    V(p) &= \sup_{f\in\calF} \Phi_{\nu}\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \nonumber\\
+         &= \max_{f\in\calF} U(f, p_{\nu}) \nonumber\\
+         &< \max_{f'\in\calF'} U(f', q_{\nu}) \nonumber\\
+         &= \sup_{f'\in\calF'} \Phi_{\nu}\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right) = V(q)
+\end{align}
+which is a direct contradiction to our assumption that $p$ has weakly higher ex-ante value than $q$ for any $(u,\pi,\Phi)$ and $\Phi\in\calE_0$. This completes the proof that prior-by-prior dominance is necessary for any class of aggregators $\mathcal{G}\supseteq\calE_0$. $\square$
+\end{original}
+
+\begin{translation}
+由于$q_{\nu}$不是$p_{\nu}$的混淆，则由Blackwell定理（参见例如de Oliveira 2018的定理1），必定存在一个三元组$(u,\pi,A)$使得
+\begin{equation}
+    \max_{f\in\calF} U(f, p_{\nu}) < \max_{f'\in\calF'} U(f', q_{\nu}).
+\end{equation}
+将该三元组$(u,\pi,A)$与聚合器$\Phi_{\nu}$结合，
+\begin{align}
+    V(p) &= \sup_{f\in\calF} \Phi_{\nu}\left( \left\{ U(f, p_{\omega}) \right\}_{\omega\in\Omega} \right) \nonumber\\
+         &= \max_{f\in\calF} U(f, p_{\nu}) \nonumber\\
+         &< \max_{f'\in\calF'} U(f', q_{\nu}) \nonumber\\
+         &= \sup_{f'\in\calF'} \Phi_{\nu}\left( \left\{ U(f', q_{\omega}) \right\}_{\omega\in\Omega} \right) = V(q)
+\end{align}
+这与我们的假设——对任何$(u,\pi,\Phi)$和$\Phi\in\calE_0$，$p$具有弱高于$q$的事前价值——直接矛盾。这完成了逐先验占优对任何聚合器类$\mathcal{G}\supseteq\calE_0$是必要的证明。$\square$
+\end{translation}
+
+% ============================================================
+% B.2. PROOF OF THEOREM 4
+% ============================================================
+
+\bisubsection{B.2. Proof of Theorem 4}{B.2. 定理4的证明}
+
+\begin{original}
+We start our proof by formally presenting a result about the Wald-more-informative condition over sets of Blackwell experiments.
+\end{original}
+
+\begin{translation}
+我们通过正式陈述一个关于Blackwell实验集合上Wald更具信息性条件的结果来开始证明。
+\end{translation}
+
+\begin{original}
+Let $(\Theta,\mathcal{P})$ and $(\Theta,\mathcal{Q})$ be two sets of Blackwell experiments, where each $\mu\in\mathcal{P}$ is a mapping $\mu:\Theta\to\Delt(S)$ and each $\mu'\in\mathcal{Q}$ is a mapping $\mu':\Theta\to\Delt(S')$. Suppose $\mathcal{P}$ is a compact subset of $\R^{|\Theta|\times|S|}$ and $\mathcal{Q}$ is a compact subset of $\R^{|\Theta|\times|S'|}$. DMs evaluate each set of experiments by the maxmin criterion. That is, for a DM with preference parameters $u$ and $\pi$ facing decision problem $A$, the ex-ante value of $\mathcal{P}$ is defined by
+\begin{equation}
+    V(\mathcal{P}) = \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f, \mu).
+\end{equation}
+\end{original}
+
+\begin{translation}
+设$(\Theta,\mathcal{P})$和$(\Theta,\mathcal{Q})$为两个Blackwell实验集合，其中每个$\mu\in\mathcal{P}$是映射$\mu:\Theta\to\Delt(S)$，每个$\mu'\in\mathcal{Q}$是映射$\mu':\Theta\to\Delt(S')$。假设$\mathcal{P}$是$\R^{|\Theta|\times|S|}$的紧子集，$\mathcal{Q}$是$\R^{|\Theta|\times|S'|}$的紧子集。DM通过最大最小准则评估每个实验集合。即，对于具有偏好参数$u$和$\pi$且面对决策问题$A$的DM，$\mathcal{P}$的事前价值定义为
+\begin{equation}
+    V(\mathcal{P}) = \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f, \mu).
+\end{equation}
+\end{translation}
+
+\begin{theorem}
+Let $(\Theta,\mathcal{P})$ and $(\Theta,\mathcal{Q})$ be two compact sets of Blackwell experiments. The following are equivalent:
+\begin{enumerate}
+    \item For every $\mu\in\conv(\mathcal{P})$, there exists $\mu'\in\conv(\mathcal{Q})$ that is a garbling of $\mu$.
+    \item $\mathcal{P}$ is preferred to $\mathcal{Q}$ in every decision problem by every decision maker using maxmin criterion. That is, $\mathcal{P}$ has weakly higher ex-ante value than $\mathcal{Q}$ for every $u$, $\pi$, $A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{original}
+\textit{Proof of Theorem 5.} To prove that $1\Rightarrow 2$, fix any $(u,\pi,A)$,
+\begin{align}
+    V(\mathcal{P}) &= \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f, \mu) \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu\in\conv(\mathcal{P})} U(f, \mu) \nonumber\\
+                   &= \min_{\mu\in\conv(\mathcal{P})} \max_{f\in\calF} U(f, \mu) \quad\text{(minimax theorem)}\nonumber\\
+                   &= \max_{f\in\calF} U(f, \mu^*) \quad\text{(for some }\mu^*\in\conv(\mathcal{P})\text{)} \nonumber\\
+                   &\geq \max_{f\in\calF} U(f, \mu^{**}) \quad\text{(for some }\mu^{**}\in\conv(\mathcal{Q})\text{ by condition 1)}\nonumber\\
+                   &\geq \min_{\mu'\in\conv(\mathcal{Q})} \max_{f\in\calF} U(f, \mu') \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu'\in\conv(\mathcal{Q})} U(f, \mu') \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu'\in\mathcal{Q}} U(f, \mu') = V(\mathcal{Q})
+\end{align}
+where the second equality follows from the fact that $U$ is linear in its second argument, the third equality follows from von Neumann's minimax theorem since both $\conv(\mathcal{P})$ and $\calF$ are compact and convex, and the first inequality follows from condition 1 and Blackwell's theorem (see, for example, Theorem 1 of de Oliveira 2018).
+\end{original}
+
+\begin{translation}
+\textit{定理5的证明。}为证明$1\Rightarrow 2$，固定任何$(u,\pi,A)$，
+\begin{align}
+    V(\mathcal{P}) &= \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f, \mu) \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu\in\conv(\mathcal{P})} U(f, \mu) \nonumber\\
+                   &= \min_{\mu\in\conv(\mathcal{P})} \max_{f\in\calF} U(f, \mu) \quad\text{(极小极大定理)}\nonumber\\
+                   &= \max_{f\in\calF} U(f, \mu^*) \quad\text{(对某个}\mu^*\in\conv(\mathcal{P})\text{)} \nonumber\\
+                   &\geq \max_{f\in\calF} U(f, \mu^{**}) \quad\text{(由条件1，对某个}\mu^{**}\in\conv(\mathcal{Q})\text{)}\nonumber\\
+                   &\geq \min_{\mu'\in\conv(\mathcal{Q})} \max_{f\in\calF} U(f, \mu') \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu'\in\conv(\mathcal{Q})} U(f, \mu') \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu'\in\mathcal{Q}} U(f, \mu') = V(\mathcal{Q})
+\end{align}
+其中第二个等式来自$U$在其第二参数上是线性的这一事实，第三个等式来自von Neumann极小极大定理（因为$\conv(\mathcal{P})$和$\calF$都是紧且凸的），第一个不等式来自条件1和Blackwell定理（参见例如de Oliveira 2018的定理1）。
+\end{translation}
+
+\begin{original}
+Then we prove $2\Rightarrow 1$ by proving its contrapositive.
+Suppose there exists $\mu_0\in\conv(\mathcal{P})$ such that no $\mu'\in\conv(\mathcal{Q})$ is a garbling of $\mu_0$, we want to construct a triplet $(u,\pi,A)$ in which
+\begin{equation}
+    V(\mathcal{P}) = \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f,\mu) < \max_{f'\in\calF'} \min_{\mu'\in\mathcal{Q}} U(f',\mu') = V(\mathcal{Q}).
+\end{equation}
+\end{original}
+
+\begin{translation}
+然后我们通过证明其逆否命题来证明$2\Rightarrow 1$。
+假设存在$\mu_0\in\conv(\mathcal{P})$使得没有$\mu'\in\conv(\mathcal{Q})$是$\mu_0$的混淆，我们希望构造一个三元组$(u,\pi,A)$使得
+\begin{equation}
+    V(\mathcal{P}) = \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f,\mu) < \max_{f'\in\calF'} \min_{\mu'\in\mathcal{Q}} U(f',\mu') = V(\mathcal{Q}).
+\end{equation}
+\end{translation}
+
+\begin{original}
+Fix $A=S$, that is, the action space is the set of signal realizations for $\mu_0$. Then the sets of action plans are $\calF=\{f:S\to\Delt(S)\}$ and $\calF'=\{f':S'\to\Delt(S)\}$. Consider an action plan $f^*\in\calF$ defined by $f^*(s)(s')=\bbone[s=s']$, that is, $f^*$ is the action plan that reports the realized signal. Then for any $\mu\in\Delt(S)^{\Theta}$, $\mu=f^*\circ\mu$ since
+\begin{equation}
+    (f^*\circ\mu)(s'|\theta) = \sum_{s\in S} f^*(s)(s')\,\mu(s|\theta) = \mu(s'|\theta), \quad (\theta,s')\in\Theta\times S.
+\end{equation}
+\end{original}
+
+\begin{translation}
+固定$A=S$，即行动空间是$\mu_0$的信号实现的集合。那么行动计划的集合为$\calF=\{f:S\to\Delt(S)\}$和$\calF'=\{f':S'\to\Delt(S)\}$。考虑行动计划$f^*\in\calF$，定义为$f^*(s)(s')=\bbone[s=s']$，即$f^*$是报告实现信号的行动计划。那么对于任何$\mu\in\Delt(S)^{\Theta}$，$\mu=f^*\circ\mu$，因为
+\begin{equation}
+    (f^*\circ\mu)(s'|\theta) = \sum_{s\in S} f^*(s)(s')\,\mu(s|\theta) = \mu(s'|\theta), \quad (\theta,s')\in\Theta\times S.
+\end{equation}
+\end{translation}
+
+\begin{original}
+Let $\mathcal{M}_{\mathcal{Q}}=\{f'\circ\mu':\mu'\in\conv(\mathcal{Q}), f'\in\calF'\}$. That is, $\mathcal{M}_{\mathcal{Q}}$ is the set of all probability measures over $S$ conditional on $\theta$ that can be induced by some action plan $f'\in\calF'$ together with some Blackwell experiment in $\conv(\mathcal{Q})$. Then $\mathcal{M}_{\mathcal{Q}}=\conv(\mathcal{Q})$. Similarly, let $\mathcal{M}_0=\{\mu_0\circ f': f'\in\calF'\}$.
+\end{original}
+
+\begin{translation}
+令$\mathcal{M}_{\mathcal{Q}}=\{f'\circ\mu':\mu'\in\conv(\mathcal{Q}), f'\in\calF'\}$。即，$\mathcal{M}_{\mathcal{Q}}$是由某个行动计划$f'\in\calF'$与$\conv(\mathcal{Q})$中的某个Blackwell实验一起所能够诱导的、以$\theta$为条件的$S$上所有概率测度的集合。则$\mathcal{M}_{\mathcal{Q}}=\conv(\mathcal{Q})$。类似地，令$\mathcal{M}_0=\{\mu_0\circ f': f'\in\calF'\}$。
+\end{translation}
+
+\begin{original}
+For any $u:\Theta\times A\to\R$ and $\pi\in\Delt(\Theta)$,
+\begin{align}
+    \max_{f\in\calF} U(f, \mu_0) &= \max_{f\in\calF} \sum_{\theta\in\Theta}\sum_{s\in S} \pi(\theta)\,\mu_0(s|\theta)\,f(s)(a)\,u(\theta,a) \nonumber\\
+                                 &= \max_{\mu\in\mathcal{M}_0} \sum_{\theta\in\Theta}\sum_{s\in S} \pi(\theta)\,\mu(s|\theta)\,u(\theta,s)
+\end{align}
+where the last equality follows from the one-to-one correspondence between $\calF$ and $\mathcal{M}_0$.
+\end{original}
+
+\begin{translation}
+对于任何$u:\Theta\times A\to\R$和$\pi\in\Delt(\Theta)$，
+\begin{align}
+    \max_{f\in\calF} U(f, \mu_0) &= \max_{f\in\calF} \sum_{\theta\in\Theta}\sum_{s\in S} \pi(\theta)\,\mu_0(s|\theta)\,f(s)(a)\,u(\theta,a) \nonumber\\
+                                 &= \max_{\mu\in\mathcal{M}_0} \sum_{\theta\in\Theta}\sum_{s\in S} \pi(\theta)\,\mu(s|\theta)\,u(\theta,s)
+\end{align}
+其中最后一个等式来自$\calF$和$\mathcal{M}_0$之间的一一对应。
+\end{translation}
+
+\begin{original}
+Since there does not exist any $\mu'\in\conv(\mathcal{Q})$ such that $\mu'$ is a garbling of $\mu_0$, $\mathcal{M}_0\cap\mathcal{M}_{\mathcal{Q}}=\emptyset$. Otherwise, there must exist $\mu$ in their intersection $\mathcal{M}_0\cap\mathcal{M}_{\mathcal{Q}}$, which further indicates the existence of an action plan $f'\in\calF'$ and an experiment $\mu'\in\conv(\mathcal{Q})$ such that $\mu_0=f'\circ\mu'=\mu$, that is, some $\mu'\in\conv(\mathcal{Q})$ is a garbling of $\mu_0$. Contradiction.
+\end{original}
+
+\begin{translation}
+由于不存在任何$\mu'\in\conv(\mathcal{Q})$使得$\mu'$是$\mu_0$的混淆，$\mathcal{M}_0\cap\mathcal{M}_{\mathcal{Q}}=\emptyset$。否则，必定存在$\mu$属于它们的交集$\mathcal{M}_0\cap\mathcal{M}_{\mathcal{Q}}$，这进一步表明存在一个行动计划$f'\in\calF'$和一个实验$\mu'\in\conv(\mathcal{Q})$使得$\mu_0=f'\circ\mu'=\mu$，即某个$\mu'\in\conv(\mathcal{Q})$是$\mu_0$的混淆。矛盾。
+\end{translation}
+
+\begin{original}
+But both $\mathcal{M}_0$ and $\mathcal{M}_{\mathcal{Q}}$ are compact and convex subsets of $\R^{|\Theta|\times|S|}$, hence we can apply the separating hyperplane theorem and conclude that there exists a nonzero vector $v\in\R^{|\Theta|\times|S|}$ and real numbers $\alpha_1<\alpha_2$ such that
+\begin{equation}
+    \sum_{\theta,s} \mu(s|\theta)\,v(\theta,s) < \alpha_1, \quad \forall\mu\in\mathcal{M}_0, \qquad
+    \sum_{\theta,s} \mu'(s|\theta)\,v(\theta,s) > \alpha_2, \quad \forall\mu'\in\mathcal{M}_{\mathcal{Q}}.
+\end{equation}
+\end{original}
+
+\begin{translation}
+但$\mathcal{M}_0$和$\mathcal{M}_{\mathcal{Q}}$都是$\R^{|\Theta|\times|S|}$的紧凸子集，因此我们可以应用分离超平面定理，得出结论：存在非零向量$v\in\R^{|\Theta|\times|S|}$和实数$\alpha_1<\alpha_2$使得
+\begin{equation}
+    \sum_{\theta,s} \mu(s|\theta)\,v(\theta,s) < \alpha_1, \quad \forall\mu\in\mathcal{M}_0, \qquad
+    \sum_{\theta,s} \mu'(s|\theta)\,v(\theta,s) > \alpha_2, \quad \forall\mu'\in\mathcal{M}_{\mathcal{Q}}.
+\end{equation}
+\end{translation}
+
+\begin{original}
+Consider $u=v$, $\pi=\text{uniform}(\Theta)$, and $A=S$ as given above.
+\begin{align}
+    \max_{f\in\calF} U(f, \mu_0) &= \max_{\mu\in\mathcal{M}_0} \sum_{\theta,s} \pi(\theta)\,\mu(s|\theta)\,u(\theta,s) \nonumber\\
+                                 &= \frac{1}{|\Theta|} \max_{\mu\in\mathcal{M}_0} \sum_{\theta,s} \mu(s|\theta)\,v(\theta,s) \nonumber\\
+                                 &< \frac{\alpha_1}{|\Theta|} \nonumber\\
+                                 &< \frac{1}{|\Theta|} \min_{\mu'\in\mathcal{M}_{\mathcal{Q}}} \sum_{\theta,s} \mu'(s|\theta)\,v(\theta,s) \nonumber\\
+                                 &= \min_{\mu'\in\conv(\mathcal{Q})} \sum_{\theta,s} \pi(\theta)\,\mu'(s|\theta)\,u(\theta,s)
+\end{align}
+where the inequality follows from the separation result above and the last equality follows from the one-to-one correspondence of $\mathcal{M}_{\mathcal{Q}}$ and $\conv(\mathcal{Q})$.
+\end{original}
+
+\begin{translation}
+如上所述，考虑$u=v$，$\pi=\text{uniform}(\Theta)$，以及$A=S$。
+\begin{align}
+    \max_{f\in\calF} U(f, \mu_0) &= \max_{\mu\in\mathcal{M}_0} \sum_{\theta,s} \pi(\theta)\,\mu(s|\theta)\,u(\theta,s) \nonumber\\
+                                 &= \frac{1}{|\Theta|} \max_{\mu\in\mathcal{M}_0} \sum_{\theta,s} \mu(s|\theta)\,v(\theta,s) \nonumber\\
+                                 &< \frac{\alpha_1}{|\Theta|} \nonumber\\
+                                 &< \frac{1}{|\Theta|} \min_{\mu'\in\mathcal{M}_{\mathcal{Q}}} \sum_{\theta,s} \mu'(s|\theta)\,v(\theta,s) \nonumber\\
+                                 &= \min_{\mu'\in\conv(\mathcal{Q})} \sum_{\theta,s} \pi(\theta)\,\mu'(s|\theta)\,u(\theta,s)
+\end{align}
+其中不等式来自上述分离结果，最后一个等式来自$\mathcal{M}_{\mathcal{Q}}$和$\conv(\mathcal{Q})$之间的一一对应。
+\end{translation}
+
+\begin{original}
+Therefore, with $(u,\pi,A)=(v,\text{uniform}(\Theta),S)$,
+\begin{align}
+    V(\mathcal{P}) &= \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f, \mu) \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu\in\conv(\mathcal{P})} U(f, \mu) \nonumber\\
+                   &= \min_{\mu\in\conv(\mathcal{P})} \max_{f\in\calF} U(f, \mu) \nonumber\\
+                   &\leq \max_{f\in\calF} U(f, \mu_0) \nonumber\\
+                   &< \min_{\mu'\in\conv(\mathcal{Q})} U(f^*, \mu') \nonumber\\
+                   &= \min_{\mu'\in\conv(\mathcal{Q})} \max_{f\in\calF} U(f, \mu') \nonumber\\
+                   &\leq \max_{f\in\calF} \min_{\mu'\in\mathcal{Q}} U(f, \mu') = V(\mathcal{Q})
+\end{align}
+This completes the proof for Theorem 5. $\square$
+\end{original}
+
+\begin{translation}
+因此，取$(u,\pi,A)=(v,\text{uniform}(\Theta),S)$，
+\begin{align}
+    V(\mathcal{P}) &= \max_{f\in\calF} \min_{\mu\in\mathcal{P}} U(f, \mu) \nonumber\\
+                   &= \max_{f\in\calF} \min_{\mu\in\conv(\mathcal{P})} U(f, \mu) \nonumber\\
+                   &= \min_{\mu\in\conv(\mathcal{P})} \max_{f\in\calF} U(f, \mu) \nonumber\\
+                   &\leq \max_{f\in\calF} U(f, \mu_0) \nonumber\\
+                   &< \min_{\mu'\in\conv(\mathcal{Q})} U(f^*, \mu') \nonumber\\
+                   &= \min_{\mu'\in\conv(\mathcal{Q})} \max_{f\in\calF} U(f, \mu') \nonumber\\
+                   &\leq \max_{f\in\calF} \min_{\mu'\in\mathcal{Q}} U(f, \mu') = V(\mathcal{Q})
+\end{align}
+这完成了定理5的证明。$\square$
+\end{translation}
+
+% ============================================================
+% CONNECTION TO AMBIGUOUS EXPERIMENTS
+% ============================================================
+
+\begin{original}
+Now we can build our proof for Theorem 4 on Theorem 5. The key observation, as discussed in Section 4, is that comparisons of ambiguous experiments for maxmin DMs can be interpreted as comparisons of sets of experiments under the maxmin criterion.
+\end{original}
+
+\begin{translation}
+现在我们可以在定理5的基础上构建定理4的证明。关键观察是，如第4节所述，对最大最小DM的模糊实验的比较可以解释为最大最小准则下实验集合的比较。
+\end{translation}
+
+\begin{original}
+For completeness, we establish the following lemma.
+\end{original}
+
+\begin{translation}
+为完整起见，我们建立以下引理。
+\end{translation}
+
+\begin{lemma}
+Let $p:\Omega\to\Delt(S)^{\Theta}$ and $q:\Omega'\to\Delt(S')^{\Theta}$ be two ambiguous experiments. Let $p(\Omega)=\{p_{\omega}:\omega\in\Omega\}$, $q(\Omega')=\{q_{\omega}:\omega\in\Omega'\}$. The following conditions are equivalent:
+\begin{enumerate}
+    \item $p$ is preferred to $q$ in every decision problem by every decision maker who uses the maxmin criterion. That is, $p$ has weakly higher ex-ante value than $q$ for every $u$, $\pi$, $A$ when the aggregator is $\Phi_W$.
+    \item As sets of Blackwell experiments, $p(\Omega)$ is preferred to $q(\Omega')$ in every decision problem by every decision maker who uses the maxmin criterion.
+\end{enumerate}
+\end{lemma}
+
+\begin{original}
+\textit{Proof of Lemma 1.} Fix any $u$, $\pi$, $A$, combined with the Wald aggregator $\Phi_W$,
+\begin{align}
+    V_W(p) \geq V_W(q) &\iff \sup_{f\in\calF} \inf_{\omega\in\Omega} U(f, p_{\omega}) \geq \sup_{f'\in\calF'} \inf_{\omega\in\Omega'} U(f', q_{\omega}) \\
+                        &\iff \sup_{f\in\calF} \inf_{\mu\in p(\Omega)} U(f, \mu) \geq \sup_{f'\in\calF'} \inf_{\mu'\in q(\Omega')} U(f', \mu') \\
+                        &\iff \sup_{f\in\calF} \min_{\mu\in \overline{p(\Omega)}} U(f, \mu) \geq \sup_{f'\in\calF'} \min_{\mu'\in \overline{q(\Omega')}} U(f', \mu') \\
+                        &\iff \max_{f\in\calF} \min_{\mu\in \overline{p(\Omega)}} U(f, \mu) \geq \max_{f'\in\calF'} \min_{\mu'\in \overline{q(\Omega')}} U(f', \mu') \\
+                        &\iff V(\overline{p(\Omega)}) \geq V(\overline{q(\Omega')})
+\end{align}
+where the third equivalence follows from the facts that $p(\Omega)$ and $q(\Omega')$ are bounded subsets of finite-dimensional Euclidean spaces and that $U$ is continuous in its second argument. $\square$
+\end{original}
+
+\begin{translation}
+\textit{引理1的证明。}固定任何$u$，$\pi$，$A$，结合Wald聚合器$\Phi_W$，
+\begin{align}
+    V_W(p) \geq V_W(q) &\iff \sup_{f\in\calF} \inf_{\omega\in\Omega} U(f, p_{\omega}) \geq \sup_{f'\in\calF'} \inf_{\omega\in\Omega'} U(f', q_{\omega}) \\
+                        &\iff \sup_{f\in\calF} \inf_{\mu\in p(\Omega)} U(f, \mu) \geq \sup_{f'\in\calF'} \inf_{\mu'\in q(\Omega')} U(f', \mu') \\
+                        &\iff \sup_{f\in\calF} \min_{\mu\in \overline{p(\Omega)}} U(f, \mu) \geq \sup_{f'\in\calF'} \min_{\mu'\in \overline{q(\Omega')}} U(f', \mu') \\
+                        &\iff \max_{f\in\calF} \min_{\mu\in \overline{p(\Omega)}} U(f, \mu) \geq \max_{f'\in\calF'} \min_{\mu'\in \overline{q(\Omega')}} U(f', \mu') \\
+                        &\iff V(\overline{p(\Omega)}) \geq V(\overline{q(\Omega')})
+\end{align}
+其中第三个等价来自$p(\Omega)$和$q(\Omega')$是有限维欧氏空间的有界子集，以及$U$在其第二参数上是连续的。$\square$
+\end{translation}
+
+\begin{original}
+\textit{Proof of Theorem 4.}
+\begin{align}
+    &\text{$p$ is Wald more informative than $q$} \nonumber\\
+    \iff& \text{For any } \mu\in\conv(\overline{p(\Omega)}), \text{ there exists } \mu'\in\conv(\overline{q(\Omega')}) \text{ that is a garbling of } \mu \nonumber\\
+    \iff& \text{$\overline{p(\Omega)}$ is preferred to $\overline{q(\Omega')}$ in every decision problem by every decision maker who} \nonumber\\
+         &\qquad \text{uses the maxmin criterion} \nonumber\\
+    \iff& \text{$p$ is preferred to $q$ in every decision problem by every decision maker who uses} \nonumber\\
+         &\qquad \text{the maxmin criterion} \nonumber
+\end{align}
+where the first equivalence follows from Definition 7, the second equivalence follows from Theorem 5, and the third equivalence follows from Lemma 1. $\square$
+\end{original}
+
+\begin{translation}
+\textit{定理4的证明。}
+\begin{align}
+    &\text{$p$在Wald意义上比$q$更具信息性} \nonumber\\
+    \iff& \text{对于任何 } \mu\in\conv(\overline{p(\Omega)}), \text{ 存在 } \mu'\in\conv(\overline{q(\Omega')}) \text{ 是 } \mu \text{ 的混淆} \nonumber\\
+    \iff& \text{$\overline{p(\Omega)}$在每一个决策问题中被每一个使用最大最小准则的决策者} \nonumber\\
+         &\qquad \text{偏好于$\overline{q(\Omega')}$} \nonumber\\
+    \iff& \text{$p$在每一个决策问题中被每一个使用最大最小准则的决策者偏好于$q$} \nonumber
+\end{align}
+其中第一个等价来自定义7，第二个等价来自定理5，第三个等价来自引理1。$\square$
+\end{translation}
+
+% ============================================================
+% DATA AVAILABILITY
+% ============================================================
+
+\subsection*{Data availability}
+\begin{original}
+No data was used for the research described in the article.
+\end{original}
+
+\begin{translation}
+本文所述研究未使用任何数据。
+\end{translation}
+
+% ============================================================
+% REFERENCES
+% ============================================================
+
+\bisection{References}{参考文献}
+
+\begin{thebibliography}{99}
+
+\bibitem{Asano2019}
+Asano, Takao, Kojima, Hiroyuki, 2019. Consequentialism and dynamic consistency in updating ambiguous beliefs. Econ.\ Theory 68 (1), 223--250.
+
+\bibitem{Beauchene2019}
+Beauch\^{e}ne, Dorian, Li, Jian, Li, Ming, 2019. Ambiguous persuasion. J.\ Econ.\ Theory 179, 312--365.
+
+\bibitem{Blackwell1951}
+Blackwell, David, 1951. Comparison of experiments. In: Proceedings of the Second Berkeley Symposium on Mathematical Statistics and Probability, pp.\ 93--102.
+
+\bibitem{Blackwell1953}
+Blackwell, David, 1953. Equivalent comparisons of experiments. Ann.\ Math.\ Stat., 265--272.
+
+\bibitem{Bose2014}
+Bose, Subir, Renou, Ludovic, 2014. Mechanism design with ambiguous communication devices. Econometrica 82 (5), 1853--1872.
+
+\bibitem{Celen2012}
+\c{C}elen, Bo\u{g}a\c{c}han, 2012. Informativeness of experiments for MEU. J.\ Math.\ Econ.\ 48 (6), 404--406.
+
+\bibitem{CerreiaVioglio2011}
+Cerreia-Vioglio, Simone, Maccheroni, Fabio, Marinacci, Massimo, Montrucchio, Luigi, 2011. Uncertainty averse preferences. J.\ Econ.\ Theory 146 (4), 1275--1330.
+
+\bibitem{Chen2022}
+Chen, Jaden Yang, 2022. Biased learning under ambiguous information. J.\ Econ.\ Theory 203, 105492.
+
+\bibitem{Cheng2023}
+Cheng, Xienan, B\"{o}rgers, Tilman, 2023. Dominance and optimality. Available at SSRN 4422054.
+
+\bibitem{Epstein2023}
+Epstein, Larry G., Halevy, Yoram, 2023. Hard-to-interpret signals. J.\ Eur.\ Econ.\ Assoc., jvad062.
+
+\bibitem{Epstein2007}
+Epstein, Larry G., Schneider, Martin, 2007. Learning under ambiguity. Rev.\ Econ.\ Stud.\ 74 (4), 1275--1303.
+
+\bibitem{Epstein2008}
+Epstein, Larry G., Schneider, Martin, 2008. Ambiguity, information quality, and asset pricing. J.\ Finance 63 (1), 197--228.
+
+\bibitem{Gensbittel2015}
+Gensbittel, Fabien, Renou, Ludovic, Tomala, Tristan, 2015. Comparisons of ambiguous experiments. HEC Paris Research Paper No.\ ECO/SCD-2015-1074.
+
+\bibitem{Gilboa1989}
+Gilboa, Itzhak, Schmeidler, David, 1989. Maxmin expected utility with non-unique prior. J.\ Math.\ Econ.\ 18 (2), 141--153.
+
+\bibitem{Hansen2001}
+Hansen, Lars Peter, Sargent, Thomas J., 2001. Robust control and model uncertainty. Am.\ Econ.\ Rev.\ 91 (2), 60--66.
+
+\bibitem{Hansen2008}
+Hansen, Lars Peter, Sargent, Thomas J., 2008. Robustness. Princeton University Press.
+
+\bibitem{Kellner2022}
+Kellner, Christian, Le Quement, Mark T., Riener, Gerhard, 2022. Reacting to ambiguous messages: an experimental analysis. Games Econ.\ Behav.\ 136, 360--378.
+
+\bibitem{Klibanoff2005}
+Klibanoff, Peter, Marinacci, Massimo, Mukerji, Sujoy, 2005. A smooth model of decision making under ambiguity. Econometrica 73 (6), 1849--1892.
+
+\bibitem{Kops2023}
+Kops, Christopher, Pasichnichenko, Illia, 2023. Testing negative value of information and ambiguity aversion. J.\ Econ.\ Theory 213, 105730.
+
+\bibitem{Li2016}
+Li, Jian, Zhou, Junjie, 2016. Blackwell's informativeness ranking with uncertainty-averse preferences. Games Econ.\ Behav.\ 96, 18--29.
+
+\bibitem{Li2020}
+Li, Jian, Zhou, Junjie, 2020. Information order in monotone decision problems under uncertainty. J.\ Econ.\ Theory 187, 105012.
+
+\bibitem{Liang2021}
+Liang, Yucheng, 2021. Learning from unknown information sources. Available at SSRN 3314789.
+
+\bibitem{Marinacci2015}
+Marinacci, Massimo, 2015. Model uncertainty. J.\ Eur.\ Econ.\ Assoc.\ 13 (6), 1022--1100.
+
+\bibitem{deOliveira2018}
+de Oliveira, Henrique, 2018. Blackwell's informativeness theorem using diagrams. Games Econ.\ Behav.\ 109, 126--131.
+
+\bibitem{deOliveira2017}
+de Oliveira, Henrique, Denti, Tommaso, Mihm, Maximilian, Ozbek, Kemal, 2017. Rationally inattentive preferences and hidden information costs. Theor.\ Econ.\ 12 (2), 621--654.
+
+\bibitem{Shishkin2023}
+Shishkin, Denis, Ortoleva, Pietro, 2023. Ambiguous information and dilation: an experiment. J.\ Econ.\ Theory 105610.
+
+\bibitem{Terkelsen1972}
+Terkelsen, Frode, 1972. Some minimax theorems. Math.\ Scand.\ 31 (2), 405--413.
+
+\end{thebibliography}
+
+\end{document}

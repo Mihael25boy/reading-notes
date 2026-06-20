@@ -1,0 +1,1761 @@
+% Chapters 16-18 from Bergin: Mathematics for Economists
+% Bilingual edition: English original + Chinese translation
+% Generated: 2026-06-19
+
+\part{Dynamic Models, Probability \& Distributions / 动态模型、概率与分布}
+
+%=====================================================================
+\chapter{Differential Equations / 微分方程}
+%=====================================================================
+
+\section{Introduction / 引言}
+
+\begin{original}
+In this chapter, dynamic models are considered where some variable varies continuously as a function of some other variable (such as time). If $y$ is a function of $x$, then assuming differentiability, the derivative is written $\frac{dy}{dx}$ or $y'(x)$. Knowing $y$, it is easy to determine the derivative $y'(x)$. However, in a variety of problems, the situation is reversed --- the derivative, $y'(x)$ is known, but not the actual function $y(x)$. And in this class of problem, the task is to determine $y(x)$ from knowledge of $y'(x)$, called solving the differential equation. Section 16.1.1 provides a few motivating examples to illustrate how such dynamics may arise. Generally, it is difficult to determine $y(x)$ from knowledge of $x$. For example, given $y(x) = \ln(1 + x^2) + xe^x$, differentiation gives $y'(x) = \frac{2x}{1+x^2} + e^x + xe^x = \frac{2x}{1+x^2} + (1 + x)e^x$. But if given $y'(x) = \frac{2x}{1+x^2} + (1 + x)e^x$, it is more difficult to see that $y(x) = \ln(1 + x^2) + xe^x$.
+\end{original}
+\begin{translation}
+本章考虑动态模型，其中某个变量作为另一个变量（如时间）的函数连续变化。若$y$是$x$的函数，则在可微的假设下，导数记为$\frac{dy}{dx}$或$y'(x)$。已知$y$，容易确定导数$y'(x)$。然而，在许多问题中，情况是相反的---导数$y'(x)$已知，而实际函数$y(x)$未知。在这类问题中，任务是从$y'(x)$的知识确定$y(x)$，这称为求解微分方程。第16.1.1节提供了一些启发性例子，说明这种动力学如何产生。一般来说，从对$x$的知识确定$y(x)$是困难的。例如，给定$y(x) = \ln(1 + x^2) + xe^x$，求导得$y'(x) = \frac{2x}{1+x^2} + e^x + xe^x = \frac{2x}{1+x^2} + (1 + x)e^x$。但若给定$y'(x) = \frac{2x}{1+x^2} + (1 + x)e^x$，则更难看出$y(x) = \ln(1 + x^2) + xe^x$。
+\end{translation}
+
+\begin{original}
+The general approach to this problem is to categorize differential equations into classes of problems of varying difficulty. In a first-order differential equation, the dynamic relation is expressed by a function $f$ with $y' = f(y, x)$. If this can be written in the form $a_1(x)y'(x) + a_0(x)y = b(x)$ it is called a first-order linear differential equation. Similarly, a second-order differential equation has the form $y''(x) = f(y', y, x)$, where $y''$ is the second derivative of the (unknown) function $y$. Again, the task is to find the function $y(x)$ that satisfies this equation. Depending on the function $f$, this problem may be extremely difficult to solve. In Section 16.2, first-order linear differential equations are considered. These arise in a number of economic models --- such as growth models. Turning to non-linear differential equations, these are typically difficult to solve but there are some specific functional forms for which a solution may easily be found. Two non-linear first-order differential equations (the logistic and Bernoulli equations) are introduced in Section 16.3. Given a first-order differential equation, $y'(x) = f(y, x)$, a fundamental question concerns the existence of a solution: is there a unique function $y$ that satisfies this equation? Section 16.4 provides sufficient conditions for the existence of a unique solution. Second-order linear differential equations are considered in Section 16.5. Finally, Section 16.6 introduces linear systems of differential equations and uses that framework to study price dynamics in a multimarket system.
+\end{original}
+\begin{translation}
+解决此问题的一般方法是将微分方程按难度分类。在一阶微分方程中，动态关系由一个函数$f$以$y' = f(y, x)$表示。如果可以写成$a_1(x)y'(x) + a_0(x)y = b(x)$的形式，则称为一阶线性微分方程。类似地，二阶微分方程具有形式$y''(x) = f(y', y, x)$，其中$y''$是（未知）函数$y$的二阶导数。同样，任务是找到满足该方程的函数$y(x)$。取决于函数$f$，此问题可能极难求解。第16.2节讨论一阶线性微分方程，这些方程出现在许多经济模型中，如增长模型。转向非线性微分方程，这些通常难以求解，但有一些特定的函数形式可以容易地找到解。第16.3节介绍了两个非线性一阶微分方程（逻辑斯蒂方程和伯努利方程）。给定一阶微分方程$y'(x) = f(y, x)$，一个基本问题是解的存在性：是否存在唯一的函数$y$满足该方程？第16.4节提供了唯一解存在的充分条件。第16.5节讨论二阶线性微分方程。最后，第16.6节介绍了线性微分方程组，并用该框架研究多市场体系中的价格动态。
+\end{translation}
+
+\subsection{Preliminary discussion / 初步讨论}
+
+\begin{original}
+A differential equation is a rule governing the change in some variable. For example, suppose there is a stock of wealth invested and growing at the rate $r$. Thus, if the current stock is $y(t)$, and the value a short time later is $y(t + \Delta t)$ then the percentage increase is given by $\frac{y(t+\Delta t) - y(t)}{y(t)}$. The increase per unit of time over the time period $t$ to $t + \Delta t$ is given by $\frac{1}{\Delta t}\frac{y(t+\Delta t) - y(t)}{y(t)} = \frac{1}{y(t)}\frac{y(t+\Delta t) - y(t)}{\Delta t}$. If $y(t)$ varies smoothly with $t$, then this is approximately $\frac{1}{y(t)}\frac{dy}{dt}$, as $\Delta t$ goes to $0$. With a constant growth rate of $r$, if $y(t)$ is the stock of wealth at time $t$, the percentage change in the stock is given by the equation $\frac{1}{y(t)}\frac{dy}{dt} = r$, so that
+\[
+\frac{dy}{dt} - r y(t) = 0.
+\]
+This is a differential equation where the change in $y$ over time is governed by the current value of $y$ and the parameter $r$. A solution to the differential equation is a function $y(t)$ satisfying the expression $\frac{dy}{dt} - r y(t) = 0$ for each $t$. This differential equation is easily solved, recognizing that $\frac{d \ln y(t)}{dt} = \frac{1}{y(t)}\frac{dy}{dt}$, so that
+\[
+\ln y(t) - \ln y(t_0) = \int_{t_0}^{t} \frac{d \ln y(t)}{dt} dt = \int_{t_0}^{t} \frac{1}{y(t)}\frac{d y(t)}{dt} dt = \int_{t_0}^{t} r dt = r(t - t_0).
+\]
+Thus, $\ln y(t) = \ln y(t_0) + r(t - t_0)$, so that $y(t) = e^{\ln y(t_0)+r(t-t_0)} = y(t_0)e^{r(t-t_0)}$.
+\end{original}
+\begin{translation}
+微分方程是控制某个变量变化规律的方程。例如，假设有一笔财富以速率$r$投资并增长。因此，若当前存量为$y(t)$，短时间后的价值为$y(t + \Delta t)$，则百分比增长由$\frac{y(t+\Delta t) - y(t)}{y(t)}$给出。在时间区间$t$到$t + \Delta t$上每单位时间的增长由$\frac{1}{\Delta t}\frac{y(t+\Delta t) - y(t)}{y(t)} = \frac{1}{y(t)}\frac{y(t+\Delta t) - y(t)}{\Delta t}$给出。若$y(t)$随$t$平滑变化，则当$\Delta t$趋于$0$时，这近似为$\frac{1}{y(t)}\frac{dy}{dt}$。在增长率为常数$r$的情况下，若$y(t)$是时刻$t$的财富存量，则存量的百分比变化由方程$\frac{1}{y(t)}\frac{dy}{dt} = r$给出，从而
+\[
+\frac{dy}{dt} - r y(t) = 0.
+\]
+这是一个微分方程，其中$y$随时间的变化由$y$的当前值和参数$r$控制。微分方程的解是一个函数$y(t)$，对每个$t$满足表达式$\frac{dy}{dt} - r y(t) = 0$。此微分方程容易求解，注意到$\frac{d \ln y(t)}{dt} = \frac{1}{y(t)}\frac{dy}{dt}$，从而
+\[
+\ln y(t) - \ln y(t_0) = \int_{t_0}^{t} \frac{d \ln y(t)}{dt} dt = \int_{t_0}^{t} \frac{1}{y(t)}\frac{d y(t)}{dt} dt = \int_{t_0}^{t} r dt = r(t - t_0).
+\]
+因此，$\ln y(t) = \ln y(t_0) + r(t - t_0)$，从而$y(t) = e^{\ln y(t_0)+r(t-t_0)} = y(t_0)e^{r(t-t_0)}$。
+\end{translation}
+
+\begin{original}
+More generally, given $y(x)$, the function $y(x)$ is an unknown function of the variable $x$ (or $t$ when it is convenient to emphasize time), but the derivative $y'(x)$ is specified in terms of some function $f$:
+\[
+\frac{dy}{dx} = f(y, x).
+\]
+Such an equation is called an ordinary differential equation of order $1$. Writing $y^{(n)}$ for the $n$th derivative of $y$ with respect to $x$, an equation of the form
+\[
+y^{(n)} = f(y^{(n-1)}, y^{(n-2)}, \ldots, y^{(1)}, y, x)
+\]
+is called an $n$th-order ordinary differential equation. A solution is a function $y(x)$ satisfying the equation.
+
+The next example illustrates a simple application (a first-order linear differential equation), determining the flow of payments required to amortize a loan in some fixed period of time.
+\end{original}
+\begin{translation}
+更一般地，给定$y(x)$，函数$y(x)$是变量$x$（或为强调时间而用$t$）的未知函数，但导数$y'(x)$由某个函数$f$确定：
+\[
+\frac{dy}{dx} = f(y, x).
+\]
+这样的方程称为一阶常微分方程。记$y^{(n)}$为$y$关于$x$的$n$阶导数，则形如
+\[
+y^{(n)} = f(y^{(n-1)}, y^{(n-2)}, \ldots, y^{(1)}, y, x)
+\]
+的方程称为$n$阶常微分方程。解是满足该方程的函数$y(x)$。
+
+下一个例子说明了一个简单的应用（一阶线性微分方程），确定在某个固定期限内摊销贷款所需的支付流。
+\end{translation}
+
+\section{First-order linear differential equations / 一阶线性微分方程}
+
+\begin{original}
+A first-order linear differential equation has the form:
+\[
+a_1(x)\frac{dy}{dx} + a_0(x)y = b(x).
+\]
+This expression defines the movement of $y$, $\frac{dy}{dx}$, in terms of its current value, $y$, and the value of a variable $x$. A solution to the differential equation is a function $y(x)$ satisfying this equation on some interval in the domain of $x$.
+\end{original}
+\begin{translation}
+一阶线性微分方程具有如下形式：
+\[
+a_1(x)\frac{dy}{dx} + a_0(x)y = b(x).
+\]
+该表达式以$y$的当前值和变量$x$的值定义了$y$的运动$\frac{dy}{dx}$。微分方程的解是一个在$x$的定义域上某个区间内满足该方程的函数$y(x)$。
+\end{translation}
+
+\subsection{Constant coefficients / 常系数}
+
+\begin{original}
+When the coefficients $a_1$, $a_0$ and $b$ do not depend on $x$ and $a_1(x) \neq 0$, $a_1\frac{dy}{dx} + a_0 y = b$ may be rewritten $\frac{dy}{dx} + \frac{a_0}{a_1}y = \frac{b}{a_1}$, giving the simple first-order differential equation:
+\[
+\frac{dy}{dx} + \alpha y = \beta. \tag{16.1}
+\]
+
+A particular solution, $y$, is any function satisfying Equation 16.1. If $y_a$ and $y_b$ satisfy Equation 16.1, then $y_c = y_a - y_b$ satisfies the homogeneous Equation:
+\[
+\frac{dy}{dx} + \alpha y = 0. \tag{16.2}
+\]
+
+A solution to the homogeneous equation is called a complementary solution. Therefore, any two particular solutions differ by a complementary solution. So, given any particular solution, $y_p$, to Equation 16.1, every particular solution, $y$, to Equation 16.1 is equal to $y_p$ plus a complementary solution, $y_c$: $y = y_p + y_c$. The family of particular solutions is called the general solution.
+
+Therefore, every solution to Equation 16.1 may be found by finding a particular solution and adding a complementary solution. Using this observation, the general solution may be obtained by finding a particular solution and then all complementary solutions.
+
+For a particular solution, with constant coefficients, this is easy to find: set $\frac{dy}{dx} = 0$ and pick the constant $y$ to solve $\alpha y = \beta$: $y_p(x) = \frac{\beta}{\alpha}$. Next, consider the homogeneous case where $\beta = 0$, $\frac{dy}{dx} + \alpha y = 0$, and rearrange to give $\frac{1}{y}\frac{dy}{dx} = -\alpha$. Integrating,
+\[
+\int_{x_0}^{x} \frac{1}{y}\frac{dy}{dx} dx = \int_{x_0}^{x} \frac{1}{y(\tilde{x})} y'(\tilde{x}) d\tilde{x} = \ln y(x) - \ln y(x_0) = -\int_{x_0}^{x} \alpha d\tilde{x} = -\alpha(x - x_0).
+\]
+Therefore, $\ln y(x) = [\ln y(x_0) + \alpha x_0] - \alpha x$. So, the complementary solution is:
+\[
+y_c(x) = [e^{\ln y(x_0)+\alpha x_0}]e^{-\alpha x} = c_0 e^{-\alpha x}.
+\]
+Note that $c_0$ is an indeterminate constant of integration, so this expression is a family of functions. Combining the particular and complementary solutions gives:
+\[
+y(x) = y_p(x) + y_c(x) = \frac{\beta}{\alpha} + c_0 e^{-\alpha x}. \tag{16.3/16.4}
+\]
+
+If the value of $y$ is given at $x_0$, $y_0 = y(x_0)$, then $y_0 = \frac{\beta}{\alpha} + c_0 e^{-\alpha x_0}$ or $y_0 - \frac{\beta}{\alpha} = c_0 e^{-\alpha x_0}$ or $c_0 = \left[y_0 - \frac{\beta}{\alpha}\right] e^{\alpha x_0}$. Therefore,
+\[
+y(x) = y_p(x) + y_c(x) = \frac{\beta}{\alpha} + \left[y_0 - \frac{\beta}{\alpha}\right] e^{-\alpha(x-x_0)}. \tag{16.5/16.6}
+\]
+\end{original}
+\begin{translation}
+当系数$a_1$、$a_0$和$b$不依赖于$x$且$a_1(x) \neq 0$时，$a_1\frac{dy}{dx} + a_0 y = b$可重写为$\frac{dy}{dx} + \frac{a_0}{a_1}y = \frac{b}{a_1}$，得到简单的一阶微分方程：
+\[
+\frac{dy}{dx} + \alpha y = \beta. \tag{16.1}
+\]
+
+特解$y$是满足方程16.1的任意函数。若$y_a$和$y_b$满足方程16.1，则$y_c = y_a - y_b$满足齐次方程：
+\[
+\frac{dy}{dx} + \alpha y = 0. \tag{16.2}
+\]
+
+齐次方程的解称为互补解。因此，任意两个特解之间相差一个互补解。所以，给定方程16.1的任意特解$y_p$，方程16.1的每个特解$y$等于$y_p$加上某个互补解$y_c$：$y = y_p + y_c$。所有特解的族称为通解。
+
+因此，方程16.1的每个解都可以通过找到一个特解并加上一个互补解来求得。利用这一观察，通解可以通过找到一个特解然后找到所有互补解来获得。
+
+对于常系数情况，特解很容易找到：令$\frac{dy}{dx} = 0$并选择常数$y$使得$\alpha y = \beta$：$y_p(x) = \frac{\beta}{\alpha}$。接下来，考虑齐次情况，即$\beta = 0$，$\frac{dy}{dx} + \alpha y = 0$，重排得$\frac{1}{y}\frac{dy}{dx} = -\alpha$。积分得，
+\[
+\int_{x_0}^{x} \frac{1}{y}\frac{dy}{dx} dx = \int_{x_0}^{x} \frac{1}{y(\tilde{x})} y'(\tilde{x}) d\tilde{x} = \ln y(x) - \ln y(x_0) = -\int_{x_0}^{x} \alpha d\tilde{x} = -\alpha(x - x_0).
+\]
+因此，$\ln y(x) = [\ln y(x_0) + \alpha x_0] - \alpha x$。故互补解为：
+\[
+y_c(x) = [e^{\ln y(x_0)+\alpha x_0}]e^{-\alpha x} = c_0 e^{-\alpha x}.
+\]
+注意$c_0$是一个未定的积分常数，因此该表达式是一个函数族。将特解和互补解组合起来得到：
+\[
+y(x) = y_p(x) + y_c(x) = \frac{\beta}{\alpha} + c_0 e^{-\alpha x}. \tag{16.3/16.4}
+\]
+
+若已知$y$在$x_0$处的值$y_0 = y(x_0)$，则$y_0 = \frac{\beta}{\alpha} + c_0 e^{-\alpha x_0}$或$y_0 - \frac{\beta}{\alpha} = c_0 e^{-\alpha x_0}$，即$c_0 = [y_0 - \frac{\beta}{\alpha}] e^{\alpha x_0}$。因此，
+\[
+y(x) = y_p(x) + y_c(x) = \frac{\beta}{\alpha} + \left[y_0 - \frac{\beta}{\alpha}\right] e^{-\alpha(x-x_0)}. \tag{16.5/16.6}
+\]
+\end{translation}
+\begin{original}
+\textbf{REMARK 16.1:} What happens to the solution function $y(x)$ as $x$ becomes very large? From the solution 16.4, it is clear that the answer depends on $\alpha$. If $\alpha > 0$, then $e^{-\alpha x}$ goes to $0$ as $x$ becomes large, and if $\alpha < 0$, then $e^{-\alpha x}$ goes to infinity (or minus infinity, depending on $c_0$) as $x$ becomes large. Call the first case ``stable'' and the second ``unstable''. Considering the complementary equation, $\frac{dy}{dx} + \alpha y = 0$, a trial solution for $y$ is $y(x) = e^{rx}$, so that the equation becomes $0 = re^{rx} + \alpha e^{rx} = (r + \alpha)e^{rx}$ giving $(r + \alpha) = 0$. This is called the characteristic polynomial of the homogeneous equation and has root $r = -\alpha$. Therefore, the dynamic system is stable if the characteristic equation has a negative root.
+
+\textbf{EXAMPLE 16.2:} The Harrod--Domar model of economic growth postulates that output and capital are related according the formula $K = \nu Y$, where $K$ is the aggregate amount of capital, $Y$ national output and $\nu$ a coefficient determining the amount of capital required per unit of output produced. Savings, $S$, is related to output according to the formula, $S = sY$, so that savings is proportional to $Y$. Investment $I$ equals saving $S$, $I = S$. Capital changes over time owing to two effects: investment raises capital and depreciation reduces capital, where depreciation is assumed to be at rate $\delta$. Therefore, over an increment of time $\Delta t$, the change in capital is
+\[
+\Delta K = (I - \delta K)\Delta t = (sY - \delta \nu Y)\Delta t,
+\]
+using $I = sY$ and $K = \nu Y$. Since $K = \nu Y$, $\Delta K = \nu \Delta Y$ and so,
+\[
+\nu \Delta Y = (I - \delta K)\Delta t,\qquad \nu \Delta Y = \left(\frac{s}{\nu} - \delta\right)Y \Delta t,\qquad \frac{\Delta Y}{\Delta t} = \frac{s - \delta \nu}{\nu} Y.
+\]
+In continuous time, this is written: $\frac{dY}{dt} = (\frac{s}{\nu} - \delta) Y$, or $\frac{dY}{dt} - (\frac{s}{\nu} - \delta) Y = 0$. From the earlier discussion, this has solution:
+\[
+Y(t) = Y(0) \cdot e^{(\frac{s}{\nu} - \delta) t}.
+\]
+
+\textbf{EXAMPLE 16.3:} The linear demand and supply model is given by the equations:
+\[
+Q_d = \alpha - \beta p, \qquad Q_s = \gamma + \delta p,
+\]
+where $\alpha \gg 0$ and $\beta, \delta > 0$. Define a dynamic model by setting $\frac{dp}{dt} = \kappa(Q_d - Q_s)$, where $\kappa > 0$ is a constant. Thus, $\frac{dp}{dt} = \kappa[\alpha - \gamma - (\beta + \delta)p]$ or
+\[
+\frac{dp}{dt} + \kappa(\beta + \delta)p = \kappa(\alpha - \gamma).
+\]
+Solving,
+\[
+p(t) = c_0 e^{-\kappa(\beta+\delta)t} + \frac{\alpha - \gamma}{\beta + \delta}.
+\]
+At $t = 0$, $p(0) = c_0 + \frac{\alpha - \gamma}{\beta + \delta}$, so that $c_0 = p(0) - \frac{\alpha - \gamma}{\beta + \delta}$, and substituting this gives,
+\[
+p(t) = \left(p(0) - \frac{\alpha - \gamma}{\beta + \delta}\right) e^{-\kappa(\beta+\delta)t} + \frac{\alpha - \gamma}{\beta + \delta}.
+\]
+
+\textbf{EXAMPLE 16.4:} According to Newton's second law, $F = ma$, force equals mass times acceleration. If $s$ denotes speed or velocity, $\frac{ds}{dt} = a(t)$, acceleration is equal to change in speed. Thus $F = m\frac{ds}{dt}$. Consider an object falling from the sky. In a vacuum, gravity creates force proportional to mass: $mg$ where $g$ is a gravity parameter ($g$ is roughly $9.8\;\text{m/s}^2$). So, for an object falling in a vacuum, $mg = m\frac{ds}{dt}$. However, in the air, an object with mass encounters resistance proportional to speed, tending to offset gravity. Suppose the proportionality factor is $k$, so that the acceleration formula becomes $m\frac{ds}{dt} = mg - k s(t)$. Or, $\frac{ds}{dt} + \frac{k}{m}s(t) = g$. Terminal velocity $\frac{ds}{dt} = 0$ occurs when speed satisfies $mg - ks(t) = 0$.
+
+Consider the differential equation describing a falling object: $\frac{ds}{dt} + \frac{k}{m}s(t) = g$. Suppose that at time $t_0 = 0$, the object begins falling so that, initially, the speed is $0$: $s_0 = s(t_0) = 0$. According to the formula:
+\[
+s(t) = \left(s_0 - \frac{gm}{k}\right)e^{-kt} + \frac{gm}{k} = \frac{gm}{k}(1 - e^{-kt}).
+\]
+Thus, the speed converges to $s(\infty) = \frac{gm}{k}$, so that the speed at time $t$ as a fraction of terminal velocity is $f = \frac{s(t)}{s(\infty)} = (1 - e^{-kt})$. Therefore, $e^{-kt} = (1 - f)$ and $-kt = \ln(1 - f)$ so that $t = -\frac{1}{k}\ln(1 - f)$. For a skydiver in an outstretched position, terminal velocity is in the approximate range of 120--130 miles per hour.
+\end{original}
+\begin{translation}
+\textbf{注16.1：}当$x$变得非常大时，解函数$y(x)$会怎样？从解16.4可以清楚地看出答案取决于$\alpha$。若$\alpha > 0$，则当$x$变大时$e^{-\alpha x}$趋于$0$；若$\alpha < 0$，则当$x$变大时$e^{-\alpha x}$趋于无穷（或负无穷，取决于$c_0$）。称第一种情况为``稳定''，第二种为``不稳定''。考虑互补方程$\frac{dy}{dx} + \alpha y = 0$，对$y$的试探解为$y(x) = e^{rx}$，使得方程变为$0 = re^{rx} + \alpha e^{rx} = (r + \alpha)e^{rx}$，得到$(r + \alpha) = 0$。这称为齐次方程的特征多项式，具有根$r = -\alpha$。因此，若特征方程有负根，则动态系统是稳定的。
+
+\textbf{例16.2：}哈罗德--多马经济增长模型假设产出与资本按公式$K = \nu Y$相关，其中$K$是资本总量，$Y$是国民产出，$\nu$是生产每单位产出所需资本量的系数。储蓄$S$按公式$S = sY$与产出相关，因此储蓄与$Y$成比例。投资$I$等于储蓄$S$，$I = S$。资本随时间变化源于两种效应：投资增加资本，折旧减少资本，其中折旧假设以速率$\delta$发生。因此，在时间增量$\Delta t$内，资本的变化为$\Delta K = (I - \delta K)\Delta t = (sY - \delta \nu Y)\Delta t$，利用了$I = sY$和$K = \nu Y$。由于$K = \nu Y$，$\Delta K = \nu \Delta Y$，故$\nu \Delta Y = (s - \delta \nu)Y \Delta t$，$\frac{\Delta Y}{\Delta t} = \frac{s - \delta \nu}{\nu} Y$。在连续时间中，这写为：$\frac{dY}{dt} = (\frac{s}{\nu} - \delta) Y$，或$\frac{dY}{dt} - (\frac{s}{\nu} - \delta) Y = 0$。根据前面的讨论，其解为：$Y(t) = Y(0) \cdot e^{(\frac{s}{\nu} - \delta) t}$。
+
+\textbf{例16.3：}线性需求与供给模型由下列方程给出：$Q_d = \alpha - \beta p$，$Q_s = \gamma + \delta p$，其中$\alpha \gg 0$且$\beta, \delta > 0$。通过设定$\frac{dp}{dt} = \kappa(Q_d - Q_s)$来定义动态模型，其中$\kappa > 0$是常数。因此，$\frac{dp}{dt} = \kappa[\alpha - \gamma - (\beta + \delta)p]$或$\frac{dp}{dt} + \kappa(\beta + \delta)p = \kappa(\alpha - \gamma)$。求解得$p(t) = c_0 e^{-\kappa(\beta+\delta)t} + \frac{\alpha - \gamma}{\beta + \delta}$。在$t = 0$处，$p(0) = c_0 + \frac{\alpha - \gamma}{\beta + \delta}$，故$c_0 = p(0) - \frac{\alpha - \gamma}{\beta + \delta}$，代入得$p(t) = (p(0) - \frac{\alpha - \gamma}{\beta + \delta}) e^{-\kappa(\beta+\delta)t} + \frac{\alpha - \gamma}{\beta + \delta}$。
+
+\textbf{例16.4：}根据牛顿第二定律，$F = ma$，力等于质量乘加速度。若$s$表示速度，则$\frac{ds}{dt} = a(t)$，加速度等于速度的变化。因此$F = m\frac{ds}{dt}$。考虑一个从空中落下的物体。在真空中，重力产生与质量成比例的力：$mg$，其中$g$是以加速度衡量的重力参数（$g$约为$9.8\;\text{m/s}^2$）。因此，对于在真空中下落的物体，$mg = m\frac{ds}{dt}$。然而，在空气中，有质量的物体遇到与速度成比例的阻力，倾向于抵消重力。假设比例因子为$k$，则加速度公式变为$m\frac{ds}{dt} = mg - k s(t)$。或$\frac{ds}{dt} + \frac{k}{m}s(t) = g$。终极速度$\frac{ds}{dt} = 0$发生在速度满足$mg - ks(t) = 0$时。
+
+考虑描述下落物体的微分方程：$\frac{ds}{dt} + \frac{k}{m}s(t) = g$。假设在时刻$t_0 = 0$物体开始下落，因此初始速度为$0$：$s_0 = s(t_0) = 0$。根据公式：$s(t) = (s_0 - \frac{gm}{k})e^{-kt} + \frac{gm}{k} = \frac{gm}{k}(1 - e^{-kt})$。因此，速度收敛到$s(\infty) = \frac{gm}{k}$，故时刻$t$的速度占终极速度的比例为$f = \frac{s(t)}{s(\infty)} = (1 - e^{-kt})$。因此，$e^{-kt} = (1 - f)$且$-kt = \ln(1 - f)$，故$t = -\frac{1}{k}\ln(1 - f)$。对于四肢伸展的跳伞者，终极速度大约在每小时120--130英里的范围内。
+\end{translation}
+\subsection{Variable coefficients / 变系数}
+
+\begin{original}
+A general first-order (linear) differential equation has the form:
+\[
+a_1(x)\frac{dy}{dx} + a_0(x)y = b(x), \tag{16.7}
+\]
+where $a_1(x) \neq 0$, $\forall x$. Equation 16.7 is called the inhomogeneous equation. The homogeneous equation is obtained when $b(x) = 0$, $\forall x$:
+\[
+a_1(x)\frac{dy}{dx} + a_0(x)y = 0. \tag{16.8}
+\]
+
+To solve Equation 16.7 write it in the form:
+\[
+\frac{dy}{dx} + \frac{a_0(x)}{a_1(x)}y = \frac{b(x)}{a_1(x)},
+\]
+or, with $\alpha(x) = \frac{a_0(x)}{a_1(x)}$, and $\beta(x) = \frac{b(x)}{a_1(x)}$,
+\[
+\frac{dy}{dx} + \alpha(x)y = \beta(x). \tag{16.9}
+\]
+
+The corresponding homogeneous equation is:
+\[
+\frac{dy}{dx} + \alpha(x)y = 0.
+\]
+
+As noted earlier, a solution to Equation 16.9, $y_p$, is called a particular solution. The family of all particular solutions is called the general solution. If $y_c$ is a solution of the homogeneous equation (the complementary solution) and $y_p$ is a particular solution, then $y_p + y_c$ is also a particular solution. Note that if $y_c$ is a solution to the homogeneous equation, then so is $k y_c$ for any constant $k$ (since $\frac{dy_c}{dx} + \alpha(x) y_c = 0$ implies $k\frac{dy_c}{dx} + \alpha(x)k y_c = 0$). Therefore, if there is a solution, there will be an infinite number of solutions, requiring some initial condition to provide a unique solution.
+
+Considering the homogeneous component, $\frac{dy}{dx} + \alpha(x)y = 0$, rewrite as:
+\[
+\frac{1}{y}\frac{dy}{dx} = -\alpha(x).
+\]
+Integrating, $\ln y(x) - \ln y(x_0) = -\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}$, so that
+\[
+y(x) = y(x_0)e^{-\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} \tag{16.10}
+\]
+is a solution of the homogeneous equation. We can check this by differentiating:
+\[
+\frac{d y(x)}{dx} = y(x_0)[-\alpha(x)]e^{-\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} = [-\alpha(x)]y(x).
+\]
+
+Solving the general (inhomogeneous) case, given in Equation 16.9, to obtain a particular solution makes use of integrating factors, described next.
+\end{original}
+\begin{translation}
+一般的一阶（线性）微分方程具有形式：
+\[
+a_1(x)\frac{dy}{dx} + a_0(x)y = b(x), \tag{16.7}
+\]
+其中对所有$x$有$a_1(x) \neq 0$。方程16.7称为非齐次方程。当对所有$x$有$b(x) = 0$时得到齐次方程：
+\[
+a_1(x)\frac{dy}{dx} + a_0(x)y = 0. \tag{16.8}
+\]
+
+为求解方程16.7，将其写成：$\frac{dy}{dx} + \frac{a_0(x)}{a_1(x)}y = \frac{b(x)}{a_1(x)}$，或记$\alpha(x) = \frac{a_0(x)}{a_1(x)}$，$\beta(x) = \frac{b(x)}{a_1(x)}$，
+\[
+\frac{dy}{dx} + \alpha(x)y = \beta(x). \tag{16.9}
+\]
+
+相应的齐次方程为：$\frac{dy}{dx} + \alpha(x)y = 0$。
+
+如前所述，方程16.9的一个解$y_p$称为特解。所有特解的族称为通解。若$y_c$是齐次方程的解（互补解），$y_p$是特解，则$y_p + y_c$也是特解。注意，若$y_c$是齐次方程的解，则对任意常数$k$，$k y_c$也是齐次方程的解（因为$\frac{dy_c}{dx} + \alpha(x) y_c = 0$意味着$k\frac{dy_c}{dx} + \alpha(x)k y_c = 0$）。因此，若存在一个解，则将有无穷多个解，需要某个初始条件来提供唯一解。
+
+考虑齐次部分$\frac{dy}{dx} + \alpha(x)y = 0$，重写为$\frac{1}{y}\frac{dy}{dx} = -\alpha(x)$。积分得$\ln y(x) - \ln y(x_0) = -\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}$，故
+\[
+y(x) = y(x_0)e^{-\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} \tag{16.10}
+\]
+是齐次方程的解。我们可通过求导来验证：
+\[
+\frac{d y(x)}{dx} = y(x_0)[-\alpha(x)]e^{-\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} = [-\alpha(x)]y(x).
+\]
+
+求解方程16.9给出的一般（非齐次）情况以获得特解，需要用到积分因子，下面描述。
+\end{translation}
+
+\subsubsection{Integrating factors / 积分因子}
+
+\begin{original}
+Returning to the general equation, Equation 16.9,
+\[
+\frac{d y(x)}{dx} + \alpha(x)y(x) = \beta(x),
+\]
+observe that the left side is similar in form to $q'(x)y(x) + q(x)y'(x)$, which is the derivative of $q(x)y(x)$. If Equation 16.9 is expressed in this way, recovery of the function $y(x)$ is simplified. To carry out this procedure, multiply the equation by some function $q(x)$ (called an integrating factor) to give:
+\[
+q(x)\frac{d y(x)}{dx} + q(x)\alpha(x)y(x) = q(x)\beta(x).
+\]
+If $q'(x) = q(x)\alpha(x)$, then the expression is
+\[
+q(x)\frac{d y(x)}{dx} + q'(x)y(x) = \frac{d}{dx}\{q(x)y(x)\} = q(x)\beta(x). \tag{16.11}
+\]
+In this case, integrating both sides of Equation 16.11 gives:
+\[
+\int_{x_0}^{x} \frac{d}{d\tilde{x}}\{q(\tilde{x})y(\tilde{x})\} d\tilde{x} = q(x) y(x) - q(x_0) y(x_0) = \int_{x_0}^{x} q(\tilde{x})\beta(\tilde{x}) d\tilde{x}, \tag{16.12}
+\]
+or
+\[
+q(x)y(x) = q(x_0)y(x_0) + \int_{x_0}^{x} q(\tilde{x})\beta(\tilde{x}) d\tilde{x}, \tag{16.13}
+\]
+so that a solution for $y(x)$ is given:
+\[
+y(x) = \frac{1}{q(x)}\left[q(x_0)y(x_0) + \int_{x_0}^{x} q(\tilde{x})\beta(\tilde{x}) d\tilde{x}\right]. \tag{16.14}
+\]
+
+What is $q$? Since $q'(x) = q(x)\alpha(x)$, $\frac{q'(x)}{q(x)} = \alpha(x)$ so that $\ln q(x)\big|_{x_0}^{x} = \int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}$, or $\ln\frac{q(x)}{q(x_0)} = \int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}$, so that
+\[
+\frac{q(x)}{q(x_0)} = e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} \quad \text{or} \quad q(x) = q(x_0)e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}}.
+\]
+
+Therefore,
+\[
+y(x) = \frac{y(x_0) + \int_{x_0}^{x} e^{\int_{x_0}^{\tilde{x}} \alpha(\tilde{\tilde{x}}) d\tilde{\tilde{x}}} \beta(\tilde{x}) d\tilde{x}}{e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}}}. \tag{16.15}
+\]
+
+Notice that when $\beta(x) = 0$ for all $x$, this expression reduces to Equation 16.10, the solution to the homogeneous equation.
+\end{original}
+\begin{translation}
+回到一般方程16.9，$\frac{d y(x)}{dx} + \alpha(x)y(x) = \beta(x)$，注意到左边在形式上类似于$q'(x)y(x) + q(x)y'(x)$，后者是$q(x)y(x)$的导数。若方程16.9以这种方式表示，则函数$y(x)$的恢复得以简化。为执行此过程，将方程乘以某个函数$q(x)$（称为积分因子），得到：
+\[
+q(x)\frac{d y(x)}{dx} + q(x)\alpha(x)y(x) = q(x)\beta(x).
+\]
+若$q'(x) = q(x)\alpha(x)$，则该表达式为
+\[
+q(x)\frac{d y(x)}{dx} + q'(x)y(x) = \frac{d}{dx}\{q(x)y(x)\} = q(x)\beta(x). \tag{16.11}
+\]
+在此情形下，对方程16.11两边积分得：
+\[
+\int_{x_0}^{x} \frac{d}{d\tilde{x}}\{q(\tilde{x})y(\tilde{x})\} d\tilde{x} = q(x) y(x) - q(x_0) y(x_0) = \int_{x_0}^{x} q(\tilde{x})\beta(\tilde{x}) d\tilde{x}, \tag{16.12}
+\]
+或
+\[
+q(x)y(x) = q(x_0)y(x_0) + \int_{x_0}^{x} q(\tilde{x})\beta(\tilde{x}) d\tilde{x}, \tag{16.13}
+\]
+从而$y(x)$的解由下式给出：
+\[
+y(x) = \frac{1}{q(x)}\left[q(x_0)y(x_0) + \int_{x_0}^{x} q(\tilde{x})\beta(\tilde{x}) d\tilde{x}\right]. \tag{16.14}
+\]
+
+$q$是什么？由于$q'(x) = q(x)\alpha(x)$，$\frac{q'(x)}{q(x)} = \alpha(x)$，故$\ln q(x)\big|_{x_0}^{x} = \int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}$，即$\ln\frac{q(x)}{q(x_0)} = \int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}$，因此
+\[
+\frac{q(x)}{q(x_0)} = e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} \quad \text{或} \quad q(x) = q(x_0)e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}}.
+\]
+
+因此，
+\[
+y(x) = \frac{y(x_0) + \int_{x_0}^{x} e^{\int_{x_0}^{\tilde{x}} \alpha(\tilde{\tilde{x}}) d\tilde{\tilde{x}}} \beta(\tilde{x}) d\tilde{x}}{e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}}}. \tag{16.15}
+\]
+
+注意，当对所有$x$有$\beta(x) = 0$时，该表达式退化为方程16.10，即齐次方程的解。
+\end{translation}
+\begin{original}
+\textbf{EXAMPLE 16.5:} Consider the linear demand and supply model of Example 16.3 with dynamic adjustment modified to $\frac{dp}{dt} = \kappa(t)(Q_d - Q_s)$, where $\kappa$ now depends on time and with $Q_d = \alpha - \beta p$ and $Q_s = \gamma + \delta p$. Dynamic adjustment is now given by:
+\[
+\frac{dp}{dt} + \kappa(t)(\beta + \delta)p = \kappa(t)(\alpha - \gamma).
+\]
+From Equation 16.15,
+\[
+p(t) = \frac{p(t_0) + \int_{t_0}^{t} e^{\int_{t_0}^{\tilde{t}} \kappa(\tilde{\tilde{t}})(\beta+\delta) d\tilde{\tilde{t}}} \kappa(\tilde{t})(\alpha - \gamma) d\tilde{t}}{e^{\int_{t_0}^{t} \kappa(\tilde{t})(\beta+\delta) d\tilde{t}}}.
+\]
+To simplify this expression, let $t_0 = 0$ and set $\kappa(t) = \theta \cdot t$. Then
+\[
+\int_{t_0}^{t} \kappa(\tilde{t})(\beta + \delta)d\tilde{t} = (\beta + \delta)\frac{1}{2}\theta t^2 = kt^2,
+\]
+where $k = (\beta + \delta)\frac{\theta}{2}$. Next,
+\[
+\int_{t_0}^{t} e^{\int_{t_0}^{\tilde{t}} \kappa(\tilde{\tilde{t}})(\beta+\delta)d\tilde{\tilde{t}}} \kappa(\tilde{t})(\alpha - \gamma) d\tilde{t} = (\alpha - \gamma) \int_{0}^{t} e^{k\tilde{t}^2}\theta\tilde{t} d\tilde{t}
+= (\alpha - \gamma)\frac{1}{2k}\left[e^{k t^2} - 1\right] = \frac{(\alpha - \gamma)}{(\beta + \delta)} \left[e^{k t^2} - 1\right].
+\]
+Thus,
+\[
+p(t) = \frac{p(0) + \frac{(\alpha - \gamma)}{(\beta + \delta)}\left[e^{k t^2} - 1\right]}{e^{k t^2}} = p(0)e^{-k t^2} + \frac{(\alpha - \gamma)}{(\beta + \delta)}[1 - e^{-k t^2}].
+\]
+Writing $p_e = \frac{(\alpha - \gamma)}{(\beta + \delta)}$, the market clearing price $p(t)$ is a weighted average of the initial price $p(0)$ and the market clearing price $p_e$: $p(t) = p(0)e^{-k t^2} + p_e[1 - e^{-k t^2}]$.
+
+\textbf{EXAMPLE 16.6:}
+\[
+\frac{dy}{dx} + axy = x.
+\]
+Here, $\alpha(x) = ax$ so that $\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x} = \frac{a}{2}[x^2 - x_0^2]$. Thus,
+\[
+e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} = e^{\frac{a}{2}x^2} e^{-\frac{a}{2}x_0^2} = k(x_0) e^{\frac{a}{2}x^2}
+\]
+so that $q(x) = q(x_0)k(x_0)e^{\frac{a}{2}x^2} = c_0 e^{\frac{a}{2}x^2}$. Multiplying both sides of $\frac{dy}{dx} + axy = x$ by $c_0 e^{\frac{a}{2}x^2}$ gives
+\[
+\left[\frac{dy}{dx} + axy\right] e^{\frac{a}{2}x^2} = x e^{\frac{a}{2}x^2}
+\]
+or $\frac{d}{dx}\left[y e^{\frac{a}{2}x^2}\right] = x e^{\frac{a}{2}x^2}$, so that
+\[
+\int_{x_0}^{x} \frac{d}{d\tilde{x}}\left[y e^{\frac{a}{2}\tilde{x}^2}\right] d\tilde{x} = \int_{x_0}^{x} \tilde{x} e^{\frac{a}{2}\tilde{x}^2} d\tilde{x}
+\]
+or
+\[
+y(x)e^{\frac{a}{2}x^2} - y(x_0)e^{\frac{a}{2}x_0^2} = \int_{x_0}^{x} \tilde{x} e^{\frac{a}{2}\tilde{x}^2} d\tilde{x} = \frac{1}{a}\left[e^{\frac{1}{2}ax^2} - e^{\frac{1}{2}a x_0^2}\right]
+\]
+or $y(x)e^{\frac{a}{2}x^2} = c_0 + \frac{1}{a} e^{\frac{1}{2}ax^2}$. Therefore,
+\[
+y(x) = c_0 e^{-\frac{a}{2}x^2} + \frac{1}{a}.
+\]
+\end{original}
+\begin{translation}
+\textbf{例16.5：}考虑例16.3的线性供需模型，其中动态调整修改为$\frac{dp}{dt} = \kappa(t)(Q_d - Q_s)$，其中$\kappa$现在依赖于时间，且$Q_d = \alpha - \beta p$，$Q_s = \gamma + \delta p$。动态调整现在由$\frac{dp}{dt} + \kappa(t)(\beta + \delta)p = \kappa(t)(\alpha - \gamma)$给出。由方程16.15，为简化此表达式，令$t_0 = 0$并设$\kappa(t) = \theta \cdot t$。则$\int_{t_0}^{t} \kappa(\tilde{t})(\beta + \delta)d\tilde{t} = (\beta + \delta)\frac{1}{2}\theta t^2 = kt^2$，其中$k = (\beta + \delta)\frac{\theta}{2}$。接下来，$\int_{t_0}^{t} e^{\int_{t_0}^{\tilde{t}} \kappa(\tilde{\tilde{t}})(\beta+\delta)d\tilde{\tilde{t}}} \kappa(\tilde{t})(\alpha - \gamma) d\tilde{t} = (\alpha - \gamma) \int_{0}^{t} e^{k\tilde{t}^2}\theta\tilde{t} d\tilde{t} = \frac{(\alpha - \gamma)}{(\beta + \delta)} [e^{k t^2} - 1]$。因此，$p(t) = p(0)e^{-k t^2} + \frac{(\alpha - \gamma)}{(\beta + \delta)}[1 - e^{-k t^2}]$。记$p_e = \frac{(\alpha - \gamma)}{(\beta + \delta)}$，市场出清价格$p(t)$是初始价格$p(0)$和市场出清价格$p_e$的加权平均：$p(t) = p(0)e^{-k t^2} + p_e[1 - e^{-k t^2}]$。
+
+\textbf{例16.6：}$\frac{dy}{dx} + axy = x$。此处$\alpha(x) = ax$，故$\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x} = \frac{a}{2}[x^2 - x_0^2]$。因此，$e^{\int_{x_0}^{x} \alpha(\tilde{x}) d\tilde{x}} = e^{\frac{a}{2}x^2} e^{-\frac{a}{2}x_0^2}$，故$q(x) = c_0 e^{\frac{a}{2}x^2}$。将$\frac{dy}{dx} + axy = x$两边乘以$c_0 e^{\frac{a}{2}x^2}$得到$[\frac{dy}{dx} + axy] e^{\frac{a}{2}x^2} = x e^{\frac{a}{2}x^2}$，或$\frac{d}{dx}[y e^{\frac{a}{2}x^2}] = x e^{\frac{a}{2}x^2}$，从而$y(x)e^{\frac{a}{2}x^2} - y(x_0)e^{\frac{a}{2}x_0^2} = \frac{1}{a}[e^{\frac{1}{2}ax^2} - e^{\frac{1}{2}a x_0^2}]$。因此，$y(x) = c_0 e^{-\frac{a}{2}x^2} + \frac{1}{a}$。
+\end{translation}
+
+\section{Some non-linear first-order differential equations / 一些非线性一阶微分方程}
+
+\begin{original}
+This section considers two well-known non-linear first-order differential equations that have exact solutions: the logistic and Bernoulli differential equations.
+\end{original}
+\begin{translation}
+本节考虑两个具有精确解的著名非线性一阶微分方程：逻辑斯蒂（Logistic）微分方程和伯努利（Bernoulli）微分方程。
+\end{translation}
+
+\subsection{The logistic model / 逻辑斯蒂模型}
+
+\begin{original}
+The linear model $\frac{dy}{dx} + ay = 0$ has solution $y(x) = y_0 e^{-ax}$ so that as $x$ becomes large $y(x)$ tends to $0$ or to $\infty$, depending on whether $a$ is positive or negative. Models of population growth where the habitat is finite cannot be modeled by this equation over long periods of time. The logistic model provides a growth model that asymptotes to a finite limit. Although the differential equation is non-linear, it is easily solved.
+
+Consider
+\[
+\frac{\dot{y}}{y} = \alpha\left(1 - \frac{y}{k}\right) = \alpha\left(\frac{k - y}{k}\right) = \beta[k - y], \quad \beta = \frac{\alpha}{k}, \;\alpha > 0,\; k > 0.
+\]
+From this expression, when $k - y > 0$ or $y < k$, $\dot{y} > 0$ and the value of $y$ grows. Similarly, when $k - y < 0$ the value of $y$ decreases. At $y = k$, $\dot{y} = 0$, and $k$ is the steady state value for $y$. The equation may be rearranged as,
+\[
+\frac{1}{y}\frac{k}{k - y}\dot{y} = \alpha.
+\]
+Observe that $\frac{1}{y} + \frac{1}{k - y} = \frac{(k - y) + y}{y(k - y)} = \frac{k}{y(k - y)}$. Consequently,
+\[
+\frac{1}{y}\frac{k}{k - y}\dot{y} = \frac{1}{y}\dot{y} + \frac{1}{k - y}\dot{y} = \alpha,
+\]
+and so
+\[
+\int_{x_0}^{x} \frac{1}{y}\frac{k}{k - y}\dot{y}dx = \int_{x_0}^{x} \frac{1}{y}\dot{y}dx + \int_{x_0}^{x} \frac{1}{k - y}\dot{y}dx = \alpha[x - x_0],
+\]
+or
+\[
+\ln y(x) - \ln y(x_0) - [\ln(k - y(x)) - \ln(k - y(x_0))] = \alpha[x - x_0].
+\]
+This yields $\ln\frac{k - y(x)}{y(x)} = c_0 - \alpha x$, or $\frac{k - y(x)}{y(x)} = c e^{-\alpha x}$. Therefore,
+\[
+y(x) = \frac{k}{1 + \tilde{c} e^{-\alpha x}}, \quad \tilde{c} = \frac{1}{c}.
+\]
+The value of $\tilde{c}$ is determined by the initial condition $y(x_0) = y_0$: $y_0 = \frac{k}{1 + \tilde{c} e^{-\alpha x_0}}$ or $\tilde{c} = \left(\frac{k}{y_0} - 1\right) e^{\alpha x_0}$. The function $y(x) = \frac{k}{1 + \tilde{c} e^{-\alpha x}}$ is called the logistic function (Figure 16.1).
+\end{original}
+\begin{translation}
+线性模型$\frac{dy}{dx} + ay = 0$具有解$y(x) = y_0 e^{-ax}$，因此当$x$变大时，$y(x)$趋于$0$或趋于$\infty$，取决于$a$是正还是负。对于栖息地有限的人口增长模型，该方程不能在长时间内建模。逻辑斯蒂模型提供了一个渐近于有限极限的增长模型。尽管该微分方程是非线性的，但它很容易求解。
+
+考虑
+\[
+\frac{\dot{y}}{y} = \alpha\left(1 - \frac{y}{k}\right) = \alpha\left(\frac{k - y}{k}\right) = \beta[k - y], \quad \beta = \frac{\alpha}{k}, \;\alpha > 0,\; k > 0.
+\]
+由该表达式，当$k - y > 0$或$y < k$时，$\dot{y} > 0$，$y$的值增长。类似地，当$k - y < 0$时，$y$的值减小。在$y = k$处，$\dot{y} = 0$，$k$是$y$的稳态值。该方程可重排为$\frac{1}{y}\frac{k}{k - y}\dot{y} = \alpha$。注意到$\frac{1}{y} + \frac{1}{k - y} = \frac{k}{y(k - y)}$。因此，$\frac{1}{y}\dot{y} + \frac{1}{k - y}\dot{y} = \alpha$，积分得$\ln y(x) - \ln y(x_0) - [\ln(k - y(x)) - \ln(k - y(x_0))] = \alpha[x - x_0]$。这给出$\ln\frac{k - y(x)}{y(x)} = c_0 - \alpha x$，或$\frac{k - y(x)}{y(x)} = c e^{-\alpha x}$。因此，
+\[
+y(x) = \frac{k}{1 + \tilde{c} e^{-\alpha x}}, \quad \tilde{c} = \frac{1}{c}.
+\]
+$\tilde{c}$的值由初始条件$y(x_0) = y_0$确定：$y_0 = \frac{k}{1 + \tilde{c} e^{-\alpha x_0}}$或$\tilde{c} = (\frac{k}{y_0} - 1) e^{\alpha x_0}$。函数$y(x) = \frac{k}{1 + \tilde{c} e^{-\alpha x}}$称为逻辑斯蒂函数（图16.1）。
+\end{translation}
+\subsection{The Bernoulli equation / 伯努利方程}
+
+\begin{original}
+One particular non-linear differential equation that has appeared in economic applications is the Bernoulli equation. This is a differential equation of the form:
+\[
+\frac{d y}{dx} + a(x)y = \beta(x)y^{\gamma}, \quad \gamma \neq 0, 1.
+\]
+Dividing by $y^{\gamma}$,
+\[
+\frac{1}{y^{\gamma}}\frac{dy}{dx} + a(x) y^{1-\gamma} = \beta(x).
+\]
+Define $w = y^{1-\gamma}$, so that $w' = (1 - \gamma) y^{-\gamma} y'$ or $\frac{dw}{dx} = (1 - \gamma) \frac{1}{y^{\gamma}}\frac{dy}{dx}$. With this change of variables:
+\[
+\frac{1}{1 - \gamma}\frac{dw}{dx} + a(x)w = \beta(x).
+\]
+This is a first-order linear differential equation, which may be solved for $w(x)$ as described previously. The function $y(x)$ is then obtained as $y(x) = w(x)^{\frac{1}{1-\gamma}}$.
+
+\textbf{EXAMPLE 16.7:} The Solow growth model provides a differential equation governing the long-run dynamics of per capita capital. A constant returns to scale production function $Y = f(K, L)$ is assumed, so that $y = \frac{Y}{L} = \frac{1}{L}f(K, L) = f(\frac{K}{L}, \frac{L}{L}) = f(k)$, where $k = \frac{K}{L}$. For example, $f(K, L) = K^{\alpha} L^{1-\alpha}$ gives $f(k) = k^{\alpha}$, with $0 < \alpha < 1$. Savings, $S$, is a fixed proportion, $s$, of income, $Y$, and investment $I$ is equal to saving: $I = S = sY$. Capital growth per unit of time is equal to investment less depreciation: $I - \delta K$: $\Delta K = (sY - \delta K)\Delta t$ or, in continuous time, $\frac{dK}{dt} = (sY - \delta K)$. Therefore, $\frac{1}{K}\frac{dK}{dt} = s\frac{Y}{K} - \delta$. Since $\frac{Y}{K} = \frac{Y/L}{K/L} = \frac{y}{k}$,
+\[
+\frac{1}{K}\frac{dK}{dt} = s\frac{y}{k} - \delta.
+\]
+
+To convert to per capita terms, observe that
+\[
+\frac{dk}{dt} = \frac{L\frac{dK}{dt} - K\frac{dL}{dt}}{L^2} = \frac{1}{L}\frac{dK}{dt} - \frac{K}{L}\frac{1}{L}\frac{dL}{dt}.
+\]
+So, with $\frac{1}{k} = \frac{L}{K}$,
+\[
+\frac{1}{k}\frac{dk}{dt} = \frac{1}{K}\frac{dK}{dt} - \frac{1}{L}\frac{dL}{dt}.
+\]
+Let $n = \frac{1}{L}\frac{dL}{dt}$ be the continuous time growth rate of the labor supply, so that
+\[
+\frac{1}{k}\frac{dk}{dt} = \frac{1}{K}\frac{dK}{dt} - n.
+\]
+Collecting terms,
+\[
+\frac{1}{K}\frac{dK}{dt} = \frac{1}{k}\frac{dk}{dt} + n = s\frac{y}{k} - \delta.
+\]
+Therefore,
+\[
+\frac{dk}{dt} = sy - (\delta + n)k = s f(k) - (\delta + n)k. \tag{16.16}
+\]
+
+From this expression, there are two points where $k$ is constant: at $0$, and at $\hat{k}$, defined by $s f(\hat{k}) - (\delta + n)\hat{k} = 0$.
+
+With $f(k) = k^{\alpha}$, the differential equation becomes
+\[
+\frac{dk}{dt} = sk^{\alpha} - (\delta + n)k
+\]
+or $\frac{dk}{dt} + (\delta + n)k = sk^{\alpha}$, which is a simple Bernoulli equation. Rearrange to get:
+\[
+\frac{1}{k^{\alpha}}\frac{dk}{dt} + (\delta + n)k^{1-\alpha} = s
+\]
+and define $w = k^{1-\alpha}$, so that
+\[
+\frac{dw}{dt} = (1 - \alpha)k^{-\alpha}\frac{dk}{dt} = (1 - \alpha)\frac{1}{k^{\alpha}}\frac{dk}{dt}\quad \text{or}\quad \frac{1}{1 - \alpha}\frac{dw}{dt} = \frac{1}{k^{\alpha}}\frac{dk}{dt}.
+\]
+With this change of variable, the differential equation is:
+\[
+\frac{1}{1 - \alpha}\frac{dw}{dt} + (\delta + n)w = s \quad\text{or}\quad \frac{dw}{dt} + (1 - \alpha)(\delta + n)w = (1 - \alpha)s.
+\]
+The solution to a differential equation of the form $\frac{dw}{dt} + aw = b$ has the form:
+\[
+w(t) = w(0)e^{-at} + \frac{b}{a} = w(0)e^{-[(1-\alpha)(\delta+n)]t} + \frac{s}{\delta + n}.
+\]
+Since $k = w^{\frac{1}{1-\alpha}}$,
+\[
+k(t) = \left(k(0)^{1-\alpha} e^{-[(1-\alpha)(\delta+n)]t} + \frac{s}{\delta + n}\right)^{\frac{1}{1-\alpha}}.
+\]
+At $t \to \infty$, $k(t) \to \left(\frac{s}{\delta + n}\right)^{\frac{1}{1-\alpha}}$. From Equation 16.16, $\frac{dk}{dt} = 0$ when $sk^{\alpha} - (\delta + n)k = 0$ or $k = \left(\frac{s}{\delta + n}\right)^{\frac{1}{1-\alpha}}$, so the solution gives the same steady state.
+
+In equilibrium, $sk^{\alpha} - (n + \delta)k = 0$, so the amount of output per capita saved, $sk^{\alpha}$, equals $(n+\delta)k$. Total output per capita is $k^{\alpha}$ and so consumption per capita, $c$, is $c = k^{\alpha} - sk^{\alpha} = k^{\alpha} - (n + \delta)k$. This is maximized when $\alpha k^{\alpha-1} - (n + \delta) = 0$, or
+\[
+k = \left(\frac{\alpha}{n + \delta}\right)^{\frac{1}{1-\alpha}}.
+\]
+The solution is called the golden rule level of capital, the level that maximizes per capita consumption. Comparing this with the long-run steady state level of $k = (\frac{s}{n+\delta})^{\frac{1}{1-\alpha}}$; these are equal when $s = \alpha$. The savings rate that maximizes the long-run per capita consumption is called the golden rule savings rate.
+\end{original}
+\begin{translation}
+在经济应用中出现的一个特殊非线性微分方程是伯努利方程。这是一个形如$\frac{d y}{dx} + a(x)y = \beta(x)y^{\gamma}$的微分方程，其中$\gamma \neq 0, 1$。除以$y^{\gamma}$得$\frac{1}{y^{\gamma}}\frac{dy}{dx} + a(x) y^{1-\gamma} = \beta(x)$。定义$w = y^{1-\gamma}$，则$w' = (1 - \gamma) y^{-\gamma} y'$或$\frac{dw}{dx} = (1 - \gamma) \frac{1}{y^{\gamma}}\frac{dy}{dx}$。经过变量替换：$\frac{1}{1 - \gamma}\frac{dw}{dx} + a(x)w = \beta(x)$。这是一阶线性微分方程，可按前面描述的方法求解$w(x)$。然后函数$y(x)$通过$y(x) = w(x)^{\frac{1}{1-\gamma}}$得到。
+
+\textbf{例16.7：}索洛增长模型提供了控制人均资本长期动态的微分方程。假设规模报酬不变的生产函数$Y = f(K, L)$，因此$y = \frac{Y}{L} = f(k)$，其中$k = \frac{K}{L}$。例如，$f(K, L) = K^{\alpha} L^{1-\alpha}$给出$f(k) = k^{\alpha}$，其中$0 < \alpha < 1$。储蓄$S$是收入$Y$的固定比例$s$，投资$I$等于储蓄：$I = S = sY$。每单位时间的资本增长等于投资减去折旧：$\Delta K = (sY - \delta K)\Delta t$，或在连续时间中，$\frac{dK}{dt} = (sY - \delta K)$。因此，$\frac{1}{K}\frac{dK}{dt} = s\frac{Y}{K} - \delta$。由于$\frac{Y}{K} = \frac{Y/L}{K/L} = \frac{y}{k}$，$\frac{1}{K}\frac{dK}{dt} = s\frac{y}{k} - \delta$。
+
+为转化为人均形式，注意到$\frac{dk}{dt} = \frac{1}{L}\frac{dK}{dt} - \frac{K}{L}\frac{1}{L}\frac{dL}{dt}$。因此，$\frac{1}{k}\frac{dk}{dt} = \frac{1}{K}\frac{dK}{dt} - n$，其中$n = \frac{1}{L}\frac{dL}{dt}$是劳动力供给的连续时间增长率。整理得$\frac{dk}{dt} = sy - (\delta + n)k = s f(k) - (\delta + n)k$（方程16.16）。从该表达式可知，$k$有两个常数点：在$0$处，以及在由$s f(\hat{k}) - (\delta + n)\hat{k} = 0$定义的$\hat{k}$处。
+
+当$f(k) = k^{\alpha}$时，微分方程变为$\frac{dk}{dt} + (\delta + n)k = sk^{\alpha}$，这是一个简单的伯努利方程。定义$w = k^{1-\alpha}$，经过变量替换得$\frac{dw}{dt} + (1 - \alpha)(\delta + n)w = (1 - \alpha)s$。解的形式为$w(t) = w(0)e^{-[(1-\alpha)(\delta+n)]t} + \frac{s}{\delta + n}$。由于$k = w^{\frac{1}{1-\alpha}}$，$k(t) = (k(0)^{1-\alpha} e^{-[(1-\alpha)(\delta+n)]t} + \frac{s}{\delta + n})^{\frac{1}{1-\alpha}}$。当$t \to \infty$时，$k(t) \to (\frac{s}{\delta + n})^{\frac{1}{1-\alpha}}$。
+
+在均衡中，$sk^{\alpha} - (n + \delta)k = 0$。人均消费$c = k^{\alpha} - sk^{\alpha} = k^{\alpha} - (n + \delta)k$。这在$\alpha k^{\alpha-1} - (n + \delta) = 0$时最大化，即$k = (\frac{\alpha}{n + \delta})^{\frac{1}{1-\alpha}}$。该解称为资本黄金律水平，即最大化人均消费的水平。与长期稳态水平$k = (\frac{s}{n+\delta})^{\frac{1}{1-\alpha}}$比较，当$s = \alpha$时二者相等。最大化长期人均消费的储蓄率称为黄金律储蓄率。
+\end{translation}
+\section{First-order differential equations: existence of solutions / 一阶微分方程：解的存在性}
+
+\begin{original}
+Consider the (differential) equation
+\[
+\frac{dy}{dx} = f(x, y),
+\]
+associating the change in $y$ to the current values of $x$ and $y$. When $f(x, y) = \beta(x) - \alpha(x) y$, this gives the first-order differential equation $\frac{dy}{dx} + \alpha(x)y = \beta(x)$. A solution to the equation on the interval $(a, b)$ is a function $y(x)$ satisfying $\frac{d y(x)}{dx} = f(x, y(x))$ for $x \in (a, b)$. Two natural questions arise. Does the differential equation have a solution? And is the solution unique?
+
+\textbf{Definition 16.1:} Let $Q$ be a region in $\mathbb{R}^2$. Say that the function $f(x, y)$ satisfies a uniform Lipschitz condition in $Q$ if there is some constant, $K$, such that for any pairs $(x, y_1), (x, y_2) \in Q$:
+\[
+|f(x, y_1) - f(x, y_2)| \leq K |y_1 - y_2|.
+\]
+
+With this definition, a key theorem on the existence of a solution to a differential equation is the following.
+
+\textbf{Theorem 16.1:} Given the differential equation:
+\[
+\frac{dy}{dx} = f(x, y),
+\]
+with initial condition $y(x_0) = y_0$, where $f$ is a continuous function on $Q = [x_0 - a, x_0 + a] \times [y_0 - b, y_0 + b]$. Then for some $a > 0$, there is a function $y$ defined on $[x_0 - a, x_0 + a]$ with $y(x_0) = y_0$ and $y'(x) = f(x, y(x))$, $x \in [x_0 - a, x_0 + a]$. If $f$ satisfies a uniform Lipschitz condition on $Q$, the solution is unique.
+
+In the case of a linear differential equation, $f(x, y) = \beta(x) - \alpha(x)y$, with $\alpha(x)$ continuous,
+\[
+|f(x, y_1) - f(x, y_2)| = |\alpha(x)y_1 - \alpha(x)y_2| \leq |\alpha(x)| |y_1 - y_2| \leq K |y_1 - y_2|,
+\]
+where $K = \max_{x \in [x_0-a, x_0+a]} |\alpha(x)|$, and so the uniform Lipschitz condition is satisfied.
+\end{original}
+\begin{translation}
+考虑（微分）方程$\frac{dy}{dx} = f(x, y)$，它将$y$的变化与$x$和$y$的当前值联系起来。当$f(x, y) = \beta(x) - \alpha(x) y$时，这给出了一阶微分方程$\frac{dy}{dx} + \alpha(x)y = \beta(x)$。在区间$(a, b)$上该方程的解是一个函数$y(x)$，对$x \in (a, b)$满足$\frac{d y(x)}{dx} = f(x, y(x))$。自然地出现两个问题：微分方程是否有解？解是否唯一？
+
+\textbf{定义16.1：}设$Q$是$\mathbb{R}^2$中的一个区域。称函数$f(x, y)$在$Q$上满足一致Lipschitz条件，如果存在某个常数$K$，使得对任意$(x, y_1), (x, y_2) \in Q$：
+\[
+|f(x, y_1) - f(x, y_2)| \leq K |y_1 - y_2|.
+\]
+
+\textbf{定理16.1：}给定微分方程$\frac{dy}{dx} = f(x, y)$及初始条件$y(x_0) = y_0$，其中$f$是$Q = [x_0 - a, x_0 + a] \times [y_0 - b, y_0 + b]$上的连续函数。则对某个$a > 0$，存在定义在$[x_0 - a, x_0 + a]$上的函数$y$，满足$y(x_0) = y_0$且$y'(x) = f(x, y(x))$，$x \in [x_0 - a, x_0 + a]$。若$f$在$Q$上满足一致Lipschitz条件，则解是唯一的。
+
+在线性微分方程的情形下，$f(x, y) = \beta(x) - \alpha(x)y$，其中$\alpha(x)$连续，
+\[
+|f(x, y_1) - f(x, y_2)| = |\alpha(x)y_1 - \alpha(x)y_2| \leq |\alpha(x)| |y_1 - y_2| \leq K |y_1 - y_2|,
+\]
+其中$K = \max_{x \in [x_0-a, x_0+a]} |\alpha(x)|$，故一致Lipschitz条件得到满足。
+\end{translation}
+
+\section{Second- and higher-order differential equations / 二阶及高阶微分方程}
+
+\begin{original}
+An equation is an $n$th-order linear differential equation if it has the form:
+\[
+a_n(x)\frac{d^n y}{dx^n} + a_{n-1}(x)\frac{d^{n-1} y}{dx^{n-1}} + \cdots + a_1(x)\frac{dy}{dx} + a_0(x)y = b(x).
+\]
+
+A second-order differential equation has the form:
+\[
+a_2(x)\frac{d^2 y}{dx^2} + a_1(x)\frac{dy}{dx} + a_0(x)y = b(x).
+\]
+
+In general, this is difficult to solve for the function $y$. The remainder of the discussion focuses on the second-order differential equation with constant coefficients.
+\end{original}
+\begin{translation}
+若方程具有以下形式，则称为$n$阶线性微分方程：
+\[
+a_n(x)\frac{d^n y}{dx^n} + a_{n-1}(x)\frac{d^{n-1} y}{dx^{n-1}} + \cdots + a_1(x)\frac{dy}{dx} + a_0(x)y = b(x).
+\]
+
+二阶微分方程具有形式：
+\[
+a_2(x)\frac{d^2 y}{dx^2} + a_1(x)\frac{dy}{dx} + a_0(x)y = b(x).
+\]
+
+一般来说，这很难求解函数$y$。接下来的讨论侧重于常系数的二阶微分方程。
+\end{translation}
+
+\subsection{Constant coefficients / 常系数}
+
+\begin{original}
+When the coefficients are constant, the second-order linear differential equation has the form:
+\[
+a_2\frac{d^2 y}{dx^2} + a_1\frac{dy}{dx} + a_0 y = b.
+\]
+
+This equation has a particular solution $\bar{y} = \frac{b}{a_0}$. Consider the homogeneous equation,
+\[
+a_2\frac{d^2 y}{dx^2} + a_1\frac{dy}{dx} + a_0 y = 0.
+\]
+
+Observe that if $y_1$ and $y_2$ are solutions to the homogeneous equation, then so is $y = c_1 y_1 + c_2 y_2$ for any $c_1$ and $c_2$.
+
+A candidate solution $y(x) = ke^{rx}$ has the property that $y'(x) = rke^{rx} = r y(x)$ and $y''(x) = r^2ke^{rx} = r^2 y(x)$, so that if this function satisfies the homogeneous equation then
+\[
+a_2 r^2 y(x) + a_1 r y(x) + a_0 y(x) = (a_2 r^2 + a_1 r + a_0)y(x) = 0.
+\]
+Since $y(x) = ke^{rx} \neq 0$, this requires $a_2 r^2 + a_1 r + a_0 = 0$. This quadratic expression has two roots:
+\[
+r_1, r_2 = \frac{-a_1 \pm \sqrt{a_1^2 - 4a_2 a_0}}{2a_2}.
+\]
+
+The solution to the differential equation depends on the roots, which may be real and distinct, real and repeated or complex.
+
+\[
+y(x) =
+\begin{cases}
+c_1 e^{r_1 x} + c_2 e^{r_2 x} + \frac{b}{a_0}, & \text{roots real and distinct}\\[4pt]
+c_1 e^{r x} + c_2 x e^{r x} + \frac{b}{a_0}, & \text{roots real and equal}\\[4pt]
+c_1 e^{\alpha x}\cos(\beta x) + c_2 e^{\alpha x}\sin(\beta x) + \frac{b}{a_0}, & \text{roots complex}.
+\end{cases}
+\]
+
+The first two cases are easy to confirm, the third involves some computation. These issues are developed in Section 16.5.2.
+
+\textbf{REMARK 16.2:} Considering stability, in the first case it is necessary for $r_1$ and $r_2$ to be negative, and in the second case for $r$ to be negative. In the complex case, the roots are repeated and $\alpha$ is the real part of both roots, so in that case, it is necessary for $\alpha$ to be negative. In sum, a sufficient condition for stability of the solution is that the real parts of the roots be negative.
+\end{original}
+\begin{translation}
+当系数为常数时，二阶线性微分方程具有形式：
+\[
+a_2\frac{d^2 y}{dx^2} + a_1\frac{dy}{dx} + a_0 y = b.
+\]
+
+该方程有一个特解$\bar{y} = \frac{b}{a_0}$。考虑齐次方程$a_2\frac{d^2 y}{dx^2} + a_1\frac{dy}{dx} + a_0 y = 0$。注意到若$y_1$和$y_2$是齐次方程的解，则对任意$c_1$和$c_2$，$y = c_1 y_1 + c_2 y_2$也是。
+
+试探解$y(x) = ke^{rx}$具有性质$y'(x) = r y(x)$和$y''(x) = r^2 y(x)$，因此若该函数满足齐次方程，则$(a_2 r^2 + a_1 r + a_0)y(x) = 0$。由于$y(x) = ke^{rx} \neq 0$，这要求$a_2 r^2 + a_1 r + a_0 = 0$。此二次方程有两个根：$r_1, r_2 = \frac{-a_1 \pm \sqrt{a_1^2 - 4a_2 a_0}}{2a_2}$。
+
+微分方程的解取决于根的类型：实且不同、实且相同、或复数。通解包括以上三种情形。
+
+\textbf{注16.2：}关于稳定性，在第一种情况下需要$r_1$和$r_2$为负，在第二种情况下$r$为负。在复数情况下，$\alpha$是两根的实部，因此需要$\alpha$为负。总之，解稳定的充分条件是特征根的实部为负。
+\end{translation}
+
+\subsection{Derivation of solution / 解的推导}
+
+\begin{original}
+Regarding these roots, there are three distinct regions of the parameter space:
+\begin{enumerate}
+\item Roots real and distinct: $a_1^2 - 4a_2a_0 > 0$. The general solution of the homogeneous equation has the form: $y(x) = c_1 e^{r_1x} + c_2 e^{r_2x}$.
+\item Roots real and equal: $a_1^2 - 4a_2a_0 = 0$, so that $r_1 = r_2 = r$. The general solution of the homogeneous equation has the form: $y(x) = c_1 e^{rx} + c_2 x e^{rx}$.
+\item Roots complex: $a_1^2 - 4a_2a_0 < 0$, so that $r_1 = \alpha + i\beta$ and $r_2 = \alpha - i\beta$, where $\alpha = -\frac{a_1}{2a_2}$ and $\beta = \sqrt{4a_2a_0 - a_1^2}/2a_2$. The general solution has the form: $y(x) = c_1 e^{r_1x} + c_2 e^{r_2x}$.
+\end{enumerate}
+
+According to Euler's formula, for any real number $x$, $e^{ix} = \cos(x) + i \sin(x)$ (Figure 16.2). Thus,
+\[
+e^{r_1 x} = e^{\alpha x + i\beta x} = e^{\alpha x} e^{i\beta x} = e^{\alpha x}[\cos(\beta x) + i \sin(\beta x)]
+\]
+and
+\[
+e^{r_2 x} = e^{\alpha x - i\beta x} = e^{\alpha x} e^{i(-\beta x)} = e^{\alpha x}[\cos(-\beta x) + i \sin(-\beta x)] = e^{\alpha x}[\cos(\beta x) - i \sin(\beta x)].
+\]
+
+Therefore,
+\[
+y(x) = c_1 e^{r_1 x} + c_2 e^{r_2 x} = e^{\alpha x}[(c_1 + c_2) \cos(\beta x) + i(c_1 - c_2) \sin(\beta x)].
+\]
+
+Since $y$ is a real-valued function, solutions of the homogeneous equation have the form:
+\[
+y(x) = c_1 e^{\alpha x} \cos(\beta x) + c_2 e^{\alpha x} \sin(\beta x) = e^{\alpha x}[c_1 \cos(\beta x) + c_2 \sin(\beta x)],
+\]
+where $c_1$ and $c_2$ are real numbers. This may be rearranged using a right-angled triangle:
+\[
+y(x) = he^{\alpha x} \cos(\beta x - \theta),
+\]
+where $h = \sqrt{c_1^2 + c_2^2}$, $\cos(\theta) = c_1/h$, $\sin(\theta) = c_2/h$.
+
+\textbf{EXAMPLE 16.8:} According to Hooke's law, the force acting on an object is proportional to its displacement from equilibrium: $F = -k y$. According to Newton's second law, $F = ma = m\frac{d^2 y}{dt^2}$. Hence
+\[
+m\frac{d^2 y}{dt^2} + k y = 0.
+\]
+Rearranging, $\frac{d^2 y}{dt^2} + \frac{k}{m} y = 0$. The associated roots are $r_1, r_2 = \pm i\sqrt{\frac{k}{m}}$. Thus, the roots are complex and the solution is:
+\[
+y(t) = h \cos\left(\sqrt{\frac{k}{m}} \cdot t - \theta\right) = y_0 \cos\left(\sqrt{\frac{k}{m}} \cdot (t - t_0)\right).
+\]
+This example may be generalized when the spring is damped: $m\frac{d^2 y}{dt^2} + q\frac{dy}{dt} + k y = 0$ (with real roots if and only if $q^2 - 4mk > 0$).
+
+\textbf{Theorem 16.2:} The $n$th-order linear differential equation:
+\[
+a_n(x)\frac{d^n y}{dx^n} + a_{n-1}(x)\frac{d^{n-1} y}{dx^{n-1}} + \cdots + a_1(x)\frac{dy}{dx} + a_0(x)y = b(x)
+\]
+with initial conditions $y(x_0) = y_0$, $y'(x_0) = y_1$, $y''(x_0) = y_2$, $\ldots$, $y^{(n-1)}(x_0) = y_{n-1}$ has a unique solution.
+\end{original}
+\begin{translation}
+对于这些根，参数空间有三个不同的区域：(1) 根为实且不同：$a_1^2 - 4a_2a_0 > 0$，齐次方程通解为$y(x) = c_1 e^{r_1x} + c_2 e^{r_2x}$；(2) 根为实且相同：$a_1^2 - 4a_2a_0 = 0$，通解为$y(x) = c_1 e^{rx} + c_2 x e^{rx}$；(3) 根为复数：$a_1^2 - 4a_2a_0 < 0$，$r_1, r_2 = \alpha \pm i\beta$，其中$\alpha = -\frac{a_1}{2a_2}$，$\beta = \sqrt{4a_2a_0 - a_1^2}/2a_2$。
+
+根据欧拉公式，对任意实数$x$，$e^{ix} = \cos(x) + i \sin(x)$（图16.2）。因此，通过代数推导，齐次方程的解具有形式：$y(x) = c_1 e^{\alpha x} \cos(\beta x) + c_2 e^{\alpha x} \sin(\beta x)$，这可以重排为$y(x) = he^{\alpha x} \cos(\beta x - \theta)$。
+
+\textbf{例16.8：}根据胡克定律，作用在物体上的力与其偏离均衡的位移成比例：$F = -k y$。根据牛顿第二定律，$F = m\frac{d^2 y}{dt^2}$。因此$m\frac{d^2 y}{dt^2} + k y = 0$，根为$r_1, r_2 = \pm i\sqrt{\frac{k}{m}}$。解为$y(t) = y_0 \cos(\sqrt{\frac{k}{m}} \cdot (t - t_0))$。此例可推广到阻尼弹簧情形：$m\frac{d^2 y}{dt^2} + q\frac{dy}{dt} + k y = 0$（当且仅当$q^2 - 4mk > 0$时有实根）。
+
+\textbf{定理16.2：}$n$阶线性微分方程在给定$n$个初始条件下具有唯一解。
+\end{translation}
+\section{Systems of differential equations / 微分方程组}
+
+\begin{original}
+Let $A$ be an $n \times n$ matrix and $\gamma$ an $n \times 1$ vector of constants. A system of first-order linear differential equations is given by:
+\[
+\frac{dy}{dx}(x) + A y(x) = \gamma. \tag{16.17}
+\]
+
+To simplify the discussion, assume that $A$ has $n$ linearly independent eigenvectors $v_i$ and corresponding eigenvalues $\lambda_i$, then for each $i$, $A v_i = \lambda_i v_i$. Let $\Lambda$ be the diagonal matrix with $\lambda_i$ in the $i$th row and column and let $P$ be the matrix with $v_i$ in the $i$th column. Then this collection of $n$ equations may be written as $AP = P\Lambda$. Therefore, $P^{-1}AP = P^{-1}P\Lambda = \Lambda$. Considering Equation 16.17, define $z = P^{-1} y$, so that $y = P z$ and substitute into Equation 16.17 to obtain:
+\[
+P\frac{dz}{dx}(x) + AP z(x) = \gamma.
+\]
+Multiplying by $P^{-1}$:
+\[
+\frac{dz}{dx}(x) + P^{-1}AP z(x) = P^{-1}\gamma
+\]
+or
+\[
+\frac{dz}{dx}(x) + \Lambda z(x) = P^{-1}\gamma = \tilde{\gamma}.
+\]
+
+Because $\Lambda$ is diagonal, this system has the form:
+\[
+\frac{dz_i}{dx}(x) + \lambda_i z_i(x) = \tilde{\gamma}_i, \quad i = 1, \ldots, n, \tag{16.18}
+\]
+a collection of $n$ first-order linear differential equations with solutions $z_i(x) = c_i e^{-\lambda_i x} + \tilde{\gamma}_i$. Given initial values $y_i(x_0)$, values $z_i(x_0)$ are determined according to $z(0) = P^{-1} y(0)$, and this determines $c_i$ and $\tilde{\gamma}_i$.
+
+Since $y = P z$,
+\[
+y_i(x) = \sum_{j=1}^{n} P_{ij} z_j = \sum_{j=1}^{n} P_{ij}[c_j e^{-\lambda_j x} + \tilde{\gamma}_j] = \sum_{j=1}^{n} \pi_{ij} e^{-\lambda_j x} + \tilde{\gamma}_j, \tag{16.19}
+\]
+where $\pi_{ij} = P_{ij} c_j$ and $\tilde{\gamma}_i = \sum_{j=1}^{n} P_{ij} \tilde{\gamma}_j$.
+
+The homogeneous equation $y' + A y = 0$ solves to give $y_c(x) = \sum_{j=1}^{n} v_j c_j e^{-\lambda_j x}$ as the complementary solution of the homogeneous equation and a particular solution is given as the solution to $A y = \gamma$ or $y_p = A^{-1}\gamma$. A general solution of the homogeneous equation is then:
+\[
+y(x) = \sum_{j=1}^{n} v_j c_j e^{-\lambda_j x} + A^{-1}\gamma.
+\]
+
+\textbf{EXAMPLE 16.9:} Consider the two-good market given by:
+\begin{align*}
+\text{Market 1}: D_1 = S_1 \quad &\text{or} \quad a_0 + a_1 p_1 + a_2 p_2 = b_0 + b_1 p_1 + b_2 p_2\\
+\text{Market 2}: D_2 = S_2 \quad &\text{or} \quad \alpha_0 + \alpha_1 p_1 + \alpha_2 p_2 = \beta_0 + \beta_1 p_1 + \beta_2 p_2.
+\end{align*}
+
+Suppose that price dynamics are linear, with price adjusting to eliminate excess demand over time: $\frac{d p_i}{dt} = \kappa(D_i(t) - S_i(t))$. Thus:
+\begin{align*}
+\frac{d p_1}{dt} &= \kappa(a_0 - b_0) + \kappa(a_1 - b_1)p_1 + \kappa(a_2 - b_2)p_2\\
+\frac{d p_2}{dt} &= \kappa(\alpha_0 - \beta_0) + \kappa(\alpha_1 - \beta_1)p_1 + \kappa(\alpha_2 - \beta_2)p_2.
+\end{align*}
+
+The system may be written: $\frac{dp}{dt} = Ap + \gamma$ or $\frac{dp}{dt} - Ap = \gamma$. With specific parameter values, the matrix $A$ has eigenvalues $\lambda_1 = -\frac{1}{4}$, $\lambda_2 = -\frac{1}{2}$, with corresponding eigenvectors $v_1 = (1, 2)$ and $v_2 = (3, 1)$. Because the roots are negative between $0$ and $-1$, the system converges to $p^e = -A^{-1}\gamma$.
+
+The price dynamics may be written:
+\[
+p(t) = V \Lambda(t) V^{-1}(p(0) - p^e) + p^e.
+\]
+where $\Lambda(t)$ is the diagonal matrix with $e^{\lambda_i t}$ as the $i$th diagonal term.
+
+\textbf{EXAMPLE 16.10:} Let
+\[
+\begin{pmatrix} y_1' \\ y_2' \end{pmatrix} = \begin{pmatrix} \frac{1}{5} & 0 \\ \frac{2}{5} & \frac{4}{5} \end{pmatrix} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} + \begin{pmatrix} 2 \\ 4 \end{pmatrix}.
+\]
+The coefficient matrix $A$ has eigenvalues $\lambda_1 = \frac{1}{5}$ and $\lambda_2 = \frac{4}{5}$. The corresponding eigenvectors are $v_1 = (-\frac{3}{2}, 1)$ and $v_2 = (0, 1)$. The general solution is:
+\[
+\begin{pmatrix} y_1(x) \\ y_2(x) \end{pmatrix} = \begin{pmatrix} -\frac{3}{2} c_1 e^{-\frac{1}{5}x} + 10 \\ c_1 e^{-\frac{1}{5}x} + c_2 e^{-\frac{4}{5}x} \end{pmatrix}.
+\]
+\end{original}
+\begin{translation}
+设$A$为$n \times n$矩阵，$\gamma$为$n \times 1$常数向量。一阶线性微分方程组为$\frac{dy}{dx}(x) + A y(x) = \gamma$（方程16.17）。假设$A$有$n$个线性无关的特征向量$v_i$及对应特征值$\lambda_i$，则$A v_i = \lambda_i v_i$。令$\Lambda$为对角矩阵，$P$为特征向量矩阵，则$AP = P\Lambda$，$P^{-1}AP = \Lambda$。定义$z = P^{-1} y$，得$\frac{dz}{dx} + \Lambda z = P^{-1}\gamma$。由于$\Lambda$是对角的，系统分解为$n$个一阶线性微分方程：$\frac{dz_i}{dx} + \lambda_i z_i = \tilde{\gamma}_i$（方程16.18），解为$z_i(x) = c_i e^{-\lambda_i x} + \tilde{\gamma}_i$。通解为$y(x) = \sum_{j=1}^{n} v_j c_j e^{-\lambda_j x} + A^{-1}\gamma$。
+
+\textbf{例16.9：}考虑两商品市场，价格动态为$\frac{d p_i}{dt} = \kappa(D_i(t) - S_i(t))$。系统可写为$\frac{dp}{dt} - Ap = \gamma$。对于特定的参数值，矩阵$A$的特征值为$\lambda_1 = -\frac{1}{4}$，$\lambda_2 = -\frac{1}{2}$，对应的特征向量为$v_1 = (1, 2)$和$v_2 = (3, 1)$。由于根为负，系统收敛到$p^e = -A^{-1}\gamma$。价格动态可写为$p(t) = V \Lambda(t) V^{-1}(p(0) - p^e) + p^e$。
+
+\textbf{例16.10：}对给定的系数矩阵$A$，特征值为$\lambda_1 = \frac{1}{5}$和$\lambda_2 = \frac{4}{5}$，对应特征向量为$v_1 = (-\frac{3}{2}, 1)$和$v_2 = (0, 1)$。通解如上所示。
+\end{translation}
+
+\section{Stability / 稳定性}
+
+\begin{original}
+The long-run behavior of a dynamic system depends on the roots of the characteristic equation. A sufficient condition for stability of the dynamic system is that the roots of the characteristic polynomial have negative real parts. Consider the polynomial:
+\[
+p(\lambda) = a_0\lambda^n + a_1\lambda^{n-1} + a_2\lambda^{n-2} + \cdots + a_{n-1}\lambda + a_n,
+\]
+where $a_0 > 0$.
+
+\textbf{Definition 16.2:} The polynomial $p(\lambda)$ is called stable if all roots of $p$ have negative real part.
+
+The Routh--Hurwicz theorem provides a means to determine the stability of a polynomial. Define the $n \times n$ (Hurwicz) matrix, $H$, as in Equation 16.20.
+
+\textbf{Theorem 16.3:} The polynomial $p(\lambda)$ is stable if and only if all the leading principal minors of $H$ are positive. More formally, letting $H_j$ denote the matrix obtained from $H$ by deleting the last $n - j$ rows and columns for $j = 1, \ldots, n$, the polynomial is stable if and only if $|H_j| > 0$ for all $j$.
+
+In the case of a second-order polynomial,
+\[
+H = \begin{pmatrix} a_1 & 0 \\ a_0 & a_2 \end{pmatrix}, \quad H_1 = \{a_1\}, \quad H_2 = H.
+\]
+so that $|H_1| = a_1$ and $|H_2| = a_1 a_2$. These are positive if and only if $a_1$ and $a_2$ are positive. And, since $a_0 > 0$, stability requires that all coefficients in the characteristic polynomial $p(\lambda) = a_0\lambda^2 + a_1\lambda + a_2$ are positive.
+
+Consider Example 16.9 with coefficient matrix $A$. The corresponding characteristic equation is $|A - \lambda I| = \lambda^2 + \frac{3}{4}\lambda + \frac{1}{8}$, so that all coefficients are positive. The matrix has eigenvalues $\lambda_1 = -\frac{1}{4}$, $\lambda_2 = -\frac{1}{2}$, leading to stable dynamics of the system.
+\end{original}
+\begin{translation}
+动态系统的长期行为取决于特征方程的根。动态系统稳定的充分条件是特征多项式的根具有负实部。考虑多项式$p(\lambda) = a_0\lambda^n + a_1\lambda^{n-1} + \cdots + a_{n-1}\lambda + a_n$，其中$a_0 > 0$。
+
+\textbf{定义16.2：}若$p$的所有根具有负实部，则称多项式$p(\lambda)$是稳定的。
+
+Routh--Hurwicz定理提供了判断多项式稳定性的方法。定义$n \times n$（Hurwicz）矩阵$H$（方程16.20）。
+
+\textbf{定理16.3：}$p(\lambda)$是稳定的当且仅当$H$的所有顺序主子式为正。更形式化地，令$H_j$表示从$H$中删除最后$n - j$行和列得到的矩阵（$j = 1, \ldots, n$），则多项式是稳定的当且仅当对所有$j$有$|H_j| > 0$。
+
+对于二阶多项式，$H = \begin{pmatrix} a_1 & 0 \\ a_0 & a_2 \end{pmatrix}$，故$|H_1| = a_1$，$|H_2| = a_1 a_2$。这些为正当且仅当$a_1$和$a_2$为正。由于$a_0 > 0$，稳定性要求特征多项式$p(\lambda) = a_0\lambda^2 + a_1\lambda + a_2$的所有系数为正。例16.9中特征方程为$\lambda^2 + \frac{3}{4}\lambda + \frac{1}{8}$，所有系数为正，特征值为$\lambda_1 = -\frac{1}{4}$，$\lambda_2 = -\frac{1}{2}$，导致系统稳定的动态。
+\end{translation}
+
+\section*{Exercises for Chapter 16 / 第16章习题}
+
+\begin{original}
+\textbf{Exercise 16.1} Consider a loan with outstanding value $P(t)$ at time $t$. The growth of the debt at time $t$, over a small instant of time, $\Delta t$, is $P(t)r\Delta t$, where $r$ is the continuous time rate of interest. Suppose that repayments are divided into two periods: an early period with no interest --- from time $t = 0$ to $\tau$ and then on a continuous basis at the rate $d$ or a repayment of $d\Delta t$ over the period of time $\Delta t$. Find the value of $d$ that amortizes the loan over the length of time $T > \tau$.
+
+\textbf{Exercise 16.2} Suppose that $\frac{dy}{dt} - \frac{3}{4}y(t) = 5$ and $y$ satisfies the initial condition, $y(0) = 0$. Find $y(t)$.
+
+\textbf{Exercise 16.3} The elasticity of demand is $\eta(p) = \frac{p}{Q}\frac{dQ(p)}{dp} = f(p)$. Find the demand function when the elasticity of demand is: (a) $f(p) = c$, (b) $f(p) = pc$, (c) $f(p) = cp$. The parameter $c$ may be positive or negative depending on context.
+
+\textbf{Exercise 16.4} Suppose that $\frac{dy}{dx} + \alpha(x)y(x) = 0$. Find $y(x)$ by direct integration.
+
+\textbf{Exercise 16.5} Suppose that $\frac{dy}{dx} + \frac{1}{2}y(x) = x$ and $y$ satisfies the initial condition, $y(0) = 2$. Find $y(x)$.
+
+\textbf{Exercise 16.6} Suppose that $\frac{dy}{dt} - \alpha y(t) = t$, where $\alpha$ is a constant and $y$ satisfies the initial condition, $y(t) = y(t_0)$ at $t = t_0$. Find $y(t)$.
+
+\textbf{Exercise 16.7} The theory of population growth from Malthus suggested that as the population grows, competition for resources will work to inhibit that population growth. One model that captures this feature is the logistic growth model: $\frac{dP}{dt} = aP\left(1 - \frac{P}{\bar{P}}\right)$. Find the growth rate of the population as a function of $t$.
+
+\textbf{Exercise 16.8} Consider a production function $y = f(k) = k^{\frac{1}{2}}$. Suppose that $k$ evolves over time according to the formula: $\frac{dk}{dt} = sk^{\frac{1}{2}} - (\delta + n)k = \frac{1}{20}k^{\frac{1}{2}} - \left(\frac{1}{10} + \frac{1}{30}\right)k$, where $s = \frac{1}{20}$, $\delta = \frac{1}{10}$ and $n = \frac{1}{30}$ are the savings, depreciation and population growth rates. Find $k(t)$.
+
+\textbf{Exercise 16.9} Suppose that $\frac{d^2 y}{dt^2} - \frac{3}{4}\frac{d y(t)}{dt} + \frac{1}{8}y(t) = 5$ and $y$ satisfies the initial conditions, $y(0) = 0$, $y(1) = 1$. Find $y(t)$.
+
+\textbf{Exercise 16.10} Consider the system:
+\[
+\begin{pmatrix} \frac{d y_1(t)}{dt} \\ \frac{d y_2(t)}{dt} \end{pmatrix} + \begin{pmatrix} \frac{7}{4} & -\frac{3}{4} \\ \frac{5}{2} & -1 \end{pmatrix} \begin{pmatrix} y_1(t) \\ y_2(t) \end{pmatrix} = \begin{pmatrix} 2 \\ 3 \end{pmatrix}.
+\]
+(a) Find the eigenvalues and eigenvectors of the coefficient matrix $A$, showing that $v_1 = (3,5)$ and $v_2 = (1,2)$ are eigenvectors of $A$.
+(b) Let $P$ be the matrix of eigenvectors; define $z = P^{-1}y$. Express the system in terms of $z$.
+(c) Solve for $z$.
+\end{original}
+\begin{translation}
+\textbf{习题16.1} 考虑一笔在时刻$t$未偿价值为$P(t)$的贷款。债务在时刻$t$、在微小时间段$\Delta t$内的增长为$P(t)r\Delta t$，其中$r$为连续时间利率。假设还款分为两个阶段：早期无利息阶段（从$t = 0$到$\tau$），然后以速率$d$连续还款。求在时间长度$T > \tau$内摊销贷款所需的$d$值。
+
+\textbf{习题16.2} 假设$\frac{dy}{dt} - \frac{3}{4}y(t) = 5$且$y$满足初始条件$y(0) = 0$。求$y(t)$。
+
+\textbf{习题16.3} 需求弹性为$\eta(p) = \frac{p}{Q}\frac{dQ(p)}{dp} = f(p)$。当需求弹性为(a) $f(p) = c$，(b) $f(p) = pc$，(c) $f(p) = cp$时，求需求函数。
+
+\textbf{习题16.4} 假设$\frac{dy}{dx} + \alpha(x)y(x) = 0$。通过直接积分求$y(x)$。
+
+\textbf{习题16.5} 假设$\frac{dy}{dx} + \frac{1}{2}y(x) = x$且$y$满足初始条件$y(0) = 2$。求$y(x)$。
+
+\textbf{习题16.6} 假设$\frac{dy}{dt} - \alpha y(t) = t$，其中$\alpha$为常数且$y$满足初始条件$y(t) = y(t_0)$（$t = t_0$）。求$y(t)$。
+
+\textbf{习题16.7} 马尔萨斯人口增长理论认为，随着人口增长，资源竞争将抑制人口增长。逻辑斯蒂增长模型$\frac{dP}{dt} = aP(1 - \frac{P}{\bar{P}})$捕捉了这一特征。求人口增长率作为$t$的函数。
+
+\textbf{习题16.8} 考虑生产函数$y = f(k) = k^{\frac{1}{2}}$。假设$k$按公式$\frac{dk}{dt} = sk^{\frac{1}{2}} - (\delta + n)k$随时间演化，其中$s = \frac{1}{20}$，$\delta = \frac{1}{10}$，$n = \frac{1}{30}$分别为储蓄率、折旧率和人口增长率。求$k(t)$。
+
+\textbf{习题16.9} 假设$\frac{d^2 y}{dt^2} - \frac{3}{4}\frac{d y(t)}{dt} + \frac{1}{8}y(t) = 5$且$y$满足初始条件$y(0) = 0$，$y(1) = 1$。求$y(t)$。
+
+\textbf{习题16.10} 对于给定的微分方程组，(a) 求系数矩阵$A$的特征值和特征向量，证明$v_1 = (3,5)$和$v_2 = (1,2)$是$A$的特征向量；(b) 用特征向量矩阵$P$定义$z = P^{-1}y$并以$z$表示系统；(c) 求解$z$。
+\end{translation}
+
+% =====================================================================
+\chapter{Linear Difference Equations / 线性差分方程}
+% =====================================================================
+
+\section{Introduction / 引言}
+
+\begin{original}
+In the study of many problems, the change in a variable is most naturally modeled in discrete units of time. For many bank loans, interest is computed on a monthly basis so that the level of debt is updated on a monthly basis. Government data are routinely released on a quarterly or annual basis, firms report profit each quarter. Thus, unemployment data or profit data are seen as sequences $u_t, u_{t-1}, \ldots$ or $\pi_t, \pi_{t-1}, \ldots$. When the data evolve according to a systematic pattern, difference equations may be used to study long-run behavior.
+
+Section 17.2 provides some introductory examples to motivate the use of difference equations. Difference equations are categorized by the order of the difference equation. In a first-order difference equation the current value of the variable of interest depends on its value in the previous period; in an $n$th-order difference equation, the current value depends on the value in the previous $n$ periods. The entire discussion here considers only first- and second-order difference equations, developed in Sections 17.3 and 17.4, respectively. Section 17.3.3 describes the well-known cobweb model of cycles in the demand and price of a single good and illustrates the process of solving a first-order difference equation. A generalization of the first-order difference equation is considered in Section 17.3.4. In Section 17.4.5 some examples of second-order difference equations are considered, in particular the multiplier-accelerator model from macroeconomic theory. Finally, Section 17.5 considers vector difference equations.
+\end{original}
+\begin{translation}
+在许多问题的研究中，变量的变化最自然地被建模为离散时间单位。对于许多银行贷款，利息按月计算，因此债务水平按月更新。政府数据通常按季度或年度发布，公司每季度报告利润。因此，失业数据或利润数据被视为序列$u_t, u_{t-1}, \ldots$或$\pi_t, \pi_{t-1}, \ldots$。当数据按照系统模式演变时，差分方程可用于研究长期行为。
+
+第17.2节提供了一些介绍性例子来说明差分方程的应用。差分方程按阶数分类。在一阶差分方程中，关注变量的当前值取决于其前一期的值；在$n$阶差分方程中，当前值取决于前$n$期的值。此处的整个讨论仅考虑一阶和二阶差分方程，分别在第17.3节和第17.4节中展开。第17.3.3节描述了著名的蛛网模型，该模型描述了单一商品需求和价格的周期，并说明了求解一阶差分方程的过程。第17.3.4节考虑了一阶差分方程的推广。第17.4.5节考虑了二阶差分方程的一些例子，特别是宏观经济理论中的乘数-加速数模型。最后，第17.5节考虑向量差分方程。
+\end{translation}
+
+\section{Motivating examples / 启发性例子}
+
+\begin{original}
+Suppose that you obtain a loan from a bank, to be repaid over time. At the end of each period, interest is computed on the outstanding balance and a payment is made against the loan. Suppose that at the beginning of period $t$ the outstanding balance is $y_t$. At the end of the period, the outstanding balance has grown to $(1 + r)y_t$ when the interest rate is $r$. Then a payment, $m$, is made to the bank. So, at the beginning of period $t+1$, the outstanding balance is $y_{t+1} = (1+r)y_t - m$. This may be rewritten as
+\[
+y_{t+1} - (1 + r)y_t = -m. \tag{17.1}
+\]
+
+What sequence $\{y_t\}$ might satisfy this rule? Observe that if $y_t$ were constant over time, $y_t = \bar{y}$, then $\bar{y} - (1 + r)\bar{y} = -m$ or $\bar{y} = \frac{m}{r}$. In this case, the outstanding debt does not change and the repayment just covers interest on the principal. From the lender's perspective, the loan is an asset, generating $m$ dollars per period in perpetuity.
+
+Consider an asset that pays $m$ dollars at the end of each year. In present-value terms, the present value of the cash flow is:
+\[
+PV = \frac{1}{(1 + r)}m + \frac{1}{(1 + r)^2}m + \frac{1}{(1 + r)^3}m + \cdots = m\frac{1}{(1+r)}\frac{1+r}{r} = \frac{m}{r}. \tag{17.2}
+\]
+
+The loan of $\bar{y}$ with repayment only of interest generates a yearly cash flow of $m$ dollars. The value $\bar{y}$ satisfies $r\bar{y} = m$; $m$ is the repayment each period that exactly covers interest accrued on the outstanding amount $\bar{y}$, so the principal $\bar{y}$ is unchanged from period to period and equals $PV$.
+
+Notice that if there were some sequence $\{\tilde{y}_t\}$ satisfying $\tilde{y}_{t+1} - (1 + r)\tilde{y}_t = 0$, then $(\bar{y} + \tilde{y}_{t+1}) - (1 + r)(\bar{y} + \tilde{y}_t) = -m$, so that the sequence $\{y_t\} = \{\bar{y} + \tilde{y}_t\}$ also satisfies Equation 17.1. Considering $\tilde{y}_{t+1} - (1 + r)\tilde{y}_t = 0$, this expression asserts that $\tilde{y}_{t+1} = (1 + r)\tilde{y}_t$, so that $\tilde{y}_{t+1} = A(1 + r)^t$ for $t \geq 1$, with $A$ arbitrary. Thus, $y_t = A(1 + r)^t + \frac{m}{r}$. Suppose that some terminal date $T$ is set such that the loan is fully repaid: $0 = y_T = A(1 + r)^T + \frac{m}{r}$. Therefore, $A = -\frac{m}{r}\frac{1}{(1+r)^T}$, and
+\[
+y_t = \frac{m}{r}\left[1 - \frac{(1 + r)^t}{(1 + r)^T}\right]. \tag{17.3}
+\]
+
+If the repayment per period is $m$ and the loan is repaid in $T$ periods, the amount borrowed must have been: $y_0 = \frac{m}{r}[1 - \frac{1}{(1+r)^T}]$.
+
+As a final motivating example, consider an employment model where workers transition in and out of employment. Let $p(e \mid e)$ be the probability of being employed next period given currently employed, and $p(u \mid e)$ the probability of being unemployed next period given currently employed. $p(e \mid u)$ and $p(u \mid u)$ denote the corresponding probabilities for an individual currently unemployed. From the definitions, $p(e \mid e) + p(u \mid e) = 1$ and $p(e \mid u) + p(u \mid u) = 1$. If $l$ is the labor force, then $l = e_t + u_t$. Of those currently employed, $e_t p(e \mid e)$ remain employed and $e_t p(u \mid e)$ become unemployed. Of those currently unemployed, $u_t p(e \mid u)$ become employed and $u_t p(u \mid u)$ remain unemployed. Thus, unemployment next period is
+\[
+u_{t+1} = e_t p(u \mid e) + u_t p(u \mid u) = (l - u_t)p(u \mid e) + u_t p(u \mid u) = l p(u \mid e) + u_t[p(u \mid u) - p(u \mid e)] = k + \lambda u_t,
+\]
+where $k = l p(u \mid e)$ and $\lambda = [p(u \mid u) - p(u \mid e)]$. In the steady state, $u_{t+1} = u_t = \bar{u}$, and so $\bar{u} = \frac{k}{1-\lambda}$. Also, $u_{t+1} - \bar{u} = \lambda(u_t - \bar{u})$, so that $u_{t+j} = \lambda^j(u_t - \bar{u})$.
+\end{original}
+\begin{translation}
+假设你从银行获得一笔贷款，需随时间偿还。在每个时期末，对未偿余额计算利息，并进行还款。假设在时期$t$开始时未偿余额为$y_t$。在时期末，当利率为$r$时，未偿余额增长为$(1 + r)y_t$。然后向银行支付$m$。因此，在时期$t+1$开始时，未偿余额为$y_{t+1} = (1+r)y_t - m$。这可以重写为$y_{t+1} - (1 + r)y_t = -m$（方程17.1）。
+
+什么样的序列$\{y_t\}$满足此规则？若$y_t$随时间保持不变，$y_t = \bar{y}$，则$\bar{y} - (1 + r)\bar{y} = -m$或$\bar{y} = \frac{m}{r}$。在此情况下，未偿债务不发生变化，还款仅覆盖本金利息。从贷款人角度看，贷款是一种资产，每期产生$m$美元的永久现金流。每期支付$m$的现金流现值为$PV = \frac{m}{r}$（方程17.2）。
+
+若存在某个序列$\{\tilde{y}_t\}$满足$\tilde{y}_{t+1} - (1 + r)\tilde{y}_t = 0$，则$\tilde{y}_{t+1} = A(1 + r)^t$。因此$y_t = A(1 + r)^t + \frac{m}{r}$。假设设定某个终端日期$T$使贷款完全偿清：$0 = y_T$，则$y_t = \frac{m}{r}[1 - \frac{(1 + r)^t}{(1 + r)^T}]$。若每期还款为$m$且在$T$期内偿清，则借款额为$y_0 = \frac{m}{r}[1 - \frac{1}{(1+r)^T}]$。
+
+在就业模型中，设$p(e \mid e)$为当前就业者下一期保持就业的概率，$p(u \mid e)$为当前就业者下一期失业的概率。类似定义$p(e \mid u)$和$p(u \mid u)$。劳动力总量$l = e_t + u_t$。则下一期失业为$u_{t+1} = k + \lambda u_t$，其中$k = l p(u \mid e)$，$\lambda = [p(u \mid u) - p(u \mid e)]$。稳态中$\bar{u} = \frac{k}{1-\lambda}$，且$u_{t+j} = \lambda^j(u_t - \bar{u})$。
+\end{translation}
+
+\section{First-order linear difference equations / 一阶线性差分方程}
+
+\begin{original}
+A first-order linear difference equation describes the movement of some variable $y_t$ over time according to an equation of the form:
+\[
+a_1 y_t + a_0 y_{t-1} = f(t).
+\]
+Assume $a_1 \neq 0$. When $a_1 \neq 0$, the equation can be rearranged:
+\[
+y_t + a y_{t-1} = \theta(t), \tag{17.4}
+\]
+where $a = \frac{a_0}{a_1}$ and $\theta(t) = \frac{1}{a_1} f(t)$. This is the general form of the first-order linear difference equation.
+
+A solution to this dynamic equation is a sequence $\{y_t\}$ satisfying the equation for each $t$.
+
+\textbf{Definition 17.1:} A function $y_t^p$ is called a particular solution of $y_t + a y_{t-1} = \theta(t)$ if $y_t^p + a y_{t-1}^p = \theta(t)$, $\forall t$. The collection of all particular solutions is called the general solution.
+
+In general, there are many particular solutions. A unique particular solution is selected by imposing an initial condition.
+
+\textbf{Definition 17.2:} A function $y_t^c$ is called a complementary solution if $y_t^c + a y_{t-1}^c = 0$, $\forall t$.
+
+If $y_t$ and $x_t$ are two particular solutions then $z_t = y_t - x_t$ satisfies $z_t + a z_{t-1} = 0$. Consequently, given any particular solution $x_t$, any other particular solution $y_t$ may be written $y_t = x_t + z_t$, for some complementary solution $z_t$.
+
+\textbf{REMARK 17.1:} Multiplying any complementary solution $y_t^c$ by a constant $k$ gives a complementary solution $k y_t^c$. And, if $x$ and $y$ are complementary solutions, then for any numbers $\alpha$ and $\beta$, $\alpha x + \beta y$ is a complementary solution. There are many complementary and (hence) many particular solutions.
+\end{original}
+\begin{translation}
+一阶线性差分方程描述某个变量$y_t$随时间按形如$a_1 y_t + a_0 y_{t-1} = f(t)$的方程运动。假设$a_1 \neq 0$，方程可重排为$y_t + a y_{t-1} = \theta(t)$（方程17.4），其中$a = \frac{a_0}{a_1}$，$\theta(t) = \frac{1}{a_1} f(t)$。这是一阶线性差分方程的一般形式。该动态方程的解是一个序列$\{y_t\}$，对每个$t$满足方程。
+
+\textbf{定义17.1：}若对所有$t$有$y_t^p + a y_{t-1}^p = \theta(t)$，则称函数$y_t^p$为$y_t + a y_{t-1} = \theta(t)$的特解。所有特解的集合称为通解。一般来说，存在许多特解，通过施加初始条件选择唯一的特解。
+
+\textbf{定义17.2：}若对所有$t$有$y_t^c + a y_{t-1}^c = 0$，则称函数$y_t^c$为互补解。若$y_t$和$x_t$是两个特解，则$z_t = y_t - x_t$满足$z_t + a z_{t-1} = 0$。
+
+\textbf{注17.1：}将任何互补解乘以常数$k$仍得到互补解。若$x$和$y$是互补解，则对任意数$\alpha$和$\beta$，$\alpha x + \beta y$也是互补解。
+\end{translation}
+
+\subsection{Solving first-order linear difference equations / 求解一阶线性差分方程}
+
+\begin{original}
+These observations suggest a general method of solution for the first-order linear difference equation:
+\begin{enumerate}
+\item Find a complementary solution, $y_t^c$, to the homogeneous equation: $y_t + a y_{t-1} = 0$.
+\item Find a particular solution, $y_t^p$, to the inhomogeneous equation: $y_t + a y_{t-1} = \theta(t)$.
+\item Combine the complementary and particular solutions to give the general solution: $y_t = y_t^c + y_t^p$.
+\item Use the initial condition to select a particular solution.
+\end{enumerate}
+
+To simplify the discussion, the case where $\theta(t)$ is constant and the case where it is variable are discussed separately.
+\end{original}
+\begin{translation}
+这些观察提示了一阶线性差分方程的一般求解方法：(1) 求齐次方程$y_t + a y_{t-1} = 0$的互补解$y_t^c$；(2) 求非齐次方程$y_t + a y_{t-1} = \theta(t)$的特解$y_t^p$；(3) 组合互补解和特解得到通解：$y_t = y_t^c + y_t^p$；(4) 利用初始条件选择特解。为简化讨论，分别讨论$\theta(t)$为常数和可变的情况。
+\end{translation}
+\subsection{The constant forcing function / 常值强制函数}
+
+\begin{original}
+The function $\theta(t)$ is sometimes called the forcing function of the difference equation. When this is constant, $\theta(t) = c$ for all $t$, the difference equation is:
+\[
+y_t + a y_{t-1} = c.
+\]
+
+The homogeneous equation is $y_t + a y_{t-1} = 0$. Finding a complementary solution is straightforward: $y_t = -a y_{t-1} = (-a)^2 y_{t-2} = (-a)^3 y_{t-3} = \cdots$, so it is clear that $y_t = k(-a)^t$ satisfies this expression for any constant $k$. When $a = -1$, $k(-a)^t = k$.
+
+The inhomogeneous equation $y_t + a y_{t-1} = c$ has a constant particular solution if $a \neq -1$: pick $y_t = \bar{y}$ where $\bar{y} + a\bar{y} = c$, so $y_t = \bar{y} = \frac{c}{1+a}$ is a solution. If $a = -1$, the equation is $y_t - y_{t-1} = c$, so that $y_t = ct + k$ for any number $k$.
+
+Combining the complementary and particular solutions,
+\[
+y_t = \begin{cases}
+k(-a)^t + \frac{c}{1+a}, & a \neq -1\\[4pt]
+y_0 + ct, & a = -1.
+\end{cases}
+\]
+
+Imposing an initial condition eliminates the arbitrary parameter. With initial condition $y_0$,
+\[
+y_t = \begin{cases}
+\left(y_0 - \frac{c}{1+a}\right)(-a)^t + \frac{c}{1+a}, & a \neq -1\\[4pt]
+y_0 + ct, & a = -1.
+\end{cases}
+\]
+
+\textbf{EXAMPLE 17.1:} $y_t - \frac{1}{2} y_{t-1} = 4$, $y_0 = 1$. The particular solution is $y_t^p = \frac{4}{1-\frac{1}{2}} = 8$. The complementary solution is $y_t^c = A(\frac{1}{2})^t$. This gives $y_t = A(\frac{1}{2})^t + 8$, and using $y_0 = 1$ gives $1 = y_0 = A + 8$, $A = -7$. Therefore, $y_t = (-7)(\frac{1}{2})^t + 8$.
+
+\textbf{EXAMPLE 17.2:} $y_t - y_{t-1} = 4$, $y_0 = 1$. The particular solution is $y_t^p = 4t$ and the complementary solution is $y_t^c = A$. This gives $y_t = A + 4t$, so $1 = y_0 = A$. Thus, $y_t = 1 + 4t$.
+\end{original}
+\begin{translation}
+函数$\theta(t)$有时称为差分方程的强制函数。当其为常数时，即对所有$t$有$\theta(t) = c$，差分方程为$y_t + a y_{t-1} = c$。齐次方程为$y_t + a y_{t-1} = 0$。求互补解很直接：$y_t = -a y_{t-1} = (-a)^2 y_{t-2} = \cdots$，故$y_t = k(-a)^t$对任意常数$k$满足该表达式。
+
+非齐次方程$y_t + a y_{t-1} = c$在$a \neq -1$时有常数特解：$y_t = \bar{y} = \frac{c}{1+a}$。若$a = -1$，方程为$y_t - y_{t-1} = c$，$y_t = ct + k$。组合互补解和特解，并施加初始条件$y_0$，得到上述形式。
+
+\textbf{例17.1：}$y_t - \frac{1}{2} y_{t-1} = 4$，$y_0 = 1$。特解为$y_t^p = 8$。互补解为$y_t^c = A(\frac{1}{2})^t$。$y_t = A(\frac{1}{2})^t + 8$，由$y_0 = 1$得$A = -7$。故$y_t = (-7)(\frac{1}{2})^t + 8$。
+
+\textbf{例17.2：}$y_t - y_{t-1} = 4$，$y_0 = 1$。特解为$y_t^p = 4t$，互补解为$y_t^c = A$。$y_t = 1 + 4t$。
+\end{translation}
+
+\subsection{The cobweb model / 蛛网模型}
+
+\begin{original}
+This is a supply and demand model with the key feature that supply in the current period depends on the previous period's price. Thus, in any given period, price alone adjusts to clear the market:
+\[
+D_t = a + b p_t, \quad a > 0,\; b < 0,\qquad S_t = c + d p_{t-1}, \quad 0 < c < a,\; d > 0.
+\]
+Market clearing each period gives: $D_t = a + b p_t = c + d p_{t-1} = S_t$.
+
+In a stationary equilibrium: $p_t = p_{t-1} = p^e$, $a + b p^e = c + d p^e \;\Rightarrow\; p^e = \frac{a-c}{d-b}$.
+
+\subsubsection{Dynamic behavior of price / 价格的动态行为}
+
+With market clearing each period, $D_t = S_t$, rearranging gives $b p_t - d p_{t-1} = c - a$, so that:
+\[
+p_t - \frac{d}{b} p_{t-1} = \frac{c-a}{b},
+\]
+or $p_t + \alpha p_{t-1} = \beta$, where $\alpha = -\frac{d}{b}$ and $\beta = \frac{c-a}{b}$. Note that $\alpha = -\frac{d}{b} > 0$ since $d > 0$, $b < 0$. The general solution is:
+\[
+p_t = k\left(\frac{d}{b}\right)^t + \frac{\beta}{1+\alpha} = k\left(\frac{d}{b}\right)^t + p^e.
+\]
+
+With an initial price $p_0$, $k = p_0 - p^e$ and this gives the particular solution:
+\[
+p_t = (p_0 - p^e)\left(\frac{d}{b}\right)^t + p^e.
+\]
+This is stable ($p_t \to p^e$) provided $\left|\frac{d}{b}\right| < 1$.
+
+\subsubsection{Stability / 稳定性}
+
+In terms of elasticities, at $p^e$, $\frac{\varepsilon_S(p^e)}{\varepsilon_D(p^e)} = \frac{d}{b}$. Since $d > 0$ and $b < 0$, $\frac{d}{b} < 0$. There are three cases:
+\begin{enumerate}
+\item $\frac{d}{b} < -1$ ($|\frac{d}{b}| > 1$): supply more responsive than demand, unstable dynamics.
+\item $\frac{d}{b} = -1$ ($|\frac{d}{b}| = 1$): equal magnitude slopes, cycles occur.
+\item $\frac{d}{b} > -1$ ($|\frac{d}{b}| < 1$): supply less responsive than demand, stable dynamics.
+\end{enumerate}
+\end{original}
+\begin{translation}
+这是一个供需模型，其关键特征是当期供给取决于前期价格。在市场出清下：$D_t = a + b p_t = c + d p_{t-1} = S_t$。在平稳均衡中：$p^e = \frac{a-c}{d-b}$。
+
+每期市场出清给出$b p_t - d p_{t-1} = c - a$，故$p_t + \alpha p_{t-1} = \beta$，其中$\alpha = -\frac{d}{b}$，$\beta = \frac{c-a}{b}$。通解为$p_t = k(\frac{d}{b})^t + p^e$。施加初始价格$p_0$得$p_t = (p_0 - p^e)(\frac{d}{b})^t + p^e$。当$|\frac{d}{b}| < 1$时稳定。
+
+以弹性表示，在$p^e$处，$\frac{\varepsilon_S(p^e)}{\varepsilon_D(p^e)} = \frac{d}{b}$。存在三种情况：(1) $\frac{d}{b} < -1$：供给比需求更敏感，动态不稳定；(2) $\frac{d}{b} = -1$：出现周期；(3) $\frac{d}{b} > -1$：供给不如需求敏感，动态稳定。
+\end{translation}
+
+\subsection{Equations with variable forcing function / 变系数强制函数方程}
+
+\begin{original}
+Considering again the equation $y_t + a y_{t-1} = \theta(t)$. The homogeneous part is the same regardless of $\theta(t)$, and the complementary solution is unchanged: $y_t = k(-a)^t$. Finding a particular solution is more complex. The usual practice is to postulate a functional form for the particular solution that is similar to the functional form of the forcing function $\theta$. Three cases are considered:
+
+\textbf{Case 1:} $\theta(t) = g d^t$
+\[
+y_t = \begin{cases}
+\left(y_0 - \frac{gd}{a+d}\right)(-a)^t + \frac{gd^{t+1}}{a+d}, & a + d \neq 0\\[4pt]
+y_0(-a)^t - \frac{g}{a} t d^{t+1}, & a + d = 0.
+\end{cases} \tag{17.5}
+\]
+
+\textbf{Case 2:} $\theta(t) = \gamma t + \delta$
+\[
+y_t = \left(y_0 - \frac{\delta}{1+a} - \frac{\gamma a}{(1+a)^2}\right)(-a)^t + \frac{\gamma}{1+a}t + \frac{\delta}{1+a} + \frac{\gamma a}{(1+a)^2}, \quad a \neq -1. \tag{17.6}
+\]
+
+\textbf{Case 3:} $\theta(t) = \gamma t^2 + \delta$
+\[
+y_t = [y_0 - \eta_3](-a)^t + \eta_1 t^2 + \eta_2 t + \eta_3, \quad a \neq -1. \tag{17.7}
+\]
+Detailed calculations deriving these expressions are given in Section 17.7.1.
+
+\textbf{EXAMPLE 17.3:} $y_t - \frac{1}{2} y_{t-1} = 5(\frac{1}{4})^t$, $y_0 = 1$. This corresponds to case 1 with $a = -\frac{1}{2}$, $d = \frac{1}{4}$. So $y_t = 6(\frac{1}{2})^t - 20(\frac{1}{4})^{t+1}$.
+
+\textbf{EXAMPLE 17.4:} $y_t - \frac{1}{2} y_{t-1} = 5(\frac{1}{2})^t$, $y_0 = 1$. $y_t = 6(\frac{1}{2})^t - 10t(\frac{1}{2})^{t+1}$.
+\end{original}
+\begin{translation}
+再次考虑方程$y_t + a y_{t-1} = \theta(t)$。齐次部分相同，互补解不变：$y_t = k(-a)^t$。求特解更复杂。通常做法是假设特解的函数形式与强制函数$\theta$的函数形式相似。讨论了三种情况（方程17.5、17.6、17.7），详细推导见第17.7.1节。
+
+\textbf{例17.3：}$y_t - \frac{1}{2} y_{t-1} = 5(\frac{1}{4})^t$，$y_0 = 1$。属于情形1，$y_t = 6(\frac{1}{2})^t - 20(\frac{1}{4})^{t+1}$。
+
+\textbf{例17.4：}$y_t - \frac{1}{2} y_{t-1} = 5(\frac{1}{2})^t$，$y_0 = 1$。$y_t = 6(\frac{1}{2})^t - 10t(\frac{1}{2})^{t+1}$。
+\end{translation}
+\section{Second-order linear difference equations / 二阶线性差分方程}
+
+\begin{original}
+The simplest form of second-order difference equation is:
+\[
+y_t + a_1 y_{t-1} + a_2 y_{t-2} = c.
+\]
+
+As in the case of first-order difference equations, the problem of finding a solution is dealt with as follows:
+\begin{itemize}
+\item Solve the inhomogeneous equation to obtain the particular solution.
+\item Solve the homogeneous equation to obtain the complementary solution.
+\item Obtain the general solution as the sum of the particular and complementary solutions.
+\item Use initial conditions to identify a unique solution.
+\end{itemize}
+\end{original}
+\begin{translation}
+二阶差分方程的最简单形式为$y_t + a_1 y_{t-1} + a_2 y_{t-2} = c$。与一阶情形相同，通过求解非齐次方程得特解，求解齐次方程得互补解，两者之和为通解，利用初始条件确定唯一解。
+\end{translation}
+
+\subsection{The inhomogeneous equation / 非齐次方程}
+
+\begin{original}
+The form of solution for the inhomogeneous equation depends on the values of $a_1$ and $a_2$. The simplest candidate particular solution is a constant solution $y_t = y$ and if this satisfies the inhomogeneous equation: $y(1 + a_1 + a_2) = c$, $y$ is determined as $y = \frac{c}{1+a_1+a_2}$.
+
+However, $y(1 + a_1 + a_2) = c$ is insoluble if $(1 + a_1 + a_2) = 0$ (and $c \neq 0$). In this case, try a particular solution $y = \gamma t$, which yields $\gamma = -\frac{c}{a_1+2a_2}$, provided $a_1 + 2a_2 \neq 0$.
+
+Finally, if both $(1 + a_1 + a_2)$ and $(a_1 + 2a_2)$ equal $0$, try $y = \gamma t^2$, giving $\gamma = \frac{c}{2}$. So, depending on the parameters, a particular solution is given by:
+\[
+y_t^p = \begin{cases}
+\frac{c}{1+a_1+a_2}, & a_1 + a_2 \neq -1\\[4pt]
+-\frac{c}{a_1+2a_2}\,t, & a_1 + a_2 = -1,\; a_1 + 2a_2 \neq 0\\[4pt]
+\frac{c}{2}t^2, & a_1 + a_2 = -1,\; a_1 + 2a_2 = 0.
+\end{cases} \tag{17.8}
+\]
+\end{original}
+\begin{translation}
+非齐次方程解的形式取决于$a_1$和$a_2$的值。最简单的候选特解是常数解$y_t = y$，若满足非齐次方程，则$y = \frac{c}{1+a_1+a_2}$。若$1 + a_1 + a_2 = 0$，尝试$y = \gamma t$，得$\gamma = -\frac{c}{a_1+2a_2}$。若两者均为零，尝试$y = \gamma t^2$，得$\gamma = \frac{c}{2}$。特解如表17.8所示。
+\end{translation}
+
+\subsection{The homogeneous equation / 齐次方程}
+
+\begin{original}
+Now, consider the homogeneous equation, $y_t + a_1 y_{t-1} + a_2 y_{t-2} = 0$. As a trial complementary solution consider $y_t^c = k b^t$. This gives the equation: $k b^t + a_1 k b^{t-1} + a_2 k b^{t-2} = 0$. Canceling $k$ gives the quadratic equation:
+\[
+b^2 + a_1 b + a_2 = 0.
+\]
+Use the usual formula to find the roots $\lambda_1$ and $\lambda_2$:
+\[
+\lambda_1, \lambda_2 = \frac{-a_1 \pm \sqrt{a_1^2 - 4a_2}}{2}.
+\]
+So, $y_t = k \lambda_i^t$ satisfies the complementary equation for any value of $k$. More generally, any $y_t$ of the form $y_t = k_1\lambda_1^t + k_2\lambda_2^t$ satisfies the complementary equation. The dynamic behavior depends critically on the roots, with three possibilities:
+
+\begin{enumerate}
+\item Both roots real and distinct ($a_1^2 - 4a_2 > 0$).
+\item Both roots real but repeated ($\lambda_1 = \lambda_2$, when $a_1^2 - 4a_2 = 0$).
+\item Both roots complex and distinct ($a_1^2 - 4a_2 < 0$).
+\end{enumerate}
+
+Depending on which case applies, the complementary solution is:
+\[
+y_t^c = \begin{cases}
+k_1 \lambda_1^t + k_2 \lambda_2^t, & \text{roots real and distinct}\\[4pt]
+k_1 \lambda^t + k_2 t \lambda^t, & \text{roots real and equal}\\[4pt]
+r^t[B_1 \cos(\omega t) + B_2 \sin(\omega t)], & \text{roots complex},
+\end{cases} \tag{17.9}
+\]
+where $r = |\lambda_1| = |\lambda_2| = \sqrt{a_2}$ and $\omega = \cos^{-1}(-\frac{a_1}{2\sqrt{a_2}})$ for complex roots. The derivation is given in Section 17.7.2.
+\end{original}
+\begin{translation}
+考虑齐次方程$y_t + a_1 y_{t-1} + a_2 y_{t-2} = 0$。试探互补解$y_t^c = k b^t$，代入得$b^2 + a_1 b + a_2 = 0$。根为$\lambda_1, \lambda_2 = \frac{-a_1 \pm \sqrt{a_1^2 - 4a_2}}{2}$。动态行为取决于三种情况：(1) 实且不同；(2) 实且相同；(3) 复数。互补解形式如方程17.9所示。
+\end{translation}
+
+\subsection{The general solution and stability / 通解与稳定性}
+
+\begin{original}
+Together, Equations 17.8 and 17.9 define the solution: $y_t = y_t^p + y_t^c$. Given initial conditions $y_0$ and $y_1$, the constants $k_1$ and $k_2$ are uniquely determined.
+
+For stability: from the particular solution, if $a_1 + a_2 = -1$, then the system diverges, so a necessary condition for stability is $a_1 + a_2 \neq -1$. For the complementary solution:
+\begin{itemize}
+\item Real distinct roots: stability requires $|\lambda_1| < 1$ and $|\lambda_2| < 1$, which translates to $-2 < a_1 < 2$, $1 + a_1 + a_2 > 0$ and $1 - a_1 + a_2 > 0$.
+\item Real equal roots: stability requires $|\lambda| < 1$ ($-2 < a_1 < 2$) and $a_1 + a_2 \neq -1$.
+\item Complex distinct roots: stability requires $|\lambda_1| = |\lambda_2| < 1$, i.e., $a_2 < 1$.
+\end{itemize}
+\end{original}
+\begin{translation}
+方程17.8和17.9共同定义了通解$y_t = y_t^p + y_t^c$。给定初始条件$y_0$和$y_1$，常数$k_1$和$k_2$唯一确定。关于稳定性，$a_1 + a_2 = -1$是必要的稳定条件。稳定性区域由参数$a_1$和$a_2$决定（图17.3）。
+\end{translation}
+
+\subsection{The Samuelson multiplier-accelerator model / 萨缪尔森乘数-加速数模型}
+
+\begin{original}
+\textbf{EXAMPLE 17.6:} Aggregate output equals aggregate consumption plus investment plus government spending:
+\[
+Y_t = C_t + I_t + G,\quad C_t = \alpha Y_{t-1},\; 0 < \alpha < 1,\quad I_t = \beta(C_t - C_{t-1}),\; \beta > 0.
+\]
+Substitution gives: $Y_t - \alpha Y_{t-1} - \beta\alpha(Y_{t-1} - Y_{t-2}) = G$, or
+\[
+Y_t - \alpha(1 + \beta)Y_{t-1} + \alpha\beta Y_{t-2} = G.
+\]
+Solving for the particular solution: $Y_t^p = \frac{G}{1 - \alpha(1 + \beta) + \alpha\beta} = \frac{G}{1-\alpha}$. The roots are $\lambda_1, \lambda_2 = \frac{\alpha(1+\beta) \pm \sqrt{[\alpha(1+\beta)]^2 - 4\alpha\beta}}{2}$.
+
+Three cases: (1) Real distinct roots when $[\alpha(1+\beta)]^2 > 4\alpha\beta$, stable when $\alpha < 1$. (2) Real equal roots when $[\alpha(1+\beta)]^2 = 4\alpha\beta$, stable when $|\alpha| < 2$. (3) Complex roots when $[\alpha(1+\beta)]^2 < 4\alpha\beta$, stable when $0 < \alpha < 1$.
+
+\textbf{EXAMPLE 17.7:} Adding a monetary sector with money supply $\bar{m}$ and demand $m_t = m_0 + m_1 Y_{t-1} + m_2 r_t$, and investment $I_t = \beta(C_t - C_{t-1}) + i_0 r_t$, gives a second-order difference equation. The characteristic equation is $\lambda^2 - \left[(1+\beta) - \frac{i_0 m_1}{m_2}\right]\lambda + \beta\alpha = 0$. Stability conditions follow from the general case.
+\end{original}
+\begin{translation}
+\textbf{例17.6：}总产出等于消费加投资加政府支出：$Y_t = C_t + I_t + G$，$C_t = \alpha Y_{t-1}$，$I_t = \beta(C_t - C_{t-1})$。代入得$Y_t - \alpha(1 + \beta)Y_{t-1} + \alpha\beta Y_{t-2} = G$。特解为$Y_t^p = \frac{G}{1-\alpha}$。根据参数有三种情况。
+
+\textbf{例17.7：}在例17.6基础上添加货币部门，货币供给为$\bar{m}$，货币需求为$m_t = m_0 + m_1 Y_{t-1} + m_2 r_t$，投资为$I_t = \beta(C_t - C_{t-1}) + i_0 r_t$，得到二阶差分方程。特征方程为$\lambda^2 - [(1+\beta) - \frac{i_0 m_1}{m_2}]\lambda + \beta\alpha = 0$。稳定性条件从一般情形推出。
+\end{translation}
+
+\section{Vector difference equations / 向量差分方程}
+
+\begin{original}
+Consider a dynamic system describing the movement of two variables $x_t$ and $y_t$ over time:
+\[
+a_{11} x_t + a_{12} y_t + b_{11} x_{t-1} + b_{12} y_{t-1} = c_1,\quad a_{21} x_t + a_{22} y_t + b_{21} x_{t-1} + b_{22} y_{t-1} = c_2.
+\]
+
+Let $z_t = \begin{pmatrix} x_t \\ y_t \end{pmatrix}$, $A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}$, $B = \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix}$, $C = \begin{pmatrix} c_1 \\ c_2 \end{pmatrix}$, so that $A z_t + B z_{t-1} = C$.
+
+A complementary solution solves $A z_t^c + B z_{t-1}^c = 0$; the particular solution solves $A z_t^p + B z_{t-1}^p = C$; and the general solution is the sum: $z_t = z_t^c + z_t^p$.
+
+\subsection{The particular solution / 特解}
+
+To find the particular solution, set $z_t^p = \bar{z}$. Then $A\bar{z} + B\bar{z} = C$ or $(A + B)\bar{z} = C$. Assume $A + B$ is non-singular, so $z_t^p = (A + B)^{-1}C$.
+
+\subsection{The complementary solution / 互补解}
+
+Try a solution of the form $z_t^c = \begin{pmatrix} s \\ u \end{pmatrix} b^t$. Divide by $b^{t-1}$ to get $(Ab + B)\begin{pmatrix} s \\ u \end{pmatrix} = 0$. If $(s, u) \neq 0$, then $|Ab + B| = 0$, giving a quadratic in $b$: $k_1 b^2 + k_2 b + k_3 = 0$. Denote the roots $b_1, b_2$. The system $[A b_i + B]\begin{pmatrix} s \\ u \end{pmatrix} = 0$ has solution $(s_i, u_i)$, determined up to a scalar multiple. This gives the complementary solution:
+\[
+z_t^c = \begin{pmatrix} x_t^c \\ y_t^c \end{pmatrix} = \begin{pmatrix} \alpha s_1 b_1^t + \beta s_2 b_2^t \\ \alpha u_1 b_1^t + \beta u_2 b_2^t \end{pmatrix}.
+\]
+
+If the roots are real and repeated, try $z_t^c = \begin{pmatrix} s_1 b_1^t + s_2 t b_2^t \\ u_1 b_1^t + u_2 t b_2^t \end{pmatrix}$.
+
+\textbf{EXAMPLE 17.8:} Consider an oligopoly of two firms. The first-order conditions give $Q_{1t} + \frac{1}{2} Q_{2t-1} = \frac{a-c}{2b}$ and $Q_{2t} + \frac{1}{2} Q_{1t-1} = \frac{a-c}{2b}$. The system $A z_t + B z_{t-1} = C$ has roots $b_1 = -\frac{1}{2}$, $b_2 = -\frac{1}{2}$ (repeated and real). The solution converges since $|-\frac{1}{2}|^t \to 0$ and $t|-\frac{1}{2}|^t \to 0$.
+\end{original}
+\begin{translation}
+考虑描述两个变量$x_t$和$y_t$随时间的运动的动态系统：$A z_t + B z_{t-1} = C$。互补解满足$A z_t^c + B z_{t-1}^c = 0$；特解满足$A z_t^p + B z_{t-1}^p = C$；通解为二者之和。特解为$z_t^p = (A + B)^{-1}C$（假设$A+B$非奇异）。互补解通过设$z_t^c = \begin{pmatrix} s \\ u \end{pmatrix} b^t$并解$|Ab + B| = 0$求得。
+
+\textbf{例17.8：}考虑双寡头古诺模型。一阶条件给出方程组，根为$b_1 = b_2 = -\frac{1}{2}$（重实根）。由于$|-\frac{1}{2}|^t \to 0$，解是收敛的。
+\end{translation}
+
+\section{The $n$-variable case / $n$变量情形}
+
+\begin{original}
+Consider a system of $n$ equations governing the evolution of the $n$-vector $x$ over time:
+\[
+x_t - A x_{t-1} = c. \tag{17.10}
+\]
+Provided $(I - A)$ is invertible, $\bar{x} = (I - A)^{-1} c$ is a particular solution. With distinct eigenvectors, $A = U \Lambda U^{-1}$ where $\Lambda$ is diagonal. Then
+\[
+x_t = U \Lambda^t U^{-1}(x_0 - \bar{x}) + \bar{x}.
+\]
+Provided all roots of $A$ are less than $1$, $\Lambda^t$ converges to the $0$ matrix and $x_t$ converges to $\bar{x}$.
+\end{original}
+\begin{translation}
+考虑$n$个方程的系统控制$n$维向量$x$随时间的演化：$x_t - A x_{t-1} = c$（方程17.10）。若$(I - A)$可逆，$\bar{x} = (I - A)^{-1} c$是特解。当特征向量不同时，$A = U \Lambda U^{-1}$，则$x_t = U \Lambda^t U^{-1}(x_0 - \bar{x}) + \bar{x}$。若$A$的所有根小于$1$，$\Lambda^t$收敛到零矩阵，$x_t$收敛到$\bar{x}$。
+\end{translation}
+
+\section{Miscellaneous calculations / 补充计算}
+
+\begin{original}
+The following sections provide detailed computations underlying the results stated in Sections 17.3.4 and 17.4.2, covering solutions for various forcing functions, roots of the characteristic equation, and stability regions. The derivations confirm the formulas for $\theta(t) = gd^t$, $\theta(t) = \gamma t + \delta$, $\theta(t) = \gamma t^2 + \delta$, and verify the complementary solution forms for real distinct, real repeated, and complex roots (including de Moivre's theorem application). The stability regions are derived in three cases: real distinct roots (conditions $-2 < a_1 < 2$, $1 + a_1 + a_2 > 0$, $1 - a_1 + a_2 > 0$), real equal roots ($a_1 + a_2 \neq -1$, $-2 < a_1 < 2$), and complex distinct roots ($a_2 < 1$).
+\end{original}
+\begin{translation}
+以下各节提供了第17.3.4节和第17.4.2节所述结果的详细计算，涵盖各种强制函数的解、特征方程的根以及稳定性区域。推导确认了$\theta(t) = gd^t$、$\theta(t) = \gamma t + \delta$、$\theta(t) = \gamma t^2 + \delta$的公式，并验证了实不同根、实重根和复数根（包括棣莫弗定理的应用）的互补解形式。稳定性区域按三种情况推导：实不同根、实重根和复数根。
+\end{translation}
+\section*{Exercises for Chapter 17 / 第17章习题}
+
+\begin{original}
+\textbf{Exercise 17.1} Let $y_0$ be the initial value of $y$. Find the long-run dynamics of the following four systems:
+\[
+\text{(a)}\; y_t = \tfrac{1}{2}y_{t-1} + 2,\quad
+\text{(b)}\; y_t = -\tfrac{1}{2}y_{t-1} + 2,\quad
+\text{(c)}\; y_t = 2y_{t-1} + 2,\quad
+\text{(d)}\; y_t = -2y_{t-1} + 2.
+\]
+
+\textbf{Exercise 17.2} Suppose that an amount $P_0$ is borrowed at time $t = 0$. The interest rate is $r$ so after one period the debt grows to $P_0(1 + r)$. Each period a repayment $d$ is made, so that at the end of period $1$, the outstanding debt is $P_1 = P_0(1 + r) - d$.
+(a) Find the equation governing the evolution of $P_t$.
+(b) Given a period $T$, find the value of $d$ that amortizes (pays off) the loan exactly at the end of period $T$.
+
+\textbf{Exercise 17.3} In a labor-market model, suppose that $p(u \mid e) = 0.05$ and $p(u \mid u) = 0.3$. If $u_t$ is the unemployment rate, then $u_{t+1} = p(u \mid e)(1 - u_t) + p(u \mid u)u_t$. Find the long-run dynamic behavior of $u_t$.
+
+\textbf{Exercise 17.4} Consider the dynamic model $y_{t+1} = a y_t + c$.
+(a) Plot the equation $y_{t+1} = a y_t + c$ and the steady-state line $y_{t+1} = y_t$ for: (i) $a = \frac{1}{2}$, $c = 4$; (ii) $a = -\frac{1}{2}$, $c = 4$; (iii) $a = 2$, $c = -1$.
+(b) In each case, trace the dynamics from the initial value of $y_0 = 1$.
+
+\textbf{Exercise 17.5} Let $y_0$ be the initial value of $y$. Find the long-run dynamics of: (a) $y_t = \frac{1}{2}y_{t-1} + 3t$, (b) $y_t = -\frac{1}{2}y_{t-1} + 3t$, (c) $y_t = 2y_{t-1} + 3t$, (d) $y_t = -2y_{t-1} + 3t$.
+
+\textbf{Exercise 17.6} Let $y_0$ be the initial value of $y$. Find the long-run dynamics of: (a) $y_t = \frac{1}{2}y_{t-1} + 3^t$, (b) $y_t = -\frac{1}{2}y_{t-1} + 2^t$, (c) $y_t = 2y_{t-1} + (\frac{1}{2})^t$, (d) $y_t = -2y_{t-1} + 2^t$.
+\end{original}
+\begin{translation}
+\textbf{习题17.1} 设$y_0$为$y$的初值。求四个系统(a)--(d)的长期动态。
+
+\textbf{习题17.2} $t = 0$时借入$P_0$。利率为$r$，每期还款$d$，$P_1 = P_0(1+r) - d$。(a) 求$P_t$的演化方程；(b) 给定期限$T$，求恰好在该期限末偿清贷款所需的$d$值。
+
+\textbf{习题17.3} 劳动力市场模型中，$p(u \mid e) = 0.05$，$p(u \mid u) = 0.3$。若$u_t$为失业率，$u_{t+1} = p(u \mid e)(1 - u_t) + p(u \mid u)u_t$。求$u_t$的长期动态行为。
+
+\textbf{习题17.4} 动态模型$y_{t+1} = a y_t + c$。(a) 对三种参数情形画出方程和稳态线；(b) 每种情形下从$y_0 = 1$追踪动态。
+
+\textbf{习题17.5} 求四个系统(a)--(d)的长期动态。
+
+\textbf{习题17.6} 求四个系统(a)--(d)的长期动态。
+\end{translation}
+
+% =====================================================================
+\chapter{Probability and Distributions / 概率与分布}
+% =====================================================================
+
+\section{Introduction / 引言}
+
+\begin{original}
+A probability distribution gives the frequency of occurrence of some variable. For example, the income distribution is summarized by a function $F$, where $F(y)$ gives the fraction of the population with income at or below $y$. If a person is selected at random from the population, then the probability that the person will have income below $y$ is $F(y)$. Similarly, one may consider the age distribution, represented by $G$, so that $G(a)$ is the fraction of people with age no larger than $a$, or a wage distribution where $H(w)$ gives the proportion of people earning a wage no larger than $w$. Thus, a distribution provides information regarding the frequency of a certain characteristic or property in a population. Considering the income distribution, suppose a person is selected at random from the population and income recorded. At the selection process, let $Y$ be the as yet to be determined income. This unknown number is called a random variable. The probability that the person selected at random will have an income below $y$ is denoted $P(Y \leq y)$ and this is equal to $F(y)$. In Section 18.2, random variables are introduced and briefly described. Intuitively, every distribution function describes the behavior of a random variable. Section 18.3 introduces the distribution function and its density.
+
+In some cases, a random variable may only have a finite number of possible values. If the random variable has a finite or countable number of possible outcomes, say that the random variable is discrete; if there are a continuum of possible outcomes, say the random variable is a continuous variable. These categorizations lead to an analogous categorization of distributions into discrete distributions and continuous distributions. Section 18.4 considers a few important discrete distributions (the Bernoulli, binomial and Poisson distributions). Finally, Section 18.5 describes the primary distributions used in hypothesis testing in economics: the uniform, normal, $t$, chi-square and $F$ distributions.
+\end{original}
+\begin{translation}
+概率分布给出某个变量出现的频率。例如，收入分布由一个函数$F$概括，其中$F(y)$给出收入在$y$或以下的人口比例。若从总体中随机选择一人，则该人收入低于$y$的概率为$F(y)$。类似地，可以考虑年龄分布$G$，$G(a)$是年龄不超过$a$的人口比例；或工资分布$H(w)$，$H(w)$给出工资不高于$w$的人口比例。因此，分布提供了关于总体中某种特征或属性频率的信息。在选择过程中，令$Y$表示待确定的收入，这个未知数称为随机变量。随机选择的人收入低于$y$的概率记为$P(Y \leq y)$，这等于$F(y)$。第18.2节引入并简要描述随机变量。直观上，每个分布函数描述了一个随机变量的行为。第18.3节介绍分布函数及其密度。
+
+在某些情况下，随机变量只有有限个可能值。若随机变量有有限或可数个可能结果，称为离散随机变量；若有连续统的可能结果，称为连续随机变量。这种分类导致将分布类似地分为离散分布和连续分布。第18.4节考虑几个重要的离散分布（伯努利、二项和泊松分布）。第18.5节描述经济学假设检验中使用的主要分布：均匀、正态、$t$、卡方和$F$分布。
+\end{translation}
+
+\section{Random variables / 随机变量}
+
+\begin{original}
+Consider the experiment of tossing a six-sided die with each side equally likely. For the experiment, there are six possible outcomes $\{1,2,3,4,5,6\}$ and each outcome is equally likely with probability $\frac{1}{6}$. We can formalize this by denoting the outcome of the die toss by $X$, where $X$ can take on any one of the six possible values. Write $P(X = i)$ to denote the probability that $X$ takes the value $i$. With the probability of each outcome assigned a number, we can determine the probability that the number drawn is less than or equal to $3$ ($P(X \leq 3) = P(X = 1) + P(X = 2) + P(X = 3)$), that the probability is greater than $3$, and so on. The notion of a random variable gives a formal way of examining random outcomes with associated probabilities.
+
+Any experiment with a finite number of outcomes $\{x_1, x_2, \ldots, x_n\}$ can be represented in this way: if outcome $x_i$ has probability $p_i$, the associated random variable has corresponding probability $P(X = x_i) = p_i$. With this formalism, one can identify defining features of the random process. The mean is denoted $\mu$ and defined $\mu = \sum_{i=1}^{n} p_i x_i$, and the variance, $\sigma^2$, is defined $\sigma^2 = \sum_{i=1}^{n} p_i(x_i - \mu)^2$. The mean provides one measure of ``central tendency''. While the mean provides a measure of ``central tendency'', variance measures dispersion. In the die-tossing case, $\mu = \sum_i p_i x_i = \frac{1}{6}\cdot 1 + \frac{1}{6}\cdot 2 + \cdots + \frac{1}{6}\cdot 6 = 3\frac{1}{2}$, and $\sigma^2 = 17\frac{1}{2}$.
+
+This formalism allows one to study arbitrary situations where outcomes are unknown. For a discrete random variable $X$ that has outcome $x_i$ with probability $p_i$, the mean $\mu = \sum x_i p_i$ is often called the expected value of $X$ and written $E\{X\}$. Similarly, the variance $\sigma^2 = \sum (x_i - \mu)^2 p_i$ is written $E\{(X - \mu)^2\}$.
+
+If the random variable is continuous, there is a continuum of possible outcomes. Some random events are most suitably modeled using continuous variables. For example, consider a device for filling cans of oil. Design specification requires that each can be filled to, say, 330 ml. In operation, few cans will be filled exactly; although the average fill may be 330 ml, a can selected at random may have, for example, 328.755 ml. However, most cans will be filled to a level close to 330 ml. Describing the dispersion around 330 ml is most easily modeled with a continuous random variable.
+\end{original}
+\begin{translation}
+考虑掷一个六面骰子的实验，每个面等可能。实验有六个可能结果$\{1,2,3,4,5,6\}$，每个结果的概率为$\frac{1}{6}$。我们可以通过用$X$表示掷骰结果来形式化，$X$可以取六个可能值中的任意一个。记$P(X = i)$表示$X$取值$i$的概率。有了每个结果的概率，我们可以确定抽到的数小于等于3的概率，等等。随机变量的概念提供了一种形式化方式来考察带有相关概率的随机结果。
+
+任何具有有限个结果$\{x_1, x_2, \ldots, x_n\}$的实验都可以这样表示。均值记为$\mu$，定义为$\mu = \sum_{i=1}^{n} p_i x_i$；方差$\sigma^2$定义为$\sigma^2 = \sum_{i=1}^{n} p_i(x_i - \mu)^2$。均值提供了``中心趋势''的一种度量，方差度量离散程度。在掷骰情形中，$\mu = 3\frac{1}{2}$，$\sigma^2 = 17\frac{1}{2}$。
+
+对于离散随机变量$X$，其取值为$x_i$的概率为$p_i$，均值$\mu = \sum x_i p_i$通常称为$X$的期望值，记为$E\{X\}$。类似地，方差$\sigma^2 = \sum (x_i - \mu)^2 p_i$记为$E\{(X - \mu)^2\}$。若随机变量是连续的，则存在连续统的可能结果。某些随机事件最适合用连续变量建模。
+\end{translation}
+\section{The distribution function and density / 分布函数与密度}
+
+\begin{original}
+A random variable takes on different values with specific probabilities. The function attaching probabilities to outcomes is called the distribution function (or the related function, the density). The distribution function, $F$, associated with the random variable $X$ is defined
+\[
+F(x) = P(X \leq x). \tag{18.1}
+\]
+Thus, $F(x)$ is the probability that $X$ will be no larger than $x$. Since $P(X \leq x) \leq P(X \leq x')$ whenever $x \leq x'$, $F(x) \leq F(x')$ for $x \leq x'$, so that $F(x)$ is non-decreasing in $x$. Given $F$, other probabilities may easily be computed. For example, $P(x_a < X \leq x_b) = P(X \leq x_b) - P(X \leq x_a) = F(x_b) - F(x_a)$. A random variable $X$ distributed on an interval $[a, b]$ satisfies $P(X < a) = P(X > b) = 0$. At $a$, $F(a) = 0$ and at $b$, $F(b) = 1$. The smallest such interval $[a, b]$ is called the support of the distribution.
+
+In the case of discrete random variables, the distribution function is defined in the same way: $F(x) = P(X \leq x)$. Since $X$ takes values from a set $\{x_1, x_2, \ldots, x_k, \ldots\}$, with $x_i < x_{i+1}$ for all $i$, $F(x) = \sum_{x_i \leq x} P(X = x_i)$, so that the distribution is a step function increasing by the amount $P(X = x_i) = p_i$ at $x = x_i$.
+
+In general, a distribution function may have features of continuous and discrete distributions.
+
+For a continuous distribution $F$, for any $x$, $F(x) - F(x - \Delta x) \to 0$ as $\Delta x \to 0$. When $F$ is continuous and differentiable, denote the derivative of $F$ by $f(x) = F'(x)$; this is called the density of $F$. From the definition of a derivative,
+\[
+f(x) = \lim_{\Delta x \to 0} \frac{F(x + \Delta x) - F(x)}{\Delta x}.
+\]
+Thus, when $\Delta x > 0$ is small, $f(x)\Delta x \approx F(x + \Delta x) - F(x) = P(x < X \leq x + \Delta x)$. Therefore, $f(x)\Delta x$ is approximately the probability that the random variable $X$ will fall in the interval $[x, x + \Delta x]$. From the definition of $f$,
+\[
+\int_a^b f(x)dx = F(b) - F(a) = P(a < X \leq b),
+\]
+so the distribution function $F$ can be obtained from the density $f$.
+
+While the distribution function has values between $0$ and $1$, the density function can have arbitrarily large positive values. If $F$ is a distribution function with $F(a) = 0$, $F(b) = 1$ and density $f$, then $\int_a^b f(x)dx = F(b) - F(a) = 1$, so that the area under $f$ is $1$.
+\end{original}
+\begin{translation}
+随机变量以特定的概率取不同的值。将概率赋予结果的函数称为分布函数（或相关函数，密度）。与随机变量$X$相关的分布函数$F$定义为$F(x) = P(X \leq x)$（方程18.1）。因此，$F(x)$是$X$不大于$x$的概率。由于当$x \leq x'$时有$P(X \leq x) \leq P(X \leq x')$，$F(x)$在$x$上非递减。给定$F$，其他概率可以轻松计算。例如，$P(x_a < X \leq x_b) = F(x_b) - F(x_a)$。分布在区间$[a, b]$上的随机变量$X$满足$P(X < a) = P(X > b) = 0$，$F(a) = 0$，$F(b) = 1$。最小的此类区间$[a, b]$称为分布的支撑。
+
+在离散随机变量情形下，$F(x) = \sum_{x_i \leq x} P(X = x_i)$，分布是一个阶梯函数。分布函数可能同时具有连续和离散特征。对于连续分布$F$，当$F$连续且可微时，记$F$的导数为$f(x) = F'(x)$，称为$F$的密度。$f(x)\Delta x$近似等于随机变量$X$落在区间$[x, x + \Delta x]$内的概率。$\int_a^b f(x)dx = F(b) - F(a) = P(a < X \leq b)$。若$F$有支撑$[a, b]$，则$\int_a^b f(x)dx = 1$。
+\end{translation}
+
+\subsection{The conditional distribution / 条件分布}
+
+\begin{original}
+The probability that the random variable falls between $a$ and $b$ ($a < b$) is given by $F(b) - F(a)$. If $b$ is the largest possible value, $F(b) = 1$, then the probability that the random variable is larger than $a$ is $1 - F(a)$. The conditional probability that $X$ lies between $\underline{a}$ and $\bar{a}$ given $X > a$ is:
+\[
+P(X \leq \bar{a} \mid X > a) = \frac{F(\bar{a}) - F(a)}{1 - F(a)}.
+\]
+
+The logic is simple: the relative likelihood of each outcome adds up to $1$, with
+\[
+1 = \frac{F(\bar{a}) - F(a)}{1 - F(a)} + \frac{1 - F(\bar{a})}{1 - F(a)}.
+\]
+Given that $X$ is above $a$, the conditional probability of $X$ falling in $[a, \bar{a}]$ is $\frac{F(\bar{a})-F(a)}{1-F(a)}$.
+\end{original}
+\begin{translation}
+随机变量落在$a$和$b$之间的概率为$F(b) - F(a)$。若$b$是最大可能值，则$F(b) = 1$，随机变量大于$a$的概率为$1 - F(a)$。给定$X > a$时$X$在$[a, \bar{a}]$内的条件概率为$P(X \leq \bar{a} \mid X > a) = \frac{F(\bar{a}) - F(a)}{1 - F(a)}$。逻辑是每个结果的相对可能性加起来等于$1$。
+\end{translation}
+
+\subsection{Joint distributions / 联合分布}
+
+\begin{original}
+Given two random variables $X$ and $Y$, let the probability that $X$ is in a set $A$ and $Y$ in a set $B$ be $P(X \in A, Y \in B)$.
+
+\textbf{Definition 18.1:} The joint distribution of two random variables $X, Y$ is a function $F(x, y)$ giving the probability that $X$ is no larger than $x$ and $Y$ is no larger than $y$:
+\[
+F(x, y) = P(X \leq x \text{ and } Y \leq y). \tag{18.3}
+\]
+Assuming sufficient differentiability, the density $f(x, y)$ associated with $F$ is defined as $f(x, y) = \frac{\partial^2 F}{\partial x \partial y}$.
+
+\textbf{EXAMPLE 18.1:} $F(x, y) = \frac{xy}{(2 - xy)}$, $0 \leq x \leq 1$, $0 \leq y \leq 1$, with corresponding density $f(x, y) = \frac{1}{(2-xy)^2} + \frac{3yx}{(2-xy)^3} + \frac{2x^2 y^2}{(2-xy)^3}$.
+
+\subsubsection{Independence / 独立性}
+
+\textbf{Definition 18.2:} The random variables $X$ and $Y$ are said to be independent if for any events $A$ and $B$,
+\[
+P(X \in A, Y \in B) = P(X \in A)P(Y \in B). \tag{18.5}
+\]
+An equivalent condition is $P(X \leq x, Y \leq y) = P(X \leq x)P(Y \leq y)$, $\forall x, y$. In terms of the distribution function, two random variables $X$ and $Y$ are independent if the joint distribution may be written $F(x, y) = F_X(x)F_Y(y)$ for all $x, y$. Equivalently, $X$ and $Y$ are independent if the density factors satisfy $f(x, y) = f_X(x) f_Y(y)$.
+
+With $n$ random variables, the condition is $F(x_1, \ldots, x_n) = F_{X_1}(x_1) \cdots F_{X_n}(x_n)$.
+
+Two random variables $X$ and $Y$ have a jointly normal distribution if
+\[
+f(x, y) = \frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}} \exp\left\{-\frac{1}{2(1-\rho^2)}\left[\left(\frac{x-\mu_x}{\sigma_x}\right)^2 + \left(\frac{y-\mu_y}{\sigma_y}\right)^2 - 2\rho\frac{(x-\mu_x)(y-\mu_y)}{\sigma_x\sigma_y}\right]\right\},
+\]
+where $\rho = \frac{\text{Cov}(X,Y)}{\sigma_x\sigma_y}$ is the correlation coefficient. In the special case where $\rho = 0$, $f(x, y) = f(x)f(y)$. \textbf{REMARK 18.1:} For the normal distribution, zero correlation implies independence.
+\end{original}
+\begin{translation}
+给定两个随机变量$X$和$Y$，$P(X \in A, Y \in B)$表示$X$在集合$A$中且$Y$在集合$B$中的概率。
+
+\textbf{定义18.1：}$X, Y$的联合分布是函数$F(x, y) = P(X \leq x \text{ and } Y \leq y)$（方程18.3）。在充分可微的假设下，密度$f(x, y) = \frac{\partial^2 F}{\partial x \partial y}$。
+
+\textbf{例18.1：}$F(x, y) = \frac{xy}{(2 - xy)}$（图18.4）。
+
+\textbf{定义18.2：}若对任意事件$A$和$B$，$P(X \in A, Y \in B) = P(X \in A)P(Y \in B)$，则称$X$和$Y$是独立的。等价地，$F(x, y) = F_X(x)F_Y(y)$或$f(x, y) = f_X(x) f_Y(y)$。两个随机变量具有联合正态分布，其中$\rho$为相关系数。\textbf{注18.1：}对于正态分布，零相关意味着独立。
+\end{translation}
+
+\section{Discrete distributions / 离散分布}
+
+\begin{original}
+A discrete distribution is characterized by a set of possible outcomes $\{x_1, x_2, \ldots\}$ and corresponding probabilities $\{p_1, p_2, \ldots\}$. The expectation is $\mu = \sum_i p_i x_i$; the variance $\sigma^2 = \sum_i p_i(x_i - \mu)^2$. The following describes the Bernoulli, binomial and Poisson distributions.
+\end{original}
+\begin{translation}
+离散分布由可能结果的集合$\{x_1, x_2, \ldots\}$和相应的概率$\{p_1, p_2, \ldots\}$刻画。期望为$\mu = \sum_i p_i x_i$；方差为$\sigma^2 = \sum_i p_i(x_i - \mu)^2$。以下描述伯努利、二项和泊松分布。
+\end{translation}
+
+\subsection{The Bernoulli distribution / 伯努利分布}
+
+\begin{original}
+Consider a random variable $X$ with two possible outcomes, $0$ or $1$. Suppose $P(X = 1) = p$, $P(X = 0) = 1 - p$. Then $E\{X\} = p \cdot 1 + (1 - p) \cdot 0 = p$; and the variance $\sigma^2 = p(1-p)^2 + (1-p)(0-p)^2 = p(1-p)$.
+\end{original}
+\begin{translation}
+考虑具有两个可能结果$0$或$1$的随机变量$X$。设$P(X = 1) = p$，$P(X = 0) = 1-p$。则$E\{X\} = p$，方差$\sigma^2 = p(1-p)$。
+\end{translation}
+
+\subsection{The binomial distribution / 二项分布}
+
+\begin{original}
+Suppose $n$ coins are drawn randomly and each tossed. The probability of exactly $k$ ones and $n-k$ zeros is $p^k(1-p)^{n-k}$. The number of ways of having $k$ ones in $n$ positions is $\binom{n}{k} = \frac{n!}{(n-k)!k!}$. Thus, the probability of having $k$ ones is:
+\[
+P(X = k) = \binom{n}{k} p^k(1-p)^{(n-k)}, \quad k = 0, \ldots, n. \tag{18.9}
+\]
+According to the binomial theorem, $(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}$. With $x = p$, $y = 1-p$, we have $1 = (p + 1-p)^n = \sum_{k=0}^{n} \binom{n}{k} p^k(1-p)^{n-k}$, so the probabilities add up to $1$.
+
+More generally, if items can be categorized into $r$ distinct groups with $k_i$ items of category $i$ ($k = k_1 + \cdots + k_r$), the number of distinct patterns is $\frac{n!}{(n-k)!k_1!k_2!\cdots k_r!}$.
+\end{original}
+\begin{translation}
+假设随机抽取$n$枚硬币并掷出。恰好有$k$个$1$和$n-k$个$0$的概率为$p^k(1-p)^{n-k}$。$n$个位置中有$k$个$1$的方式数为$\binom{n}{k} = \frac{n!}{(n-k)!k!}$。因此，有$k$个$1$的概率为$P(X = k) = \binom{n}{k} p^k(1-p)^{(n-k)}$（方程18.9）。根据二项式定理，概率之和为$1$。
+
+更一般地，若物品分为$r$个不同类别，第$i$类有$k_i$个物品，则不同模式的数量为$\frac{n!}{(n-k)!k_1!k_2!\cdots k_r!}$。
+\end{translation}
+
+\subsection{The Poisson distribution / 泊松分布}
+
+\begin{original}
+Let $X$ be a random variable denoting the number of occurrences in one unit of time. The Poisson distribution assigns probability:
+\[
+P(X = k) = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k = 0, 1, \ldots \tag{18.10}
+\]
+where $\lambda > 0$ is a given parameter. The expected value is $E\{X\} = \lambda$ and the variance is $\text{Var}(X) = \lambda$, so the mean and variance are equal.
+
+When the unit of time is $\tau$, $P(X = k) = \frac{e^{-\lambda\tau}(\lambda\tau)^k}{k!}$, $k = 0, 1, \ldots$
+
+\subsection{The Poisson process / 泊松过程}
+
+For each $t \geq 0$, let $X_t$ be a random variable denoting the number of occurrences in the time interval $[0, t]$, with distribution $P(X_t = k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}$. Furthermore, suppose $X_t$ has independent increments, so that $X_t - X_s$ is independent of $X_q - X_p$ for $t > s \geq q > p$ with
+\[
+P(X_t - X_s = k) = \frac{e^{-\lambda(t-s)}[\lambda(t-s)]^k}{k!}. \tag{18.12}
+\]
+
+\textbf{REMARK 18.2:} The Poisson process is characterized by simple postulates: for a short length of time $\Delta$, (a) $P(X_{t+\Delta} - X_t = 0) = 1 - \lambda\Delta + o(\Delta)$, (b) $P(X_{t+\Delta} - X_t = 1) = \lambda\Delta + o(\Delta)$, (c) $P(X_{t+\Delta} - X_t \geq 2) = o(\Delta)$; and independent increments. Then the family satisfies Equation 18.12.
+\end{original}
+\begin{translation}
+设$X$为表示单位时间内事件发生次数的随机变量。泊松分布指定概率为$P(X = k) = \frac{e^{-\lambda}\lambda^k}{k!}$，$k = 0, 1, \ldots$（方程18.10），其中$\lambda > 0$为给定参数。期望$E\{X\} = \lambda$，方差$\text{Var}(X) = \lambda$，故均值和方差相等。
+
+当时间单位为$\tau$时，$P(X = k) = \frac{e^{-\lambda\tau}(\lambda\tau)^k}{k!}$。
+
+\textbf{泊松过程：}对每个$t \geq 0$，设$X_t$表示时间区间$[0, t]$内事件的发生次数。此外，设$X_t$具有独立增量。\textbf{注18.2：}泊松过程由简单的公设刻画：对很短的时段$\Delta$，满足概率条件并具有独立增量。
+\end{translation}
+\section{Continuous distributions / 连续分布}
+
+\begin{original}
+In this section, continuous distributions are considered, characterized by a cumulative distribution $F$ and density $f = F'$. In this case, the mean is $E\{X\} = \mu = \int x f(x)dx$ and variance $E\{(X - \mu)^2\} = \sigma^2 = \int (x - \mu)^2 f(x)dx$. Similarly, given a function $h(x)$, $E\{h(X)\} = \int h(x) f(x)dx$.
+
+The following discussion introduces the primary distributions used in hypothesis testing in economics: the uniform, normal, $t$, chi-square and $F$ distributions.
+\end{original}
+\begin{translation}
+本节考虑连续分布，其特征为累积分布$F$和密度$f = F'$。此时，均值$E\{X\} = \mu = \int x f(x)dx$，方差$E\{(X - \mu)^2\} = \sigma^2 = \int (x - \mu)^2 f(x)dx$。类似地，$E\{h(X)\} = \int h(x) f(x)dx$。以下介绍经济学假设检验中使用的主要分布：均匀、正态、$t$、卡方和$F$分布。
+\end{translation}
+
+\subsection{The uniform distribution / 均匀分布}
+
+\begin{original}
+Consider the task of selecting a number at random from the interval $[a, b]$. With each number ``equally likely'', this random variable is said to be uniformly distributed on $[a, b]$ with distribution
+\[
+F(x) = \frac{1}{b-a}(x - a), \quad x \in [a, b].
+\]
+The corresponding density is $f(x) = \frac{1}{b-a}$. The mean is $\mu = \frac{1}{2}(b + a)$ and the variance is $\sigma^2 = \frac{1}{12}(b - a)^2$.
+\end{original}
+\begin{translation}
+考虑从区间$[a, b]$中随机选取一个数。每个数``等可能''，该随机变量称为在$[a, b]$上均匀分布，分布函数为$F(x) = \frac{1}{b-a}(x - a)$。密度为$f(x) = \frac{1}{b-a}$。均值$\mu = \frac{1}{2}(b + a)$，方差$\sigma^2 = \frac{1}{12}(b - a)^2$。
+\end{translation}
+
+\subsection{The exponential distribution / 指数分布}
+
+\begin{original}
+A common model of the time of occurrence of an event uses the exponential distribution. This has density:
+\[
+f(x) = \lambda e^{-\lambda x}, \quad x \geq 0.
+\]
+This has cumulative distribution $F(x) = 1 - e^{-\lambda x}$ with $x \geq 0$. The distribution has mean $\mu = \frac{1}{\lambda}$ and variance $\sigma^2 = \frac{1}{\lambda^2}$.
+
+One interesting feature of the exponential distribution is that the conditional distribution and the unconditional distribution are the same: $P(X \leq \bar{a} \mid X > a) = 1 - e^{-\lambda s} = F(s)$, where $s = \bar{a} - a$. The distribution of the wait time is the same at time $x = a$, given no arrival, as it is at time $x = 0$.
+\end{original}
+\begin{translation}
+事件发生时间的常见模型使用指数分布。密度为$f(x) = \lambda e^{-\lambda x}$，$x \geq 0$。累积分布为$F(x) = 1 - e^{-\lambda x}$。均值$\mu = \frac{1}{\lambda}$，方差$\sigma^2 = \frac{1}{\lambda^2}$。指数分布的一个有趣特征是条件分布与无条件分布相同：$P(X \leq \bar{a} \mid X > a) = 1 - e^{-\lambda s} = F(s)$。等待时间的分布在时刻$x = a$（给定未到达）与在时刻$x = 0$是相同的。
+\end{translation}
+
+\subsection{The normal distribution / 正态分布}
+
+\begin{original}
+The normal distribution is often used to model the spread of a characteristic in a population. The normal distribution has density:
+\[
+f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\infty < x < \infty, \tag{18.13}
+\]
+with corresponding cumulative distribution:
+\[
+F(x) = \int_{-\infty}^{x} f(\xi)d\xi = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(\xi-\mu)^2}{2\sigma^2}} d\xi. \tag{18.14}
+\]
+
+In the special case where $\mu = 0$ and $\sigma^2 = 1$, the distribution is called the standard normal distribution, with density $\phi(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}x^2}$ and cumulative distribution $\Phi(x) = \int_{-\infty}^{x} \phi(\xi)d\xi$.
+
+Notice that $\Phi(-1.645) = 0.05$ and $\Phi(1.645) = 0.95$, so that a random variable drawn from a standard normal distribution will fall below $-1.645$ with probability $0.05$ and above $1.645$ with probability $0.05$.
+
+\textbf{Theorem 18.1:} If $X$ is a normally distributed random variable with mean $\mu$ and variance $\sigma^2$, then $Z = a + bX$ has a normal distribution with mean $a + b\mu$ and variance $b^2\sigma^2$.
+
+Given a normal random variable $X$ with mean $\mu$ and variance $\sigma^2$, the transformation $\frac{X-\mu}{\sigma}$ has the standard normal distribution. Thus, for example, if a random variable is drawn from a normal distribution, there is a $95\%$ probability that it will lie within $1.96$ standard deviations of the mean.
+
+\textbf{Theorem 18.2:} Suppose that $X_1, \ldots, X_n$ are normally distributed random variables. Then $\bar{X} = \sum_{i=1}^{n} a_i X_i$ is normally distributed with mean $\sum_{i=1}^{n} a_i \mu_i$. If the random variables are independent then the variance is $\sum_{i=1}^{n} a_i^2 \sigma_i^2$.
+\end{original}
+\begin{translation}
+正态分布常用于对总体中某特征的分布进行建模。正态分布的密度为$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$（方程18.13），相应的累积分布为$F(x) = \int_{-\infty}^{x} f(\xi)d\xi$（方程18.14）。当$\mu = 0$且$\sigma^2 = 1$时，称为标准正态分布，密度为$\phi(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}x^2}$，累积分布为$\Phi(x)$。$\Phi(-1.645) = 0.05$，$\Phi(1.645) = 0.95$。
+
+\textbf{定理18.1：}若$X$为正态分布随机变量，均值为$\mu$，方差为$\sigma^2$，则$Z = a + bX$具有均值$a + b\mu$和方差$b^2\sigma^2$的正态分布。变换$\frac{X-\mu}{\sigma}$具有标准正态分布。因此，从正态分布中抽取的随机变量有$95\%$的概率落在均值两侧$1.96$个标准差之内。
+
+\textbf{定理18.2：}正态分布随机变量的线性组合服从正态分布。若各变量独立，则方差为$\sum a_i^2 \sigma_i^2$。
+\end{translation}
+
+\subsection{Moment-generating functions / 矩母函数}
+
+\begin{original}
+The expectation of a function $h(x)$ is $E\{h(X)\} = \int h(x) f(x)dx$. One special case occurs when $h(x) = e^{tx}$. The expectation is called the moment-generating function (assuming the integral exists):
+\[
+m_X(t) = E\{e^{tX}\} = \int e^{tx} f(x)dx.
+\]
+
+\textbf{Theorem 18.3:} Suppose that $m_X(t)$ is defined on an interval $(-\epsilon, \epsilon)$, $\epsilon > 0$. Then $m_X$ uniquely determines the distribution.
+
+One important property: if $X_1, \ldots, X_n$ are independent and $Y = X_1 + \cdots + X_n$, then $m_Y(t) = m_{X_1}(t) \cdots m_{X_n}(t)$. In the i.i.d. case, $m_Y(t) = m_X(t)^n$.
+
+For the normal distribution, the moment-generating function is $m(t) = e^{\mu t + \frac{1}{2}t^2\sigma^2}$. Thus, the sum of $n$ i.i.d. normal random variables has moment-generating function $m(t)^n = e^{n\mu t + \frac{1}{2}t^2 n\sigma^2}$, a normal distribution with mean $n\mu$ and variance $n\sigma^2$.
+\end{original}
+\begin{translation}
+函数$h(x)$的期望为$E\{h(X)\} = \int h(x) f(x)dx$。当$h(x) = e^{tx}$时，期望称为矩母函数：$m_X(t) = E\{e^{tX}\}$。
+
+\textbf{定理18.3：}若$m_X(t)$在区间$(-\epsilon, \epsilon)$上定义（$\epsilon > 0$），则$m_X$唯一确定分布。一个重要性质是：若$X_1, \ldots, X_n$独立且$Y = X_1 + \cdots + X_n$，则$m_Y(t) = m_{X_1}(t) \cdots m_{X_n}(t)$。对于正态分布，矩母函数为$m(t) = e^{\mu t + \frac{1}{2}t^2\sigma^2}$。$n$个独立同分布正态变量之和服从正态分布，均值为$n\mu$，方差为$n\sigma^2$。
+\end{translation}
+
+\subsection{The chi-square distribution / 卡方分布}
+
+\begin{original}
+A chi-square distribution with $k$ degrees of freedom ($k$ a positive integer) is defined by density:
+\[
+f(x) = \frac{1}{2^{\frac{k}{2}}\Gamma(\frac{k}{2})} x^{\frac{k}{2}-1} e^{-\frac{1}{2}x}, \quad x > 0, \tag{18.15}
+\]
+where $\Gamma(\cdot)$ is the gamma function $\Gamma(q) = \int_0^{\infty} \xi^{q-1} e^{-\xi} d\xi$. The chi-square distribution with $n$ degrees of freedom has mean $n$ and variance $2n$.
+
+\textbf{REMARK 18.4:} If $q > 1$, $\Gamma(q) = (q-1)\Gamma(q-1)$. $\Gamma(1) = 1$, $\Gamma(\frac{1}{2}) = \sqrt{\pi}$. If $x$ is an integer then $\Gamma(x+1) = x!$.
+
+\textbf{REMARK 18.5:} The chi-square distribution is a special case of the gamma distribution with density $f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}$, where $\alpha = \frac{k}{2}$ and $\beta = \frac{1}{2}$.
+
+\textbf{Theorem 18.4:} (1) If $X$ has a standard normal distribution, then $X^2$ has a chi-square distribution with one degree of freedom. (2) If $X_1, \ldots, X_n$ are independent standard normal random variables, then $Z = X_1^2 + \cdots + X_n^2$ has a chi-square distribution with $n$ degrees of freedom.
+\end{original}
+\begin{translation}
+自由度为$k$的卡方分布由密度$f(x) = \frac{1}{2^{\frac{k}{2}}\Gamma(\frac{k}{2})} x^{\frac{k}{2}-1} e^{-\frac{1}{2}x}$定义（方程18.15），其中$\Gamma(\cdot)$为伽玛函数。$n$自由度卡方分布均值为$n$，方差为$2n$。
+
+\textbf{注18.4：}若$q > 1$，$\Gamma(q) = (q-1)\Gamma(q-1)$。$\Gamma(1) = 1$，$\Gamma(\frac{1}{2}) = \sqrt{\pi}$。
+
+\textbf{注18.5：}卡方分布是伽玛分布的特例。\textbf{定理18.4：}(1) 若$X$为标准正态，则$X^2$服从自由度$1$的卡方分布；(2) $n$个独立标准正态变量的平方和服从自由度$n$的卡方分布。
+\end{translation}
+
+\subsection{The $t$ distribution / $t$分布}
+
+\begin{original}
+The random variable $X$ is said to have a $t$ distribution with $k$ degrees of freedom if the density is:
+\[
+f(x) = \frac{\Gamma(\frac{1}{2}(k+1))}{\Gamma(\frac{k}{2})} \frac{1}{\sqrt{k\pi}} \frac{1}{(1 + \frac{x^2}{k})^{\frac{k+1}{2}}}, \quad -\infty < x < \infty. \tag{18.17}
+\]
+The $t$ distribution with $k$ degrees of freedom has mean $0$ ($k > 1$) and variance $\frac{k}{k-2}$ ($k > 2$).
+
+\textbf{Theorem 18.5:} Suppose that $Y$ has a standard normal distribution and $Z$ has a chi-square distribution with $k$ degrees of freedom, with $Y$ and $Z$ independent. Then the random variable $X = \frac{Y}{\sqrt{Z/k}}$ has a $t$ distribution with $k$ degrees of freedom.
+
+\textbf{REMARK 18.6:} Given a collection of i.i.d. standard normal random variables with mean $0$ and variance $1$, let $\bar{x} = \frac{1}{n}\sum_i x_i$ and $s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$. Then $\bar{x}$ and $s^2$ are independently distributed; $\bar{x}$ has a normal distribution with mean $0$ and variance $\frac{1}{n}$; $(n-1)s^2$ has a chi-square distribution with $n-1$ degrees of freedom. Therefore $\frac{\bar{x}}{s/\sqrt{n}}$ has a $t$ distribution with $n-1$ degrees of freedom.
+\end{original}
+\begin{translation}
+自由度为$k$的$t$分布密度如方程18.17所示。$k$自由度的$t$分布均值为$0$（$k > 1$），方差为$\frac{k}{k-2}$（$k > 2$）。
+
+\textbf{定理18.5：}若$Y$为标准正态，$Z$为自由度$k$的卡方，且独立，则$X = \frac{Y}{\sqrt{Z/k}}$服从自由度$k$的$t$分布。
+
+\textbf{注18.6：}给定一组独立同分布标准正态随机变量，$\bar{x}$服从均值为$0$、方差为$\frac{1}{n}$的正态分布；$(n-1)s^2$服从自由度$n-1$的卡方分布。因此$\frac{\bar{x}}{s/\sqrt{n}}$服从自由度$n-1$的$t$分布。
+\end{translation}
+
+\subsection{The $F$ distribution / $F$分布}
+
+\begin{original}
+The random variable $X$ is said to have the $F$ distribution with degrees of freedom $m$ and $n$ if the density is:
+\[
+f(x) = \frac{\Gamma(\frac{m+n}{2})}{\Gamma(\frac{m}{2})\Gamma(\frac{n}{2})} \left(\frac{m}{n}\right)^{\frac{m}{2}} \frac{x^{\frac{m-2}{2}}}{(1 + \frac{m}{n}x)^{\frac{m+n}{2}}}, \quad x > 0. \tag{18.18}
+\]
+Usually, $m$ and $n$ are positive integers. The $F$ distribution with degrees of freedom $m$ and $n$ has mean $\frac{n}{n-2}$ ($n > 2$) and variance $\frac{2n^2(m+n-2)}{m(n-2)^2(n-4)}$ ($n > 4$).
+
+\textbf{Theorem 18.6:} Suppose that $Y$ and $Z$ are independent chi-square distributions with $m$ and $n$ degrees of freedom, respectively. Then the random variable $X = \frac{Y/m}{Z/n}$ has an $F$ distribution with degrees of freedom $m$ and $n$.
+\end{original}
+\begin{translation}
+自由度为$m$和$n$的$F$分布密度如方程18.18所示。$F$分布均值为$\frac{n}{n-2}$（$n > 2$），方差为$\frac{2n^2(m+n-2)}{m(n-2)^2(n-4)}$（$n > 4$）。
+
+\textbf{定理18.6：}若$Y$和$Z$是独立的卡方分布，自由度分别为$m$和$n$，则随机变量$X = \frac{Y/m}{Z/n}$服从自由度$m$和$n$的$F$分布。
+\end{translation}
+\section*{Exercises for Chapter 18 / 第18章习题}
+
+\begin{original}
+\textbf{Exercise 18.1} Suppose that an instructor has 100 questions available and must write an exam consisting of four questions. A question may be asked only once in the exam. How many different exams can the instructor set? (Two exams are different if there is at least one question on one exam that is not on the other.)
+
+\textbf{Exercise 18.2} Suppose that an instructor has 100 questions available and must write an exam consisting of four questions. Furthermore, each question must come from a distinct category: A, B, C, D. The instructor has 15 category A questions, 25 category B questions, 40 category C questions and 30 category D questions.
+(a) How many different exams can the instructor set?
+(b) Suppose instead that the exam consists of eight questions, and two must be drawn from each section. How many distinct exams are possible?
+
+\textbf{Exercise 18.3} Let $f(x) = a(1 - x^4)$ for $0 < x < 1$ and $0$ otherwise be a probability density function. Find $a$.
+
+\textbf{Exercise 18.4} Let $f(x) = a(1 - x^n)$ for $0 < x < 1$ and $0$ otherwise be a probability density function where $n$ is a positive integer. Find $a$.
+
+\textbf{Exercise 18.5} Let $X$ be a random variable with density $f(x) = 4x^3$ for $0 < x < 1$ and $0$ otherwise. Find $\text{Prob}(\frac{1}{3} < X < \frac{2}{3})$.
+
+\textbf{Exercise 18.6} For a random variable $X$, the moments of the distribution are defined: $\mu_1 = E\{X\}$, $\mu_2 = E\{X^2\}$, $\ldots$, $\mu_k = E\{X^k\}$ with the mean $\mu = \mu_1$. Show that the variance $\sigma^2$ satisfies $\sigma^2 = \mu_2 - \mu_1^2$.
+
+\textbf{Exercise 18.7} The moment-generating function for a discrete random variable $X$ is defined: $m(t) = \sum_x e^{tx} p(x)$, where $p(x) = \text{Prob}(X = x)$. Show that $m'(0) = \sum_{i=1}^{n} x_i p(x_i)$ and $m''(0) = \sum_{i=1}^{n} x_i^2 p(x_i)$.
+
+\textbf{Exercise 18.8} The Bernoulli distribution is: $f(x) = p^x(1-p)^{1-x}$ for $x = 0, 1$ and $0$ otherwise.
+(a) Find the mean $\mu$ and variance $\sigma^2$.
+(b) Find the moment-generating function of $f$.
+(c) Use the moment-generating function to find $\mu$ and $\sigma^2$.
+
+\textbf{Exercise 18.9} The exponential distribution is: $f(x) = \lambda e^{-\lambda x}$ for $x > 0$ and $0$ for $x \leq 0$.
+(a) Find the mean and variance.
+(b) Find the moment-generating function.
+
+\textbf{Exercise 18.10} For the exponential distribution, the hazard function is defined: $h(x) = \frac{f(x)}{1 - F(x)}$. Show that, for the exponential function, the hazard function is constant.
+
+\textbf{Exercise 18.11} The Poisson distribution is: $f(x) = \frac{e^{-\lambda}\lambda^x}{x!}$ for $x = 0, 1, 2, \ldots$ and $0$ otherwise. Suppose that a coffee shop has an average of 24 customers per hour.
+(a) What is the probability that the shop will have six or fewer customers in any given hour?
+(b) Considering two successive hours, what is the probability that the shop will have six or fewer customers in the first hour and more than six customers in the second hour?
+
+\textbf{Exercise 18.12} Suppose $X$ and $Y$ are two independent random variables with Poisson distributions: $\frac{e^{-\lambda_x}\lambda_x^x}{x!}$ and $\frac{e^{-\lambda_y}\lambda_y^y}{y!}$. Then $Z = X + Y$ has a Poisson distribution with parameter $\lambda_z = \lambda_x + \lambda_y$. Suppose two shops A and B have an average number of customers per hour of 5 and 10, respectively. What is the probability that, together, the two stores will have fewer than 20 customers in any given hour?
+
+\textbf{Exercise 18.13} Use the fact that, for any real number $\lambda$, $e^\lambda = \sum_{x=0}^{\infty} \frac{\lambda^x}{x!}$ to show that the moment-generating function for the Poisson distribution is $m(t) = e^{-\lambda}e^{\lambda e^t}$. From this conclude that the Poisson distribution has mean $\lambda$.
+
+\textbf{Exercise 18.14} Suppose that a ball will fall onto the real number line. The distribution of the point of impact is given by a standard normal distribution. Suppose you can place an interval of length $k > 0$ on the line. How should the interval be located to maximize the probability that the ball will fall within the interval?
+
+\textbf{Exercise 18.15} Let $X$ be a standard normal random variable. Define the random variable $Z = \sigma X^2$ where $\sigma > 0$. Find the distribution of $Z$.
+
+\textbf{Exercise 18.16} The random variable $T_n = \frac{X}{\sqrt{Z/n}}$, where $X$ is standard normal and $Z$ a chi-square variable with $n$ degrees of freedom, has a $t$ distribution with $n$ degrees of freedom. Use the law of large numbers to argue that, as $n$ becomes large, the distribution of a $T$ variable converges to that of a standard normal distribution.
+
+\textbf{Exercise 18.17} The random variable $F_n = \frac{Y/m}{Z/n}$, where $Y$, $Z$ are independent chi-square variables with $m$ and $n$ degrees of freedom, has an $F$ distribution. Use the law of large numbers to argue that, as $n$ becomes large, the distribution of an $F$ variable converges to that of a chi-square (with $m$ degrees of freedom) divided by its degrees of freedom.
+\end{original}
+\begin{translation}
+\textbf{习题18.1} 教师有100道题目，需出一份包含四道题的试卷。每题只能用一次。可以出多少份不同的试卷？
+
+\textbf{习题18.2} 教师需从A、B、C、D四类中各选一题。A类15题，B类25题，C类40题，D类30题。(a) 可出多少份不同试卷？(b) 若试卷需八道题，每类各抽两题，有多少种不同试卷？
+
+\textbf{习题18.3} 设$f(x) = a(1 - x^4)$对$0 < x < 1$，否则为$0$，是概率密度函数。求$a$。
+
+\textbf{习题18.4} 设$f(x) = a(1 - x^n)$对$0 < x < 1$，否则为$0$，是概率密度函数，$n$为正整数。求$a$。
+
+\textbf{习题18.5} 设$X$是密度为$f(x) = 4x^3$（$0 < x < 1$）的随机变量。求$\text{Prob}(\frac{1}{3} < X < \frac{2}{3})$。
+
+\textbf{习题18.6} 对随机变量$X$，矩定义为$\mu_k = E\{X^k\}$。证明方差$\sigma^2 = \mu_2 - \mu_1^2$。
+
+\textbf{习题18.7} 离散随机变量的矩母函数$m(t) = \sum_x e^{tx} p(x)$。证明$m'(0) = \sum x_i p(x_i)$且$m''(0) = \sum x_i^2 p(x_i)$。
+
+\textbf{习题18.8} 伯努利分布：$f(x) = p^x(1-p)^{1-x}$，$x = 0, 1$。(a) 求均值和方差；(b) 求矩母函数；(c) 用矩母函数求均值和方差。
+
+\textbf{习题18.9} 指数分布：$f(x) = \lambda e^{-\lambda x}$，$x > 0$。(a) 求均值和方差；(b) 求矩母函数。
+
+\textbf{习题18.10} 风险函数$h(x) = \frac{f(x)}{1 - F(x)}$。证明对指数分布，风险函数为常数。
+
+\textbf{习题18.11} 泊松分布：$f(x) = \frac{e^{-\lambda}\lambda^x}{x!}$。咖啡店平均每小时24位顾客。(a) 任意一小时内顾客数不超过六的概率？(b) 连续两小时内第一小时不超六且第二小时超六的概率？
+
+\textbf{习题18.12} 若$X$和$Y$独立且服从泊松分布，则$Z = X + Y$服从参数$\lambda_z = \lambda_x + \lambda_y$的泊松分布。A店平均每小时5位顾客，B店10位。两店合计任意一小时内顾客少于20的概率？
+
+\textbf{习题18.13} 利用$e^\lambda = \sum_{x=0}^{\infty} \frac{\lambda^x}{x!}$证明泊松分布的矩母函数为$m(t) = e^{-\lambda}e^{\lambda e^t}$，并得出均值为$\lambda$。
+
+\textbf{习题18.14} 一个球落向实数轴。撞击点的分布是标准正态分布。你可以放置一个长度为$k > 0$的区间。如何放置以最大化球落入该区间的概率？
+
+\textbf{习题18.15} 设$X$为标准正态随机变量。定义$Z = \sigma X^2$（$\sigma > 0$）。求$Z$的分布。
+
+\textbf{习题18.16} 利用大数定律论证，当$n$变大时，$T$变量的分布收敛到标准正态分布。
+
+\textbf{习题18.17} 利用大数定律论证，当$n$变大时，$F$变量的分布收敛到卡方分布（$m$自由度）除以其自由度。
+\end{translation}

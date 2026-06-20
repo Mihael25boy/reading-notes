@@ -1,0 +1,1909 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{article}
+
+% === Chinese support ===
+\usepackage{ctex}
+\setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi]
+
+% === Page geometry ===
+\usepackage[margin=2.5cm]{geometry}
+
+% === Math ===
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bbm}
+
+% === Graphics and color ===
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+% === Custom environments for bilingual text ===
+\newenvironment{original}
+  {\par\noindent\color{black}\smallskip}
+  {\par\smallskip}
+
+\newenvironment{translation}
+  {\par\noindent\color{blue!70!black}\smallskip}
+  {\par\medskip\hrule\medskip}
+
+% === Theorem environments ===
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\CE}{\mathit{CE}}
+\renewcommand{\div}{\operatorname{div}}
+
+\title{\textbf{Adaptive Preferences: An Evolutionary Model of Non-Expected Utility and Ambiguity Aversion}\\[5pt]
+       \large 适应性偏好：非期望效用与模糊厌恶的演化模型}
+
+\author{Philipp Sadowski, Todd Sarver\\[3pt]
+        \small Duke University, Department of Economics, 213 Social Sciences/Box 90097, Durham, NC 27708, United States of America}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\begin{original}
+We enrich an evolutionary model with common and idiosyncratic uncertainty as in Robson (1996) by allowing for hidden actions (or phenotypic flexibility). In contexts where common uncertainty is ambiguous and idiosyncratic uncertainty is risky, the model generates both ambiguity aversion and non-expected-utility preferences for risk, thereby providing a link between the two types of behavior. While the general evolutionarily optimal objective function does not have an obvious similarity to functional forms studied in the literature, our main results show that it can be recast as a combination of familiar models of ambiguity aversion and non-expected utility. We show that particular classes of hidden actions generate the special cases of rank-dependent or divergence risk preferences embedded within a model of ambiguity aversion.
+\end{original}
+\begin{translation}
+我们在Robson（1996）的模型基础上，通过引入隐藏行动（或表型灵活性），丰富了包含共同不确定性和个体特异性不确定性的演化模型。在共同不确定性是模糊的而个体特异性不确定性是风险的背景下，该模型同时产生了模糊厌恶和非期望效用的风险偏好，从而提供了这两种行为类型之间的联系。虽然一般的演化最优目标函数与文献中研究的函数形式没有明显的相似性，但我们的主要结果表明，它可以被重新表述为熟悉的模糊厌恶模型和非期望效用模型的组合。我们表明，特定类别的隐藏行动可以在模糊厌恶模型中嵌入等级依赖风险偏好或散度风险偏好等特例。
+\end{translation}
+
+\bigskip
+\noindent\textbf{JEL classification:} D81, D83, D84
+
+\noindent\textbf{Keywords:} Evolution of preferences; Ambiguity; Non-expected utility; Phenotypic flexibility
+
+\noindent\textbf{关键词：} 偏好演化；模糊；非期望效用；表型灵活性
+
+\newpage
+
+% ============================================================
+% 1. INTRODUCTION
+% ============================================================
+\section{Introduction / 引言}
+
+\begin{original}
+This paper provides an evolutionary perspective on choice under uncertainty, based on the notion that natural selection not only molds physical traits but also shapes choice behavior. Using this approach, we develop a foundation for a non-expected-utility and ambiguity-averse model of choice. While systematic deviations from expected utility are common, they appear to be at odds with evolutionary optimality, especially in scenarios involving objective risk. A central contribution of this paper is to expand the scope of the evolutionary approach by allowing individuals to simultaneously make multiple decisions, some of which are observable and others which are hidden from the modeler. When chosen optimally, as evolution will require, the presence of such hidden actions will generate preferences that appear to violate expected utility from the perspective of the analyst. We show that the resulting class of evolutionarily optimal preferences, which we call adaptive preferences, can be recast as a representation that combines familiar functional forms from the literatures on non-expected utility and ambiguity aversion. We show that this representation nests rank-dependent expected utility and divergence preferences in the context of risk, and variants of the smooth model, variational preferences, and multiple prior preferences in the contexts of both risk and ambiguity. The exact form of the equivalent representation depends on the set of available hidden actions in our model, and we explore this mapping for several parametric classes of hidden actions.
+\end{original}
+\begin{translation}
+本文为不确定性下的选择提供了一个演化视角，其基本理念是自然选择不仅塑造物理特征，也塑造选择行为。利用这一方法，我们为非期望效用和模糊厌恶的选择模型提供了一个基础。虽然系统性地偏离期望效用是常见的，但这些偏离似乎与演化最优性不一致，尤其是在涉及客观风险的情境中。本文的一个核心贡献是通过允许个体同时做出多个决策来扩展演化方法的范围，其中一些决策是可观察的，而另一些则对建模者隐藏。当按照演化要求进行最优选择时，这种隐藏行动的存在将生成从分析师角度看似乎违反期望效用的偏好。我们表明，由此产生的演化最优偏好类别——我们称之为适应性偏好——可以被重新表述为一种包含了非期望效用和模糊厌恶文献中熟悉的函数形式的表征。我们表明，这一表征在风险情境下包含了等级依赖期望效用和散度偏好，在风险和模糊两种情境下包含了平滑模型、变分偏好和多先验偏好的变体。等效表征的具体形式取决于我们模型中可用的隐藏行动集合，我们针对几类参数化的隐藏行动探索了这一映射关系。
+\end{translation}
+
+\begin{original}
+Importantly, our results demonstrate not only the scope of evolutionarily optimal preferences but also their limits, which can aid in model selection. In particular, while ambiguity-averse preferences are typically assumed to reduce to expected utility when facing objective risk, our model excludes this benchmark version of many of the ambiguity models it nests and instead links different uncertainty attitudes to violations of expected utility. Thus, our evolutionary approach generates a link between Allais- and Ellsberg-type behaviors, which we illustrate using an example based on recent experimental evidence.
+\end{original}
+\begin{translation}
+重要的是，我们的结果不仅展示了演化最优偏好的范围，也展示了其局限性，这有助于模型选择。特别是，虽然模糊厌恶偏好通常被假定在面对客观风险时退化为期望效用，但我们的模型排除了其所嵌套的许多模糊模型的这一基准版本，而是将不同的不确定性态度与期望效用的违反联系起来。因此，我们的演化方法在阿莱（Allais）行为和埃尔斯伯格（Ellsberg）行为之间建立了联系，我们利用基于近期实验证据的例子对此进行了说明。
+\end{translation}
+
+\begin{original}
+The starting point of our analysis is an observation which dates back to a seminal paper by Robson (1996): Evolutionary optimality generates a preference for idiosyncratic uncertainty over common uncertainty, and ambiguity is closely associated with common uncertainty in many instances. Hence, natural selection favors ambiguity aversion. The intuition for why evolution can generate aversion to common uncertainty is actually quite simple. To illustrate, suppose there are two actions between which all individuals must choose in every period. For both actions, individual growth (meaning net expected number of offspring) will be either 2 or 4, each with probability $1/2$. The only difference is that one action bears common uncertainty, where realized per-period growth is perfectly correlated across individuals, while the other bears idiosyncratic uncertainty, where realized growth is independent across individuals. By the law of large numbers, the per-period growth of a (large subpopulation with a common) genotype who consistently chooses the idiosyncratic uncertainty will be approximately $\frac{1}{2}(2+4) = 3$. In contrast, a genotype who chooses the common uncertainty will grow by either 2 or 4, each in approximately half of the periods. Heuristically, this leads to a long-run average growth over two periods of $2 \times 4 = 8$, which is less than $3 \times 3 = 9$. This example illustrates the detrimental effect of correlation on growth: The genotype who chooses the idiosyncratic uncertainty will have a higher long-run growth rate, which implies it will almost surely dominate in the long run (Lemma 1). We discuss and justify the close connection between ambiguity and correlated uncertainty in detail in Section 1.1.
+\end{original}
+\begin{translation}
+我们分析的起点源于Robson（1996）的一篇开创性论文中的观察：演化最优性产生了个体对个体特异性不确定性相对于共同不确定性的偏好，而模糊在许多情况下与共同不确定性密切相关。因此，自然选择偏好模糊厌恶。关于演化为何能产生对共同不确定性的厌恶，其直觉实际上相当简单。为了说明，假设每个时期所有个体都必须在两个行动之间进行选择。对于两个行动，个体增长（即净期望后代数量）将是2或4，各以$1/2$的概率发生。唯一的区别在于一个行动承担的是共同不确定性——其每期实现的增长在个体之间完全相关；而另一个行动承担的是个体特异性不确定性——其实现的增长在个体之间相互独立。根据大数定律，持续选择个体特异性不确定性的（具有共同基因型的）大亚群的每期增长率约为$\frac{1}{2}(2+4) = 3$。相比之下，选择共同不确定性的基因型将以2或4增长，大约各占一半的时期。启发式地，这导致两期的长期平均增长为$2 \times 4 = 8$，小于$3 \times 3 = 9$。这个例子说明了相关性对增长的有害影响：选择个体特异性不确定性的基因型将具有更高的长期增长率，这意味着它在长期中几乎必然占据主导地位（引理1）。我们将在第1.1节详细讨论并论证模糊与相关不确定性之间的紧密联系。
+\end{translation}
+
+\begin{original}
+The main innovation of our paper is the incorporation of adaptation via hidden actions. The incorporation of hidden actions is motivated not only by economic settings---where data sets often capture only a subset of the many decision being make by individuals---but also by biological settings---where hidden actions might take the form of unobservable aspects of physical adaptation of organisms. In an economic context, data sets could contain information such as occupation choice, investments, or even vaccination decisions, while omitting information about other complementary decisions such as housing choice, other investments or insurance, or social distancing measures, respectively. In a biological context, hidden actions could take the form of rapid and reversible physical adaptation, known as phenotypic flexibility, which has recently gained increased attention in evolutionary biology. Following the revealed preference approach of economics, our model predictions concern only observable choices between outcome-relevant actions, treating the phenotype as unobservable.
+\end{original}
+\begin{translation}
+本文的主要创新在于通过隐藏行动引入适应性。隐藏行动的引入不仅受经济情境的驱动——数据通常只捕获个体所做的众多决策中的一部分——也受到生物学情境的驱动——隐藏行动可以表现为生物体物理适应的不可观察方面。在经济情境下，数据可以包含职业选择、投资甚至疫苗接种决策等信息，同时省略了其他互补决策的信息，如住房选择、其他投资或保险，或社交距离措施。在生物学情境下，隐藏行动可以表现为快速可逆的物理适应——称为表型灵活性——这最近在演化生物学中越来越受到关注。遵循经济学的显示性偏好方法，我们的模型预测仅涉及结果相关行动之间的可观察选择，而将表型视为不可观察的。
+\end{translation}
+
+\begin{original}
+It is well known that hidden actions can lead to revealed preferences over observed choices that violate expected utility, even if the individual's actual joint preferences over all choices satisfy expected utility. In particular, since different hidden actions may be optimal for different observable actions, individuals may be averse to probabilistic mixtures over observable outcomes (see Sarver (2018)).
+\end{original}
+\begin{translation}
+众所周知，隐藏行动可以导致在可观察选择上显示出的偏好违反期望效用，即使个体对所有选择的实际联合偏好满足期望效用。特别是，由于不同的隐藏行动可能对不同的可观察行动是最优的，个体可能会对可观察结果的概率混合表现出厌恶（参见Sarver（2018））。
+\end{translation}
+
+% ============================================================
+% 1.1 Ambiguity as common uncertainty
+% ============================================================
+\subsection{Ambiguity as Common Uncertainty / 模糊即共同不确定性}
+
+\begin{original}
+In many examples and applications of ambiguity, the unknown probabilities concern common factors that affect all individuals in the population. For example, in one of the earliest applications of ambiguity to economics, Dow and Werlang (1992) and Epstein and Wang (1994) examined the implications of ambiguity about asset returns. Returns to financial assets are obviously common to all individuals who invest in them. Similarly, in applications to macroeconomics, ambiguity typically concerns aggregate variables, such as factor productivity (Ilut and Schneider (2014), Bianchi et al. (2018)). Other examples of uncertainty about aggregate variables that can affect individual outcomes and where probabilities are poorly understood could include the timing of new technological breakthroughs, natural disasters such as earthquakes or tsunamis, or climate change and its implications.
+\end{original}
+\begin{translation}
+在模糊的许多例子和应用中，未知概率涉及影响群体中所有个体的共同因素。例如，在模糊应用于经济学的最早期例子中，Dow和Werlang（1992）以及Epstein和Wang（1994）研究了关于资产收益模糊的含义。金融资产的收益对所有投资于它们的个体而言显然是共同的。同样，在宏观经济学的应用中，模糊通常涉及总量变量，如要素生产率（Ilut和Schneider（2014），Bianchi等人（2018））。其他关于总量变量的不确定性的例子——这些变量可能影响个体结果且概率不易理解——可能包括新技术突破的时机、自然灾害（如地震或海啸），或气候变化及其影响。
+\end{translation}
+
+\begin{original}
+One reason common uncertainty in the examples mentioned so far may be subject to greater ambiguity than idiosyncratic uncertainty is that idiosyncratic random variables can be studied using cross-sectional data, whereas aggregate variables by definition cannot. Greater abundance of data may lead to a better understanding. Nonetheless, there could be common uncertainty for which the probabilities are well understood by individuals, and our results would be equally relevant in those settings.
+\end{original}
+\begin{translation}
+迄今为止所提及的例子中，共同不确定性之所以可能比个体特异性不确定性更容易受到更大的模糊影响的一个原因是，个体特异性随机变量可以使用截面数据来研究，而总量变量按定义则不能。数据的更丰富性可能导致更好的理解。尽管如此，可能存在概率已被个体充分理解的共同不确定性，而我们的结果在这些情境下同样相关。
+\end{translation}
+
+\begin{original}
+Model uncertainty can also be a source of common uncertainty. Even if the risks faced by each individual are well understood and idiosyncratic conditional on some common underlying model parameter, if that parameter is unknown and ambiguous then all individuals share in the resulting common uncertainty. For a simple illustration, consider a medical treatment. If the efficacy (success rate) of the treatment for a population with a given set of characteristics is known, then whether it is successful for one individual is independent of whether it succeeds for another. However, if the treatment has undergone limited testing, then its success rate may be unknown and would itself be a source of common uncertainty for all individuals. In fact, most instances of ambiguity can be cast as common uncertainty about idiosyncratic probabilities.
+\end{original}
+\begin{translation}
+模型不确定性也可以是共同不确定性的一个来源。即使每个个体面临的风险在给定某些共同的底层模型参数的条件下是充分理解和个体特异性的，但如果该参数是未知和模糊的，那么所有个体都会分担由此产生的共同不确定性。举个简单的例子，考虑一种医疗治疗。如果对具有给定特征的人群的治疗有效性（成功率）是已知的，那么一个个体是否治疗成功与另一个个体是否成功是相互独立的。然而，如果该治疗只经过了有限的测试，那么其成功率可能是未知的，这本身就构成了所有个体共同不确定性的来源。事实上，大多数模糊的例子都可以被表述为关于个体特异性概率的共同不确定性。
+\end{translation}
+
+\begin{original}
+Of course, we should be careful to point out that the correlation mechanism at play in this paper may not be the only driver of ambiguity aversion. We would not go so far as to claim that every instance of ambiguity corresponds to common uncertainty; nor would we suggest that every instance of common uncertainty involves ambiguous beliefs. Nonetheless, the main thrust of the preceding discussion is that there are indeed many situations in which ambiguity is tightly linked to common uncertainty, and our results speak specifically to these instances of ambiguity. In other cases where ambiguity is not connected to common uncertainty, we remain agnostic about whether ambiguity aversion is driven by heuristics developed by genotypes from the case of common uncertainty or whether some other source of ambiguity aversion is at play.
+\end{original}
+\begin{translation}
+当然，我们需要谨慎地指出，本文中起作用的关联机制可能不是模糊厌恶的唯一驱动力。我们不会走那么远，声称每个模糊的例子都对应于共同不确定性；我们也不会暗示每个共同不确定性的例子都涉及模糊信念。尽管如此，前述讨论的主要要点是，确实存在许多情况，其中模糊与共同不确定性紧密相连，而我们的结果专门适用于这些模糊的例子。在模糊与共同不确定性没有关联的其他情况下，我们对于模糊厌恶是否由基因型从共同不确定性案例中发展出的启发式方法驱动，还是其他某种模糊厌恶来源在起作用，保持不可知的态度。
+\end{translation}
+
+% ============================================================
+% 1.2 Outline
+% ============================================================
+\subsection{Outline / 论文结构}
+
+\begin{original}
+The remainder of the paper is structured as follows. Section 2 formally sets up our model. Section 3 establishes that adaptive preferences are evolutionarily optimal. Section 4 sets the stage by illustrating via an example how the model in Robson (1996), which is a version of the smooth model of ambiguity aversion and a special case of our model without hidden actions, predicts Ellsberg behavior. In Section 5, we explore an alternative special case involving hidden actions but with no common uncertainty, and we show that the evolutionarily optimal preferences in this case correspond to the optimal risk attitude preferences studied by Sarver (2018). In particular, we show that our model nests rank-dependent expected utility (RDU) and divergence preferences as special cases. Section 6 analyzes the general case of our model when hidden actions and common uncertainty are simultaneously at play. Our main result is a dual formulation of our representation that greatly simplifies the comparison to existing models. We use this result to show that versions of several prominent representations, including variational preferences, multiple priors expected utility, and rank-dependent utility, can be embedded in our general model. Importantly, these special cases provide a link between Ellsberg- and Allais-type behaviors, as we illustrate with an example. In Section 7, we discuss some of the simplifying assumptions that are commonly made in economic applications of the evolutionary approach and the robustness of our results to relaxing them. Most proofs are contained in the Appendix, with the proofs of some supporting results relegated to a Supplementary Appendix.
+\end{original}
+\begin{translation}
+本文其余部分的结构如下。第2节正式建立了我们的模型。第3节确立了适应性偏好是演化最优的。第4节通过一个例子说明Robson（1996）的模型——该模型是模糊厌恶平滑模型的一个版本，也是我们模型在没有隐藏行动时的特例——如何预测埃尔斯伯格行为，从而为后续内容做铺垫。在第5节中，我们探讨了另一个涉及隐藏行动但没有共同不确定性的特例，我们表明在这种情况下的演化最优偏好对应于Sarver（2018）研究的最优风险态度偏好。特别是，我们表明我们的模型将等级依赖期望效用（RDU）和散度偏好作为特例嵌套在内。第6节分析了隐藏行动和共同不确定性同时存在的一般情况。我们的主要结果是对我们的表征提供了一个对偶公式，这大大简化了与现有模型的比较。我们利用这一结果表明，几种重要表征的版本——包括变分偏好、多先验期望效用和等级依赖效用——可以嵌入我们的一般模型之中。重要的是，这些特例在埃尔斯伯格型行为和阿莱型行为之间提供了联系，我们通过一个例子进行了说明。在第7节中，我们讨论了在演化方法的经济应用中一些常见的简化假设，以及放松这些假设时我们结果的稳健性。大多数证明包含在附录中，一些支持性结果的证明则放到了补充附录中。
+\end{translation}
+
+\newpage
+% ============================================================
+% ============================================================
+% 2. EVOLUTIONARY SETTING
+% ============================================================
+\section{The Evolutionary Model / 演化模型}
+
+% --- 2.1 Basic Setup ---
+\subsection{Basic Setup / 基本框架}
+
+\begin{original}
+The basic idea behind the evolutionary approach is that a large population of individuals is initially made up of subpopulations with different genotypes, where a genotype specifies the physical traits as well as the programmed behavior (choices) of an organism. These choices lead to a possibly uncertain outcome, and this outcome together with the physical traits of the organism determine its evolutionary fitness, that is, its number of offspring and its own survival. The offspring inherit the parent's genotype. In the next period the offspring and the parent (if still alive) will face a choice of their own, and so on. In this way, the number of individuals who share a particular genotype may shrink or grow over time, relative to the whole population. A genotype is evolutionarily optimal among those initially present if the relative size of its subpopulation does not vanish over time.
+
+We follow Robson (1996) in modeling the underlying uncertainty in our evolutionary model using a state space $\Theta \times \Omega$, with typical elements $(\theta, \omega)$, where $\theta \in \Theta$ captures uncertainty that is common across individuals (the \emph{correlated} component), while $\omega \in \Omega$ captures uncertainty that is idiosyncratic to each individual (the \emph{uncorrelated} component). For any given $\theta$, the states $\omega$ are drawn independently across individuals from the distribution $\mu_\Omega(\cdot \mid \theta)$; the common component $\theta$ is drawn from $\mu_\Theta \in \Delta(\Theta)$ once before any individual draws. The joint distribution over $\Theta \times \Omega$ is $\mu = \mu_\Theta \otimes \mu_\Omega(\cdot \mid \cdot) \in \Delta(\Theta \times \Omega)$.
+\end{original}
+\begin{translation}
+演化方法的基本思想是，一个大的个体群体最初由具有不同基因型的亚群组成，其中基因型规定了生物体的物理特征以及程序化的行为（选择）。这些选择导致可能不确定的结果，而这一结果与生物体的物理特征一起决定了其演化适应性，即其后代数量和自身存活。后代继承父母的基因型。在下一个时期，后代和父母（如果仍然存活）将面临他们自己的选择，依此类推。通过这种方式，共享特定基因型的个体数量可能相对于整个群体随时间缩减或增长。如果某个基因型在最初存在的基因型中其亚群的相对规模不会随时间消失，则该基因型是演化最优的。
+
+我们遵循 Robson (1996)，使用状态空间 $\Theta \times \Omega$ 来建模演化模型中的潜在不确定性，其典型元素为 $(\theta, \omega)$，其中 $\theta \in \Theta$ 捕捉个体之间共同的不确定性（\emph{相关}成分），而 $\omega \in \Omega$ 捕捉每个个体特有的不确定性（\emph{不相关}成分）。对于任意给定的 $\theta$，状态 $\omega$ 从分布 $\mu_\Omega(\cdot \mid \theta)$ 中独立地跨个体抽取；共同成分 $\theta$ 在任何个体抽取之前一次性从 $\mu_\Theta \in \Delta(\Theta)$ 中抽取。$\Theta \times \Omega$ 上的联合分布为 $\mu = \mu_\Theta \otimes \mu_\Omega(\cdot \mid \cdot) \in \Delta(\Theta \times \Omega)$。
+\end{translation}
+
+% --- 2.2 Consumption and Fitness ---
+\subsection{Consumption and Fitness / 消费与适应性}
+
+\begin{original}
+Let $X$ denote a nonempty set of outcomes. Both the $\theta$ and $\omega$ dimensions of the state space are potentially relevant for the outcome of an action. Formally, let $\mathcal{F}$ denote the set of simple acts, that is, the set of all measurable and finite-valued functions $f \colon \Theta \times \Omega \to X$. An evolutionary fitness function $u \in \mathcal{U}$ specifies the (net expected) individual reproductive growth associated with each outcome. Given an act $f \in \mathcal{F}$, the individual growth in state $(\theta, \omega)$ is then $u(f(\theta, \omega))$.
+
+Individuals face the task of choosing acts in each period before learning the realization of the state $(\theta, \omega)$. Each genotype determines preferences that are used for this choice. In addition to the observable choice of act $f$, we assume that individuals might simultaneously take hidden actions, that is, actions that are unobservable to the modeler. We model hidden actions in a simple and tractable reduced form by allowing individuals to select a fitness function $u$ from some feasible set $\mathcal{U}$ in each period. Our use of multiple fitness functions can also be interpreted in terms of phenotypic flexibility in the context of evolutionary biology.
+
+We aim to uncover various preferences that can be nested within our evolutionary model, thereby illustrating the structure imposed by our model on choice under uncertainty. At the outset, we therefore impose only minimal technical restrictions on the set of fitness functions: We assume $\mathcal{U}$ is nonempty and that $\sup_{u \in \mathcal{U}} u(x)$ is finite for every $x \in X$. Additional structure and restrictions on $\mathcal{U}$ may be appropriate depending on the application, as the availability of various hidden actions and their impact on fitness will naturally depend on the choice context.
+\end{original}
+\begin{translation}
+令 $X$ 表示一个非空的结果集合。状态空间的 $\theta$ 和 $\omega$ 维度都可能与行动的结果相关。形式上，令 $\mathcal{F}$ 表示简单行动的集合，即所有可测且有限值函数 $f \colon \Theta \times \Omega \to X$ 的集合。演化适应性函数 $u \in \mathcal{U}$ 指定与每个结果相关的个体繁殖增长的（净期望）值。给定行动 $f \in \mathcal{F}$，状态 $(\theta, \omega)$ 下的个体增长为 $u(f(\theta, \omega))$。
+
+个体在每个时期面临在得知状态 $(\theta, \omega)$ 的实现之前选择行动的任务。每个基因型决定了用于此选择的偏好。除了可观察的行动选择 $f$ 之外，我们假设个体可能同时采取隐藏行动，即建模者无法观察到的行动。我们以简单且可处理的简化形式来建模隐藏行动：允许个体在每个时期从某个可行集合 $\mathcal{U}$ 中选择一个适应性函数 $u$。我们对多个适应性函数的使用也可以从演化生物学中表型灵活性的角度来解释。
+
+我们旨在揭示可以嵌套于我们演化模型中的各种偏好，从而说明我们的模型对不确定性下选择所施加的结构。因此，在开始时，我们对适应性函数集合仅施加最小的技术性限制：假设 $\mathcal{U}$ 非空，且对于每个 $x \in X$，$\sup_{u \in \mathcal{U}} u(x)$ 是有限的。根据应用的不同，对 $\mathcal{U}$ 施加额外的结构和限制可能是适当的，因为各种隐藏行动的可用性及其对适应性的影响自然取决于选择情境。
+\end{translation}
+
+% --- 2.3 Growth Rates ---
+\subsection{Growth Rates / 增长率}
+
+\begin{original}
+In a given time period, the aggregate growth rate of a genotype will be determined by the common preferences each individual in its subpopulation is programmed to use when choosing (deterministically or possibly randomly) an act $f$ and a fitness function $u$. We assume each decision problem is faced repeatedly, leading to a stochastic sequence of aggregate growth rates for each genotype. Our analysis of natural selection and evolutionary optimality will center around the comparison of long-run growth rates of different genotypes (with different programmed preferences), which we state in log terms.
+
+\begin{definition}[Definition 1]
+Suppose the aggregate growth rate of a genotype is given by $G_t$, where $G_t$ is the random variable that describes the aggregate growth rate in period $t$ of the entire subpopulation of individuals with that genotype. We say that $\gamma$ is the (log) long-run growth rate of the genotype if
+\[
+\gamma = \lim_{T \to \infty} \frac{1}{T} \sum_{t=1}^{T} \ln(G_t) \qquad \text{almost surely}.
+\]
+\end{definition}
+\end{original}
+\begin{translation}
+在给定的时间周期中，一个基因型的总增长率由其亚群中每个个体被编程用于选择（确定性地或可能随机地）行动 $f$ 和适应性函数 $u$ 的共同偏好所决定。我们假设每个决策问题被反复面对，导致每个基因型产生一个随机的总增长率序列。我们对自然选择和演化最优性的分析将围绕不同基因型（具有不同编程偏好）的长期增长率的比较展开，我们以对数形式陈述。
+
+\begin{definition}[定义1]
+假设一个基因型的总增长率为 $G_t$，其中 $G_t$ 是描述具有该基因型的整个个体亚群在时期 $t$ 的总增长率的随机变量。我们称 $\gamma$ 是该基因型的（对数）长期增长率，如果
+\[
+\gamma = \lim_{T \to \infty} \frac{1}{T} \sum_{t=1}^{T} \ln(G_t) \qquad \text{几乎必然成立}。
+\]
+\end{definition}
+\end{translation}
+
+\begin{original}
+To establish that the long-run growth rate is the appropriate statistic for comparison in our evolutionary model, the next lemma demonstrates how it relates to long-run dominance of a particular genotype over others. We follow the standard convention of assuming that the number of agents of each genotype is (infinitely) large, which we formally model by treating the set of individuals of each genotype $g$ as a continuum with measure $m_g(t)$ at time period $t$. Thus, if the sequence of aggregate growth rates of genotype $g$ is $G_t^g$ and the initial measure of this genotype is $m_g(0)$, then the measure of its subpopulation at time $t$ is $m_g(t) = m_g(0) \prod_{\tau=1}^{t} G_\tau^g$.
+
+\begin{lemma}[Lemma 1]
+Consider two genotypes $g = A, B$, where genotype $g$ has a sequence of stochastic aggregate growth rates $(G_t^g)_{t=1}^{\infty}$ yielding long-run growth rate $\gamma_g$. If $\gamma_A > \gamma_B$, then regardless of the initial measures $m_A(0) > 0$ and $m_B(0) > 0$ of their respective subpopulations at time $t = 0$, we have $\frac{m_B(t)}{m_A(t)} \to 0$ almost surely as $t \to \infty$.
+\end{lemma}
+
+Lemma 1 clarifies why maximizing long-run growth, rather than the expected population size, is evolutionarily optimal. If in the present moment organisms have already been evolving for $t$ periods, then the relative population sizes of different genotypes that we observe today are a snapshot of the evolutionary process in period $t$. Assuming this process has been underway for some time ($t$ is large), the probability is very high that the dominant genotype observed today is precisely the one with the highest long-run growth rate.
+\end{original}
+\begin{translation}
+为了确立长期增长率是我们演化模型中比较的适当统计量，以下引理展示了它如何与特定基因型对其他基因型的长期优势相关联。我们遵循标准惯例，假设每个基因型的代理人数量是（无限）大的，我们通过将每个基因型 $g$ 的个体集合视为在时间周期 $t$ 具有测度 $m_g(t)$ 的连续统来形式化建模。因此，如果基因型 $g$ 的总增长率序列为 $G_t^g$，且该基因型的初始测度为 $m_g(0)$，则其在时间 $t$ 的亚群测度为 $m_g(t) = m_g(0) \prod_{\tau=1}^{t} G_\tau^g$。
+
+\begin{lemma}[引理1]
+考虑两个基因型 $g = A, B$，其中基因型 $g$ 具有随机总增长率序列 $(G_t^g)_{t=1}^{\infty}$，产生长期增长率 $\gamma_g$。若 $\gamma_A > \gamma_B$，则无论它们在时间 $t = 0$ 的各自亚群的初始测度 $m_A(0) > 0$ 和 $m_B(0) > 0$ 为何，当 $t \to \infty$ 时，几乎必然有 $\frac{m_B(t)}{m_A(t)} \to 0$。
+\end{lemma}
+
+引理1阐明了为什么最大化长期增长率而非期望种群规模是演化最优的。如果当前生物体已经演化了 $t$ 个时期，那么我们今天观察到的不同基因型的相对种群规模是时期 $t$ 演化过程的一个快照。假设这一过程已经进行了一段时间（$t$ 很大），那么今天观察到的优势基因型恰好是具有最高长期增长率的那个，其概率非常高。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% 3. EVOLUTIONARILY OPTIMAL CHOICE
+% ============================================================
+\section{Evolutionarily Optimal Choice / 演化最优选择}
+
+\begin{original}
+We begin our analysis by deriving the long-run growth rates associated with (possibly random) choices of action and fitness function. Since evolutionary optimality requires maximizing long-run growth, the optimal value function over random choice follows immediately.
+
+\begin{definition}[Definition 2]
+A random choice $\pi \in \Delta(\mathcal{F} \times \mathcal{U})$ is a simple probability measure over the space of acts and feasible fitness functions.
+
+The random choice $\pi$ assigns probability $\pi(f, u)$ to a pair $(f, u)$. Therefore, for a given state realization $(\theta, \omega)$, the random choice $\pi$ achieves an expected fitness of
+\[
+\sum_{(f,u) \in \mathcal{F} \times \mathcal{U}} u(f(\theta, \omega)) \, \pi(f, u).
+\]
+\end{definition}
+
+We adopt the convention that the domain of the natural logarithm includes nonpositive numbers and its range is the extended reals by setting $\ln(x) = -\infty$ for all $x \leq 0$.
+
+\begin{theorem}[Theorem 1 (Long-Run Growth)]
+Suppose $\mathcal{U}$ and $\mathcal{F}$ are fixed, and consider a genotype with an (infinitely) large subpopulation of individuals. The long-run growth rate of the genotype from choosing the random choice $\pi \in \Delta(\mathcal{F} \times \mathcal{U})$ in every period is
+\begin{equation}\label{eq:1}
+\gamma(\pi) = \int_{\Theta} \ln\!\left( \sum_{(f,u)} u(f(\theta, \omega)) \, \mu_\Omega(\omega \mid \theta) \, \pi(f, u) \right) \mu_\Theta(\theta).
+\end{equation}
+\end{theorem}
+
+The concavity of the logarithm implies that $\gamma$ is more adversely affected by common uncertainty about $\theta$ than by idiosyncratic uncertainty about $\omega$. Also, since $\gamma$ expresses the long-run average growth rate in log terms, $\gamma(\pi) = -\infty$ corresponds to extinction and $\gamma(\pi) = 0$ corresponds to constant population size. At the heart of the proof of Theorem 1 is the same logic that is behind the seminal result of Robson (1996), who considered the special case of no adaptation ($\mathcal{U} = \{u\}$) and deterministic choice.
+\end{original}
+\begin{translation}
+我们通过推导与（可能随机的）行动和适应性函数选择相关的长期增长率来开始我们的分析。由于演化最优性要求最大化长期增长，随机选择上的最优值函数随之可得。
+
+\begin{definition}[定义2]
+随机选择 $\pi \in \Delta(\mathcal{F} \times \mathcal{U})$ 是行动和可行适应性函数空间上的简单概率测度。
+
+随机选择 $\pi$ 为对 $(f, u)$ 分配概率 $\pi(f, u)$。因此，对于给定的状态实现 $(\theta, \omega)$，随机选择 $\pi$ 实现的期望适应性为
+\[
+\sum_{(f,u) \in \mathcal{F} \times \mathcal{U}} u(f(\theta, \omega)) \, \pi(f, u).
+\]
+\end{definition}
+
+我们采用以下约定：自然对数的定义域包含非正数，其值域为扩展实数，对所有 $x \leq 0$ 设定 $\ln(x) = -\infty$。
+
+\begin{theorem}[定理1（长期增长）]
+假设 $\mathcal{U}$ 和 $\mathcal{F}$ 是固定的，考虑一个具有（无限）大个体亚群的基因型。该基因型在每个时期选择随机选择 $\pi \in \Delta(\mathcal{F} \times \mathcal{U})$ 的长期增长率为
+\begin{equation}\label{eq:1}
+\gamma(\pi) = \int_{\Theta} \ln\!\left( \sum_{(f,u)} u(f(\theta, \omega)) \, \mu_\Omega(\omega \mid \theta) \, \pi(f, u) \right) \mu_\Theta(\theta).
+\end{equation}
+\end{theorem}
+
+对数的凹性意味着 $\gamma$ 受关于 $\theta$ 的共同不确定性的不利影响比受关于 $\omega$ 的个体特异不确定性的影响更大。此外，由于 $\gamma$ 以对数形式表示长期平均增长率，$\gamma(\pi) = -\infty$ 对应灭绝，$\gamma(\pi) = 0$ 对应恒定种群规模。定理1证明的核心逻辑与 Robson (1996) 的开创性结果相同，后者考虑了无适应性（$\mathcal{U} = \{u\}$）和确定性选择的特例。
+\end{translation}
+
+\begin{original}
+The long-run growth rate of the population is optimized if individuals choose $\pi$ to maximize Equation (1). However, since only the random choice of act is observed while the choice of fitness function corresponds to some unobservable action, it will be useful to decompose $\pi$ into its (observable) marginal distribution over acts and (unobservable) conditional distribution over fitness functions given the act.
+
+\begin{definition}[Definition 3]
+A (random) action $\alpha \in \Delta(\mathcal{F})$ is a simple probability measure over acts, where $\alpha(f)$ denotes the probability assigned to $f$. A (random) adaptation plan is a function $\beta(\cdot \mid f) \in \Delta(\mathcal{U})$ mapping from the space of acts to the set of simple probability measures over the feasible fitness functions, where $\beta(u \mid f)$ is the probability assigned to fitness function $u$ following the observable choice of act $f$.
+\end{definition}
+
+The random choice $\pi$ can equivalently be expressed as a pair $\alpha$ and $\beta$. Formally, let $\pi = \alpha \otimes \beta$ denote the measure with marginal distribution $\alpha$ on $\mathcal{F}$ and conditional distribution $\beta(\cdot \mid f)$ on $\mathcal{U}$. Then, the expectation of $u(f(\theta, \omega))$ with respect to this measure is
+\[
+\sum_{f \in \mathcal{F}} \sum_{u \in \mathcal{U}} u(f(\theta, \omega)) \, \beta(u \mid f) \, \alpha(f).
+\]
+
+Given a random action $\alpha$ and random adaptation plan $\beta$, the corresponding joint choice of both action and adaptation is given by $\pi = \alpha \otimes \beta$. Therefore, the highest possible long-run growth rate associated with an action $\alpha$ (and subsequent optimal choice of adaptation plan) is
+\begin{equation}\label{eq:2}
+\Gamma(\alpha) = \sup_{\beta(\cdot \mid \cdot)} \gamma(\alpha \otimes \beta)
+= \int_{\Theta} \sup_{\beta(\cdot \mid \cdot)} \ln\!\left( \sum_{f \in \mathcal{F}} \sum_{u \in \mathcal{U}} u(f(\theta, \omega)) \, \beta(u \mid f) \, \mu_\Omega(\omega \mid \theta) \, \alpha(f) \right) \mu_\Theta(\theta).
+\end{equation}
+
+Robson (1996) considered the special case with a single fitness function $u$, without random choice, in which case the long-run growth rate associated with the deterministic choice of act $f$ reduces to
+\begin{equation}\label{eq:3}
+\gamma(f) = \int_{\Theta} \ln\!\left( \sum_{\omega \in \Omega} u(f(\theta, \omega)) \, \mu_\Omega(\omega \mid \theta) \right) \mu_\Theta(\theta).
+\end{equation}
+\end{original}
+\begin{translation}
+如果个体选择 $\pi$ 以最大化方程（1），则群体的长期增长率被最优化。然而，由于只有行动的随机选择被观察到，而适应性函数的选择对应于某些不可观察的行动，因此将 $\pi$ 分解为其在行动上的（可观察的）边缘分布和在给定行动下适应性函数上的（不可观察的）条件分布将是有用的。
+
+\begin{definition}[定义3]
+（随机）行动 $\alpha \in \Delta(\mathcal{F})$ 是行动上的简单概率测度，其中 $\alpha(f)$ 表示分配给 $f$ 的概率。（随机）适应性计划是一个函数 $\beta(\cdot \mid f) \in \Delta(\mathcal{U})$，从行动空间映射到可行适应性函数上的简单概率测度集合，其中 $\beta(u \mid f)$ 是在可观察的行动选择 $f$ 之后分配给适应性函数 $u$ 的概率。
+\end{definition}
+
+随机选择 $\pi$ 可以等价地表示为一对 $\alpha$ 和 $\beta$。形式上，令 $\pi = \alpha \otimes \beta$ 表示在 $\mathcal{F}$ 上具有边缘分布 $\alpha$ 和在 $\mathcal{U}$ 上具有条件分布 $\beta(\cdot \mid f)$ 的测度。则 $u(f(\theta, \omega))$ 关于该测度的期望为
+\[
+\sum_{f \in \mathcal{F}} \sum_{u \in \mathcal{U}} u(f(\theta, \omega)) \, \beta(u \mid f) \, \alpha(f).
+\]
+
+给定随机行动 $\alpha$ 和随机适应性计划 $\beta$，行动和适应性的相应联合选择由 $\pi = \alpha \otimes \beta$ 给出。因此，与行动 $\alpha$（以及随后适应性计划的最优选择）相关的最高可能的长期增长率为
+\begin{equation}\label{eq:2}
+\Gamma(\alpha) = \sup_{\beta(\cdot \mid \cdot)} \gamma(\alpha \otimes \beta)
+= \int_{\Theta} \sup_{\beta(\cdot \mid \cdot)} \ln\!\left( \sum_{f \in \mathcal{F}} \sum_{u \in \mathcal{U}} u(f(\theta, \omega)) \, \beta(u \mid f) \, \mu_\Omega(\omega \mid \theta) \, \alpha(f) \right) \mu_\Theta(\theta).
+\end{equation}
+
+Robson (1996) 考虑了单一适应性函数 $u$、无随机选择的特例，此时与确定性选择行动 $f$ 相关的长期增长率退化为
+\begin{equation}\label{eq:3}
+\gamma(f) = \int_{\Theta} \ln\!\left( \sum_{\omega \in \Omega} u(f(\theta, \omega)) \, \mu_\Omega(\omega \mid \theta) \right) \mu_\Theta(\theta).
+\end{equation}
+\end{translation}
+
+\begin{original}
+By Lemma 1, the evolutionarily optimal genotype is the one that maximizes the long-run growth rate; that is, it chooses among actions to maximize Equation (2). We refer to the preferences over random actions represented by this function $\Gamma$ as \emph{adaptive preferences}. As is usual in random choice contexts, we do not directly observe these preferences, only the implied random choice rule. Formally, a decision problem $D$ specifies a nonempty and finite set of available acts. The resulting set of feasible action choices is $\Delta(D) = \{\alpha \in \Delta(\mathcal{F}) : \operatorname{supp}(\alpha) \subseteq D\}$.
+
+\begin{corollary}[Corollary 1 (Evolutionarily Optimal Choice)]
+Suppose $\mathcal{U}$ and $\mathcal{F}$ are fixed. Then, for every infinitely repeated decision problem $D$, the genotype that chooses a random action in $\operatorname{argmax}_{\alpha \in \Delta(D)} \Gamma(\alpha)$ achieves a weakly higher long-run growth rate than all others.
+\end{corollary}
+
+The adaptive preferences represented by Equation (2) specify the optimal response to correlated and uncorrelated uncertainty, but do not concern ambiguity per se. However, as laid out in Section 1.1, in many examples and applications of ambiguity, the unknown probability concerns a common factor that affects all individuals in the population. Thus, the evolutionary mechanism described in Theorem 1 may capture one important source of ambiguity aversion. In particular, the Robson (1996) representation in Equation (3) is a special case of the issue-preference model studied by Nau (2006) and Ergin and Gul (2009), and it is a special case of the smooth model of Klibanoff et al.\ (2005) when restricted to acts $f$ that depend only on $\Omega$. We discuss this special case in detail in Section 4.
+\end{original}
+\begin{translation}
+由引理1，演化最优的基因型是最大化长期增长率的那个；也就是说，它在行动之间选择以最大化方程（2）。我们将由该函数 $\Gamma$ 表示的关于随机行动的偏好称为\emph{适应性偏好}。正如随机选择语境中通常的情况，我们并不直接观察这些偏好，而只观察隐含的随机选择规则。形式上，决策问题 $D$ 指定一个非空且有限的可用行动集合。由此产生的可行行动选择集合为 $\Delta(D) = \{\alpha \in \Delta(\mathcal{F}) : \operatorname{supp}(\alpha) \subseteq D\}$。
+
+\begin{corollary}[推论1（演化最优选择）]
+假设 $\mathcal{U}$ 和 $\mathcal{F}$ 是固定的。那么，对于每个无限重复的决策问题 $D$，在 $\operatorname{argmax}_{\alpha \in \Delta(D)} \Gamma(\alpha)$ 中选择随机行动的基因型获得弱高于所有其他基因型的长期增长率。
+\end{corollary}
+
+方程（2）所表示的适应性偏好指定了对相关和不相关不确定性的最优响应，但并不直接涉及模糊性本身。然而，如第1.1节所述，在模糊性的许多例子和应用中，未知概率涉及影响群体中所有个体的共同因素。因此，定理1中描述的演化机制可能捕捉了模糊厌恶的一个重要来源。特别地，Robson (1996) 在方程（3）中的表示是 Nau (2006) 和 Ergin and Gul (2009) 研究的议题偏好模型的特例，并且当限制在仅依赖于 $\Omega$ 的行动 $f$ 上时，它是 Klibanoff 等 (2005) 的平滑模型的特例。我们将在第4节详细讨论这个特例。
+\end{translation}
+
+\newpage
+
+% ============================================================
+% 4. AMBIGUITY AVERSION
+% ============================================================
+\section{Ambiguity Aversion / 模糊厌恶}
+
+\begin{original}
+To set the stage, this section illustrates via an example the special case of our model previously analyzed by Robson (1996): a single fitness function ($\mathcal{U} = \{u\}$), which allows the supremum over $\mathcal{U}$ to be dropped from the representation in Equation (2).
+\end{original}
+\begin{translation}
+为了奠定基础，本节通过一个例子说明我们的模型先前由Robson（1996）分析的特例：单一适应性函数（$\mathcal{U} = \{u\}$），这使得可以从方程（2）的表征中去掉关于$\mathcal{U}$的上确界。
+\end{translation}
+
+\begin{example}[Example 1: Ellsberg]
+Consider an Ellsberg urn with one black ball and two balls that could each be either red or yellow. Each individual independently draws one ball from the urn, which we model using the state space $\Omega = \{B, R, Y\}$ for independent risk. The individual may be offered the following bets on colors of the ball drawn:
+\[
+\begin{array}{c|ccc}
+& B & R & Y \\
+\hline
+f_{B}  & 1 & 0 & 0 \\
+f_{R}  & 0 & 1 & 0 \\
+f_{BY} & 1 & 0 & 1 \\
+f_{RY} & 0 & 1 & 1
+\end{array}
+\]
+In this table, $f_B$ denotes the act that pays $\$1$ if the ball drawn is black and $\$0$ otherwise, $f_{BY}$ indicates the act that pays $\$1$ if the ball is either black or yellow, and so on. The typical preference pattern documented by Ellsberg (1961) is $f_B \succ f_R$ and $f_{RY} \succ f_{BY}$, in violation of Savage's sure-thing principle.
+\end{example}
+\begin{translation}
+\textbf{例1（埃尔斯伯格）}。考虑一个埃尔斯伯格瓮，其中有一个黑球和两个球，每个可能是红色或黄色。每个个体独立地从瓮中抽取一个球，我们使用状态空间$\Omega = \{B, R, Y\}$来建模独立风险。个体可能被提供以下关于抽取球颜色的赌注：
+\[
+\begin{array}{c|ccc}
+& B & R & Y \\
+\hline
+f_{B}  & 1 & 0 & 0 \\
+f_{R}  & 0 & 1 & 0 \\
+f_{BY} & 1 & 0 & 1 \\
+f_{RY} & 0 & 1 & 1
+\end{array}
+\]
+在该表中，$f_B$表示如果抽到的球是黑色则支付$\$1$否则支付$\$0$的行动，$f_{BY}$表示如果球是黑色或黄色则支付$\$1$的行动，依此类推。埃尔斯伯格（1961）记录的典型偏好模式是$f_B \succ f_R$和$f_{RY} \succ f_{BY}$，违反了萨维奇的确定事件原则。
+\end{translation}
+
+\begin{original}
+To understand such preferences within the evolutionary model described above, note that although the draw of the ball is independent across individuals, the composition of the urn itself may be common for all individuals. In this case, we can model the possible urn compositions using the set $\Theta = \{1, 2, 3\}$, where $\theta_1 = (B, R, R)$, $\theta_2 = (B, R, Y)$, and $\theta_3 = (B, Y, Y)$. Even if individuals form subjective probability assessments on the possible urn compositions, this correlated uncertainty is treated differently than uncorrelated uncertainty. For ease of illustration, suppose that $\mu_\Theta$ assigns equal weight to each urn composition and that there is a single fitness function $u$ that takes values $u(0) = 0$ and $u(1) = 1$. When acts only depend on $\Omega$, the long run growth rate for deterministic choice in Equation (3) is a special case of the smooth model (Klibanoff et al. (2005)) with a concave transformation function, so these evolutionarily optimal preferences exhibit Ellsberg behavior:
+\[
+\gamma(f_B) = \ln\left[\frac{1}{3}\right] > \frac{1}{3}\ln\left[\frac{2}{3}\right] + \frac{1}{3}\ln\left[\frac{1}{3}\right] + \frac{1}{3}\ln[0] = \gamma(f_R),
+\]
+and
+\[
+\gamma(f_{RY}) = \frac{1}{3}\ln\left[\frac{1}{3}\right] + \frac{1}{3}\ln\left[\frac{2}{3}\right] + \frac{1}{3}\ln[1] < \ln\left[\frac{2}{3}\right] = \gamma(f_{BY}).
+\]
+\end{original}
+\begin{translation}
+为了在上述演化模型中理解这类偏好，注意虽然球的抽取在个体之间是独立的，但瓮本身的构成可能对所有个体是共同的。在这种情况下，我们可以使用集合$\Theta = \{1, 2, 3\}$来建模可能的瓮构成，其中$\theta_1 = (B, R, R)$、$\theta_2 = (B, R, Y)$和$\theta_3 = (B, Y, Y)$。即使个体对可能的瓮构成形成主观概率评估，这种相关的不确定性与不相关的不确定性会被不同对待。为便于说明，假设$\mu_\Theta$对每个瓮构成赋予相等的权重，且存在一个单一的适应性函数$u$，取值为$u(0) = 0$和$u(1) = 1$。当行动仅依赖于$\Omega$时，方程（3）中确定性选择的长期增长率是具有凹变换函数的平滑模型（Klibanoff等人（2005））的一个特例，因此这些演化最优偏好表现出埃尔斯伯格行为：
+\[
+\gamma(f_B) = \ln\left[\frac{1}{3}\right] > \frac{1}{3}\ln\left[\frac{2}{3}\right] + \frac{1}{3}\ln\left[\frac{1}{3}\right] + \frac{1}{3}\ln[0] = \gamma(f_R),
+\]
+以及
+\[
+\gamma(f_{RY}) = \frac{1}{3}\ln\left[\frac{1}{3}\right] + \frac{1}{3}\ln\left[\frac{2}{3}\right] + \frac{1}{3}\ln[1] < \ln\left[\frac{2}{3}\right] = \gamma(f_{BY}).
+\]
+\end{translation}
+
+\begin{original}
+This example is also useful for illustrating the role of random choice within our model, and why restricting to deterministic choice of acts is not without loss of generality. When choosing between $f_B$ and $f_R$ (or between $f_{BY}$ and $f_{RY}$), it is easy to see that strict randomization in choice is not optimal. However, for other decision problems, randomization can have a strict benefit within our evolutionary model. Consider an act $f_Y$ that bets on yellow, paying $\$1$ if the ball is yellow and $\$0$ otherwise. Suppose the individual is asked to choose between $f_Y$ and $f_B$. Notice that $\gamma(f_B) = \gamma(f_Y)$ (both of which are strictly less than $\gamma(f_{BY})$). However, if the random action $\pi$ sets $\pi(f_B) = \alpha$ and $\pi(f_Y) = 1 - \alpha$, then it is easy to verify that $\gamma(\pi)$ is maximized at $\alpha = \frac{1}{2}$, giving a value of $\gamma(\pi) = \ln(\frac{1}{3}) = \gamma(f_{BY})$. In this case, the individual strictly prefers randomization to the deterministic choice of either $f_B$ or $f_Y$.
+\end{original}
+\begin{translation}
+这个例子也有助于说明我们模型中随机选择的作用，以及为什么限制在确定性行动选择上不是没有一般性损失的。当在$f_B$和$f_R$之间选择（或在$f_{BY}$和$f_{RY}$之间选择）时，很容易看出严格随机化选择不是最优的。然而，对于其他决策问题，随机化在我们演化模型中可以具有严格的好处。考虑一个押注黄色的行动$f_Y$，如果球是黄色则支付$\$1$，否则支付$\$0$。假设个体被要求在$f_Y$和$f_B$之间选择。注意$\gamma(f_B) = \gamma(f_Y)$（两者都严格小于$\gamma(f_{BY})$）。然而，如果随机行动$\pi$设定$\pi(f_B) = \alpha$和$\pi(f_Y) = 1 - \alpha$，那么容易验证$\gamma(\pi)$在$\alpha = \frac{1}{2}$时最大化，给出$\gamma(\pi) = \ln(\frac{1}{3}) = \gamma(f_{BY})$的值。在这种情况下，个体严格偏好随机化，而不是确定性选择$f_B$或$f_Y$。
+\end{translation}
+
+\begin{original}
+In Example 1, the crucial assumption for generating ambiguity aversion is that the composition of the urn is common across all individuals. In contrast, if a different urn is composed for each individual and if there is no correlation in how these urns are constructed, then correlation aversion alone would not produce ambiguity aversion---a different mechanism would be required to generate Ellsberg behavior. This example is therefore useful for illustrating both the scope and the limitations of the evolutionary model: Adaptive preferences generate ambiguity aversion anytime there is uncertainty about the model itself or some other factor that is common to all individuals in the population, which we contend is the case in the vast majority of examples and applications of ambiguity. As noted earlier, in cases involving idiosyncratic ambiguity, we do not take a stand on whether ambiguity aversion is driven by heuristics developed by the genotypes from the case of common uncertainty or if it arises from some other source.
+\end{original}
+\begin{translation}
+在例1中，产生模糊厌恶的关键假设是瓮的构成在所有个体之间是共同的。相比之下，如果为每个个体构成不同的瓮，并且在这些瓮的构建方式上没有相关性，那么仅凭相关性厌恶本身不会产生模糊厌恶——需要一种不同的机制来生成埃尔斯伯格行为。因此，这个例子有助于说明演化模型的范围和局限性：适应性偏好在任何时候只要存在关于模型本身或其他对群体中所有个体共同的因素的不确定性，就会产生模糊厌恶，我们认为这是模糊的绝大多数例子和应用中的情况。如前所述，在涉及个体特异性模糊的情况下，我们对模糊厌恶是由基因型从共同不确定性案例中发展出的启发式方法驱动，还是由其他来源产生，不持特定立场。
+\end{translation}
+
+\begin{original}
+In line with the interpretation of ambiguity as model uncertainty, we favor a statistical interpretation of the smooth model used in this section, where each $\theta \in \Theta$ is a candidate for the true model (the law of nature governing the distribution of $\omega \in \Omega$) and the marginal distribution of $\mu$ on $\Theta$ is a prior over the candidate models. For simplicity, we treat $\mu$ as constant over time. In that case, evolutionary optimality requires that individuals' preferences (eventually) assign the correct weights, so that $\mu$ becomes objective---it accurately reflects the data generating process. However, our evolutionary approach can easily be extended to allow $\mu$ to change with time $t$. For a simple example, suppose there is an index set $S$ and a set of possible distributions $\mu_s \in \Delta(\Theta \times \Omega)$, where $s \in S$ is redrawn periodically after finitely many periods. Then, in each period $t$, it is again evolutionarily optimal for individuals to maximize the growth rate in Equation (2), this time using their ``best guess'' of the distribution $\mu$ given all information available at time $t$. This information evolves as follows: One $\omega \in \Omega$ is commonly drawn each period, so that in between draws of $s$ the marginal of $\mu$ on $\Theta$ is gradually revealed. At the same time, with a large number of individuals who each independently draw a state $\omega \in \Omega$ each period, the conditional $\mu(\cdot|\theta)$ on $\Omega$ can be fully revealed in one period. In other words, in this situation ambiguity will only linger in the case of common uncertainty, in line with the discussion in Section 1.1.
+\end{original}
+\begin{translation}
+与将模糊解释为模型不确定性相一致，我们偏向于对本节中使用的平滑模型进行统计解释，其中每个$\theta \in \Theta$是真实模型（支配$\omega \in \Omega$分布的自然法则）的一个候选，而$\mu$在$\Theta$上的边缘分布是候选模型上的先验。为简单起见，我们将$\mu$视为随时间恒定。在这种情况下，演化最优性要求个体的偏好（最终）赋予正确的权重，从而使$\mu$成为客观的——它准确反映了数据生成过程。然而，我们的演化方法可以很容易地扩展以允许$\mu$随时间$t$变化。举个简单的例子，假设存在一个指标集$S$和一组可能的分布$\mu_s \in \Delta(\Theta \times \Omega)$，其中$s \in S$在有限期数后被定期重新抽取。那么，在每个时期$t$，个体再次演化最优地最大化方程（2）中的增长率，这次使用他们在时间$t$可获得的所有信息对分布$\mu$的"最佳猜测"。这一信息的演变如下：每个时期共同抽取一个$\omega \in \Omega$，因此在$s$的抽取之间，$\mu$在$\Theta$上的边缘被逐渐揭示。同时，由于存在大量个体，每个个体每个时期独立抽取一个状态$\omega \in \Omega$，条件分布$\mu(\cdot|\theta)$在$\Omega$上可以在一期内完全揭示。换句话说，在这种情况下，模糊只会在共同不确定性的情况下持续存在，这与第1.1节的讨论一致。
+\end{translation}
+\newpage
+% ============================================================
+% 5. NON-EXPECTED UTILITY
+% ============================================================
+\section{Non-Expected Utility / 非期望效用}
+
+\begin{original}
+The adaptive model also accommodates violations of expected utility in the context of pure (uncorrelated) risk. In this section, we consider two such special cases of our model: rank-dependent utility in Section 5.1 and a class of divergence preferences involving pessimistic distortions of an objective probability distribution in Section 5.2.
+
+In contrast to Section 4, we now permit non-degenerate adaptation (non-singleton $\mathcal{U}$); however, to focus solely on risk preferences for the moment, we will restrict attention in this section to the special case of our model without common uncertainty ($\Theta = \{\theta\}$). Since a central contribution of this paper is to illustrate the joint restrictions on ambiguity attitudes and non-expected-utility preferences imposed by our evolutionary environment, Section 6 will characterize a set of equivalent representations for the general model with both non-trivial common uncertainty and non-trivial adaptation. The main result of this paper, Theorem 2 in Section 6, will enable us to embed the examples from this section within a model that incorporates ambiguity aversion.
+
+Since this section focuses on the special case without common uncertainty, we will suppress the $\Theta$ dimension from the state space and focus on acts defined on the state space $\Omega$. In this case, there is no strict benefit to randomization, so it is without loss of generality to restrict attention to deterministic action choices $f$ and adaptation choices $u$. Therefore, Equation (2) becomes
+\[
+\Gamma(f) = \sup_{u \in \mathcal{U}} \ln\left( \int_\Omega u(f(\omega)) \mu(d\omega) \right)
+= \ln\left( \sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) \right).
+\]
+
+Note that in this case the logarithm can also be dropped by taking a monotone transformation, but we will retain it for consistency in expressing growth rates in log terms and for ease of comparing the formulas in this section to later results.
+
+In order to accommodate certain special cases, it will be technically convenient to permit the fitness functions $u$ to take the value $-\infty$, so we henceforth assume that $\mathcal{U}$ is a nonempty set of functions $u: C \to [-\infty, \infty)$. We have assumed throughout that the set $\mathcal{U}$ is pointwise bounded above. In anticipation of our results in Section 6, we will also focus attention on sets that are closed, as formalized in the next assumption. We will see that the special cases of rank-dependent utility and divergence preferences considered in the following subsections will be characterized by sets $\mathcal{U}$ that satisfy this assumption.
+\end{original}
+\begin{translation}
+适应性模型在纯粹（不相关）风险的背景下也容纳了对期望效用的违反。在本节中，我们考虑我们模型的两个此类特例：第5.1节中的等级依赖效用和第5.2节中涉及对客观概率分布进行悲观扭曲的一类散度偏好。
+
+与第4节相反，我们现在允许非退化的适应性（非单点集$\mathcal{U}$）；然而，为了暂时专注于风险偏好，我们在本节中限制注意力于没有共同不确定性（$\Theta = \{\theta\}$）的模型特例。由于本文的一个核心贡献是说明我们的演化环境对模糊态度和非期望效用偏好施加的联合限制，第6节将为具有非平凡共同不确定性和非平凡适应性的一般模型刻画一组等价表征。本文的主要结果——第6节中的定理2——将使我们能够将本节的例子嵌入到一个包含模糊厌恶的模型中。
+
+由于本节专注于没有共同不确定性的特例，我们将从状态空间中抑制$\Theta$维度，并专注于定义在状态空间$\Omega$上的行动。在这种情况下，随机化没有严格的好处，因此限制注意力于确定性行动选择$f$和适应性选择$u$不失一般性。因此，方程（2）变为
+\[
+\Gamma(f) = \sup_{u \in \mathcal{U}} \ln\left( \int_\Omega u(f(\omega)) \mu(d\omega) \right)
+= \ln\left( \sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) \right).
+\]
+
+注意，在这种情况下，通过取单调变换也可以去掉对数，但我们将保留它以保持一致性地以对数形式表示增长率，并便于将本节的公式与后面的结果进行比较。
+
+为了容纳某些特例，允许适应性函数$u$取$-\infty$值在技术上是方便的，因此我们此后假设$\mathcal{U}$是函数$u: C \to [-\infty, \infty)$的一个非空集合。我们始终假设集合$\mathcal{U}$是逐点上有界的。预期到我们在第6节的结果，我们还将注意力集中在闭集上，如下一个假设所正式表述。我们将看到，以下小节中考虑的等级依赖效用和散度偏好的特例将由满足该假设的集合$\mathcal{U}$来刻画。
+\end{translation}
+
+\begin{assumption}[Assumption 1]
+Suppose $\mathcal{U}$ is a nonempty set of functions $u: C \to [-\infty, \infty)$ that is pointwise bounded above (that is, $\sup_{u \in \mathcal{U}} u(c) < \infty$ for every $c \in C$) and closed in the topology of pointwise convergence (on the extended reals).
+\end{assumption}
+\begin{translation}
+\textbf{假设1}。假设$\mathcal{U}$是函数$u: C \to [-\infty, \infty)$的一个非空集合，该集合是逐点上有界的（即对于每个$c \in C$，$\sup_{u \in \mathcal{U}} u(c) < \infty$），且在逐点收敛拓扑（在扩展实数上）下是闭的。
+\end{translation}
+
+% ============================================================
+\subsection{Rank-Dependent Utility / 等级依赖效用}
+
+\begin{original}
+Although the connection is nontrivial, the following result shows that rank-dependent utility with a pessimistic probability distortion function can be expressed as a special case of our model.
+\end{original}
+\begin{translation}
+虽然这一联系并非平凡，但以下结果表明，具有悲观概率扭曲函数的等级依赖效用可以被表示为我们模型的一个特例。
+\end{translation}
+
+\begin{proposition}[Proposition 1: Rank-Dependent Utility]
+Suppose $C \subseteq \mathbb{R}$. Fix any bounded nondecreasing function $v: C \to \mathbb{R}$ and any function $\varphi: [0, 1] \to [0, 1]$ that is nondecreasing, concave, and onto. Then, there exists a set $\mathcal{U}$ of functions $u: C \to \mathbb{R}$ satisfying Assumption 1 such that for any simple act $f \in \mathcal{F}$ and any $\mu \in \Delta(\Omega)$,
+\[
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx
+\]
+where
+\[
+F_{f,\mu}(x) = \mu(\{\omega \in \Omega : v(f(\omega)) \leq x\})
+\]
+denotes the cumulative distribution function of $v \circ f$ given $\mu$. In particular, the value function $\Gamma$ in Equation (4) can be equivalently expressed as
+\[
+\Gamma(f) = \ln\left( \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx \right).
+\]
+\end{proposition}
+\begin{translation}
+\textbf{命题1（等级依赖效用）}。假设$C \subseteq \mathbb{R}$。固定任意有界非递减函数$v: C \to \mathbb{R}$和任意非递减、凹且映满的函数$\varphi: [0, 1] \to [0, 1]$。那么，存在一个满足假设1的函数$u: C \to \mathbb{R}$的集合$\mathcal{U}$，使得对于任意简单行动$f \in \mathcal{F}$和任意$\mu \in \Delta(\Omega)$，
+\[
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx
+\]
+其中
+\[
+F_{f,\mu}(x) = \mu(\{\omega \in \Omega : v(f(\omega)) \leq x\})
+\]
+表示给定$\mu$下$v \circ f$的累积分布函数。特别是，方程（4）中的值函数$\Gamma$可以等价地表示为
+\[
+\Gamma(f) = \ln\left( \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx \right).
+\]
+\end{translation}
+
+\begin{original}
+Since we identify idiosyncratic uncertainty over $\Omega$ with pure risk, the distribution of outcomes $v \circ f$ amounts to an unambiguous risky prospect. Thus, given the appropriate set of fitness functions $\mathcal{U}$, adaptive preferences are equivalent to rank-dependent utility where individuals overweight the probability assigned to worse outcomes. The following example from Ben-Tal and Teboulle (2007) and Sarver (2018, supplementary material) illustrates more concretely one instance of this duality.
+\end{original}
+\begin{translation}
+由于我们将$\Omega$上的个体特异性不确定性等同于纯粹风险，结果$v \circ f$的分布相当于一个无歧义的风险前景。因此，给定适当的适应性函数集$\mathcal{U}$，适应性偏好等价于等级依赖效用，其中个体对分配给较差结果的概率赋予过高权重。以下来自Ben-Tal和Teboulle（2007）以及Sarver（2018，补充材料）的例子更具体地说明了这种对偶性的一个实例。
+\end{translation}
+
+\begin{example}[Example 2: RDU Fitness Functions]
+Suppose $C \subseteq \mathbb{R}$, and fix some $0 < \beta < 1 < \alpha$. Consider a parametric class of fitness functions where for each $v \in \mathbb{R}$, we define $u_v: \mathbb{R} \to \mathbb{R}$ by
+\[
+u_v(c) = \begin{cases}
+v + \beta(c - v) & \text{if } c < v \\
+v + \alpha(c - v) & \text{if } c \geq v.
+\end{cases}
+\]
+The fitness function $u_v$ can be interpreted as a piecewise-linear gain-loss function with a target consumption level $v$. It is concave (since $\beta < \alpha$), takes value $v$ at $c = v$, and takes values strictly below $v$ for $c \neq v$.
+\end{example}
+\begin{translation}
+\textbf{例2（RDU适应性函数）}。假设$C \subseteq \mathbb{R}$，并固定某个$0 < \beta < 1 < \alpha$。考虑一类参数化的适应性函数，其中对于每个$v \in \mathbb{R}$，我们定义$u_v: \mathbb{R} \to \mathbb{R}$为
+\[
+u_v(c) = \begin{cases}
+v + \beta(c - v) & \text{若 } c < v \\
+v + \alpha(c - v) & \text{若 } c \geq v.
+\end{cases}
+\]
+适应性函数$u_v$可以被解释为一个具有目标消费水平$v$的分段线性收益-损失函数。它是凹的（因为$\beta < \alpha$），在$c = v$时取值为$v$，在$c \neq v$时取值严格低于$v$。
+\end{translation}
+
+\begin{claim}[Claim 1]
+Define $\mathcal{U}$ as in Example 2. Then, for any simple act $f \in \mathcal{F}$,
+\[
+\max_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx
+\]
+where
+\[
+\varphi(p) = \begin{cases}
+\frac{p}{\beta} & \text{if } p < \frac{1-\beta}{\alpha-\beta} \\[4pt]
+\frac{1-\beta}{\alpha-\beta} + \frac{p - \frac{1-\beta}{\alpha-\beta}}{\alpha} & \text{if } p \geq \frac{1-\beta}{\alpha-\beta}.
+\end{cases}
+\]
+\end{claim}
+\begin{translation}
+\textbf{断言1}。如例2定义$\mathcal{U}$。那么，对于任意简单行动$f \in \mathcal{F}$，
+\[
+\max_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx
+\]
+其中
+\[
+\varphi(p) = \begin{cases}
+\frac{p}{\beta} & \text{若 } p < \frac{1-\beta}{\alpha-\beta} \\[4pt]
+\frac{1-\beta}{\alpha-\beta} + \frac{p - \frac{1-\beta}{\alpha-\beta}}{\alpha} & \text{若 } p \geq \frac{1-\beta}{\alpha-\beta}.
+\end{cases}
+\]
+\end{translation}
+
+\begin{original}
+For intuition, if there is a $v$ such that $F_{f,\mu}(v) = \frac{1-\beta}{\alpha-\beta}$, then the optimal fitness function for the act $f$ is $u_v$. From this, it is easy to show that outcomes to the left of $v$ are weighted by $\beta$ times their probability and outcomes to the right are weighted by $\alpha$, consistent with the distortion function $\varphi$.
+\end{original}
+\begin{translation}
+直观上，如果存在一个$v$使得$F_{f,\mu}(v) = \frac{1-\beta}{\alpha-\beta}$，那么对于行动$f$的最优适应性函数是$u_v$。由此容易看出，$v$左侧的结果被赋予$\beta$乘以其概率的权重，而右侧的结果被赋予$\alpha$的权重，这与扭曲函数$\varphi$一致。
+\end{translation}
+
+% ============================================================
+\subsection{Divergence Preferences / 散度偏好}
+
+\begin{definition}[Definition 4]
+Fix a convex and lower semicontinuous function $\psi: \mathbb{R}_+ \to [0, \infty]$ such that $\psi(1) = 0$ and there exists some $\delta < 1 < \eta$ such that $\psi$ is finite on the interval $[\delta, \eta]$, and let $P$ and $Q$ be probability measures on a given state space. The $\psi$-divergence of $Q$ with respect to $P$ is given by
+\[
+D_\psi(Q\|P) = \begin{cases}
+\int \psi\left(\frac{dQ}{dP}\right) dP & \text{if } Q \ll P, \\
+\infty & \text{otherwise}.
+\end{cases}
+\]
+
+The notation $Q \ll P$ indicates that $Q$ is absolutely continuous with respect to $P$, that is, for any measurable set $A$, $P(A) = 0$ implies $Q(A) = 0$. The term $\frac{dQ}{dP}$ denotes the Radon-Nikodym derivative (density) of $Q$ with respect to $P$, which exists if and only if $Q$ is absolutely continuous with respect to $P$. It is immediate from the definition of the $\psi$-divergence that $D_\psi(Q\|P) \geq 0$, with equality if $Q = P$. Moreover, if $\psi$ is strictly convex, then $D_\psi(Q\|P) = 0$ if and only if $Q = P$. Relative entropy (or Kullback-Leibler divergence) is the special case of a $\psi$-divergence where $\psi(x) = x\ln(x) - x + 1$. In this case, Equation (5) simplifies to
+\[
+D_{KL}(Q\|P) = \begin{cases}
+\int \ln\left(\frac{dQ}{dP}\right) dQ & \text{if } Q \ll P, \\
+\infty & \text{otherwise}.
+\end{cases}
+\]
+\end{definition}
+\begin{translation}
+\textbf{定义4}。固定一个凸且下半连续函数$\psi: \mathbb{R}_+ \to [0, \infty]$，满足$\psi(1) = 0$且存在某个$\delta < 1 < \eta$使得$\psi$在区间$[\delta, \eta]$上有限，并令$P$和$Q$是给定状态空间上的概率测度。$Q$关于$P$的$\psi$-散度由下式给出：
+\[
+D_\psi(Q\|P) = \begin{cases}
+\int \psi\left(\frac{dQ}{dP}\right) dP & \text{若 } Q \ll P, \\
+\infty & \text{否则}.
+\end{cases}
+\]
+
+记号$Q \ll P$表示$Q$关于$P$绝对连续，即对于任意可测集$A$，$P(A) = 0$蕴含$Q(A) = 0$。$\frac{dQ}{dP}$项表示$Q$关于$P$的Radon-Nikodym导数（密度），它存在当且仅当$Q$关于$P$绝对连续。从$\psi$-散度的定义立即可得$D_\psi(Q\|P) \geq 0$，且若$Q = P$则取等号。此外，若$\psi$是严格凸的，则$D_\psi(Q\|P) = 0$当且仅当$Q = P$。相对熵（或Kullback-Leibler散度）是$\psi$-散度在$\psi(x) = x\ln(x) - x + 1$时的特例。在这种情况下，方程（5）简化为
+\[
+D_{KL}(Q\|P) = \begin{cases}
+\int \ln\left(\frac{dQ}{dP}\right) dQ & \text{若 } Q \ll P, \\
+\infty & \text{否则}.
+\end{cases}
+\]
+\end{translation}
+
+\begin{original}
+Ben-Tal and Teboulle (1987, 2007) provided an explicit dual characterization of variational preferences (Maccheroni et al. (2006)) with a divergence cost function as the supremum of a set of expected utilities under the reference measure, where the supremum is taken over a set of possible Bernoulli utility indices. The following proposition extends their result to permit a nondecreasing convex transformation $\Phi$ of the divergence term.
+\end{original}
+\begin{translation}
+Ben-Tal和Teboulle（1987, 2007）对具有散度成本函数的变分偏好（Maccheroni等人（2006））提供了一个显式的对偶刻画，将其表示为参考测度下一组期望效用的上确界，其中上确界是在一组可能的伯努利效用指标上取得的。以下命题将他们的结果扩展为允许对散度项进行非递减凸变换$\Phi$。
+\end{translation}
+
+\begin{proposition}[Proposition 2: Divergence Duality]
+Fix any $\psi$-divergence $D_\psi(\cdot\|\cdot)$, any function $v: C \to \mathbb{R}$, and any nondecreasing, convex, and lower semicontinuous function $\Phi: \mathbb{R}_+ \to [0, \infty]$ such that $\Phi(0) = 0$ and $\Phi$ is finite on some interval $[0, \varepsilon)$. Then, there exists a set $\mathcal{U}$ satisfying Assumption 1 such that for any simple act $f \in \mathcal{F}$ and any $\mu \in \Delta(\Omega)$,
+\[
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \Phi(D_\psi(Q\|\mu)) \right].
+\]
+\end{proposition}
+\begin{translation}
+\textbf{命题2（散度对偶性）}。固定任意$\psi$-散度$D_\psi(\cdot\|\cdot)$、任意函数$v: C \to \mathbb{R}$，以及任意非递减、凸且下半连续的函数$\Phi: \mathbb{R}_+ \to [0, \infty]$，满足$\Phi(0) = 0$且$\Phi$在某个区间$[0, \varepsilon)$上有限。那么，存在一个满足假设1的集合$\mathcal{U}$，使得对于任意简单行动$f \in \mathcal{F}$和任意$\mu \in \Delta(\Omega)$，
+\[
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \Phi(D_\psi(Q\|\mu)) \right].
+\]
+\end{translation}
+
+\begin{corollary}[Corollary 2]
+Fix any $\mu \in \Delta(\Omega)$, any $\psi$-divergence $D_\psi(\cdot\|\cdot)$, and any function $v: C \to \mathbb{R}$. Given a set $\mathcal{U}$, define $\Gamma$ by Equation (4).
+
+1. Fix any scalar $\kappa > 0$. There exists a set $\mathcal{U}$ such that
+\[
+\Gamma(f) = \ln\left( \inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \kappa D_\psi(Q\|\mu) \right] \right).
+\]
+
+2. Fix a scalar $\eta > 0$, and define $\Delta_\eta(\Omega) = \{ Q \in \Delta(\Omega) : D_\psi(Q\|\mu) \leq \eta \}$. There exists a set $\mathcal{U}$ such that
+\[
+\Gamma(f) = \ln\left( \inf_{Q \in \Delta_\eta(\Omega)} \int_\Omega v(f(\omega)) Q(d\omega) \right).
+\]
+\end{corollary}
+\begin{translation}
+\textbf{推论2}。固定任意$\mu \in \Delta(\Omega)$、任意$\psi$-散度$D_\psi(\cdot\|\cdot)$和任意函数$v: C \to \mathbb{R}$。给定一个集合$\mathcal{U}$，由方程（4）定义$\Gamma$。
+
+1. 固定任意标量$\kappa > 0$。存在一个集合$\mathcal{U}$使得
+\[
+\Gamma(f) = \ln\left( \inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \kappa D_\psi(Q\|\mu) \right] \right).
+\]
+
+2. 固定一个标量$\eta > 0$，定义$\Delta_\eta(\Omega) = \{ Q \in \Delta(\Omega) : D_\psi(Q\|\mu) \leq \eta \}$。存在一个集合$\mathcal{U}$使得
+\[
+\Gamma(f) = \ln\left( \inf_{Q \in \Delta_\eta(\Omega)} \int_\Omega v(f(\omega)) Q(d\omega) \right).
+\]
+\end{translation}
+
+\begin{original}
+Divergence preferences have typically been considered in the context of ambiguity rather than risk. For example, the formula inside the logarithm in part 1 of Corollary 2 was analyzed by Maccheroni et al. (2006) as a special case of their model of variational preferences. The formula inside the logarithm in part 2 of the corollary is a multiple prior representation (Gilboa and Schmeidler (1989)). However, while these types of functional forms have received the most attention in the ambiguity literature, they also have a natural interpretation in the context of objective risk. The pessimistic distortion of the (objective and idiosyncratic) probability measure $\mu$ to some other measure $Q$ in these formulas allows over-weighting of bad outcomes, similar to the interpretation of rank-dependent utility in the previous section. In fact, this similarity between the two models is not merely conceptual: Although the classes of divergence and RDU preferences are distinct, we provide an example in Appendix B showing there is actually some overlap between the two classes of preferences.
+
+In the proof of Proposition 2, we provide an explicit formula for the set of fitness functions $\mathcal{U}$ using the Fenchel conjugate from convex analysis (see Proposition 3 in Appendix A.3). The following example is based on these explicit formulas.
+\end{original}
+\begin{translation}
+散度偏好通常是在模糊而非风险的背景下被考虑的。例如，推论2第1部分中对数内部的公式被Maccheroni等人（2006）分析为他们的变分偏好模型的一个特例。该推论第2部分中对数内部的公式是一个多先验表征（Gilboa和Schmeidler（1989））。然而，虽然这些类型的函数形式在模糊文献中受到了最多的关注，但它们在客观风险的背景下也有自然的解释。在这些公式中，将（客观且个体特异性的）概率测度$\mu$悲观地扭曲为某个其他测度$Q$，允许对坏结果赋予过高权重，类似于前一节中等级依赖效用的解释。事实上，这两个模型之间的相似性不仅仅是概念上的：虽然散度偏好和RDU偏好的类别是不同的，但我们在附录B中提供了一个例子，表明这两个偏好类别实际上存在一些重叠。
+
+在命题2的证明中，我们使用凸分析中的Fenchel共轭给出了适应性函数集$\mathcal{U}$的显式公式（见附录A.3中的命题3）。以下例子基于这些显式公式。
+\end{translation}
+
+\begin{example}[Example 3: Divergence Fitness Functions]
+Suppose $C \subseteq \mathbb{R}$, and consider the following parametric class of fitness functions involving two parameters, where the first ($v \in \mathbb{R}$) is a target level of consumption and the second ($\eta \geq 0$) determines the sensitivity to gains and losses: Define $u_{v,\eta}: \mathbb{R} \to [-\infty, \infty)$ by
+\[
+u_{v,\eta}(c) = v + \eta - \eta \exp\left( \frac{v - c}{\eta} \right) - \zeta(\eta)
+\]
+if $\eta > 0$. For ($\eta = 0$), let $u_{v,0}(c) = v$ for $c \geq v$ and $u_{v,0}(c) = -\infty$ for $c < v$. The components of $u_{v,\eta}(c)$ have a simple interpretation: $v + \eta - \eta \exp(\frac{v-c}{\eta})$ is a gain-loss function that is strictly concave, takes the value $v$ at $c = v$, and takes values strictly below $v$ for $c \neq v$. The parameter $\eta$ determines the sensitivity to gains and losses, with larger $\eta$ leading to decreased sensitivity. Finally, $\zeta: \mathbb{R}_+ \to [0, \infty]$ is a function that determines the ``cost'' of increasing $\eta$ (decreasing sensitivity to gains and losses). Assume that $\zeta$ is nondecreasing and convex, with $\zeta(0) = 0$.
+\end{example}
+\begin{translation}
+\textbf{例3（散度适应性函数）}。假设$C \subseteq \mathbb{R}$，并考虑以下涉及两个参数的参数化适应性函数类，其中第一个（$v \in \mathbb{R}$）是目标消费水平，第二个（$\eta \geq 0$）决定对收益和损失的敏感度：定义$u_{v,\eta}: \mathbb{R} \to [-\infty, \infty)$为
+\[
+u_{v,\eta}(c) = v + \eta - \eta \exp\left( \frac{v - c}{\eta} \right) - \zeta(\eta)
+\]
+若$\eta > 0$。对于（$\eta = 0$），令$u_{v,0}(c) = v$（当$c \geq v$时），$u_{v,0}(c) = -\infty$（当$c < v$时）。$u_{v,\eta}(c)$的各组成部分具有简单的解释：$v + \eta - \eta \exp(\frac{v-c}{\eta})$是一个严格凹的收益-损失函数，在$c = v$处取值为$v$，在$c \neq v$处取值严格低于$v$。参数$\eta$决定对收益和损失的敏感度，$\eta$越大导致敏感度越低。最后，$\zeta: \mathbb{R}_+ \to [0, \infty]$是一个决定增加$\eta$（降低对收益和损失的敏感度）的"成本"的函数。假设$\zeta$是非递减且凸的，且$\zeta(0) = 0$。
+\end{translation}
+
+\begin{claim}[Claim 2]
+Define $u_{v,\eta}$ as in Example 3. Then, for any simple act $f \in \mathcal{F}$,
+\[
+\max_{\eta \geq 0} \max_{v \in \mathbb{R}} \int_\Omega u_{v,\eta}(f(\omega)) \mu(d\omega) = \inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \Phi(D_{KL}(Q\|\mu)) \right],
+\]
+where $D_{KL}(Q\|\mu)$ is the relative entropy defined in Equation (6) and special cases of the functions $\Phi$ and $\zeta$ are related as follows, where $\kappa, \eta > 0$:
+
+1. If $\zeta(\eta) = 0$ for $\eta \leq \kappa$ and $\zeta(\eta) = \infty$ otherwise, then $\Phi(x) = 0$ for $x \leq \kappa$ and $\Phi(x) = \infty$ otherwise.
+2. If $\zeta(\eta) = \kappa \eta$, then $\Phi(x) = 0$ for $x \leq \kappa$ and $\Phi(x) = \infty$ otherwise.
+\end{claim}
+\begin{translation}
+\textbf{断言2}。如例3定义$u_{v,\eta}$。那么，对于任意简单行动$f \in \mathcal{F}$，
+\[
+\max_{\eta \geq 0} \max_{v \in \mathbb{R}} \int_\Omega u_{v,\eta}(f(\omega)) \mu(d\omega) = \inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \Phi(D_{KL}(Q\|\mu)) \right],
+\]
+其中$D_{KL}(Q\|\mu)$是方程（6）中定义的相对熵，函数$\Phi$和$\zeta$的特例关系如下，其中$\kappa, \eta > 0$：
+
+1. 若$\zeta(\eta) = 0$（当$\eta \leq \kappa$时），且$\zeta(\eta) = \infty$（否则），则$\Phi(x) = 0$（当$x \leq \kappa$时），且$\Phi(x) = \infty$（否则）。
+2. 若$\zeta(\eta) = \kappa \eta$，则$\Phi(x) = 0$（当$x \leq \kappa$时），且$\Phi(x) = \infty$（否则）。
+\end{translation}
+
+\begin{original}
+Claim 2 relates the class of fitness functions in Example 3 to divergence preferences and, moreover, illustrates two instances of the duality between the cost function $\zeta$ in the fitness functions and the transformation $\Phi$ that is applied to the divergence. More generally, the function $\Phi$ is the Fenchel conjugate of $\zeta$ (by Proposition 3 in the appendix).
+\end{original}
+\begin{translation}
+断言2将例3中的适应性函数类与散度偏好联系起来，此外还说明了适应性函数中的成本函数$\zeta$与应用于散度的变换$\Phi$之间对偶性的两个实例。更一般地，函数$\Phi$是$\zeta$的Fenchel共轭（根据附录中的命题3）。
+\end{translation}
+\newpage
+% ============================================================
+% 6. AMBIGUITY AVERSION AND NON-EXPECTED UTILITY
+% ============================================================
+\section{Ambiguity Aversion and Non-Expected Utility / 模糊厌恶与非期望效用}
+
+\begin{original}
+We observed in Sections 4 and 5 that our model of adaptive preferences nests as special cases rank-dependent utility and divergence preferences in the context of risk and a version of the smooth model in the context of ambiguity. In this section, we expand our analysis to special cases of our representation that simultaneously incorporate both ambiguity aversion and non-expected utility for risk. One motivation for simultaneously considering both is the empirically observed correlation between ambiguity aversion and violations of the independence axiom (Dean and Ortoleva (2019)). Another motivation for this generality is that within our model of adaptive preferences, there are some attitudes toward ambiguity that are incompatible with a single fitness function $\mathcal{U} = \{u\}$, but can be accommodated with non-trivial adaptation, in which case violations of expected utility are implied. Section 6.4 provides an example of such a pattern based on the experimental findings of Abdellaoui et al. (2011).
+\end{original}
+\begin{translation}
+我们在第4节和第5节中观察到，我们的适应性偏好模型在风险背景下将等级依赖效用和散度偏好作为特例嵌套在内，在模糊背景下将平滑模型的一个版本作为特例嵌套在内。在本节中，我们将分析扩展到同时包含模糊厌恶和风险的非期望效用的表征特例。同时考虑这两者的一个动机是经验上观察到的模糊厌恶与独立性公理违反之间的相关性（Dean和Ortoleva（2019））。这种一般性的另一个动机是，在我们的适应性偏好模型中，存在一些对模糊的态度与单一适应性函数$\mathcal{U} = \{u\}$不兼容，但可以通过非平凡的适应来容纳，在这种情况下隐含了对期望效用的违反。第6.4节基于Abdellaoui等人（2011）的实验发现提供了一个此类模式的例子。
+\end{translation}
+
+\begin{original}
+An impediment to the analysis of special cases of our general representation in Equation (2) is that it has a logarithm between the two layers of integration. For example, our results for rank-dependent utility and divergence preferences in the previous section assumed that there was no common uncertainty, and it is not immediately obvious how those results might be extended to the general case of both common and idiosyncratic uncertainty. The main result of this section, Theorem 2, is a duality result that recasts our representation in a form that facilitates the analysis of these and other special cases. We then study several special cases in detail in Sections 6.1 and 6.2, and we briefly discuss comparative statics that link risk and uncertainty aversion across some of those special cases in Section 6.3.
+\end{original}
+\begin{translation}
+分析我们方程（2）中一般表征的特例的一个障碍是，它在两层积分之间有一个对数。例如，我们在前一节中对等级依赖效用和散度偏好的结果假设没有共同不确定性，而如何将这些结果扩展到既有共同不确定性又有个体特异性不确定性的一般情形并不是显然的。本节的主要结果——定理2——是一个对偶结果，它将我们的表征重新表述为一种便于分析这些和其他特例的形式。然后，我们在第6.1节和第6.2节详细研究几个特例，并在第6.3节简要讨论了一些特例中联系风险厌恶和不确定性厌恶的比较静态。
+\end{translation}
+
+\begin{original}
+Our results will involve the relative entropy of one probability measure with respect to another, as defined in Equation (6). In what follows, for any probability measure $\mu \in \Delta(\Theta)$, let
+\[
+\Delta_\mu(\Theta) = \{ \nu \in \Delta(\Theta) : \nu \ll \mu \text{ and } D_{KL}(\nu\|\mu) < \infty \}.
+\]
+In particular, since $D_{KL}(\nu\|\mu) < \infty$ requires that $\mu \ll \nu$, if $\nu \in \Delta_\mu(\Theta)$ then the measures $\mu$ and $\nu$ are mutually absolutely continuous, that is, both $\nu \ll \mu$ and $\mu \ll \nu$. When necessary to avoid confusion, we will denote the marginal distribution of $\mu$ on $\Theta$ by $\mu_\Theta$.
+\end{original}
+\begin{translation}
+我们的结果将涉及一个概率测度关于另一个概率测度的相对熵，如方程（6）所定义。在下文中，对于任意概率测度$\mu \in \Delta(\Theta)$，令
+\[
+\Delta_\mu(\Theta) = \{ \nu \in \Delta(\Theta) : \nu \ll \mu \text{ 且 } D_{KL}(\nu\|\mu) < \infty \}.
+\]
+特别是，由于$D_{KL}(\nu\|\mu) < \infty$要求$\mu \ll \nu$，若$\nu \in \Delta_\mu(\Theta)$则测度$\mu$和$\nu$是相互绝对连续的，即既有$\nu \ll \mu$又有$\mu \ll \nu$。当为避免混淆而必要时，我们将以$\mu_\Theta$表示$\mu$在$\Theta$上的边缘分布。
+\end{translation}
+
+\begin{theorem}[Theorem 2]
+Suppose $\mathcal{U}$ satisfies Assumption 1, and fix $\mu \in \Delta(\Theta \times \Omega)$. For any random action plan $\pi \in \Delta^s(\mathcal{F})$, the function $\Gamma$ defined by Equation (2) can be equivalently expressed as
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \sup_{u \in \mathcal{U}} \left( \int_\Omega u(f(\theta, \omega)) \mu(d\omega|\theta) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+\end{theorem}
+\begin{translation}
+\textbf{定理2}。假设$\mathcal{U}$满足假设1，并固定$\mu \in \Delta(\Theta \times \Omega)$。对于任意随机行动计划$\pi \in \Delta^s(\mathcal{F})$，由方程（2）定义的函数$\Gamma$可以等价地表示为
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \sup_{u \in \mathcal{U}} \left( \int_\Omega u(f(\theta, \omega)) \mu(d\omega|\theta) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+\end{translation}
+
+\begin{original}
+For intuition, we highlight the key steps in the proof: First, using duality techniques related to those employed in the literature on large deviations in statistics (cf. Dupuis and Ellis (1997)), we show that Equation (2) can be equivalently expressed as
+\[
+\Gamma(\pi) = \sup_{\phi: \mathcal{F} \to \Delta^s(\mathcal{U})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+This expression is not yet amenable to analysis, as we would like to reverse the order of the supremum and infimum in order to further simplify it and connect with existing functional forms. The next step in the proof is to do just that by leveraging a particular version of the von Neumann-Sion minimax theorem (von Neumann (1928), Sion (1958)) that is due to Tuy (2004). Then, after we switch the order of the supremum and infimum, the supremum over $\phi$ applies to the expression inside the logarithm, which is linear in $\phi$. Therefore, optimization over adaptation plans $\phi$ can be reduced to the deterministic selection of a fitness function $u$ following every act $f$ that realizes under $\pi$, giving Equation (7). This final observation will greatly simplify the analysis of the model since it eliminates randomization over $\mathcal{U}$ from the formula for long-run growth rates.
+\end{original}
+\begin{translation}
+为直观说明，我们重点介绍证明中的关键步骤：首先，利用与统计中大偏差文献（参见Dupuis和Ellis（1997））相关的对偶技术，我们表明方程（2）可以等价地表示为
+\[
+\Gamma(\pi) = \sup_{\phi: \mathcal{F} \to \Delta^s(\mathcal{U})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+这一表达式尚不便于分析，因为我们希望调换上确界和下确界的顺序，以进一步简化它并与现有的函数形式联系起来。证明中的下一步通过利用von Neumann-Sion极小极大定理的一个特定版本（von Neumann（1928），Sion（1958））——该版本由Tuy（2004）给出——来实现这一点。然后，在调换上确界和下确界的顺序之后，关于$\phi$的上确界适用于对数内部的表达式，而该表达式在$\phi$中是线性的。因此，关于适应计划$\phi$的优化可以简化为在$\pi$下实现的每个行动$f$之后对适应性函数$u$的确定性选择，从而得到方程（7）。这一最终观察将大大简化模型的分析，因为它从长期增长率的公式中消除了关于$\mathcal{U}$的随机化。
+\end{translation}
+
+\begin{original}
+Despite the resemblance, the functional in Equation (7) with a single fitness function $\mathcal{U} = \{u\}$ is not a variational representation (Maccheroni et al. (2006)). The distinction is the logarithm around the integral in the first term. In fact, in the case of a single fitness function, taking the exponential transformation of the representation in Equation (7) establishes it as a special case of the confidence preferences studied by Chateauneuf and Faro (2009), where confidence in a prior $\mu$ is measured by $\exp(-D_{KL}(\nu\|\mu))$. More generally, this no-adaptation case is also nested by the general representation for uncertainty-averse preferences proposed by Cerreia-Vioglio et al. (2011).
+\end{original}
+\begin{translation}
+尽管相似，具有单一适应性函数$\mathcal{U} = \{u\}$的方程（7）中的泛函并不是一个变分表征（Maccheroni等人（2006））。区别在于第一项中围绕积分的对数。事实上，在单一适应性函数的情况下，对方程（7）中的表征取指数变换，可以将其确立为Chateauneuf和Faro（2009）研究的置信偏好的一个特例，其中对先验$\mu$的置信度由$\exp(-D_{KL}(\nu\|\mu))$来衡量。更一般地，这一无适应的情况也被Cerreia-Vioglio等人（2011）提出的不确定性厌恶偏好的一般表征所嵌套。
+\end{translation}
+
+\begin{original}
+Turning to the specifics of our functional form, relative entropy has appeared in a number of representations for ambiguity-averse preferences, perhaps most notably in the multiplier preferences introduced by Hansen and Sargent (2001) and studied axiomatically by Strzalecki (2011), and also within a version of confidence preferences in Chateauneuf and Faro (2012). However, in these models, the entropy term is added (with a negative sign) rather than being within the confidence term. While relative entropy is often interpreted as a ``distance'' between the two distributions involved, it is not a distance function in the metric sense, because it is not symmetric.
+
+To interpret the subtle difference in the context of the representation in Equation (7), suppose the decision-maker takes as the reference measure $\mu$ the empirical frequencies in a large sample of independently realized states $\omega \in \Omega$, but worries that the data is actually generated by the measure $\nu$ on $\Theta$. Of course, the larger the sample, the closer to zero the probability that it would be generated by $\nu \neq \mu$. The theory of large deviations establishes that the rate at which this probability vanishes increases in $D_{KL}(\nu\|\mu)$ (see, e.g., Cover and Thomas (2006, Section 11.4)). The representation suggests, therefore, that the decision-maker is less confident in a measure $\nu$ the faster it becomes implausible with growing sample size.
+\end{original}
+\begin{translation}
+转向我们函数形式的具体细节，相对熵已出现在许多模糊厌恶偏好的表征中，也许最显著的是在Hansen和Sargent（2001）引入并由Strzalecki（2011）公理化研究的乘数偏好中，以及Chateauneuf和Faro（2012）的置信偏好的一个版本中。然而，在这些模型中，熵项是（以负号）加上去的，而不是在置信项之内。虽然相对熵通常被解释为所涉及的两个分布之间的"距离"，但它在度量意义上并不是一个距离函数，因为它不是对称的。
+
+为了在方程（7）的表征背景下解释这种微妙差异，假设决策者以独立实现状态$\omega \in \Omega$的大样本中的经验频率作为参考测度$\mu$，但担心数据实际上是由$\Theta$上的测度$\nu$生成的。当然，样本越大，它由$\nu \neq \mu$生成的概率越接近于零。大偏差理论表明，这一概率消失的速率随$D_{KL}(\nu\|\mu)$增加而增加（参见，例如，Cover和Thomas（2006，第11.4节））。因此，该表征暗示，一个测度$\nu$随着样本量的增长而变得不可信的速度越快，决策者对该测度的置信度就越低。
+\end{translation}
+
+\begin{original}
+In order to describe the special cases of the next two subsections, it will be convenient to define a measure $\bar{\mu}$ on $\Theta \times \Omega$ with marginal $\nu$ on $\Theta$ and conditional distribution $\mu(\cdot|\theta)$ on $\Omega$. That is, for any event $E$ in the product $\sigma$-algebra $\mathcal{B}_\Theta \otimes \mathcal{B}_\Omega$, let
+\[
+\bar{\mu}(E) = \int_\Theta \mu(\{(\theta, \omega) \in E\} | \theta) \nu(d\theta).
+\]
+With this definition in hand, Equation (7) can be written as
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{u \in \mathcal{U}} \int_{\Theta \times \Omega} u(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+\end{original}
+\begin{translation}
+为了描述接下来两个小节的特殊情况，定义一个在$\Theta \times \Omega$上的测度$\bar{\mu}$是方便的，其在$\Theta$上具有边缘$\nu$，在$\Omega$上具有条件分布$\mu(\cdot|\theta)$。即，对于乘积$\sigma$-代数$\mathcal{B}_\Theta \otimes \mathcal{B}_\Omega$中的任意事件$E$，令
+\[
+\bar{\mu}(E) = \int_\Theta \mu(\{(\theta, \omega) \in E\} | \theta) \nu(d\theta).
+\]
+有了这一定义，方程（7）可以写为
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{u \in \mathcal{U}} \int_{\Theta \times \Omega} u(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+\end{translation}
+
+% ============================================================
+\subsection{Nesting Rank-Dependent Utility / 嵌套等级依赖效用}
+
+\begin{original}
+Proposition 1 linked our adaptive model to RDU preferences in the special case of no common uncertainty ($\Theta = \{\theta\}$), in which case the state space was effectively $\Omega$. The next corollary follows directly from that result by taking the state space to be $\Theta \times \Omega$ and the measure to be $\bar{\mu} = \nu \otimes \mu(\cdot|\theta)$ (on $\Theta \times \Omega$). Note that this application is only possible because we first apply Theorem 2 to remove the logarithm from between the two layers of integration.
+\end{original}
+\begin{translation}
+命题1在没有共同不确定性（$\Theta = \{\theta\}$）的特例中将我们的适应性模型与RDU偏好联系起来，在这种情况下状态空间实际上是$\Omega$。下一个推论直接从该结果得出，只需取状态空间为$\Theta \times \Omega$，测度为$\bar{\mu} = \nu \otimes \mu(\cdot|\theta)$（在$\Theta \times \Omega$上）。注意，这一应用之所以可能，是因为我们首先应用定理2去掉了两层积分之间的对数。
+\end{translation}
+
+\begin{corollary}[Corollary 3]
+Suppose $C \subseteq \mathbb{R}$. Fix any bounded nondecreasing function $v: C \to \mathbb{R}$ and any function $\varphi: [0, 1] \to [0, 1]$ that is nondecreasing, concave, and onto. Then, there exists a set $\mathcal{U}$ of functions $u: C \to \mathbb{R}$ satisfying Assumption 1 such that for any $\mu \in \Delta(\Theta \times \Omega)$, the function $\Gamma$ defined by Equation (2) can be equivalently expressed as
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\mathbb{R} v(x) \varphi(F_{\pi,\bar{\mu}}(x)) dx \right) + D_{KL}(\nu\|\mu_\Theta) \right],
+\]
+where
+\[
+F_{\pi,\bar{\mu}}(x) = \bar{\mu}(\{(\theta, \omega) \in \Theta \times \Omega : v(f(\theta, \omega)) \leq x\})
+\]
+is the cumulative distribution function of $v \circ f$ given $\bar{\mu}$.
+\end{corollary}
+\begin{translation}
+\textbf{推论3}。假设$C \subseteq \mathbb{R}$。固定任意有界非递减函数$v: C \to \mathbb{R}$和任意非递减、凹且映满的函数$\varphi: [0, 1] \to [0, 1]$。那么，存在一个满足假设1的函数$u: C \to \mathbb{R}$的集合$\mathcal{U}$，使得对于任意$\mu \in \Delta(\Theta \times \Omega)$，由方程（2）定义的函数$\Gamma$可以等价地表示为
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\mathbb{R} v(x) \varphi(F_{\pi,\bar{\mu}}(x)) dx \right) + D_{KL}(\nu\|\mu_\Theta) \right],
+\]
+其中
+\[
+F_{\pi,\bar{\mu}}(x) = \bar{\mu}(\{(\theta, \omega) \in \Theta \times \Omega : v(f(\theta, \omega)) \leq x\})
+\]
+是给定$\bar{\mu}$下$v \circ f$的累积分布函数。
+\end{translation}
+
+\begin{original}
+This representation illustrates the simplicity of analyzing the combination of ambiguity aversion, non-expected-utility risk preferences, and random choice when working with the dual formula in Equation (8) and its special cases. In this application, the RDU representation inside the logarithm generates aversion to any kind of uncertainty, while ambiguity aversion (roughly speaking, the additional aversion to uncertainty from $\Theta$) is captured by the outer part of the representation---the confidence preferences within which the RDU representation is embedded. The outer part is fixed across genotypes, even if those differ in terms of $\mathcal{U}$ and hence in terms of their attitudes towards risk. Random choice of acts is also easy to analyze in this representation, since the expectation with respect to $\pi$ appears inside the confidence preferences (reflecting the hedging benefits of randomization) but outside of the RDU formula.
+\end{original}
+\begin{translation}
+这一表征说明了在使用方程（8）中的对偶公式及其特例时，分析模糊厌恶、非期望效用风险偏好和随机选择的组合的简便性。在本应用中，对数内部的RDU表征产生对任何类型不确定性的厌恶，而模糊厌恶（粗略地说，来自$\Theta$的额外不确定性厌恶）则由表征的外部部分——RDU表征所嵌入于其中的置信偏好——来捕捉。外部部分在不同基因型之间是固定的，即使这些基因型在$\mathcal{U}$上不同从而在风险态度上不同。在这种表征中，行动的随机选择也很容易分析，因为关于$\pi$的期望出现在置信偏好内部（反映了随机化的对冲收益）但在RDU公式的外部。
+\end{translation}
+
+% ============================================================
+\subsection{Nesting Divergence Preferences / 嵌套散度偏好}
+
+\begin{original}
+Proposition 2 linked our adaptive model to a general class of divergence preferences in the special case of no common uncertainty ($\Theta = \{\theta\}$), in which case the state space was effectively $\Omega$. In parallel to our analysis of rank-dependent utility in the previous section, the next corollary follows directly from Proposition 2 by taking the state space to be $\Theta \times \Omega$ and the measure to be $\bar{\mu} = \nu \otimes \mu(\cdot|\theta)$ (on $\Theta \times \Omega$). Again, this application is only possible because of Theorem 2.
+\end{original}
+\begin{translation}
+命题2在没有共同不确定性（$\Theta = \{\theta\}$）的特例中将我们的适应性模型与一类一般的散度偏好联系起来，在这种情况下状态空间实际上是$\Omega$。与我们在前一节中对等级依赖效用的分析相平行，下一个推论直接从命题2得出，只需取状态空间为$\Theta \times \Omega$，测度为$\bar{\mu} = \nu \otimes \mu(\cdot|\theta)$（在$\Theta \times \Omega$上）。同样，这一应用之所以可能，只是因为定理2。
+\end{translation}
+
+\begin{corollary}[Corollary 4]
+Fix any $\psi$-divergence $D_\psi(\cdot\|\cdot)$, any function $v: C \to \mathbb{R}$, and any nondecreasing, convex, and lower semicontinuous function $\Phi: \mathbb{R}_+ \to [0, \infty]$ such that $\Phi(0) = 0$ and $\Phi$ is finite on some interval $[0, \varepsilon)$. Then, there exists a set $\mathcal{U}$ satisfying Assumption 1 such that for any $\mu \in \Delta(\Theta \times \Omega)$, the function $\Gamma$ in Equation (2) can be equivalently expressed as
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \inf_{Q \in \Delta(\Theta \times \Omega)} \left[ \int_{\Theta \times \Omega} v(f(\theta, \omega)) Q(d\theta, d\omega) + \Phi(D_\psi(Q\|\bar{\mu})) \right] \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+\end{corollary}
+\begin{translation}
+\textbf{推论4}。固定任意$\psi$-散度$D_\psi(\cdot\|\cdot)$、任意函数$v: C \to \mathbb{R}$，以及任意非递减、凸且下半连续的函数$\Phi: \mathbb{R}_+ \to [0, \infty]$，满足$\Phi(0) = 0$且$\Phi$在某个区间$[0, \varepsilon)$上有限。那么，存在一个满足假设1的集合$\mathcal{U}$，使得对于任意$\mu \in \Delta(\Theta \times \Omega)$，方程（2）中的函数$\Gamma$可以等价地表示为
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \inf_{Q \in \Delta(\Theta \times \Omega)} \left[ \int_{\Theta \times \Omega} v(f(\theta, \omega)) Q(d\theta, d\omega) + \Phi(D_\psi(Q\|\bar{\mu})) \right] \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+\end{translation}
+
+\begin{original}
+The representation in Corollary 4 can be further specialized by considering specific functional forms for $\Phi$, just as in Corollary 2 from Section 5.2. This value function embeds a general divergence representation inside confidence preferences. To see how it captures ambiguity aversion, note that the measure $\bar{\mu}$ ultimately used to evaluate an act may be more pessimistic than $\nu \otimes \mu(\cdot|\theta)$ on $\Theta \times \Omega$, which in turn may be more pessimistic than $\mu$ only on $\Theta$. Hence, compared to $\mu$, there is more ``opportunity'' for $\bar{\mu}$ to be pessimistic about $\Theta$ than about $\Omega$.
+\end{original}
+\begin{translation}
+推论4中的表征可以通过考虑$\Phi$的特定函数形式来进一步特化，正如第5.2节推论2中的做法。该值函数将一般的散度表征嵌入置信偏好之内。要理解它如何捕捉模糊厌恶，注意最终用于评估一个行动的测度$\bar{\mu}$在$\Theta \times \Omega$上可能比$\nu \otimes \mu(\cdot|\theta)$更加悲观，而后者反过来又可能仅在$\Theta$上比$\mu$更加悲观。因此，与$\mu$相比，$\bar{\mu}$对$\Theta$比对$\Omega$有更多的"机会"持悲观态度。
+\end{translation}
+
+% ============================================================
+\subsection{Comparative Statics / 比较静态}
+
+\begin{original}
+We briefly mention comparative statics that compare the behavior of individuals with different sets of fitness functions $\mathcal{U}$: Suppose that all conceivable genotypes perform equally well when facing deterministic outcomes (no uncertainty). In terms of the model of adaptive preferences, this means that the upper envelope of $\mathcal{U}$ is the same for all those genotypes. In this case, one can show that individual $A$ with adaptive preferences for $\mathcal{U}_A$ is more risk averse than an individual $B$ with $\mathcal{U}_B$ if and only if individual $A$ is also more uncertainty averse than $B$. For example, in the representations of Corollaries 3 and 4 the upper envelope of $\mathcal{U}$ is $v$, and hence holding $v$ fixed, individuals with either of these two types of preferences who can be ranked in terms of risk aversion will be ranked the same way in terms of overall uncertainty aversion.
+\end{original}
+\begin{translation}
+我们简要提及比较具有不同适应性函数集$\mathcal{U}$的个体行为的比较静态：假设所有可想象的基因型在面对确定性结果（没有不确定性）时表现同样好。就适应性偏好模型而言，这意味着$\mathcal{U}$的上包络对所有那些基因型是相同的。在这种情况下，可以表明，具有$\mathcal{U}_A$的适应性偏好的个体$A$比具有$\mathcal{U}_B$的个体$B$更具风险厌恶性，当且仅当个体$A$也比个体$B$更具不确定性厌恶性。例如，在推论3和4的表征中，$\mathcal{U}$的上包络是$v$，因此在固定$v$的情况下，具有这两种类型偏好中任何一种的个体，如果能按风险厌恶进行排序，则他们按总体不确定性厌恶的排序方式将相同。
+\end{translation}
+
+% ============================================================
+\subsection{Source Preferences / 来源偏好}
+
+\begin{original}
+Adaptive preferences imply that any ambiguity attitude that cannot be captured by the smooth model of ambiguity aversion in Equation (3) must go hand in hand with violations of expected utility. We illustrate this connection via the example of source preferences.
+
+Abdellaoui et al. (2011) compare behavior under known (risky) and unknown (ambiguous) sources of uncertainty. In their experiment, the known uncertainty comes from betting on the color of a ball drawn from an urn with eight balls of eight different colors. The unknown uncertainty comes from betting on the color of a ball drawn from an urn with eight balls with the same colors, but unknown composition in the sense that some colors might appear several times and others might be absent. Based on symmetry it is clear that each color should be considered equally likely even for the unknown urn (just as the two colors are usually revealed to be considered equally likely in the ambiguous two color Ellsberg urn), but nonetheless an ambiguity adverse decision maker would prefer to bet on the known urn.
+
+Abdellaoui et al. (2011) interpret their data through the lens of source functions $f_s$ and $f_r$, which are probability weighting functions for the known and unknown sources, respectively. That is, fixing outcomes $x > y$, the gamble that yields $x$ with probability $p$ and $y$ otherwise is evaluated as if the probability assigned to $x$ is $f(p)$ instead of $p$. For a representative subject, they find that for $p > 0.5$ the source function $f_s$ is systematically lower than $f_r$, while for small $p$ there is no significant difference. To be more specific, consider the function $g(p) = f_r^{-1}(f_s(p))$. While the experiment determines preferences via certainty equivalents, transitivity of preferences implies that the representative subject is indifferent between the gamble with unknown probability $p$ and the one with known probability $g(p)$, which we therefore call the risk equivalent of $p$, given $x$ and $y$. Their findings then imply that $g(0) = 0$ and $g(1) = 1$ and that $g(p)$ is continuous, strictly increasing but not convex everywhere, close to the identity function for small $p$, and below identity for larger $p$.
+\end{original}
+\begin{translation}
+适应性偏好意味着，任何无法被方程（3）中的模糊厌恶平滑模型捕捉的模糊态度，必须与期望效用的违反相伴而生。我们通过来源偏好的例子来说明这一联系。
+
+Abdellaoui等人（2011）比较了在已知（有风险的）和未知（模糊的）不确定性来源下的行为。在他们的实验中，已知不确定性来自于对从装有八种不同颜色的八个球的瓮中抽取的球的颜色进行押注。未知不确定性来自于对从装有相同八种颜色但组成未知的八个球的瓮中抽取的球的颜色进行押注——未知组成的含义是某些颜色可能出现多次，而其他颜色可能不存在。基于对称性，显然即使是对于未知的瓮，每种颜色也应该被视为等可能的（正如在模糊的两色埃尔斯伯格瓮中，两种颜色通常被揭示为被视为等可能的），但尽管如此，一个模糊厌恶的决策者会更偏好押注于已知的瓮。
+
+Abdellaoui等人（2011）通过来源函数$f_s$和$f_r$的透镜来解释他们的数据，这两个函数分别是已知和未知来源的概率加权函数。即，固定结果$x > y$，以概率$p$产生$x$否则产生$y$的赌博被评估为好像分配给$x$的概率是$f(p)$而不是$p$。对于一个代表性被试，他们发现对于$p > 0.5$，来源函数$f_s$系统性地低于$f_r$，而对于较小的$p$，没有显著差异。更具体地说，考虑函数$g(p) = f_r^{-1}(f_s(p))$。虽然实验通过确定性等价物来确定偏好，但偏好的传递性意味着代表性被试在具有未知概率$p$的赌博与具有已知概率$g(p)$的赌博之间是无差异的，因此我们称后者为给定$x$和$y$下$p$的风险等价。他们的发现随即意味着$g(0) = 0$和$g(1) = 1$，且$g(p)$是连续的、严格递增的，但并非处处凸的，对于小的$p$接近恒等函数，对于较大的$p$低于恒等函数。
+\end{translation}
+
+\begin{original}
+Here, we will not attempt to calibrate our model of adaptive preferences to match their data. Our modest aim in this section is merely to demonstrate via the following two claims that (i) it cannot match the qualitative pattern of $g(p)$ just described if $\mathcal{U}$ is a singleton (no adaptation), but that (ii) it can match this pattern if $\mathcal{U}$ has two or more elements. To that end, let $g_\mathcal{U}(p)$ be the risk equivalent implied by our model for a particular $\mathcal{U}$.
+\end{original}
+\begin{translation}
+在此，我们不会试图校准我们的适应性偏好模型以匹配他们的数据。我们在本节中的谦逊目标仅仅是，通过以下两个断言来展示：(i) 如果$\mathcal{U}$是单点集（没有适应性），它不能匹配刚刚描述的$g(p)$的定性模式，但(ii) 如果$\mathcal{U}$有两个或更多元素，它可以匹配这一模式。为此，令$g_\mathcal{U}(p)$为我们的模型对于特定$\mathcal{U}$所隐含的风险等价。
+\end{translation}
+
+\begin{claim}[Claim 3]
+For any strictly increasing fitness function $u$, the risk equivalent $g_{\{u\}}(p)$ is continuous, strictly increasing and strictly convex in $p$, and satisfies $g_{\{u\}}(0) = 0$ and $g_{\{u\}}(1) = 1$. Furthermore, if $u_2(x) > u_1(x) > u_1(y) > u_2(y)$, then $g_{\{u_1\}}(p) > g_{\{u_2\}}(p)$ for all $p \in (0, 1)$.
+\end{claim}
+\begin{translation}
+\textbf{断言3}。对于任意严格递增的适应性函数$u$，风险等价$g_{\{u\}}(p)$在$p$中是连续的、严格递增且严格凸的，并满足$g_{\{u\}}(0) = 0$和$g_{\{u\}}(1) = 1$。此外，如果$u_2(x) > u_1(x) > u_1(y) > u_2(y)$，那么对于所有$p \in (0, 1)$，有$g_{\{u_1\}}(p) > g_{\{u_2\}}(p)$。
+\end{translation}
+
+\begin{claim}[Claim 4]
+If $u_2(x) > u_1(x) > u_1(y) > u_2(y)$, then there are $\bar{p} < \hat{p} \in (0, 1)$ such that $g_{\{u_1, u_2\}}(p) = g_{\{u_1\}}(p)$ for all $p \leq \bar{p}$, $g_{\{u_1, u_2\}}(p) = g_{\{u_2\}}(p)$ for all $p \geq \hat{p}$, and $g_{\{u_1, u_2\}}(p)$ is convex for all $p \in [0, 1]$.
+\end{claim}
+\begin{translation}
+\textbf{断言4}。如果$u_2(x) > u_1(x) > u_1(y) > u_2(y)$，那么存在$\bar{p} < \hat{p} \in (0, 1)$，使得对于所有$p \leq \bar{p}$，有$g_{\{u_1, u_2\}}(p) = g_{\{u_1\}}(p)$，对于所有$p \geq \hat{p}$，有$g_{\{u_1, u_2\}}(p) = g_{\{u_2\}}(p)$，且$g_{\{u_1, u_2\}}(p)$对于所有$p \in [0, 1]$是凸的。
+\end{translation}
+
+\begin{original}
+Obviously, the fact that $\mathcal{U}$ contains two elements that do not dominate each other immediately implies that preferences over gambles with known probabilities (risk) must violate expected utility. To continue the example in Fig. 3, suppose $\mathcal{U} = \{u_1, u_2\}$ where $u_1(x) = 0.5x + 2$ and $u_2(x) = x + 0.1$. Then it is easy to verify that for $y = 4$ and $x = 0$ the two fitness functions generate the values in the figure (rounded to the first decimal) and that for risky gambles the common ratio violation of expected utility proposed in Allais (1953) ensues: Getting $z = 3$ for sure is better than getting $y = 4$ with probability $p = 0.8$ and $x = 0$ otherwise, but getting $y = 4$ with probability $p = 0.2$ and $x = 0$ otherwise is better than getting $z = 3$ with probability $p = 0.25$ and $x = 0$ otherwise.
+\end{original}
+\begin{translation}
+显然，$\mathcal{U}$包含两个不相互支配的元素这一事实立即意味着对已知概率赌博（风险）的偏好必定违反期望效用。继续延续图3中的例子，假设$\mathcal{U} = \{u_1, u_2\}$，其中$u_1(x) = 0.5x + 2$，$u_2(x) = x + 0.1$。那么很容易验证，对于$y = 4$和$x = 0$，这两个适应性函数产生图中的数值（四舍五入到第一位小数），并且对于风险赌博，会出现阿莱（1953）提出的期望效用的共同比率违反：确定性地获得$z = 3$优于以概率$p = 0.8$获得$y = 4$否则获得$x = 0$，但以概率$p = 0.2$获得$y = 4$否则获得$x = 0$优于以概率$p = 0.25$获得$z = 3$否则获得$x = 0$。
+\end{translation}
+
+\newpage
+% ============================================================
+% 7. REALISM OF THE EVOLUTIONARY MODEL
+% ============================================================
+\section{Realism of the Evolutionary Model / 演化模型的现实性}
+
+\begin{original}
+To conclude, we discuss two assumptions that are implicit in our formulation of the evolutionary model and that are commonly made in economic contexts. Corollary 1 shows that the long-run growth rate is optimized by choosing the action plan $\pi \in \Delta^s(D)$ that maximizes $\Gamma$, assuming the decision problem $D$ is faced by the genotype repeatedly in every period. In fact, this assumption is unnecessarily strong and is made solely for ease of exposition. As can be seen in the proof of Theorem 1, aggregate fitness in each period affects the population size multiplicatively, which provides a degree of separability for choice problems that appear at different times. For example, if the genotype faces an infinite sequence of decision problems $(D_t)$, then attaining the highest possible long-run growth rate requires that individuals maximize adaptive preferences from any decision problem $D$ that repeats with fixed frequency within this sequence.
+
+Another assumption in our model is that time is divided into discrete time periods. Robatto and Szentes (2017) made the surprising observation that correlation aversion disappears in the continuous-time limit of this basic model. Further extending this line of research, Robson and Samuelson (2019) allowed fertility and mortality rates to vary with age in order to separate the assumption of continuous time from the assumption that new organisms can reproduce immediately after birth, and they found that correlation aversion can be recovered even in continuous time. Investigating the implications of different timing and age structures in our context of hidden actions and updating could be an interesting avenue for future research. In this paper, we stick to discrete time with age-independent fertility and mortality rates as is common in evolutionary models in economics.
+\end{original}
+\begin{translation}
+作为结论，我们讨论两个隐含在我们对演化模型的表述中且在经济背景下通常做出的假设。推论1表明，假设决策问题$D$在每一期被基因型重复面对，通过选择最大化$\Gamma$的行动计划$\pi \in \Delta^s(D)$来优化长期增长率。事实上，这一假设是不必要地强的，仅仅是为了阐述的方便。正如在定理1的证明中可以看到的，每期的总适应性以乘法方式影响群体规模，这为在不同时间出现的决策问题提供了某种程度的可分离性。例如，如果基因型面对一个无限的决策问题序列$(D_t)$，那么实现最高可能的长期增长率要求个体对该序列中以固定频率重复的任何决策问题$D$最大化适应性偏好。
+
+我们模型中的另一个假设是时间被划分为离散的时期。Robatto和Szentes（2017）做出了惊人的观察：在这个基本模型的连续时间极限中，相关性厌恶消失了。进一步扩展这一研究方向，Robson和Samuelson（2019）允许生育率和死亡率随年龄变化，以分离连续时间的假设与新生物体在出生后可以立即繁殖的假设，他们发现即使在连续时间中也可以恢复相关性厌恶。在我们隐藏行动和更新的背景下，调查不同时间结构和年龄结构的含义可能是未来研究的一个有趣方向。在本文中，我们坚持采用经济学演化模型中常见的离散时间和年龄独立的生育率和死亡率。
+\end{translation}
+
+\vspace{12pt}
+\noindent\textbf{Declaration of Competing Interest / 利益冲突声明}
+
+\begin{original}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+\end{original}
+\begin{translation}
+作者声明，他们没有已知的可能似乎会影响本文所报告工作的竞争性财务利益或个人关系。
+\end{translation}
+
+\vspace{12pt}
+\noindent\textbf{Data Availability / 数据可获得性}
+
+\begin{original}
+No data was used for the research described in the article.
+\end{original}
+\begin{translation}
+本文所述研究没有使用任何数据。
+\end{translation}
+\newpage
+% ============================================================
+% APPENDIX A: PROOFS
+% ============================================================
+\section*{Appendix A. Proofs / 附录A：证明}
+
+\subsection*{A.1. Proof of Lemma 1 / 引理1的证明}
+
+\begin{original}
+Note that
+\[
+\ln(\Phi_i(T)) = \ln(\Phi_i(0)) + \sum_{t=1}^T \ln(\rho_{i,t}),
+\]
+and therefore
+\[
+\ln\left( \frac{\Phi_B(T)}{\Phi_A(T)} \right) = \ln\left( \frac{\Phi_B(0)}{\Phi_A(0)} \right) + \sum_{t=1}^T \ln(\rho_{B,t}) - \sum_{t=1}^T \ln(\rho_{A,t}).
+\]
+
+Since $\gamma_A$ and $\gamma_B$ are the long-run growth rates of these two genotypes, we have
+\[
+\frac{1}{T} \left[ \sum_{t=1}^T \ln(\rho_{B,t}) - \sum_{t=1}^T \ln(\rho_{A,t}) \right] \to \gamma_B - \gamma_A \quad \text{a.s.}
+\]
+
+Since $\gamma_A - \gamma_B > 0$, this implies
+\[
+\ln\left( \frac{\Phi_B(T)}{\Phi_A(T)} \right) \to -\infty \quad \text{a.s.}
+\]
+
+Therefore, $\frac{\Phi_B(T)}{\Phi_A(T)} \to 0$ almost surely as $T \to \infty$. This completes the proof.
+\end{original}
+\begin{translation}
+注意到
+\[
+\ln(\Phi_i(T)) = \ln(\Phi_i(0)) + \sum_{t=1}^T \ln(\rho_{i,t}),
+\]
+因此
+\[
+\ln\left( \frac{\Phi_B(T)}{\Phi_A(T)} \right) = \ln\left( \frac{\Phi_B(0)}{\Phi_A(0)} \right) + \sum_{t=1}^T \ln(\rho_{B,t}) - \sum_{t=1}^T \ln(\rho_{A,t}).
+\]
+
+由于$\gamma_A$和$\gamma_B$是这两个基因型的长期增长率，我们有
+\[
+\frac{1}{T} \left[ \sum_{t=1}^T \ln(\rho_{B,t}) - \sum_{t=1}^T \ln(\rho_{A,t}) \right] \to \gamma_B - \gamma_A \quad \text{a.s.}
+\]
+
+由于$\gamma_A - \gamma_B > 0$，这意味着
+\[
+\ln\left( \frac{\Phi_B(T)}{\Phi_A(T)} \right) \to -\infty \quad \text{a.s.}
+\]
+
+因此，当$T \to \infty$时，$\frac{\Phi_B(T)}{\Phi_A(T)} \to 0$几乎必然成立。证毕。
+\end{translation}
+
+% ============================================================
+\subsection*{A.2. Proof of Proposition 1 / 命题1的证明}
+
+\begin{original}
+Since $v$ is bounded, there exist $a, b \in \mathbb{R}$ such that $v(c) \in [a, b]$. The following two lemmas provide key steps in our construction.
+
+\textbf{Lemma 2.} Suppose $\varphi: [0, 1] \to [0, 1]$ is nondecreasing, concave, and onto. Define a function $I: \Delta([a, b]) \to \mathbb{R}$ by
+\[
+I(\mu) = \int_{\mathbb{R}} \varphi(F_\mu(x)) dx,
+\]
+where $F_\mu(x) = \mu([a, x])$ is the cumulative distribution function for the measure $\mu$. Then, there exists a set $G$ of nondecreasing and concave continuous functions $g: [a, b] \to \mathbb{R}$ such that
+\[
+I(\mu) = \sup_{g \in G} \int_{[a,b]} g(x) \mu(dx).
+\]
+
+\textit{Proof.} It can be shown that $I$ is convex using similar arguments to those in Section S.2.1 of the Supplementary Material of Sarver (2018) (alternatively, see Wakker (1994) or Chatterjee and Krishna (2011)). It is also not difficult to show that $I$ is continuous in the topology of weak convergence. Finally, since $\varphi$ is concave, the function $I$ respects second-order stochastic dominance by Theorem 2 in Yaari (1987). In light of these conditions, we can apply Proposition 1 from Sarver (2018) to obtain a set $G$ with the claimed properties. $\square$
+
+\textbf{Lemma 3.} Fix a set $\mathcal{U}$ of functions $u: C \to [-\infty, \infty)$ that is pointwise bounded above. Then, for any $\mu \in \Delta(\Omega)$ and any simple act $f \in \mathcal{F}$,
+\[
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \sup_{u \in \operatorname{cl}(\mathcal{U})} \int_\Omega u(f(\omega)) \mu(d\omega),
+\]
+where the closure is taken with respect to the product topology (i.e., the topology of pointwise convergence) on $[-\infty, \infty]^C$.
+
+The proof of Lemma 3 proceeds by noting that since $f$ is a simple act, the integral depends on $u$ only through its values on a finite set, and convergence in the product topology preserves these values.
+
+\textbf{Proof of Proposition 1.} Take $G$ as in Lemma 2 for the function $\varphi$, and let $\mathcal{U} = \{ g \circ v : g \in G \}$. Fix any $\mu \in \Delta(\Omega)$ and any simple act $f \in \mathcal{F}$, and let $\mu_{v\circ f}$ be the distribution of utility values induced by $f$, $v$, and $\mu$. Formally,
+\[
+\mu_{v\circ f} = \mu \circ (v \circ f)^{-1} \in \Delta([a, b]).
+\]
+Then, we have
+\begin{align*}
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) &= \sup_{g \in G} \int_\Omega g(v(f(\omega))) \mu(d\omega) \\
+&= \sup_{g \in G} \int_{[a,b]} g(x) \mu_{v\circ f}(dx) \quad \text{(change of variables)} \\
+&= I(\mu_{v\circ f}) \quad \text{(Lemma 2)} \\
+&= \int_{\mathbb{R}} \varphi(F_{\mu_{v\circ f}}(x)) dx \\
+&= \int_{\mathbb{R}} v(x) \varphi(F_{f,\mu}(x)) dx.
+\end{align*}
+
+The last equality is essentially another application of the change of variables formula. One needs to show that if $\mu_{v\circ f}$ is the probability measure over utility values with cumulative distribution function $F_{\mu_{v\circ f}}$ and if $\mu$ is the probability measure over outcomes in $\Omega$ with cumulative distribution function $F_{f,\mu}$, then $\mu_{v\circ f} = \mu \circ v^{-1}$. This holds whenever $v$ is nondecreasing.
+
+Note that since $I(\delta_x) = x$ when $\mu(\{x\}) = 1$, we must have $g(x) \leq x$ for all $x \in [a, b]$ and $g \in G$. Now, for any $c \in C$ there exists $x \in [a,b]$ such that $v(c) = x$. Thus, $u(c) = g(v(c)) \leq v(c)$ for all $c \in C$, so the set $\mathcal{U}$ is bounded above. Moreover, taking the closure of $\mathcal{U}$ does not alter the values in the equality above by Lemma 3, so we can assume that $\mathcal{U}$ is closed without loss of generality. $\square$
+\end{original}
+\begin{translation}
+由于$v$是有界的，存在$a, b \in \mathbb{R}$使得$v(c) \in [a, b]$。以下两个引理提供了我们构造中的关键步骤。
+
+\textbf{引理2.} 假设$\varphi: [0, 1] \to [0, 1]$是非递减的、凹的且映满的。定义一个函数$I: \Delta([a, b]) \to \mathbb{R}$为
+\[
+I(\mu) = \int_{\mathbb{R}} \varphi(F_\mu(x)) dx,
+\]
+其中$F_\mu(x) = \mu([a, x])$是测度$\mu$的累积分布函数。那么，存在一个非递减且凹的连续函数$g: [a, b] \to \mathbb{R}$的集合$G$，使得
+\[
+I(\mu) = \sup_{g \in G} \int_{[a,b]} g(x) \mu(dx).
+\]
+
+\textit{证明。} 可以使用类似于Sarver（2018）补充材料第S.2.1节中的论证来证明$I$是凸的（另见Wakker（1994）或Chatterjee和Krishna（2011））。也不难证明$I$在弱收敛拓扑下是连续的。最后，由于$\varphi$是凹的，根据Yaari（1987）的定理2，函数$I$尊重二阶随机占优。鉴于这些条件，我们可以应用Sarver（2018）的命题1获得一个具有所声称性质的集合$G$。$\square$
+
+\textbf{引理3.} 固定一个逐点上有界的函数$u: C \to [-\infty, \infty)$的集合$\mathcal{U}$。那么，对于任意$\mu \in \Delta(\Omega)$和任意简单行动$f \in \mathcal{F}$，
+\[
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \sup_{u \in \operatorname{cl}(\mathcal{U})} \int_\Omega u(f(\omega)) \mu(d\omega),
+\]
+其中闭包是关于$[-\infty, \infty]^C$上的乘积拓扑（即逐点收敛拓扑）取的。
+
+引理3的证明通过注意到由于$f$是简单行动，积分仅通过$u$在有限集合上的值依赖于$u$，而乘积拓扑中的收敛保持这些值。
+
+\textbf{命题1的证明。} 取引理2中针对函数$\varphi$的$G$，并令$\mathcal{U} = \{ g \circ v : g \in G \}$。固定任意$\mu \in \Delta(\Omega)$和任意简单行动$f \in \mathcal{F}$，令$\mu_{v\circ f}$为$f$、$v$和$\mu$诱导的效用值分布。正式地，
+\[
+\mu_{v\circ f} = \mu \circ (v \circ f)^{-1} \in \Delta([a, b]).
+\]
+那么，我们有
+\begin{align*}
+\sup_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) &= \sup_{g \in G} \int_\Omega g(v(f(\omega))) \mu(d\omega) \\
+&= \sup_{g \in G} \int_{[a,b]} g(x) \mu_{v\circ f}(dx) \quad \text{（变量替换）} \\
+&= I(\mu_{v\circ f}) \quad \text{（引理2）} \\
+&= \int_{\mathbb{R}} \varphi(F_{\mu_{v\circ f}}(x)) dx \\
+&= \int_{\mathbb{R}} v(x) \varphi(F_{f,\mu}(x)) dx.
+\end{align*}
+
+最后一个等式实质上是变量替换公式的又一次应用。需要证明的是，如果$\mu_{v\circ f}$是效用值上的概率测度，具有累积分布函数$F_{\mu_{v\circ f}}$，且如果$\mu$是$\Omega$上结果上的概率测度，具有累积分布函数$F_{f,\mu}$，那么$\mu_{v\circ f} = \mu \circ v^{-1}$。这在$v$是非递减时成立。
+
+注意，由于当$\mu(\{x\}) = 1$时$I(\delta_x) = x$，对于所有$x \in [a, b]$和$g \in G$必须有$g(x) \leq x$。现在，对于任意$c \in C$，存在$x \in [a,b]$使得$v(c) = x$。因此，对于所有$c \in C$有$u(c) = g(v(c)) \leq v(c)$，所以集合$\mathcal{U}$是上有界的。此外，根据引理3，取$\mathcal{U}$的闭包不会改变上述等式中的值，因此我们可以不失一般性地假设$\mathcal{U}$是闭的。$\square$
+\end{translation}
+
+% ============================================================
+\subsection*{A.3. Proof of Proposition 2 / 命题2的证明}
+
+\begin{original}
+Some basic definitions and results from functional analysis will be used frequently in this proof. If $X$ is a Banach space, we use $X^*$ to denote the space of all continuous linear functionals on $X$ (the norm dual of $X$). For $x \in X$ and $x^* \in X^*$, we use $\langle x, x^* \rangle$ to denote the duality pairing $x^*(x)$.
+
+Given a function $h: X \to (-\infty, \infty]$, the effective domain of $h$ is the set $\operatorname{dom}(h) = \{ x \in X : h(x) < \infty \}$. The function $h$ is proper if $\operatorname{dom}(h) \neq \emptyset$, that is, if it is not identically equal to $\infty$. The (Fenchel) conjugate of $h$ is the function $h^*: X^* \to [-\infty, \infty]$ defined by
+\[
+h^*(x^*) = \sup_{x \in X} [\langle x, x^* \rangle - h(x)].
+\]
+
+Note that if $h$ is proper, then $h^*(x^*) > -\infty$ for all $x^* \in X^*$. Finally, given a set $K \subseteq X$, we define $\delta_K$ by $\delta_K(x) = 0$ if $x \in K$ and $\delta_K(x) = \infty$ if $x \notin K$. This is the indicator function commonly used in functional analysis. Note that $\delta_K^*(x^*) = \sup_{x \in K} \langle x, x^* \rangle$.
+
+In this proof, we will work with the $L^1$ and $L^\infty$ spaces of functions. That is, given a probability space $(\Omega, \mathcal{F}, P)$, the space $L^1(\Omega, \mathcal{F}, P)$ is the set of all (equivalence classes of) integrable functions, and the space $L^\infty(\Omega, \mathcal{F}, P)$ is the set of all (equivalence classes of) essentially bounded functions. When the reference probability space is understood, we will sometimes denote these spaces simply as $L^1$ and $L^\infty$, respectively. It is a standard result that these are Banach spaces (when endowed with the $L^1$ and $L^\infty$ norms, respectively) and that $(L^1)^* = L^\infty$, with the duality pairing
+\[
+\langle f, g \rangle = \int_\Omega f(\omega) g(\omega) P(d\omega)
+\]
+for $f \in L^1$, $g \in L^\infty$.
+\end{original}
+\begin{translation}
+本证明中将频繁使用泛函分析中的一些基本定义和结果。如果$X$是一个Banach空间，我们用$X^*$表示$X$上所有连续线性泛函的空间（$X$的范数对偶）。对于$x \in X$和$x^* \in X^*$，我们用$\langle x, x^* \rangle$表示对偶配对$x^*(x)$。
+
+给定一个函数$h: X \to (-\infty, \infty]$，$h$的有效定义域是集合$\operatorname{dom}(h) = \{ x \in X : h(x) < \infty \}$。如果$\operatorname{dom}(h) \neq \emptyset$，即$h$不恒等于$\infty$，则函数$h$是适定的。$h$的（Fenchel）共轭是函数$h^*: X^* \to [-\infty, \infty]$，定义为
+\[
+h^*(x^*) = \sup_{x \in X} [\langle x, x^* \rangle - h(x)].
+\]
+
+注意，如果$h$是适定的，那么对于所有$x^* \in X^*$有$h^*(x^*) > -\infty$。最后，给定一个集合$K \subseteq X$，我们定义$\delta_K$为：若$x \in K$则$\delta_K(x) = 0$；若$x \notin K$则$\delta_K(x) = \infty$。这是泛函分析中常用的指示函数。注意$\delta_K^*(x^*) = \sup_{x \in K} \langle x, x^* \rangle$。
+
+在本证明中，我们将使用函数的$L^1$和$L^\infty$空间。即，给定一个概率空间$(\Omega, \mathcal{F}, P)$，空间$L^1(\Omega, \mathcal{F}, P)$是所有可积函数的（等价类的）集合，空间$L^\infty(\Omega, \mathcal{F}, P)$是所有本质上有限函数的（等价类的）集合。当参考概率空间是明确的时，我们有时将这些空间分别简称为$L^1$和$L^\infty$。这是一个标准结果：这些空间是Banach空间（分别赋予$L^1$和$L^\infty$范数），且$(L^1)^* = L^\infty$，对偶配对为
+\[
+\langle f, g \rangle = \int_\Omega f(\omega) g(\omega) P(d\omega)
+\]
+其中$f \in L^1$，$g \in L^\infty$。
+\end{translation}
+
+\begin{original}
+\textbf{Proposition 3.} Fix any probability space $(\Omega, \mathcal{F}, P)$. Let $D_\psi(\cdot\|P)$ be a $\psi$-divergence, and fix any nondecreasing, convex, and lower semicontinuous function $\Phi: \mathbb{R} \to (-\infty, \infty]$ such that $\Phi(0) = 0$ and $\Phi$ is finite on some interval $(-\infty, \varepsilon)$. Then, for any random variable $X \in L^\infty(\Omega, \mathcal{F}, P)$,
+\[
+\inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega X(\omega) Q(d\omega) + \Phi(D_\psi(Q\|P)) \right] = \max_{\alpha \geq 0} \max_{v \in \mathbb{R}} \int_\Omega u_{v,\alpha}(X(\omega)) P(d\omega),
+\]
+where $u_{v,\alpha}: \mathbb{R} \to [-\infty, \infty)$ is defined for $v \in \mathbb{R}$ and $\alpha \geq 0$ by
+\[
+u_{v,\alpha}(x) = \begin{cases}
+v - \alpha \psi^*\left( \frac{v - x}{\alpha} \right) - \Phi^*(\alpha) & \text{if } \alpha > 0 \\
+v + \inf(\operatorname{dom}(\psi)) (x - v) - \Phi^*(0) & \text{if } \alpha = 0 \text{ and } x < v \\
+v + \sup(\operatorname{dom}(\psi)) (x - v) - \Phi^*(0) & \text{if } \alpha = 0 \text{ and } x \geq v.
+\end{cases}
+\]
+
+Note that in Proposition 2, we took $\Phi$ to be a function from $\mathbb{R}_+$ to $[0, \infty]$; however, we can treat $\Phi$ as a nondecreasing, convex, and lower semicontinuous function from $\mathbb{R}$ into $[0, \infty]$ by taking $\Phi(x) = 0$ for $x < 0$. Similarly, our definition of a divergence requires $\psi$ to be a continuous convex function mapping from $\mathbb{R}_+$ to $\mathbb{R}_+$, but we can treat $\psi$ as lower semicontinuous convex function defined on all of $\mathbb{R}$ by taking $\psi(x) = \infty$ for $x < 0$.
+
+Proposition 2 then follows as a special case of Proposition 3 where the state space is $\Omega$, the probability measure is $P = \mu \in \Delta(\Omega)$, and $X$ is defined by $X(\omega) = v(f(\omega))$. Note that since $f$ is a simple act and $v$ is real-valued, $X$ is bounded. Take $\mathcal{U}$ to be the closure of the set $\{ u_{v,\alpha} : v \in \mathbb{R}, \alpha \geq 0 \}$, where the closure is taken with respect to the topology of pointwise convergence on the extended reals. Then, $\mathcal{U}$ satisfies Assumption 1 and the arguments above together with Lemma 3 (which allows us to take the closure) establish that the equality in the statement of the proposition holds.
+\end{original}
+\begin{translation}
+\textbf{命题3。} 固定任意概率空间$(\Omega, \mathcal{F}, P)$。令$D_\psi(\cdot\|P)$是一个$\psi$-散度，并固定任意非递减、凸且下半连续的函数$\Phi: \mathbb{R} \to (-\infty, \infty]$，满足$\Phi(0) = 0$且$\Phi$在某个区间$(-\infty, \varepsilon)$上有限。那么，对于任意随机变量$X \in L^\infty(\Omega, \mathcal{F}, P)$，
+\[
+\inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega X(\omega) Q(d\omega) + \Phi(D_\psi(Q\|P)) \right] = \max_{\alpha \geq 0} \max_{v \in \mathbb{R}} \int_\Omega u_{v,\alpha}(X(\omega)) P(d\omega),
+\]
+其中$u_{v,\alpha}: \mathbb{R} \to [-\infty, \infty)$对于$v \in \mathbb{R}$和$\alpha \geq 0$定义为
+\[
+u_{v,\alpha}(x) = \begin{cases}
+v - \alpha \psi^*\left( \frac{v - x}{\alpha} \right) - \Phi^*(\alpha) & \text{若 } \alpha > 0 \\
+v + \inf(\operatorname{dom}(\psi)) (x - v) - \Phi^*(0) & \text{若 } \alpha = 0 \text{ 且 } x < v \\
+v + \sup(\operatorname{dom}(\psi)) (x - v) - \Phi^*(0) & \text{若 } \alpha = 0 \text{ 且 } x \geq v.
+\end{cases}
+\]
+
+注意，在命题2中，我们将$\Phi$取为从$\mathbb{R}_+$到$[0, \infty]$的函数；然而，我们可以通过令$\Phi(x) = 0$（当$x < 0$时）将$\Phi$视为从$\mathbb{R}$到$[0, \infty]$的非递减、凸且下半连续函数。同样，我们对散度的定义要求$\psi$是从$\mathbb{R}_+$到$\mathbb{R}_+$的连续凸函数，但我们可以通过令$\psi(x) = \infty$（当$x < 0$时）将$\psi$视为定义在整个$\mathbb{R}$上的下半连续凸函数。
+
+命题2随即作为命题3的特例推出，其中状态空间为$\Omega$，概率测度为$P = \mu \in \Delta(\Omega)$，且$X$定义为$X(\omega) = v(f(\omega))$。注意，由于$f$是简单行动且$v$是实值的，$X$是有界的。取$\mathcal{U}$为集合$\{ u_{v,\alpha} : v \in \mathbb{R}, \alpha \geq 0 \}$的闭包，其中闭包是关于扩展实数上逐点收敛拓扑取的。那么，$\mathcal{U}$满足假设1，且上述论证与引理3（允许我们取闭包）相结合，确立了命题陈述中的等式成立。
+\end{translation}
+
+\begin{original}
+Therefore, all that remains is to prove Proposition 3. Our proof is based on three lemmas. The first two lemmas closely parallel the proof strategy used by Ben-Tal and Teboulle (2007, Theorem 4.2) who provide a similar result for the case when $\Phi(x) = x$, that is, when there is no transformation of the divergence term.
+
+\textbf{Lemma 4.} Fix any probability space $(\Omega, \mathcal{F}, P)$. Let $\Psi: L^1 \to (-\infty, \infty]$ be a convex and lower semicontinuous function, and suppose there exist $\delta < 1 < \eta$ such that $\delta \leq f(\omega) \leq \eta$ for all $\omega$ implies $\Psi(f) < \infty$. Then, for any $X \in L^\infty$,
+\[
+\inf_{\substack{f \in L^1 \\ \int f(\omega) P(d\omega) = 1}} \left[ \int_\Omega X(\omega) f(\omega) P(d\omega) + \Psi(f) \right] = \max_{\lambda \in \mathbb{R}} \left[ \lambda - \Psi^*( \lambda - X ) \right].
+\]
+
+The proof of Lemma 4 uses Lagrangian duality and a constraint qualification condition from Borwein and Lewis (1992).
+
+\textbf{Lemma 5.} Fix any probability space $(\Omega, \mathcal{F}, P)$, and fix any proper convex and lower semicontinuous function $\phi: \mathbb{R} \to (-\infty, \infty]$. Define a functional $\Psi: L^1 \to (-\infty, \infty]$ by $\Psi(f) = \int_\Omega \phi(f(\omega)) P(d\omega)$. Then, $\Psi$ is a proper convex and lower semicontinuous functional, and the Fenchel conjugate $\Psi^*: L^\infty \to (-\infty, \infty]$ of $\Psi$ is given by $\Psi^*(g) = \int_\Omega \phi^*(g(\omega)) P(d\omega)$ (see Rockafellar (1968)).
+
+\textbf{Lemma 6.} Fix any probability space $(\Omega, \mathcal{F}, P)$, and fix any convex and lower semicontinuous function $\psi: \mathbb{R}_+ \to [0, \infty]$ such that $\psi(1) = 0$ and there exists some $\delta < 1 < \eta$ such that $\psi$ is finite on the interval $[\delta, \eta]$. Also, fix any nondecreasing, convex, and lower semicontinuous function $\Phi: \mathbb{R} \to (-\infty, \infty]$ such that $\Phi$ is finite on some interval $(-\infty, \varepsilon)$. Define $\Psi_1: L^1 \to (-\infty, \infty]$ by $\Psi_1(f) = \int_\Omega \psi(f(\omega)) P(d\omega)$, and define $\Psi: L^1 \to (-\infty, \infty]$ by $\Psi = \Phi \circ \Psi_1$. Then, for any $g \in L^\infty$, the Fenchel conjugate of $\Psi$ satisfies a formula involving the minimum over $\alpha \geq 0$ of a combination of the conjugates of $\Phi$ and $\psi$.
+
+The proof of Lemma 6 appeals to Theorem 2 of Hiriart-Urruty (2006) for the conjugate of the composition of two convex functions.
+
+\textbf{Proof of Proposition 3.} Note that $D_\psi(Q\|P) = \infty$ whenever $Q$ is not absolutely continuous with respect to $P$. Thus, we can restrict attention to $Q \ll P$, and we can therefore express the divergence using Radon-Nikodym derivatives $f = \frac{dQ}{dP} \in L^1(\Omega, \mathcal{F}, P)$:
+\[
+\inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega X(\omega) Q(d\omega) + \Phi(D_\psi(Q\|P)) \right]
+= \inf_{\substack{f \in L^1 \\ \int f(\omega) P(d\omega) = 1}} \left[ \int_\Omega X(\omega) f(\omega) P(d\omega) + \Phi\left( \int_\Omega \psi(f(\omega)) P(d\omega) \right) \right].
+\]
+
+Note that for $f \in L^1$ to be a Radon-Nikodym derivative, we must have $\int f(\omega) P(d\omega) = 1$ and $f \geq 0$ a.s. The first constraint is stated explicitly in the equation above, and since $\psi(x) = \infty$ for $x < 0$, the second constraint becomes superfluous.
+
+Define $\Psi_1: L^1 \to (-\infty, \infty]$ by $\Psi_1(f) = \int_\Omega \psi(f(\omega)) P(d\omega)$, and define $\Psi: L^1 \to (-\infty, \infty]$ by $\Psi = \Phi \circ \Psi_1$. Note that $\Psi_1$ is convex and lower semicontinuous by Lemma 5, and therefore $\Psi$ is convex and lower semicontinuous given our assumptions on $\Phi$. We also assumed that there is an interval $(-\infty, \varepsilon)$ on which $\Phi$ is finite. Since $\psi: \mathbb{R}_+ \to [0, \infty]$ is convex and finite on some interval $[\delta, \eta]$ for $\delta < 1 < \eta$, it is necessarily continuous on $(\delta, \eta)$. Therefore, since $\psi(1) = 0$, there exists some $\delta' < 1 < \eta'$ such that $\delta' \leq f(\omega) \leq \eta'$ for all $\omega$ implies $0 \leq \Psi_1(f) < \infty$ and hence $\Psi(f) < \infty$. Therefore, we can apply Lemma 4 followed by Lemma 6 to obtain the desired result. $\square$
+\end{original}
+\begin{translation}
+因此，剩下要做的就是证明命题3。我们的证明基于三个引理。前两个引理与Ben-Tal和Teboulle（2007，定理4.2）使用的证明策略紧密平行，后者对$\Phi(x) = x$的情形（即没有散度项的变换时）提供了类似的结果。
+
+\textbf{引理4.} 固定任意概率空间$(\Omega, \mathcal{F}, P)$。令$\Psi: L^1 \to (-\infty, \infty]$是一个凸且下半连续的函数，并假设存在$\delta < 1 < \eta$使得对所有$\omega$有$\delta \leq f(\omega) \leq \eta$蕴含$\Psi(f) < \infty$。那么，对于任意$X \in L^\infty$，
+\[
+\inf_{\substack{f \in L^1 \\ \int f(\omega) P(d\omega) = 1}} \left[ \int_\Omega X(\omega) f(\omega) P(d\omega) + \Psi(f) \right] = \max_{\lambda \in \mathbb{R}} \left[ \lambda - \Psi^*( \lambda - X ) \right].
+\]
+
+引理4的证明使用拉格朗日对偶和Borwein与Lewis（1992）的约束资格条件。
+
+\textbf{引理5.} 固定任意概率空间$(\Omega, \mathcal{F}, P)$，并固定任意适定的凸且下半连续函数$\phi: \mathbb{R} \to (-\infty, \infty]$。定义一个泛函$\Psi: L^1 \to (-\infty, \infty]$为$\Psi(f) = \int_\Omega \phi(f(\omega)) P(d\omega)$。那么，$\Psi$是一个适定的凸且下半连续的泛函，且$\Psi$的Fenchel共轭$\Psi^*: L^\infty \to (-\infty, \infty]$由$\Psi^*(g) = \int_\Omega \phi^*(g(\omega)) P(d\omega)$给出（见Rockafellar（1968））。
+
+\textbf{引理6.} 固定任意概率空间$(\Omega, \mathcal{F}, P)$，并固定任意凸且下半连续的函数$\psi: \mathbb{R}_+ \to [0, \infty]$，满足$\psi(1) = 0$且存在某个$\delta < 1 < \eta$使得$\psi$在区间$[\delta, \eta]$上有限。同时，固定任意非递减、凸且下半连续的函数$\Phi: \mathbb{R} \to (-\infty, \infty]$，使得$\Phi$在某个区间$(-\infty, \varepsilon)$上有限。定义$\Psi_1: L^1 \to (-\infty, \infty]$为$\Psi_1(f) = \int_\Omega \psi(f(\omega)) P(d\omega)$，并定义$\Psi: L^1 \to (-\infty, \infty]$为$\Psi = \Phi \circ \Psi_1$。那么，对于任意$g \in L^\infty$，$\Psi$的Fenchel共轭满足一个涉及在$\alpha \geq 0$上取$\Phi$和$\psi$的共轭组合的最小值的公式。
+
+引理6的证明借助Hiriart-Urruty（2006）的定理2来处理两个凸函数复合的共轭。
+
+\textbf{命题3的证明。} 注意，每当$Q$不关于$P$绝对连续时，$D_\psi(Q\|P) = \infty$。因此，我们可以限制注意力于$Q \ll P$，并因此可以使用Radon-Nikodym导数$f = \frac{dQ}{dP} \in L^1(\Omega, \mathcal{F}, P)$来表达散度：
+\[
+\inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega X(\omega) Q(d\omega) + \Phi(D_\psi(Q\|P)) \right]
+= \inf_{\substack{f \in L^1 \\ \int f(\omega) P(d\omega) = 1}} \left[ \int_\Omega X(\omega) f(\omega) P(d\omega) + \Phi\left( \int_\Omega \psi(f(\omega)) P(d\omega) \right) \right].
+\]
+
+注意，要使$f \in L^1$成为Radon-Nikodym导数，我们必须有$\int f(\omega) P(d\omega) = 1$和$f \geq 0$ a.s.。第一个约束在上式中明确陈述，并且由于当$x < 0$时$\psi(x) = \infty$，第二个约束变成多余的。
+
+如前，定义$\Psi_1: L^1 \to (-\infty, \infty]$为$\Psi_1(f) = \int_\Omega \psi(f(\omega)) P(d\omega)$，并定义$\Psi: L^1 \to (-\infty, \infty]$为$\Psi = \Phi \circ \Psi_1$。根据引理5，$\Psi_1$是凸且下半连续的，因此给定我们对$\Phi$的假设，$\Psi$是凸且下半连续的。我们还假设存在一个区间$(-\infty, \varepsilon)$使得$\Phi$在其上有限。由于$\psi: \mathbb{R}_+ \to [0, \infty]$是凸的且在某个区间$[\delta, \eta]$上有限（其中$\delta < 1 < \eta$），它在$(\delta, \eta)$上必然是连续的。因此，由于$\psi(1) = 0$，存在某个$\delta' < 1 < \eta'$使得对所有$\omega$有$\delta' \leq f(\omega) \leq \eta'$蕴含$0 \leq \Psi_1(f) < \infty$从而$\Psi(f) < \infty$。因此，我们可以应用引理4，然后应用引理6来获得所需结果。$\square$
+\end{translation}
+% ============================================================
+\subsection*{A.4. Proof of Claim 2 / 断言2的证明}
+
+\begin{original}
+Define $\psi$ by $\psi(x) = x\ln(x) - x + 1$ for $x > 0$ and $\psi(0) = 1$, so that the $\psi$-divergence is precisely relative entropy: $D_\psi(Q\|P) = D_{KL}(Q\|P)$. It is standard that the Fenchel conjugate of $\psi$ is $\psi^*$ defined by $\psi^*(y) = e^y - 1$. Therefore, Proposition 3 gives the equality stated in Claim 2 for precisely the class of parameterized fitness functions defined in Example 3 when $\zeta(\eta) = \Phi^*(\eta)$. Note also that:
+
+1. If $\Phi(x) = 0$ for $x \leq \kappa$ and $\Phi(x) = \infty$ otherwise, then $\Phi^*(\eta) = \kappa\eta$ for all $\eta \geq 0$.
+2. If $\Phi(x) = \kappa x$ for all $x \geq 0$ (and $\Phi(x) = 0$ otherwise), then $\Phi^*(\eta) = 0$ if $0 \leq \eta \leq \kappa$ and $\Phi^*(\eta) = \infty$ if $\eta > \kappa$.
+\end{original}
+\begin{translation}
+定义$\psi$为$\psi(x) = x\ln(x) - x + 1$（当$x > 0$时）且$\psi(0) = 1$，使得$\psi$-散度恰好是相对熵：$D_\psi(Q\|P) = D_{KL}(Q\|P)$。标准的结果是，$\psi$的Fenchel共轭$\psi^*$由$\psi^*(y) = e^y - 1$定义。因此，命题3对于例3中定义的那类参数化适应性函数在$\zeta(\eta) = \Phi^*(\eta)$时给出了断言2中陈述的等式。另请注意：
+
+1. 若$\Phi(x) = 0$（当$x \leq \kappa$时）且$\Phi(x) = \infty$（否则），则对所有的$\eta \geq 0$有$\Phi^*(\eta) = \kappa\eta$。
+2. 若对所有的$x \geq 0$有$\Phi(x) = \kappa x$（且否则$\Phi(x) = 0$），则当$0 \leq \eta \leq \kappa$时$\Phi^*(\eta) = 0$，当$\eta > \kappa$时$\Phi^*(\eta) = \infty$。
+\end{translation}
+
+% ============================================================
+\subsection*{A.5. Proof of Theorem 2 / 定理2的证明}
+
+\begin{original}
+The following proposition will be central to our first step in the proof of Theorem 2.
+
+\textbf{Proposition 4.} Fix any measurable space $(X, \mathcal{F})$. Suppose $h: X \to [-\infty, \infty)$ is measurable and bounded above, and let $P \in \Delta(X)$. Then,
+\[
+\ln\left( \int_X h(x) P(dx) \right) = \inf_{Q \in \Delta_P(X)} \left[ \int_X \ln(h(x)) Q(dx) + D_{KL}(Q\|P) \right].
+\]
+In addition, if $h$ is bounded away from zero, that is, if $h(x) \geq \varepsilon > 0$ for all $x \in X$, then the infimum in Equation (12) is uniquely attained by the measure $Q_0$ with Radon-Nikodym derivative
+\[
+\frac{dQ_0}{dP}(x) = \frac{h(x)}{\int_X h(x') P(dx')}.
+\]
+
+Proposition 4 restricts to $Q \in \Delta_P(X)$, thereby ensuring that we do not encounter terms of the form $-\infty + \infty$. That is, while the first term inside the infimum in Equation (12) could take the value $-\infty$, the second term $D_{KL}(Q\|P)$ will necessarily be finite. Proposition 4 is based on dual formulas for relative entropy that are related to those commonly invoked in the theory of large deviations (e.g., Dupuis and Ellis (1997)), although the result itself is distinct from any known results of which we are aware. The complete proof of Proposition 4 is contained in Appendix A.7.
+\end{original}
+\begin{translation}
+以下命题将是我们证明定理2的第一步的核心。
+
+\textbf{命题4。} 固定任意可测空间$(X, \mathcal{F})$。假设$h: X \to [-\infty, \infty)$是可测且上有界的，并令$P \in \Delta(X)$。那么，
+\[
+\ln\left( \int_X h(x) P(dx) \right) = \inf_{Q \in \Delta_P(X)} \left[ \int_X \ln(h(x)) Q(dx) + D_{KL}(Q\|P) \right].
+\]
+此外，如果$h$是远离零的，即对所有$x \in X$有$h(x) \geq \varepsilon > 0$，那么方程（12）中的下确界由具有下述Radon-Nikodym导数的测度$Q_0$唯一取得：
+\[
+\frac{dQ_0}{dP}(x) = \frac{h(x)}{\int_X h(x') P(dx')}.
+\]
+
+命题4限制$Q \in \Delta_P(X)$，从而确保我们不会遇到$-\infty + \infty$形式的项。也就是说，虽然方程（12）中下确界内的第一项可能取$-\infty$值，但第二项$D_{KL}(Q\|P)$必然是有限的。命题4基于与大偏差理论（例如Dupuis和Ellis（1997））中常用的相对熵对偶公式，尽管该结果本身不同于我们所知的任何已知结果。命题4的完整证明包含在附录A.7中。
+\end{translation}
+
+\begin{original}
+Using Proposition 4, the following lemma provides the first step in our proof of Theorem 2.
+
+\textbf{Lemma 7.} Suppose $\mathcal{U}$ is a nonempty set of functions $u: C \to [-\infty, \infty)$ that is pointwise bounded above, and fix $\mu \in \Delta(\Theta \times \Omega)$. For any random action $\pi \in \Delta^s(\mathcal{F})$, the function $\Gamma$ defined by Equation (2) can be equivalently expressed as
+\[
+\Gamma(\pi) = \sup_{\phi: \mathcal{F} \to \Delta^s(\mathcal{U})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+
+\textit{Proof Sketch of Lemma 7.} For a given $\pi \in \Delta^s(\mathcal{F})$ and $\phi: \mathcal{F} \to \Delta^s(\mathcal{U})$, define $h: \Theta \to [-\infty, \infty)$ by $h(\theta) = \sum_{\mathcal{F}} \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \pi(f)$. To verify that $h$ is bounded above, recall that $\pi \in \Delta^s(\mathcal{F})$ has finite support and each $f \in \operatorname{supp}(\pi)$ is a simple act. This implies that only finitely many realizations of $f(\theta, \omega)$ occur with positive probability. Since the set $\mathcal{U}$ is pointwise bounded above, this implies that there exists $M \in \mathbb{R}$ such that $u(f(\theta, \omega)) \leq M$ for all $\theta \in \Theta$, $\omega \in \Omega$, $u \in \mathcal{U}$ and $f \in \operatorname{supp}(\pi)$. Therefore, $h(\theta) \leq M$ for all $\theta \in \Theta$. Applying Proposition 4 to this function yields the result. $\square$
+\end{original}
+\begin{translation}
+利用命题4，以下引理提供了我们证明定理2的第一步。
+
+\textbf{引理7。} 假设$\mathcal{U}$是函数$u: C \to [-\infty, \infty)$的一个非空集合，该集合是逐点上有界的，并固定$\mu \in \Delta(\Theta \times \Omega)$。对于任意随机行动$\pi \in \Delta^s(\mathcal{F})$，由方程（2）定义的函数$\Gamma$可以等价地表示为
+\[
+\Gamma(\pi) = \sup_{\phi: \mathcal{F} \to \Delta^s(\mathcal{U})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+
+\textit{引理7的证明概要。} 对于给定的$\pi \in \Delta^s(\mathcal{F})$和$\phi: \mathcal{F} \to \Delta^s(\mathcal{U})$，定义$h: \Theta \to [-\infty, \infty)$为$h(\theta) = \sum_{\mathcal{F}} \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \pi(f)$。要验证$h$是上有界的，回想$\pi \in \Delta^s(\mathcal{F})$具有有限支撑，且每个$f \in \operatorname{supp}(\pi)$是简单行动。这意味着仅有限多个$f(\theta, \omega)$的实现以正概率出现。由于集合$\mathcal{U}$是逐点上有界的，这意味着存在$M \in \mathbb{R}$使得对所有$\theta \in \Theta$、$\omega \in \Omega$、$u \in \mathcal{U}$和$f \in \operatorname{supp}(\pi)$有$u(f(\theta, \omega)) \leq M$。因此，对所有$\theta \in \Theta$有$h(\theta) \leq M$。将命题4应用于此函数即得结果。$\square$
+\end{translation}
+
+\begin{original}
+The next proposition will be central to the second step in the proof of Theorem 2.
+
+\textbf{Proposition 5.} Fix a measure $\mu \in \Delta(\Theta \times \Omega)$, and suppose $\mathcal{G}$ is a nonempty set of functions $g: \Theta \times \Omega \to [-\infty, \infty)$ with the following properties:
+
+1. \textit{Closedness:} When the set of extended reals $[-\infty, \infty]$ is endowed with its usual topology and $[-\infty, \infty]^{\Theta \times \Omega}$ is endowed with the product topology (i.e., the topology of pointwise convergence), $\mathcal{G}$ is a closed subset of this space.
+
+2. \textit{Finite measurability:} There exists a finite partition $\mathcal{A}_1, \dots, \mathcal{A}_n$ of $\Theta \times \Omega$ such that every $g \in \mathcal{G}$ is measurable with respect to $\mathcal{A}_1, \dots, \mathcal{A}_n$.
+
+3. \textit{Pointwise boundedness:} $\sup_{g \in \mathcal{G}} g(\theta, \omega) < \infty$ for every $(\theta, \omega) \in \Theta \times \Omega$.
+
+Then,
+\[
+\sup_{g \in \operatorname{co}(\mathcal{G})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right]
+\]
+\[
+= \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{g \in \mathcal{G}} \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+
+Proposition 5 is based on an application of an extension of the von Neumann-Sion Minimax Theorem due to Tuy (2004). Despite the reliance on these established tools and techniques, the complete proof of this proposition is quite involved and is contained in Appendix A.8.
+
+Proceeding with the proof of Theorem 2, fix any $\pi \in \Delta^s(\mathcal{F})$, and let $D = \operatorname{supp}(\pi)$. Since $\pi$ is a simple lottery over acts, $D$ is a finite set of acts. We will define $\mathcal{G}$ to be the set of individual expected fitness functions that are attainable given the fixed random choice of act under the random action $\pi$ together with some deterministic adaptation plan. That is, we are focusing for now on adaptations plans $\phi$ that place probability one on some fitness function $u \in \mathcal{U}$ following each $f \in D$.
+
+Formally, deterministic adaptation plans are denoted by $(u_f)_{f \in D} \in \mathcal{U}^D$, or $(u_f)$ for short. Define a mapping $\Psi: \mathcal{U}^D \to [-\infty, \infty]^{\Theta \times \Omega}$ by
+\[
+\Psi((u_f))(\theta, \omega) = \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f)
+\]
+for $(\theta, \omega) \in \Theta \times \Omega$. Define $\mathcal{G}$ to be the range of $\Psi$, that is,
+\[
+\mathcal{G} = \{ \Psi((u_f)) \in [-\infty, \infty]^{\Theta \times \Omega} : (u_f) \in \mathcal{U}^D \}.
+\]
+
+In other words, $\mathcal{G}$ is the set of all functions $g$ that take the form
+\[
+g(\theta, \omega) = \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f)
+\]
+for some deterministic adaptation plan $(u_f)$. Two key lemmas (Lemma 8 and Lemma 9, relegated to the Supplementary Appendix) show that taking the convex hull of $\mathcal{G}$ generates precisely the set of individual expected fitness functions that can be attained through random adaptation plans and that the set $\mathcal{G}$ is closed.
+
+We then verify that $\mathcal{G}$ satisfies the three conditions from Proposition 5:
+\begin{itemize}
+\item Lemma 9 already showed that this set is closed, which establishes the first condition.
+\item For finite measurability: since each $f \in D$ is a simple act and $D$ is finite, there exists a finite partition of $\Theta \times \Omega$ such that every act $f \in D$ is measurable with respect to it. Every function in $\mathcal{G}$ is then also measurable with respect to this partition.
+\item For pointwise boundedness: since $D$ is a finite set of simple acts, there is a finite set $C_0 \subseteq C$ such that $f(\theta, \omega) \in C_0$ for all $f \in D$ and $(\theta, \omega) \in \Theta \times \Omega$. Since $\mathcal{U}$ is pointwise bounded above, $\sup_{u \in \mathcal{U}} u(c) < \infty$ for all $c \in C_0$. Then, $\sup_{g \in \mathcal{G}} g(\theta, \omega) \leq \max_{c \in C_0} \sup_{u \in \mathcal{U}} u(c) < \infty$ for all $(\theta, \omega)$.
+\end{itemize}
+
+We are now ready to apply Lemma 7 and Proposition 5. Let $\Gamma$ be as defined in Equation (2). Then,
+\begin{align*}
+\Gamma(\pi) &= \sup_{\phi: \mathcal{F} \to \Delta^s(\mathcal{U})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right] \\
+&= \sup_{g \in \operatorname{co}(\mathcal{G})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right] \\
+&= \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{g \in \mathcal{G}} \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right] \\
+&= \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{(u_f) \in \mathcal{U}^D} \int_{\Theta \times \Omega} \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right],
+\end{align*}
+where the first equality follows from Lemma 7, the second from Lemma 8, the third from Proposition 5, and the fourth from the definition of $\mathcal{G}$.
+
+Simple manipulations of the term inside the logarithm yield
+\begin{align*}
+\sup_{(u_f) \in \mathcal{U}^D} \int_{\Theta \times \Omega} \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f) \bar{\mu}(d\theta, d\omega)
+&= \sup_{(u_f) \in \mathcal{U}^D} \sum_{f \in D} \left( \int_{\Theta \times \Omega} u_f(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) \pi(f) \\
+&= \sum_{f \in D} \left( \sup_{u \in \mathcal{U}} \int_{\Theta \times \Omega} u(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) \pi(f),
+\end{align*}
+and hence
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sum_{f \in D} \left( \sup_{u \in \mathcal{U}} \int_{\Theta \times \Omega} u(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) \pi(f) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+
+Since this is true for any $\pi \in \Delta^s(\mathcal{F})$, the proof is complete. $\square$
+\end{original}
+\begin{translation}
+下一个命题将是我们证明定理2的第二步的核心。
+
+\textbf{命题5。} 固定一个测度$\mu \in \Delta(\Theta \times \Omega)$，并假设$\mathcal{G}$是函数$g: \Theta \times \Omega \to [-\infty, \infty)$的一个非空集合，具有以下性质：
+
+1. \textit{闭性：}当扩展实数集$[-\infty, \infty]$被赋予其通常的拓扑，且$[-\infty, \infty]^{\Theta \times \Omega}$被赋予乘积拓扑（即逐点收敛拓扑）时，$\mathcal{G}$是该空间的一个闭子集。
+
+2. \textit{有限可测性：}存在$\Theta \times \Omega$的一个有限划分$\mathcal{A}_1, \dots, \mathcal{A}_n$，使得每个$g \in \mathcal{G}$关于该划分是可测的。
+
+3. \textit{逐点有界性：}对于每个$(\theta, \omega) \in \Theta \times \Omega$，有$\sup_{g \in \mathcal{G}} g(\theta, \omega) < \infty$。
+
+那么，
+\[
+\sup_{g \in \operatorname{co}(\mathcal{G})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right]
+\]
+\[
+= \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{g \in \mathcal{G}} \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+
+命题5基于Tuy（2004）给出的von Neumann-Sion极小极大定理的一个扩展的应用。尽管依赖于这些已确立的工具和技术，该命题的完整证明相当复杂，包含在附录A.8中。
+
+继续定理2的证明，固定任意$\pi \in \Delta^s(\mathcal{F})$，令$D = \operatorname{supp}(\pi)$。由于$\pi$是行动上的简单彩票，$D$是一个有限的行动集。我们将定义$\mathcal{G}$为在随机行动$\pi$下结合某个确定性适应计划的固定随机行动选择可达到的个体期望适应性函数集。也就是说，我们现在关注的是那些在每个$f \in D$之后对某个适应性函数$u \in \mathcal{U}$赋予概率1的适应计划$\phi$。
+
+正式地，确定性适应计划记为$(u_f)_{f \in D} \in \mathcal{U}^D$，或简记为$(u_f)$。定义一个映射$\Psi: \mathcal{U}^D \to [-\infty, \infty]^{\Theta \times \Omega}$为
+\[
+\Psi((u_f))(\theta, \omega) = \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f)
+\]
+其中$(\theta, \omega) \in \Theta \times \Omega$。定义$\mathcal{G}$为$\Psi$的值域，即
+\[
+\mathcal{G} = \{ \Psi((u_f)) \in [-\infty, \infty]^{\Theta \times \Omega} : (u_f) \in \mathcal{U}^D \}.
+\]
+
+换句话说，$\mathcal{G}$是对于某个确定性适应计划$(u_f)$具有如下形式的所有函数$g$的集合：
+\[
+g(\theta, \omega) = \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f).
+\]
+
+两个关键引理（引理8和引理9，归入补充附录）表明，取$\mathcal{G}$的凸包恰好生成可以通过随机适应计划获得的个体期望适应性函数集，且集合$\mathcal{G}$是闭的。
+
+然后我们验证$\mathcal{G}$满足命题5的三个条件：
+\begin{itemize}
+\item 引理9已经证明该集合是闭的，这确立了第一个条件。
+\item 对于有限可测性：由于每个$f \in D$是简单行动且$D$是有限的，存在$\Theta \times \Omega$的一个有限划分使得每个行动$f \in D$关于它是可测的。那么$\mathcal{G}$中的每个函数也关于该划分可测。
+\item 对于逐点有界性：由于$D$是一个有限的简单行动集，存在一个有限集$C_0 \subseteq C$使得对所有$f \in D$和$(\theta, \omega) \in \Theta \times \Omega$有$f(\theta, \omega) \in C_0$。由于$\mathcal{U}$是逐点上有界的，对所有$c \in C_0$有$\sup_{u \in \mathcal{U}} u(c) < \infty$。那么，对所有$(\theta, \omega)$有$\sup_{g \in \mathcal{G}} g(\theta, \omega) \leq \max_{c \in C_0} \sup_{u \in \mathcal{U}} u(c) < \infty$。
+\end{itemize}
+
+现在我们准备应用引理7和命题5。令$\Gamma$如方程（2）所定义。那么，
+\begin{align*}
+\Gamma(\pi) &= \sup_{\phi: \mathcal{F} \to \Delta^s(\mathcal{U})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_\Theta \left( \sum_{\mathcal{U}} u(f(\theta, \omega)) \phi(u|f) \right) \nu(d\theta) \right) + D_{KL}(\nu\|\mu_\Theta) \right] \\
+&= \sup_{g \in \operatorname{co}(\mathcal{G})} \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right] \\
+&= \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{g \in \mathcal{G}} \int_{\Theta \times \Omega} g(\theta, \omega) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right] \\
+&= \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sup_{(u_f) \in \mathcal{U}^D} \int_{\Theta \times \Omega} \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f) \bar{\mu}(d\theta, d\omega) \right) + D_{KL}(\nu\|\mu_\Theta) \right],
+\end{align*}
+其中第一个等式来自引理7，第二个来自引理8，第三个来自命题5，第四个来自$\mathcal{G}$的定义。
+
+对数内部项的简单代数操作产生
+\begin{align*}
+\sup_{(u_f) \in \mathcal{U}^D} \int_{\Theta \times \Omega} \sum_{f \in D} u_f(f(\theta, \omega)) \pi(f) \bar{\mu}(d\theta, d\omega)
+&= \sup_{(u_f) \in \mathcal{U}^D} \sum_{f \in D} \left( \int_{\Theta \times \Omega} u_f(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) \pi(f) \\
+&= \sum_{f \in D} \left( \sup_{u \in \mathcal{U}} \int_{\Theta \times \Omega} u(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) \pi(f),
+\end{align*}
+因此
+\[
+\Gamma(\pi) = \inf_{\nu \in \Delta_\mu(\Theta)} \left[ \ln\left( \sum_{f \in D} \left( \sup_{u \in \mathcal{U}} \int_{\Theta \times \Omega} u(f(\theta, \omega)) \bar{\mu}(d\theta, d\omega) \right) \pi(f) \right) + D_{KL}(\nu\|\mu_\Theta) \right].
+\]
+
+由于这对任意$\pi \in \Delta^s(\mathcal{F})$成立，证毕。$\square$
+\end{translation}
+
+% ============================================================
+\subsection*{A.6. Proofs of Claims 3 and 4 / 断言3和4的证明}
+
+\begin{original}
+\textbf{Proof of Claim 3.} Given $u$, let $a = u(x)$ and $b = u(y)$. Then $g_{\{u\}}(p)$ satisfies $\ln g_{\{u\}}(p) + (1 - g_{\{u\}}(p)) = p\ln(a) + (1-p)\ln(b)$ implying
+\[
+g_{\{u\}}(p) = \frac{a^{1-p} - b}{a - b}.
+\]
+Continuous differentiability of $g_{\{u\}}(p)$ is then immediate, and with $a > b$ it is straightforward to check that the first and second derivatives of $g_{\{u\}}(p)$ are positive, establishing that it is increasing and convex. Direct evaluation yields $g_{\{u\}}(0) = 0$ and $g_{\{u\}}(1) = 1$.
+
+Consider now $u_1$ and $u_2$ with $u_2(x) > u_1(x) > u_1(y) > u_2(y)$ as in the claim. To establish that $g_{\{u_1\}}(p) > g_{\{u_2\}}(p)$ for all $p \in (0, 1)$, it suffices to verify that for any strictly increasing $u$ with $a$ and $b$ as defined above and for all $p \in (0, 1)$, $\frac{\partial g_{\{u\}}(p)}{\partial a} < 0$ and $\frac{\partial g_{\{u\}}(p)}{\partial b} > 0$. Indeed, with some simple algebra,
+\[
+\frac{\partial g_{\{u\}}(p)}{\partial a} < 0 \iff a^{1-p} < (1-p)a + p,
+\]
+\[
+(1-p)\ln a + p\ln b < \ln((1-p)a + pb),
+\]
+which is true by the concavity of the logarithm. That $\frac{\partial g_{\{u\}}(p)}{\partial b} > 0$ follows analogously $\square$.
+
+\textbf{Proof of Claim 4.} For $\mathcal{U} = \{u_1, u_2\}$ with $u_2(x) > u_1(x) > u_1(y) > u_2(y)$ as in the claim, let $g(p)$ be the risk equivalent of $p$ from optimally choosing $u \in \mathcal{U}$. It is clear that $g(p)$ must be continuous, strictly increasing and that $g(0) = 0$ and $g(1) = 1$.
+
+To further analyze $g(p)$, consider the hypothetical where $u_i$ with $u_i \in \{u_1, u_2\}$ is the fitness function used to evaluate the gamble when $p$ is generated from the unknown urn, and $u_j$ with $u_j \in \{u_1, u_2\}$ is the one used to evaluate the gamble when $p$ is generated from the known urn. Replicating the derivation in the proof of Claim 3 yields that the risk equivalent of $p$ under those fitness functions is
+\[
+g_{i,j}(p) = \frac{(u_i(x))^p (u_i(y))^{1-p} - u_j(y)}{u_j(x) - u_j(y)},
+\]
+which is increasing, convex, and continuous.
+
+Since $u_1(x) > u_2(x)$ and $u_2(y) > u_1(y)$, there is $\hat{p} \in (0, 1)$ such that $p\ln(u_i(x)) + (1-p)\ln(u_i(y))$ gives a higher value for $i = 1$ than $i = 2$ if and only if $p \geq \hat{p}$. Further, since $g(p)$ is continuous, strictly increasing and satisfies $g(0) = 0$ and $g(1) = 1$, there is $\bar{p} \in (0, 1)$ such that $\ln(u_j(g(p)) + (1-g(p))u_j(y))$ is maximized by $j = 1$ if and only if $p \leq \bar{p}$. Thus $\bar{p} = \min\{\hat{p}, \tilde{p}\}$ is the largest $p \in (0, 1)$ such that $g(p) = g_{1,1}(p) = g_{\{u_1\}}(p)$, and $\hat{p} = \max\{\hat{p}, \tilde{p}\}$ is the smallest $p \in (0, 1)$ such that $g(p) = g_{2,2}(p) = g_{\{u_2\}}(p)$.
+
+To find the value of $g(p)$ for $p \in (\bar{p}, \hat{p})$, it remains to establish the order of $\bar{p}$ and $\hat{p}$. By Claim 3, $g_{\{u_1\}}(p) > g_{\{u_2\}}(p)$ for all $p \in (0, 1)$. First, since $g(p)$ is continuous, it must be that $\bar{p} \leq \hat{p}$. Second, with analysis of the derivatives of $g_{i,j}$ at 0 and 1, it can be shown that $\bar{p} < \hat{p}$.
+
+Thus indeed $\bar{p} < \hat{p}$ and
+\[
+g(p) = \begin{cases}
+g_{\{u_1\}}(p) & \text{if } p \leq \bar{p} \\
+g_{1,2}(p) & \text{if } p \in (\bar{p}, \hat{p}) \\
+g_{\{u_2\}}(p) & \text{if } p \geq \hat{p}.
+\end{cases}
+\]
+
+Finally, since $g_{1,2}(p)$ is convex and intersects $g_{\{u_1\}}(p)$ and $g_{\{u_2\}}(p)$ from above, the only non-convexity arises at $\hat{p}$. This establishes the claim for $\bar{p}$ and $\hat{p}$. $\square$
+\end{original}
+\begin{translation}
+\textbf{断言3的证明。} 给定$u$，令$a = u(x)$和$b = u(y)$。那么$g_{\{u\}}(p)$满足$\ln g_{\{u\}}(p) + (1 - g_{\{u\}}(p)) = p\ln(a) + (1-p)\ln(b)$，蕴含
+\[
+g_{\{u\}}(p) = \frac{a^{1-p} - b}{a - b}.
+\]
+$g_{\{u\}}(p)$的连续可微性随即可得，且鉴于$a > b$，容易验证$g_{\{u\}}(p)$的一阶和二阶导数均为正，从而确立了它是递增且凸的。直接计算得到$g_{\{u\}}(0) = 0$和$g_{\{u\}}(1) = 1$。
+
+现在考虑如断言中所述的$u_1$和$u_2$，满足$u_2(x) > u_1(x) > u_1(y) > u_2(y)$。要确立对所有$p \in (0, 1)$有$g_{\{u_1\}}(p) > g_{\{u_2\}}(p)$，只需验证对于如上定义的$a$和$b$的任意严格递增的$u$以及所有$p \in (0, 1)$，有$\frac{\partial g_{\{u\}}(p)}{\partial a} < 0$和$\frac{\partial g_{\{u\}}(p)}{\partial b} > 0$。实际上，通过简单的代数运算，
+\[
+\frac{\partial g_{\{u\}}(p)}{\partial a} < 0 \iff a^{1-p} < (1-p)a + p,
+\]
+\[
+(1-p)\ln a + p\ln b < \ln((1-p)a + pb),
+\]
+这由对数的凹性保证为真。$\frac{\partial g_{\{u\}}(p)}{\partial b} > 0$可以类似地得到。$\square$
+
+\textbf{断言4的证明。} 对于$\mathcal{U} = \{u_1, u_2\}$，其中如断言中所述$u_2(x) > u_1(x) > u_1(y) > u_2(y)$，令$g(p)$为从最优选择$u \in \mathcal{U}$得到的$p$的风险等价。显然$g(p)$必须是连续的、严格递增的，且$g(0) = 0$和$g(1) = 1$。
+
+为进一步分析$g(p)$，考虑如下假设情形：当$p$由未知瓮生成时，以$u_i \in \{u_1, u_2\}$作为用于评估赌博的适应性函数；当$p$由已知瓮生成时，以$u_j \in \{u_1, u_2\}$作为用于评估的适应性函数。重复断言3证明中的推导，可得在这些适应性函数下$p$的风险等价为
+\[
+g_{i,j}(p) = \frac{(u_i(x))^p (u_i(y))^{1-p} - u_j(y)}{u_j(x) - u_j(y)},
+\]
+它是递增的、凸的且连续的。
+
+由于$u_1(x) > u_2(x)$且$u_2(y) > u_1(y)$，存在$\hat{p} \in (0, 1)$使得$p\ln(u_i(x)) + (1-p)\ln(u_i(y))$在$i = 1$时比$i = 2$时给出更高值当且仅当$p \geq \hat{p}$。此外，由于$g(p)$是连续的、严格递增的且满足$g(0) = 0$和$g(1) = 1$，存在$\bar{p} \in (0, 1)$使得$\ln(u_j(g(p)) + (1-g(p))u_j(y))$由$j = 1$最大化当且仅当$p \leq \bar{p}$。因此$\bar{p} = \min\{\hat{p}, \tilde{p}\}$是使得$g(p) = g_{1,1}(p) = g_{\{u_1\}}(p)$的最大$p \in (0, 1)$，而$\hat{p} = \max\{\hat{p}, \tilde{p}\}$是使得$g(p) = g_{2,2}(p) = g_{\{u_2\}}(p)$的最小$p \in (0, 1)$。
+
+要找到$p \in (\bar{p}, \hat{p})$时$g(p)$的值，剩下需要确立$\bar{p}$和$\hat{p}$的顺序。根据断言3，对所有$p \in (0, 1)$有$g_{\{u_1\}}(p) > g_{\{u_2\}}(p)$。首先，由于$g(p)$是连续的，必须有$\bar{p} \leq \hat{p}$。其次，通过分析$g_{i,j}$在0和1处的导数，可以证明$\bar{p} < \hat{p}$。
+
+因此确实有$\bar{p} < \hat{p}$且
+\[
+g(p) = \begin{cases}
+g_{\{u_1\}}(p) & \text{若 } p \leq \bar{p} \\
+g_{1,2}(p) & \text{若 } p \in (\bar{p}, \hat{p}) \\
+g_{\{u_2\}}(p) & \text{若 } p \geq \hat{p}.
+\end{cases}
+\]
+
+最后，由于$g_{1,2}(p)$是凸的且从上方与$g_{\{u_1\}}(p)$和$g_{\{u_2\}}(p)$相交，唯一的非凸性出现在$\hat{p}$处。这为$\bar{p}$和$\hat{p}$确立了断言。$\square$
+\end{translation}
+\newpage
+% ============================================================
+\subsection*{A.7. Proof of Proposition 4 / 命题4的证明}
+
+\begin{original}
+The proof proceeds in three steps. We first prove Equation (12) for random variables $h$ that are bounded above and satisfy $h(x) \geq \varepsilon > 0$ for all $x \in X$. We then extend the result to all bounded $h \geq 0$. Finally, we extend to any $h$ that is bounded above.
+
+\textbf{Step 1:} Suppose that $h$ is bounded above and satisfies $h(x) \geq \varepsilon > 0$ for all $x \in X$. Then, $\ln(h)$ is a bounded function, and it is therefore integrable. Fix any measures $Q, P \in \Delta(X)$ with $Q \ll P$ and define a measure $Q_0$ by its Radon-Nikodym derivative
+\[
+\frac{dQ_0}{dP}(x) = \frac{h(x)}{\int_X h(x') P(dx')}.
+\]
+
+Since $h$ is strictly positive, $Q_0$ and $P$ are mutually absolutely continuous. In particular, since $Q \ll P$, this implies $Q \ll Q_0$. Thus, $\frac{dQ}{dQ_0}$ exists and $\frac{dQ}{dP} = \frac{dQ}{dQ_0} \frac{dQ_0}{dP}$. Note that
+\begin{align*}
+\int_X \ln(h) dQ - D_{KL}(Q\|P)
+&= \int_X \ln(h) dQ - \int_X \ln\left( \frac{dQ}{dP} \right) dQ \\
+&= \int_X \ln(h) dQ - \int_X \ln\left( \frac{dQ}{dQ_0} \right) dQ - \int_X \ln\left( \frac{dQ_0}{dP} \right) dQ \\
+&= -D_{KL}(Q\|Q_0) + \ln\left( \int_X h dP \right).
+\end{align*}
+
+By Lemma 1.4.1 in Dupuis and Ellis (1997), $D_{KL}(Q\|Q_0) \geq 0$, with equality if and only if $Q = Q_0$. Therefore,
+\[
+\int_X \ln(h) dQ + D_{KL}(Q\|P) \geq \ln\left( \int_X h dP \right),
+\]
+with equality if and only if $Q = Q_0$. It is not difficult to show that Equations (13) and (16) are dual in the sense that $Q = Q_0$ if and only if $P = P_0$. Therefore, given $P$, if we set $Q = Q_0$ then the above holds with equality. Moreover, since $h$ is bounded and $\frac{1}{\int h dP} \leq \frac{1}{\varepsilon}$, we have $D_{KL}(Q_0\|P) < \infty$, which implies $Q_0 \in \Delta_P(X)$. Hence the infimum in Equation (12) is attained at $Q_0$.
+
+\textbf{Step 2:} Consider now any bounded $h \geq 0$. Define a sequence of random variables $(h_n)$ by $h_n = \max\{h, 1/n\}$. By step 1, we know that Equation (12) holds for each $h_n$ and for any $P$. Using this, together with the fact that $h_n \geq h$ for all $n$, we have
+\[
+\int_X \ln(h) dP = \lim_{n \to \infty} \int_X \ln(h_n) dP = \lim_{n \to \infty} \inf_{Q \in \Delta_P(X)} \left[ \int_X \ln(h_n) dQ + D_{KL}(Q\|P) \right]
+\]
+\[
+\geq \inf_{Q \in \Delta_P(X)} \left[ \int_X \ln(h) dQ + D_{KL}(Q\|P) \right].
+\]
+
+For the opposite inequality, note that for any $n$ and any $Q \in \Delta_P(X)$, Equation (12) applied to the function $h_n$ implies $\int_X \ln(h_n) dP \leq \int_X \ln(h_n) dQ + D_{KL}(Q\|P)$. Taking the limit as $n \to \infty$ and applying the monotone convergence theorem yields the desired inequality for any $Q$, and hence the infimum over $Q$ also satisfies the inequality. Thus, Equation (12) holds for any bounded $h \geq 0$.
+
+\textbf{Step 3:} Finally, consider any $h$ that is bounded above. Let $h^+(x) = \max\{h(x), 0\}$. Since we have adopted the standard convention that $\ln(x) = -\infty$ for any $x \leq 0$, we have $\ln(h^+(x)) = \ln(h(x))$ for all $x$. Let $A = \{ x \in X : h(x) > 0 \}$. If $P(A) > 0$, then $\int \ln(h) dP = -\infty$ and the equality holds. If $P(A) = 0$, then $h(x) = 0$ for $P$-almost all $x$, so any $Q \in \Delta_P(X)$ must also have $Q(A) = 0$, and thus $h = h^+$ for both $P$ and $Q$. The result follows from step 2. This completes the proof. $\square$
+\end{original}
+\begin{translation}
+证明分三步进行。我们首先对上有界且满足对所有$x \in X$有$h(x) \geq \varepsilon > 0$的随机变量$h$证明方程（12）。然后将结果扩展到所有有界的$h \geq 0$。最后，扩展到任意上有界的$h$。
+
+\textbf{步骤1：}假设$h$是上有界的且满足对所有$x \in X$有$h(x) \geq \varepsilon > 0$。那么，$\ln(h)$是一个有界函数，因此它是可积的。固定任意测度$Q, P \in \Delta(X)$满足$Q \ll P$，并通过其Radon-Nikodym导数定义一个测度$Q_0$：
+\[
+\frac{dQ_0}{dP}(x) = \frac{h(x)}{\int_X h(x') P(dx')}.
+\]
+
+由于$h$是严格正的，$Q_0$和$P$是相互绝对连续的。特别是，由于$Q \ll P$，这蕴含$Q \ll Q_0$。因此，$\frac{dQ}{dQ_0}$存在且$\frac{dQ}{dP} = \frac{dQ}{dQ_0} \frac{dQ_0}{dP}$。注意
+\begin{align*}
+\int_X \ln(h) dQ - D_{KL}(Q\|P)
+&= \int_X \ln(h) dQ - \int_X \ln\left( \frac{dQ}{dP} \right) dQ \\
+&= \int_X \ln(h) dQ - \int_X \ln\left( \frac{dQ}{dQ_0} \right) dQ - \int_X \ln\left( \frac{dQ_0}{dP} \right) dQ \\
+&= -D_{KL}(Q\|Q_0) + \ln\left( \int_X h dP \right).
+\end{align*}
+
+根据Dupuis和Ellis（1997）的引理1.4.1，$D_{KL}(Q\|Q_0) \geq 0$，等号成立当且仅当$Q = Q_0$。因此，
+\[
+\int_X \ln(h) dQ + D_{KL}(Q\|P) \geq \ln\left( \int_X h dP \right),
+\]
+等号成立当且仅当$Q = Q_0$。不难证明方程（13）和（16）在下述意义上是对偶的：$Q = Q_0$当且仅当$P = P_0$。因此，给定$P$，如果我们设$Q = Q_0$，则上述以等式成立。此外，由于$h$是有界的且$\frac{1}{\int h dP} \leq \frac{1}{\varepsilon}$，我们有$D_{KL}(Q_0\|P) < \infty$，这蕴含$Q_0 \in \Delta_P(X)$。因此方程（12）中的下确界在$Q_0$处达到。
+
+\textbf{步骤2：}现在考虑任意有界的$h \geq 0$。通过$h_n = \max\{h, 1/n\}$定义一列随机变量$(h_n)$。由步骤1，我们知道方程（12）对每个$h_n$和任意$P$成立。利用这一点，加上对所有$n$有$h_n \geq h$的事实，我们有
+\[
+\int_X \ln(h) dP = \lim_{n \to \infty} \int_X \ln(h_n) dP = \lim_{n \to \infty} \inf_{Q \in \Delta_P(X)} \left[ \int_X \ln(h_n) dQ + D_{KL}(Q\|P) \right]
+\]
+\[
+\geq \inf_{Q \in \Delta_P(X)} \left[ \int_X \ln(h) dQ + D_{KL}(Q\|P) \right].
+\]
+
+对于相反的不等式，注意对任意$n$和任意$Q \in \Delta_P(X)$，对方程（12）应用于函数$h_n$蕴含$\int_X \ln(h_n) dP \leq \int_X \ln(h_n) dQ + D_{KL}(Q\|P)$。取$n \to \infty$的极限并应用单调收敛定理，对任意$Q$得到所需不等式，因此关于$Q$的下确界也满足该不等式。从而方程（12）对任意有界的$h \geq 0$成立。
+
+\textbf{步骤3：}最后，考虑任意上有界的$h$。令$h^+(x) = \max\{h(x), 0\}$。由于我们已经采纳了对任意$x \leq 0$有$\ln(x) = -\infty$的标准惯例，对所有$x$有$\ln(h^+(x)) = \ln(h(x))$。令$A = \{ x \in X : h(x) > 0 \}$。若$P(A) > 0$，则$\int \ln(h) dP = -\infty$且等式成立。若$P(A) = 0$，则$h(x) = 0$对$P$-几乎所有的$x$成立，因此任意$Q \in \Delta_P(X)$也必须有$Q(A) = 0$，从而对$P$和$Q$都有$h = h^+$。结果从步骤2推出。证毕。$\square$
+\end{translation}
+
+% ============================================================
+\subsection*{A.8. Proof of Proposition 5 / 命题5的证明}
+
+\begin{original}
+Our proof will rely on a version of the von Neumann-Sion Minimax Theorem due to Tuy (2004).
+
+\textbf{Theorem 3 (von Neumann-Sion-Tuy Minimax Theorem).} Let $A$ be a closed and convex subset of a topological vector space, and let $B$ be a convex subset of a topological vector space. Suppose $\Phi: A \times B \to \mathbb{R}$ satisfies the following conditions:
+
+1. For every $b \in B$, the function $a \mapsto \Phi(a, b)$ is quasiconcave and upper semicontinuous on $A$.
+
+2. For every $a, a' \in A$ and $b \in B$, the function $\lambda \mapsto \Phi(a + (1-\lambda)a', b)$ is quasiconvex and lower semicontinuous on $[0, 1]$.
+
+3. There exists some $\alpha < \inf_{b \in B} \sup_{a \in A} \Phi(a, b)$ and a nonempty finite set $A_0 \subseteq A$ such that the set $B_\alpha = \{ b \in B : \min_{a \in A_0} \Phi(a, b) \geq \alpha \}$ is compact.
+
+Then,
+\[
+\sup_{a \in A} \inf_{b \in B} \Phi(a, b) = \inf_{b \in B} \sup_{a \in A} \Phi(a, b).
+\]
+
+This result is a special case of Theorem 2 in Tuy (2004).
+
+The complete proof of Proposition 5 proceeds through several lemmas (Lemma 10 through Lemma 16 in the paper). The strategy is to:
+
+1. Use the finite measurability property of $\mathcal{G}$ to reduce the problem to a finite-dimensional setting via a finite partition.
+
+2. Remove events that have zero probability under $\mu$, hence reducing to an index set with all positive probability elements.
+
+3. Remove dimensions where the functions take the value $-\infty$, reducing to a subset of Euclidean space.
+
+4. Show that the convex hull can be replaced by its closure without affecting the value of the optimization.
+
+5. Verify the conditions of Theorem 3 (quasiconcavity, quasiconvexity, and the compactness condition).
+
+6. Apply Theorem 3 to swap the supremum and infimum.
+
+The detailed verification of these steps involves techniques from functional analysis, topology, and convex analysis, and the complete proof is contained in the published paper. $\square$
+\end{original}
+\begin{translation}
+我们的证明将依赖Tuy（2004）给出的von Neumann-Sion极小极大定理的一个版本。
+
+\textbf{定理3（von Neumann-Sion-Tuy极小极大定理）。} 令$A$是一个拓扑向量空间的闭凸子集，令$B$是一个拓扑向量空间的凸子集。假设$\Phi: A \times B \to \mathbb{R}$满足以下条件：
+
+1. 对于每个$b \in B$，函数$a \mapsto \Phi(a, b)$在$A$上是拟凹且上半连续的。
+
+2. 对于每个$a, a' \in A$和$b \in B$，函数$\lambda \mapsto \Phi(a + (1-\lambda)a', b)$在$[0, 1]$上是拟凸且下半连续的。
+
+3. 存在某个$\alpha < \inf_{b \in B} \sup_{a \in A} \Phi(a, b)$和一个非空有限集$A_0 \subseteq A$，使得集合$B_\alpha = \{ b \in B : \min_{a \in A_0} \Phi(a, b) \geq \alpha \}$是紧的。
+
+那么，
+\[
+\sup_{a \in A} \inf_{b \in B} \Phi(a, b) = \inf_{b \in B} \sup_{a \in A} \Phi(a, b).
+\]
+
+这一结果是Tuy（2004）定理2的一个特例。
+
+命题5的完整证明通过若干引理（论文中的引理10至引理16）展开。其策略是：
+
+1. 利用$\mathcal{G}$的有限可测性，通过有限划分将问题简化为有限维设定。
+
+2. 移除在$\mu$下具有零概率的事件，从而简化为所有元素具有正概率的指标集。
+
+3. 移除函数取$-\infty$值的维度，简化为欧几里德空间的子集。
+
+4. 证明凸包可以被其闭包替换而不影响优化的值。
+
+5. 验证定理3的条件（拟凹性、拟凸性和紧性条件）。
+
+6. 应用定理3交换上确界和下确界。
+
+这些步骤的详细验证涉及泛函分析、拓扑学和凸分析的技术，完整证明包含在已发表的论文中。$\square$
+\end{translation}
+
+\newpage
+% ============================================================
+% APPENDIX B
+% ============================================================
+\section*{Appendix B. Overlap Between Divergence and RDU Preferences / 附录B：散度偏好与RDU偏好的重叠}
+
+\begin{original}
+As we noted in Section 5.2, while the class of divergence preferences is generally distinct from the class of rank-dependent utility preferences, there is some overlap, as the following claim demonstrates.
+
+\textbf{Claim 5.} Define $\mathcal{U}$ as in Example 2 for some $0 < \beta < 1 < \alpha$, and define $\varphi$ as in Claim 1. Fix any $\psi$ satisfying the assumptions of Proposition 2. Then, for any simple act $f \in \mathcal{F}$,
+\[
+\inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \Phi(D_\psi(Q\|\mu)) \right] = \max_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx,
+\]
+where $\Phi: \mathbb{R}_+ \to [0, \infty]$ is defined by $\Phi(x) = 0$ for $x \in [\beta, \alpha]$ and $\Phi(x) = \infty$ otherwise.
+
+Note that the divergence $D_\psi(Q\|\mu)$ defined in Claim 5 takes only the values 0 and $+\infty$, so the equality in the claim holds for any admissible function $\Phi$ (since we must have $\Phi(0) = 0$ and $\Phi(\infty) = \infty$).
+
+\textit{Proof.} Define $\Phi$ by $\Phi(x) = 0$ if $x \in [\beta, \alpha]$ and $\Phi(x) = \infty$ otherwise. It is standard that the Fenchel conjugate of $\Phi$ is $\Phi^*$ defined by
+\[
+\Phi^*(\eta) = \begin{cases}
+\beta\eta & \text{if } \eta < 0 \\
+\alpha\eta & \text{if } \eta \geq 0.
+\end{cases}
+\]
+
+Notice also that for this function, we have $\psi^*(\eta) = \infty$ for all $\eta \geq 0$, so the formula for $u_{v,\alpha}$ in Proposition 3 reduces to
+\[
+u_{v,\alpha}(x) = \begin{cases}
+v + \beta(x - v) - \Phi^*(\alpha) & \text{if } x < v \\
+v + \alpha(x - v) - \Phi^*(\alpha) & \text{if } x \geq v
+\end{cases}
+\]
+for all $\alpha \geq 0$. Since $\min_{\alpha \geq 0} \Phi^*(\alpha) = 0$ (e.g., $\Phi^*(0) = 0$ if we take $\eta = 0$), maximization over $\alpha$ eliminates this term, and this family of fitness functions reduces to the parametric class $\mathcal{U}$ from Example 2. $\square$
+\end{original}
+\begin{translation}
+正如我们在第5.2节中注意到的，虽然散度偏好类通常与等级依赖效用偏好类不同，但存在一些重叠，如下面的断言所示。
+
+\textbf{断言5。} 对某个$0 < \beta < 1 < \alpha$，如例2定义$\mathcal{U}$，并如断言1定义$\varphi$。固定任意满足命题2假设的$\psi$。那么，对于任意简单行动$f \in \mathcal{F}$，
+\[
+\inf_{Q \in \Delta(\Omega)} \left[ \int_\Omega v(f(\omega)) Q(d\omega) + \Phi(D_\psi(Q\|\mu)) \right] = \max_{u \in \mathcal{U}} \int_\Omega u(f(\omega)) \mu(d\omega) = \int_\mathbb{R} v(x) \varphi(F_{f,\mu}(x)) dx,
+\]
+其中$\Phi: \mathbb{R}_+ \to [0, \infty]$定义为：当$x \in [\beta, \alpha]$时$\Phi(x) = 0$，否则$\Phi(x) = \infty$。
+
+注意，断言5中定义的散度$D_\psi(Q\|\mu)$只取0和$+\infty$两个值，因此断言中的等式对任意容许的函数$\Phi$成立（因为我们必须有$\Phi(0) = 0$和$\Phi(\infty) = \infty$）。
+
+\textit{证明。} 定义$\Phi$为：若$x \in [\beta, \alpha]$则$\Phi(x) = 0$，否则$\Phi(x) = \infty$。标准的结果是，$\Phi$的Fenchel共轭$\Phi^*$由下式定义：
+\[
+\Phi^*(\eta) = \begin{cases}
+\beta\eta & \text{若 } \eta < 0 \\
+\alpha\eta & \text{若 } \eta \geq 0.
+\end{cases}
+\]
+
+另请注意，对于这个函数，对所有$\eta \geq 0$有$\psi^*(\eta) = \infty$，因此命题3中$u_{v,\alpha}$的公式简化为：对所有$\alpha \geq 0$，
+\[
+u_{v,\alpha}(x) = \begin{cases}
+v + \beta(x - v) - \Phi^*(\alpha) & \text{若 } x < v \\
+v + \alpha(x - v) - \Phi^*(\alpha) & \text{若 } x \geq v.
+\end{cases}
+\]
+
+由于$\min_{\alpha \geq 0} \Phi^*(\alpha) = 0$（例如，若我们取$\eta = 0$则$\Phi^*(0) = 0$），关于$\alpha$的最大化消去了这一项，且该适应性函数族简化为例2中的参数化类$\mathcal{U}$。$\square$
+\end{translation}
+
+\newpage
+% ============================================================
+% APPENDIX C: SUPPLEMENTARY MATERIAL
+% ============================================================
+\section*{Appendix C. Supplementary Material / 附录C：补充材料}
+
+\begin{original}
+Supplementary material related to this article can be found online at \url{https://doi.org/10.1016/j.jet.2024.105840}.
+\end{original}
+\begin{translation}
+与本文相关的补充材料可在以下网址在线查阅：\url{https://doi.org/10.1016/j.jet.2024.105840}。
+\end{translation}
+
+\newpage
+% ============================================================
+% REFERENCES
+% ============================================================
+\section*{References / 参考文献}
+
+\begin{original}
+\begin{description}
+\item[Abdellaoui, M., Baillon, A., Placido, L., Wakker, P.P., 2011.] The rich domain of uncertainty: source functions and their experimental implementation. Am. Econ. Rev. 101, 695--723.
+
+\item[Aliprantis, C., Border, K., 2006.] Infinite Dimensional Analysis, 3rd ed. Springer-Verlag, Berlin, Germany.
+
+\item[Allais, M., 1953.] Le Comportement de l'Homme Rationnel devant le Risque: Critique des Postulats et Axioms de l'Ecole Americaine. Econometrica 21, 503--546.
+
+\item[Athreya, K.B., Ney, P.E., 1972.] Branching Processes. Springer-Verlag, New York.
+
+\item[Ben-Tal, A., Teboulle, M., 1987.] Penalty functions and duality in stochastic programming via $\phi$-divergence functionals. Math. Oper. Res. 12, 224--240.
+
+\item[Ben-Tal, A., Teboulle, M., 2007.] An old-new concept of convex risk measures: the optimized certainty equivalent. Math. Finance 17, 449--476.
+
+\item[Bianchi, F., Ilut, C.L., Schneider, M., 2018.] Uncertainty shocks, asset supply and pricing over the business cycle. Rev. Econ. Stud. 85, 810--854.
+
+\item[B\"{o}rgers, T., Sarin, R., 1997.] Learning through reinforcement and replicator dynamics. J. Econ. Theory 77, 1--14.
+
+\item[Borwein, J.M., Lewis, A.S., 1992.] Partially finite convex programming, Part I: quasi relative interiors and duality theory. Math. Program. 57, 15--48.
+
+\item[Cerreia-Vioglio, S., Maccheroni, F., Marinacci, M., Montrucchio, L., 2011.] Uncertainty averse preferences. J. Econ. Theory 146, 1275--1330.
+
+\item[Chapman, J., Dean, M., Ortoleva, P., Snowberg, E., Camerer, C., 2019.] Econographics. Working paper.
+
+\item[Chateauneuf, A., Faro, J.H., 2009.] Ambiguity through confidence functions. J. Math. Econ. 45, 535--558.
+
+\item[Chateauneuf, A., Faro, J.H., 2012.] On the confidence preferences model. Fuzzy Sets Syst. 188, 1--15.
+
+\item[Chatterjee, K., Krishna, R.V., 2011.] A nonsmooth approach to nonexpected utility theory under risk. Math. Soc. Sci. 62, 166--175.
+
+\item[Chetty, R., Szeidl, A., 2007.] Consumption commitments and risk preferences. Q. J. Econ. 122, 831--877.
+
+\item[Chetty, R., Szeidl, A., 2016.] Consumption commitments and habit formation. Econometrica 84, 855--890.
+
+\item[Chew, S.H., Karni, E., Safra, Z., 1987.] Risk aversion in the theory of expected utility with rank dependent probabilities. J. Econ. Theory 42, 370--381.
+
+\item[Combari, C., Laghdir, M., Thibault, L., 1996.] A note on subdifferentials of convex composite functionals. Arch. Math. 67, 239--252.
+
+\item[Cover, T.M., Thomas, J.A., 2006.] Elements of Information Theory, 3nd ed. John Wiley \& Sons, Hoboken, New Jersey.
+
+\item[Dean, M., Ortoleva, P., 2017.] Allais, Ellsberg, and preferences for hedging. Theor. Econ. 12, 377--424.
+
+\item[Dean, M., Ortoleva, P., 2019.] The empirical relationship between nonstandard economic behaviors. Proc. Natl. Acad. Sci. USA 116, 16262--16267.
+
+\item[Dow, J., Werlang, S.R., 1992.] Uncertainty aversion, risk aversion, and the optimal choice of portfolio. Econometrica 60, 197--204.
+
+\item[Dudley, R.M., 2002.] Real Analysis and Probability, 2nd ed. Cambridge University Press, Cambridge, United Kingdom.
+
+\item[Dupuis, P., Ellis, R.S., 1997.] A Weak Convergence Approach to the Theory of Large Deviations. John Wiley \& Sons, New York.
+
+\item[Ellsberg, D., 1961.] Risk, ambiguity, and the savage axioms. Q. J. Econ. 75, 643--669.
+
+\item[Epstein, L.G., Wang, T., 1994.] Intertemporal asset pricing under Knightian uncertainty. Econometrica 62, 283--322.
+
+\item[Ergin, H., Gul, F., 2009.] A theory of subjective compound lotteries. J. Econ. Theory 144, 899--929.
+
+\item[Ergin, H., Sarver, T., 2015.] Hidden actions and preferences for timing of resolution of uncertainty. Theor. Econ. 10, 489--541.
+
+\item[Friedman, M., 1953.] The methodology of positive economics. In: Friedman, M. (Ed.), Essays in Positive Economics. University of Chicago Press.
+
+\item[Gabaix, X., Laibson, D., 2001.] The 6D bias and the equity-premium puzzle. NBER Macroecon. Annu. 16, 257--312.
+
+\item[Gilboa, I., Schmeidler, D., 1989.] Maxmin expected utility with non-unique prior. J. Math. Econ. 18, 141--153.
+
+\item[Grossman, S.J., Laroque, G., 1990.] Asset pricing and optimal portfolio choice in the presence of illiquid durable consumption goods. Econometrica 58, 25--51.
+
+\item[Halevy, Y., Feltkamp, V., 2005.] A Bayesian approach to uncertainty aversion. Rev. Econ. Stud. 72, 449--466.
+
+\item[Hansen, L.P., Sargent, T.J., 2001.] Robust control and model uncertainty. Am. Econ. Rev. 91, 60--66.
+
+\item[Hansen, L.P., Sargent, T.J., 2008.] Robustness. Princeton University Press.
+
+\item[Hiriart-Urruty, J.-B., 2006.] A note on the Legendre-Fenchel transform of convex composite functions. In: Alart, P., Maisonneuve, O., Rockafellar, R.T. (Eds.), Nonsmooth Mechanics and Analysis. Springer, pp. 35--46.
+
+\item[Ilut, C.L., Schneider, M., 2014.] Ambiguous business cycles. Am. Econ. Rev. 104, 2368--2399.
+
+\item[Izhakian, Y., 2017.] Expected utility with uncertain probabilities theory. J. Math. Econ. 69, 91--103.
+
+\item[Klibanoff, P., Marinacci, M., Mukerji, S., 2005.] A smooth model of decision making under ambiguity. Econometrica 73, 1849--1892.
+
+\item[Kreps, D.M., Porteus, E.L., 1979.] Temporal von Neumann-Morgenstern and induced preferences. J. Econ. Theory 20, 81--109.
+
+\item[Kutateladze, S.S., 1979.] Convex Operators. Russian Mathematical Surveys, vol. 34, pp. 181--214.
+
+\item[Maccheroni, F., Marinacci, M., Rustichini, A., 2006.] Ambiguity aversion, robustness, and the variational representation of preferences. Econometrica 74, 1447--1498.
+
+\item[Machina, M.J., 1984.] Temporal risk and the nature of induced preferences. J. Econ. Theory 33, 199--231.
+
+\item[Marinacci, M., 2015.] Model uncertainty. J. Eur. Econ. Assoc. 13, 1022--1100.
+
+\item[Markowitz, H.M., 1959.] Portfolio Selection, Efficient Diversification of Investments. John Wiley and Sons, New York.
+
+\item[Mossin, J., 1969.] A note on uncertainty and preferences in a temporal context. Am. Econ. Rev. 59, 172--174.
+
+\item[Nau, R.F., 2006.] Uncertainty aversion with second-order utilities and probabilities. Manag. Sci. 52, 136--145.
+
+\item[Nelson, R.R., Winter, S.G., 1982.] An Evolutionary Theory of Economic Change. Harvard University Press.
+
+\item[Robatto, R., Szentes, B., 2017.] On the biological foundation of risk preferences. J. Econ. Theory 172, 410--422.
+
+\item[Robson, A.J., 1996.] A biological basis for expected and non-expected utility. J. Econ. Theory 68, 397--424.
+
+\item[Robson, A.J., Samuelson, L., 2011.] The evolutionary foundations of preferences. In: Handbook of Social Economics, vol. 1. Elsevier, pp. 221--310.
+
+\item[Robson, A.J., Samuelson, L., 2019.] Evolved attitudes to idiosyncratic and aggregate risk in age-structured populations. J. Econ. Theory 181, 44--81.
+
+\item[Rockafellar, R.T., 1968.] Integrals which are convex functionals. Pac. J. Math. 24, 525--539.
+
+\item[Sarver, T., 2018.] Dynamic mixture-averse preferences. Econometrica 86, 1347--1382.
+
+\item[Schlag, K.H., 1998.] Why imitate, and if so, how?: A boundedly rational approach to multi-armed bandits. J. Econ. Theory 78, 130--156.
+
+\item[Segal, U., 1987.] The Ellsberg paradox and risk aversion: an anticipated utility approach. Int. Econ. Rev. 28, 175--202.
+
+\item[Sion, M., 1958.] On general minimax theorems. Pac. J. Math. 8, 171--176.
+
+\item[Spence, M., Zeckhauser, R., 1972.] The effect of the timing of consumption decisions and the resolution of lotteries on the choice of lotteries. Econometrica 40, 401--403.
+
+\item[Strzalecki, T., 2011.] Axiomatic foundations of multiplier preferences. Econometrica 79, 47--73.
+
+\item[Tuy, H., 2004.] Minimax theorems revisited. Acta Math. Vietnam. 29, 217--229.
+
+\item[von Neumann, J., 1928.] Zur Theorie der Gesellschaftsspiele. Math. Ann. 100, 295--320.
+
+\item[Wakker, P., 1994.] Separating marginal utility and probabilistic risk aversion. Theory Decis. 36, 1--44.
+
+\item[Yaari, M.E., 1987.] The dual theory of choice under risk. Econometrica 55, 95--115.
+\end{description}
+\end{original}
+\begin{translation}
+（参考文献保持原文，不翻译。参考文献标题为英文原文，仅在此处注记。）
+
+\textbf{注意：} 以下为论文的完整参考文献列表，保持英文原文。参考文献涵盖了演化偏好理论、模糊决策、非期望效用、信息论、凸分析和相关的实验经济学文献。
+\end{translation}
+
+\end{document}

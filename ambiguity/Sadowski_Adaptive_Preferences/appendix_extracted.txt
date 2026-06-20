@@ -1,0 +1,715 @@
+P. Sadowski and T. Sarver                                                      Journal of Economic Theory 218 (2024) 105840
+
+      ln()         =       lim     ln() 
+
+                           
+
+                                 
+
+                                                             
+                                   ln        + (  ) .
+                             inf       
+
+                            ()
+
+Note that these terms could take the value -.
+    To prove the opposite inequality, note that for any  and any   (), Equation (12) applied to the function  implies
+
+                                         
+                                     + (  ).
+      ln()                 ln  
+
+    
+
+Since both sides of this inequality are finite for all , we can again take the limit as    and apply the monotone convergence
+
+theorem to obtain
+
+                                       
+                                     + (  ).
+      ln()                 ln  
+
+                                       
+
+Since this is true for all   (), we have
+
+                                                             
+                                   ln                      )
+      ln()                   inf                  +  (         .
+                                       
+                            ()
+
+Thus, Equation (12) holds for any bounded   0.
+    Step 3: Finally, consider any  that is bounded above. Let +() = max{(), 0}. Since we have adopted the standard conven-
+
+tion that ln() = - for any   0, we have ln(+()) = ln(()) for all . Therefore, since Equation (12) holds for + by step
+
+2,
+
+     ln()  =  ln(+) 
+
+                           
+
+                                                               
+                                   ln      +  + (  )
+                   =         inf       
+
+                            ()
+
+                                                             
+                                   ln        + (  ) .
+                             inf       
+
+                            ()
+
+To establish the opposite inequality, we consider two cases. Let  = {    ()  0}. The first case is when () > 0. Then,
+ ln() = -, so the above must hold with equality. The second case is when () = 0. Then, () = 0 for all   (), since
+any   () must be absolutely continuous with respect to . Therefore,    =  + for all   () and hence
+
+                                                                        
+           ln                              )             ln       +  + (  ) .
+      inf                          +  (        =    inf      
+                                                             
+     ()                                            ()
+
+Thus, the equality is established for both cases, which completes the proof.
+
+A.8. Proof of Proposition 5
+
+    Our proof will rely on a version of the von Neumann­Sion Minimax Theorem. von Neumann (1928) proved that when  
+ ×    is a bilinear function and  and  are finite-dimensional simplexes,
+
+    sup inf  (, ) = inf sup  (, ).
+                                
+
+Perhaps the most important and well-known extension of von Neumann's result is due to Sion (1958), who showed that the same
+conclusion can be derived under the weaker assumptions that  and  are convex subsets of topological vector spaces, one of these
+sets is compact,  is quasiconcave and upper semicontinuous in , and  is quasiconvex and lower semicontinuous in . Sion's result
+is not quite strong enough for our purposes, since in our application it may be that neither  nor  is compact and since  may not
+be lower semicontinuous in . We will therefore rely on the following generalization of the von Neumann­Sion Theorem, which is
+
+due to Tuy (2004).
+
+                                                                    27
+P. Sadowski and T. Sarver                                    Journal of Economic Theory 218 (2024) 105840
+
+Theorem 3 (von Neumann­Sion­Tuy Minimax Theorem). Let  be a closed and convex subset of a topological vector space, and let  be a
+convex subset of a topological vector space. Suppose    ×    satisfies the following conditions:
+
+1. For every   , the function    (, ) is quasiconcave and upper semicontinuous on .
+
+2. For every    and ,   , the function    (,  + (1 - )) is quasiconvex and lower semicontinuous on [0, 1].
+3. There exists some  < inf  sup  (, ) and a nonempty finite set    such that the set  = {    min  (, )  } is
+
+    compact.
+
+Then,
+
+       sup inf  (, ) = inf sup  (, ).
+                            
+
+    This result is a special case of Theorem 2 in Tuy (2004). His result requires that  be what he calls -connected. This condition
+is implied by our assumptions that  is closed and convex,  is convex,  is quasiconcave and upper semicontinuous in , and
+   (,  + (1 - )) is quasiconvex in  for all , , . His result also requires the lower semicontinuity property that we assumed
+in condition 2.39 The final assumption needed for his result is condition 3.40 For completeness and ease of reference, we include a
+
+complete proof of Theorem 3 in Section S4 of the Supplementary Appendix.
+    Note that the theorem of Sion (1958) follows as a corollary to this result: If  is quasiconvex and lower semicontinuous in  then
+
+condition 2 is implied, and if  is compact then condition 3 is implied (given that  is upper semicontinuous in ).
+    We now proceed with the proof of Proposition 5. Fix any measure   ( × ), and fix any convex set  satisfying the properties
+
+described in the statement of the proposition. We proceed in several steps. Using the second property of  from the statement of the
+proposition, we know that there exists a finite partition  of  ×  such that every    is measurable with respect to  . We can
+
+enumerate the elements of this partition as
+
+         = {    },
+where  is a finite index set. For each    , fix an arbitrary element (, )  . Since each    is measurable with respect  ,
+we know that (, ) = (, ) for all    and (, )  . Consider the mapping
+
+           = ((, ))
+from  into [-, ] . It is easy to see that this mapping is a homeomorphism from  to the set
+
+         = {    }  [-, ] .
+
+In other words, the set of functions  is topologically equivalent to the set of vectors .
+    Recall that for any   (), we define    to be the measure on  ×  with marginal  on  and conditional distribution
+
+(|) on . That is, for any event  in the product -algebra    , let
+
+         () =   [(, )  ] (|) ().
+
+                           
+
+Define a function   [-, ) × ()  + by
+
+         (,  )  =       {            (   }         (     )
+                   max 0,               )   exp(         ).
+
+                           
+
+Lemma 10. The set  and function  satisfy the following conditions:
+
+ 1. When [-, ] is endowed with the product topology (i.e., the topology of pointwise convergence),  is compact.
+ 2. There exists    such that    for all    and    .
+ 3. Equation (14) from the statement of the proposition is equivalent to the following:
+
+             sup inf (, ) = inf sup (, ).                                                                        (17)
+         co() ()                   () 
+
+ 39 Note that the assumption of lower semicontinuity in  in every line segment (that is, lower semicontinuity of the mapping    (,  + (1 - )) for all
+, , ) in condition 2 is in general weaker than assuming lower semicontinuity in . However, the assumption of quasiconvexity in  in every line segment (that is,
+quasiconvexity of the mapping    (,  + (1 - )) for all , , ) in condition 2 is equivalent to quasiconvexity in . Also, note that we have switched the roles
+of  and  compared to Tuy (2004).
+ 40 Strictly speaking, Theorem 2 in Tuy (2004) assumes that  is compact for  = sup inf   (, ) and shows that  < inf  sup  (, ) leads to a contra-
+diction. As is evident from his proof, our condition 3 is sufficient to obtain the same result.
+
+                                                                                                             28
+P. Sadowski and T. Sarver                                                                      Journal of Economic Theory 218 (2024) 105840
+
+Proof. Since  is a closed subset of [-, ]× by the first property in the statement of the proposition and since  and  are
+homeomorphic,  is closed. In addition, since [-, ] is a compact space when endowed with the product topology,41 this implies
+
+that  is compact. Since  is pointwise bounded above by the third property in the statement of the proposition, we have
+
+sup  = sup (, ) < 
+               
+
+for all    . In particular, since  is finite, there exists    such that    for all    and    . To establish the third
+condition, note that42
+
+  [                                 ]
+
+ln sup inf (, )
+            co() ()
+                                     [       (                   )                )]
+                                                                )         (      
+                  =   sup     inf        ln                (         +         
+                  =
+                  =  co()   ( )              (                           )       (       )]
+                                                                        )               
+                      sup            [  ln        (,    )         (         +         
+
+                     co()    inf          (           )    (    )(,       )  +    (        )]
+                                        ln                              )                  .
+                      sup   ( )                  (,
+
+                     co()            [       ×
+
+                             inf
+
+                            ( )
+
+Similarly,
+
+  [                          ]
+
+ln inf sup (, )
+             ( )
+                             [      (                          )                )]
+                             [  ln  (  sup               ()       +    (       
+                  = inf         ln                                    
+                                                                                 (
+                      ( )                                               )                )]
+                                       sup                                               .
+                  = inf                         (, ) (  )(, ) +                       
+                                       
+                      ( )                ×
+
+Thus, Equation (14) is equivalent to Equation (17). 
+
+    Next, we show that we can remove any indices    that correspond to probability zero events. By definition,  and  must be
+mutually absolutely continuous for any   (), and hence    and  are also mutually absolutely continuous. Thus, for any
+   and   (),
+
+          () = 0  () = 0.
+
+We can therefore remove any events    that occur with zero probability under , since such events must also occur with zero
+probability under    for any   (). That is, consider the index set    given by
+
+         = {    () > 0}.
+Define the projection function   [-, ]  [, ] by  () = () , and set
+
+ =  () = { =  ()    }.
+
+Define a function   [-, ) × ()  + by
+
+  (,        )  =       {                       }         (       )
+                  max 0,                 ()       exp(           ).
+
+                           
+
+Lemma 11. The set  and function  satisfy the following conditions:
+
+ 1. When [-, ] is endowed with the product topology,  is compact (hence closed).
+ 2. There exists    such that    for all    and    .
+
+ 41 It is easy to see that the set of extended reals [-, ] is compact in its usual topology (see Example 2.75 in Aliprantis and Border (2006)), and hence [-, ]
+endowed with the product topology is compact by the Tychonoff Product Theorem (Theorem 2.61 in Aliprantis and Border (2006)).
+ 42 To deal with vectors  and functions  that can take the value -, we adopt the notational convention throughout that ln() = - for any   [-, 0]. Hence
+ln(max{0, }) = ln() for all   [-, ).
+
+                                                                                                             29
+P. Sadowski and T. Sarver                                           Journal of Economic Theory 218 (2024) 105840
+
+3. Equation (17) is equivalent to the following:                                                                (18)
+
+sup inf  (, ) = inf sup  (, ).
+co() ()                    () 
+
+Proof. The projection function  is continuous when [-, ] and [-, ] are endowed with their product topologies.
+Therefore, the set  is compact, as it is the image of the compact set  under the continuous function  . Since [-, ] is
+a Hausdorff space, compact subsets of this space are closed (Lemma 2.32 in Aliprantis and Border (2006)). Hence,  is closed.
+The second condition follows directly from the second condition in Lemma 10. To establish the third condition, recall from above
+that  and    are mutually absolutely continuous for any   (). This implies that for any   [-, ) , if we take
+ =  ()  [-, ) , then (, ) =  (, ) for all   (). Therefore, Equations (17) and (18) are equivalent. 
+
+    We now show that we can remove any    such that  = - for some    , thereby reducing this set to a subset of the
+Euclidean space  . Formally, let
+
+         = {     > -,   }.
+Note that it is possible to have  = .
+
+Lemma 12. The set  and function  satisfy the following conditions:
+
+1. When  is endowed with the Euclidean topology,  is closed.
+2. There exists    such that    for all    and    .
+3. Equation (18) holds either if  = , or if    and
+
+sup inf  (, ) = inf sup  (, ).                                      (19)
+co() ()                    () 
+
+4. Fix any   (). When restricted to  (endowed with the Euclidean topology), the mapping    (, ) is continuous, nonde-
+    creasing, quasiconcave, and quasiconvex.
+
+Proof. Since  is a closed subset of [-, ] (endowed with the product topology of the extended reals), it is easy to verify
+that  is a closed subset of  (endowed with the Euclidean topology). Note, however, that  need not be compact. Next, the
+second condition follows directly from the second condition in Lemma 11. To establish the third condition, note that if   co()
+has  = - for some    , then for any   (),
+
+        
+                 () = -,
+
+           
+
+and hence  (, ) = 0. Thus, if  = , then  (, ) = 0 for all   co() and   (), so Equation (18) holds trivially. In the
+alternative case of   , it is immediate that Equations (18) and (19) are equivalent.
+
+    To verify the fourth condition, fix any   (). Note that the mapping
+              
+
+              ()
+
+                  
+
+is continuous, nondecreasing, and linear. Therefore, the mapping    (, ) is continuous, nondecreasing, quasiconcave, and qua-
+siconvex (though it is obviously no longer linear). 
+
+    To apply the minimax theorem, we need the set over which the supremum is being taking to be closed an convex. That is, we
+will want to show that we can replace co() with cl(co()) on the left side of Equation (19) and replace  with cl(co()) on
+the right side without affecting either of these values. The next two lemmas show that this is possible for the set  and function 
+in question.
+
+Lemma 13. Suppose    is closed, and suppose there exists    such that    for all    and    . Then, for any   cl(co( ))
+there exists   co( ) such that    (that is,    for all    ).
+
+Proof. Suppose   cl(co( )). There exists a sequence () in co( ) such that   . Let  be the cardinality of the set  . By
+Caratheodory's Convexity Theorem (Theorem 5.32 in Aliprantis and Border (2006)), every element of co( ) can be written as a
+convex combination of at most  + 1 vectors from  . Therefore, each  can be written as
+
+               +1
+         = ,
+
+                    =1
+
+                                                                                                             30
+P. Sadowski and T. Sarver                                                                                            Journal of Economic Theory 218 (2024) 105840
+
+where    for all    and   {1, ... ,  + 1}, and  = (1 , ... , +1)  [0, 1]+1 satisfies 1 +  + +1 = 1 for all   . Since
+[0, 1]+1 is compact, () has a convergent subsequence. With slight abuse of notation, denote this subsequence again by (). That
+                                                                    for some  = (1, ... , +1)  [0, 1]+1.
+is,  we can assume  without loss of generality      that            all  such that  > 0. For suppose to the          contrary that () is unbounded.
+     We claim that  the sequence () in  is          bounded for     there exists some subsequence ( ) and            some dimension    such that
+
+Then, since  is bounded above by , this would imply
+
+,  -. However, since  > 0 and ,   for all , this implies ,  -, contradicting the fact that this subsequence
+converges to   . Thus, () must be bounded.
+    Therefore, by passing to subsequences if necessary,         it  is  without    loss  of  generality  to  assume  that  ( )  converges  for  all    for  which
+
+ > 0. Denote the limits of these sequences by  , respectively, and let
+
+      =                      .
+
+         {1,...,+1}
+                >0
+
+Since  is closed, each of these  is in  , and hence   co( ). Now, for every    and    ,
+
+     , =                      , +                    ,                          , +                       ,
+
+          {1,...,+1}                 {1,...,+1}               {1,...,+1}                 {1,...,+1}
+
+               >0                            =0                      >0                       =0
+
+since ,  . Taking limits, the left side of this inequality converges to  and the right side converges to  . Thus,   , as
+claimed. 
+
+Lemma 14. If   , Equation (19) is equivalent to the following:
+
+       sup          inf  (, ) = inf                 sup  (, ).                                                                                              (20)
+     cl(co()) ()                         () cl(co())
+
+Proof. The function  in nondecreasing in  by Lemma 12. Therefore, for any ,    and   (),    implies  (, ) 
+ (, ). Therefore,
+
+         inf  (, )  inf  (, ).
+                     ( )                     ( )
+
+Also, since  is closed and bounded above by Lemma 12, Lemma 13 implies for any   cl(co()) there exists   co() such
+that   . Therefore,
+
+       sup inf  (, ) = sup                          inf  (, ).
+     co() ()                         cl(co()) ()
+
+This establishes that the left sides of Equations (19) and (20) are the same.                any          co().      Thus,    =             for  some         
+    To see that the right sides of these equations are also the same, first fix
+                                                                                                                                    =1
+and   ,   {1, ... , }. Since for any   (), the mapping    (, ) is quasiconvex by Lemma 12, this implies that
+ ()   ( ) for some . Therefore,
+
+     sup  (, ) = sup  (, )
+
+                           co( )
+
+for every   (). By the same arguments used above, it is also true that
+
+       sup  (, ) = sup  (, ).
+
+     co( )                 cl(co( ))
+
+Combining these observations, we see that the right sides of Equations (19) and (20) are the same. 
+
+    We are almost ready to apply the minimax theorem to prove that Equation (20) holds whenever   . First, the following
+lemma will be used to establish some of the necessary properties of the mapping    (, ).
+
+Lemma 15. Suppose      is measurable and bounded, and fix any   (). Then, for any ,   (), the mapping
+
+                                                           (                   )))
+                                                    exp( 
+         max  0,               (  +  (1  -  )    )                  +   (1  -
+                    
+                                                 
+                    
+
+is quasiconvex and lower semicontinuous on the interval [0, 1].
+
+                                                                               31
+P. Sadowski and T. Sarver                                                                      Journal of Economic Theory 218 (2024) 105840
+
+Proof. Our proof will make use of the Donsker­Varadhan variational formula (see, for example, Lemma 1.4.3 in Dupuis and Ellis
+(1997)), which states that for any ,   (),
+
+                                                               
+                                                  exp( )  ,
+(            )  =    sup             -   ln  
+
+                      ()                     
+
+where () denotes the space of all bounded Borel measurable real functions on . Therefore,
+
+                                     (            )
+exp((  )) = sup exp    ,
+                            ()  exp( ) 
+
+and hence
+
+                                                     {                   (          )    }
+                                                      0, sup exp      
+                           
+max        0,          exp((  )) = max                                                      .
+                                                                          exp( ) 
+                                                          ()
+                
+
+We will show for any ,   (),   (), and ,   (), the function   [0, 1]   defined by
+
+                               
+                               
+               exp                  ( + (1 - ))
+
+()         =                     
+
+                      exp( ) ( + (1 - ))
+
+                     
+
+is quasiconvex and lower semicontinuous. This will establish the claim in the statement of the lemma, since the supremum of a set
+
+of quasiconvex and lower semicontinuous functions retains these properties.
+
+    Continuity of the function  in  is immediate. To see that  is quasiconvex, fix any    and fix any 1, 2  [0, 1] such that
+(1)   and (2)  . Suppose without loss of generality that 1  2. We need to show that ()   for any   (1, 2). Note
+that ()   is equivalent to
+
+                      
+                  
+exp                           ( + (1 - ))                      exp( ) ( + (1 - )).
+
+                                                         
+
+Any   (1, 2) can be written as 1 + (1 - )2 for  = (2 - )(2 - 1). Therefore, we have
+
+                      
+                  
+exp                           ( + (1 - ))
+
+                      
+
+                                                                                       
+                                                                                  
+=          exp                       (1    +  (1  -  1)  )  +  (1  -  )  exp              (2 + (1 - 2))
+
+                                                                                       
+
+   exp( ) (1 + (1 - 1)) + (1 - )  exp( ) (2 + (1 - 2))
+
+                                                               
+
+         =   exp( ) ( + (1 - )),
+
+                  
+
+which implies ()  . This establishes that  is quasiconvex, which completes the proof. 
+
+    The following lemma applies Theorem 3 to prove that Equation (20) holds whenever   . In light of Lemmas 10, 11, 12, and
+14, this will establish Equation (14) and complete the proof of Proposition 5.
+
+Lemma 16. If   , then Equation (20) is satisfied.
+
+Proof. We only need to establish that the assumptions of Theorem 3 are satisfied for the sets  = cl(co()),  = (), and for
+the function  defined above.
+
+    Note that  is a closed and convex subset of  by definition. It is also straightforward to show that the set  is convex. To see
+
+that condition 1 of Theorem 3 is satisfied, recall that for any   , the mapping    (, ) is continuous and quasiconcave on 
+
+by Lemma 12.
+
+                                                                                32
+P. Sadowski and T. Sarver                                                                         Journal of Economic Theory 218 (2024) 105840
+
+Next, fix any    and define      by43
+
+       () =           
+                             [(, )  ] (|).
+                    
+                      
+
+Then, for any   (),
+
+                                         (     )
+                                  exp(         )
+       max    0,                            
+                  
+                              
+                  
+
+                                                                                     (     )
+                                                                           )  exp(         )
+              = max 0,×                     [(,  )    ]       (    )(,                  
+
+                                                                           
+
+                      {                            }         (         )
+                           0,     ()                  exp(              )
+              = max                                                  
+
+                              
+
+              =  (, ).
+
+Therefore, Lemma 15 applied to this random variable  and to  =  implies that for any ,   , the mapping    (,  + (1 -
+)) is quasiconvex and lower semicontinuous on [0, 1]. Thus, condition 2 of Theorem 3 are satisfied.
+
+    Finally, we show that either condition 3 of Theorem 3 holds for  = {} and some  > 0, or Equation (20) holds trivially with
+both sides of the equality equal to zero. Thus, there are two cases to consider. The first case is when
+
+         inf sup  (, ) > 0.
+
+            
+
+In this case, fix any  > 0 that is strictly less than this value and take  = {}. The set
+
+          {     (, )  }
+is closed since  is closed and  is continuous in . Given this, and since  is a subset of the finite-dimensional Euclidean space  ,
+the set  is compact if and only if it is bounded. By Lemma 12, there exists    such that    for all    and    . Let
+
+           min    ()       >  0.
+
+           
+
+Then, for any    and    ,
+
+              ( )  () + (1 - ())   + (1 - ).
+
+        
+
+Thus,  since    (      )      =0     and  since    > 0,  for  any          and      ,   we  have
+               
+
+                               
+       0 <    (, ) = ( )   + (1 - )
+
+                                       
+
+                  >   -  (1  -    )  .
+                              
+
+Therefore, the set  is bounded above by  and bounded below by -(1 - ). This implies that  is bounded, hence compact.
+Thus, all of the conditions of Theorem 3 are satisfied, so we can conclude that Equation (20) holds.
+
+The second case is when
+
+         inf sup  (, ) = 0.
+
+            
+
+In this case, since   0 and since
+
+       sup inf  (, )  inf sup  (, ),
+                               
+
+Equation (20) must hold with both sides equal to zero. Thus, in either case, the equation is satisfied. This completes the proof. 
+
+ 43 Note that the sets {    (, )  } are measurable for each    and    by Lemma 4.46 in Aliprantis and Border (2006), and hence the function being
+integrated is indeed measurable.
+
+                                                                                                             33
+P. Sadowski and T. Sarver                                               Journal of Economic Theory 218 (2024) 105840
+
+Appendix B. Overlap between divergence and RDU preferences
+
+    As we noted in Section 5.2, while the class of divergence preferences is generally distinct from the class of rank-dependent utility
+preferences, there is some overlap, as the following claim demonstrates.
+
+Claim 5. Define  as in Example 2 for some 0   < 1 < , and define  as in Claim 1. Fix any  satisfying the assumptions of Proposition 2.
+
+Then, for any simple act     ,
+
+       [                            ]
+
+  inf        () () + ((  ))            =  max     ( ()) () =    (,)(),
+
+ ( )                                       
+
+                                                            
+
+where   +  [0, ] is defined by () = 0 for   [, ] and () =  otherwise.
+
+    Note that the divergence (  ) defined in Claim 5 takes only the values 0 and +, so the equality in the claim holds for any
+admissible function  (since we must have (0) = 0 and () = ).
+
+Proof. Define  by () = 0 if   [, ] and () =  otherwise. It is standard that the Fenchel conjugate of  (see Equation (9)) is
+
+     defined by
+
+                  {
+        () =  if   0
+
+                       if  > 0
+
+Notice also that for this function, we have ()() = () for all   0, so the formula for , in Proposition 3 reduces to
+
+ ,  ()  =   -  (  -  )  -  ()
+           {
+             + ( - ) - ()
+        =  + ( - ) - ()             if  < 
+                                    if   
+
+for all   0. Since min0 () = 0 (e.g., (0) = 0 if we take () = 0 for   0), maximization over  eliminates this term, and this
+family of fitness functions reduces to the parametric class  from Example 2. 
+
+Appendix C. Supplementary material
+
+Supplementary material related to this article can be found online at https://doi.org/10.1016/j.jet.2024.105840.
+
+References
+
+Abdellaoui, M., Baillon, A., Placido, L., Wakker, P.P., 2011. The rich domain of uncertainty: source functions and their experimental implementation. Am. Econ.
+     Rev. 101, 695­723.
+
+Aliprantis, C., Border, K., 2006. Infinite Dimensional Analysis, 3rd ed. Springer-Verlag, Berlin, Germany.
+Allais, M., 1953. Le Comportement de l'Homme Rationnel devant le Risque: Critique des Postulats et Axioms de l'Ecole Americaine. Econometrica 21, 503­546.
+Athreya, K.B., Ney, P.E., 1972. Branching Processes. Springer-Verlag, New York.
+Ben-Tal, A., Teboulle, M., 1987. Penalty functions and duality in stochastic programming via -divergence functionals. Math. Oper. Res. 12, 224­240.
+Ben-Tal, A., Teboulle, M., 2007. An old-new concept of convex risk measures: the optimized certainty equivalent. Math. Finance 17, 449­476.
+Bianchi, F., Ilut, C.L., Schneider, M., 2018. Uncertainty shocks, asset supply and pricing over the business cycle. Rev. Econ. Stud. 85, 810­854.
+Börgers, T., Sarin, R., 1997. Learning through reinforcement and replicator dynamics. J. Econ. Theory 77, 1­14.
+Borwein, J.M., Lewis, A.S., 1992. Partially finite convex programming, Part I: quasi relative interiors and duality theory. Math. Program. 57, 15­48.
+Cerreia-Vioglio, S., Maccheroni, F., Marinacci, M., Montrucchio, L., 2011. Uncertainty averse preferences. J. Econ. Theory 146, 1275­1330.
+Chapman, J., Dean, M., Ortoleva, P., Snowberg, E., Camerer, C., 2019. Econographics. Working paper.
+Chateauneuf, A., Faro, J.H., 2009. Ambiguity through confidence functions. J. Math. Econ. 45, 535­558.
+Chateauneuf, A., Faro, J.H., 2012. On the confidence preferences model. Fuzzy Sets Syst. 188, 1­15.
+Chatterjee, K., Krishna, R.V., 2011. A nonsmooth approach to nonexpected utility theory under risk. Math. Soc. Sci. 62, 166­175.
+Chetty, R., Szeidl, A., 2007. Consumption commitments and risk preferences. Q. J. Econ. 122, 831­877.
+Chetty, R., Szeidl, A., 2016. Consumption commitments and habit formation. Econometrica 84, 855­890.
+Chew, S.H., Karni, E., Safra, Z., 1987. Risk aversion in the theory of expected utility with rank dependent probabilities. J. Econ. Theory 42, 370­381.
+Combari, C., Laghdir, M., Thibault, L., 1996. A note on subdifferentials of convex composite functionals. Arch. Math. 67, 239­252.
+Cover, T.M., Thomas, J.A., 2006. Elements of Information Theory, 3nd ed. John Wiley & Sons, Hoboken, New Jersey.
+Dean, M., Ortoleva, P., 2017. Allais, Ellsberg, and preferences for hedging. Theor. Econ. 12, 377­424.
+Dean, M., Ortoleva, P., 2019. The empirical relationship between nonstandard economic behaviors. Proc. Natl. Acad. Sci. USA 116, 16262­16267.
+Dow, J., Werlang, S.R., 1992. Uncertainty aversion, risk aversion, and the optimal choice of portfolio. Econometrica 60, 197­204.
+Dudley, R.M., 2002. Real Analysis and Probability, 2nd ed. Cambridge University Press, Cambridge, United Kingdom.
+Dupuis, P., Ellis, R.S., 1997. A Weak Convergence Approach to the Theory of Large Deviations. John Wiley & Sons, New York.
+Ellsberg, D., 1961. Risk, ambiguity, and the savage axioms. Q. J. Econ. 75, 643­669.
+Epstein, L.G., Wang, T., 1994. Intertemporal asset pricing under Knightian uncertainty. Econometrica 62, 283­322.
+Ergin, H., Gul, F., 2009. A theory of subjective compound lotteries. J. Econ. Theory 144, 899­929.
+Ergin, H., Sarver, T., 2015. Hidden actions and preferences for timing of resolution of uncertainty. Theor. Econ. 10, 489­541.
+Friedman, M., 1953. The methodology of positive economics. In: Friedman, M. (Ed.), Essays in Positive Economics. University of Chicago Press.
+
+                                                 34
+P. Sadowski and T. Sarver      Journal of Economic Theory 218 (2024) 105840
+
+Gabaix, X., Laibson, D., 2001. The 6D bias and the equity-premium puzzle. NBER Macroecon. Annu. 16, 257­312.
+Gilboa, I., Schmeidler, D., 1989. Maxmin expected utility with non-unique prior. J. Math. Econ. 18, 141­153.
+Grossman, S.J., Laroque, G., 1990. Asset pricing and optimal portfolio choice in the presence of illiquid durable consumption goods. Econometrica 58, 25­51.
+Halevy, Y., Feltkamp, V., 2005. A Bayesian approach to uncertainty aversion. Rev. Econ. Stud. 72, 449­466.
+Hansen, L.P., Sargent, T.J., 2001. Robust control and model uncertainty. Am. Econ. Rev. 91, 60­66.
+Hansen, L.P., Sargent, T.J., 2008. Robustness. Princeton University Press.
+Hiriart-Urruty, J.-B., 2006. A note on the Legendre-Fenchel transform of convex composite functions. In: Alart, P., Maisonneuve, O., Rockafellar, R.T. (Eds.), Nons-
+
+     mooth Mechanics and Analysis. Springer, pp. 35­46.
+Ilut, C.L., Schneider, M., 2014. Ambiguous business cycles. Am. Econ. Rev. 104, 2368­2399.
+Izhakian, Y., 2017. Expected utility with uncertain probabilities theory. J. Math. Econ. 69, 91­103.
+Klibanoff, P., Marinacci, M., Mukerji, S., 2005. A smooth model of decision making under ambiguity. Econometrica 73, 1849­1892.
+Kreps, D.M., Porteus, E.L., 1979. Temporal von Neumann-Morgenstern and induced preferences. J. Econ. Theory 20, 81­109.
+Kutateladze, S.S., 1979. Convex Operators. Russian Mathematical Surveys, vol. 34, pp. 181­214.
+Maccheroni, F., Marinacci, M., Rustichini, A., 2006. Ambiguity aversion, robustness, and the variational representation of preferences. Econometrica 74, 1447­1498.
+Machina, M.J., 1984. Temporal risk and the nature of induced preferences. J. Econ. Theory 33, 199­231.
+Marinacci, M., 2015. Model uncertainty. J. Eur. Econ. Assoc. 13, 1022­1100.
+Markowitz, H.M., 1959. Portfolio Selection, Efficent Diversification of Investments. John Wiley and Sons, New York.
+Mossin, J., 1969. A note on uncertainty and preferences in a temporal context. Am. Econ. Rev. 59, 172­174.
+Nau, R.F., 2006. Uncertainty aversion with second-order utilities and probabilities. Manag. Sci. 52, 136­145.
+Nelson, R.R., Winter, S.G., 1982. An Evolutionary Theory of Economic Change. Harvard University Press.
+Robatto, R., Szentes, B., 2017. On the biological foundation of risk preferences. J. Econ. Theory 172, 410­422.
+Robson, A.J., 1996. A biological basis for expected and non-expected utility. J. Econ. Theory 68, 397­424.
+Robson, A.J., Samuelson, L., 2011. The evolutionary foundations of preferences. In: Handbook of Social Economics, vol. 1. Elsevier, pp. 221­310.
+Robson, A.J., Samuelson, L., 2019. Evolved attitudes to idiosyncratic and aggregate risk in age-structured populations. J. Econ. Theory 181, 44­81.
+Rockafellar, R.T., 1968. Integrals which are convex functionals. Pac. J. Math. 24, 525­539.
+Sarver, T., 2018. Dynamic mixture-averse preferences. Econometrica 86, 1347­1382.
+Schlag, K.H., 1998. Why imitate, and if so, how?: A boundedly rational approach to multi-armed bandits. J. Econ. Theory 78, 130­156.
+Segal, U., 1987. The Ellsberg paradox and risk aversion: an anticipated utility approach. Int. Econ. Rev. 28, 175­202.
+Sion, M., 1958. On general minimax theorems. Pac. J. Math. 8, 171­176.
+Spence, M., Zeckhauser, R., 1972. The effect of the timing of consumption decisions and the resolution of lotteries on the choice of lotteries. Econometrica 40,
+
+     401­403.
+Strzalecki, T., 2011. Axiomatic foundations of multiplier preferences. Econometrica 79, 47­73.
+Tuy, H., 2004. Minimax theorems revisited. Acta Math. Vietnam. 29, 217­229.
+von Neumann, J., 1928. Zur Theorie der Gesellschaftsspiele. Math. Ann. 100, 295­320.
+Wakker, P., 1994. Separating marginal utility and probabilistic risk aversion. Theory Decis. 36, 1­44.
+Yaari, M.E., 1987. The dual theory of choice under risk. Econometrica 55, 95­115.
+
+                           35
+

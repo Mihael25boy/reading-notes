@@ -1,0 +1,510 @@
+% ====================================================================
+% Bergin: Mathematics for Economists / 经济学家数学基础
+% Chapters 1–3: Introduction, Matrices and Systems of Equations,
+%                Linear Algebra: Applications
+% Bilingual edition (English + Chinese)
+% ====================================================================
+
+% ====================================================================
+\chapter{Introduction / 绪论}
+% ====================================================================
+
+% -------------------------------------------------------------------
+\section{Introduction / 绪论}
+% -------------------------------------------------------------------
+
+\begin{original}
+This introductory chapter provides an overview of the mathematical
+tools that will be developed in the text.  The focus is on those areas
+of mathematics most relevant to economic analysis: linear algebra,
+multivariate calculus, optimization, and dynamics.
+\end{original}
+\begin{translation}
+本章为绪论，概述本书将要展开的数学工具。重点放在与经济分析最为相关的
+数学领域：线性代数、多元微积分、最优化以及动态分析。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{A Brief Summary by Chapter / 各章内容简介}
+% -------------------------------------------------------------------
+
+\begin{original}
+A brief summary by chapter is provided to guide the reader through the
+structure of the book.  Each chapter builds on material developed
+earlier, so the ordering is important for those reading the book
+sequentially.
+\end{original}
+\begin{translation}
+本节提供各章内容简介，帮助读者把握全书的整体结构。各章内容以前面章节
+为基础逐步展开，因此对于按顺序阅读的读者而言，章节的编排顺序很重要。
+\end{translation}
+
+
+% ====================================================================
+\chapter{Matrices and Systems of Equations / 矩阵与方程组}
+% ====================================================================
+
+% -------------------------------------------------------------------
+\section{Introduction / 引言}
+% -------------------------------------------------------------------
+
+\begin{original}
+This chapter introduces matrices and their use in representing and
+solving systems of linear equations.  Linear equations and matrix
+algebra are fundamental tools in economic modelling, appearing in
+everything from simple supply-and-demand models to sophisticated
+econometric estimation.
+\end{original}
+\begin{translation}
+本章介绍矩阵及其在表示与求解线性方程组中的应用。线性方程与矩阵代数
+是经济建模的基本工具，从简单的供需模型到复杂的计量经济学估计，
+到处都有它们的身影。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Some Motivating Examples / 若干引例}
+% -------------------------------------------------------------------
+
+\begin{original}
+We begin with several simple economic examples that illustrate why
+matrices and systems of linear equations arise naturally.  These
+examples include a simple market equilibrium problem, a national-income
+model, and an input–output production model.
+\end{original}
+\begin{translation}
+我们从几个简单的经济学例子入手，说明矩阵与线性方程组何以自然地出现。
+这些例子包括一个简单的市场均衡问题、一个国民收入模型以及一个
+投入—产出生产模型。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Vectors / 向量}
+% -------------------------------------------------------------------
+
+\begin{original}
+Vectors are ordered lists of numbers.  Geometrically, a vector can be
+viewed as a point or a directed line segment in $n$-dimensional space.
+Algebraically, vectors are the building blocks of matrix operations.
+\end{original}
+\begin{translation}
+向量是有序数组。从几何上看，向量可视为 $n$ 维空间中的一个点或一条
+有向线段。从代数上看，向量是矩阵运算的基本构件。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Matrices / 矩阵}
+% -------------------------------------------------------------------
+
+\begin{original}
+A matrix is a rectangular array of numbers.  The size or order of a
+matrix is given by the number of rows and columns it contains.  An
+$m \times n$ matrix has $m$ rows and $n$ columns.
+\end{original}
+\begin{translation}
+矩阵是一个矩形的数表。矩阵的大小或阶由其行数和列数决定。
+一个 $m \times n$ 矩阵有 $m$ 行和 $n$ 列。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Matrix Addition and Subtraction / 矩阵加法与减法}
+% -------------------------------------------------------------------
+
+\begin{original}
+Two matrices of the same dimension can be added (or subtracted) by
+adding (or subtracting) corresponding entries.  If $A$ and $B$ are both
+$m \times n$, then $C = A + B$ is also $m \times n$, with
+$c_{ij} = a_{ij} + b_{ij}$.
+\end{original}
+\begin{translation}
+两个维数相同的矩阵可以通过对应元素相加（或相减）来进行加法
+（或减法）运算。若 $A$ 与 $B$ 均为 $m \times n$ 矩阵，则
+$C = A + B$ 也是 $m \times n$ 矩阵，且 $c_{ij} = a_{ij} + b_{ij}$。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Matrix Multiplication / 矩阵乘法}
+% -------------------------------------------------------------------
+
+\begin{original}
+The product $C = AB$ is defined when the number of columns of $A$
+equals the number of rows of $B$.  If $A$ is $m \times r$ and $B$ is
+$r \times n$, then $C$ is $m \times n$ with entries
+$c_{ij} = \sum_{k=1}^{r} a_{ik} b_{kj}$.
+\end{original}
+\begin{translation}
+当 $A$ 的列数等于 $B$ 的行数时，乘积 $C = AB$ 有定义。若 $A$ 为
+$m \times r$ 矩阵，$B$ 为 $r \times n$ 矩阵，则 $C$ 为 $m \times n$
+矩阵，其元素为 $c_{ij} = \sum_{k=1}^{r} a_{ik} b_{kj}$。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Matrix Transpose / 矩阵转置}
+% -------------------------------------------------------------------
+
+\begin{original}
+The transpose of an $m \times n$ matrix $A$, denoted $A'$ or $A^{T}$,
+is the $n \times m$ matrix obtained by interchanging rows and columns:
+$(A')_{ij} = A_{ji}$.
+\end{original}
+\begin{translation}
+$m \times n$ 矩阵 $A$ 的转置，记作 $A'$ 或 $A^{T}$，是一个
+$n \times m$ 矩阵，通过互换行与列得到：$(A')_{ij} = A_{ji}$。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Matrix Inversion / 矩阵求逆}
+% -------------------------------------------------------------------
+
+\begin{original}
+A square matrix $A$ is invertible (or nonsingular) if there exists a
+matrix $A^{-1}$ such that $AA^{-1} = A^{-1}A = I$, where $I$ is the
+identity matrix.  Not every square matrix has an inverse; those that
+do not are called singular.
+\end{original}
+\begin{translation}
+若存在矩阵 $A^{-1}$ 使得 $AA^{-1} = A^{-1}A = I$（其中 $I$ 为单位矩阵），
+则方阵 $A$ 可逆（或称非奇异）。并非每个方阵都有逆矩阵；没有逆矩阵的
+方阵称为奇异矩阵。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Additional Remarks on Determinants / 关于行列式的补充说明}
+% -------------------------------------------------------------------
+
+\begin{original}
+The determinant of a square matrix, denoted $\det(A)$ or $|A|$, is a
+scalar that provides information about the matrix.  A square matrix is
+invertible if and only if its determinant is nonzero.  The determinant
+also has a geometric interpretation as the volume scaling factor of the
+linear transformation represented by the matrix.
+\end{original}
+\begin{translation}
+方阵的行列式，记作 $\det(A)$ 或 $|A|$，是一个能够提供矩阵信息的标量。
+方阵可逆当且仅当其行列式非零。行列式还具有几何解释，即矩阵所表示的
+线性变换的体积缩放因子。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Cramer's Rule / 克莱姆法则}
+% -------------------------------------------------------------------
+
+\begin{original}
+Cramer's rule gives an explicit formula for the solution of a system of
+$n$ linear equations in $n$ unknowns, provided the coefficient matrix
+has nonzero determinant.  The $i$-th variable is $x_i = |A_i|/|A|$,
+where $A_i$ is the matrix obtained by replacing the $i$-th column of
+$A$ with the right-hand-side vector $b$.
+\end{original}
+\begin{translation}
+克莱姆法则给出了 $n$ 个方程 $n$ 个未知数的线性方程组解的显式公式，
+前提是系数矩阵的行列式非零。第 $i$ 个变量为 $x_i = |A_i|/|A|$，
+其中 $A_i$ 是将 $A$ 的第 $i$ 列替换为右端向量 $b$ 后得到的矩阵。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Gaussian Elimination / 高斯消元法}
+% -------------------------------------------------------------------
+
+\begin{original}
+Gaussian elimination is a systematic procedure for solving systems of
+linear equations by reducing the augmented matrix to row-echelon form
+(or reduced row-echelon form) through a sequence of elementary row
+operations.
+\end{original}
+\begin{translation}
+高斯消元法是一种求解线性方程组的系统化方法，通过一系列初等行变换
+将增广矩阵化为行阶梯形（或简化行阶梯形）。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Linear Dependence and Independence / 线性相关与线性无关}
+% -------------------------------------------------------------------
+
+\begin{original}
+A set of vectors $\{v_1, v_2, \ldots, v_k\}$ is linearly dependent if
+there exist scalars $c_1, c_2, \ldots, c_k$, not all zero, such that
+$c_1 v_1 + c_2 v_2 + \cdots + c_k v_k = 0$.  Otherwise the vectors are
+linearly independent.
+\end{original}
+\begin{translation}
+向量组 $\{v_1, v_2, \ldots, v_k\}$ 称为线性相关的，若存在不全为零的
+标量 $c_1, c_2, \ldots, c_k$ 使得
+$c_1 v_1 + c_2 v_2 + \cdots + c_k v_k = 0$。
+否则，这些向量是线性无关的。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Matrix Rank and Linear Independence / 矩阵的秩与线性无关性}
+% -------------------------------------------------------------------
+
+\begin{original}
+The rank of a matrix is the maximum number of linearly independent
+rows (or columns) in the matrix.  Row rank and column rank are always
+equal.  The rank provides information about the dimension of the
+solution space of the associated homogeneous system.
+\end{original}
+\begin{translation}
+矩阵的秩是矩阵中线性无关行（或列）的最大数目。行秩与列秩始终相等。
+秩提供了关于相应齐次方程组解空间维数的信息。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Solutions of Systems of Equations / 方程组的解}
+% -------------------------------------------------------------------
+
+\begin{original}
+A system of linear equations may have no solution, exactly one
+solution, or infinitely many solutions.  The existence and uniqueness
+of solutions depend on the relationship between the rank of the
+coefficient matrix and the rank of the augmented matrix.
+\end{original}
+\begin{translation}
+一个线性方程组可能无解，恰有一解，或有无穷多解。解的存在性与唯一性
+取决于系数矩阵的秩与增广矩阵的秩之间的关系。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Solving Systems of Equations: A Geometric View / 方程组求解：几何视角}
+% -------------------------------------------------------------------
+
+\begin{original}
+Geometrically, a system of linear equations can be viewed as the
+intersection of hyperplanes.  Each equation defines a hyperplane, and
+the solution set is the intersection of all these hyperplanes.  This
+geometric perspective helps in understanding the possible solution
+configurations.
+\end{original}
+\begin{translation}
+从几何上看，线性方程组可视为超平面的交。每个方程定义一个超平面，
+解集就是所有这些超平面的交集。这一几何视角有助于理解可能的解的
+各种情形。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Solutions of Equation Systems: Rank and Linear Independence / 方程组的解：秩与线性无关性}
+% -------------------------------------------------------------------
+
+\begin{original}
+The solution structure of $Ax = b$ is determined by the rank of $A$ and
+the rank of the augmented matrix $[A \mid b]$.  When these ranks are
+equal, solutions exist; the difference between the number of unknowns
+and the rank gives the dimension of the solution space for the
+homogeneous system.
+\end{original}
+\begin{translation}
+$Ax = b$ 的解的结构由 $A$ 的秩和增广矩阵 $[A \mid b]$ 的秩决定。
+当这两个秩相等时，解存在；未知数个数与秩的差给出了齐次方程组解空间
+的维数。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Special Matrices / 特殊矩阵}
+% -------------------------------------------------------------------
+
+\begin{original}
+Several classes of matrices have special properties that are useful in
+economic applications: symmetric matrices ($A' = A$), idempotent
+matrices ($A^2 = A$), orthogonal matrices ($A'A = I$), diagonal
+matrices, triangular matrices, and positive definite matrices.
+\end{original}
+\begin{translation}
+有几类矩阵因其特殊性质在经济应用中非常有用：对称矩阵 ($A' = A$)、
+幂等矩阵 ($A^2 = A$)、正交矩阵 ($A'A = I$)、对角矩阵、三角矩阵
+以及正定矩阵。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section*{Exercises for Chapter 2 / 第 2 章习题}
+% -------------------------------------------------------------------
+
+\begin{original}
+Exercises for Chapter 2 cover matrix operations, determinants, solving
+systems of equations using Gaussian elimination and Cramer's rule,
+linear dependence, rank, and special matrices.
+\end{original}
+\begin{translation}
+第 2 章习题涵盖矩阵运算、行列式、运用高斯消元法和克莱姆法则求解
+方程组、线性相关性、秩以及特殊矩阵等内容。
+\end{translation}
+
+
+% ====================================================================
+\chapter{Linear Algebra: Applications / 线性代数：应用}
+% ====================================================================
+
+% -------------------------------------------------------------------
+\section{Introduction / 引言}
+% -------------------------------------------------------------------
+
+\begin{original}
+This chapter applies the linear-algebra techniques developed in
+Chapter~2 to several economic problems.  The applications range from
+market models and production analysis to dynamic models of inflation
+and econometric estimation.
+\end{original}
+\begin{translation}
+本章将第 2 章展开的线性代数工具应用于若干经济问题。应用范围涵盖市场
+模型和生产分析，以及通货膨胀动态模型与计量经济学估计。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{The Market Model / 市场模型}
+% -------------------------------------------------------------------
+
+\begin{original}
+A simple linear market model expresses supply and demand as linear
+functions of price.  The equilibrium price vector solves a system of
+linear equations.  Matrix algebra provides a compact and powerful
+framework for analysing multi-market equilibrium.
+\end{original}
+\begin{translation}
+简单的线性市场模型将供给和需求表示为价格的线性函数。均衡价格向量是
+一组线性方程组的解。矩阵代数为分析多市场均衡提供了一个紧凑而强大的
+框架。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Adjacency Matrices / 邻接矩阵}
+% -------------------------------------------------------------------
+
+\begin{original}
+An adjacency matrix represents the connections in a network or graph.
+In economics, adjacency matrices appear in the analysis of social
+networks, trade linkages, and industrial organisation.  Powers of the
+adjacency matrix give information about indirect connections.
+\end{original}
+\begin{translation}
+邻接矩阵表示网络或图中的连接关系。在经济学中，邻接矩阵出现在社会网络、
+贸易关联和产业组织分析中。邻接矩阵的幂提供了关于间接连接的信息。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Input--Output Analysis / 投入—产出分析}
+% -------------------------------------------------------------------
+
+\begin{original}
+Input–output analysis, developed by Wassily Leontief, describes the
+interdependence among the different sectors of an economy.  The
+input–output matrix records the flows of goods between sectors.  The
+Leontief inverse $(I - A)^{-1}$ is central to computing the total
+(direct and indirect) requirements needed to meet a given final demand.
+\end{original}
+\begin{translation}
+投入—产出分析由 Wassily Leontief 提出，描述了经济中不同部门之间的
+相互依赖关系。投入—产出矩阵记录了部门间商品的流动。Leontief 逆矩阵
+$(I - A)^{-1}$ 对于计算满足给定最终需求所需的总（直接和间接）需求
+是核心的。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Inflation and Unemployment Dynamics / 通货膨胀与失业动态}
+% -------------------------------------------------------------------
+
+\begin{original}
+Dynamic models of inflation and unemployment can be written as systems
+of linear difference equations.  The long-run behaviour of the system
+depends on the eigenvalues of the coefficient matrix.  This section
+shows how matrix methods illuminate the dynamics of macroeconomic
+variables.
+\end{original}
+\begin{translation}
+通货膨胀与失业的动态模型可以写成线性差分方程组的形式。系统的长期行为
+取决于系数矩阵的特征值。本节展示矩阵方法如何揭示宏观经济变量的动态
+特征。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Stationary (Invariant) Distributions / 平稳（不变）分布}
+% -------------------------------------------------------------------
+
+\begin{original}
+A stationary (or invariant) distribution of a Markov chain is a
+probability distribution $\pi$ satisfying $\pi P = \pi$, where $P$ is
+the transition matrix.  Such distributions describe the long-run
+behaviour of the chain and are important in many economic applications,
+including income mobility and firm-size dynamics.
+\end{original}
+\begin{translation}
+马尔可夫链的平稳（或不变）分布是一个概率分布 $\pi$，满足
+$\pi P = \pi$，其中 $P$ 为转移矩阵。这类分布描述了链的长期行为，
+在许多经济应用中都很重要，包括收入流动性和企业规模动态。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Convergence to a Stationary Distribution / 收敛到平稳分布}
+% -------------------------------------------------------------------
+
+\begin{original}
+Under appropriate conditions (irreducibility and aperiodicity), a
+Markov chain converges to its unique stationary distribution regardless
+of the initial distribution.  The speed of convergence is governed by
+the second-largest eigenvalue of the transition matrix.
+\end{original}
+\begin{translation}
+在适当的条件（不可约性和非周期性）下，马尔可夫链无论从何种初始分布
+出发，都会收敛到其唯一的平稳分布。收敛速度由转移矩阵的第二大特征值
+决定。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Computation of the Invariant Distribution / 不变分布的计算}
+% -------------------------------------------------------------------
+
+\begin{original}
+The invariant distribution can be computed by solving the linear system
+$\pi (I - P) = 0$ subject to the normalisation constraint
+$\sum_i \pi_i = 1$.  Standard matrix methods, including Gaussian
+elimination, can be used to find $\pi$.
+\end{original}
+\begin{translation}
+不变分布可以通过求解线性方程组 $\pi (I - P) = 0$ 并附加归一化约束
+$\sum_i \pi_i = 1$ 来计算。标准矩阵方法，包括高斯消元法，可用于
+求出 $\pi$。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section{Econometrics / 计量经济学}
+% -------------------------------------------------------------------
+
+\begin{original}
+Linear algebra is the mathematical foundation of econometrics.  The
+linear regression model $y = X\beta + \varepsilon$ is expressed in
+matrix notation, and the least-squares estimator is derived using
+matrix differentiation and projection.
+\end{original}
+\begin{translation}
+线性代数是计量经济学的数学基础。线性回归模型 $y = X\beta + \varepsilon$
+用矩阵记号表示，最小二乘估计量则通过矩阵微分与投影推导得出。
+\end{translation}
+
+% -------------------------------------------------------------------
+\subsection{Derivation of the Least Squares Estimator / 最小二乘估计量的推导}
+% -------------------------------------------------------------------
+
+\begin{original}
+The ordinary least squares (OLS) estimator minimises the sum of squared
+residuals $e'e = (y - X\beta)'(y - X\beta)$.  The first-order
+condition yields the normal equations $X'X\hat{\beta} = X'y$, and,
+provided $X'X$ is invertible, the OLS estimator is
+$\hat{\beta} = (X'X)^{-1}X'y$.
+\end{original}
+\begin{translation}
+普通最小二乘 (OLS) 估计量极小化残差平方和
+$e'e = (y - X\beta)'(y - X\beta)$。一阶条件给出正规方程
+$X'X\hat{\beta} = X'y$，且只要 $X'X$ 可逆，OLS 估计量即为
+$\hat{\beta} = (X'X)^{-1}X'y$。
+\end{translation}
+
+% -------------------------------------------------------------------
+\section*{Exercises for Chapter 3 / 第 3 章习题}
+% -------------------------------------------------------------------
+
+\begin{original}
+Exercises for Chapter 3 cover the market model, adjacency matrices,
+input–output analysis, inflation and unemployment dynamics, stationary
+distributions, and the least-squares estimator.
+\end{original}
+\begin{translation}
+第 3 章习题涵盖市场模型、邻接矩阵、投入—产出分析、通货膨胀与失业
+动态、平稳分布以及最小二乘估计量等内容。
+\end{translation}

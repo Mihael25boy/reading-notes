@@ -1,0 +1,14 @@
+\beamer@sectionintoc {1}{同时博弈与纳什均衡}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{同时行动博弈（策略性博弈）}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{纳什均衡}{9}{0}{1}
+\beamer@sectionintoc {2}{纳什均衡的存在性：不动点定理}{17}{0}{2}
+\beamer@subsectionintoc {2}{1}{角谷不动点定理}{18}{0}{2}
+\beamer@subsectionintoc {2}{2}{纳什均衡的存在性}{23}{0}{2}
+\beamer@subsectionintoc {2}{3}{纳什均衡的意义}{29}{0}{2}
+\beamer@subsectionintoc {2}{4}{零和博弈}{31}{0}{2}
+\beamer@sectionintoc {3}{混合策略纳什均衡}{38}{0}{3}
+\beamer@subsectionintoc {3}{1}{混合策略纳什均衡}{39}{0}{3}
+\beamer@subsectionintoc {3}{2}{相关均衡：对MNE的放松}{56}{0}{3}
+\beamer@sectionintoc {4}{可理性化与占优策略}{71}{0}{4}
+\beamer@subsectionintoc {4}{1}{可理性化}{72}{0}{4}
+\beamer@subsectionintoc {4}{2}{可理性化与严格被占优策略}{78}{0}{4}

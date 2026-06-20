@@ -1,0 +1,1935 @@
+% ============================================================
+% Chapter 4: Linear Programming / 第4章：线性规划
+% Chapter 5: Functions of One Variable / 第5章：一元函数
+% Chapter 6: Functions of One Variable: Applications / 第6章：一元函数的应用
+% Bilingual edition (English + Chinese)
+% ============================================================
+
+\chapter{Linear Programming / 线性规划}
+
+\section{Introduction / 引论}
+
+\begin{original}
+Linear programming is an optimization technique for finding optimal solutions to problems where the objective and constraints are linear. In what follows, the general linear programming problem and methods of solution are described, along with various features of this class of problem. A linear program is characterized by a linear objective, linear constraints and restrictions on the signs of choice variables. Linearity of the constraint set leads to a particular geometric structure on the set possible choice variables. For low-dimensional programs this permits a graphical treatment of the problem and, more generally, the geometric structure leads naturally to an algorithmic method for finding solutions. Section 4.1 develops the basic features of a linear program. This consists of formulation of the programming problem, description of key issues in solving these programs and the valuation of resource constraints through the dual prices. A broader understanding of linear programming requires knowledge of basic solutions, which are discussed in Section 4.2. Here the geometric view described in Section 4.1 is reinterpreted in terms of equation systems. Section 4.3 describes classic results in linear programming where the original program (the primal) is related to a second program (the dual). Before developing the discussion, a simple example will illustrate how these programs arise.
+\end{original}
+\begin{translation}
+线性规划是一种最优化技术，用于求解目标函数和约束条件均为线性的问题的最优解。下面将介绍一般线性规划问题及其求解方法，以及此类问题的各种特征。线性规划的特点是：线性目标函数、线性约束条件以及对选择变量符号的限制。约束集的线性性质导致可行选择变量集具有特定的几何结构。对于低维规划，这允许对问题进行图形化处理；更一般地，这种几何结构自然地导出了一种算法求解方法。第4.1节阐述线性规划的基本特征，包括规划问题的表述、求解这些规划的关键问题以及通过对偶价格对资源约束进行估值。更深入地理解线性规划需要了解基本解的概念，这些将在第4.2节讨论。在此，第4.1节描述的几何观点将用方程组的语言重新解释。第4.3节描述线性规划的经典结果，其中原始规划（原始问题）与第二个规划（对偶问题）相关联。在展开讨论之前，先通过一个简单的例子来说明这些规划是如何产生的。
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.1:}
+\begin{original}
+A firm produces two goods, 1 and 2. Production requires the application of two techniques: processing and finishing. A unit of good 1 requires two hours of processing time and four hours of finishing time; a unit of good 2 requires three hours of processing and three hours of finishing time. The total amount of time that the processing machine can run for each day is 13 hours, while the finishing machine can run for 17 hours. Each unit of good 1 sells for \$3 and each unit of good 2 sells for \$4. The problem is to decide how much of each good should be produced to maximize revenue --- a problem that may be formulated as a linear program.
+
+Let $x$ denote the number of units of good 1 produced, and let $y$ denote the number of units of good 2 produced. Then the revenue is equal to $3x + 4y$, since each unit of 1 generates \$3 of revenue and each unit of 2 generates \$4 of revenue. This defines the linear objective. Next, $x$ units of good 1 require two hours of processing time, while $y$ units of good 2 require three hours of processing time: altogether, producing $x$ units of 1 and $y$ units of 2 requires $2x + 3y$ hours of processing time. Similarly, producing $x$ units of 1 and $y$ units of 2 requires $4x + 3y$ hours of finishing time. The total amount of processing time is 13 hours, so the production plan must satisfy $2x + 3y \le 13$, the first linear constraint, and likewise $4x + 3y \le 17$ defines the finishing constraint. Finally, negative amounts cannot be produced: $x, y \ge 0$. Putting all these conditions together, the full problem may be summarized:
+\end{original}
+\begin{translation}
+一家企业生产两种商品，商品1和商品2。生产需要两种工艺：加工和精加工。一单位商品1需要两小时加工时间和四小时精加工时间；一单位商品2需要三小时加工时间和三小时精加工时间。加工机器每天可运行的总时间为13小时，而精加工机器可运行17小时。每单位商品1售价为\$3，每单位商品2售价为\$4。问题是要决定每种商品各应生产多少以最大化收入——该问题可以表述为一个线性规划。
+
+设$x$表示商品1的产量，$y$表示商品2的产量。则收入等于$3x+4y$，因为每单位商品1产生\$3收入，每单位商品2产生\$4收入。这定义了线性目标。接下来，$x$单位商品1需要两小时加工时间，而$y$单位商品2需要三小时加工时间：总共，生产$x$单位商品1和$y$单位商品2需要$2x+3y$小时加工时间。类似地，生产$x$单位商品1和$y$单位商品2需要$4x+3y$小时精加工时间。加工总时间为13小时，因此生产计划必须满足$2x+3y \le 13$，即第一个线性约束；同样，$4x+3y \le 17$定义了精加工约束。最后，不能生产负数量：$x, y \ge 0$。将所有这些条件放在一起，完整的问题可以概括如下：
+\end{translation}
+
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{subject to:} \quad & 2x + 3y \le 13 \quad \text{(processing)} \\
+& 4x + 3y \le 17 \quad \text{(finishing)} \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+\subsection{Formulation / 问题的表述}
+
+\begin{original}
+In a linear-programming problem a collection of variables $(x_1, x_2,\ldots, x_n)$ must be chosen to maximize (or minimize) a linear function,
+\[
+f(x_1, x_2,\ldots, x_n) = c_1 x_1 + c_2 x_2 + \cdots + c_n x_n,
+\]
+subject to a finite number of linear constraints of the form:
+\[
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \le b,\quad a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b,\quad \text{or}\quad a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \ge b.
+\]
+In addition, the $x_i$ variables are required to be chosen non-negative. A typical linear program may be written:
+\end{original}
+\begin{translation}
+在线性规划问题中，需要选择一组变量$(x_1, x_2,\ldots, x_n)$以最大化（或最小化）一个线性函数，
+\[
+f(x_1, x_2,\ldots, x_n) = c_1 x_1 + c_2 x_2 + \cdots + c_n x_n,
+\]
+并满足有限个如下形式的线性约束：
+\[
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \le b,\quad a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b,\quad \text{或}\quad a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \ge b.
+\]
+此外，变量$x_i$要求为非负。一个典型的线性规划可以写为：
+\end{translation}
+
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 x_2 + \cdots + c_n x_n \\
+\text{subject to:} \quad & a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n \le b_1 \\
+& a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n \le b_2 \\
+& \qquad \cdots \qquad \cdots \qquad \cdots \\
+& a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n \le b_m \\
+& x_1, x_2, \ldots, x_n \ge 0.
+\end{aligned}
+\]
+
+\begin{original}
+This is a linear program with $n$ variables and $m$ constraints. If we write $c = (c_1, c_2, \ldots, c_n)$,
+\[
+A = \begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix},\quad
+b = \begin{pmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{pmatrix},\quad
+x = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix},
+\]
+then the program may be written in matrix form:
+\[
+\max \; c'x \qquad \text{subject to:} \quad Ax \le b,\; x \ge 0. \tag{4.1}
+\]
+\end{original}
+\begin{translation}
+这是一个具有$n$个变量和$m$个约束的线性规划。若记$c = (c_1, c_2, \ldots, c_n)$，
+\[
+A = \begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix},\quad
+b = \begin{pmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{pmatrix},\quad
+x = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix},
+\]
+则该规划可以用矩阵形式表示为：
+\[
+\max \; c'x \qquad \text{满足:} \quad Ax \le b,\; x \ge 0. \tag{4.1}
+\]
+\end{translation}
+
+\begin{original}
+In parallel with the maximization problem, there is minimization formulation:
+\[
+\min \; c'x \qquad \text{subject to:} \quad Ax \ge b,\; x \ge 0. \tag{4.2}
+\]
+\end{original}
+\begin{translation}
+与最大化问题相对应，还有最小化的表述：
+\[
+\min \; c'x \qquad \text{满足:} \quad Ax \ge b,\; x \ge 0. \tag{4.2}
+\]
+\end{translation}
+
+\subsubsection{Mixed constraints and unrestricted variable signs / 混合约束与无限制变量符号}
+
+\begin{original}
+The formulations for maximization and minimization given in Equations 4.1 and 4.2 have a standardized form with non-negativity constraints. In general, maximization and minimization problems can be cast in this way. The following discussion illustrates. Consider the program:
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 x_2 \\
+\text{subject to:} \quad & a_{11}x_1 + a_{12}x_2 \le b_1 \\
+& a_{21}x_1 + a_{22}x_2 \ge b_2 \\
+& x_1 \ge 0.
+\end{aligned}
+\]
+In this program, both types of inequality appear, and only $x_1$ is required to be non-negative. Replacing $x_2$ with $y - z$ and requiring $y$ and $z$ to be non-negative overcomes the second issue --- picking $y = 0$ and $z$ any desired positive number gives $x_2$ equal to the negative of that number.
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 y - c_2 z \\
+\text{subject to:} \quad & a_{11}x_1 + a_{12}y - a_{12}z \le b_1 \\
+& a_{21}x_1 + a_{22}y - a_{22}z \ge b_2 \\
+& x_1, y, z \ge 0.
+\end{aligned}
+\]
+The first issue is solved by multiplying the relevant constraint by $-1$ to reverse the inequality: for example $5 \ge 4$ is equivalent to $-5 \le -4$ and $ax \ge b$ is equivalent to $-ax \le -b$. In this example, multiplying $a_{21}x_1 + a_{22}y - a_{22}z \ge b_2$ by $-1$ gives:
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 y - c_2 z \\
+\text{subject to:} \quad & a_{11}x_1 + a_{12}y - a_{12}z \le b_1 \\
+& -a_{21}x_1 - a_{22}y + a_{22}z \le b_2 \\
+& x_1, y, z \ge 0.
+\end{aligned}
+\]
+Similarly, given an equality constraint $a_i x_i = b_i$, this is equivalent to two constraints, $a_i x_i \le b_i$ and $a_i x_i \ge b_i$. Note that the convention is to formulate the minimization program with the inequalities having the ``$\ge$'' form: in matrix terms, $Ax \ge b$. In the linear program, constraints of the form $Ax \le b$ or $Ax \ge b$ are called feasibility constraints; the constraints that $x_i \ge 0$ for all $i$ are called non-negativity constraints. Taking both types of constraint together, refer to them as the program constraints or constraints.
+\end{original}
+\begin{translation}
+方程4.1和4.2给出的最大化和最小化表述具有带非负约束的标准化形式。一般来说，最大化和最小化问题都可以转化为这种形式。下面的讨论将加以说明。考虑如下规划：
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 x_2 \\
+\text{满足:} \quad & a_{11}x_1 + a_{12}x_2 \le b_1 \\
+& a_{21}x_1 + a_{22}x_2 \ge b_2 \\
+& x_1 \ge 0.
+\end{aligned}
+\]
+在这个规划中，两种类型的不等式都出现了，且只有$x_1$要求非负。用$y - z$替换$x_2$并要求$y$和$z$非负，可以解决第二个问题——取$y = 0$和$z$为任意所需正数，即可使$x_2$等于该数的相反数。
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 y - c_2 z \\
+\text{满足:} \quad & a_{11}x_1 + a_{12}y - a_{12}z \le b_1 \\
+& a_{21}x_1 + a_{22}y - a_{22}z \ge b_2 \\
+& x_1, y, z \ge 0.
+\end{aligned}
+\]
+第一个问题通过将相关约束乘以$-1$以反转不等式来解决：例如$5 \ge 4$等价于$-5 \le -4$，$ax \ge b$等价于$-ax \le -b$。在此例中，将$a_{21}x_1 + a_{22}y - a_{22}z \ge b_2$乘以$-1$得：
+\[
+\begin{aligned}
+\max \quad & c_1 x_1 + c_2 y - c_2 z \\
+\text{满足:} \quad & a_{11}x_1 + a_{12}y - a_{12}z \le b_1 \\
+& -a_{21}x_1 - a_{22}y + a_{22}z \le b_2 \\
+& x_1, y, z \ge 0.
+\end{aligned}
+\]
+类似地，给定等式约束$a_i x_i = b_i$，这等价于两个约束：$a_i x_i \le b_i$和$a_i x_i \ge b_i$。注意，惯例是将最小化规划表述为具有``$\ge$''形式的不等式：矩阵形式为$Ax \ge b$。在线性规划中，形如$Ax \le b$或$Ax \ge b$的约束称为可行性约束；对所有$i$要求$x_i \ge 0$的约束称为非负约束。将两类约束合在一起，统称为规划约束或约束条件。
+\end{translation}
+
+\begin{original}
+The next sections consider a number of important concepts in linear programming. Section 4.1.2 discusses the feasible region --- those choices that satisfy all the constraints of the problem. Following this, Section 4.1.3 considers the problem of finding an optimal solution. In Section 4.1.4, dual prices and slack variables are introduced. Dual prices attach a price or valuation to each constraint, while slack variables indicate whether constraints are binding or not. Finally, the dual program associated with a linear program (called ``the primal'') is introduced (Section 4.1.6). The dual program is derived from the primal program, is closely related and provides additional perspective on the primal program.
+\end{original}
+\begin{translation}
+接下来的几节将考虑线性规划中的若干重要概念。第4.1.2节讨论可行区域——即满足问题所有约束的那些选择。随后，第4.1.3节考虑寻找最优解的问题。在第4.1.4节中，引入对偶价格和松弛变量。对偶价格为每个约束赋予一个价格或估值，而松弛变量则指示约束是否紧。最后，引入与线性规划（称为``原始问题''）相关联的对偶规划（第4.1.6节）。对偶规划由原始规划推导而来，与之密切相关，并提供了对原始规划的额外视角。
+\end{translation}
+
+\subsection{The feasible region / 可行区域}
+
+\begin{original}
+A vector $x = (x_1, \ldots, x_n)$ is called feasible if it satisfies the linear constraint inequalities and the non-negativity constraints.
+
+\textbf{Definition 4.1:} The set of $x$ vectors that satisfy the constraints $Ax \le b$ and $x \ge 0$ is called the feasible set or feasible region.
+
+Geometrically, it has a special shape --- it is a convex polyhedron. The following examples give the feasible regions defined by inequality constraints (on the left side), and the corresponding graphs show the feasible regions as the shaded areas.
+\end{original}
+\begin{translation}
+如果一个向量$x = (x_1, \ldots, x_n)$满足线性约束不等式和非负约束，则称其为可行的。
+
+\textbf{定义4.1：} 满足约束$Ax \le b$和$x \ge 0$的$x$向量的集合称为可行集或可行区域。
+
+从几何上看，它具有特殊的形状——它是一个凸多面体。以下例子给出了由不等式约束定义的可行区域（左侧），相应图形以阴影区域表示可行区域。
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.2:}
+\begin{original}
+In this example, the feasible region is defined by two inequality constraints and the non-negativity constraints.
+\[
+\begin{aligned}
+2x + y &\le 6 \\
+3x + 4y &\le 12 \\
+x, y &\ge 0
+\end{aligned}
+\]
+\end{original}
+\begin{translation}
+在本例中，可行区域由两个不等式约束和非负约束定义。
+\[
+\begin{aligned}
+2x + y &\le 6 \\
+3x + 4y &\le 12 \\
+x, y &\ge 0
+\end{aligned}
+\]
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.3:}
+\begin{original}
+The next example has three constraints. The additional constraint adds corners to the feasible region, and indicates the impact of additional constraints.
+\[
+\begin{aligned}
+2x + 2y &\le 10 \\
+3x + 6y &\le 18 \\
+2x + 12y &\le 24 \\
+x, y &\ge 0
+\end{aligned}
+\]
+\end{original}
+\begin{translation}
+下一个例子有三个约束。额外的约束为可行区域增加了角点，并表明了额外约束的影响。
+\[
+\begin{aligned}
+2x + 2y &\le 10 \\
+3x + 6y &\le 18 \\
+2x + 12y &\le 24 \\
+x, y &\ge 0
+\end{aligned}
+\]
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.4:}
+\begin{original}
+The feasible region is defined by linear equations, but this region may be quite complex. The next example illustrates increasing complexity. In this example, the second constraint is written as $2x + 6y \ge 12$, which is equivalent to $-2x - 6y \le 12$.
+\[
+\begin{aligned}
+3x + 4y &\le 12 \\
+2x + 6y &\ge 12 \\
+2x + 8y &\le 20 \\
+x, y &\ge 0
+\end{aligned}
+\]
+\end{original}
+\begin{translation}
+可行区域由线性方程定义，但该区域可能相当复杂。下一个例子说明了日益增加的复杂性。在此例中，第二个约束写为$2x + 6y \ge 12$，等价于$-2x - 6y \le 12$。
+\[
+\begin{aligned}
+3x + 4y &\le 12 \\
+2x + 6y &\ge 12 \\
+2x + 8y &\le 20 \\
+x, y &\ge 0
+\end{aligned}
+\]
+\end{translation}
+
+\subsection{Finding an optimal solution / 寻找最优解}
+
+\begin{original}
+Once the feasible region is identified, one can begin the search for an optimal solution: a point in the feasible region such that there is no other point in the feasible region that improves the objective value.
+
+\textbf{Definition 4.2:} Consider the linear program: $\max c'x$ subject to $Ax \le b$ and $x \ge 0$. If $\bar{x}$ is feasible and $c'\bar{x} \ge c'x$ for all feasible $x$, then $\bar{x}$ is called an optimal solution. Similarly, in the program: $\min c'x$ subject to $Ax \ge b$ and $x \ge 0$. If $\bar{x}$ is feasible and $c'\bar{x} \le c'x$ for all feasible $x$, then $\bar{x}$ is called an optimal solution.
+
+When it is possible to graph the feasible region (with two choice variables), and there are not too many constraints, the problem can be solved by inspection. To illustrate, consider Example 4.1 again.
+\end{original}
+\begin{translation}
+一旦确定了可行区域，就可以开始寻找最优解：可行区域中使得没有其他任何可行点能改进目标函数值的点。
+
+\textbf{定义4.2：} 考虑线性规划：$\max c'x$ 满足 $Ax \le b$ 和 $x \ge 0$。若$\bar{x}$是可行的，且对所有可行$x$有$c'\bar{x} \ge c'x$，则称$\bar{x}$为最优解。类似地，在规划$\min c'x$ 满足 $Ax \ge b$ 和 $x \ge 0$中，若$\bar{x}$是可行的，且对所有可行$x$有$c'\bar{x} \le c'x$，则称$\bar{x}$为最优解。
+
+当可以用图形表示可行区域（有两个选择变量）且约束不太多时，可以通过观察来求解问题。为说明这一点，再次考虑例4.1。
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.5:}
+\begin{original}
+Recall the program from Example 4.1:
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{subject to:} \quad & 2x + 3y \le 13 \\
+& 4x + 3y \le 17 \\
+& x, y \ge 0.
+\end{aligned}
+\]
+Consider the objective function, $\pi(x, y) = 3x + 4y$. An equation such as $\pi(x, y) = 2$ defines a line giving those combinations of $(x, y)$ such that $\pi(x, y) = 2$. Referring to $\pi$ as profit, the set $\{(x, y) \mid \pi(x, y) = k\}$ is called an ``iso-profit'' line with profit $k$. Iso-profit lines for the objective function, along with the feasible region, may easily be graphed. In the figure, the iso-profit lines are drawn for $k = 8, 12$ and $18$.
+
+From the figure, the highest value for the objective, $18$, is achieved at $(2,3)$, the corner of the feasible region determined by equations $2x + 3y = 13$ and $4x + 3y = 17$. Using Cramer's rule:
+\[
+\begin{vmatrix} 2 & 3 \\ 4 & 3 \end{vmatrix} = 6 - 12 = -6,\quad
+\begin{vmatrix} 13 & 3 \\ 17 & 3 \end{vmatrix} = 39 - 51 = -12,\quad
+\begin{vmatrix} 2 & 13 \\ 4 & 17 \end{vmatrix} = 34 - 52 = -18.
+\]
+Thus, the solution is $x = (x, y) = \left(\frac{-12}{-6}, \frac{-18}{-6}\right) = (2,3)$. Note that the feasible region is defined by its corners. Determining the objective value at each of the corners gives the table:
+
+\begin{center}
+\begin{tabular}{cc}
+Corner: $(x, y)$ & Objective value \\
+\hline
+$(0, 0)$ & $0 = 3(0) + 4(0)$ \\
+$\left(0, \frac{13}{3}\right)$ & $17\frac{1}{3} = 3(0) + 4\left(\frac{13}{3}\right)$ \\
+$(2, 3)$ & $18 = 3(2) + 4(3)$ \\
+$\left(\frac{17}{4}, 0\right)$ & $12\frac{3}{4} = 3\left(\frac{17}{4}\right) + 4(0)$
+\end{tabular}
+\end{center}
+
+By comparing the objective value at each corner, observe that the highest value occurs at corner $(2,3)$. This is not accidental. An optimal solution can always be found at a corner.
+\end{original}
+\begin{translation}
+回顾例4.1中的规划：
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{满足:} \quad & 2x + 3y \le 13 \\
+& 4x + 3y \le 17 \\
+& x, y \ge 0.
+\end{aligned}
+\]
+考虑目标函数$\pi(x, y) = 3x + 4y$。像$\pi(x, y) = 2$这样的方程定义了一条直线，给出了使得$\pi(x, y) = 2$的$(x, y)$组合。将$\pi$视为利润，集合$\{(x, y) \mid \pi(x, y) = k\}$称为利润为$k$的``等利润''线。目标函数的等利润线以及可行区域可以很容易地绘制出来。图中画出了$k = 8, 12$和$18$的等利润线。
+
+从图中可以看出，目标函数的最大值$18$在$(2,3)$处取得，这是由方程$2x + 3y = 13$和$4x + 3y = 17$确定的可行区域的角点。使用克莱姆法则：
+\[
+\begin{vmatrix} 2 & 3 \\ 4 & 3 \end{vmatrix} = 6 - 12 = -6,\quad
+\begin{vmatrix} 13 & 3 \\ 17 & 3 \end{vmatrix} = 39 - 51 = -12,\quad
+\begin{vmatrix} 2 & 13 \\ 4 & 17 \end{vmatrix} = 34 - 52 = -18.
+\]
+因此，解为$x = (x, y) = \left(\frac{-12}{-6}, \frac{-18}{-6}\right) = (2,3)$。注意可行区域由其角点定义。确定每个角点的目标函数值如下表：
+
+\begin{center}
+\begin{tabular}{cc}
+角点: $(x, y)$ & 目标函数值 \\
+\hline
+$(0, 0)$ & $0 = 3(0) + 4(0)$ \\
+$\left(0, \frac{13}{3}\right)$ & $17\frac{1}{3} = 3(0) + 4\left(\frac{13}{3}\right)$ \\
+$(2, 3)$ & $18 = 3(2) + 4(3)$ \\
+$\left(\frac{17}{4}, 0\right)$ & $12\frac{3}{4} = 3\left(\frac{17}{4}\right) + 4(0)$
+\end{tabular}
+\end{center}
+
+通过比较每个角点的目标函数值，可以观察到最大值出现在角点$(2,3)$处。这并非偶然。最优解总是可以在某个角点处找到。
+\end{translation}
+
+\begin{original}
+An important theorem in linear programming (see Theorem 4.2, later) says that if a linear program has an optimal solution, then it has an optimal solution at a corner. This does not say that every optimal solution is at a corner --- just that there is an optimal solution at a corner (assuming the problem has an optimal solution). The key benefit of the theorem is that in searching for an optimal solution we can restrict attention to the corners of the feasible region. When there are many variables and a graphical solution is not possible, being able to restrict attention to corners is very useful. One method for solving a linear program, the simplex method, compares corners, moving from one to another to improve the objective and stopping when no further improvement is possible. (New methods move inside the feasible set during the search.)
+
+In more than two dimensions, the meaning of ``corner'' may be less clear. In higher dimensions, the appropriate concept is vertex or extreme point of the feasible region. Note in the figures that no corner is a (strict) convex combination of other points in the feasible region. We may define a corner of the feasible region to be a point, $x$, in the feasible region with the property that we cannot find two other points in the feasible region, say $y, z$ (different from $x$), such that $x$ lies on a straight line connecting these two points. The only points in the figures satisfying this criterion are the corners. This criterion is independent of the dimension of the feasible region (the number of elements in the $x$ vector) and defines a vertex or extreme point of the feasible set in general. This is discussed further in Section 4.2.
+\end{original}
+\begin{translation}
+线性规划中的一个重要定理（见后文定理4.2）指出，如果线性规划有最优解，那么它在某个角点处有最优解。这并非说每个最优解都在角点处——只是说存在一个角点上的最优解（假设问题有最优解）。该定理的关键好处在于，在寻找最优解时，我们可以将注意力限制在可行区域的角点上。当变量很多且无法进行图形求解时，能够将注意力限制在角点上是极为有用的。求解线性规划的一种方法——单纯形法——通过比较角点，从一个角点移动到另一个以改进目标函数值，直至无法进一步改进为止。（较新的方法在搜索过程中在可行集内部移动。）
+
+在二维以上，``角点''的含义可能不太明确。在更高维度中，适当的概念是可行区域的顶点或极点。注意图中没有角点是可行区域中其他点的（严格）凸组合。我们可以将可行区域的角点定义为可行区域中具有如下性质的点$x$：我们无法在可行区域中找到另外两个点，比如$y, z$（不同于$x$），使得$x$位于连接这两点的直线上。图中满足这一准则的唯一一点是各个角点。该准则与可行区域的维数（$x$向量中元素的数量）无关，并一般地定义了可行集的顶点或极点。这将在第4.2节进一步讨论。
+\end{translation}
+
+\subsection{Dual prices and slack variables / 对偶价格与松弛变量}
+
+\begin{original}
+In a linear program, the inequality constraints identify resource constraints: usage of a particular resource may not exceed a particular level. Subject to these constraints, the objective is optimized. Therefore, when a resource constraint is varied (some right-hand side parameter $b_i$ is altered), this generally has an impact on the solution and corresponding objective value. This change in the objective value is measured by the dual price.
+\end{original}
+\begin{translation}
+在线性规划中，不等式约束确定了资源约束：特定资源的使用量不得超过特定水平。在这些约束下，目标函数被最优化。因此，当某个资源约束发生变化（某个右端参数$b_i$被改变）时，这通常会对解及相应的目标函数值产生影响。目标函数值的这种变化通过对偶价格来衡量。
+\end{translation}
+
+\subsubsection{Dual prices / 对偶价格}
+
+\begin{original}
+The dual or shadow price of the $i$th constraint is defined as the change in the value of the optimized objective due to a unit change in the right-hand side of the $i$th constraint. For example, suppose that the program has been solved and the solution is at a corner $\bar{x}$ with associated objective value $c'\bar{x}$. Then, $\bar{x}$ is located at the intersection of some set of constraints. Changing the right-hand side (RHS) of one of those constraints slightly will change the intersection point slightly, to say $\tilde{x}$. Suppose that the RHS of the $i$th constraint is changed from $b_i$ to $\tilde{b}_i$ and suppose that the corner at which the solution is located is defined by the same set of constraints (the solution occurs at the $\tilde{x}$).
+
+(This is the typical situation. Formally, the solution basis does not change. See Example 4.6, Remark 4.1 and the discussion of basic solutions in Section 4.2.) Let the new solution be $\tilde{x}$. Then the dual price of the $i$th constraint is defined:
+\[
+DP_i = \frac{\text{Change in objective}}{\text{Change in RHS of constraint } i} = \frac{c'\tilde{x} - c'\bar{x}}{\tilde{b}_i - b_i}.
+\]
+\end{original}
+\begin{translation}
+第$i$个约束的对偶价格或影子价格定义为：第$i$个约束右端项每单位变化所导致的最优化目标函数值的变化。例如，假设规划已解出，解位于角点$\bar{x}$处，相应的目标函数值为$c'\bar{x}$。那么，$\bar{x}$位于某组约束的交点处。略微改变其中一个约束的右端项（RHS）将使交点略微移动，移至例如$\tilde{x}$处。假设第$i$个约束的RHS从$b_i$变为$\tilde{b}_i$，且解所在的角点由同一组约束定义（解出现在$\tilde{x}$处）。
+
+（这是典型情况。形式上，解的基不变。参见例4.6、注记4.1以及第4.2节关于基本解的讨论。）设新解为$\tilde{x}$。则第$i$个约束的对偶价格定义为：
+\[
+DP_i = \frac{\text{目标函数的变化}}{\text{约束}i\text{的RHS的变化}} = \frac{c'\tilde{x} - c'\bar{x}}{\tilde{b}_i - b_i}.
+\]
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.6:}
+\begin{original}
+To illustrate, continuing with the previous example, consider the impact of changing the right-hand side (RHS1) of the first constraint from 13 to 14. In the notation above, $b_1 = 13$, $\tilde{b}_1 = 14$. This defines a new program:
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{subject to:} \quad & 2x + 3y \le 14 \quad (1) \\
+& 4x + 3y \le 17 \quad (2) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+When the RHS of constraint 1 changes from 13 to 14, the new solution using Cramer's rule is:
+\[
+\begin{vmatrix} 2 & 3 \\ 4 & 3 \end{vmatrix} = 6 - 12 = -6,\quad
+\begin{vmatrix} 14 & 3 \\ 17 & 3 \end{vmatrix} = 42 - 51 = -9,\quad
+\begin{vmatrix} 2 & 14 \\ 4 & 17 \end{vmatrix} = 34 - 56 = -22.
+\]
+Then the new solution is at $\tilde{x} = (x, y) = \left(\frac{9}{6}, \frac{22}{6}\right)$.
+
+The objective value at the new solution is:
+\[
+c'\tilde{x} = (3,4) \cdot \left(\frac{9}{6}, \frac{22}{6}\right) = \frac{1}{6}[3(9) + 4(22)] = \frac{1}{6} \cdot 115 = 19.1667 = 19\frac{1}{6}.
+\]
+
+Therefore,
+\[
+DP_1 = \frac{\text{objective}}{\text{RHS1}} = \frac{c'\tilde{x} - c'\bar{x}}{\tilde{b}_1 - b_1} = \frac{19.1667 - 18}{14 - 13} = 1.1667 = 1\frac{1}{6}.
+\]
+
+The same reasoning applies to constraint 2. Consider raising the RHS (RHS2) of constraint 2 from 17 to 18. The new solution is at $\tilde{x} = (x, y) = \left(\frac{15}{6}, \frac{16}{6}\right)$ with objective value:
+\[
+c'\tilde{x} = (3,4) \cdot \left(\frac{15}{6}, \frac{16}{6}\right) = \frac{1}{6}[3(15) + 4(16)] = \frac{1}{6} \cdot 109 = 18.1667.
+\]
+Therefore,
+\[
+DP_2 = \frac{\text{objective}}{\text{RHS2}} = \frac{c'\tilde{x} - c'\bar{x}}{\tilde{b}_2 - b_2} = \frac{18.1667 - 18}{18 - 17} = 0.1667 = \frac{1}{6}.
+\]
+\end{original}
+\begin{translation}
+为了说明，继续前面的例子，考虑将第一个约束的右端项（RHS1）从13变为14的影响。采用上述记号，$b_1 = 13$，$\tilde{b}_1 = 14$。这定义了一个新规划：
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{满足:} \quad & 2x + 3y \le 14 \quad (1) \\
+& 4x + 3y \le 17 \quad (2) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+当约束1的RHS从13变为14时，使用克莱姆法则得到的新解为：
+\[
+\begin{vmatrix} 2 & 3 \\ 4 & 3 \end{vmatrix} = 6 - 12 = -6,\quad
+\begin{vmatrix} 14 & 3 \\ 17 & 3 \end{vmatrix} = 42 - 51 = -9,\quad
+\begin{vmatrix} 2 & 14 \\ 4 & 17 \end{vmatrix} = 34 - 56 = -22.
+\]
+则新解为$\tilde{x} = (x, y) = \left(\frac{9}{6}, \frac{22}{6}\right)$。
+
+新解处的目标函数值为：
+\[
+c'\tilde{x} = (3,4) \cdot \left(\frac{9}{6}, \frac{22}{6}\right) = \frac{1}{6}[3(9) + 4(22)] = \frac{1}{6} \cdot 115 = 19.1667 = 19\frac{1}{6}.
+\]
+
+因此，
+\[
+DP_1 = \frac{\text{目标函数}}{\text{RHS1}} = \frac{c'\tilde{x} - c'\bar{x}}{\tilde{b}_1 - b_1} = \frac{19.1667 - 18}{14 - 13} = 1.1667 = 1\frac{1}{6}.
+\]
+
+同样的推理适用于约束2。考虑将约束2的RHS（RHS2）从17提高到18。新解为$\tilde{x} = (x, y) = \left(\frac{15}{6}, \frac{16}{6}\right)$，目标函数值为：
+\[
+c'\tilde{x} = (3,4) \cdot \left(\frac{15}{6}, \frac{16}{6}\right) = \frac{1}{6}[3(15) + 4(16)] = \frac{1}{6} \cdot 109 = 18.1667.
+\]
+因此，
+\[
+DP_2 = \frac{\text{目标函数}}{\text{RHS2}} = \frac{c'\tilde{x} - c'\bar{x}}{\tilde{b}_2 - b_2} = \frac{18.1667 - 18}{18 - 17} = 0.1667 = \frac{1}{6}.
+\]
+\end{translation}
+
+\subsubsection{Slack variables / 松弛变量}
+
+\begin{original}
+Given the constraints $Ax \le b$ and $x \ge 0$, suppose that the optimal solution has been found and call it $\bar{x}$. The slack variables are defined as the vector $s$ that satisfies $A\bar{x} + s = b$ or $s = b - A\bar{x}$. (In the case where the constraints have the form $Ax \ge b$ and $x \ge 0$, the slack variables are defined: $A\bar{x} - s = b$ or $s = A\bar{x} - b$. This convention ensures that the slack variables are non-negative.)
+
+Continuing with the example, $s = (s_1, s_2)$ is defined by the equations:
+\[
+\begin{aligned}
+2x + 3y + s_1 &= 13 \quad \text{or} \quad 2(2) + 3(3) + s_1 = 13 \quad \text{or} \quad 13 + s_1 = 13 \\
+4x + 3y + s_2 &= 17 \quad \text{or} \quad 4(2) + 3(3) + s_2 = 17 \quad \text{or} \quad 17 + s_2 = 17
+\end{aligned}
+\]
+so that $s = (s_1, s_2) = (0,0)$. When a slack variable is 0, the corresponding constraint is binding. Here both slack variables are 0, and the constraints bind. In general, changing the RHS of a binding constraint changes the solution and the value of the objective. Therefore, in general, if the slack variable associated with a constraint is 0, the corresponding dual price is non-zero. Conversely, if the slack variable associated with a constraint is positive, then the constraint is not binding: changing it has no effect on the solution and so the dual price is zero.
+\end{original}
+\begin{translation}
+给定约束$Ax \le b$和$x \ge 0$，假设已找到最优解并记为$\bar{x}$。松弛变量定义为满足$A\bar{x} + s = b$或$s = b - A\bar{x}$的向量$s$。（在约束形式为$Ax \ge b$和$x \ge 0$的情况下，松弛变量定义为：$A\bar{x} - s = b$或$s = A\bar{x} - b$。这一约定确保了松弛变量非负。）
+
+继续该例子，$s = (s_1, s_2)$由以下方程定义：
+\[
+\begin{aligned}
+2x + 3y + s_1 &= 13 \quad \text{或} \quad 2(2) + 3(3) + s_1 = 13 \quad \text{或} \quad 13 + s_1 = 13 \\
+4x + 3y + s_2 &= 17 \quad \text{或} \quad 4(2) + 3(3) + s_2 = 17 \quad \text{或} \quad 17 + s_2 = 17
+\end{aligned}
+\]
+因此$s = (s_1, s_2) = (0,0)$。当松弛变量为0时，相应的约束是紧的。这里两个松弛变量均为0，约束是紧的。一般来说，改变紧约束的RHS会改变解和目标函数值。因此，一般来说，如果与某个约束相关联的松弛变量为0，则相应的对偶价格非零。反之，如果与某个约束相关联的松弛变量为正，则该约束不是紧的：改变它不会对解产生影响，因此对偶价格为零。
+\end{translation}
+
+\subsection{Some examples / 若干例子}
+
+\begin{original}
+In this section, two examples are considered in detail to summarize the discussion so far.
+\end{original}
+\begin{translation}
+本节详细讨论两个例子以总结到目前为止的讨论。
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.7:}
+\begin{original}
+Consider the following linear program:
+\[
+\begin{aligned}
+\max \quad & 4x + 7y \\
+\text{subject to:} \quad & 2x + 6y \le 28 \quad (1) \\
+& 3x + 4y \le 22 \quad (2) \\
+& 5x + 4y \le 34 \quad (3) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+\noindent\textit{Solution:} Constraints 1 and 2 intersect at $(x, y) = (2,4)$; constraints 1 and 3 at $(x, y) = \left(\frac{92}{22}, \frac{72}{22}\right)$; and constraints 2 and 3 at $(x, y) = (6,1)$. These are found by solving each pair of equations in turn. For example, $2x + 6y = 28$ and $3x + 4y = 22$ solve to give $(x, y) = (2,4)$, which turns out to be the optimal solution:
+\[
+\begin{pmatrix} 2 & 6 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 28 \\ 22 \end{pmatrix}.
+\]
+Thus
+\[
+\begin{vmatrix} 2 & 6 \\ 3 & 4 \end{vmatrix} = -10,\quad
+\begin{vmatrix} 28 & 6 \\ 22 & 4 \end{vmatrix} = -20,\quad
+\begin{vmatrix} 2 & 28 \\ 3 & 22 \end{vmatrix} = -40.
+\]
+This gives $(x, y) = \left(\frac{-20}{-10}, \frac{-40}{-10}\right) = (2,4)$. To see that it is optimal, recall from earlier discussion that comparing the objective value at each feasible corner is one way to solve the program. Another way is to compare the slopes of the constraints and the objective.
+
+\begin{center}
+\begin{tabular}{cc}
+Constraint & Slope \\
+\hline
+Constraint 1 & $-\frac{1}{3}$ \\
+Constraint 2 & $-\frac{3}{4}$ \\
+Constraint 3 & $-\frac{5}{4}$ \\
+Objective & $-\frac{4}{7}$
+\end{tabular}
+\end{center}
+
+The slope of the objective is between the slope of constraints 1 and 2, so the optimal solution will be where these constraints intersect --- at $(2,4)$. The value of the objective at the solution is: $4(2) + 7(4) = 36$.
+
+\noindent\textit{Parameter changes:} If, for example, the objective were changed to $6x + 7y$ with a slope of $\frac{6}{7}$, this would be steeper than constraint 2 and the solution would be located at $(x, y) = (6,1)$. If the objective were altered to be parallel to the second constraint (for example, $6x + 8y$) there would be an infinite number of solutions ($(x, y) = (2,4)$, $(x, y) = (6,1)$ and all points on the line connecting them).
+
+\noindent\textit{Slack variables:} Since both constraints 1 and 2 are satisfied with equality, $s_1 = s_2 = 0$, while $s_3 = 34 - 5(2) - 4(4) = 34 - 26 = 8$.
+
+\noindent\textit{Dual prices:}
+\begin{enumerate}
+\item To calculate the dual price in constraint 1, replace 28 by 29. Then the new solution is $(x, y) = \left(\frac{16}{10}, \frac{43}{10}\right)$. The value of the objective is $4\left(\frac{16}{10}\right) + 7\left(\frac{43}{10}\right) = \frac{365}{10} = 36\frac{1}{2}$. Consequently, $DP_1 = \frac{1}{2}$.
+\item To calculate the dual price in constraint 2, replace 22 by 23. Then the new solution is $(x, y) = \left(\frac{26}{10}, \frac{38}{10}\right)$. The value of the objective is $4\left(\frac{26}{10}\right) + 7\left(\frac{38}{10}\right) = \frac{370}{10} = 37$. Consequently, $DP_2 = 1$.
+\item Since changing the right-hand side of constraint 3 does not affect the solution, the associated dual price is 0.
+\end{enumerate}
+\end{original}
+\begin{translation}
+考虑如下线性规划：
+\[
+\begin{aligned}
+\max \quad & 4x + 7y \\
+\text{满足:} \quad & 2x + 6y \le 28 \quad (1) \\
+& 3x + 4y \le 22 \quad (2) \\
+& 5x + 4y \le 34 \quad (3) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+\noindent\textit{解：}约束1和2交于$(x, y) = (2,4)$；约束1和3交于$(x, y) = \left(\frac{92}{22}, \frac{72}{22}\right)$；约束2和3交于$(x, y) = (6,1)$。这些是通过依次求解每对方程得到的。例如，$2x + 6y = 28$和$3x + 4y = 22$求解得$(x, y) = (2,4)$，这恰好是最优解。为验证其最优性，比较各可行角点的目标函数值是一种求解方法。另一种方法是比较约束和目标函数的斜率。目标函数的斜率介于约束1和2的斜率之间，因此最优解将位于这些约束的交点处——即$(2,4)$。解处的目标函数值为：$4(2) + 7(4) = 36$。
+
+\noindent\textit{参数变化：}若目标函数改为$6x + 7y$，斜率为$\frac{6}{7}$，这将比约束2更陡，解将位于$(x, y) = (6,1)$。若目标函数被改变为与第二个约束平行（例如$6x + 8y$），则将有无穷多个解。
+
+\noindent\textit{松弛变量：}由于约束1和2均以等式满足，$s_1 = s_2 = 0$，而$s_3 = 34 - 5(2) - 4(4) = 34 - 26 = 8$。
+
+\noindent\textit{对偶价格：}
+\begin{enumerate}
+\item 为计算约束1的对偶价格，将28替换为29。新解为$(x, y) = \left(\frac{16}{10}, \frac{43}{10}\right)$，目标函数值为$36\frac{1}{2}$。因此$DP_1 = \frac{1}{2}$。
+\item 为计算约束2的对偶价格，将22替换为23。新解为$(x, y) = \left(\frac{26}{10}, \frac{38}{10}\right)$，目标函数值为37。因此$DP_2 = 1$。
+\item 由于改变约束3的右端项不影响解，相应的对偶价格为0。
+\end{enumerate}
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.8:}
+\begin{original}
+Consider the following linear program:
+\[
+\begin{aligned}
+\min \quad & 4x + 2y \\
+\text{subject to:} \quad & 4x + 8y \ge 40 \quad (1) \\
+& 3x + 2y \ge 24 \quad (2) \\
+& 6x + 2y \ge 30 \quad (3) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+\noindent\textit{Solution:} Comparing the slopes of the objective and constraints gives the solution at the intersection of constraints 2 and 3. Using Cramer's rule: $(x, y) = (2,9)$. The value of the objective at the solution is: $4(2) + 2(9) = 26$.
+
+\noindent\textit{Slack variables:} The values of the slack variables at the optimal solution, $(x, y)$ are defined from the equations:
+\[
+\begin{aligned}
+4x + 8y - s_1 &= 40 \\
+3x + 2y - s_2 &= 24 \\
+6x + 2y - s_3 &= 30,
+\end{aligned}
+\]
+giving $s_1 = 4(2) + 8(9) - 40 = 80 - 40 = 40$, and $s_2 = 0$, $s_3 = 0$.
+
+\noindent\textit{Dual prices:}
+\begin{enumerate}
+\item Because constraint 1 is not binding, its shadow price is 0: $DP_1 = 0$.
+\item To determine the dual price of the second constraint, increase RHS2 by 1 from 24 to 25. The new solution is $(x, y) = \left(\frac{10}{6}, 10\right)$ and the objective value is $4\left(\frac{10}{6}\right) + 2(10) = 26.6667$. Thus $DP_2 = 0.6667$.
+\item Finally, to determine $DP_3$, raise the RHS of constraint 3 by 1 unit and find the new intersection with the original constraint 2. The new solution is $(x, y) = \left(\frac{14}{6}, \frac{51}{6}\right)$ and the objective value is $26.3337$. Therefore $DP_3 = 0.3337$.
+\end{enumerate}
+\end{original}
+\begin{translation}
+考虑如下线性规划：
+\[
+\begin{aligned}
+\min \quad & 4x + 2y \\
+\text{满足:} \quad & 4x + 8y \ge 40 \quad (1) \\
+& 3x + 2y \ge 24 \quad (2) \\
+& 6x + 2y \ge 30 \quad (3) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+\noindent\textit{解：}比较目标函数和约束的斜率可知，解位于约束2和3的交点处。使用克莱姆法则：$(x, y) = (2,9)$。解处的目标函数值为：$4(2) + 2(9) = 26$。
+
+\noindent\textit{松弛变量：}在最优解$(x, y)$处，松弛变量的值由以下方程定义：
+\[
+\begin{aligned}
+4x + 8y - s_1 &= 40 \\
+3x + 2y - s_2 &= 24 \\
+6x + 2y - s_3 &= 30,
+\end{aligned}
+\]
+得$s_1 = 4(2) + 8(9) - 40 = 80 - 40 = 40$，$s_2 = 0$，$s_3 = 0$。
+
+\noindent\textit{对偶价格：}
+\begin{enumerate}
+\item 由于约束1不是紧的，其影子价格为0：$DP_1 = 0$。
+\item 为确定第二个约束的对偶价格，将RHS2从24增加到25。新解为$(x, y) = \left(\frac{10}{6}, 10\right)$，目标函数值为$26.6667$。因此$DP_2 = 0.6667$。
+\item 最后，为确定$DP_3$，将约束3的RHS增加1单位，并找到其与原始约束2的新交点。新解为$(x, y) = \left(\frac{14}{6}, \frac{51}{6}\right)$，目标函数值为$26.3337$。因此$DP_3 = 0.3337$。
+\end{enumerate}
+\end{translation}
+
+\subsection{Duality reconsidered / 对偶性再探讨}
+
+\begin{original}
+The following discussion provides a different perspective on dual prices and their computation. An example will motivate the discussion. The next example takes an earlier example and rearranges the parameters and objective to give a program called the dual program. Every program has a dual program, giving the terminology primal and dual to refer to the initial and transformed programs. It turns out that the optimal solution payoff values are the same in both programs, the dual prices in the primal are the solution values in the dual, and the solution values in the primal are the dual prices in the dual program.
+\end{original}
+\begin{translation}
+下面的讨论为对偶价格及其计算提供了一个不同的视角。一个例子将引出这一讨论。下一个例子取自之前的例子，并重新排列参数和目标函数以得到一个称为对偶规划的规划。每个规划都有一个对偶规划，因此用术语原始问题和对偶问题来分别指代初始规划和变换后的规划。结果表明，两个规划的最优解支付值是相同的，原始问题中的对偶价格是对偶问题中的解值，而原始问题中的解值是对偶规划中的对偶价格。
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.9:}
+\begin{original}
+Consider the following linear program:
+
+\noindent\textit{Program A}
+\[
+\begin{aligned}
+\min \quad & 13w + 17z \\
+\text{subject to:} \quad & 2w + 4z \ge 3 \quad (1) \\
+& 3w + 3z \ge 4 \quad (2) \\
+& w, z \ge 0.
+\end{aligned}
+\]
+
+Observe that this program bears a close relation to one discussed earlier (see Examples 4.5 and 4.6):
+
+\noindent\textit{Program B}
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{subject to:} \quad & 2x + 3y \le 13 \quad (1) \\
+& 4x + 3y \le 17 \quad (2) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+Program A is called the dual of program B. Notice that A is obtained from B by exchanging the objective coefficients and RHS constraint parameters, and taking the transpose of the coefficient matrix. The remarkable fact relating these programs is the following. Let $(\bar{x}, \bar{y})$ solve program B, with objective value $\bar{B}$ and dual prices $(DP_1^B, DP_2^B)$. Similarly, let $(\bar{w}, \bar{z})$ solve program A, with objective value $\bar{A}$ and dual prices $(DP_1^A, DP_2^A)$. Then
+\[
+\text{(1) } \bar{B} = \bar{A},\quad \text{(2) } (\bar{x}, \bar{y}) = (DP_1^A, DP_2^A),\quad \text{(3) } (\bar{w}, \bar{z}) = (DP_1^B, DP_2^B).
+\]
+
+Recall from Examples 4.5 and 4.6, that the solution to program B has: $\bar{B} = 18$, $(\bar{x}, \bar{y}) = (2, 3)$ and $(DP_1, DP_2) = \left(1\frac{1}{6}, \frac{1}{6}\right)$. The solution to program A is at the intersection of the two constraints; using Cramer's rule gives solution $(\bar{w}, \bar{z}) = \left(\frac{7}{6}, \frac{1}{6}\right)$. The objective value is $\bar{A} = 13\left(\frac{7}{6}\right) + 17\left(\frac{1}{6}\right) = \frac{108}{6} = 18$.
+
+To calculate the dual prices in program A, consider first an increase of $\frac{1}{4}$ in the RHS of constraint 1. The new solution is $(\bar{w}, \bar{z}) = \left(\frac{25}{24}, \frac{7}{24}\right)$. The new objective value is then $13\left(\frac{25}{24}\right) + 17\left(\frac{7}{24}\right) = \frac{444}{24} = 18\frac{1}{2}$. Thus, $DP_1^A = \frac{\frac{1}{2}}{\frac{1}{4}} = 2$. For constraint 2, changing the RHS to $4\frac{1}{4}$ gives new solution $(\bar{w}, \bar{z}) = \left(\frac{8}{6}, \frac{1}{12}\right)$. The new objective value is then $13\left(\frac{16}{12}\right) + 17\left(\frac{1}{12}\right) = \frac{225}{12} = 18\frac{3}{4}$. Thus, $DP_2^A = \frac{\frac{3}{4}}{\frac{1}{4}} = 3$.
+
+Summarizing: $DP_1^A = 2$, $DP_2^A = 3$. Thus, $(\bar{x}, \bar{y}) = (DP_1^A, DP_2^A) = (2, 3)$. Recall that the dual prices for program B were $DP_1^B = 1.1667 = \frac{7}{6}$ and $DP_2^B = 0.1667 = \frac{1}{6}$ and $\bar{B} = 18$. Thus, $(\bar{w}, \bar{z}) = (DP_1^B, DP_2^B) = \left(\frac{7}{6}, \frac{1}{6}\right)$ and $\bar{A} = \bar{B} = 18$.
+\end{original}
+\begin{translation}
+考虑如下线性规划：
+
+\noindent\textit{规划A}
+\[
+\begin{aligned}
+\min \quad & 13w + 17z \\
+\text{满足:} \quad & 2w + 4z \ge 3 \quad (1) \\
+& 3w + 3z \ge 4 \quad (2) \\
+& w, z \ge 0.
+\end{aligned}
+\]
+
+注意到该规划与之前讨论的一个规划（见例4.5和4.6）密切相关：
+
+\noindent\textit{规划B}
+\[
+\begin{aligned}
+\max \quad & 3x + 4y \\
+\text{满足:} \quad & 2x + 3y \le 13 \quad (1) \\
+& 4x + 3y \le 17 \quad (2) \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+规划A称为规划B的对偶。注意，A是通过交换目标系数和RHS约束参数，并取系数矩阵的转置而从B得到的。联系这些规划的一个显著事实如下。设$(\bar{x}, \bar{y})$为规划B的解，目标函数值为$\bar{B}$，对偶价格为$(DP_1^B, DP_2^B)$。类似地，设$(\bar{w}, \bar{z})$为规划A的解，目标函数值为$\bar{A}$，对偶价格为$(DP_1^A, DP_2^A)$。则
+\[
+\text{(1) } \bar{B} = \bar{A},\quad \text{(2) } (\bar{x}, \bar{y}) = (DP_1^A, DP_2^A),\quad \text{(3) } (\bar{w}, \bar{z}) = (DP_1^B, DP_2^B).
+\]
+
+回顾例4.5和4.6，规划B的解为：$\bar{B} = 18$，$(\bar{x}, \bar{y}) = (2, 3)$，以及对偶价格$(DP_1, DP_2) = \left(1\frac{1}{6}, \frac{1}{6}\right)$。规划A的解位于两个约束的交点处；使用克莱姆法则得解$(\bar{w}, \bar{z}) = \left(\frac{7}{6}, \frac{1}{6}\right)$。目标函数值为$\bar{A} = 13\left(\frac{7}{6}\right) + 17\left(\frac{1}{6}\right) = \frac{108}{6} = 18$。
+
+计算规划A中的对偶价格：首先考虑约束1的RHS增加$\frac{1}{4}$，得$DP_1^A = 2$。对于约束2，将RHS改为$4\frac{1}{4}$，得$DP_2^A = 3$。
+
+总结：$DP_1^A = 2$，$DP_2^A = 3$。因此，$(\bar{x}, \bar{y}) = (DP_1^A, DP_2^A) = (2, 3)$。回顾规划B的对偶价格为$DP_1^B = 1.1667 = \frac{7}{6}$和$DP_2^B = 0.1667 = \frac{1}{6}$，$\bar{B} = 18$。因此，$(\bar{w}, \bar{z}) = (DP_1^B, DP_2^B) = \left(\frac{7}{6}, \frac{1}{6}\right)$且$\bar{A} = \bar{B} = 18$。
+\end{translation}
+
+
+\subsection{Basic solutions / 基本解}
+
+\begin{original}
+The previous discussion dealt with programs having constraints of the form $Ax \le b$ or $Ax \ge b$. In what follows, it is shown that such inequality-constrained problems may be reformulated to equality-constrained programs. The equality-constrained formulation is then used to discuss basic solutions.
+\end{original}
+\begin{translation}
+前面的讨论处理了具有$Ax \le b$或$Ax \ge b$形式约束的规划。下面将说明此类不等式约束问题可以重新表述为等式约束规划。然后利用等式约束的表述来讨论基本解。
+\end{translation}
+
+\subsubsection{Equality-constrained programs / 等式约束规划}
+
+\begin{original}
+Consider the linear program: $\max c' x$ subject to $Ax \le b$ and $x \ge 0$. Here $c \sim n \times 1$, $x \sim n \times 1$, $A \sim m \times n$, $s \sim m \times 1$ and $I \sim m \times m$, the identity matrix. The program may be written in a variety of equivalent ways:
+
+\begin{center}
+\begin{tabular}{cc}
+I & II \\
+$\begin{aligned} \max \quad & c'x \\ \text{s.t.} \quad & Ax \le b \\ & x \ge 0 \end{aligned}$ &
+$\begin{aligned} \max \quad & c'x + 0's \\ \text{s.t.} \quad & Ax + Is = b \\ & x, s \ge 0 \end{aligned}$
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{cc}
+III & IV \\
+$\begin{aligned} \max \quad & (\bar{c}, 0)' \cdot (x, s) \\ \text{s.t.} \quad & (\bar{A} : I)(x, s) = b \\ & (x, s) \ge 0 \end{aligned}$ &
+$\begin{aligned} \max \quad & \bar{c}' \cdot z \\ \text{s.t.} \quad & \bar{A}z = b \\ & z \ge 0 \end{aligned}$
+\end{tabular}
+\end{center}
+
+Formulation II can be expressed succinctly as follows. Define new matrices and vectors: $\bar{c}' = (c,0)$, $\bar{A} = (A : I)$, $z = (x, s)$. In the initial problem, the dimensions of the matrices and vectors were $c \sim n \times 1$, $x \sim n \times 1$, $A \sim m \times n$. Since $A$ is an $m \times n$ matrix, this means that there are $m$ constraints (leaving aside the non-negativity constraints on the $x$). The equality-constrained model is obtained by adding ``slack'' variables $s$ --- one for each constraint. So there are $m$ slack variables added to give formulation II. Thus $\bar{c}$ is a lengthened vector with zeros added to $c$; likewise, $z$ involves lengthening the $x$ vector with $s$, and $\bar{A}$ is a matrix formed by placing $A$ and $I$, the $m \times m$ identity matrix, side by side. Therefore, $z \sim (n+m) \times 1$, $\bar{c} \sim (n+m) \times 1$ and $\bar{A} \sim m \times (n + m)$. Programs II, III and IV are equivalent problems --- just involving relabeling. Furthermore, I and II are equivalent problems, so that the inequality-constrained program in I may be replaced by the equality-constrained program, IV.
+\end{original}
+\begin{translation}
+考虑线性规划：$\max c' x$ 满足 $Ax \le b$ 和 $x \ge 0$。这里$c \sim n \times 1$, $x \sim n \times 1$, $A \sim m \times n$, $s \sim m \times 1$ 且 $I \sim m \times m$为单位矩阵。该规划可以用多种等价方式表示：
+
+（表格见上）
+
+表述II可以简洁地表达如下。定义新的矩阵和向量：$\bar{c}' = (c,0)$，$\bar{A} = (A : I)$，$z = (x, s)$。在初始问题中，矩阵和向量的维度为$c \sim n \times 1$, $x \sim n \times 1$, $A \sim m \times n$。因为$A$是$m \times n$矩阵，这意味着有$m$个约束（暂且不考虑$x$的非负约束）。等式约束模型通过添加``松弛''变量$s$——每个约束一个——而得到。因此添加了$m$个松弛变量以得到表述II。因而$\bar{c}$是一个通过在$c$后添加零而延长的向量；同样地，$z$涉及用$s$延长$x$向量，而$\bar{A}$是通过将$A$和$I$（$m \times m$单位矩阵）并排放置而形成的矩阵。因此，$z \sim (n+m) \times 1$, $\bar{c} \sim (n+m) \times 1$ 且 $\bar{A} \sim m \times (n + m)$。规划II、III和IV是等价问题——仅涉及重新标记。此外，I和II是等价问题，因此I中的不等式约束规划可以用等式约束规划IV代替。
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 4.1:} The linear programs I and II have the same solutions: if $\bar{x}$ solves I then for some $s \ge 0$, $(\bar{x}, s)$ solves II, and if $(\tilde{x}, \tilde{s})$ solves II then $\tilde{x}$ solves I.
+\end{original}
+\begin{translation}
+\textbf{定理4.1：}线性规划I和II具有相同的解：若$\bar{x}$是I的解，则对某个$s \ge 0$，$(\bar{x}, s)$是II的解；若$(\tilde{x}, \tilde{s})$是II的解，则$\tilde{x}$是I的解。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 4.2:} The minimization problem is analogous. This can be expressed:
+\[
+\min \; \bar{c}' z \quad \text{subject to:} \quad \bar{A}z = b,\; z \ge 0,
+\]
+where $\bar{A} = (A : -I)$, $\bar{c} = (c,0)$, and $z = (x, s)$. Again, solving I and II yields the same solution.
+\end{original}
+\begin{translation}
+\textbf{注记4.2：}最小化问题是类似的。这可以表示为：
+\[
+\min \; \bar{c}' z \quad \text{满足:} \quad \bar{A}z = b,\; z \ge 0,
+\]
+其中$\bar{A} = (A : -I)$，$\bar{c} = (c,0)$，$z = (x, s)$。同样地，求解I和II得到相同的解。
+\end{translation}
+
+\subsubsection{Definition and identification of basic solutions / 基本解的定义与识别}
+
+\begin{original}
+In this section, basic solutions are introduced and related to the vertices of the feasible region. In view of Theorem 4.1, we can focus on the equality-constrained formulation for the following discussion (and discard the ``bar'' notation). Thus, the linear program will be written: $\max c' x$, subject to: $Ax = b$ and $x \ge 0$.
+
+Recall that a feasible solution in the inequality-constrained program is any vector $x$ satisfying the constraints: $Ax \le b$ and $x \ge 0$. A feasible solution $\hat{x}$ is an optimal feasible solution if there is no other feasible $\tilde{x}$, such that $c'\tilde{x} > c'\hat{x}$ in the case of a maximization problem and $c'\tilde{x} < c'\hat{x}$ in the case of a minimization problem. With the equality-constrained program, a vector $x$ satisfying $Ax = b$ and $x \ge 0$ is said to be feasible. Let $m$ be the number of rows in $A$ and recall that $A$ has more columns than rows.
+
+We assume that $A$ has full rank and since $A$ has more columns than rows this means that the rank of $A$ equals the number of rows: $m$. This is called the full rank assumption: the $m$ rows of $A$ are linearly independent. This assumption involves no loss of generality. If $A$ does not have full rank then there are two possibilities. Either some of the constraints in $Ax = b$ are redundant, or the constraints are inconsistent --- there is no $x$ such that $Ax = b$.
+
+Suppose we select $m$ linearly independent columns from the matrix $A$: say these columns together form a matrix $B$. Such a set of columns is called a basis. It is possible that not all sets of $m$ columns of $A$ are linearly independent, but since $A$ has full rank there is at least one set of $m$ linearly independent columns.
+
+Since $B$ is non-singular, the equation system $Bx_B = b$ has a unique solution. For example, suppose that the first $m$ columns of $A$ are linearly independent and let $B$ be the matrix formed by these first $m$ columns. Let the remaining columns of $A$ form some matrix $C$, so that $A = (B : C)$. Then if $x_B$ satisfies $Bx_B = b$, let $x = (x_B, 0)$ and observe that $Ax = Bx_B + C \cdot 0 = Bx_B = b$. Thus $x = (x_B : 0)$ satisfies $Ax = b$. However, this $x$ may not satisfy $x \ge 0$ --- some elements of the vector $x$ may be negative.
+
+Given $Ax = b$, let $B$ be any non-singular $m \times m$ submatrix of columns of $A$. If all elements of $x$ not associated with columns of $B$ are set to 0, and the resulting set of equations solved, the unique $x$ determined in this way is called a basic solution of the system $Ax = b$ with respect to the basis $B$. The components of $x$ associated with columns of $B$ are called basic variables.
+
+If one or more of the basic variables in a basic solution has a value of 0, that solution is said to be a degenerate basic solution. Therefore, in a non-degenerate basic solution there are $m$ non-zero components (and the remaining components are 0). In a degenerate basic solution, there are fewer than $m$ components non-zero.
+
+Recall that if $x$ satisfies both $Ax = b$ and $x \ge 0$, $x$ is said to be feasible (for these constraints). If $x$ is a basic solution satisfying $x \ge 0$ it is called a basic feasible solution. If this solution is also degenerate, it is called a degenerate basic feasible solution. The following result, called the fundamental theorem of linear programming, is central in linear programming.
+\end{original}
+\begin{translation}
+在本节中，引入基本解并将其与可行区域的顶点相关联。鉴于定理4.1，我们可以在接下来的讨论中专注于等式约束表述（并丢弃``bar''记号）。因此，线性规划将写为：$\max c' x$，满足：$Ax = b$ 和 $x \ge 0$。
+
+回顾在不等式约束规划中，可行解是满足约束$Ax \le b$和$x \ge 0$的任何向量$x$。可行解$\hat{x}$是最优可行解，如果在最大化问题中不存在其他可行解$\tilde{x}$使得$c'\tilde{x} > c'\hat{x}$，在最小化问题中不存在其他可行解$\tilde{x}$使得$c'\tilde{x} < c'\hat{x}$。对于等式约束规划，满足$Ax = b$和$x \ge 0$的向量$x$称为可行的。设$m$为$A$的行数，并回顾$A$的列数多于行数。
+
+我们假设$A$具有满秩，且由于$A$的列数多于行数，这意味着$A$的秩等于行数：$m$。这称为满秩假设：$A$的$m$行线性无关。该假设不丧失一般性。如果$A$不具有满秩，则有两种可能：要么$Ax = b$中的某些约束是冗余的，要么约束是不一致的——不存在$x$使得$Ax = b$。
+
+假设我们从矩阵$A$中选择$m$个线性无关的列：称这些列共同构成矩阵$B$。这样一组列称为一个基。$A$中并非所有$m$列的集合都是线性无关的，但由于$A$具有满秩，至少存在一组$m$个线性无关的列。
+
+由于$B$是非奇异的，方程组$Bx_B = b$有唯一解。例如，假设$A$的前$m$列线性无关，令$B$为由这前$m$列构成的矩阵。令$A$的其余列构成某个矩阵$C$，使得$A = (B : C)$。那么若$x_B$满足$Bx_B = b$，令$x = (x_B, 0)$，则$Ax = Bx_B + C \cdot 0 = Bx_B = b$。因此$x = (x_B : 0)$满足$Ax = b$。然而，这个$x$可能不满足$x \ge 0$——向量$x$的某些元素可能为负。
+
+给定$Ax = b$，令$B$为$A$的列的任意非奇异$m \times m$子矩阵。如果将与$B$的列无关的所有$x$的元素设为0，并求解所得的方程组，以这种方式确定的唯一$x$称为方程组$Ax = b$关于基$B$的基本解。与$B$的列相关联的$x$的分量称为基本变量。
+
+如果基本解中的一个或多个基本变量的值为0，则该解称为退化的基本解。因此，在非退化的基本解中，有$m$个非零分量（其余分量为0）。在退化的基本解中，少于$m$个分量非零。
+
+回顾如果$x$同时满足$Ax = b$和$x \ge 0$，则称$x$（对这些约束）是可行的。如果$x$是满足$x \ge 0$的基本解，则称其为基本可行解。如果该解也是退化的，则称为退化的基本可行解。以下结果——称为线性规划的基本定理——在线性规划中居于核心地位。
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 4.2:} Given a linear program of the form I or II,
+\[
+\begin{aligned}
+\text{I} \quad & \max \; c'x \quad \text{s.t.} \quad Ax \le b,\; x \ge 0 \\
+\text{II} \quad & \max \; c'x \quad \text{s.t.} \quad Ax = b,\; x \ge 0.
+\end{aligned}
+\]
+\begin{enumerate}
+\item If there is a feasible solution there is a basic feasible solution.
+\item If there is an optimal feasible solution, there is an optimal basic feasible solution.
+\end{enumerate}
+
+The importance of this theorem (from the computational point of view) is that the search for an optimal solution can be restricted to the basic solutions. Since there are only a finite number of these, there are only a finite number of $x$ to be considered in the search for an optimal solution.
+\end{original}
+\begin{translation}
+\textbf{定理4.2：}给定形式I或II的线性规划，
+\[
+\begin{aligned}
+\text{I} \quad & \max \; c'x \quad \text{s.t.} \quad Ax \le b,\; x \ge 0 \\
+\text{II} \quad & \max \; c'x \quad \text{s.t.} \quad Ax = b,\; x \ge 0.
+\end{aligned}
+\]
+\begin{enumerate}
+\item 若存在可行解，则存在基本可行解。
+\item 若存在最优可行解，则存在最优基本可行解。
+\end{enumerate}
+
+该定理的重要性（从计算的角度看）在于，对最优解的搜索可以限制在基本解上。由于基本解只有有限个，在搜索最优解时只需考虑有限个$x$。
+\end{translation}
+
+\bigskip
+\noindent\textbf{EXAMPLE 4.10:}
+\begin{original}
+\[
+\begin{aligned}
+\max \quad & 2x + 5y \\
+\text{subject to:} \quad & 4x + y \le 24 \\
+& x + 3y \le 21 \\
+& x + y \le 9 \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+This is rearranged in equality constraint form as:
+\[
+\begin{aligned}
+\max \quad & 2x + 5y + 0s_1 + 0s_2 + 0s_3 \\
+\text{subject to:} \quad & 4x + y + s_1 = 24 \\
+& x + 3y + s_2 = 21 \\
+& x + y + s_3 = 9 \\
+& x, y, s_1, s_2, s_3 \ge 0.
+\end{aligned}
+\]
+
+In matrix form, let:
+\[
+\bar{A} = \begin{pmatrix} 4 & 1 & 1 & 0 & 0 \\ 1 & 3 & 0 & 1 & 0 \\ 1 & 1 & 0 & 0 & 1 \end{pmatrix},\quad
+b = \begin{pmatrix} 24 \\ 21 \\ 9 \end{pmatrix},\quad
+\bar{c} = (2,5,0,0,0),\quad z = (x, y, s_1, s_2, s_3).
+\]
+
+The problem may then be written: $\max \; \bar{c}'z$ subject to: $\bar{A}z = b$, $z \ge 0$.
+
+In general, given a matrix with $m$ rows and $p$ columns ($p > m$), the number of $m \times m$ submatrices that can be formed is $\frac{p!}{m!(p-m)!}$. In the present case, the coefficient matrix has $m = 3$ and $p = 5$, and so the maximum number of distinct $3 \times 3$ matrices is $\frac{5!}{3!(5-3)!} = 10$.
+
+The ten basic solutions are in the form $z = (x, y, s_1, s_2, s_3)$:
+\[
+\begin{aligned}
+z_1 &= (3,6,6,0,0) \\
+z_2 &= (5,4,0,4,0) \\
+z_3 &= (4.636, 5.545, 0, 0, -1.09) \\
+z_4 &= (9, 0, -12, 12, 0) \\
+z_5 &= (21, 0, -60, 0, -12) \\
+z_6 &= (6, 0, 0, 15, 3) \\
+z_7 &= (0, 9, 15, -6, 0) \\
+z_8 &= (0, 7, 17, 0, 2) \\
+z_9 &= (0, 24, 0, -51, -15) \\
+z_{10} &= (0, 0, 24, 21, 9).
+\end{aligned}
+\]
+
+This list of $z$ is the list of basic solutions. Note now that there are some basic solutions that have negative entries. Once we eliminate those with negative entries, we are left with the basic feasible solutions. The non-feasible basic solutions are: $z_3, z_4, z_5, z_7$ and $z_9$. The basic feasible solutions are $z_1, z_2, z_6, z_8, z_{10}$. Denoting the objective value at $z$ by $\pi(z)$:
+\[
+\pi(z_1) = 2(3) + 5(6) = 36,\; \pi(z_2) = 2(5) + 5(4) = 30,\; \pi(z_6) = 2(6) + 5(0) = 12,
+\]
+\[
+\pi(z_8) = 2(0) + 5(7) = 35,\; \pi(z_{10}) = 2(0) + 5(0) = 0.
+\]
+So, the solution is at $z_1$, with $x = 3$ and $y = 6$.
+\end{original}
+\begin{translation}
+\[
+\begin{aligned}
+\max \quad & 2x + 5y \\
+\text{满足:} \quad & 4x + y \le 24 \\
+& x + 3y \le 21 \\
+& x + y \le 9 \\
+& x, y \ge 0.
+\end{aligned}
+\]
+
+将其重新排列为等式约束形式：
+\[
+\begin{aligned}
+\max \quad & 2x + 5y + 0s_1 + 0s_2 + 0s_3 \\
+\text{满足:} \quad & 4x + y + s_1 = 24 \\
+& x + 3y + s_2 = 21 \\
+& x + y + s_3 = 9 \\
+& x, y, s_1, s_2, s_3 \ge 0.
+\end{aligned}
+\]
+
+矩阵形式为：$\max \; \bar{c}'z$ 满足 $\bar{A}z = b$, $z \ge 0$。
+
+一般来说，给定一个具有$m$行和$p$列（$p > m$）的矩阵，可以构成的$m \times m$子矩阵的个数为$\frac{p!}{m!(p-m)!}$。在本例中，系数矩阵有$m = 3$和$p = 5$，因此不同的$3 \times 3$矩阵最多有$\frac{5!}{3!(5-3)!} = 10$个。
+
+十个基本解的形式为$z = (x, y, s_1, s_2, s_3)$：（见上）
+
+该$z$列表即为基本解列表。注意有些基本解包含负值。一旦排除那些有负值的解，剩下的就是基本可行解。不可行的基本解是：$z_3, z_4, z_5, z_7$和$z_9$。基本可行解是$z_1, z_2, z_6, z_8, z_{10}$。因此，解在$z_1$处，$x = 3$且$y = 6$。
+\end{translation}
+
+\subsection{Duality principles / 对偶原理}
+
+\begin{original}
+There is a general principle behind the close connection between the primal and dual programs. It turns out that both have the same objective values. The following discussion formalizes these observations. Consider the primal (P) and dual (D):
+\[
+\begin{aligned}
+\text{P} \quad & \max \; c'x \quad \text{s.t.} \quad Ax \le b,\; x \ge 0 \\
+\text{D} \quad & \min \; b'y \quad \text{s.t.} \quad A'y \ge c,\; y \ge 0.
+\end{aligned}
+\]
+
+The dual is formed from the primal by exchanging objective coefficients with the RHS vector; reversing the inequalities in the linear constraints; and transposing the constraint matrix. Taking the dual program associated with the dual gives the primal.
+\end{original}
+\begin{translation}
+原始问题与对偶问题之间的紧密联系背后有一个一般原理。结果表明，两者具有相同的目标函数值。下面的讨论将这些观察形式化。考虑原始问题（P）和对偶问题（D）：
+\[
+\begin{aligned}
+\text{P} \quad & \max \; c'x \quad \text{满足} \quad Ax \le b,\; x \ge 0 \\
+\text{D} \quad & \min \; b'y \quad \text{满足} \quad A'y \ge c,\; y \ge 0.
+\end{aligned}
+\]
+
+对偶问题由原始问题通过交换目标系数与RHS向量、反转线性约束中的不等式以及转置约束矩阵而构成。取与对偶问题相关联的对偶规划即得到原始问题。
+\end{translation}
+
+\begin{original}
+\textbf{Theorem 4.3:} For any feasible $x$ and any feasible $y$, $b'y \ge c'x$.
+
+\textbf{Theorem 4.4:} If $\bar{x}$ and $\bar{y}$ are feasible and satisfy $c'\bar{x} = b'\bar{y}$, then $\bar{x}$ is optimal in the primal and $\bar{y}$ is optimal in the dual.
+
+\textbf{Theorem 4.5:} If $\bar{x}$ and $\bar{y}$ are solutions to the primal and dual respectively, then $c'\bar{x} = b'\bar{y}$.
+
+\textbf{Theorem 4.6:} Suppose that $F_P = \emptyset$, so that there is no $x$ feasible for the primal. Then there is no $\hat{y} \in F_D$ satisfying $b'\hat{y} \le b'y$ for all $y \in F_D$.
+
+Thus, if either program has an optimal solution, then so does the other, and the objective values are equal: if $\bar{x}$ solves the primal and $\bar{y}$ solves the dual, then $c'\bar{x} = b'\bar{y}$. If one program is not feasible, the other has no optimal solution.
+\end{original}
+\begin{translation}
+\textbf{定理4.3：}对任何可行的$x$和任何可行的$y$，有$b'y \ge c'x$。
+
+\textbf{定理4.4：}若$\bar{x}$和$\bar{y}$是可行的且满足$c'\bar{x} = b'\bar{y}$，则$\bar{x}$是原始问题的最优解，$\bar{y}$是对偶问题的最优解。
+
+\textbf{定理4.5：}若$\bar{x}$和$\bar{y}$分别是原始问题和对偶问题的解，则$c'\bar{x} = b'\bar{y}$。
+
+\textbf{定理4.6：}假设$F_P = \emptyset$，即不存在原始问题的可行解$x$。则不存在$\hat{y} \in F_D$满足对所有$y \in F_D$有$b'\hat{y} \le b'y$。
+
+因此，如果任一规划有最优解，那么另一个也有，且目标函数值相等：若$\bar{x}$是原始问题的解，$\bar{y}$是对偶问题的解，则$c'\bar{x} = b'\bar{y}$。如果一个规划不可行，则另一个没有最优解。
+\end{translation}
+
+\subsubsection{Duality and dual prices / 对偶性与对偶价格}
+
+\begin{original}
+Theorem 4.4 may be used to provide insight on dual prices. More generally, if the parameters $b$ in the dual objective do not define objective iso-cost lines that are parallel to any of the constraints, then small changes in $b$ lead to no change in the optimal solution of the dual. So, given $b$ with solution $\bar{y}$ to the dual program, if some $b_i$ is changed to $b_i + \Delta b_i$, then the solution to the dual remains unchanged at $\bar{y}$ and the value of the dual objective at the optimal solution to the new program is $\sum_{j \neq i} b_j \bar{y}_j + (b_i + \Delta b_i)\bar{y}_i$. Turning to the primal, with initial RHS, $b$, the optimal solution is $\bar{x}$. Changing the RHS of the $i$th equation to $b_i + \Delta b_i$ determines a new solution with each $\bar{x}_i$ shifted by a small amount --- so that $\bar{x}_i$ moves to $\bar{x}_i + \Delta x_i$, say. From Theorem 4.4,
+\[
+c_1 \bar{x}_1 + c_2 \bar{x}_2 + \cdots + c_n \bar{x}_n = b_1 \bar{y}_1 + b_2 \bar{y}_2 + \cdots + b_m \bar{y}_m
+\]
+and after the RHS change:
+\[
+c_1(\bar{x}_1 + \Delta x_1) + \cdots + c_n(\bar{x}_n + \Delta x_n) = b_1 \bar{y}_1 + \cdots + (b_i + \Delta b_i)\bar{y}_i + \cdots + b_m \bar{y}_m.
+\]
+
+Using the pre-change equality and dividing gives:
+\[
+\frac{c_1 \Delta x_1 + c_2 \Delta x_2 + \cdots + c_n \Delta x_n}{\Delta b_j} = \bar{y}_j.
+\]
+
+Writing the left side as $\frac{\Delta \pi}{\Delta b_j}$, this gives $\frac{\Delta \pi}{\Delta b_j} = \bar{y}_j$. So, for the ``regular'' case, the change in the objective resulting from a change in the RHS is given by the corresponding dual price.
+\end{original}
+\begin{translation}
+定理4.4可用于提供对对偶价格的洞见。更一般地，如果对偶目标函数中的参数$b$不定义与任何约束平行的等成本线，那么$b$的微小变化不会导致对偶问题最优解的变化。因此，在原始问题中，初始RHS $b$对应的最优解为$\bar{x}$。将第$i$个方程的RHS变为$b_i + \Delta b_i$确定了一个新解，其中每个$\bar{x}_i$移动了很小的量——即$\bar{x}_i$移动到$\bar{x}_i + \Delta x_i$。根据定理4.4，利用变化前的等式并除以$\Delta b_j$得：
+\[
+\frac{c_1 \Delta x_1 + c_2 \Delta x_2 + \cdots + c_n \Delta x_n}{\Delta b_j} = \bar{y}_j.
+\]
+将左边写为$\frac{\Delta \pi}{\Delta b_j}$，得$\frac{\Delta \pi}{\Delta b_j} = \bar{y}_j$。因此，对于``正则''情形，RHS变化所导致的目标函数变化由相应的对偶价格给出。
+\end{translation}
+
+\section{Exercises for Chapter 4 / 第4章习题}
+
+\begin{original}
+\textbf{Exercise 4.1} You have a choice of two foods to eat per day. Food A contains 3 grams of vitamin A per ounce, 4 grams of vitamin C and 1 gram of vitamin E. Food B contains 1 gram of vitamin A, 5 grams of vitamin C and 3 grams of vitamin E. The minimum daily requirements of vitamins A, C and E are 22, 66 and 20 grams respectively. You are also on a diet, so you want to minimize your calorie intake. An ounce of food A has 30 calories and an ounce of food B has 20.
+(a) Formulate the linear programming problem.
+(b) What are the vertices of the convex set bounded by the constraints?
+(c) At what point do you minimize your calorie intake subject to the nutritional requirements?
+(d) Assume that each calorie you consume costs you \$2. What would you pay for a vitamin pill that would reduce the amount of vitamin A you need from food to 20 grams?
+\end{original}
+\begin{translation}
+\textbf{习题4.1} 你每天可以吃两种食物。食物A每盎司含3克维生素A、4克维生素C和1克维生素E。食物B每盎司含1克维生素A、5克维生素C和3克维生素E。维生素A、C和E的每日最低需求量分别为22、66和20克。你还在节食，因此希望最小化卡路里摄入量。一盎司食物A含30卡路里，一盎司食物B含20卡路里。
+(a) 表述该线性规划问题。
+(b) 由约束所围成的凸集的顶点是什么？
+(c) 在满足营养需求的前提下，你在哪一点最小化卡路里摄入量？
+(d) 假设你摄入的每卡路里花费你\$2。你愿意为一片能将你从食物中获取的维生素A需求量降低至20克的维生素片支付多少钱？
+\end{translation}
+
+\begin{original}
+\textbf{Exercise 4.2} For the following systems of constraints, determine and plot the feasible regions.
+\begin{align*}
+\text{(a)}\; & 4x + 3y \le 12,\; x - y \ge 0 &
+\text{(b)}\; & x \ge 0,\; y \ge 0,\; x + y - 6 \ge 0,\; 2x + y - 8 \ge 0 \\
+\text{(c)}\; & 2x + y \le 50,\; x + 2y \le 40,\; x \ge 0,\; y \ge 0 &
+\text{(d)}\; & x + 2y \le 12,\; 6x + 4y \le 48,\; -x + 2y \le 8 \\
+\text{(e)}\; & 3x + y \le 12,\; 6x + 5y \le 30,\; x + 2y \le 14,\; x \ge 0,\; y \ge 0 \\
+\text{(f)}\; & 20x + 15y \le 60,000,\; 4x + 9y \le 25,200,\; 4x + 6y \le 18,000,\; 30x + 20y \le 87,000
+\end{align*}
+\end{original}
+\begin{translation}
+\textbf{习题4.2} 对以下约束组，确定并绘制可行区域。
+\end{translation}
+
+\begin{original}
+\textbf{Exercise 4.3} Solve the following linear programming problems:
+\[
+\begin{aligned}
+\text{Max:} \quad & 5x + 4y \\
+\text{s.t.} \quad & x + 2y \le 12,\; 6x + 4y \le 48,\; -x + 2y \le 8,\; x, y \ge 0.
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\text{Min:} \quad & x + 3y \\
+\text{s.t.} \quad & 3x + y \le 12,\; 6x + 5y \le 30,\; x + 2y \le 14,\; x, y \ge 0.
+\end{aligned}
+\]
+
+Part I. In the maximization problem, calculate the change in the value of the objective as a result of:
+(a) Changing the RHS from 12 to 10, and from this deduce the dual price associated with the first constraint.
+(b) Changing the RHS from 48 to 40, and from this deduce the dual price associated with the second constraint.
+(c) Changing the RHS from 8 to 7, and from this deduce the dual price associated with the third constraint.
+
+Part II. In the minimization problem, calculate the change in the value of the objective as a result of:
+(d) Changing the RHS from 12 to 11, and from this deduce the dual price associated with the first constraint.
+(e) Changing the RHS from 30 to 32, and from this deduce the dual price associated with the second constraint.
+(f) Changing the RHS from 14 to 15, and from this deduce the dual price associated with the third constraint.
+
+Part III. For both problems, introduce slack variables and write the programs as equality-constrained problems. In both cases:
+(g) Identify all the basic solutions.
+(h) Identify all the basic feasible solutions.
+\end{original}
+\begin{translation}
+\textbf{习题4.3} 求解以下线性规划问题：（见上）
+
+第一部分：在最大化问题中，计算因以下变化而导致的目标函数值的变化：
+(a)~(c) 分别为改变各约束的RHS并推导相应的对偶价格。
+
+第二部分：在最小化问题中，做类似计算。
+
+第三部分：对两个问题，引入松弛变量并将规划写为等式约束问题，识别所有基本解和基本可行解。
+\end{translation}
+
+\begin{original}
+\textbf{Exercise 4.4--4.16} Additional exercises on linear programming: solving programs, identifying basic solutions and basic feasible solutions, calculating dual prices, plotting constraints, and analyzing parameter changes. (See textbook for full exercise statements.)
+\end{original}
+\begin{translation}
+\textbf{习题4.4--4.16} 关于线性规划的附加习题：求解规划、识别基本解和基本可行解、计算对偶价格、绘制约束以及分析参数变化。（完整习题陈述见教材。）
+\end{translation}
+
+% ============================================================
+% Chapter 5: Functions of One Variable
+% ============================================================
+
+\chapter{Functions of One Variable / 一元函数}
+
+\section{Introduction / 引论}
+
+\begin{original}
+Functions arise naturally in the study of economic problems. For example, a demand function relates quantity demanded to price. Properties of such functions are routinely studied --- the slope and elasticity measure responsiveness of demand to price variations. The techniques presented here introduce the tools required for such calculations. Section 5.2 describes a variety of functions arising in different areas (taxation, finance and present value calculations). Section 5.3 introduces the basic notions of continuity and differentiability of a function. Certain families of functions, such as logarithmic, polynomial and exponential functions, appear frequently in economic applications; some of these are introduced in Section 5.4 and their shapes described. Growth rates and the algebra of growth calculations are developed in Section 5.5. Finally, Section 5.6 provides rules for the differentiation where the function is itself formed from other functions (such as the ratio or product of functions).
+\end{original}
+\begin{translation}
+函数自然地出现在经济问题的研究中。例如，需求函数将需求量与价格联系起来。此类函数的性质被常规地研究——斜率和弹性衡量需求对价格变化的响应程度。这里介绍的技术提供了进行此类计算所需的工具。第5.2节描述了在不同领域（税收、金融和现值计算）中出现的各种函数。第5.3节介绍函数的连续性和可微性的基本概念。某些函数族，如对数函数、多项式函数和指数函数，在经济应用中频繁出现；其中一些在第5.4节中介绍并描述了它们的形状。增长率和增长计算的代数在第5.5节中展开。最后，第5.6节提供了当函数本身由其他函数构成（如函数的比率或乘积）时的微分法则。
+\end{translation}
+
+\begin{original}
+A function, $f$, from a set $X$ to a set $Y$ is a rule associating with each element of a set $X$ some element in the set $Y$. This is written $f: X \to Y$. In words, to each point in $X$, $f$ associates a point, $y = f(x)$ in $Y$. The set $X$ is called the domain and the set $Y$ is called the range. The inverse demand function, relating price to quantity demanded, $p(Q)$, is a familiar example. The domain is the set of non-negative numbers, $\mathbb{R}_+$ (quantity must be positive), and the range is also the set of non-negative numbers (price is non-negative). Thus, $p: \mathbb{R}_+ \to \mathbb{R}_+$.
+\end{original}
+\begin{translation}
+从集合$X$到集合$Y$的函数$f$是一个规则，它将集合$X$的每个元素与集合$Y$中的某个元素相关联。记作$f: X \to Y$。换言之，对于$X$中的每个点，$f$关联着$Y$中的一个点$y = f(x)$。集合$X$称为定义域，集合$Y$称为值域。将价格与需求量联系起来的反需求函数$p(Q)$是一个熟悉的例子。定义域是非负实数集$\mathbb{R}_+$（数量必须为正），值域也是非负实数集（价格非负）。因此，$p: \mathbb{R}_+ \to \mathbb{R}_+$。
+\end{translation}
+
+\section{Some examples / 若干例子}
+
+\subsection{Demand functions / 需求函数}
+
+\begin{original}
+Consumer demand theory describes an individual in terms of utility derived from consumption of a vector of goods $(x_1, x_2, \ldots, x_n)$. With a fixed income $y$ and price $p_i$ for good $i$, utility maximization leads to choices for the goods that depend on prices and income: $x_i(p_1, p_2, \ldots, p_n, y)$. In the two-good case, utility maximization leads to the selection of $(x_1, x_2)$. The values of $x_1$ and $x_2$ depend on the prices $(p_1, p_2)$ and income, $y$. These are called the demand functions and are written $x_1(p_1, p_2, y)$ and $x_2(p_1, p_2, y)$.
+
+With $J$ individuals, write the demand for good $i$ by individual $j$ as $x_i^j(p_1, p_2, \ldots, p_n, y^j)$, where $y^j$ is income of individual $j$. Then, the aggregate demand for good $i$ is:
+\[
+X_i(p_1, p_2, \ldots, p_n, y^1, y^2, \ldots, y^J) = \sum_{j=1}^{J} x_i^j(p_1, p_2, \ldots, p_n, y^j).
+\]
+
+If we consider the case where all prices other than that of good $j$, $p_j = \bar{p}_j$, $j \neq i$, and all incomes, $y^j = \bar{y}^j$, are fixed then the aggregate demand is:
+\[
+D_i(p_i) = X_i(\bar{p}_1, \bar{p}_2, \ldots, \bar{p}_{i-1}, p_i, \bar{p}_{i+1}, \ldots, \bar{p}_n, \bar{y}^1, \bar{y}^2, \ldots, \bar{y}^J).
+\]
+
+For simplicity, ignore the subscripts and write, $D(p)$, for the aggregate demand as a function of own price. Writing $Q$ for the quantity demanded, $Q = D(p)$. This gives aggregate demand for the good as a function of the good's price. With this, the responsiveness of demand to price variation may be considered. The slope of the demand function is $\frac{Q' - Q}{p' - p} = \frac{D(p') - D(p)}{p' - p}$. Similarly, the percentage change in quantity resulting from a percentage change in price is given by $\frac{Q' - Q}{Q} / \frac{p' - p}{p}$. The negative of this term gives the elasticity of demand:
+\[
+\varepsilon(p) = -\frac{p}{D(p)} \frac{D(p') - D(p)}{p' - p}.
+\]
+\end{original}
+\begin{translation}
+消费者需求理论用从商品向量$(x_1, x_2, \ldots, x_n)$的消费中获得的效用来描述个体。在固定收入$y$和商品$i$的价格$p_i$下，效用最大化导致商品的选择依赖于价格和收入：$x_i(p_1, p_2, \ldots, p_n, y)$。在两商品情形中，效用最大化导致选择$(x_1, x_2)$。$x_1$和$x_2$的值取决于价格$(p_1, p_2)$和收入$y$。这些称为需求函数，记作$x_1(p_1, p_2, y)$和$x_2(p_1, p_2, y)$。
+
+在有$J$个个体的情况下，将个体$j$对商品$i$的需求记作$x_i^j(p_1, p_2, \ldots, p_n, y^j)$。则商品$i$的总需求为上述求和形式。
+
+如果考虑除商品$j$外的所有价格$p_j = \bar{p}_j$，$j \neq i$，以及所有收入$y^j = \bar{y}^j$都固定的情况，则总需求为$D_i(p_i)$。为简便起见，忽略下标，将总需求作为自身价格的函数记作$D(p)$。记$Q$为需求量，$Q = D(p)$。需求的斜率由$\frac{Q' - Q}{p' - p}$给出。类似地，价格百分比变化导致的数量百分比变化给出了需求弹性。
+\end{translation}
+
+\subsection{Present value and the interest rate / 现值与利率}
+
+\begin{original}
+The present value of a cash flow may be viewed as a function of the interest rate. A bond is characterized by a face value $P$, an interest rate $\kappa$ and a maturity date $T$, and it pays the holder a fixed payment, $f = \kappa P$, each time period, and the face value $P$ at the end of the $T$th period. Thus, the cash flow generated by the bond is: $(f, f, f, \ldots, f, P)$, where $f$ is paid at the end of periods $1, 2$, up to $T - 1$. If the market interest rate is $r$, $x$ dollars invested today for one period is worth $y = x(1 + r)$ at the end of the period. Put differently, to have $y$ dollars at the end of the period, $x = \frac{y}{(1+r)}$ dollars should be invested now.
+
+The current value of a payoff $y$ one period from now is $\frac{y}{1+r}$. The same reasoning shows that the current value of a payoff $y$ $t$ periods from now is $\frac{y}{(1+r)^t}$. Therefore, the flow $(f, f, f, \ldots, f, P)$ has current market value of:
+\[
+V = \frac{f}{1+r} + \frac{f}{(1+r)^2} + \cdots + \frac{f}{(1+r)^t} + \cdots + \frac{f}{(1+r)^{T-1}} + \frac{P}{(1+r)^T}.
+\]
+
+One simple case occurs when the payments continue indefinitely (and there is no end period at which $P$ would be paid). In this case,
+\[
+V = f \frac{1}{1+r} \left[1 + \frac{1}{1+r} + \frac{1}{(1+r)^2} + \cdots \right].
+\]
+
+Using the fact that for $0 < \gamma < 1$, $1 + \gamma + \gamma^2 + \cdots = \frac{1}{1-\gamma}$, when $\gamma = \frac{1}{1+r}$, the infinite sum becomes $\frac{1}{1-\frac{1}{1+r}} = \frac{1+r}{r}$. Therefore, $V = f \frac{1}{1+r} \cdot \frac{1+r}{r} = \frac{f}{r}$.
+
+Write $V(r)$ to denote this dependence, the valuing of the bond as a function of the current market interest rate: $V(r) = \frac{f}{r}$.
+\end{original}
+\begin{translation}
+现金流的现值可以看作是利率的函数。债券的特征是面值$P$、利率$\kappa$和到期日$T$，它每期向持有者支付固定金额$f = \kappa P$，并在第$T$期末支付面值$P$。因此，债券产生的现金流为：$(f, f, f, \ldots, f, P)$，其中$f$在第1, 2直至$T-1$期末支付。如果市场利率为$r$，今天投资$x$美元一期后价值为$y = x(1 + r)$。换句话说，要在一期末获得$y$美元，现在应投资$x = \frac{y}{(1+r)}$美元。
+
+一期后支付$y$的当前价值为$\frac{y}{1+r}$。同样的推理表明，$t$期后支付$y$的当前价值为$\frac{y}{(1+r)^t}$。因此，现金流$(f, f, f, \ldots, f, P)$的当前市场价值如上所示。一种简单情况是支付无限期持续（没有支付$P$的结束期）。此时$V = \frac{f}{r}$。将这种依赖性记为$V(r)$：$V(r) = \frac{f}{r}$。
+\end{translation}
+
+\subsection{Taxation / 税收}
+
+\begin{original}
+In a market with supply and demand curves $S(p)$ and $D(p)$, the introduction of a sales tax creates a wedge between the price paid and the price received. With $D(p)$ and supply $S(p)$, the market clearing price is $p_0$, determined as the solution to: $D(p_0) = S(p_0)$. Suppose now that an ad-valorem tax is introduced, so that if the seller receives $p_t$, the buyer pays $(1 + t)p_t$. Let $t_0 = 0$ be the tax initially (no tax) and $t$ the tax imposed. Market clearing requires that the amount supplied at price $p_t$ equals the amount demanded at price $(1+t)p_t$: $D((1+t)p_t) = S(p_t)$. With $Q(0) = D(p_0) = S(p_0)$ and $Q(t) = D((1 + t)p_t) = S(p_t)$, the variation on quantity traded as a result of the tax increment is $Q(t) - Q(0) < 0$, and the rate of change of quantity traded relative to the tax variation is given by $\frac{Q(t)-Q(0)}{t}$.
+\end{original}
+\begin{translation}
+在具有供给曲线$S(p)$和需求曲线$D(p)$的市场中，引入销售税会在支付价格和收到价格之间造成一个楔子。由$D(p_0) = S(p_0)$确定市场出清价格$p_0$。现在假设引入从价税，使得如果卖方收到$p_t$，买方支付$(1 + t)p_t$。市场出清要求价格为$p_t$时的供给量等于价格为$(1+t)p_t$时的需求量：$D((1+t)p_t) = S(p_t)$。由于税收增加导致的交易量变化为$Q(t) - Q(0) < 0$，交易量相对于税收变化的变化率由$\frac{Q(t)-Q(0)}{t}$给出。
+\end{translation}
+
+\subsection{Options / 期权}
+
+\begin{original}
+At any point in time, a stock trades at some price $p$, which varies over time. Derivative assets can be created as a function of the stock price $p$, $f(p)$. Such derivative assets are called ``options''. In finance, an option gives the owner the right to buy or sell an asset. An option giving the right to purchase an asset at some specified price, $\bar{p}$, called the exercise or strike price, at (or before) a specified date, $T$, is a call option. An option giving the right to sell is called a put option. When the right can be exercised only at the date $T$, the option is a European option. When the right can be exercised on or before the date $T$, the option is an American option.
+
+Suppose that the strike price of a European call option is $\bar{p}$ and that $\tilde{p}$ is the (as yet unknown) stock price at period $T$. Then, if the price $\tilde{p}$ turns out to be above $\bar{p}$, the owner can exercise the right to purchase at price $\bar{p}$ and sell on the market at price $\tilde{p}$, so the net gain is $\tilde{p} - \bar{p}$. If $\tilde{p} < \bar{p}$, the owner will choose not to exercise, and the net benefit is 0. So, the return per call option owned is $\pi(\tilde{p}) = \max\{\tilde{p} - \bar{p}, 0\}$.
+
+In contrast, a put option gives the right to sell a unit of the asset at a strike price $\hat{p}$. This has a return of $\pi(\tilde{p}) = \max\{\hat{p} - \tilde{p}, 0\}$. Such options may be combined to provide more complex return streams.
+\end{original}
+\begin{translation}
+在任何时点，股票以某个价格$p$交易，该价格随时间变化。衍生资产可以作为股票价格$p$的函数$f(p)$来创建。此类衍生资产称为``期权''。在金融学中，期权赋予持有者买入或卖出一项资产的权利。赋予在指定日期$T$（或之前）以指定价格$\bar{p}$（称为执行价或行权价）购买资产的权利的期权是看涨期权。赋予出售权利的期权称为看跌期权。当该权利只能在日期$T$行使时，该期权是欧式期权。当该权利可以在日期$T$或之前行使时，该期权是美式期权。
+
+假设欧式看涨期权的行权价为$\bar{p}$，$\tilde{p}$为$T$时刻的股票价格。如果$\tilde{p} > \bar{p}$，持有者可以行权以价格$\bar{p}$购买并以市场价格$\tilde{p}$出售，净收益为$\tilde{p} - \bar{p}$。如果$\tilde{p} < \bar{p}$，持有者将选择不行权，净收益为0。因此，每份看涨期权的回报为$\pi(\tilde{p}) = \max\{\tilde{p} - \bar{p}, 0\}$。相比之下，看跌期权赋予以行权价$\hat{p}$出售资产的权利，其回报为$\pi(\tilde{p}) = \max\{\hat{p} - \tilde{p}, 0\}$。
+\end{translation}
+
+\section{Continuity and differentiability / 连续性与可微性}
+
+\subsection{Preliminaries / 预备知识}
+
+\begin{original}
+\textbf{Definition 5.1:} Functions may be categorized in terms of surjectivity, injectivity and bijectivity.
+\begin{itemize}
+\item If $f(X) = Y$, where $f(X) = \{y \mid \text{there is an } x \in X, f(x) = y\}$, we say $f$ is onto $Y$ or surjective. In words, for any point $y \in Y$, there is some $x \in X$ with $f(x) = y$.
+\item The function $f$ is called 1-1 (one-to-one) or injective if $f(x_1) = f(x_2)$ implies that $x_1 = x_2$; a 1-1 function cannot have the same value at two different points in the domain.
+\item If $f$ is both 1-1 and onto, it is called bijective. If $f$ is a bijective mapping, there is a function $g: Y \to X$, called the inverse of $f$ with $g(f(x)) = x$ and $f(g(y)) = y$. The function $g$ is written $f^{-1}$.
+\end{itemize}
+\end{original}
+\begin{translation}
+\textbf{定义5.1：}函数可以按照满射性、单射性和双射性进行分类。
+\begin{itemize}
+\item 若$f(X) = Y$，其中$f(X) = \{y \mid \text{存在} x \in X, f(x) = y\}$，则称$f$是到$Y$上的或满射的。换言之，对$Y$中的任意点$y$，存在某个$x \in X$使得$f(x) = y$。
+\item 若$f(x_1) = f(x_2)$蕴含$x_1 = x_2$，则称函数$f$为1-1（一一对应）或单射的；一一函数不能在定义域的两个不同点取相同的值。
+\item 若$f$既是1-1又是满射，则称其为双射。若$f$是双射映射，则存在函数$g: Y \to X$，称为$f$的逆，满足$g(f(x)) = x$和$f(g(y)) = y$。函数$g$记作$f^{-1}$。
+\end{itemize}
+\end{translation}
+
+\subsection{Inequalities and absolute value / 不等式与绝对值}
+
+\begin{original}
+For a real number $a$, the expression $|a|$ is called the absolute value of $a$, and is defined: $|a| = a$, if $a \ge 0$ and $|a| = -a$, if $a < 0$:
+\[
+|a| = \begin{cases} -a & \text{if } a < 0, \\ a & \text{if } a \ge 0. \end{cases}
+\]
+
+\textbf{Proposition 5.1:} The absolute value operation satisfies a number of simple rules. For real numbers, $a$, $b$ and $c$:
+\begin{enumerate}
+\item If $a \ge 0$, then $|x| \le a$ if and only if $-a \le x \le a$;
+\item $|a + b| = |b + a|$;
+\item $|a \cdot b| = |a||b|$;
+\item $|a + b| \le |a| + |b|$;
+\item $|a + b| \ge |a| - |b|$;
+\item $|\frac{a}{b}| = \frac{|a|}{|b|}$, if $b \neq 0$.
+\end{enumerate}
+\end{original}
+\begin{translation}
+对于实数$a$，表达式$|a|$称为$a$的绝对值，定义为：若$a \ge 0$则$|a| = a$，若$a < 0$则$|a| = -a$。
+
+\textbf{命题5.1：}绝对值运算满足若干简单规则。对实数$a$, $b$和$c$：
+\begin{enumerate}
+\item 若$a \ge 0$，则$|x| \le a$当且仅当$-a \le x \le a$；
+\item $|a + b| = |b + a|$；
+\item $|a \cdot b| = |a||b|$；
+\item $|a + b| \le |a| + |b|$；
+\item $|a + b| \ge |a| - |b|$；
+\item $|\frac{a}{b}| = \frac{|a|}{|b|}$，若$b \neq 0$。
+\end{enumerate}
+\end{translation}
+
+\subsection{Continuity / 连续性}
+
+\begin{original}
+\textbf{Definition 5.2:} Let $x_1, x_2, \ldots, x_n = \{x_n\}_{n=1}^{\infty}$ be a sequence of real numbers. We say that $x_n$ converges to a real number $c$ if given any positive number, $\varepsilon > 0$, however small, there is an integer $n^*$, such that $|x_n - c| < \varepsilon$, whenever $n \ge n^*$. This is written $|x_n - c| \to 0$ as $n \to \infty$, or $x_n \to c$, or $\lim_n x_n = c$.
+
+\textbf{Definition 5.3:} A function $f$ is continuous at $c$ if given $\varepsilon > 0$, $\exists \delta > 0$ such that
+\[
+|f(x) - f(c)| < \varepsilon \quad \text{whenever} \quad |x - c| < \delta.
+\]
+In this case, write $\lim_{x \to c} f(x) = f(c)$. Call $f$ continuous, if $f$ is continuous at every $c \in X$.
+\end{original}
+\begin{translation}
+\textbf{定义5.2：}设$x_1, x_2, \ldots, x_n = \{x_n\}_{n=1}^{\infty}$为一实数序列。若给定任意正数$\varepsilon > 0$，无论多小，都存在整数$n^*$，使得当$n \ge n^*$时$|x_n - c| < \varepsilon$，则称$x_n$收敛于实数$c$。记作$|x_n - c| \to 0$当$n \to \infty$，或$x_n \to c$，或$\lim_n x_n = c$。
+
+\textbf{定义5.3：}若给定$\varepsilon > 0$，$\exists \delta > 0$使得当$|x - c| < \delta$时$|f(x) - f(c)| < \varepsilon$，则函数$f$在$c$处连续。此时记$\lim_{x \to c} f(x) = f(c)$。若$f$在每一$c \in X$处均连续，则称$f$连续。
+\end{translation}
+
+\begin{original}
+Some simple rules follow from the definitions. If $\lim_{x \to c} f(x) = a$ and $\lim_{x \to c} g(x) = b$, then:
+\begin{enumerate}
+\item For any constant $\lambda$, $\lim_{x \to c} \lambda f(x) = \lambda a$.
+\item $\lim_{x \to c}[f(x) + g(x)] = a + b$,
+\item $\lim_{x \to c} f(x) \cdot g(x) = ab$,
+\item $\lim_{x \to c} \frac{f(x)}{g(x)} = \frac{a}{b}$, if $b \neq 0$.
+\item If $f: X \to Y$, and $g: Y \to Z$ are continuous functions, then $h: X \to Z$, defined by $h(x) = g(f(x))$ is a continuous function: $\lim_{x \to c} h(x) = h(c)$.
+\end{enumerate}
+\end{original}
+\begin{translation}
+由定义可得一些简单规则。若$\lim_{x \to c} f(x) = a$且$\lim_{x \to c} g(x) = b$，则：
+\begin{enumerate}
+\item 对任意常数$\lambda$，$\lim_{x \to c} \lambda f(x) = \lambda a$。
+\item $\lim_{x \to c}[f(x) + g(x)] = a + b$，
+\item $\lim_{x \to c} f(x) \cdot g(x) = ab$，
+\item $\lim_{x \to c} \frac{f(x)}{g(x)} = \frac{a}{b}$，若$b \neq 0$。
+\item 若$f: X \to Y$和$g: Y \to Z$是连续函数，则由$h(x) = g(f(x))$定义的$h: X \to Z$是连续函数：$\lim_{x \to c} h(x) = h(c)$。
+\end{enumerate}
+\end{translation}
+
+\subsection{Differentiability / 可微性}
+
+\begin{original}
+\textbf{Definition 5.4:} The function $f$ is differentiable at $\bar{x}$ if, as $x$ converges to $\bar{x}$, $\frac{f(x)-f(\bar{x})}{(x-\bar{x})}$ converges to a number. Formally, $f$ is differentiable at $\bar{x}$ if the following limit exists:
+\[
+\lim_{x \to \bar{x}} \frac{f(x) - f(\bar{x})}{x - \bar{x}} = \lim_{\Delta x \to 0} \frac{f(\bar{x} + \Delta x) - f(\bar{x})}{\Delta x} = \lim_{\varepsilon \to 0} \frac{f(\bar{x} + \varepsilon) - f(\bar{x})}{\varepsilon}.
+\]
+If the limit exists it is denoted $\frac{d f(\bar{x})}{dx}$ or $f'(\bar{x})$ and is called the derivative of $f$.
+\end{original}
+\begin{translation}
+\textbf{定义5.4：}若当$x$收敛于$\bar{x}$时，$\frac{f(x)-f(\bar{x})}{(x-\bar{x})}$收敛于一个数，则函数$f$在$\bar{x}$处可微。形式上，若下列极限存在，则$f$在$\bar{x}$处可微：
+\[
+\lim_{x \to \bar{x}} \frac{f(x) - f(\bar{x})}{x - \bar{x}} = \lim_{\Delta x \to 0} \frac{f(\bar{x} + \Delta x) - f(\bar{x})}{\Delta x} = \lim_{\varepsilon \to 0} \frac{f(\bar{x} + \varepsilon) - f(\bar{x})}{\varepsilon}.
+\]
+若该极限存在，则记作$\frac{d f(\bar{x})}{dx}$或$f'(\bar{x})$，并称为$f$的导数。
+\end{translation}
+
+\begin{original}
+\textbf{Remark 5.1:} It is always the case that differentiability of a function implies that the function is continuous. The converse is not true. For example, $|x|$ is continuous but not differentiable at $x = 0$.
+
+\textbf{Remark 5.2:} Differentiability plays an important role in locating the maximum or minimum of a function. Consider $f(x) = x(1-x) = x - x^2$, so $f'(x) = 1-2x$. Thus $f'(x)$ is positive when $x < \frac{1}{2}$, negative when $x > \frac{1}{2}$ and equal to 0 at $x = \frac{1}{2}$. This suggests that the use of derivatives will be helpful in finding maxima (and minima) of functions.
+\end{original}
+\begin{translation}
+\textbf{注记5.1：}函数的可微性总是蕴含该函数连续。反之则不成立。例如，$|x|$是连续的但在$x = 0$处不可微。
+
+\textbf{注记5.2：}可微性在定位函数的最大值或最小值中起着重要作用。考虑$f(x) = x(1-x) = x - x^2$，则$f'(x) = 1-2x$。因此当$x < \frac{1}{2}$时$f'(x)$为正，当$x > \frac{1}{2}$时为负，在$x = \frac{1}{2}$处等于0。这表明导数的使用将有助于寻找函数的极大值（和极小值）。
+\end{translation}
+
+\section{Types of function / 函数的类型}
+
+\begin{original}
+\textbf{Exponential functions:} The exponential function is defined $f(x) = e^x$, where $e \approx 2.718$. More generally, exponential functions have the functional form $f(x) = a^x$ or $f(x) = b a^{cx}$.
+
+\textbf{Polynomial functions:} A polynomial function is a function of the form: $f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$.
+
+\textbf{Trigonometric functions:} The three primary trigonometric functions are the sine, cosine and tangent functions.
+
+\textbf{Logarithmic functions:} The logarithm of $x$ to the base $b$ is that number $y$ such that $x = b^y$. One special case is where $b = e$, Euler's number. Routinely, $\log_e x$ is written $\ln x$.
+\end{original}
+\begin{translation}
+\textbf{指数函数：}指数函数定义为$f(x) = e^x$，其中$e \approx 2.718$。更一般地，指数函数具有形式$f(x) = a^x$或$f(x) = b a^{cx}$。
+
+\textbf{多项式函数：}多项式函数是形如$f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$的函数。
+
+\textbf{三角函数：}三个基本三角函数是正弦、余弦和正切函数。
+
+\textbf{对数函数：}以$b$为底的$x$的对数是满足$x = b^y$的数$y$。一种特殊情况是$b = e$（欧拉数）。通常将$\log_e x$写作$\ln x$。
+\end{translation}
+
+\subsubsection{Plots of various functions / 各类函数的图像}
+
+\begin{original}
+The following table gives some well known functions and their derivatives.
+\[
+\begin{array}{c|ccccccc}
+f(x) & x^a & a^x & \log_e x & e^{ax} & \sin(x) & \cos(x) & \tan(x) \\
+\hline
+f'(x) & a x^{a-1} & a^x \cdot \ln(a) & \frac{1}{x} & a e^{ax} & \cos(x) & -\sin(x) & \frac{1}{\cos^2(x)}
+\end{array}
+\]
+\end{original}
+\begin{translation}
+下表给出了一些众所周知的函数及其导数。
+\end{translation}
+
+\subsection{The log and exponential functions / 对数函数与指数函数}
+
+\begin{original}
+\textbf{Definition 5.5:} The log of a number $x$ to the base $b$ is the power to which $b$ must be raised to equal that number. Thus, $a = \log_b x$ means $x = b^a$. So, $\log_b x$ is the number that satisfies $x = b^{\log_b x}$.
+
+\textbf{Proposition 5.2:} The log function satisfies:
+\begin{enumerate}
+\item The log of $x^a$ to base $b$ is equal to $a$ times the log of $x$ to the base $b$: $\log_b x^a = a \log_b x$.
+\item The log of a product is equal to the sum of the logs: $\log_b xy = \log_b x + \log_b y$.
+\item The log of a ratio is equal to the difference of the logs: $\log_b \frac{x}{y} = \log_b x - \log_b y$.
+\item Change of base: $\log_c x = \log_c b \cdot \log_b x$, or $\frac{\log_c x}{\log_b x} = \log_c b$.
+\end{enumerate}
+\end{original}
+\begin{translation}
+\textbf{定义5.5：}以$b$为底的数$x$的对数是使得$b$的该次幂等于该数的幂。因此，$a = \log_b x$意味着$x = b^a$。故$\log_b x$是满足$x = b^{\log_b x}$的数。
+
+\textbf{命题5.2：}对数函数满足：
+\begin{enumerate}
+\item $x^a$以$b$为底的对数等于$a$乘以$x$以$b$为底的对数：$\log_b x^a = a \log_b x$。
+\item 乘积的对数等于对数之和：$\log_b xy = \log_b x + \log_b y$。
+\item 比率的对数等于对数之差：$\log_b \frac{x}{y} = \log_b x - \log_b y$。
+\item 换底公式：$\log_c x = \log_c b \cdot \log_b x$。
+\end{enumerate}
+\end{translation}
+
+\begin{original}
+\textbf{Remark 5.3:} The mathematical constant $e \approx 2.71828$, Euler's number, may be defined in a number of ways:
+\[
+e = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots = \sum_{j=0}^{\infty} \frac{x^j}{j!} \quad \text{(evaluated at } x = 1\text{)}.
+\]
+Yet another equivalent definition gives $e$ as the limit of a sequence of numbers:
+\[
+e = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x.
+\]
+\end{original}
+\begin{translation}
+\textbf{注记5.3：}数学常数$e \approx 2.71828$，即欧拉数，可以用多种方式定义。另一种等价定义将$e$作为数列的极限：
+\[
+e = \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x.
+\]
+\end{translation}
+
+\section{Growth rates / 增长率}
+
+\begin{original}
+Suppose an investor invests one dollar for a year at a 100\% interest rate. If the interest is calculated once at the end of the year, the loan is worth $1 \times (1+r) = 2$. With $n$ rounds of interest calculation, the value of the loan at the end of the year is $\left(1 + \frac{1}{n}\right)^n$. As $n$ becomes large, this approaches $e$.
+
+Suppose now that the interest rate is $r$ instead of 1. With $n$ rounds of interest calculation, the final value is $\left(1 + \frac{r}{n}\right)^{nt}$. From the previous calculations:
+\[
+\left(1 + \frac{r}{n}\right)^{nt} \to (e^r)^t = e^{rt}.
+\]
+Thus, the value of $P$ dollars invested now with continuous interest accumulation is $V = P e^{rt}$. Conversely, $V$ dollars in $t$ periods with continuous discounting is worth $V e^{-rt} (= P)$ now.
+\end{original}
+\begin{translation}
+假设一位投资者以100\%的利率投资一美元一年。如果利息在年底计算一次，贷款价值为$1 \times (1+r) = 2$。经过$n$轮利息计算，年底贷款价值为$\left(1 + \frac{1}{n}\right)^n$。当$n$变得很大时，这趋近于$e$。
+
+现在假设利率为$r$而非1。经过$n$轮利息计算，最终价值为$\left(1 + \frac{r}{n}\right)^{nt}$。根据之前的计算，这趋近于$e^{rt}$。因此，现在投资$P$美元在连续计息下的价值为$V = P e^{rt}$。反之，$t$期后的$V$美元按连续贴现的当前价值为$V e^{-rt} (= P)$。
+\end{translation}
+
+\subsection{Additivity of continuous growth rates / 连续增长率的可加性}
+
+\begin{original}
+One advantage of using continuous compound rates is that growth rates are additive. Consider three time periods, $s < t < u$, with some variable observed at those three dates: $y_s, y_t, y_u$. Using the continuous growth formula:
+\[
+\frac{y_t}{y_s} = e^{\gamma_{st}},\quad \frac{y_u}{y_t} = e^{\gamma_{tu}},\quad \frac{y_u}{y_s} = e^{\gamma_{su}},
+\]
+where $\gamma_{ij}$ is the continuous growth rate from time $i$ to time $j$. Then, multiplying,
+\[
+e^{\gamma_{su}} = \frac{y_u}{y_s} = \frac{y_t}{y_s} \cdot \frac{y_u}{y_t} = e^{\gamma_{st}} e^{\gamma_{tu}} = e^{\gamma_{st} + \gamma_{tu}},
+\]
+so that $\gamma_{su} = \gamma_{st} + \gamma_{tu}$. Thus, the growth rate over the full period is equal to the sum of the growth rates in the two subperiods.
+\end{original}
+\begin{translation}
+使用连续复利的一个优点是增长率具有可加性。考虑三个时点$s < t < u$，在这些日期观测到的某个变量为$y_s, y_t, y_u$。使用连续增长公式：$\frac{y_t}{y_s} = e^{\gamma_{st}}$，等等。其中$\gamma_{ij}$是从时刻$i$到$j$的连续增长率。然后相乘得$e^{\gamma_{su}} = e^{\gamma_{st} + \gamma_{tu}}$，故$\gamma_{su} = \gamma_{st} + \gamma_{tu}$。因此，整个时期的增长率等于两个子时期增长率之和。
+\end{translation}
+
+\subsection{The derivatives of $e^x$ and $\ln x$ / $e^x$与$\ln x$的导数}
+
+\begin{original}
+Given a constant $k$, the derivative of $e^{kx}$ is given by
+\[
+\frac{d}{dx}\{e^{kx}\} = k e^{kx}.
+\]
+
+The derivative of $\ln x$ is given by
+\[
+\frac{d}{dx}\{\ln x\} = \frac{1}{x}.
+\]
+\end{original}
+\begin{translation}
+给定常数$k$，$e^{kx}$的导数为$\frac{d}{dx}\{e^{kx}\} = k e^{kx}$。$\ln x$的导数为$\frac{d}{dx}\{\ln x\} = \frac{1}{x}$。
+\end{translation}
+
+\section{Some rules of calculus / 微积分的一些法则}
+
+\begin{original}
+Some basic rules of calculus apply for the differentiation of the product, ratio and composition of continuous functions.
+\begin{enumerate}
+\item The derivative of a product of functions:
+\[
+\frac{d}{dx}\{f(x)g(x)\} = f'(x)g(x) + g'(x)f(x).
+\]
+\item The derivative of a ratio of functions ($g(x) \neq 0$):
+\[
+\frac{d}{dx}\left\{\frac{f(x)}{g(x)}\right\} = \frac{g(x)f'(x) - f(x)g'(x)}{[g(x)]^2}.
+\]
+\item The chain rule (differentiating the composition of functions):
+\[
+\frac{d}{dx}\{f(g(x))\} = f'(g(x))g'(x).
+\]
+\end{enumerate}
+
+In the context of the exponential and log functions, the chain rule gives:
+\[
+\frac{d}{dx} e^{f(x)} = f'(x) e^{f(x)}, \qquad \frac{d}{dx} \ln f(x) = \frac{1}{f(x)} f'(x) \quad \text{given } f(x) > 0.
+\]
+\end{original}
+\begin{translation}
+微积分的一些基本法则适用于连续函数的乘积、比率和复合的微分。
+\begin{enumerate}
+\item 函数乘积的导数：$\frac{d}{dx}\{f(x)g(x)\} = f'(x)g(x) + g'(x)f(x)$。
+\item 函数比率的导数（$g(x) \neq 0$）：$\frac{d}{dx}\left\{\frac{f(x)}{g(x)}\right\} = \frac{g(x)f'(x) - f(x)g'(x)}{[g(x)]^2}$。
+\item 链式法则（复合函数的微分）：$\frac{d}{dx}\{f(g(x))\} = f'(g(x))g'(x)$。
+\end{enumerate}
+在指数函数和对数函数的背景下，链式法则给出：$\frac{d}{dx} e^{f(x)} = f'(x) e^{f(x)}$，$\frac{d}{dx} \ln f(x) = \frac{1}{f(x)} f'(x)$（假设$f(x) > 0$）。
+\end{translation}
+
+\subsection{l'H\^{o}pital's rule / 洛必达法则}
+
+\begin{original}
+\textbf{Theorem 5.1:} Suppose that (i) $f$ and $g$ are differentiable on $(a - \varepsilon, a + \varepsilon) \setminus \{a\}$ for some $\varepsilon > 0$, (ii) $\lim_{x \to a} f(x) = 0$ and $\lim_{x \to a} g(x) = 0$, (iii) $g'(x) \neq 0$ on $(a - \varepsilon, a + \varepsilon) \setminus \{a\}$. Then,
+\[
+\lim_{x \to a} \frac{f'(x)}{g'(x)} = k \quad \text{implies} \quad \lim_{x \to a} \frac{f(x)}{g(x)} = k.
+\]
+
+Similarly, suppose that (i) $f$ and $g$ are differentiable on $(a - \varepsilon, a + \varepsilon) \setminus \{a\}$ for some $\varepsilon > 0$, (ii) $\lim_{x \to a} f(x) = \infty$ and $\lim_{x \to a} g(x) = \infty$, (iii) $g'(x) \neq 0$ on $(a - \varepsilon, a + \varepsilon) \setminus \{a\}$. Then,
+\[
+\lim_{x \to a} \frac{f'(x)}{g'(x)} = k \quad \text{implies} \quad \lim_{x \to a} \frac{f(x)}{g(x)} = k.
+\]
+
+Thus, under general conditions, the limit of the ratio is equal to the limit of the ratio of the derivatives.
+\end{original}
+\begin{translation}
+\textbf{定理5.1：}假设(i) $f$和$g$在$(a - \varepsilon, a + \varepsilon) \setminus \{a\}$上对某$\varepsilon > 0$可微，(ii) $\lim_{x \to a} f(x) = 0$且$\lim_{x \to a} g(x) = 0$，(iii) 在$(a - \varepsilon, a + \varepsilon) \setminus \{a\}$上$g'(x) \neq 0$。则$\lim_{x \to a} \frac{f'(x)}{g'(x)} = k$蕴含$\lim_{x \to a} \frac{f(x)}{g(x)} = k$。类似地，可以对$f(x)$和$g(x)$均趋于无穷的情形陈述类似结果。因此，在一般条件下，比率的极限等于导数比率的极限。
+\end{translation}
+
+\subsection{Higher derivatives / 高阶导数}
+
+\begin{original}
+For notational convenience, the second derivative is denoted $f''(x)$. Technically, the second derivative is defined in exactly the same way as the first derivative:
+\[
+f''(x) = \lim_{\varepsilon \to 0} \frac{f'(x + \varepsilon) - f'(x)}{\varepsilon}.
+\]
+
+Thus, the second derivative is the derivative of the first derivative. Likewise, higher-order derivatives may be determined step by step. Properties of the second derivative are central in the discussion of optimization. If the second derivative is positive, the slope of the function is increasing at that point; if the second derivative is negative, the slope of the function is decreasing.
+\end{original}
+\begin{translation}
+为记号方便，二阶导数记作$f''(x)$。技术上，二阶导数的定义与一阶导数完全相同：$f''(x) = \lim_{\varepsilon \to 0} \frac{f'(x + \varepsilon) - f'(x)}{\varepsilon}$。因此，二阶导数是一阶导数的导数。类似地，高阶导数可以逐步确定。二阶导数的性质在最优化讨论中居于核心地位。若二阶导数为正，函数在该点的斜率递增；若二阶导数为负，函数的斜率递减。
+\end{translation}
+
+\section{Exercises for Chapter 5 / 第5章习题}
+
+\begin{original}
+\textbf{Exercise 5.1--5.14} Exercises on continuity, differentiability, l'H\^{o}pital's rule, derivatives, growth rates, elasticity, and applications. (See textbook for full exercise statements.)
+\end{original}
+\begin{translation}
+\textbf{习题5.1--5.14} 关于连续性、可微性、洛必达法则、导数、增长率、弹性及其应用的习题。（完整习题陈述见教材。）
+\end{translation}
+
+% ============================================================
+% Chapter 6: Functions of One Variable: Applications
+% ============================================================
+
+\chapter{Functions of One Variable: Applications / 一元函数的应用}
+
+\section{Introduction / 引论}
+
+\begin{original}
+In this chapter, calculus techniques are applied to the study of a variety of problems, beginning with optimization in Section 6.2. In an optimization problem, given a function $f$ of one variable $x$, the problem is to find the value of $x$, $\bar{x}$ that maximizes $f$. Such an $\bar{x}$ is characterized by the condition that $f(\bar{x}) \ge f(x)$ for all $x$. If the choice of $x$ is restricted to some set $X$, then the requirement is that $f(\bar{x}) \ge f(x)$ for all $x \in X$. Calculus techniques are used to find $\bar{x}$ by considering how $f$ varies with $x$. These techniques are local in nature and so locate ``local'' maxima (or minima). In contrast, $\bar{x}$ is a global maximizer if $f(\bar{x})$ is as large as $f(x)$ for any possible $x$. Identifying whether a value $\bar{x}$ is a local or global maximizer is considered in Section 6.3. This discussion focuses on the shape of the function $f$, and the use of calculus techniques to identify the shape.
+
+Following this discussion of optimization, a number of applications are examined. The discussion of externalities in Section 6.4 illustrates the use of these techniques to study the welfare implications of traffic congestion. Comparative statics, introduced in Section 6.5, concerns the change in a variable resulting from an underlying parameter change. A key measurement in economics is the elasticity, measuring the response of a dependent variable to a change in another variable --- this is introduced in Section 6.6. Sections 6.7 and 6.8 consider comparative static calculations in a taxation context. Finally, Section 6.9 considers Ramsey pricing, using variational arguments to study efficient taxation.
+\end{original}
+\begin{translation}
+在本章中，微积分技术被应用于研究各种问题，首先从第6.2节的最优化开始。在最优化问题中，给定一个单变量$x$的函数$f$，问题是找到使$f$最大化的$x$值$\bar{x}$。这样的$\bar{x}$由条件$f(\bar{x}) \ge f(x)$对所有$x$成立来刻画。如果$x$的选择被限制在某个集合$X$中，则要求是$f(\bar{x}) \ge f(x)$对所有$x \in X$成立。微积分技术通过考虑$f$如何随$x$变化来寻找$\bar{x}$。这些技术在本质上是局部的，因此定位``局部''极大值（或极小值）。相比之下，如果$f(\bar{x})$与任何可能的$x$对应的$f(x)$一样大，则$\bar{x}$是全局最大化者。识别一个值$\bar{x}$是局部还是全局最大化者在第6.3节考虑。该讨论侧重于函数$f$的形状，以及使用微积分技术识别该形状。
+
+在此最优化讨论之后，考察若干应用。第6.4节关于外部性的讨论说明了使用这些技术来研究交通拥堵的福利含义。第6.5节引入的比较静态分析关注由底层参数变化导致的变量变化。经济学中的一个关键度量是弹性，衡量因变量对另一个变量变化的响应——这在第6.6节中介绍。第6.7和6.8节在税收背景下考虑比较静态计算。最后，第6.9节考虑拉姆齐定价，使用变分论证来研究有效税收。
+\end{translation}
+
+\section{Optimization / 最优化}
+
+\begin{original}
+\textbf{Definition 6.1:} Say that $x^*$ is a global maximum if $f(x^*) \ge f(x)$ for all $x \in X$, and a global minimum if $f(x^*) \le f(x)$ for all $x \in X$. If $f(x^*) \ge f(x)$ for all $x \in X$, say that $x^*$ maximizes $f$. If $f(x^*) \le f(x)$ for all $x \in X$, say that $x^*$ minimizes $f$.
+
+The discussion here focuses on the problem of maximizing $f$ (to minimize $f$, maximize $-f$). Furthermore, throughout the discussion only unconstrained optimization is considered: at any point $x$, one can move in any direction, to alternative choices. That fact allows one to use derivatives to characterize optimal choices.
+
+A necessary condition for a point $x^*$ to be an optimum is that $f'(x^*) = 0$, so that the function is flat at $x^*$: if $f'(x^*) > 0$ increasing $x$ raises the value of the function, and if $f'(x^*) < 0$ reducing $x$ raises the value of the function.
+
+\textbf{Theorem 6.1:} Let $f$ be a differentiable function. Then if $x^*$ maximizes $f(x)$, $f'(x^*) = 0$.
+\end{original}
+\begin{translation}
+\textbf{定义6.1：}若对所有$x \in X$有$f(x^*) \ge f(x)$，则称$x^*$为全局最大值点；若对所有$x \in X$有$f(x^*) \le f(x)$，则称$x^*$为全局最小值点。若对所有$x \in X$有$f(x^*) \ge f(x)$，则称$x^*$最大化$f$。若对所有$x \in X$有$f(x^*) \le f(x)$，则称$x^*$最小化$f$。
+
+这里的讨论聚焦于最大化$f$的问题（要最小化$f$，最大化$-f$）。此外，整个讨论中仅考虑无约束最优化：在任何点$x$，可以向任意方向移动到替代选择。这一事实允许我们使用导数来刻画最优选择。
+
+点$x^*$成为最优解的一个必要条件是$f'(x^*) = 0$，即函数在$x^*$处是平坦的：若$f'(x^*) > 0$，增加$x$会提高函数值；若$f'(x^*) < 0$，减少$x$会提高函数值。
+
+\textbf{定理6.1：}设$f$为可微函数。则若$x^*$最大化$f(x)$，有$f'(x^*) = 0$。
+\end{translation}
+
+\subsection{The first-order condition: issues / 一阶条件：若干问题}
+
+\begin{original}
+The first-order condition is a necessary condition for a point $x^*$ to be either a maximum or a minimum, for if $f'(x^*) \neq 0$ it means that the function is either increasing or decreasing at $x^*$. However, this is only a necessary condition. Consider the function $f(x) = x^3$: $f'(0) = 0$, but 0 is neither a maximum nor a minimum. Thus, while the condition $f'(x) = 0$ locates an $x$ such that the function $f$ is flat at that point, additional conditions must be checked to determine if $x$ is optimal.
+\end{original}
+\begin{translation}
+一阶条件是点$x^*$成为最大值或最小值的必要条件，因为如果$f'(x^*) \neq 0$，意味着函数在$x^*$处要么递增要么递减。然而，这仅仅是一个必要条件。考虑函数$f(x) = x^3$：$f'(0) = 0$，但0既非最大值也非最小值。因此，虽然条件$f'(x) = 0$定位了一个使得函数$f$在该点平坦的$x$，但必须检查附加条件以确定$x$是否最优。
+\end{translation}
+
+\subsection{The second-order condition / 二阶条件}
+
+\begin{original}
+\textbf{Theorem 6.2:} Suppose that $f$ is a continuous function with continuous first and second derivatives, $f'(x)$ and $f''(x)$. Then
+\[
+f(x^* + \Delta x) = f(x^*) + f'(x^*)\Delta x + \frac{1}{2} f''(p)(\Delta x)^2 \tag{6.1}
+\]
+for some $p$ between $x^*$ and $x^* + \Delta x$.
+
+\textbf{Theorem 6.3:} Let $f$ be a continuous function with continuous first and second derivatives. Suppose that $f'(x^*) = 0$. Then:
+\begin{enumerate}
+\item $f''(x^*) < 0$ implies that $x^*$ is a local maximum.
+\item $f''(x^*) > 0$ implies that $x^*$ is a local minimum.
+\end{enumerate}
+
+The condition $f''(x) < 0$ is called a second-order condition.
+\end{original}
+\begin{translation}
+\textbf{定理6.2：}假设$f$是具有连续一阶和二阶导数$f'(x)$和$f''(x)$的连续函数。则对某个介于$x^*$和$x^* + \Delta x$之间的$p$，有$f(x^* + \Delta x) = f(x^*) + f'(x^*)\Delta x + \frac{1}{2} f''(p)(\Delta x)^2$。
+
+\textbf{定理6.3：}设$f$为具有连续一阶和二阶导数的连续函数。假设$f'(x^*) = 0$。则：
+\begin{enumerate}
+\item $f''(x^*) < 0$蕴含$x^*$是局部最大值点。
+\item $f''(x^*) > 0$蕴含$x^*$是局部最小值点。
+\end{enumerate}
+条件$f''(x) < 0$称为二阶条件。
+\end{translation}
+
+\subsection{Applications: profit maximization and related problems / 应用：利润最大化及相关问题}
+
+\begin{original}
+A simple application of these results is the monopoly revenue optimization problem, where inverse demand is given by $p = p(Q)$ and the cost by $c(Q)$. Thus, total revenue is $R(Q) = Q p(Q)$ and profit is $\pi(Q) = R(Q) - c(Q)$.
+
+The first-order condition for profit maximization is:
+\[
+\pi'(Q) = R'(Q) - c'(Q) = 0.
+\]
+
+This yields the profit-maximizing rule: set marginal revenue equal to marginal cost. With $\pi(Q) = R(Q) - c(Q) = Q p(Q) - c(Q)$, differentiating gives
+\[
+\pi'(Q) = [p(Q) + Q p'(Q)] - c'(Q)
+\]
+and rearranging:
+\[
+\pi'(Q) = p(Q)\left[1 + \frac{Q}{p}\frac{dp}{dQ}\right] - c'(Q).
+\]
+
+\textbf{Example 6.3:} In the linear case $p(Q) = a - bQ$ and $c(Q) = cQ$, where $c$ is the constant marginal cost. Then $R(Q) = aQ - bQ^2$ and $\pi(Q) = (a-c)Q - bQ^2$. Also, $\pi'(Q) = (a-c) - 2bQ$. Setting $\pi'(Q) = 0$, the solution for $Q$ is $Q_m = \frac{a-c}{2b}$. The second-order condition is $\pi''(Q) \le 0$ and in the linear case $\pi''(Q) = -2b < 0$. This may be compared with the competitive model, where quantity $Q_c$ is such that price equals marginal cost: $p(Q) = c(Q)$. With linearity $a - bQ = c$ or $Q_c = \frac{a-c}{b}$ for the competitive output.
+\end{original}
+\begin{translation}
+这些结果的一个简单应用是垄断收入最优化问题，其中反需求由$p = p(Q)$给出，成本由$c(Q)$给出。因此，总收入为$R(Q) = Q p(Q)$，利润为$\pi(Q) = R(Q) - c(Q)$。
+
+利润最大化的一阶条件为：$\pi'(Q) = R'(Q) - c'(Q) = 0$。这产生了利润最大化法则：令边际收益等于边际成本。
+
+\textbf{例6.3：}在线性情形中$p(Q) = a - bQ$且$c(Q) = cQ$，其中$c$为常数边际成本。则$R(Q) = aQ - bQ^2$且$\pi(Q) = (a-c)Q - bQ^2$。令$\pi'(Q) = 0$，解出$Q_m = \frac{a-c}{2b}$。二阶条件$\pi''(Q) = -2b < 0$满足。这可以与竞争模型相比较，其中产量$Q_c$满足价格等于边际成本：$Q_c = \frac{a-c}{b}$。
+\end{translation}
+
+\section{Concavity and optimization / 凹性与最优化}
+
+\begin{original}
+\textbf{Definition 6.2:} A function $f$ is concave if for any $x, y$ and any $\lambda \in [0,1]$
+\[
+f(\lambda x + (1 - \lambda)y) \ge \lambda f(x) + (1 - \lambda) f(y).
+\]
+
+\textbf{Definition 6.3:} A function $g$ is convex if for any $x, y$ and any $\lambda \in [0,1]$
+\[
+g(\lambda x + (1 - \lambda)y) \le \lambda g(x) + (1 - \lambda) g(y).
+\]
+
+\textbf{Theorem 6.4:} If $f$ is concave and $f'(x^*) = 0$, then $x^*$ is a global maximum. If $f$ is convex and $f'(x^*) = 0$, then $x^*$ is a global minimum.
+
+\textbf{Definition 6.4:} A function $f$ is strictly concave if for $x \neq y$
+\[
+f(\lambda x + (1 - \lambda)y) > \lambda f(x) + (1 - \lambda) f(y), \quad \lambda \in (0,1).
+\]
+Strict concavity guarantees a unique optimum.
+
+\textbf{Theorem 6.5:} If $f$ is a strictly concave function then $f$ has a unique maximum.
+
+\textbf{Theorem 6.6:} Given the function $f$, suppose that $f''(x) < 0$ everywhere, then the function is strictly concave. If $f''(x) \le 0$ for all $x$, the function is concave.
+
+\textbf{Theorem 6.7:}
+\begin{enumerate}
+\item A twice differentiable function $f$ is concave if and only if $f''(x) \le 0$, $\forall x$.
+\item The function $f$ is convex if and only if $f''(x) \ge 0$, $\forall x$.
+\item Strict concavity of $f$ implies that $f''(x) \le 0$ for all $x$, and $f''(x) < 0$ for all $x$ implies strict concavity.
+\item Strict convexity of $f$ implies that $f''(x) \ge 0$ for all $x$, and $f''(x) > 0$ for all $x$ implies strict convexity.
+\end{enumerate}
+\end{original}
+\begin{translation}
+\textbf{定义6.2：}若对任意$x, y$和任意$\lambda \in [0,1]$有$f(\lambda x + (1 - \lambda)y) \ge \lambda f(x) + (1 - \lambda) f(y)$，则函数$f$是凹的。
+
+\textbf{定义6.3：}若对任意$x, y$和任意$\lambda \in [0,1]$有$g(\lambda x + (1 - \lambda)y) \le \lambda g(x) + (1 - \lambda) g(y)$，则函数$g$是凸的。
+
+\textbf{定理6.4：}若$f$是凹的且$f'(x^*) = 0$，则$x^*$是全局最大值点。若$f$是凸的且$f'(x^*) = 0$，则$x^*$是全局最小值点。
+
+\textbf{定义6.4：}若对$x \neq y$有$f(\lambda x + (1 - \lambda)y) > \lambda f(x) + (1 - \lambda) f(y)$, $\lambda \in (0,1)$，则函数$f$是严格凹的。严格凹性保证了唯一的最优解。
+
+\textbf{定理6.5：}若$f$是严格凹函数，则$f$有唯一的最大值点。
+
+\textbf{定理6.6：}给定函数$f$，假设处处有$f''(x) < 0$，则该函数是严格凹的。若对所有$x$有$f''(x) \le 0$，则该函数是凹的。
+
+\textbf{定理6.7：}(1) 二阶可微函数$f$是凹的当且仅当$f''(x) \le 0$, $\forall x$。(2) 函数$f$是凸的当且仅当$f''(x) \ge 0$, $\forall x$。(3) $f$的严格凹性蕴含对所有$x$有$f''(x) \le 0$，且对所有$x$有$f''(x) < 0$蕴含严格凹性。
+\end{translation}
+
+\subsection{Summary / 小结}
+
+\begin{original}
+The following set of points summarizes the previous discussion on optimization.
+\begin{itemize}
+\item $f'(x^*) = 0$ is necessary for a maximum or minimum.
+\item $f''(x^*) < 0$ and $f'(x^*) = 0$ is sufficient for $x^*$ to be a unique local maximum.
+\item $f''(x) \le 0$ for a neighborhood of $x^*$ and $f'(x^*) = 0$ is sufficient for $x^*$ to be a local maximum.
+\item $f''(x) \le 0$ for all $x$ and $f'(x^*) = 0$ implies that $x^*$ is a global maximum.
+\item $f(x)$ concave implies that $f''(x) \le 0$ for all $x$.
+\item $f''(x) < 0$ for all $x$ implies $f$ is strictly concave, which implies that $f$ has a unique global maximum.
+\end{itemize}
+\end{original}
+\begin{translation}
+以下几点总结了之前关于最优化的讨论。
+\begin{itemize}
+\item $f'(x^*) = 0$是最大值或最小值的必要条件。
+\item $f''(x^*) < 0$且$f'(x^*) = 0$是$x^*$为唯一局部最大值点的充分条件。
+\item 在$x^*$的邻域内$f''(x) \le 0$且$f'(x^*) = 0$是$x^*$为局部最大值点的充分条件。
+\item 对所有$x$有$f''(x) \le 0$且$f'(x^*) = 0$蕴含$x^*$是全局最大值点。
+\item $f(x)$凹蕴含对所有$x$有$f''(x) \le 0$。
+\item 对所有$x$有$f''(x) < 0$蕴含$f$是严格凹的，这蕴含$f$有唯一的全局最大值点。
+\end{itemize}
+\end{translation}
+
+\section{Externalities / 外部性}
+
+\subsection{The free-rider problem / 搭便车问题}
+
+\begin{original}
+Consider a public bridge that drivers can use for free. For each individual driver, the benefit from using the bridge is $b$. With $n$ drivers using the bridge, the cost (in terms of delay) to each driver is $c(n)$, so when there are $n$ drivers in total crossing the bridge the net benefit or utility to each of those drivers is $u = b - c(n)$. Assume that $c(0) = 0$, $c'(n) > 0$ and $c''(n) > 0$ for all $n \ge 0$.
+
+\subsubsection{Equilibrium behavior / 均衡行为}
+
+The social cost from bridge usage is the cost per user times the number of users, $s(c) = n c(n)$, and the total benefit is $n b$. Therefore, the social welfare is:
+\[
+w(n) = n b - s(c) = n b - n c(n).
+\]
+Maximizing this:
+\[
+w'(n) = b - [n c'(n) + c(n)].
+\]
+
+Socially efficient usage of the bridge occurs when $w'(n) = 0$. Let the solution be $\bar{n}$:
+\[
+b = c(\bar{n}) + \bar{n} c'(\bar{n}). \tag{6.8}
+\]
+
+But drivers independently decide whether to use the bridge or not, and usage increases as long as $b > c(n)$, so the equilibrium usage level ($\hat{n}$) is determined as the solution $b - c(n) = 0$. Comparing these, the market equilibrium level of usage $\hat{n}$ is larger than the socially optimal level, $\bar{n}$.
+
+\subsubsection{A policy solution / 政策解决方案}
+
+Suppose the government could charge a toll for bridge usage so a driver must pay $t$ to cross the bridge. The manager then charges a toll of $t = \bar{n} c'(\bar{n})$. So, if $\bar{n}$ people use the bridge, each individual compares $b$ with $c(\bar{n}) + \bar{n} c'(\bar{n})$, the travel cost plus the toll charge. With the tax, equilibrium bridge usage is determined by the value of $n$ that satisfies $b = c(n) + n c'(n)$, which is $\bar{n}$.
+\end{original}
+\begin{translation}
+考虑一座司机可以免费使用的公共桥梁。对每个个体司机，使用桥梁的收益为$b$。当有$n$个司机使用桥梁时，每个司机的成本（以延误计）为$c(n)$，因此当总共有$n$个司机过桥时，每个司机的净收益或效用为$u = b - c(n)$。假设$c(0) = 0$, $c'(n) > 0$且$c''(n) > 0$对所有$n \ge 0$成立。
+
+桥梁使用的社会成本为每个使用者的成本乘以使用人数：$s(c) = n c(n)$，总收益为$n b$。因此社会福利为：$w(n) = n b - n c(n)$。最大化此式：$w'(n) = b - [n c'(n) + c(n)]$。
+
+当$w'(n) = 0$时桥梁使用达到社会效率水平。设解为$\bar{n}$：$b = c(\bar{n}) + \bar{n} c'(\bar{n})$。
+
+但司机独立决定是否使用桥梁，只要$b > c(n)$使用就会增加，因此均衡使用水平($\hat{n}$)由$b - c(n) = 0$确定。比较两者，市场均衡使用水平$\hat{n}$大于社会最优水平$\bar{n}$。
+
+假设政府可以对桥梁使用收费，司机必须支付$t$才能过桥。管理者收取$t = \bar{n} c'(\bar{n})$的通行费。因此，如果有$\bar{n}$人使用桥梁，每个个体将$b$与$c(\bar{n}) + \bar{n} c'(\bar{n})$（旅行成本加通行费）进行比较。有了税收后，均衡桥梁使用量由满足$b = c(n) + n c'(n)$的$n$值决定，即$\bar{n}$。
+\end{translation}
+
+\section{Comparative statics / 比较静态分析}
+
+\begin{original}
+Comparative statics studies the impact on a solution variable of changes in the underlying parameters. Consider an optimization problem where the function to be maximized depends explicitly on some parameter or parameters. For example, consider the maximization of the function
+\[
+f(x; a, c) = a \cdot \ln(x + 1) - c x.
+\]
+
+Maximizing gives $\frac{a}{x+1} - c = 0$ and from the first-order condition, the solution is $x(a, c) = \frac{a}{c} - 1$. So, for example, taking $c$ to be a constant, $\frac{dx}{da} = \frac{1}{c}$, giving the impact on the solution of a change in the parameter $a$.
+\end{original}
+\begin{translation}
+比较静态分析研究底层参数变化对解变量的影响。考虑一个最优化问题，其中被最大化的函数显式依赖于某个或多个参数。例如，考虑函数$f(x; a, c) = a \cdot \ln(x + 1) - c x$的最大化。最大化得$\frac{a}{x+1} - c = 0$，由一阶条件得解为$x(a, c) = \frac{a}{c} - 1$。因此，例如，将$c$视为常数，$\frac{dx}{da} = \frac{1}{c}$给出了参数$a$变化对解的影响。
+\end{translation}
+
+\section{Elasticity of demand / 需求弹性}
+
+\begin{original}
+The elasticity of demand measures the responsiveness of demand to price changes and is defined as the percentage change in quantity demanded due to a percentage change in price and denoted $\varepsilon$:
+\[
+\varepsilon = \frac{\%\ \text{change in } Q}{\%\ \text{change in } P} = \frac{\frac{\Delta Q}{Q}}{\frac{\Delta P}{P}} = \frac{P}{Q} \frac{\Delta Q}{\Delta P} \to \frac{P}{Q} \frac{dQ}{dP}.
+\]
+
+Often, because demand is downward sloping, the elasticity is defined as $-\frac{P}{Q}\frac{dQ}{dP}$, so that the elasticity is expressed as a positive number for downward sloping demand.
+
+\subsection{Elasticity, revenue and profit maximization / 弹性、收益与利润最大化}
+
+Recall that the profit function of a monopoly was written:
+\[
+\pi(Q) = P(Q)Q - c(Q) = R(Q) - c(Q).
+\]
+
+From this expression:
+\[
+\pi'(Q) = R'(Q) - c'(Q) = P(Q)\left[1 + \frac{Q}{P}\frac{dP}{dQ}\right] - c'(Q) = P(Q)\left[1 + \frac{1}{\varepsilon}\right] - c'(Q).
+\]
+
+Since a profit-maximizing monopolist sets $\pi'(Q) = 0$ and solves for $Q$, this implies that the solution satisfies:
+\[
+P(Q)\left[1 + \frac{1}{\varepsilon(Q)}\right] = c'(Q),
+\]
+and since $\varepsilon(Q) < 0$, this implies that $P(Q) > c'(Q)$ at the solution so that the profit-maximizing monopolist sets a price greater than marginal cost. Rearranging,
+\[
+\frac{P(Q) - c'(Q)}{P(Q)} = -\frac{1}{\varepsilon(Q)},
+\]
+so that the markup of price over marginal cost is equal to the reciprocal of the elasticity.
+\end{original}
+\begin{translation}
+需求弹性衡量需求对价格变化的响应程度，定义为需求量百分比变化除以价格百分比变化，记为$\varepsilon$：
+\[
+\varepsilon = \frac{\%\ \text{$Q$的变化}}{\%\ \text{$P$的变化}} = \frac{P}{Q} \frac{dQ}{dP}.
+\]
+通常，由于需求是向下倾斜的，弹性定义为$-\frac{P}{Q}\frac{dQ}{dP}$，使得对于向下倾斜的需求弹性表示为正数。
+
+回顾垄断企业的利润函数写为：$\pi(Q) = P(Q)Q - c(Q) = R(Q) - c(Q)$。由此表达式：
+\[
+\pi'(Q) = P(Q)\left[1 + \frac{1}{\varepsilon}\right] - c'(Q).
+\]
+由于利润最大化垄断者令$\pi'(Q) = 0$并求解$Q$，这意味着解满足$P(Q)\left[1 + \frac{1}{\varepsilon(Q)}\right] = c'(Q)$。由于$\varepsilon(Q) < 0$，这意味着在解处$P(Q) > c'(Q)$，因此利润最大化垄断者设定的价格高于边际成本。重新排列得：
+\[
+\frac{P(Q) - c'(Q)}{P(Q)} = -\frac{1}{\varepsilon(Q)},
+\]
+即价格超过边际成本的加成等于弹性的倒数。
+\end{translation}
+
+\section{Taxation and monopoly / 税收与垄断}
+
+\begin{original}
+Suppose that the government wishes to induce a monopolist to produce the quantity at which price equals marginal cost. To achieve this outcome, suppose that the government gives a per-unit subsidy of $s$ and imposes a lump sum tax of $T$. The profit of the firm is then:
+\[
+\pi_g(Q) = Q(P(Q) + s) - cQ - T.
+\]
+
+The first-order condition is $\pi_g'(Q) = 0 = P(Q) + QP'(Q) + s - c = 0$, which is equivalent to: $P(Q)\left[1 + \frac{1}{\varepsilon(Q)}\right] = c - s$.
+
+If the subsidy is chosen equal to the price-elasticity ratio at the competitive output, the monopolist's optimal choice is the competitive output. In the case of linear demand $\frac{dQ}{dP} = -\frac{1}{b}$, so that $s$ should be chosen to satisfy $Q_c = \frac{s}{b}$ or $s = b Q_c$.
+\end{original}
+\begin{translation}
+假设政府希望诱导垄断者生产价格等于边际成本时的产量。为达到这一结果，假设政府给予每单位$s$的补贴并征收总额税$T$。企业利润则为：$\pi_g(Q) = Q(P(Q) + s) - cQ - T$。一阶条件等价于：$P(Q)\left[1 + \frac{1}{\varepsilon(Q)}\right] = c - s$。如果补贴选择等于竞争产量处的价格-弹性比，垄断者的最优选择就是竞争产量。在线性需求情形中，应选择$s = b Q_c$。
+\end{translation}
+
+\section{Taxation incidence in supply and demand / 供需中的税收归宿}
+
+\begin{original}
+When a tax is imposed on a good, this generally impacts both the buyer and seller. The price paid by the buyer will typically rise, and the price received by the seller will typically fall --- with the gap equal to the tax. Suppose that in some market the government charges a tax $t$ per unit sold. Thus the price paid by the purchaser exceeds the price received by the seller by the amount $t$: $P_d(Q) = P_s(Q) + t$.
+
+\subsection{A unit tax / 单位税}
+
+Given an initial value for $t$, the corresponding quantity, $Q(t)$, satisfies $P_d(Q(t)) = P_s(Q(t)) + t$, $(Q(0) = Q_e)$. Differentiating gives:
+\[
+P_d'(Q(t))\frac{dQ(t)}{dt} - 1 = P_s'(Q(t))\frac{dQ(t)}{dt}.
+\]
+
+Let the terms $\varepsilon_s$ and $\varepsilon_d$ denote the elasticities of supply and demand respectively. Since $P_d'(Q) < 0$ and $P_s'(Q) > 0$, $\varepsilon_d < 0$ and $\varepsilon_s > 0$. Solving for $\frac{dQ}{dt}$ (evaluated at $t = 0$):
+\[
+\left.\frac{dQ}{dt}\right|_{t=0} = \frac{-1}{\frac{P_e}{Q_e}\left(\frac{1}{\varepsilon_s} - \frac{1}{\varepsilon_d}\right)}.
+\]
+
+\subsection{An ad-valorem tax / 从价税}
+
+With an ad-valorem tax, $(1 + t)P_s(Q(t)) = P_d(Q(t))$. Differentiating and evaluating at $t = 0$ gives:
+\[
+\left.\frac{dQ}{dt}\right|_{t=0} = -\frac{Q_e}{\frac{1}{\varepsilon_s} - \frac{1}{\varepsilon_d}}.
+\]
+\end{original}
+\begin{translation}
+当对一种商品征税时，这通常会影响买卖双方。买方支付的价格通常会上升，卖方收到的价格通常会下降——差额等于税额。假设在某个市场中政府对每单位销售征收$t$的税。因此购买者支付的价格超过销售者收到的价格恰好$t$：$P_d(Q) = P_s(Q) + t$。
+
+给定$t$的初始值，相应的数量$Q(t)$满足$P_d(Q(t)) = P_s(Q(t)) + t$，$(Q(0) = Q_e)$。微分并求解$\frac{dQ}{dt}$（在$t = 0$处求值）得上述公式。由于$\varepsilon_s > 0$且$\varepsilon_d < 0$，有$\frac{dQ}{dt} < 0$。注意当弹性很小时，$t$变化对$Q$的影响很大。
+
+对于从价税，$(1 + t)P_s(Q(t)) = P_d(Q(t))$。微分并在$t = 0$处求值得出类似公式。
+\end{translation}
+
+\subsection{Elasticities and taxation / 弹性与税收}
+
+\begin{original}
+Considering the formula associated with the unit tax,
+\[
+\frac{dQ}{dt} = \frac{-1}{\frac{P}{Q}\left(\frac{1}{\varepsilon_s} - \frac{1}{\varepsilon_d}\right)},
+\]
+the following observations highlight some aspects of elasticities and their relationship to the responsiveness of demand and price to changes in taxation. If $\varepsilon_s$ is very large, the quantity supplied is very responsive to price changes, so the supply curve is flat. When $\varepsilon_d$ is also very large, then the demand curve is also flat. In this case, both $\frac{1}{\varepsilon_s}$ and $\frac{1}{\varepsilon_d}$ are very small so that $\frac{dQ}{dt}$ is a large negative number. Therefore, large elasticities lead to a large change in quantity traded as a result of the tax. When both $\varepsilon_s$ and $\varepsilon_d$ are small, this corresponds to the situation where neither supply nor demand is responsive to price changes --- the curves are both steep. In this case, $\frac{1}{\varepsilon_s}$ and $\frac{1}{\varepsilon_d}$ are large so that $\frac{dQ}{dt}$ is a small negative number.
+\end{original}
+\begin{translation}
+考虑单位税相关的公式：$\frac{dQ}{dt} = \frac{-1}{\frac{P}{Q}\left(\frac{1}{\varepsilon_s} - \frac{1}{\varepsilon_d}\right)}$，以下观察突出了弹性及其与需求和价格对税收变化响应程度之间关系的某些方面。如果$\varepsilon_s$非常大，供给量对价格变化非常敏感，因此供给曲线是平坦的。当$\varepsilon_d$也非常大时，需求曲线也是平坦的。在这种情况下，$\frac{1}{\varepsilon_s}$和$\frac{1}{\varepsilon_d}$都非常小，因此$\frac{dQ}{dt}$是一个很大的负数。因此，较大的弹性导致税收引起的交易量变化较大。当$\varepsilon_s$和$\varepsilon_d$都很小时，对应于供给和需求对价格变化都不敏感的情况——两条曲线都很陡峭。在这种情况下，$\frac{1}{\varepsilon_s}$和$\frac{1}{\varepsilon_d}$很大，因此$\frac{dQ}{dt}$是一个小的负数。
+\end{translation}
+
+\section{Ramsey pricing / 拉姆齐定价}
+
+\begin{original}
+Consider the efficiency problem that arises when there is a fixed cost in production, so that pricing at marginal cost generates a loss. In the absence of a subsidy to production, price must be set above marginal cost. Consider the task of recovering fixed cost by pricing above marginal cost in different markets where fixed cost is jointly shared in production, while minimizing loss of consumer and producer surplus.
+
+Consider two markets with demands $p_x(x) = a - bx$ and $p_y(y) = \alpha - \beta y$, where both items are produced by a firm with cost function $c(x, y) = F + c[x + y]$, so that there is common constant marginal cost $c$ and a fixed cost $F$. Pricing at marginal cost is efficient but generates a loss for the firm. If prices are set above marginal cost so that the fixed cost $F$ is recouped, what is the optimal pricing scheme (minimizing loss of surplus, subject to raising the fixed cost $F$)?
+
+Consider reducing the quantity in each market by the same amount. The revenue generated per unit of dead-weight loss in each market: $\rho_x$ and $\rho_y$:
+\[
+\rho_x = \frac{R_x}{DWL_x} = 2\frac{q}{q - \tilde{q}}, \quad \rho_y = \frac{R_y}{DWL_y} = 2\frac{q}{q - \tilde{q}}.
+\]
+
+Let $\rho = \rho_x = \rho_y$. Viewed as a function of $(q, \tilde{q})$, $\rho(q, \tilde{q})$ falls as $\tilde{q}$ falls, so the revenue gain per unit of dead-weight loss is greatest when $\tilde{q}$ is close to $q$. And the optimal quantity reduction is the same in both markets. In the case where marginal costs are different, setting the ratios equal gives $\frac{\tilde{q}_x}{q_x - \tilde{q}_x} = \frac{\tilde{q}_y}{q_y - \tilde{q}_y}$, so that $\frac{\tilde{q}_x}{q_x} = \frac{\tilde{q}_y}{q_y}$. Therefore, the quantities should be reduced in the same proportion.
+\end{original}
+\begin{translation}
+考虑当生产中存在固定成本时出现的效率问题，此时按边际成本定价会产生亏损。在没有生产补贴的情况下，价格必须设定在边际成本之上。考虑在固定成本于生产中共同分担的不同市场中，通过按高于边际成本定价来回收固定成本，同时最小化消费者和生产者剩余的损失。
+
+考虑两个市场，其需求分别为$p_x(x) = a - bx$和$p_y(y) = \alpha - \beta y$，两种产品均由一家企业以成本函数$c(x, y) = F + c[x + y]$生产，因此存在共同的常数边际成本$c$和固定成本$F$。按边际成本定价是有效的，但会给企业带来亏损。如果定价高于边际成本以回收固定成本$F$，什么是最优定价方案？
+
+考虑在每个市场减少相同数量的产量。每个市场中每单位无谓损失的收益为$\rho_x$和$\rho_y$。令$\rho = \rho_x = \rho_y$。将$\rho$视为$(q, \tilde{q})$的函数，$\rho(q, \tilde{q})$随$\tilde{q}$下降而下降，因此当$\tilde{q}$接近$q$时单位无谓损失的收益增益最大。最优的数量减少在两个市场中是相同的。在边际成本不同的情况下，令比率相等得$\frac{\tilde{q}_x}{q_x} = \frac{\tilde{q}_y}{q_y}$。因此，数量应按相同比例减少。
+\end{translation}
+
+\section{Exercises for Chapter 6 / 第6章习题}
+
+\begin{original}
+\textbf{Exercise 6.1} Let $C(q)$ denote the total cost of producing $q$ units of a good. Show that the average cost is minimized at the point where average and marginal costs coincide.
+
+\textbf{Exercise 6.2} The price-cost margin (markup), $m$, for a monopolist is defined as $m = \frac{\text{price} - \text{marginal cost}}{\text{price}}$. Find the relationship between $\varepsilon$, the elasticity of demand and $m$.
+
+\textbf{Exercise 6.3--6.16} Additional exercises on monopoly, taxation, comparative statics, elasticity, and related applications. (See textbook for full exercise statements.)
+\end{original}
+\begin{translation}
+\textbf{习题6.1} 令$C(q)$表示生产$q$单位商品的总成本。证明平均成本在平均成本与边际成本相等处达到最小。
+
+\textbf{习题6.2} 垄断者的价格-成本边际（加成）$m$定义为$m = \frac{\text{价格} - \text{边际成本}}{\text{价格}}$。找出需求弹性$\varepsilon$与$m$之间的关系。
+
+\textbf{习题6.3--6.16} 关于垄断、税收、比较静态分析、弹性及相关应用的附加习题。（完整习题陈述见教材。）
+\end{translation}
